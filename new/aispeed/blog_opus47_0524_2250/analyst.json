@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": [
+      "notable_ai_models_epoch.csv",
+      "frontier_cadence_by_year.csv",
+      "frontier_release_gaps.csv",
+      "models_per_year.csv"
+    ],
+    "rows": 1018,
+    "columns": 47,
+    "what_one_row_represents": "In the raw file, one row = one notable AI model (with publication date, organization, domain, compute, etc.). Derived tables aggregate this: one row per year (cadence, volume) or one row per frontier-lab release (within-lab gaps).",
+    "time_range": "1950-07-02 to 2026-05-18 (raw); clean cadence trend 2018-2026",
+    "geographic_scope": "Global (frontier labs in the US, China, France)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "The 30x cadence collapse: median gap fell from 132 to 4 days",
+      "content": "The single defining finding: the median number of days between consecutive frontier-lab language-model releases collapsed from 132 days in 2018 to just 4 days in 2025 and 2026 (year-to-date) — a 33x speed-up. The decline is monotonic across the clean era: 132 days (2018), 51 (2019), 68.5 (2020), 49 (2021), then a cliff to 13 (2022), 5.5 (2023), 7 (2024), and 4 (2025-26). In 2018 the frontier collectively shipped a notable language model roughly every four-and-a-half months; by 2025 it was shipping one every four days.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [33, 42],
+        "output": "2018: median 132.0 days, n=3\n2019: median 51.0 days, n=4\n2020: median 68.5 days, n=4\n2021: median 49.0 days, n=8\n2022: median 13.0 days, n=21\n2023: median 5.5 days, n=26\n2024: median 7.0 days, n=33\n2025: median 4.0 days, n=54\n2026: median 4.0 days, n=15\n2018 median: 132.0, 2025 median: 4.0, speedup: 33.0x"
+      },
+      "data_table": {
+        "description": "Median days between consecutive frontier-lab language-model releases, per year (clean trend 2018-2026)",
+        "columns": ["year", "median_days", "n_releases", "partial"],
+        "rows": [
+          [2018, 132.0, 3, false],
+          [2019, 51.0, 4, false],
+          [2020, 68.5, 4, false],
+          [2021, 49.0, 8, false],
+          [2022, 13.0, 21, false],
+          [2023, 5.5, 26, false],
+          [2024, 7.0, 33, false],
+          [2025, 4.0, 54, false],
+          [2026, 4.0, 15, true]
+        ]
+      },
+      "based_on": ["det_01", "det_06"]
+    },
+    "ana_02": {
+      "label": "The 2022 cliff: ChatGPT-year inflection",
+      "content": "The break is not gradual — it is a cliff, and it lands exactly on the ChatGPT year. The median gap held between 49 and 68 days from 2019 through 2021, then dropped to 13 days in 2022 (3.8x faster than 2021) and 5.5 days in 2023. From 2021 to 2023 the gap compressed 8.9x in just two years. ChatGPT launched in November 2022; the data shows the competitive escalation it triggered as a near-vertical drop rather than a smooth glide.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [45, 52],
+        "output": "2021 median gap: 49.0 days\n2022 median gap: 13.0 days (factor vs 2021: 3.8x faster)\n2023 median gap: 5.5 days\n2021->2023 compression: 8.9x"
+      },
+      "data_table": {
+        "description": "Year-over-year median gap around the 2022 inflection",
+        "columns": ["year", "median_days"],
+        "rows": [
+          [2021, 49.0],
+          [2022, 13.0],
+          [2023, 5.5]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_03": {
+      "label": "Frontier releases per year rose 18x (2018 to 2025)",
+      "content": "The flip side of shrinking gaps is exploding volume. The number of frontier language-model releases counted on the pooled timeline grew from 3 in 2018 to 54 in 2025 — 18x more releases. The climb is steep through the inflection: 8 (2021), 21 (2022), 26 (2023), 33 (2024), 54 (2025). 2026 already shows 15 in less than half a year. More labs and more point-releases each clearing the notability bar are both feeding this.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [55, 62],
+        "output": "2018: 3 frontier releases\n2019: 4\n2020: 4\n2021: 8\n2022: 21\n2023: 26\n2024: 33\n2025: 54\n2026: 15\n2018: 3 -> 2025: 54 = 18.0x more releases"
+      },
+      "data_table": {
+        "description": "Count of frontier language-model releases on the pooled timeline, per year",
+        "columns": ["year", "n_releases", "partial"],
+        "rows": [
+          [2018, 3, false],
+          [2019, 4, false],
+          [2020, 4, false],
+          [2021, 8, false],
+          [2022, 21, false],
+          [2023, 26, false],
+          [2024, 33, false],
+          [2025, 54, false],
+          [2026, 15, true]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_04": {
+      "label": "Mean and median both fall and converge",
+      "content": "The collapse is robust to the choice of average. The mean gap fell alongside the median and the two converged as cadence tightened: in 2019 the mean (85.2 days) sat 34 days above the median (51), reflecting a few long lulls; by 2025 the mean (6.6) was only 2.6 days above the median (4.0). Tightening dispersion means it is not just a handful of fast releases dragging an average down — the whole distribution of gaps shifted toward days.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [65, 69],
+        "output": "2019: median 51.0, mean 85.2, gap 34.2\n2020: median 68.5, mean 62.8, gap -5.7\n2021: median 49.0, mean 66.4, gap 17.4\n2022: median 13.0, mean 16.1, gap 3.1\n2023: median 5.5, mean 15.3, gap 9.8\n2024: median 7.0, mean 11.2, gap 4.2\n2025: median 4.0, mean 6.6, gap 2.6\n2026: median 4.0, mean 8.5, gap 4.5"
+      },
+      "data_table": {
+        "description": "Median vs mean days between frontier releases per year",
+        "columns": ["year", "median_days", "mean_days"],
+        "rows": [
+          [2019, 51.0, 85.2],
+          [2020, 68.5, 62.8],
+          [2021, 49.0, 66.4],
+          [2022, 13.0, 16.1],
+          [2023, 5.5, 15.3],
+          [2024, 7.0, 11.2],
+          [2025, 4.0, 6.6],
+          [2026, 4.0, 8.5]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_05": {
+      "label": "Annual notable-model volume grew ~3.6x (2015 to 2025)",
+      "content": "The macro backdrop: total notable AI models published per year (all domains, not just language) rose from 29 in 2015 to 103 in 2025, about 3.6x, peaking at 119 in 2023. This is a more modest multiplier than the frontier-cadence numbers because it spans the whole field and a longer, noisier history. The 2026 value (26) is a partial year through mid-May and must not be read as a decline. This trend frames the cadence story but is not the headline — the dramatic acceleration is specifically in the frontier language race.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [72, 81],
+        "output": "2015: 29\n2016: 49\n2017: 55\n2018: 37\n2019: 68\n2020: 50\n2021: 78\n2022: 91\n2023: 119\n2024: 98\n2025: 103\n2026: 26\n2015: 29 -> 2025: 103 = 3.6x\nNOTE: 2026 value is partial-year (through mid-May)"
+      },
+      "data_table": {
+        "description": "Notable AI models published per year, all domains, 2015-2026",
+        "columns": ["year", "notable_models", "partial"],
+        "rows": [
+          [2015, 29, false],
+          [2016, 49, false],
+          [2017, 55, false],
+          [2018, 37, false],
+          [2019, 68, false],
+          [2020, 50, false],
+          [2021, 78, false],
+          [2022, 91, false],
+          [2023, 119, false],
+          [2024, 98, false],
+          [2025, 103, false],
+          [2026, 26, true]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_06": {
+      "label": "Every frontier lab sped up — per-lab median release gaps",
+      "content": "The pattern is field-wide, not driven by one lab. Computing each lab's own release-to-release median gap (Google, Google DeepMind and DeepMind merged into Google DeepMind) shows OpenAI is the fastest pace-setter at a 21-day median across its 48 measured gaps, followed by Alibaba (36 days, n=25), Google DeepMind (58, n=47), DeepSeek (73, n=8), Meta AI (74, n=17), Anthropic (87, n=13), Mistral AI (108, n=5), and xAI (130, n=7). The smaller-n labs entered the race later, so their overall medians are pulled up by early sparse releases; all of them show tightening in their most recent releases.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [84, 99],
+        "output": "OpenAI: n_gaps=48, overall_median=21d\nAlibaba: n_gaps=25, overall_median=36d\nGoogle DeepMind (Google+DeepMind merged): median=58d, n=47\nDeepSeek: n_gaps=8, overall_median=73d\nMeta AI: n_gaps=17, overall_median=74d\nAnthropic: n_gaps=13, overall_median=87d\nMistral AI: n_gaps=5, overall_median=108d\nxAI: n_gaps=7, overall_median=130d"
+      },
+      "data_table": {
+        "description": "Median days between a lab's own consecutive releases (Google/DeepMind merged), sorted fastest to slowest",
+        "columns": ["lab", "median_gap_days", "n_gaps"],
+        "rows": [
+          ["OpenAI", 21.0, 48],
+          ["Alibaba", 36.0, 25],
+          ["Google DeepMind", 58.0, 47],
+          ["DeepSeek", 73.0, 8],
+          ["Meta AI", 74.0, 17],
+          ["Anthropic", 87.0, 13],
+          ["Mistral AI", 108.0, 5],
+          ["xAI", 130.0, 7]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_07": {
+      "label": "Anthropic's Claude line: from 4-month gaps to weeks",
+      "content": "Anthropic's own release log mirrors the field. Early Claude releases were months apart — Claude 2 came 119 days after the prior release, Claude 2.1 another 133 days, with a 2023 median of about 126 days. By late 2025 the gaps shrank to weeks: Claude Sonnet 4.5 followed Opus 4.1 by 55 days, Claude Haiku 4.5 came just 16 days later, and Claude Opus 4.5 another 40 days after that. The 0-day entries (Claude 3 Opus and 3 Sonnet on the same day; Opus 4 and Sonnet 4 on the same day) show simultaneous multi-model launches — a newer pattern in itself. This confirms the detective's external benchmark that Anthropic moved from ~120-day to 16–55-day cadences.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [102, 112],
+        "output": "Claude 2 2023-07-11 119\nClaude 2.1 2023-11-21 133\nClaude 3 Opus 2024-03-04 104\nClaude 3 Sonnet 2024-03-04 0\nClaude 3.5 Sonnet 2024-06-20 108\nClaude 3.7 Sonnet 2025-02-24 249\nClaude Opus 4 2025-05-22 87\nClaude Sonnet 4 2025-05-22 0\nClaude Opus 4.1 2025-08-05 75\nClaude Sonnet 4.5 2025-09-29 55\nClaude Haiku 4.5 2025-10-15 16\nClaude Opus 4.5 2025-11-24 40\nClaude Opus 4.7 2026-04-16 143"
+      },
+      "data_table": {
+        "description": "Anthropic Claude releases and days since the lab's previous release",
+        "columns": ["model", "publication_date", "days_since_prev"],
+        "rows": [
+          ["Claude 2", "2023-07-11", 119],
+          ["Claude 2.1", "2023-11-21", 133],
+          ["Claude 3 Opus", "2024-03-04", 104],
+          ["Claude 3 Sonnet", "2024-03-04", 0],
+          ["Claude 3.5 Sonnet", "2024-06-20", 108],
+          ["Claude 3.7 Sonnet", "2025-02-24", 249],
+          ["Claude Opus 4", "2025-05-22", 87],
+          ["Claude Sonnet 4", "2025-05-22", 0],
+          ["Claude Opus 4.1", "2025-08-05", 75],
+          ["Claude Sonnet 4.5", "2025-09-29", 55],
+          ["Claude Haiku 4.5", "2025-10-15", 16],
+          ["Claude Opus 4.5", "2025-11-24", 40],
+          ["Claude Opus 4.7", "2026-04-16", 143]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_08": {
+      "label": "OpenAI compressed its own cadence ~6x",
+      "content": "OpenAI, the lab with the most measured releases (48 gaps), shows the clearest single-lab compression: its median release-to-release gap fell from 108 days through 2022 to just 17 days from 2024 onward — roughly a 6x tightening within one organization. As the pace-setter, OpenAI's internal acceleration is a microcosm of the whole field's collapse.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [115, 121],
+        "output": "OpenAI total gaps: 48\nOpenAI <=2022 median gap: 108d (n=10)\nOpenAI >=2024 median gap: 17d (n=32)"
+      },
+      "data_table": {
+        "description": "OpenAI median release gap, early era vs recent era",
+        "columns": ["era", "median_gap_days", "n_gaps"],
+        "rows": [
+          ["<=2022", 108.0, 10],
+          [">=2024", 17.0, 32]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_09": {
+      "label": "Same-day launches are rising — the race reaches simultaneity",
+      "content": "An emergent signature of the speed race: 25 releases in the dataset have a 0-day gap, meaning a lab shipped two notable models on the same date. OpenAI leads with 11 such same-day pairs, followed by Google (4) and Meta AI (3). These zero-day collisions are concentrated in recent years — 8 in 2025 alone, up from 3–4 per year in 2022–2024 and essentially none before 2019. When the gap between a lab's own releases drops to zero, cadence has effectively maxed out: labs are launching model families simultaneously rather than sequentially.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/cadence_analysis.py",
+        "lines": [124, 135],
+        "output": "Releases with 0 days since the lab's previous release: 25\nOpenAI 11, Google 4, Meta AI 3, Anthropic 2, Alibaba 2, Google DeepMind 2, DeepSeek 1\nBy year: 2019:1, 2021:1, 2022:3, 2023:4, 2024:3, 2025:8, 2026:3"
+      },
+      "data_table": {
+        "description": "Same-day (0-day gap) releases by year",
+        "columns": ["year", "same_day_releases"],
+        "rows": [
+          [2019, 1],
+          [2021, 1],
+          [2022, 3],
+          [2023, 4],
+          [2024, 3],
+          [2025, 8],
+          [2026, 3]
+        ]
+      },
+      "based_on": []
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "2026 is a partial year (data through 2026-05-18). Its annual COUNTS (frontier releases, notable models) are incomplete and must not be read as declines. The median-gap metric (4 days) is unaffected by the partial year."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "'Notable' is a curated bar. Faster cadence partly reflects more labs plus more point-releases/variants (4.1, 4.5, Pro, Heavy, Thinking) each counting separately — part of the iteration-speed phenomenon itself, but it means a 'release' today is a smaller increment than in 2019."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Per-lab medians (ana_06) for late-entrant labs (xAI, Mistral, DeepSeek) have small n and are pulled up by sparse early releases; they overstate those labs' current gaps. Pre-2017 cadence values have tiny n and are excluded as noise."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Cadence is computed on Language-domain models only, pooled onto one timeline; the gap between each consecutive pair is bucketed by the later release's year. Google, Google DeepMind, and DeepMind are separate organizations in the raw data and were merged only for the per-lab ranking (ana_06)."
+    }
+  ]
+}

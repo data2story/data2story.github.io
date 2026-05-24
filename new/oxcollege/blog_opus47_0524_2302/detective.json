@@ -1,0 +1,77 @@
+{
+  "meta": { "role": "detective", "version": "2.0" },
+  "items": {
+    "det_01": {
+      "label": "Wikidata as the data source",
+      "content": "This dataset was extracted from Wikidata's SPARQL endpoint on 2026-05-24. Colleges are defined as items that are 'instance of' the class 'college of the University of Oxford' (Q2581649). Founding dates come from the 'inception' property (P571), founders from 'founded by' (P112), and namesakes from 'named after' (P138). Wikidata is a free, openly licensed (CC0) collaborative knowledge base, which means the data is reproducible by anyone but also inherits Wikidata's editorial choices: it intentionally includes historical, defunct and merged colleges alongside the ~39 current ones, and a handful of items (e.g. Examination Schools, Greek College) are arguably administrative or scholarly societies rather than colleges in the modern residential sense.",
+      "category": "origin",
+      "sources": [
+        { "url": "https://www.wikidata.org", "title": "Wikidata", "facts": ["Colleges identified as instance of Q2581649", "Founding via inception P571, founder via P112, namesake via P138", "Wikidata content is CC0 licensed and free to query via SPARQL"] }
+      ]
+    },
+    "det_02": {
+      "label": "The 'oldest college' dispute: Univ vs Balliol vs Merton",
+      "content": "Three colleges contest the title of Oxford's oldest, and the rivalry has never been resolved because each rests its claim on a different criterion. University College (1249) points to the earliest endowment: money left in the will of William of Durham in 1249 to support scholars. Balliol College (1263) claims the longest continuous existence as a named house of scholars on land given by its founder, occupying its Broad Street site without interruption since around 1263. Merton College (1264) was the first to be given formal statutes — a written constitution — in 1264, whereas Balliol and Univ had no statutes until the 1280s. Members of each college vigorously deny the others' claims; the consensus is that Univ has the oldest endowment intent, Balliol the longest continuous presence, and Merton the longest formal collegiate status.",
+      "category": "controversy",
+      "sources": [
+        { "url": "https://balliolarchivist.wordpress.com/2011/10/06/q-a-oldest-established/", "title": "Q&A: oldest established — Balliol College Archives", "facts": ["Balliol founded ca 1263 as a house of scholars on land owned by the founder, on its present Broad Street site, continuously since", "Univ traces its claim to William of Durham's 1249 bequest"] },
+        { "url": "https://en.wikipedia.org/wiki/Merton_College,_Oxford", "title": "Merton College, Oxford — Wikipedia", "facts": ["Merton received statutes in 1264, the first Oxford college to have a formal constitution", "Neither Balliol nor University College had statutes until the 1280s"] }
+      ]
+    },
+    "det_03": {
+      "label": "The Reformation cull and refounding (16th c.)",
+      "content": "The English Reformation under Henry VIII reshaped Oxford between roughly 1536 and 1546. Monastic colleges that served religious orders were dissolved: Gloucester College and others were suppressed in 1539, and St Mary's College and St Bernard's College fell in 1540, ceasing to function after the dissolution of the monasteries cut off the clergy who staffed them. At the same time, new foundations rose from the wreckage. Thomas Wolsey's Cardinal College (1525) was suppressed when Wolsey fell, refounded as King Henry VIII's College in 1532, and finally re-established by the king in 1546 as Christ Church — simultaneously the cathedral of the new Diocese of Oxford. This churn explains why the 16th century is the single biggest century in the dataset by foundations: it is partly a story of destruction and renaming, not pure growth.",
+      "category": "interpretive_hook",
+      "sources": [
+        { "url": "https://en.wikipedia.org/wiki/Timeline_of_Oxford", "title": "Timeline of Oxford — Wikipedia", "facts": ["Gloucester College dissolved 1539", "St Mary's College and St Bernard's College dissolved 1540"] },
+        { "url": "https://en.wikipedia.org/wiki/Christ_Church,_Oxford", "title": "Christ Church, Oxford — Wikipedia", "facts": ["Cardinal College suppressed 1531, refounded as King Henry VIII's College in 1532", "Refounded as Christ Church in 1546 as part of the reorganisation of the Church of England"] }
+      ]
+    },
+    "det_04": {
+      "label": "1879 and the women's colleges",
+      "content": "The 19th-century expansion in the dataset is partly the arrival of women at Oxford. Lady Margaret Hall, founded in 1878, was the first women's college and admitted its first nine students in 1879; the non-denominational Somerville Hall opened the same year, the two splitting over religious lines. St Anne's, St Hugh's (1886) and St Hilda's (1893) followed. Crucially, these institutions existed for decades before women could actually take Oxford degrees: women attended lectures and sat exams but were not full members of the University until 1920, when the first women had MA degrees conferred. The dataset's 19th-century cluster therefore marks not just numerical growth but a structural change in who Oxford was for.",
+      "category": "interpretive_hook",
+      "sources": [
+        { "url": "https://en.wikipedia.org/wiki/Somerville_College,_Oxford", "title": "Somerville College, Oxford — Wikipedia", "facts": ["Lady Margaret Hall founded 1878, first women's college, first students 1879", "Somerville Hall opened 1879, splitting from LMH over religious denomination"] },
+        { "url": "https://en.wikipedia.org/wiki/First_women_admitted_to_degrees_at_the_University_of_Oxford", "title": "First women admitted to degrees — Wikipedia", "facts": ["Women not admitted to Oxford degrees until 1920", "First women had MA conferred on 14 October 1920"] }
+      ]
+    },
+    "det_05": {
+      "label": "The modern graduate-college wave and Reuben (2019)",
+      "content": "The 20th and 21st century foundations in the dataset are dominated by graduate colleges, often endowed by industrial philanthropists: Nuffield (1937, motor magnate Lord Nuffield), Wolfson (1965, Isaac Wolfson), Kellogg (1990, the cereal foundation), and Reuben (2019). Reuben College is the newest, the first new Oxford college since Kellogg in 1990; it was established graduate-only in 2019, took its name after an £80 million gift from the Reuben Foundation in 2020, and enrolled its first students in 2021 in the former Radcliffe Science Library. Green Templeton (2008) is the product of a merger — Green College (1979) joined Templeton College (1965), the first such merger in the university's modern history, which is why both Templeton and Green Templeton appear in the dataset. Kellogg, Reuben and St Cross are 'societies' without a royal charter rather than full chartered colleges.",
+      "category": "background",
+      "sources": [
+        { "url": "https://en.wikipedia.org/wiki/Reuben_College,_Oxford", "title": "Reuben College, Oxford — Wikipedia", "facts": ["Reuben founded 2019, first new Oxford college since Kellogg in 1990", "£80m gift from the Reuben Foundation in 2020 led to the renaming", "Graduate-only, first students 2021, housed in the former Radcliffe Science Library"] },
+        { "url": "https://en.wikipedia.org/wiki/Green_Templeton_College,_Oxford", "title": "Green Templeton College — Wikipedia", "facts": ["Green Templeton formed 2008 from merger of Green College (1979) and Templeton College (1965)", "First college merger in the university's modern history"] }
+      ]
+    },
+    "det_06": {
+      "label": "Why namesakes and founders matter",
+      "content": "Oxford colleges are named and founded by a recognisable cast: medieval bishops and royal clerks (Walter de Merton, William of Wykeham, William Waynflete), Tudor monarchs and prelates (Henry VIII, Elizabeth I, Cardinal Wolsey, Bishop Foxe), and modern philanthropists (Lord Nuffield, Isaac Wolfson, the Reuben brothers). Namesakes split between the religious (Mary Magdalene, John the Baptist, All Souls' Day, the Holy Trinity, Jesus Christ) and the personal (the founder themselves, royal consorts like Philippa of Hainault, scholars like Mary Somerville and Thomas Linacre). This makes the dataset a compact social history of who held wealth and power in England across eight centuries — from the medieval Church, through the Crown, to 20th-century industry and finance. A reader can trace the secularisation of patronage straight through the 'named_after' column.",
+      "category": "why_it_matters",
+      "sources": [
+        { "url": "https://en.wikipedia.org/wiki/Colleges_of_the_University_of_Oxford", "title": "Colleges of the University of Oxford — Wikipedia", "facts": ["Colleges founded by a mix of clergy, royalty and modern philanthropists", "Modern colleges frequently named after industrial benefactors"] }
+      ]
+    },
+    "det_07": {
+      "label": "Scope guidance for the analyst",
+      "content": "Watch several caveats. (1) The dataset mixes current colleges with defunct/merged/dissolved ones (Rewley Abbey, Gloucester, Durham, Canterbury, Cardinal, King Henry VIII's, St Mary's, St Bernard's, Greek College, Templeton, Examination Schools); analyses of 'how old is the typical Oxford college' should distinguish the ~39 surviving colleges from the full historical set. (2) Two rows (Harris Manchester, St Bernard's) have blank founded_year and must be excluded from any year-based math. (3) Medieval founding dates are approximate and sometimes disputed (see the oldest-college debate), so treat 1249/1263/1264 as nominal. (4) Founder and namesake fields are often blank and sometimes hold multiple semicolon-separated values (Balliol, Christ Church, Green Templeton), which must be split before counting individual people. (5) The century-count table already provided in the README is a strong backbone for a trend story, but note the 'unknown' bucket of 2 colleges.",
+      "category": "scope_suggestion",
+      "sources": [
+        { "url": "https://www.wikidata.org", "title": "Wikidata", "facts": ["Founder field can contain multiple semicolon-separated values", "Some inception dates are missing in Wikidata"] }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_note",
+      "filename": null,
+      "url": null,
+      "license": null,
+      "source": "n/a",
+      "description": "No reference images were downloaded. This is a historical/quantitative dataset about foundation dates; the story is carried by trend charts, a timeline, and ranking visuals. Per the run's LEAN media budget, at most one generated hero image is planned (handled by the Designer). Specific college photographs would be decorative rather than evidentiary for a dataset whose content is dates, founders and namesakes.",
+      "relates_to": ["det_01", "det_07"]
+    }
+  ],
+  "instances": []
+}

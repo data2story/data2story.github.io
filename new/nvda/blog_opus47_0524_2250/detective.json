@@ -1,0 +1,122 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Dataset origin: SEC filings + Yahoo Finance",
+      "content": "This dataset pairs NVIDIA's official as-filed financial statements with its market price. The financials come from the SEC EDGAR XBRL company facts API for NVIDIA CORP (CIK 0001045810), meaning each revenue, margin, and net-income figure is the audited number NVIDIA reported in its 10-K and 10-Q filings. The stock prices come from Yahoo Finance via yfinance with auto_adjust enabled, so they are fully adjusted for NVIDIA's two stock splits (4:1 in 2021, 10:1 in 2024) and dividends. The annual file covers fiscal years 2011 through 2026. A crucial structural detail: NVIDIA's fiscal year ends in late January, so 'FY2026' mostly covers calendar 2025 — the period_end column carries the authoritative date, and any join between financials and prices must use period_end, not the year label.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://data.sec.gov/api/xbrl/companyfacts/CIK0001045810.json",
+          "title": "SEC EDGAR XBRL company facts — NVIDIA CORP (CIK 0001045810)",
+          "facts": ["NVIDIA's as-filed financials are public via the SEC company facts API", "NVIDIA's CIK is 0001045810"]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "EPS is not split-adjusted; prices are",
+      "content": "A central caveat that shapes how this data must be read: SEC reports earnings-per-share exactly as filed, so EPS is NOT adjusted for stock splits, while the stock prices ARE split-adjusted. The visible symptom is that diluted EPS appears to collapse across a split even when profits soared — FY2024 diluted EPS of $11.93 'drops' to $2.94 in FY2025 across the 10:1 split, despite net income more than doubling. The clean, split-immune way to track the business is net income, which rose from $29.8B to $72.9B over exactly that span. Plotting raw EPS against split-adjusted price on one axis would be misleading; net income against price is the honest comparison.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.bitget.com/wiki/nvda-stock-split-history",
+          "title": "NVDA Stock Split History",
+          "facts": ["NVIDIA executed a 4-for-1 split in July 2021 and a 10-for-1 split in June 2024", "The 10-for-1 split followed the share price surpassing $1,000"]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "From Denny's to the GPU: NVIDIA's origin",
+      "content": "NVIDIA was founded in 1993 by Jensen Huang, Chris Malachowsky, and Curtis Priem, reportedly over a meeting at a Denny's in East San Jose, with the goal of bringing advanced 3D graphics to gaming and multimedia. Its defining early moment was the 1999 GeForce 256, marketed as the world's first GPU. For most of its history NVIDIA was a graphics-and-gaming company — context that makes the later AI-driven revenue explosion in this dataset all the more dramatic. The earliest years in this dataset (FY2011-FY2016, revenue in the $3.5B-$5B range) represent that gaming-centric era, before data center became the dominant business.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Nvidia",
+          "title": "Nvidia — Wikipedia",
+          "facts": ["NVIDIA was founded in 1993 by Jensen Huang, Chris Malachowsky, and Curtis Priem", "The 1999 GeForce 256 was marketed as the world's first GPU"]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "CUDA and AlexNet: the accelerated-computing pivot",
+      "content": "NVIDIA's transformation from graphics vendor to AI infrastructure company traces to two events. In 2006 it introduced CUDA, a parallel-computing platform that let developers run general-purpose computation on GPUs. In 2012, GPUs powered the breakthrough AlexNet neural network, kicking off the deep-learning era and making NVIDIA's hardware the default substrate for AI. The company now states that over 90% of all AI training in the world happens on NVIDIA GPUs. This is the why behind the numbers: the revenue curve in this dataset is the financial shadow of NVIDIA becoming the picks-and-shovels supplier of the AI gold rush.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.taskade.com/blog/nvidia-jensen-history",
+          "title": "What is NVIDIA? History of Jensen Huang, CUDA & GPUs",
+          "facts": ["NVIDIA introduced CUDA in 2006", "NVIDIA GPUs powered the AlexNet neural network breakthrough in 2012", "Over 90% of all AI training happens on NVIDIA GPUs"]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "The FY2024 inflection: data center +427%",
+      "content": "Fiscal 2024 (covering most of calendar 2023) was the hinge of the entire AI story. NVIDIA reported full-year revenue of about $26.0B for FY2023 that was essentially flat, then in FY2024 total revenue rocketed up 262% year-over-year to roughly $60.9B, with Data Center revenue alone up 427% as hyperscalers raced to buy Hopper-architecture H100 GPUs to train large language models. Q4 FY2024 data center compute revenue was up 478% year-over-year. This single inflection — from a flat year to a tripling — is the most important external fact for interpreting the revenue trend in this dataset.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581024000028/q4fy24pr.htm",
+          "title": "NVIDIA Q4 & FY2024 results (SEC Form 8-K)",
+          "facts": ["FY2024 total revenue was up 262% year-over-year", "Data Center revenue grew 427% year-over-year in FY2024", "Q4 FY2024 data center compute revenue was up 478% year-over-year"]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "FY2023: the flat year before the boom",
+      "content": "It is easy to forget that immediately before the explosion, NVIDIA had a rough year. Fiscal 2023 revenue was roughly $26.97B, essentially flat versus the prior year, as the gaming segment fell about 27% to $9.07B amid a post-crypto-mining glut, channel-inventory corrections, and weak macro conditions. Net margin in this dataset collapses from 36.2% in FY2022 to 16.2% in FY2023 — the worst margin in the AI-era window — before snapping back to 48.9% in FY2024. This makes FY2023 the dramatic 'before' that sets up the 'after', and explains the V-shaped dip visible in any margin chart.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581023000014/q4fy23pr.htm",
+          "title": "NVIDIA Q4 & FY2023 results (SEC Form 8-K)",
+          "facts": ["FY2023 full-year revenue was about $26.97B, flat versus the prior year", "FY2023 gaming revenue fell about 27% to $9.07B due to channel inventory and macro conditions"]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Two splits and the $5 trillion market cap",
+      "content": "The market's verdict on this revenue story was historic. NVIDIA's share price rose so far that it executed a 4-for-1 split in July 2021 and a 10-for-1 split in June 2024 (when shares had passed $1,000). On October 29, 2025 NVIDIA became the first public company ever to reach a $5 trillion market capitalization, and by spring 2026 it was the world's most valuable company at roughly $5.2 trillion, with split-adjusted shares around $216. The split-adjusted price series in this dataset — rising from cents in the 2010s to over $200 by FY2026 — is the market pricing in the revenue curve.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.cnbc.com/2026/04/24/nvidia-stock-closes-at-record-pushing-market-cap-past-5-trillion.html",
+          "title": "Nvidia stock closes at record, pushing market cap past $5 trillion",
+          "facts": ["NVIDIA first reached a $5 trillion market cap on October 29, 2025", "By spring 2026 NVIDIA was the world's most valuable company at roughly $5.2 trillion"]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "FY2025-FY2026: the scale-up continues",
+      "content": "The boom did not stop at FY2024. Data center revenue reached about $115.2B in fiscal 2025, up 142% year-over-year, and total company revenue in this dataset climbs to $130.5B in FY2025 and $215.9B in FY2026. Demand stayed ahead of supply — NVIDIA reported all Blackwell datacenter variants sold out, as were H100 and H200 inventories. This sustained, multi-year compounding is what distinguishes the NVIDIA story from a one-quarter spike: revenue roughly 3.5x'd in two years (FY2024 ~$61B to FY2026 ~$216B), with gross margin holding above 70%.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-third-quarter-fiscal-2025",
+          "title": "NVIDIA Q3 FY2025 financial results",
+          "facts": ["FY2025 data center revenue was about $115.2B, up 142% year-over-year", "Q3 FY2025 quarterly data center revenue was a record $30.8B, up 112% year-over-year"]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Scope guidance for the analyst",
+      "content": "The strongest analyses this dataset supports: (1) the revenue trajectory FY2011-FY2026 with year-over-year growth, highlighting the FY2024 inflection; (2) gross and net margin trends, especially the FY2023 dip and the FY2024-FY2026 expansion above 70% gross margin; (3) net income (split-immune) versus split-adjusted price to test how tightly the market tracked fundamentals; (4) the EPS-vs-price trap from det_02 as a teaching anomaly; (5) R&D spend scaling alongside revenue; (6) balance-sheet growth (total assets, stockholders' equity). Watch the caveats: fiscal vs calendar year (join on period_end), EPS not split-adjusted, and the revenue tag merge in older years. FY2014 is labeled fy=2013 and there is no fy=2014 row in the source (a fiscal-calendar labeling artifact) — treat the period_end dates as ground truth.",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_note",
+      "filename": null,
+      "url": null,
+      "license": null,
+      "source": null,
+      "description": "No reference media downloaded. This is a financial time-series dataset; the story is best told with data-driven charts and one atmospheric hero image generated by the Designer. Stock photos of GPUs or Jensen Huang would be decorative rather than evidentiary, so media collection was intentionally skipped per the detective media-restraint guidance.",
+      "relates_to": ["det_01", "det_09"]
+    }
+  ],
+  "instances": []
+}

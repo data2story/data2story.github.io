@@ -1,0 +1,283 @@
+{
+  "meta": { "role": "analyst", "version": "2.0" },
+  "dataset": {
+    "files": ["absolute_judgements.csv", "pairwise_comparisons.csv", "respondent_metadata.csv"],
+    "rows": 98306,
+    "columns": 4,
+    "what_one_row_represents": "absolute_judgements: one numeric 0–100% estimate by one respondent for one probability phrase (19 phrases x 5,174 respondents). pairwise_comparisons: one head-to-head choice of which of two phrases conveys higher probability. respondent_metadata: one respondent's demographics.",
+    "time_range": "2026-01 to 2026-02 (submission month)",
+    "geographic_scope": "Global online sample; UK (2,018) and US (1,436) dominate"
+  },
+  "items": {
+    "ana_01": {
+      "label": "The 19-phrase probability ladder",
+      "content": "Ranking the 19 phrases by mean assigned probability produces an intuitive ladder. 'Will Happen' tops it (mean 97.6, median 100), then 'Almost Certain' (94.0), 'Highly Likely' (85.3), 'Very Good Chance' (79.2), 'Likely' (72.6) and 'Probable' (71.4). The middle clusters around 'About Even' (exactly 50.0) and 'Realistic Possibility' (57.0). At the bottom sit 'Remote Chance' (8.7) and 'Almost No Chance' (3.9, median 2). But the average hides the real story: the spread around each rung varies enormously, from a near-flat 'About Even' (std 3.7) to a sprawling 'Realistic Possibility' (std 20.5). Each phrase also shows full 0–100 min/max because a handful of respondents typed an estimate that contradicts the word entirely.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": { "file": "code/01_phrase_distributions.py", "lines": [11, 22], "output": "Will Happen 97.6 (med 100, std 6.9); Almost Certain 94.0; Highly Likely 85.3; Very Good Chance 79.2; Likely 72.6 (std 10.3); Probable 71.4 (std 12.0); Better than Even 58.1; Realistic Possibility 57.0 (std 20.5); About Even 50.0 (std 3.7); May Happen 41.9; Might Happen 40.0; Could Happen 39.7; Unlikely 19.0; Improbable 13.4; Chances are Slight 13.0; Little Chance 11.7; Highly Unlikely 9.2; Remote Chance 8.7; Almost No Chance 3.9 (med 2)" },
+      "data_table": {
+        "description": "All 19 phrases with mean, median, quartiles, min, max, std — box-plot ready, sorted ascending by mean",
+        "columns": ["term", "mean", "median", "q25", "q75", "min", "max", "std"],
+        "rows": [
+          ["Almost No Chance", 3.9, 2, 1, 5, 0, 100, 6.0],
+          ["Remote Chance", 8.7, 5, 3, 10, 0, 100, 9.9],
+          ["Highly Unlikely", 9.2, 5, 5, 10, 0, 100, 12.4],
+          ["Little Chance", 11.7, 10, 5, 15, 0, 99, 8.1],
+          ["Chances are Slight", 13.0, 10, 5, 15, 0, 100, 10.2],
+          ["Improbable", 13.4, 10, 5, 20, 0, 100, 11.6],
+          ["Unlikely", 19.0, 20, 10, 25, 0, 100, 11.3],
+          ["Could Happen", 39.7, 40, 25, 50, 0, 95, 18.2],
+          ["Might Happen", 40.0, 40, 25, 50, 0, 100, 17.7],
+          ["May Happen", 41.9, 40, 30, 51, 0, 100, 17.0],
+          ["About Even", 50.0, 50, 50, 50, 0, 100, 3.7],
+          ["Realistic Possibility", 57.0, 60, 40, 75, 0, 100, 20.5],
+          ["Better than Even", 58.1, 60, 55, 60, 0, 100, 6.8],
+          ["Probable", 71.4, 75, 65, 80, 0, 100, 12.0],
+          ["Likely", 72.6, 75, 67, 80, 0, 100, 10.3],
+          ["Very Good Chance", 79.2, 80, 75, 85, 0, 100, 9.9],
+          ["Highly Likely", 85.3, 90, 80, 90, 0, 100, 10.9],
+          ["Almost Certain", 94.0, 95, 90, 98, 0, 100, 5.8],
+          ["Will Happen", 97.6, 100, 99, 100, 0, 100, 6.9]
+        ]
+      },
+      "based_on": ["det_03", "det_04"]
+    },
+    "ana_02": {
+      "label": "Which words people disagree on most",
+      "content": "Ranking phrases by the standard deviation of their estimates reveals where consensus collapses. 'Realistic Possibility' is the single most contested word, with a std of 20.5 and an interquartile range of 35 points (40 to 75) — people genuinely cannot agree what it means. The three modal verbs 'Could Happen' (18.2), 'Might Happen' (17.7) and 'May Happen' (17.0) follow close behind. At the other end, agreement is tightest where the words are most absolute: 'About Even' (3.7), 'Almost Certain' (5.8), 'Almost No Chance' (6.0), 'Will Happen' (6.9). The pattern is clean: disagreement peaks in the murky middle and around hedge words, and vanishes at the certain extremes — exactly the shape every formal study since Sherman Kent has found.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": { "file": "code/01_phrase_distributions.py", "lines": [25, 28], "output": "Realistic Possibility std 20.5 (iqr 35); Could Happen 18.2; Might Happen 17.7; May Happen 17.0; Highly Unlikely 12.4; Probable 12.0; ... About Even 3.7; Almost Certain 5.8; Almost No Chance 6.0; Will Happen 6.9" },
+      "data_table": {
+        "description": "All 19 phrases ranked by disagreement (std dev of estimates), with mean and IQR",
+        "columns": ["term", "std", "iqr", "mean"],
+        "rows": [
+          ["Realistic Possibility", 20.5, 35, 57.0],
+          ["Could Happen", 18.2, 25, 39.7],
+          ["Might Happen", 17.7, 25, 40.0],
+          ["May Happen", 17.0, 21, 41.9],
+          ["Highly Unlikely", 12.4, 5, 9.2],
+          ["Probable", 12.0, 15, 71.4],
+          ["Improbable", 11.6, 15, 13.4],
+          ["Unlikely", 11.3, 15, 19.0],
+          ["Highly Likely", 10.9, 10, 85.3],
+          ["Likely", 10.3, 13, 72.6],
+          ["Chances are Slight", 10.2, 10, 13.0],
+          ["Very Good Chance", 9.9, 10, 79.2],
+          ["Remote Chance", 9.9, 7, 8.7],
+          ["Little Chance", 8.1, 10, 11.7],
+          ["Will Happen", 6.9, 1, 97.6],
+          ["Better than Even", 6.8, 5, 58.1],
+          ["Almost No Chance", 6.0, 4, 3.9],
+          ["Almost Certain", 5.8, 8, 94.0],
+          ["About Even", 3.7, 0, 50.0]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_03": {
+      "label": "'Realistic Possibility' vs the official 40–50%",
+      "content": "UK intelligence officially defines 'realistic possibility' as a 40–50% likelihood. The crowd disagrees wildly: only 17.5% of responses landed inside that 40–50% band. Far more (64.0%) placed it above 50%, and 18.5% put it below 40%. The mean was 57.0 and the median 60 — both above the official ceiling. Estimates filled the entire 0–100 range, with a clear peak around 60–70%. In other words, the phrase that a government uses to mean 'a bit less than even' is read by most people as 'better than even'. It is the dataset's sharpest illustration of why a single estimative word cannot safely carry a decision.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": { "file": "code/01_phrase_distributions.py", "lines": [31, 45], "output": "mean 57.0 median 60 std 20.5; inside 40-50%: 17.5%; below 40%: 18.5%; above 50%: 64.0%; histogram peak 60-70 (1049) and 50-60 (936)" },
+      "data_table": {
+        "description": "Distribution of 'Realistic Possibility' estimates in 10-point bins, with the UK official band (40–50) flagged",
+        "columns": ["bin", "count", "official_band"],
+        "rows": [
+          ["0-10", 144, false],
+          ["10-20", 253, false],
+          ["20-30", 382, false],
+          ["30-40", 623, false],
+          ["40-50", 461, true],
+          ["50-60", 936, false],
+          ["60-70", 1049, false],
+          ["70-80", 1002, false],
+          ["80-90", 258, false],
+          ["90-100", 66, false]
+        ]
+      },
+      "based_on": ["det_03", "det_04"]
+    },
+    "ana_05": {
+      "label": "The pull of round numbers",
+      "content": "People do not answer like calibrated instruments — they reach for round numbers. Of all 98,306 estimates, 53.6% were exact multiples of 10 and another 31.2% ended in 5, so 84.8% of every probability judgement in the dataset is a multiple of five. Only 15.2% used any other digit. The last-digit histogram is brutally spiky: '0' accounts for 53.6% of answers and '5' for 31.2%, while '4' appears just 0.5% of the time. This is the same anchoring-to-round-numbers bias seen in surveys everywhere, and it means much of the apparent precision in these numbers is an illusion.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": { "file": "code/02_rounding_and_order.py", "lines": [10, 27], "output": "Multiples of 10: 53.6%; ending in 5: 31.2%; multiple of 5: 84.8%; other 15.2%. Last-digit: 0=53.6%,1=5.2%,2=2.8%,3=1.5%,4=0.5%,5=31.2%,6=0.8%,7=0.7%,8=1.3%,9=2.4%" },
+      "data_table": {
+        "description": "Share of all 98,306 estimates ending in each last digit 0–9",
+        "columns": ["last_digit", "pct"],
+        "rows": [[0, 53.6], [1, 5.2], [2, 2.8], [3, 1.5], [4, 0.5], [5, 31.2], [6, 0.8], [7, 0.7], [8, 1.3], [9, 2.4]]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_06": {
+      "label": "One in five rounded everything to a 5",
+      "content": "The rounding habit runs deep at the person level too. 18.8% of respondents — 973 of 5,174, close to one in five — gave estimates that were all multiples of five across every one of the 19 phrases. A smaller but striking 0.5% (28 people) answered only in multiples of ten for all 19. These respondents are not reading a probability off a mental ruler; they are picking from a small menu of 'nice' numbers, which compresses real differences between phrases into a coarse grid.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": { "file": "code/02_rounding_and_order.py", "lines": [29, 35], "output": "Only multiples of 10: 0.5% (28 of 5174); only multiples of 5: 18.8% (973 of 5174)" },
+      "data_table": {
+        "description": "Share of respondents by rounding behaviour across all 19 estimates",
+        "columns": ["behaviour", "pct", "count"],
+        "rows": [
+          ["Used only multiples of 10", 0.5, 28],
+          ["Used only multiples of 5 (incl 10)", 18.8, 973],
+          ["Used at least one non-multiple-of-5", 81.2, 4201]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_07": {
+      "label": "Presentation order barely moves the needle",
+      "content": "Does the position a phrase appears in nudge how high you rate it? Only faintly. After centering each phrase to remove its own average, the value crept up with position — from about -0.6 points for the first three phrases shown to +0.3 for the last three, a swing of under 1 percentage point across all 19 positions. The correlation between presentation order and the term-centered estimate is just 0.024. So there is a whisper of an anchoring/warm-up effect, but it is far too small to matter for any real decision — a useful myth-buster against the worry that the quiz design biased the answers.",
+      "type": "trend",
+      "strength": "weak",
+      "calculation": { "file": "code/02_rounding_and_order.py", "lines": [37, 55], "output": "term-centered mean by order: pos1 -0.78 ... pos18 +0.69; first-3 mean -0.60, last-3 mean +0.29, diff -0.88pp; correlation order vs centered value 0.0236" },
+      "data_table": {
+        "description": "Term-centered mean estimate by presentation position (1–19); positive = rated higher than the phrase's own average",
+        "columns": ["order", "centered_mean"],
+        "rows": [
+          [1, -0.78], [2, -0.53], [3, -0.48], [4, -0.44], [5, 0.04], [6, -0.12],
+          [7, -0.12], [8, -0.07], [9, 0.12], [10, 0.23], [11, 0.13], [12, 0.15],
+          [13, 0.23], [14, 0.15], [15, 0.39], [16, 0.24], [17, 0.40], [18, 0.69], [19, -0.23]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_08": {
+      "label": "The closest head-to-head contests",
+      "content": "In the pairwise task, some phrase match-ups are essentially coin flips. 'Improbable' vs 'Remote Chance' split 50.8/49.2, and 'Could Happen' vs 'Might Happen' split exactly the same 50.8/49.2 — the crowd has no shared sense of which is higher. 'Likely' vs 'Probable', the quiz's title fight, went 53.1% to Likely — close, but with a twist (see the flip below). 'Chances are Slight' vs 'Unlikely' (45.6/54.4) and vs 'Little Chance' (45.5/54.5) are nearly as tight. The closest contests cluster exactly among the high-disagreement phrases from the absolute task, confirming the two methods see the same fog from different angles.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": { "file": "code/03_pairwise_consistency.py", "lines": [17, 33], "output": "Improbable vs Remote Chance 50.8%; Could Happen vs Might Happen 50.8%; Likely vs Probable 53.1%; Chances are Slight vs Unlikely 45.6%; Chances are Slight vs Little Chance 45.5%; About Even vs Realistic Possibility 42.2%" },
+      "data_table": {
+        "description": "Closest pairwise contests — winner's share of votes (near 50% = maximum disagreement)",
+        "columns": ["matchup", "n", "winner_share"],
+        "rows": [
+          ["Improbable vs Remote Chance", 321, 50.8],
+          ["Could Happen vs Might Happen", 240, 50.8],
+          ["Likely vs Probable", 473, 53.1],
+          ["Chances are Slight vs Unlikely", 252, 54.4],
+          ["Chances are Slight vs Little Chance", 286, 54.5],
+          ["About Even vs Realistic Possibility", 185, 57.8],
+          ["Better than Even vs Realistic Possibility", 371, 58.8],
+          ["May Happen vs Might Happen", 249, 61.0]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_10": {
+      "label": "People are 96.6% consistent with themselves",
+      "content": "Every respondent saw one pair twice as a hidden consistency check. When the same two phrases came back around, 96.6% of people chose the same winner both times; only 3.4% (174 of 5,174) flipped their answer. So the wild disagreement in this data is not noise inside each head — individuals are remarkably stable. The variance is between people, not within them: we each have a firm private sense of what 'likely' means, and the problem is that those private senses don't match.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": { "file": "code/03_pairwise_consistency.py", "lines": [49, 63], "output": "Respondents with a repeated pair: 5174; flipped 174 (3.4%); consistent 96.6%" },
+      "data_table": {
+        "description": "Self-consistency on the repeated pair",
+        "columns": ["outcome", "pct", "count"],
+        "rows": [["Same answer both times", 96.6, 5000], ["Flipped answer", 3.4, 174]]
+      },
+      "based_on": []
+    },
+    "ana_11": {
+      "label": "Two methods agree — except where words tie",
+      "content": "The absolute ranking (by mean value) and the pairwise ranking (by win rate) agree almost perfectly, with a Spearman correlation of 0.989. Both put 'Will Happen' first and 'Almost No Chance' last. But the handful of disagreements are exactly the interesting ones. 'Likely' beats 'Probable' on absolute average (72.6 vs 71.4) yet 'Probable' wins more of its other head-to-head matches (77.7% win rate vs 68.5%), so the two methods rank them in opposite order — a genuine flip at the title fight. 'Improbable' and 'Little Chance' also swap places by two ranks. Where words are close in meaning, the measurement method itself can decide the winner.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": { "file": "code/03_pairwise_consistency.py", "lines": [65, 79], "output": "Spearman 0.989. Likely abs_rank 5 / pw_rank 6; Probable abs_rank 6 / pw_rank 5; Improbable abs 14 / pw 16; Little Chance abs 16 / pw 14" },
+      "data_table": {
+        "description": "Each phrase's rank by absolute mean vs by pairwise win-rate (1 = highest probability)",
+        "columns": ["term", "abs_rank", "pw_rank", "abs_mean", "winrate"],
+        "rows": [
+          ["Will Happen", 1, 1, 97.6, 97.6],
+          ["Almost Certain", 2, 2, 94.0, 91.2],
+          ["Highly Likely", 3, 3, 85.3, 88.5],
+          ["Very Good Chance", 4, 4, 79.2, 81.4],
+          ["Likely", 5, 6, 72.6, 68.5],
+          ["Probable", 6, 5, 71.4, 77.7],
+          ["Better than Even", 7, 7, 58.1, 66.2],
+          ["Realistic Possibility", 8, 8, 57.0, 61.7],
+          ["About Even", 9, 9, 50.0, 50.6],
+          ["May Happen", 10, 10, 41.9, 50.3],
+          ["Might Happen", 11, 12, 40.0, 44.7],
+          ["Could Happen", 12, 11, 39.7, 45.9],
+          ["Unlikely", 13, 13, 19.0, 27.0],
+          ["Improbable", 14, 16, 13.4, 18.7],
+          ["Chances are Slight", 15, 15, 13.0, 22.6],
+          ["Little Chance", 16, 14, 11.7, 26.7],
+          ["Highly Unlikely", 17, 17, 9.2, 16.1],
+          ["Remote Chance", 18, 18, 8.7, 14.5],
+          ["Almost No Chance", 19, 19, 3.9, 4.0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_12": {
+      "label": "Optimism by country: small but real",
+      "content": "Giving each respondent an 'optimism' score (their average estimate after subtracting each phrase's global mean), countries differ — but barely. Americans are the most optimistic readers at +0.66 points above the global average, followed by Ireland (+0.60) and the Netherlands (+0.35). The British sit slightly below average (-0.43) and Norwegians are the most cautious at -2.03. On raw values, Americans average 46.2% versus Britons' 45.1% — a US/UK ratio of 1.024, matching the ~1.03x Kucharski reported. The total spread across countries is just 2.68 percentage points, so nationality nudges interpretation rather than transforming it.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": { "file": "code/04_demographics.py", "lines": [22, 35], "output": "US +0.66; Ireland +0.60; Netherlands +0.35; France +0.32; Germany +0.17; Canada +0.13; Switzerland +0.08; Australia -0.32; UK -0.43; New Zealand -0.64; Norway -2.03. US raw 46.22 vs UK 45.13, ratio 1.024; country spread 2.68pp" },
+      "data_table": {
+        "description": "Optimism (term-centered mean, pp above/below global avg) by country, n>=40",
+        "columns": ["country", "optimism", "n"],
+        "rows": [
+          ["United States", 0.66, 1436],
+          ["Ireland", 0.60, 50],
+          ["Netherlands", 0.35, 48],
+          ["France", 0.32, 42],
+          ["Germany", 0.17, 108],
+          ["Canada", 0.13, 161],
+          ["Switzerland", 0.08, 46],
+          ["Australia", -0.32, 121],
+          ["United Kingdom", -0.43, 2018],
+          ["New Zealand", -0.64, 52],
+          ["Norway", -2.03, 74]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_13": {
+      "label": "Age barely matters",
+      "content": "Optimism by age band is almost flat among the bulk of respondents: 25–34 (+0.32), 35–44 (+0.37), 45–54 (-0.30) and 55–64 (-0.87) differ by barely a point. The visible outliers — Under-18 at +3.11 and 75+ at +0.19 — rest on tiny samples (19 and 79 people), so they should not be over-read. The honest summary is that age is among the weakest signals in the data, reinforcing that the real divide in how people read probability words is not generational.",
+      "type": "group-diff",
+      "strength": "weak",
+      "calculation": { "file": "code/04_demographics.py", "lines": [37, 42], "output": "Under 18 +3.11 (n19); 18-24 +0.61 (141); 25-34 +0.32 (868); 35-44 +0.37 (1405); 45-54 -0.30 (1163); 55-64 -0.87 (734); 65-74 -0.37 (328); 75+ +0.19 (79)" },
+      "data_table": {
+        "description": "Optimism (term-centered mean) by age band, with sample sizes",
+        "columns": ["age_band", "optimism", "n"],
+        "rows": [
+          ["Under 18", 3.11, 19],
+          ["18-24", 0.61, 141],
+          ["25-34", 0.32, 868],
+          ["35-44", 0.37, 1405],
+          ["45-54", -0.30, 1163],
+          ["55-64", -0.87, 734],
+          ["65-74", -0.37, 328],
+          ["75+", 0.19, 79]
+        ]
+      },
+      "based_on": ["det_04"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "The sample is a self-selected online quiz audience skewed toward the UK (2,018), US (1,436), postgraduate education (2,699 of 4,511 who answered) and English-first-language speakers (3,993). It is not representative of any general population; demographic comparisons describe this audience only."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "All 19 phrases show min 0 / max 100 because a few respondents typed estimates that contradict the word (e.g. a high number for 'Almost No Chance'). These extreme values inflate range but have little effect on medians; spread is best read via std and IQR."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Demographic effects are statistically detectable in a 5,000-person sample but practically tiny (country spread 2.68pp, age effects under ~1pp for major bands). Do not infer causation; many confounders (profession, numeracy) are unmeasured."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "'Optimism' is operationalised as the mean term-centered estimate per respondent — how much higher/lower than average they read phrases overall. It is a relative index, not an absolute personality measure."
+    }
+  ]
+}

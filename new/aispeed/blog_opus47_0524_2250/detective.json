@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Epoch AI Notable AI Models — the source database",
+      "content": "The data comes from Epoch AI's 'Notable AI Models' database, a curated catalogue of machine-learning models judged historically or technically significant. Epoch is a research institute that tracks the trajectory of AI by hand-collecting structured metadata (publication date, organization, domain, training compute, parameters, etc.) on each model. The full database spans from the 1950s to a 2026-05-18 snapshot and contains roughly 1,000 'notable' models in this extract (Epoch's broader AI-models database holds over two thousand entries). It is released under a Creative Commons Attribution license, free to reuse with credit. Crucially, this is a curated set, not a census of every model ever trained — which is exactly why it is useful for measuring the cadence of consequential releases rather than raw model spam.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://epoch.ai/data/notable-ai-models",
+          "title": "Data on Notable AI Models | Epoch AI",
+          "facts": [
+            "Epoch AI maintains a curated 'Notable AI Models' database tracking significant ML models",
+            "Released under a Creative Commons Attribution license, free to use with credit",
+            "Snapshot used here was taken 2026-05-24 with the latest model dated 2026-05-18"
+          ]
+        },
+        {
+          "url": "https://epoch.ai/data/ai-models-documentation",
+          "title": "AI Models Documentation – Overview | Epoch AI",
+          "facts": [
+            "The broader AI-models database contains over two thousand machine-learning models",
+            "Subsets include 'Notable AI models', 'Frontier models' (top-10 by training compute at release), and 'Large-scale models' (>=1e23 FLOP)"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "What 'notable' means — the inclusion bar",
+      "content": "A model qualifies as 'notable' in Epoch's database if it meets at least one of a small set of criteria: it advanced the state of the art on a recognized benchmark, was highly cited (on the order of 1,000+ citations), had significant real-world use (e.g. over a million monthly users), was historically important, or was expensive to train (on the order of $1M+). Models are typically added within about two weeks of release. This matters for interpretation: the curation bar is roughly constant over time, so a shrinking gap between notable releases reflects a real speed-up in consequential model output — not just a flood of trivial checkpoints. But the bar is also why point-releases and variants ('4.1', '4.5', 'Pro'/'Heavy') can each count as separate entries once they clear it.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://epoch.ai/data/ai-models",
+          "title": "Data on AI Models | Epoch AI",
+          "facts": [
+            "A model is flagged notable if it advanced state of the art, was highly cited, had over a million monthly users, was historically significant, or cost over one million dollars to train",
+            "Major models are generally added to the database within about two weeks of their release"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "The LLM race timeline that produced this acceleration",
+      "content": "The cadence collapse is not an abstract statistic — it tracks a well-documented arms race. The Transformer arrived in 2017; GPT-2 (2019) and GPT-3 (2020, 175B parameters) established large language models as a category. The inflection point was ChatGPT in November 2022, which reached 100 million users in two months — the fastest-growing consumer app in history at the time. That triggered Google's internal 'code red', Microsoft's $10B investment in OpenAI, Meta's decision to open-source Llama, and a surge of capital into Anthropic. GPT-4 followed in March 2023. From there a stable cast of frontier labs — OpenAI, Anthropic, Google/Google DeepMind, Meta AI, xAI, DeepSeek, Mistral AI, Alibaba — began shipping flagship and point releases on ever-tighter schedules. The dataset's 2022-onward gap collapse is the quantitative fingerprint of exactly this competitive escalation.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Large_language_model",
+          "title": "Large language model - Wikipedia",
+          "facts": [
+            "The Transformer architecture was introduced in 2017; GPT-3 (2020) had 175 billion parameters",
+            "A competitive landscape formed around OpenAI, Anthropic, Google DeepMind, and xAI, plus open-source players Meta Llama, DeepSeek, and Mistral"
+          ]
+        },
+        {
+          "url": "https://www.startupbricks.in/blog/evolution-llm-chatgpt-2022-2026",
+          "title": "The Evolution of Large Language Models: From ChatGPT in 2022 to 2026",
+          "facts": [
+            "ChatGPT launched November 2022 and reached 100 million users within two months",
+            "Google declared a 'code red', Microsoft invested $10 billion in OpenAI, and Meta open-sourced Llama in response"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Independent confirmation: the pace is breaking eval cycles",
+      "content": "External trackers corroborate the acceleration and add a 'so what'. Industry coverage in 2026 notes that frontier labs are 'releasing new models faster than ever', with the three leading labs now updating flagship models 'every few weeks, not every few months' — to the point that the pace itself is becoming a barrier to entry for smaller competitors. A Frontier Model Release Velocity Index reported roughly 12+ substantive frontier releases in Q1 2026 versus 6 in Q4 2025, a sustained pace near three meaningful launches per week. The downstream consequence: organizations that historically ran six-month model-evaluation cycles are being forced onto roughly four-week cadences, because the top model on a router like OpenRouter can change two or three times within a single quarter. This is the real-world stake behind the median-gap numbers.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://officechai.com/ai/frontier-labs-are-releasing-new-models-faster-than-ever-shows-data/",
+          "title": "Frontier Labs Are Releasing New Models Faster Than Ever, Shows Data",
+          "facts": [
+            "The three leading labs are now updating their flagship models every few weeks rather than every few months",
+            "The release pace itself is becoming a barrier to entry for smaller competitors"
+          ]
+        },
+        {
+          "url": "https://www.digitalapplied.com/blog/frontier-model-release-velocity-index-q2-2026",
+          "title": "Frontier Model Release Velocity Index 2026 Q2 Report",
+          "facts": [
+            "Roughly 12+ substantive frontier releases occurred in Q1 2026 versus about 6 in Q4 2025",
+            "Organizations that ran six-month evaluation cycles are being pushed onto roughly four-week cadences"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Caveat: a 'release' in 2025 is a smaller increment than in 2019",
+      "content": "The headline 30x speed-up is real but must be read carefully. Part of the cadence collapse comes from more labs entering the race and from point-releases and variants ('4.1', '4.5', 'Pro', 'Heavy', 'Thinking' editions) each clearing the notability bar as separate entries. That is itself part of the iteration-speed phenomenon being measured — labs ship smaller, more frequent increments — but it means a single 'release' today represents a smaller capability jump than a flagship release in 2019. The median-gap metric is robust to the partial 2026 year (data runs through mid-May, so 2026's annual COUNT is incomplete, but its gap of ~4 days is unaffected). Pre-2017 years have tiny sample sizes and noisy gap values that should be ignored; the clean trend runs 2019 to present.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://epoch.ai/data/notable-ai-models",
+          "title": "Data on Notable AI Models | Epoch AI",
+          "facts": [
+            "Point-releases and model variants are catalogued as separate notable entries",
+            "The 2026 snapshot is partial (through mid-May), so the 2026 annual count is incomplete"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Scope suggestion for the Analyst",
+      "content": "The cleanest story lives in two derived tables. (1) frontier_cadence_by_year.csv: the field-wide median days between consecutive Language-domain frontier releases, bucketed by year — this is the headline metric and is the most defensible because the median is robust to the partial 2026 year and to outliers. (2) frontier_release_gaps.csv: within-lab release-to-release gaps for each of the named frontier labs (OpenAI, Anthropic, Google/Google DeepMind/DeepMind, Meta AI, xAI, DeepSeek, Mistral AI, Alibaba), which lets you show that individual labs follow the same pattern, not just the pooled field. models_per_year.csv (annual notable-model volume) supports the macro 'more models overall' backdrop but its 2026 value is partial and must be flagged. Focus the analysis on 2018->2026 for cadence and treat pre-2017 gaps as noise.",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_note",
+      "filename": null,
+      "url": null,
+      "license": null,
+      "source": null,
+      "description": "No reference media collected. This is an abstract, quantitative time-series dataset about AI release cadence. Real-world photos (lab logos, product screenshots) would be generic, brand-encumbered, and add no evidentiary value. The story is best told with data-driven charts plus at most one atmospheric hero image generated by the Designer. Omission is intentional, not an oversight.",
+      "relates_to": ["det_01", "det_03"]
+    }
+  ],
+  "instances": []
+}

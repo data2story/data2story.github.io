@@ -1,0 +1,107 @@
+{
+  "meta": { "role": "editor", "version": "2.0" },
+  "core_claim": "We treat words like 'likely' and 'realistic possibility' as if they share a meaning, but 5,174 people show the same word can mean almost anything — and the disagreement lives between individuals, not within them.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — How likely is 'likely'?",
+      "purpose": "hook",
+      "title": "How likely is ‘likely’?",
+      "findings": ["ana_03"],
+      "context": ["det_02", "det_03"],
+      "triage": { "ana_03": "lead" },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Open with the reader's own guess for 'realistic possibility'. 17.5%, 64%, 40-50% must be exact. Pair with the Kent 'serious possibility' 20-80% anecdote."
+    },
+    "edt_02": {
+      "label": "The ladder that looks solid",
+      "purpose": "context",
+      "title": "The ladder that looks solid",
+      "findings": ["ana_01"],
+      "context": ["det_03"],
+      "triage": { "ana_01": "supporting" },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": null,
+      "editorial_notes": "Present the mean ladder as deceptively reassuring; the chart should already hint at spread (box/range) to set up edt_03."
+    },
+    "edt_03": {
+      "label": "Where consensus collapses",
+      "purpose": "evidence",
+      "title": "Where consensus collapses",
+      "findings": ["ana_02", "ana_01"],
+      "context": ["det_06"],
+      "triage": { "ana_02": "lead", "ana_01": "supporting" },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": null,
+      "editorial_notes": "Disagreement (std/IQR) ranking is the spine of the piece. Realistic Possibility = most contested; extremes = tightest."
+    },
+    "edt_04": {
+      "label": "The title fight — likely vs probable",
+      "purpose": "turn",
+      "title": "The title fight: likely vs probable",
+      "findings": ["ana_08", "ana_11"],
+      "context": ["det_06"],
+      "triage": { "ana_08": "supporting", "ana_11": "lead" },
+      "chart_placeholder": "ana_11",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Keep both numbers visible: Likely wins on average (73 vs 71) but Probable wins head-to-head (78% vs 69%) — the method flips the winner."
+    },
+    "edt_05": {
+      "label": "It's not you — it's us",
+      "purpose": "turn",
+      "title": "It’s not you, it’s us",
+      "findings": ["ana_10"],
+      "context": ["det_02"],
+      "triage": { "ana_10": "lead" },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": null,
+      "editorial_notes": "96.6% self-consistency is pivotal — proves variance is between people, not within. Must stay visible."
+    },
+    "edt_06": {
+      "label": "The shortcuts in our heads",
+      "purpose": "evidence",
+      "title": "The shortcuts in our heads",
+      "findings": ["ana_05", "ana_06"],
+      "context": ["det_04"],
+      "triage": { "ana_05": "supporting", "ana_06": "color" },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "audio",
+      "editorial_notes": "53.6% multiples of 10, 31.2% ending in 5 must be exact. Last-digit spike chart. Sonification of the spiky last-digit distribution fits here."
+    },
+    "edt_07": {
+      "label": "The explanations that don't explain",
+      "purpose": "evidence",
+      "title": "The explanations that don’t explain",
+      "findings": ["ana_12", "ana_13", "ana_07"],
+      "context": ["det_04"],
+      "triage": { "ana_12": "supporting", "ana_13": "color", "ana_07": "color" },
+      "chart_placeholder": "ana_12",
+      "media_placeholder": null,
+      "editorial_notes": "ALWAYS frame demographic effects as small (spread < 3pp). Keep sample-size caveat visible for Under-18/Norway outliers."
+    },
+    "edt_08": {
+      "label": "Close — say the number",
+      "purpose": "close",
+      "title": "Say the number",
+      "findings": ["ana_03"],
+      "context": ["det_05", "det_02"],
+      "triage": { "ana_03": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "End on the practical lesson and reconnect to the reader's opening guess. End on a question, not a summary."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "lead",
+    "ana_05": "supporting",
+    "ana_06": "color",
+    "ana_07": "color",
+    "ana_08": "supporting",
+    "ana_10": "lead",
+    "ana_11": "lead",
+    "ana_12": "supporting",
+    "ana_13": "color"
+  }
+}

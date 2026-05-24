@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "The frontier AI labs compressed the median gap between consecutive language-model releases from ~132 days in 2018 to ~4 days in 2025 — a roughly 30x acceleration that turned model launches from seasonal events into a near-daily drumbeat.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — Every four days",
+      "purpose": "hook",
+      "title": "Every four days",
+      "findings": ["ana_01"],
+      "context": ["det_01", "det_04"],
+      "triage": {
+        "ana_01": "lead"
+      },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "interactive",
+      "editorial_notes": "132 days, 4 days, 33x must be exact. This is the spine chart of the whole piece. Mark 2026 as partial."
+    },
+    "edt_02": {
+      "label": "The cliff was 2022",
+      "purpose": "turn",
+      "title": "The cliff was 2022",
+      "findings": ["ana_02", "ana_04"],
+      "context": ["det_03"],
+      "triage": {
+        "ana_02": "supporting",
+        "ana_04": "supporting"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": null,
+      "editorial_notes": "Must tie the 2022 drop to ChatGPT (Nov 2022). Keep 13 and 5.5 exact."
+    },
+    "edt_03": {
+      "label": "Eighteen times the releases",
+      "purpose": "evidence",
+      "title": "Eighteen times the releases",
+      "findings": ["ana_03"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": null,
+      "editorial_notes": "Keep the point-release caveat (det_05) visible. Mark 2026 partial. 18x is releases, not capability."
+    },
+    "edt_04": {
+      "label": "Nobody is sitting still",
+      "purpose": "evidence",
+      "title": "Nobody is sitting still",
+      "findings": ["ana_06", "ana_08"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "Soften small-n labs (xAI, Mistral, DeepSeek) — medians pulled up by late entry. OpenAI 108->17 is the clean microcosm."
+    },
+    "edt_05": {
+      "label": "From seasons to weeks — Anthropic's log",
+      "purpose": "evidence",
+      "title": "From seasons to weeks",
+      "findings": ["ana_07"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_07": "supporting"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": null,
+      "editorial_notes": "Human-scale section. Keep the 0-day Claude pairs (3 Opus/3 Sonnet; Opus 4/Sonnet 4) — they set up edt_06."
+    },
+    "edt_06": {
+      "label": "When the gap hits zero",
+      "purpose": "evidence",
+      "title": "When the gap hits zero",
+      "findings": ["ana_09"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_09": "color"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": null,
+      "editorial_notes": "25 total, 11 OpenAI, 8 in 2025. The emergent simultaneity angle."
+    },
+    "edt_07": {
+      "label": "The clock that won't slow",
+      "purpose": "close",
+      "title": "The clock that won't slow",
+      "findings": ["ana_01"],
+      "context": ["det_04", "det_05"],
+      "triage": {
+        "ana_01": "lead"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "End on the open question (is 4 days a floor?), not a summary. Mention 2026 still holding the 4-day line."
+    }
+  },
+  "full_triage": {
+    "ana_01": "lead",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "cut",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "color"
+  }
+}

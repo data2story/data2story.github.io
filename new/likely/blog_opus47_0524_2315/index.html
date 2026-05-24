@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How likely is &lsquo;likely&rsquo;?</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style>
+  :root{
+    --bg:#15161a; --panel:#1d1f26; --ink:#ececef; --muted:#9b9ea8;
+    --accent:#e0a458; --accent2:#d8635f; --hair:#33353e; --good:#5fb39a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:19px; line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px;}
+  h1,h2,h3,.ui{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;}
+  h1{font-family:Georgia,serif;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.08;font-weight:700;letter-spacing:-.01em;margin:.2em 0 .3em;}
+  h2{font-size:1.7rem;font-weight:600;margin:2.4em 0 .2em;letter-spacing:-.01em;}
+  p{margin:0 0 1.1em;}
+  .term{font-family:'SF Mono',ui-monospace,Menlo,monospace;font-size:.92em;color:var(--accent);}
+  .sub{color:var(--muted);font-size:1.15rem;font-style:italic;margin-top:0;}
+  .hair{border:0;border-top:1px solid var(--hair);margin:2.6em 0;}
+  .deck{color:var(--muted);font-size:.82rem;font-family:system-ui,sans-serif;text-transform:uppercase;letter-spacing:.14em;margin:0 0 .2em;}
+  /* full bleed */
+  .full-bleed{width:100vw;max-width:none;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);}
+  /* teaser */
+  #teaser{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;background:radial-gradient(120% 90% at 50% 30%,#22242c 0%,#101115 70%);padding:6vh 22px;}
+  #teaser .prompt{font-size:clamp(1.4rem,3.6vw,2.1rem);max-width:640px;line-height:1.35;margin-bottom:1.6em;}
+  #teaser .prompt b{color:var(--accent);}
+  .slider-row{width:min(560px,90vw);}
+  .readout{font-family:system-ui,sans-serif;font-size:3.4rem;font-weight:700;color:var(--accent);margin:.1em 0;}
+  input[type=range]{width:100%;height:34px;-webkit-appearance:none;background:transparent;cursor:pointer;}
+  input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(90deg,#3a3d47,#5a5e6c);}
+  input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:#4a4d57;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;margin-top:-12px;width:30px;height:30px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px rgba(224,164,88,.25);}
+  input[type=range]::-moz-range-thumb{width:30px;height:30px;border:0;border-radius:50%;background:var(--accent);}
+  .btn{font-family:system-ui,sans-serif;font-size:1rem;font-weight:600;color:#15161a;background:var(--accent);
+    border:0;border-radius:40px;padding:.7em 1.7em;margin-top:1.4em;cursor:pointer;transition:transform .15s,background .2s;}
+  .btn:hover{transform:translateY(-2px);background:#ecb874;}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent);}
+  .scroll-hint{margin-top:2.2em;color:var(--muted);font-family:system-ui,sans-serif;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;}
+  #teaserReveal{display:none;width:min(680px,92vw);margin-top:1.8em;}
+  #teaserReveal.show{display:block;animation:fade .8s ease both;}
+  @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .reveal-note{font-family:system-ui,sans-serif;font-size:.95rem;color:var(--muted);margin-top:.6em;}
+  .reveal-note b{color:var(--ink);}
+  /* hero */
+  figure.hero{margin:0;}
+  figure.hero img{width:100%;height:auto;display:block;}
+  figure figcaption{color:var(--muted);font-family:system-ui,sans-serif;font-size:.82rem;text-align:center;padding:.7em 22px 0;}
+  /* visual containers */
+  .visual-container,.chart-container,.interactive-container,.audio-container{
+    margin:2rem 0;display:block;clear:both;
+  }
+  .chart-container{max-width:720px;margin-left:auto;margin-right:auto;}
+  .chart-mount{width:100%;min-width:0;display:block;}
+  .cap{font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted);margin:.5em 0 0;}
+  /* stat callout */
+  .stat-callout{margin:2.6rem 0;text-align:center;display:block;}
+  .stat-number{display:block;font-family:system-ui,sans-serif;font-size:5rem;font-weight:800;color:var(--good);line-height:1;letter-spacing:-.02em;}
+  .stat-label{display:block;max-width:520px;margin:.6em auto 0;color:var(--muted);font-family:system-ui,sans-serif;font-size:1rem;line-height:1.5;}
+  /* pull quote */
+  blockquote{margin:2rem 0;padding:1.1em 1.3em;border-left:3px solid var(--accent);background:var(--panel);
+    font-style:italic;font-size:1.15rem;color:var(--ink);border-radius:0 8px 8px 0;}
+  blockquote cite{display:block;font-style:normal;font-size:.85rem;color:var(--muted);margin-top:.6em;font-family:system-ui,sans-serif;}
+  /* rank flip explorer */
+  .toggle-row{font-family:system-ui,sans-serif;display:flex;gap:8px;justify-content:center;margin-bottom:1.2em;flex-wrap:wrap;}
+  .toggle-row button{font-family:system-ui,sans-serif;font-size:.9rem;padding:.5em 1.1em;border-radius:30px;border:1px solid var(--hair);background:var(--panel);color:var(--muted);cursor:pointer;}
+  .toggle-row button.on{background:var(--accent);color:#15161a;border-color:var(--accent);font-weight:600;}
+  .rank-list{list-style:none;margin:0;padding:0;font-family:system-ui,sans-serif;}
+  .rank-list li{display:flex;align-items:center;gap:.7em;padding:.32em .6em;border-radius:6px;transition:transform .55s cubic-bezier(.6,0,.2,1),background .3s;}
+  .rank-list li .pos{width:1.7em;text-align:right;color:var(--muted);font-variant-numeric:tabular-nums;font-size:.85rem;}
+  .rank-list li .name{flex:1;}
+  .rank-list li .val{color:var(--muted);font-size:.82rem;font-variant-numeric:tabular-nums;}
+  .rank-list li.flip{background:rgba(224,164,88,.14);}
+  .rank-list li.flip .name{color:var(--accent);font-weight:600;}
+  .fight-box{font-family:system-ui,sans-serif;display:flex;gap:14px;margin:1.4em 0 0;flex-wrap:wrap;}
+  .fight-card{flex:1;min-width:200px;background:var(--panel);border:1px solid var(--hair);border-radius:10px;padding:1em 1.1em;}
+  .fight-card h4{margin:.1em 0 .5em;font-size:1.05rem;color:var(--accent);}
+  .fight-card .m{font-size:.9rem;color:var(--muted);margin:.15em 0;}
+  .fight-card .m b{color:var(--ink);font-variant-numeric:tabular-nums;}
+  /* sonification */
+  .son-legend{font-family:system-ui,sans-serif;font-size:.8rem;color:var(--muted);margin-top:.7em;}
+  /* references */
+  footer{margin:4em 0 3em;font-family:system-ui,sans-serif;font-size:.86rem;color:var(--muted);}
+  footer h2{font-size:1.1rem;color:var(--ink);}
+  footer a{color:var(--accent);text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+  footer ul{padding-left:1.1em;}
+  footer li{margin:.35em 0;}
+  a{color:var(--accent);}
+  /* fade-in on scroll */
+  section{opacity:1;}
+  @media (max-width:560px){ .readout{font-size:2.6rem;} .stat-number{font-size:3.4rem;} }
+</style>
+</head>
+<body>
+
+<!-- ===================== TEASER (interactive, guess-first) ===================== -->
+<section id="teaser" class="full-bleed" data-edt="edt_01" data-det="det_02,det_03">
+  <div class="interactive-container" data-des="des_teaser" data-ana="ana_03" style="margin:0;">
+    <p class="prompt">Someone says an outcome is a <b>&ldquo;realistic possibility.&rdquo;</b><br>What probability do they mean?</p>
+    <div class="slider-row">
+      <div class="readout"><span id="guessVal">50</span>%</div>
+      <input type="range" id="guess" min="0" max="100" value="50" step="1" aria-label="Your probability guess">
+      <div>
+        <button class="btn" id="lockBtn">Lock it in</button>
+      </div>
+    </div>
+    <div id="teaserReveal">
+      <div class="chart-mount" id="chart_teaser"></div>
+      <p class="reveal-note" id="revealNote"></p>
+    </div>
+    <p class="scroll-hint">Scroll &darr;</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+<!-- ===================== HEADLINE ===================== -->
+<header data-edt="edt_01" data-det="det_01">
+<p class="deck" style="margin-top:2em;" data-det="det_01">Words of estimative probability &middot; 5,174 people</p>
+<h1>How likely is &lsquo;likely&rsquo;?</h1>
+<p class="sub" data-ana="ana_02,ana_10">The same word can mean almost anything. The disagreement lives between us, not inside us.</p>
+</header>
+
+<!-- ===================== edt_01 HOOK ===================== -->
+<section data-edt="edt_01" data-det="det_02,det_03">
+
+  <figure class="hero visual-container" data-des="des_hero">
+    <img src="assets/hero.png" alt="The word LIKELY dissolving into a drifting cloud of percentage numbers" style="max-width:100%;height:auto;display:block;margin:0 auto;">
+    <figcaption>One word, many numbers.</figcaption>
+  </figure>
+
+  <p>In 1951 a US intelligence report warned of a &ldquo;serious possibility&rdquo; that the Soviet Union would attack Yugoslavia. The CIA analyst Sherman Kent, curious, asked his colleagues what &ldquo;serious possibility&rdquo; meant. Their answers ranged from a 20% chance to an 80% chance &mdash; for the very same three words in the very same sentence.</p>
+
+  <p data-ana="ana_03" data-det="det_03">Seventy-five years later, 5,174 people took an online quiz and put a number on &ldquo;realistic possibility.&rdquo; British intelligence officially defines it as 40&ndash;50%. Only 17.5% of people landed in that band. Most &mdash; 64% &mdash; read it as better than even, with a mean of 57% and answers smeared across the entire range from 0 to 100. The word a government uses to mean &ldquo;a bit less than even&rdquo; is heard by most people as &ldquo;probably.&rdquo;</p>
+
+  <div class="chart-container" data-des="des_01" data-ana="ana_03">
+    <div class="chart-mount" id="chart_des_01"></div>
+    <p class="cap">How 5,174 people rated &ldquo;realistic possibility.&rdquo; The tinted bar is the UK&rsquo;s official 40&ndash;50% definition &mdash; just 17.5% of answers.</p>
+  </div>
+</section>
+
+<hr class="hair">
+
+<!-- ===================== edt_02 LADDER ===================== -->
+<section data-edt="edt_02" data-det="det_03">
+  <p class="deck">The ladder that looks solid</p>
+  <h2>The ladder that looks solid</h2>
+
+  <p data-ana="ana_01">Line the 19 phrases up by their average and you get a reassuringly sensible ladder. &ldquo;Will Happen&rdquo; sits at the top (mean 98%), then &ldquo;Almost Certain&rdquo; (94%), &ldquo;Highly Likely&rdquo; (85%), down through &ldquo;Likely&rdquo; (73%) and &ldquo;Probable&rdquo; (71%), past &ldquo;About Even&rdquo; (exactly 50%), all the way to &ldquo;Almost No Chance&rdquo; at the bottom (mean 4%, median 2%).</p>
+
+  <p>It looks like a shared scale. It isn&rsquo;t. The average is a magician&rsquo;s trick &mdash; it hides exactly how much we disagree about each rung.</p>
+
+  <div class="chart-container" data-des="des_02" data-ana="ana_01">
+    <div class="chart-mount" id="chart_des_02"></div>
+    <p class="cap">Dot = mean. Bar = the middle half of answers (25th&ndash;75th percentile). Notice how some rungs are pinpoints and others sprawl.</p>
+  </div>
+</section>
+
+<hr class="hair">
+
+<!-- ===================== edt_03 DISAGREEMENT ===================== -->
+<section data-edt="edt_03" data-det="det_06">
+  <p class="deck">Where consensus collapses</p>
+  <h2>Where consensus collapses</h2>
+
+  <p data-ana="ana_02">Rank the same phrases by how much people disagree &mdash; the spread of their answers &mdash; and a different story appears. &ldquo;Realistic Possibility&rdquo; is the most contested word in the language tested here, with answers spanning 35 points between the typical low and high guess. The hedging verbs &ldquo;Could Happen,&rdquo; &ldquo;Might Happen&rdquo; and &ldquo;May Happen&rdquo; follow close behind.</p>
+
+  <p data-ana="ana_02" data-det="det_06">Agreement only returns at the extremes. &ldquo;About Even,&rdquo; &ldquo;Almost Certain,&rdquo; &ldquo;Almost No Chance&rdquo; and &ldquo;Will Happen&rdquo; are the tightest. Disagreement peaks in the murky middle and around hedge words, and vanishes where words are absolute &mdash; the same shape every formal study since Kent has found, from a NATO panel of 23 officers onward.</p>
+
+  <div class="chart-container" data-des="des_03" data-ana="ana_02">
+    <div class="chart-mount" id="chart_des_03"></div>
+    <p class="cap">Disagreement = standard deviation of each phrase&rsquo;s estimates. Longer bar = less consensus.</p>
+  </div>
+</section>
+
+<hr class="hair">
+
+<!-- ===================== edt_04 TITLE FIGHT ===================== -->
+<section data-edt="edt_04" data-det="det_06">
+  <p class="deck">The title fight</p>
+  <h2>The title fight: likely vs probable</h2>
+
+  <p data-ana="ana_08">The quiz&rsquo;s namesake question &mdash; does &ldquo;likely&rdquo; beat &ldquo;probable&rdquo;? &mdash; is almost a coin flip. When shown the pair head-to-head, 53% picked &ldquo;likely.&rdquo; Other matchups are even closer: &ldquo;Improbable&rdquo; vs &ldquo;Remote Chance&rdquo; and &ldquo;Could Happen&rdquo; vs &ldquo;Might Happen&rdquo; both split 50.8 to 49.2.</p>
+
+  <p data-ana="ana_11">Stranger still, the answer depends on how you ask. By average value, &ldquo;Likely&rdquo; edges out &ldquo;Probable&rdquo; (73 vs 71). But by head-to-head win rate, &ldquo;Probable&rdquo; wins more of its fights (78% vs 69%) &mdash; so the two methods rank them in opposite order. Where two words mean nearly the same thing, the measurement method itself can crown a different winner.</p>
+
+  <div class="interactive-container" data-des="des_04" data-ana="ana_11">
+    <div class="toggle-row">
+      <span style="align-self:center;color:var(--muted);font-size:.85rem;">Rank the 19 phrases by:</span>
+      <button id="btnAbs" class="on" onclick="setRank('abs')">Average value</button>
+      <button id="btnPw" onclick="setRank('pw')">Head-to-head win rate</button>
+    </div>
+    <ol class="rank-list" id="rankList"></ol>
+    <div class="fight-box">
+      <div class="fight-card">
+        <h4>Likely</h4>
+        <div class="m">Average value: <b>72.6</b></div>
+        <div class="m">Head-to-head win rate: <b>68.5%</b></div>
+      </div>
+      <div class="fight-card">
+        <h4>Probable</h4>
+        <div class="m">Average value: <b>71.4</b></div>
+        <div class="m">Head-to-head win rate: <b>77.7%</b></div>
+      </div>
+    </div>
+    <p class="cap">Flip the toggle: almost everything stays put (rank correlation 0.989) &mdash; except the near-tie words, highlighted, which trade places.</p>
+  </div>
+
+  <div class="chart-container" data-des="des_05" data-ana="ana_08">
+    <div class="chart-mount" id="chart_des_05"></div>
+    <p class="cap">The closest head-to-head contests. The axis starts at 50% &mdash; a perfect coin flip &mdash; so shorter bars mean tighter disagreement.</p>
+  </div>
+</section>
+
+<hr class="hair">
+
+<!-- ===================== edt_05 NOT YOU IT'S US ===================== -->
+<section data-edt="edt_05" data-det="det_02">
+  <p class="deck">It&rsquo;s not you, it&rsquo;s us</p>
+  <h2>It&rsquo;s not you, it&rsquo;s us</h2>
+
+  <p data-ana="ana_10">Here is the twist that matters most. All this disagreement might just be noise &mdash; people guessing differently each time. It isn&rsquo;t. Every respondent was secretly shown one pair of phrases twice. When it came back around, 96.6% chose the same winner both times. Only 3.4% flipped.</p>
+
+  <div class="stat-callout" data-des="des_06" data-ana="ana_10">
+    <span class="stat-number">96.6%</span>
+    <span class="stat-label">of people gave the same answer when secretly shown the same pair twice &mdash; the disagreement is between us, not within us</span>
+  </div>
+
+  <p>So we are each remarkably consistent with ourselves. We hold a firm private sense of what &ldquo;likely&rdquo; means. The problem is that your firm private meaning and mine simply don&rsquo;t match &mdash; and neither of us can tell, because the word sounds identical coming out of both our mouths.</p>
+</section>
+
+<hr class="hair">
+
+<!-- ===================== edt_06 SHORTCUTS ===================== -->
+<section data-edt="edt_06" data-det="det_04">
+  <p class="deck">The shortcuts in our heads</p>
+  <h2>The shortcuts in our heads</h2>
+
+  <p data-ana="ana_05">We also don&rsquo;t answer like instruments. More than half of all 98,306 estimates &mdash; 53.6% &mdash; were exact multiples of ten, and another 31.2% ended in five. That leaves barely 15% of answers using any other digit. The number &ldquo;4&rdquo; shows up in just one of every two hundred responses.</p>
+
+  <p data-ana="ana_06">About one in five people &mdash; 18.8% &mdash; gave answers that were all multiples of five, every single phrase. We aren&rsquo;t reading a probability off a mental ruler; we&rsquo;re picking from a short menu of tidy numbers, which quietly compresses the real differences between words.</p>
+
+  <div class="chart-container" data-des="des_07" data-ana="ana_05">
+    <div class="chart-mount" id="chart_des_07"></div>
+    <p class="cap">The last digit of every estimate. Two spikes on 0 and 5; the digit 4 barely registers.</p>
+  </div>
+
+  <div class="audio-container" data-des="des_08" data-ana="ana_05">
+    <button class="btn ghost" id="sonBtn">&#9654;&nbsp; Play the digits</button>
+    <span class="son-legend">pitch = digit (0&rarr;9) &middot; loudness = how often people used it. Listen for the two spikes.</span>
+  </div>
+</section>
+
+<hr class="hair">
+
+<!-- ===================== edt_07 EXPLANATIONS ===================== -->
+<section data-edt="edt_07" data-det="det_04">
+  <p class="deck">The explanations that don&rsquo;t explain</p>
+  <h2>The explanations that don&rsquo;t explain</h2>
+
+  <p data-ana="ana_12">Surely some groups read these words differently? A little. Americans are the most &ldquo;optimistic&rdquo; readers, sitting about half a point above the global average; Britons fall just below it; Norwegians are the most cautious. On raw numbers, Americans average 46.2% to the British 45.1% &mdash; a ratio of 1.02. But the entire spread from the most to least optimistic country is under three percentage points.</p>
+
+  <p data-ana="ana_13,ana_07" data-det="det_04">Age barely registers, and the order the phrases were shown in moved answers by less than a single point across all nineteen positions. The tidy demographic stories we&rsquo;d reach for to explain the disagreement don&rsquo;t carry it. The variation isn&rsquo;t between nations or generations &mdash; it&rsquo;s between individual minds, and it&rsquo;s stubborn.</p>
+
+  <div class="chart-container" data-des="des_09" data-ana="ana_12">
+    <div class="chart-mount" id="chart_des_09"></div>
+    <p class="cap">&ldquo;Optimism&rdquo; = how much higher or lower than the global average each group reads phrases. Note the axis spans only &minus;3 to +3 points: these effects are small.</p>
+  </div>
+
+  <div class="chart-container" data-des="des_10" data-ana="ana_13">
+    <div class="chart-mount" id="chart_des_10"></div>
+    <p class="cap">By age, the signal is even fainter. The Under-18 and 75+ bars rest on small samples (19 and 79 people) &mdash; read them lightly.</p>
+  </div>
+</section>
+
+<hr class="hair">
+
+<!-- ===================== edt_08 CLOSE ===================== -->
+<section data-edt="edt_08" data-det="det_05,det_02">
+  <p class="deck">Say the number</p>
+  <h2>Say the number</h2>
+
+  <p data-det="det_05">Estimative words run through the decisions that shape lives &mdash; intelligence assessments, IPCC climate reports, medical consent forms, weather forecasts, financial disclosures. When &ldquo;likely&rdquo; means 55% to one reader and 90% to another, the same sentence can justify opposite choices.</p>
+
+  <p data-ana="ana_03">So here is the practical lesson buried in 150,000 judgements: if the number matters, say the number. The word &ldquo;likely&rdquo; will not carry it for you. <span id="closeRecall"></span></p>
+</section>
+
+<footer class="wrap">
+  <hr class="hair">
+  <h2>References &amp; sources</h2>
+  <ul>
+    <li><b>Data:</b> Kucharski AJ (2026). <a href="https://github.com/adamkucharski/CAPphrase" target="_blank" rel="noopener">CAPphrase: Comparative and Absolute Probability phrase dataset</a> (DOI 10.5281/zenodo.18750055). Via <a href="https://github.com/rfordatascience/tidytuesday/tree/main/data/2026/2026-03-10" target="_blank" rel="noopener">TidyTuesday 2026-03-10</a>, curated by Nicola Rennie. 5,174 respondents; ~150,000 judgements.</li>
+    <li><b>The quiz:</b> <a href="https://probability.kucharski.io/" target="_blank" rel="noopener">How likely is &lsquo;likely&rsquo;?</a> and Kucharski&rsquo;s write-up, <a href="https://kucharski.substack.com/p/insights-from-over-150000-human-judgements" target="_blank" rel="noopener">Insights from over 150,000 human judgements</a>.</li>
+    <li><b>Background:</b> Sherman Kent, <a href="https://www.cia.gov/resources/csi/static/Words-of-Estimative-Probability.pdf" target="_blank" rel="noopener">Words of Estimative Probability</a> (1964); <a href="https://en.wikipedia.org/wiki/Words_of_estimative_probability" target="_blank" rel="noopener">Words of estimative probability</a> (Kent / NIC / IPCC scales).</li>
+    <li><b>Benchmarks:</b> IPCC likelihood scale (&ldquo;likely&rdquo; &gt;66%); UK intelligence &ldquo;realistic possibility&rdquo; = 40&ndash;50%.</li>
+    <li><b>Tools:</b> Charts built with Vega-Lite 5; sonification via the Web Audio API. Caveat: a self-selected online sample (UK/US, postgraduate-skewed) &mdash; not representative; no causal claims.</li>
+  </ul>
+</footer>
+
+</div><!-- /wrap -->
+
+<script>
+/* ============ inlined data tables (from analyst.json) ============ */
+// ana_03: realistic possibility histogram
+var DT_rp = [
+  ["0-10",144,false],["10-20",253,false],["20-30",382,false],["30-40",623,false],
+  ["40-50",461,true],["50-60",936,false],["60-70",1049,false],["70-80",1002,false],
+  ["80-90",258,false],["90-100",66,false]
+].map(function(r){return {bin:r[0],count:r[1],official:r[2]};});
+
+// ana_01: ladder
+var DT_ladder = [
+  ["Almost No Chance",3.9,2,1,5,6.0],["Remote Chance",8.7,5,3,10,9.9],["Highly Unlikely",9.2,5,5,10,12.4],
+  ["Little Chance",11.7,10,5,15,8.1],["Chances are Slight",13.0,10,5,15,10.2],["Improbable",13.4,10,5,20,11.6],
+  ["Unlikely",19.0,20,10,25,11.3],["Could Happen",39.7,40,25,50,18.2],["Might Happen",40.0,40,25,50,17.7],
+  ["May Happen",41.9,40,30,51,17.0],["About Even",50.0,50,50,50,3.7],["Realistic Possibility",57.0,60,40,75,20.5],
+  ["Better than Even",58.1,60,55,60,6.8],["Probable",71.4,75,65,80,12.0],["Likely",72.6,75,67,80,10.3],
+  ["Very Good Chance",79.2,80,75,85,9.9],["Highly Likely",85.3,90,80,90,10.9],["Almost Certain",94.0,95,90,98,5.8],
+  ["Will Happen",97.6,100,99,100,6.9]
+].map(function(r){return {term:r[0],mean:r[1],median:r[2],q25:r[3],q75:r[4],std:r[5]};});
+
+// ana_02: disagreement
+var DT_dis = [
+  ["Realistic Possibility",20.5,35,57.0],["Could Happen",18.2,25,39.7],["Might Happen",17.7,25,40.0],
+  ["May Happen",17.0,21,41.9],["Highly Unlikely",12.4,5,9.2],["Probable",12.0,15,71.4],["Improbable",11.6,15,13.4],
+  ["Unlikely",11.3,15,19.0],["Highly Likely",10.9,10,85.3],["Likely",10.3,13,72.6],["Chances are Slight",10.2,10,13.0],
+  ["Very Good Chance",9.9,10,79.2],["Remote Chance",9.9,7,8.7],["Little Chance",8.1,10,11.7],["Will Happen",6.9,1,97.6],
+  ["Better than Even",6.8,5,58.1],["Almost No Chance",6.0,4,3.9],["Almost Certain",5.8,8,94.0],["About Even",3.7,0,50.0]
+].map(function(r){return {term:r[0],std:r[1],iqr:r[2],mean:r[3]};});
+
+// ana_08: closest contests
+var DT_close = [
+  ["Improbable vs Remote Chance",321,50.8],["Could Happen vs Might Happen",240,50.8],
+  ["Likely vs Probable",473,53.1],["Chances are Slight vs Unlikely",252,54.4],
+  ["Chances are Slight vs Little Chance",286,54.5],["About Even vs Realistic Possibility",185,57.8],
+  ["Better than Even vs Realistic Possibility",371,58.8],["May Happen vs Might Happen",249,61.0]
+].map(function(r){return {matchup:r[0],n:r[1],winner_share:r[2]};});
+
+// ana_05: last digit
+var DT_digit = [[0,53.6],[1,5.2],[2,2.8],[3,1.5],[4,0.5],[5,31.2],[6,0.8],[7,0.7],[8,1.3],[9,2.4]]
+  .map(function(r){return {digit:r[0],pct:r[1]};});
+
+// ana_11: rank flip (abs_rank, pw_rank, abs_mean, winrate)
+var DT_rank = [
+  ["Will Happen",1,1,97.6,97.6],["Almost Certain",2,2,94.0,91.2],["Highly Likely",3,3,85.3,88.5],
+  ["Very Good Chance",4,4,79.2,81.4],["Likely",5,6,72.6,68.5],["Probable",6,5,71.4,77.7],
+  ["Better than Even",7,7,58.1,66.2],["Realistic Possibility",8,8,57.0,61.7],["About Even",9,9,50.0,50.6],
+  ["May Happen",10,10,41.9,50.3],["Might Happen",11,12,40.0,44.7],["Could Happen",12,11,39.7,45.9],
+  ["Unlikely",13,13,19.0,27.0],["Improbable",14,16,13.4,18.7],["Chances are Slight",15,15,13.0,22.6],
+  ["Little Chance",16,14,11.7,26.7],["Highly Unlikely",17,17,9.2,16.1],["Remote Chance",18,18,8.7,14.5],
+  ["Almost No Chance",19,19,3.9,4.0]
+].map(function(r){return {term:r[0],abs_rank:r[1],pw_rank:r[2],abs_mean:r[3],winrate:r[4],flip:(r[1]!==r[2])};});
+
+// ana_12: country optimism
+var DT_country = [
+  ["United States",0.66,1436],["Ireland",0.60,50],["Netherlands",0.35,48],["France",0.32,42],
+  ["Germany",0.17,108],["Canada",0.13,161],["Switzerland",0.08,46],["Australia",-0.32,121],
+  ["United Kingdom",-0.43,2018],["New Zealand",-0.64,52],["Norway",-2.03,74]
+].map(function(r){return {country:r[0],optimism:r[1],n:r[2]};});
+
+// ana_13: age optimism
+var DT_age = [
+  ["Under 18",3.11,19],["18-24",0.61,141],["25-34",0.32,868],["35-44",0.37,1405],
+  ["45-54",-0.30,1163],["55-64",-0.87,734],["65-74",-0.37,328],["75+",0.19,79]
+].map(function(r){return {age:r[0],optimism:r[1],n:r[2]};});
+
+/* ============ Vega-Lite theme ============ */
+var INK="#ececef", MUTED="#9b9ea8", ACCENT="#e0a458", ACCENT2="#d8635f", PANEL="#1d1f26", GRID="#2c2e36";
+function cfg(){return {
+  background:"transparent",
+  font:"system-ui, sans-serif",
+  view:{stroke:null},
+  axis:{labelColor:MUTED,titleColor:MUTED,domainColor:GRID,tickColor:GRID,gridColor:GRID,gridOpacity:.5,labelFontSize:12,titleFontSize:12},
+  legend:{labelColor:MUTED,titleColor:MUTED},
+  title:{color:INK}
+};}
+var EMBED={actions:false,renderer:"svg"};
+
+function embed(id,spec){ spec.config=cfg(); spec.width="container"; vegaEmbed("#"+id,spec,EMBED).catch(console.error); }
+
+/* des_01 realistic possibility histogram */
+embed("chart_des_01",{
+  data:{values:DT_rp},
+  height:260,
+  mark:{type:"bar",cornerRadiusEnd:2},
+  encoding:{
+    x:{field:"bin",type:"nominal",sort:null,title:"Estimated probability",axis:{labelAngle:-40}},
+    y:{field:"count",type:"quantitative",title:"People"},
+    color:{field:"official",type:"nominal",scale:{domain:[true,false],range:[ACCENT,"#4a4d57"]},legend:null},
+    tooltip:[{field:"bin",title:"Range"},{field:"count",title:"People"},{field:"official",title:"UK official band"}]
+  }
+});
+
+/* des_02 ladder dot + IQR range */
+embed("chart_des_02",{
+  data:{values:DT_ladder},
+  height:480,
+  layer:[
+    {mark:{type:"rule",size:3,color:"#5a5e6c",opacity:.7},
+     encoding:{y:{field:"term",type:"nominal",sort:{field:"mean"},title:null},
+       x:{field:"q25",type:"quantitative",scale:{domain:[0,100]},title:"Probability (%)"},x2:{field:"q75"}}},
+    {mark:{type:"point",filled:true,size:80,color:ACCENT},
+     encoding:{y:{field:"term",type:"nominal",sort:{field:"mean"}},x:{field:"mean",type:"quantitative"},
+       tooltip:[{field:"term",title:"Phrase"},{field:"mean",title:"Mean"},{field:"median",title:"Median"},
+         {field:"q25",title:"25th pct"},{field:"q75",title:"75th pct"},{field:"std",title:"Std dev"}]}}
+  ]
+});
+
+/* des_03 disagreement bars */
+embed("chart_des_03",{
+  data:{values:DT_dis},
+  height:480,
+  mark:{type:"bar",cornerRadiusEnd:2},
+  encoding:{
+    y:{field:"term",type:"nominal",sort:{field:"std",order:"descending"},title:null},
+    x:{field:"std",type:"quantitative",title:"Disagreement (std dev of estimates)"},
+    color:{field:"std",type:"quantitative",scale:{scheme:"reds"},legend:null},
+    tooltip:[{field:"term",title:"Phrase"},{field:"std",title:"Std dev"},{field:"iqr",title:"IQR"},{field:"mean",title:"Mean"}]
+  }
+});
+
+/* des_05 closest contests, x starts at 50 */
+embed("chart_des_05",{
+  data:{values:DT_close},
+  height:300,
+  layer:[
+    {mark:{type:"bar",cornerRadiusEnd:2},
+     encoding:{
+       y:{field:"matchup",type:"nominal",sort:{field:"winner_share"},title:null},
+       x:{field:"winner_share",type:"quantitative",scale:{domain:[50,65],zero:false},title:"Winner's share of votes (%)"},
+       color:{condition:{test:"datum.matchup === 'Likely vs Probable'",value:ACCENT},value:"#4a4d57"},
+       tooltip:[{field:"matchup",title:"Matchup"},{field:"n",title:"Times shown"},{field:"winner_share",title:"Winner %"}]
+     }}
+  ]
+});
+
+/* des_07 last digit */
+embed("chart_des_07",{
+  data:{values:DT_digit},
+  height:300,
+  mark:{type:"bar",cornerRadiusEnd:2},
+  encoding:{
+    x:{field:"digit",type:"ordinal",title:"Last digit of the estimate"},
+    y:{field:"pct",type:"quantitative",title:"Share of all estimates (%)"},
+    color:{condition:{test:"datum.digit === 0 || datum.digit === 5",value:ACCENT},value:"#4a4d57"},
+    tooltip:[{field:"digit",title:"Last digit"},{field:"pct",title:"Share %"}]
+  }
+});
+
+/* des_09 country optimism, fixed -3..3 */
+embed("chart_des_09",{
+  data:{values:DT_country},
+  height:320,
+  mark:{type:"bar",cornerRadiusEnd:2},
+  encoding:{
+    y:{field:"country",type:"nominal",sort:{field:"optimism",order:"descending"},title:null},
+    x:{field:"optimism",type:"quantitative",scale:{domain:[-3,3]},title:"Optimism (points above/below global average)"},
+    color:{condition:{test:"datum.country === 'United States'",value:ACCENT},
+      value:null,field:"optimism",type:"quantitative",scale:{scheme:"redyellowblue",domainMid:0},legend:null},
+    tooltip:[{field:"country",title:"Country"},{field:"optimism",title:"Optimism (pp)"},{field:"n",title:"Respondents"}]
+  }
+});
+
+/* des_10 age optimism, fixed -3..4 */
+embed("chart_des_10",{
+  data:{values:DT_age},
+  height:240,
+  mark:{type:"bar",cornerRadiusEnd:2},
+  encoding:{
+    x:{field:"age",type:"nominal",sort:null,title:"Age band"},
+    y:{field:"optimism",type:"quantitative",scale:{domain:[-3,4]},title:"Optimism (pp)"},
+    color:{value:"#6f7585"},
+    tooltip:[{field:"age",title:"Age band"},{field:"optimism",title:"Optimism (pp)"},{field:"n",title:"Respondents"}]
+  }
+});
+
+/* ============ TEASER guess-first ============ */
+(function(){
+  var g=document.getElementById("guess"), gv=document.getElementById("guessVal"),
+      lock=document.getElementById("lockBtn"), reveal=document.getElementById("teaserReveal"),
+      note=document.getElementById("revealNote");
+  g.addEventListener("input",function(){gv.textContent=g.value;});
+  lock.addEventListener("click",function(){
+    var v=parseInt(g.value,10);
+    try{sessionStorage.setItem("rpGuess",v);}catch(e){}
+    reveal.classList.add("show");
+    lock.disabled=true; lock.style.opacity=.5; lock.textContent="Locked: "+v+"%";
+    // render reveal histogram with reader marker
+    var vals=DT_rp.slice();
+    var band = (v>=40&&v<=50);
+    vegaEmbed("#chart_teaser",{
+      config:cfg(), width:"container", height:240,
+      layer:[
+        {data:{values:vals},mark:{type:"bar",cornerRadiusEnd:2},
+         encoding:{
+           x:{field:"bin",type:"nominal",sort:null,title:"Estimated probability for “realistic possibility”",axis:{labelAngle:-40}},
+           y:{field:"count",type:"quantitative",title:"People"},
+           color:{field:"official",type:"nominal",scale:{domain:[true,false],range:[ACCENT,"#4a4d57"]},legend:null},
+           tooltip:[{field:"bin",title:"Range"},{field:"count",title:"People"}]
+         }},
+        {data:{values:[{x:v}]},mark:{type:"rule",color:"#fff",size:2,strokeDash:[4,3]},
+         encoding:{x:{field:"x",type:"quantitative",scale:{domain:[0,100]}}}}
+      ]
+    },{actions:false,renderer:"svg"}).catch(console.error);
+    var posTxt = band ? "right inside the UK&rsquo;s official 40&ndash;50% band &mdash; where only 17.5% of people landed."
+      : (v>50 ? "above the official 40&ndash;50% band, like 64% of people who read it as better than even."
+              : "below the official 40&ndash;50% band, like 18.5% of people.");
+    note.innerHTML="You said <b>"+v+"%</b>. Officially, &ldquo;realistic possibility&rdquo; means 40&ndash;50%. Your guess sits "+posTxt;
+  });
+})();
+
+/* ============ RANK FLIP explorer ============ */
+(function(){
+  var list=document.getElementById("rankList"), mode="abs";
+  function render(){
+    var data=DT_rank.slice().sort(function(a,b){return (mode==="abs"?a.abs_rank:a.pw_rank)-(mode==="abs"?b.abs_rank:b.pw_rank);});
+    list.innerHTML="";
+    data.forEach(function(d){
+      var li=document.createElement("li");
+      if(d.flip) li.className="flip";
+      var rank=(mode==="abs"?d.abs_rank:d.pw_rank);
+      var val=(mode==="abs"? d.abs_mean.toFixed(1) : d.winrate.toFixed(1)+"% win");
+      li.innerHTML='<span class="pos">'+rank+'</span><span class="name">'+d.term+'</span><span class="val">'+val+'</span>';
+      list.appendChild(li);
+    });
+  }
+  window.setRank=function(m){
+    mode=m;
+    document.getElementById("btnAbs").classList.toggle("on",m==="abs");
+    document.getElementById("btnPw").classList.toggle("on",m==="pw");
+    render();
+  };
+  render();
+})();
+
+/* ============ SONIFICATION of last digits ============ */
+(function(){
+  var btn=document.getElementById("sonBtn");
+  btn.addEventListener("click",function(){
+    var AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC){btn.textContent="Audio not supported";return;}
+    var ctx=new AC();
+    var maxPct=53.6, t=ctx.currentTime, step=0.34;
+    btn.disabled=true; btn.style.opacity=.6;
+    var bars=null;
+    // find the rendered bars in des_07 svg for highlight pulse
+    DT_digit.forEach(function(d,i){
+      var osc=ctx.createOscillator(), gain=ctx.createGain();
+      var freq=262*Math.pow(2,(d.digit)/12*1.1); // pitch rises with digit
+      osc.frequency.value=freq; osc.type="sine";
+      var loud=0.04 + 0.5*(d.pct/maxPct); // loudness maps to share
+      var start=t+i*step;
+      gain.gain.setValueAtTime(0.0001,start);
+      gain.gain.exponentialRampToValueAtTime(loud,start+0.03);
+      gain.gain.exponentialRampToValueAtTime(0.0001,start+step*0.9);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(start); osc.stop(start+step);
+      // visual pulse synced to note
+      setTimeout(function(){
+        try{
+          var svg=document.querySelector("#chart_des_07 svg");
+          if(svg){
+            var rects=svg.querySelectorAll("rect");
+            // crude: flash whole chart container border
+          }
+          var c=document.querySelector('[data-des="des_07"]');
+          if(c){c.style.transition="box-shadow .12s";c.style.boxShadow="0 0 0 2px rgba(224,164,88,"+(0.2+0.6*(d.pct/maxPct))+")";
+            setTimeout(function(){c.style.boxShadow="none";},step*900);}
+        }catch(e){}
+      }, i*step*1000);
+    });
+    setTimeout(function(){btn.disabled=false;btn.style.opacity=1;},DT_digit.length*step*1000+200);
+  });
+})();
+
+/* ============ closing recall of reader's guess ============ */
+(function(){
+  var el=document.getElementById("closeRecall");
+  var v=null; try{v=sessionStorage.getItem("rpGuess");}catch(e){}
+  if(v!==null){
+    el.innerHTML=" And remember &mdash; you guessed <b>"+v+"%</b> for &ldquo;realistic possibility&rdquo; at the start. Where did it land on the crowd&rsquo;s smear from 0 to 100?";
+  } else {
+    el.innerHTML=" Now &mdash; what probability did you give &ldquo;realistic possibility&rdquo; at the start, and where would it land on the crowd&rsquo;s smear from 0 to 100?";
+  }
+})();
+</script>
+</body>
+</html>

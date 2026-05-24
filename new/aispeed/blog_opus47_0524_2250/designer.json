@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "LEAN budget (orchestrator-mandated): prefer free data-driven visuals (Vega-Lite charts, CSS/SVG, vanilla-JS interactive). Exactly ONE generated image (hero) for the whole blog. No video, no music, no text2music/text2video.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The dataset is a quantitative time series of release cadence — charts are the primary evidence vehicle (line, bar, lollipop, slope, timeline)."
+      },
+      "image": {
+        "used": true,
+        "reason": "ONE atmospheric hero image to set the 'accelerating interval' mood at the top and close. LEAN budget allows exactly one generated image."
+      },
+      "video": {
+        "used": false,
+        "reason": "LEAN budget forbids video generation. The acceleration is best shown by a guess-first interactive + animated chart reveals, not a generated clip."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Data sonification of the year-by-year median gap (9 ordered values) — using FREE Web Audio API oscillators (not text2music). Hearing the tempo of clicks speed up as the gap collapses makes the acceleration viscerally felt, synced with the headline chart. No generated audio file, so it stays within the LEAN/no-music constraint."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "No geography in the data. The headline finding is surprising, so a guess-first slider lets readers predict 2025's gap before the reveal — maximizing the surprise of '4 days'."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_hero": {
+      "label": "Hero image — collapsing interval",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "Abstract cinematic editorial illustration of accelerating time: a long horizontal row of vertical light-bars on a deep charcoal background, bars spaced far apart on the left and compressing into a dense bright blur on the right, conveying a collapsing interval and a quickening pulse. Cool teal-to-warm-amber gradient, subtle motion-blur streaks, fine grain, dramatic rim lighting, minimal, high-end data-journalism aesthetic. No text, no numbers, no charts, no logos in frame.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed hero behind the headline. Vertical light-bars spaced wide on the left and compressing into a bright blur on the right — a visual metaphor for the release interval collapsing from months to days. Dark charcoal field so white headline text overlays cleanly. Used full-viewport at top.",
+      "rationale": "The single permitted image. Pure metaphor (accelerating pulse), not a fake chart or a brand-encumbered photo. Sets the mood the data then proves.",
+      "based_on": []
+    },
+    "des_01": {
+      "label": "Guess-first: predict the 2025 gap",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "guess_first_slider",
+        "initial_state": "Reader sees the prompt 'In 2018, frontier labs shipped a new language model every ~132 days. How often by 2025?' with a slider running from 1 to 132 days and a 'Reveal' button.",
+        "trigger": "Reader drags the slider to their guess and clicks Reveal.",
+        "transition": "The slider locks; the full 2018-2026 median-gap line chart animates in (drawing left to right), with the reader's guess marked as a dashed line for comparison against the actual 4-day endpoint.",
+        "payoff": "Reveal the actual 2025 value (4 days) and the 33x figure; show how far the reader's guess sat from reality.",
+        "data_source": "ana_01"
+      },
+      "brief": "A guess-first widget above the headline chart. Reader commits to a number before seeing the answer, making the 4-day reveal land as a surprise. After reveal it morphs into / sits directly above the ana_01 line chart (des_02), with the guess overlaid as a reference line. 2026 point marked as partial (hollow/dashed).",
+      "rationale": "The finding is counterintuitive — most readers will guess weeks, not days. Guessing first maximizes the surprise. Chosen over a passive chart because the editorial hook is the gap between intuition and reality.",
+      "based_on": ["ana_01"]
+    },
+    "des_02": {
+      "label": "Headline cadence-collapse line chart",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_01",
+        "x": "year",
+        "y": "median_days",
+        "highlight": {"year": 2022, "note": "ChatGPT inflection"},
+        "interaction": "hover tooltip showing exact median days and n_releases per year; 2026 point rendered hollow/dashed to flag partial year",
+        "style": {"palette": "single accent (amber) line on dark", "no_gridlines": true, "y_log_optional": false, "point_markers": true, "annotate": ["2018: 132d", "2025: 4d"]}
+      },
+      "brief": "The spine chart. X = year (2018-2026), Y = median days between releases. A single descending line from 132 down to 4, with point markers. Annotate the 132-day start and 4-day end. 2026's point is hollow/dashed (partial year). Hover shows median + n. This is the page centerpiece, paired with the sonification (des_07) and the guess interactive (des_01).",
+      "rationale": "A single decisive descending line is the most legible way to show a monotonic collapse. No exploration needed beyond hover.",
+      "based_on": ["ana_01"]
+    },
+    "des_03": {
+      "label": "Stat callout — 33x",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "33x",
+        "label": "faster: median gap fell from 132 days (2018) to 4 days (2025)",
+        "data_source": "ana_01"
+      },
+      "brief": "Oversized 33x callout (72px) directly under the hook prose, with the 132->4 days subtitle. Anchors the headline number before the chart.",
+      "rationale": "The multiplier is the most quotable number in the piece and deserves headline typographic treatment.",
+      "based_on": ["ana_01"]
+    },
+    "des_04": {
+      "label": "The 2022 cliff — slope/annotated line",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_02",
+        "x": "year",
+        "y": "median_days",
+        "highlight": {"year": 2022},
+        "interaction": "hover tooltip with exact values; a vertical annotation rule at 2022 labeled 'ChatGPT, Nov 2022'",
+        "style": {"palette": "accent line, muted rule", "no_gridlines": true, "emphasize_drop": true, "annotate": ["2021: 49d", "2022: 13d", "2023: 5.5d"]}
+      },
+      "brief": "A focused three-point line (2021, 2022, 2023) showing the near-vertical drop from 49 to 13 to 5.5 days, with a vertical annotation rule at 2022 labeled 'ChatGPT launches'. Steepness is the point — let the y-axis make the 2022->2023 plunge look like a cliff.",
+      "rationale": "Zooming to the inflection triplet makes the cliff unmistakable and ties it visually to the ChatGPT causal anchor. Different visual mode (annotated zoom) from des_02 to avoid a chart streak.",
+      "based_on": ["ana_02"]
+    },
+    "des_05": {
+      "label": "Releases-per-year bar chart",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_03",
+        "x": "year",
+        "y": "n_releases",
+        "highlight": {"year": 2025},
+        "interaction": "hover tooltip with count; 2026 bar rendered hatched/translucent and labeled 'partial year'",
+        "style": {"palette": "teal bars on dark", "no_gridlines": true, "annotate": ["2018: 3", "2025: 54"]}
+      },
+      "brief": "Vertical bars, X = year 2018-2026, Y = frontier releases counted. The 2025 bar (54) towers over 2018 (3). 2026 bar is visually distinct (hatched/translucent) and labeled partial so readers don't misread it as a decline. Switches visual mode from lines to bars for pacing.",
+      "rationale": "Bars communicate growing counts better than a line; the 18x growth reads as a rising wall. Distinct mode breaks the line-chart rhythm.",
+      "based_on": ["ana_03"]
+    },
+    "des_06": {
+      "label": "Per-lab median gap — horizontal lollipop",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_06",
+        "x": "median_gap_days",
+        "y": "lab",
+        "highlight": {"lab": "OpenAI"},
+        "interaction": "hover tooltip showing median gap and n_gaps; sort labs fastest (top) to slowest (bottom)",
+        "style": {"palette": "amber bars, OpenAI emphasized", "no_gridlines": true, "horizontal": true, "note": "small-n labs (xAI, Mistral, DeepSeek) flagged in caption as pulled up by late entry"}
+      },
+      "brief": "Horizontal bars ranking the 8 labs by their own median release gap, fastest (OpenAI 21d) at top to slowest (xAI 130d) at bottom. OpenAI bar emphasized. Caption notes small-n labs are pulled up by late entry. Hover shows median + n_gaps.",
+      "rationale": "A ranking is clearest as sorted horizontal bars with readable lab labels. Shows the acceleration is field-wide, not one lab.",
+      "based_on": ["ana_06"]
+    },
+    "des_07": {
+      "label": "Sonification — hear the gap collapse",
+      "type": "audio",
+      "section": "edt_01",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "The 9 ordered median-gap values map naturally to tempo: playing one click per year where the inter-click delay is proportional to that year's gap makes the acceleration audible — sparse, slow clicks in 2018-2021 then a rapid burst by 2025. Hearing tempo speed up conveys 'acceleration' more viscerally than any static chart.",
+        "trigger": "Click a 'Play the acceleration' button beneath the headline chart (des_02). Never autoplay.",
+        "ui_form": "chart-synced sonification: each year's marker on the des_02 line lights up as its click plays, so the reader sees and hears the same tightening interval.",
+        "content": {
+          "implementation": "Web Audio API (free, no generated file) — short oscillator/marimba-like click per year; inter-click time scaled from median_days (compressed scale so total playback is ~6s); the matching point on the des_02 line highlights in sync.",
+          "data_mapping": {"field": "median_days", "maps_to": "inter-click delay (tempo)", "range_years": [2018, 2026]},
+          "tool": "web_audio_api",
+          "model": "none"
+        },
+        "fallback": "If audio is muted or Web Audio is unavailable, the play button is disabled with a tooltip and the des_02 chart still tells the full story. A short legend reads 'each click = one year; faster clicks = shorter gap between releases.'",
+        "novelty_note": "Not a generic click-to-play tone card: tempo (not pitch) carries the meaning, and playback is bound to the headline line chart so the heard acceleration matches the seen one."
+      },
+      "brief": "A FREE Web Audio sonification under the headline chart. Press play and hear one click per year with the delay between clicks proportional to that year's median gap — slow, spaced clicks for 2018-2021 collapsing into a rapid stutter by 2025. The des_02 line's year markers highlight in time with the clicks. Mute-safe; chart is full fallback.",
+      "rationale": "This analytical dataset has a perfect small ordered sequence to sonify, and tempo is the ideal mapping for an 'acceleration' story. Uses free oscillators, honoring the no-music constraint.",
+      "based_on": ["ana_01"]
+    },
+    "des_08": {
+      "label": "Anthropic Claude release timeline",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "timeline_cards_or_lollipop",
+        "data_source": "ana_07",
+        "x": "publication_date",
+        "y": "days_since_prev",
+        "highlight": {"days_since_prev": 0, "note": "same-day pairs"},
+        "interaction": "hover/tap each Claude release to see its name, date, and gap; 0-day pairs visually linked",
+        "style": {"palette": "accent dots on a date axis", "annotate": ["Claude 2: 119d", "Claude Haiku 4.5: 16d", "0-day pairs marked"]}
+      },
+      "brief": "A horizontal release timeline of Anthropic's 13 Claude releases along a date axis, each dot's height (or a small bar) = days since the lab's previous release. Early dots tall (119, 133), recent dots short (16, 40, 55). The two 0-day pairs (3 Opus/3 Sonnet; Opus 4/Sonnet 4) are visually flagged. If a fixed-width timeline gets cramped, fall back to a responsive numbered-card stack. Hover shows model + date + gap.",
+      "rationale": "A real lab's named log makes the abstract trend human-scale and concrete. Timeline form differs from the prior bar/line charts for pacing, and it sets up the same-day-release section.",
+      "based_on": ["ana_07"]
+    },
+    "des_09": {
+      "label": "Same-day launches by year",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_09",
+        "x": "year",
+        "y": "same_day_releases",
+        "highlight": {"year": 2025},
+        "interaction": "hover tooltip with count",
+        "style": {"palette": "coral bars on dark", "no_gridlines": true, "annotate": ["2025: 8 same-day launches"]}
+      },
+      "brief": "Small bar chart of 0-day (same-day) releases by year, clustering in the present (8 in 2025). Distinct coral palette to read as an 'extreme/emergent' signal. Paired with the stat that OpenAI alone has 11 same-day pairs.",
+      "rationale": "A compact bar makes the 'simultaneity rising' anomaly visible. Coral signals this is the extreme tail of the acceleration story.",
+      "based_on": ["ana_09"]
+    },
+    "des_10": {
+      "label": "Closing hero reprise / stat",
+      "type": "stat_callout",
+      "section": "edt_07",
+      "content": {
+        "value": "4 days",
+        "label": "the interval the frontier now keeps — and 2026 is still holding the line",
+        "data_source": "ana_01"
+      },
+      "brief": "Closing oversized stat '4 days' over a dimmed reprise of the hero image, leaving the reader on the open question of whether 4 days is a floor. Reuses hero.png (no new asset).",
+      "rationale": "Bookends the piece with the same number that opened it, reusing the one permitted image rather than generating a second.",
+      "based_on": ["ana_01"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, data-journalism, restrained with one warm accent",
+    "text_visual_pattern": "text-then-visual; hook leads with a guess-first interactive + sonified headline chart, then alternates chart modes (line, annotated zoom, bars, ranking, timeline) to avoid a chart streak",
+    "centrepiece": "des_02",
+    "anti_sameness_notes": "Avoids the generic click-to-play tone card by making the audio a tempo sonification bound to the line chart. Varies chart type every section. Only one generated image, reused at open and close, instead of decorative image spam. The interactive is a guess-first slider (intuition vs reality), not a quiz grid.",
+    "typography_notes": "Large 72px stat callouts (33x, 4 days); system-ui for chart labels and UI, Georgia/serif for body; subtle hairline section dividers; 2026 always visually flagged as partial in any chart it appears in."
+  }
+}

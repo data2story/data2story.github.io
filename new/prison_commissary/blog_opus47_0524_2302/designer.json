@@ -1,0 +1,210 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "LEAN media budget: prefer free data-driven charts, CSS/SVG, and interactive HTML. Exactly one generated image (hero). No video, no music, no sonification audio. Channels are chosen by what the data and the sensitive subject matter support, not a quota.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The dataset is fundamentally quantitative cross-state price comparisons — bar charts and ranked dot plots are the most honest, legible way to show dispersion."
+      },
+      "image": {
+        "used": true,
+        "reason": "One restrained, non-identifying conceptual hero image sets a somber documentary tone without exploiting real prisoners. Budget caps generated images at one."
+      },
+      "video": {
+        "used": false,
+        "reason": "LEAN budget explicitly forbids video. The story is statistical, not an event or transformation; a video would be decorative and risk exploitative or fabricated imagery of incarcerated people."
+      },
+      "audio": {
+        "used": false,
+        "reason": "LEAN budget forbids generated music; no real recordings are central to the data. A tone-based sonification of prices would be decorative for this sensitive topic and add nothing the ranked charts do not already convey."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "A guess-first 'hours of labor' calculator lets the reader feel the wage-to-price gap before seeing it, which is far stronger than a passive chart for the piece's emotional core."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_hero": {
+      "label": "Hero image — ramen and fan on a prison shelf",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "Editorial conceptual still life, no people, no text: a worn metal prison shelf holding a single packet of instant ramen and a small plastic fan under cold fluorescent light, with a faint price tag, muted desaturated greens and grays, shallow depth of field, documentary photography mood, restrained and somber, no faces, no identifying marks",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed somber still life of a single ramen packet and a small fan on a worn metal shelf under cold light. No people, no readable text. Sets a documentary, restrained tone over which the headline overlays. Dark gradient scrim at bottom for legibility.",
+      "rationale": "A conceptual object photo conveys the subject's gravity without using real images of incarcerated people, which would be exploitative for this dataset. One image only, per LEAN budget.",
+      "based_on": []
+    },
+    "des_01": {
+      "label": "Ramen price by state — ranked bar",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_02",
+        "x": "price",
+        "y": "state",
+        "sort": "ascending by price (cheapest at top)",
+        "highlight": {"states": ["North Carolina", "Florida"]},
+        "interaction": "hover tooltip showing exact price per state",
+        "style": {"palette": "single muted teal with North Carolina and Florida emphasized in a warm accent", "no_gridlines": true, "width": "container"}
+      },
+      "brief": "Horizontal ranked bar chart of all 46 states' cheapest ramen, sorted cheapest-to-priciest. North Carolina ($0.24, cheapest) and Florida ($1.06, priciest) are highlighted in a contrasting accent color with their values labeled directly. A subtle reference line/annotation at ~$0.32 marks the rough outside-store price. Caption notes 46 of 50 states provided data.",
+      "rationale": "A full ranked bar makes the 4.4x spread undeniable as a gradient, not a cherry-picked pair. Bar over dot here because magnitude (length) reads instantly for non-experts.",
+      "based_on": ["ana_02"]
+    },
+    "des_02": {
+      "label": "Cross-product spread stat strip",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "48x",
+        "label": "the spread on deodorant: $0.06 in Ohio to $2.90 in Alaska",
+        "data_source": "ana_01"
+      },
+      "brief": "A row of three large stat callouts above or beside the ramen chart: '4.4x ramen ($0.24-$1.06)', '30.6x toothpaste ($0.12-$3.67)', '48x deodorant ($0.06-$2.90)'. Big numbers, small descriptive labels. Communicates that the spread is a pattern across products, not one item.",
+      "rationale": "The dispersion ratios are so striking they deserve headline-number treatment; this also surfaces ana_01's full data_table beyond just ramen.",
+      "based_on": ["ana_01"]
+    },
+    "des_03": {
+      "label": "Hours-of-labor calculator (guess-first interactive)",
+      "type": "interactive",
+      "section": "edt_02",
+      "content": {
+        "interaction_type": "guess_first_then_reveal",
+        "initial_state": "Reader sees an item dropdown (default: Electric Fan) and a wage slider (default $0.06/hr, range $0.06-$0.63). A prompt asks: 'How many hours of prison work do you think this costs?' with a number input or 'I'll guess' button.",
+        "trigger": "Reader optionally enters a guess, then clicks 'Reveal'. They can also change the item and drag the wage slider.",
+        "transition": "A horizontal bar animates to the computed hours; the median price and the hours-of-labor are shown. Changing item/wage recomputes live (hours = median_price / wage, rounded).",
+        "payoff": "For a fan at $0.06/hr the bar fills to 382 hours with the line 'more than nine 40-hour weeks — for one fan'. Reader feels the exchange rate viscerally.",
+        "data_source": "ana_03"
+      },
+      "brief": "Inline vanilla-JS widget. Dropdown of the 9 items in ana_03's data_table; wage slider 0.06-0.63. Live computes hours = median_price / wage. Animated bar + big hours number. Pre-reveal it invites a guess to maximize the surprise of 382 hours. All numbers come from ana_03's data_table (median_price); hours recomputed client-side from the slider. Include a small note that wages are from external reporting (det_02).",
+      "rationale": "The wage-to-price gap is the emotional spine; letting readers guess and then drag the wage makes them discover how brutal the math is rather than read it passively. Chosen over a static chart per the interactive-preference rule for surprising findings.",
+      "based_on": ["ana_03"]
+    },
+    "des_04": {
+      "label": "Hours-per-item companion bar chart",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_03",
+        "x": "hours_at_6c",
+        "y": "item",
+        "sort": "descending by hours_at_6c",
+        "highlight": {"item": "Electric Fan"},
+        "interaction": "hover tooltip showing median price and hours at both $0.06 and $0.25",
+        "style": {"palette": "muted amber-to-red sequential by hours", "no_gridlines": true, "width": "container", "log_or_break_note": "Electric Fan (382h) dwarfs others; consider a broken/annotated scale or label the fan value directly so the small items remain readable"}
+      },
+      "brief": "Horizontal bar chart, hours of labor at $0.06/hr per item, sorted descending. Electric Fan (382h) highlighted. Because the fan dwarfs the rest, label the fan bar's value directly and keep the axis honest; smaller items (ramen 8h, toothpaste 21h) must remain readable. Tooltip shows both wage scenarios.",
+      "rationale": "Pairs the interactive with a fixed reference view so the reader can compare all items at the lowest wage at a glance.",
+      "based_on": ["ana_03"]
+    },
+    "des_05": {
+      "label": "Electric fan price by state — ranked dot/bar",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_07",
+        "x": "price",
+        "y": "state",
+        "sort": "descending by price (priciest at top)",
+        "highlight": {"states": ["Nevada", "Wyoming"]},
+        "interaction": "hover tooltip with exact price",
+        "style": {"palette": "cool blue with Nevada (high) and Wyoming (low) emphasized", "no_gridlines": true, "width": "container"}
+      },
+      "brief": "Horizontal ranked bar of cheapest fan price across all 30 states that list one, priciest at top. Nevada ($43.80) and Wyoming ($10.02) emphasized. A reference annotation can note the 4.4x spread. Keep state labels legible.",
+      "rationale": "Mirrors the ramen chart's form deliberately to show the same 4.4x spread recurs on a health-critical item, reinforcing the thesis through visual rhyme.",
+      "based_on": ["ana_07"]
+    },
+    "des_06": {
+      "label": "Price by product type — religion vs staples",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_04",
+        "x": "median_price",
+        "y": "product",
+        "sort": "descending by median_price",
+        "color": "category (Religious / Comfort / Food / Hygiene) — color-code so the religious items at the top stand out",
+        "highlight": {"products": ["Quran", "Crucifix", "Star of David", "Electric Fan"]},
+        "interaction": "hover tooltip with median price and number of states",
+        "style": {"palette": "categorical: religious items in one accent, staples muted", "no_gridlines": true, "width": "container"}
+      },
+      "brief": "Horizontal bar of all 23 product types by median price, descending. Color bars by an inferred category so the cluster of religious items + the fan at the top is visually distinct from the cheap staples (toothbrush, ramen, soap) at the bottom. Programmer assigns category by product name: Crucifix/Quran/Star of David/Prayer Rug/Hijab/Kufi Cap/Bible/Islamic Prayer Beads/Yarmulke/Rosary Beads = Religious; Electric Fan/Reading Glasses/Relaxer = Comfort/Health; Peanut Butter/Mac and Cheese/Beans/Ramen = Food; rest = Hygiene. Annotate the Quran vs Bible gap. Caption acknowledges small samples for some religious items.",
+      "rationale": "A single ranked, category-colored bar makes the moral turn land: the costliest goods are faith items and a fan; the cheapest are the things a prison cannot withhold.",
+      "based_on": ["ana_04"]
+    },
+    "des_07": {
+      "label": "Quran vs Bible stat callout",
+      "type": "stat_callout",
+      "section": "edt_04",
+      "content": {
+        "value": "$25.99 vs $5.21",
+        "label": "median price of a Quran versus a Bible — nearly 5x more for the central text of Islam",
+        "data_source": "ana_05"
+      },
+      "brief": "A two-number stat callout contrasting Quran median ($25.99) and Bible median ($5.21), with the ~5x framing. Placed within edt_04 near the religion chart.",
+      "rationale": "The single most quotable disparity in the piece deserves headline treatment.",
+      "based_on": ["ana_05"]
+    },
+    "des_08": {
+      "label": "Vendor share — who runs the store",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_06",
+        "x": "states",
+        "y": "vendor",
+        "sort": "descending by states",
+        "highlight": {"vendors": ["Keefe Commissary", "State-run"]},
+        "interaction": "hover tooltip with state count",
+        "style": {"palette": "muted; private vendors in one tone, State-run in another", "no_gridlines": true, "width": "container"}
+      },
+      "brief": "Horizontal bar of vendors by number of states served. State-run (17) and Keefe Commissary (16) dominate; the long tail of single-state vendors shown below. Color private vendors distinctly from State-run to support the kickback point in the prose.",
+      "rationale": "Shows concentration of the captive market in a few private operators, grounding the 'who profits' close.",
+      "based_on": ["ana_06"]
+    },
+    "des_09": {
+      "label": "Cheapest vs priciest states — diverging bar",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_08",
+        "x": "mean_price",
+        "y": "state",
+        "sort": "descending by mean_price",
+        "color": "rank_group (priciest / cheapest)",
+        "highlight": {"states": ["Indiana", "Michigan"]},
+        "interaction": "hover tooltip with mean price per item",
+        "style": {"palette": "two-tone: priciest in warm, cheapest in cool", "no_gridlines": true, "width": "container"}
+      },
+      "brief": "Horizontal bar of the 8 priciest and 8 cheapest states by mean cheapest-price-per-item, two-tone by rank_group. Indiana ($8.36) at top and Michigan ($0.93) at bottom emphasized, with the ~9x framing annotated. This is the closing 'geography of cost' visual.",
+      "rationale": "Ends the piece on the central thesis made spatial: the same basket of needs costs ~9x more depending on the state.",
+      "based_on": ["ana_08"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark, somber editorial — restrained, documentary, data-forward",
+    "text_visual_pattern": "text-first within each section, with one decisive visual or interactive directly below the prose; charts deliberately rhyme in form (ramen ranked bar, fan ranked bar) to reinforce the recurring 4.4x spread",
+    "centrepiece": "des_03",
+    "anti_sameness_notes": "No audio card, no video, no map. The emotional centerpiece is a guess-first labor calculator, not a hero chart. Charts use a consistent muted palette with sparing warm accents only on the two endpoints that carry the argument, avoiding rainbow dashboards. Exactly one generated image keeps the page from feeling like stock-photo journalism.",
+    "typography_notes": "Large stat callouts (~64px) for the dispersion ratios and the Quran/Bible contrast; serif body (Georgia) for narrative gravity, system-ui for chart/UI labels; thin section dividers; pull the key numbers ($0.24/$1.06, 382 hours, $25.99 vs $5.21) into emphasized inline spans."
+  }
+}

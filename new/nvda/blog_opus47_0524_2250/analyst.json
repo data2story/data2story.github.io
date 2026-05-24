@@ -1,0 +1,200 @@
+{
+  "meta": { "role": "analyst", "version": "2.0" },
+  "dataset": {
+    "files": ["financials_annual.csv", "stock_prices_daily.csv", "stock_price_by_year.csv", "stock_prices_monthly.csv"],
+    "rows": 16,
+    "columns": 16,
+    "what_one_row_represents": "One NVIDIA fiscal year (FY ends late January), FY2011 through FY2026, with as-filed income-statement and balance-sheet figures, joined where relevant to split-adjusted stock prices.",
+    "time_range": "FY2011 (period_end 2011-01-30) to FY2026 (period_end 2026-01-25); daily prices 1999-2026",
+    "geographic_scope": "Global company (NVIDIA Corp, US-listed)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Revenue grew 61x: $3.5B to $216B (FY2011-FY2026)",
+      "content": "NVIDIA's annual revenue rose from $3.54B in the fiscal year ending January 2011 to $215.94B in the fiscal year ending January 2026 — a 60.9x increase. Growth was modest and even negative through the gaming era (FY-end 2014 fell 3.5%, FY-end 2020 fell 6.8%), accelerated to 50-60% in FY-end 2021 and 2022, then went vertical: +125.9% (FY-end 2024), +114.2% (FY-end 2025), and +65.5% (FY-end 2026). The curve is not a smooth exponential — it is a flat decade followed by a near-vertical cliff starting in the fiscal year ending January 2024.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_financials.py", "lines": [18, 24], "output": "FY2011 revenue: $3.54B -> FY2026 revenue: $215.94B\nTotal multiple FY2011->FY2026: 60.9x\nrev_yoy_pct: 2024=125.9, 2025=114.2, 2026=65.5" },
+      "data_table": {
+        "description": "Annual revenue ($B) and YoY growth, FY ending year",
+        "columns": ["fy_end_year", "revenue_b", "rev_yoy_pct"],
+        "rows": [
+          [2011, 3.54, null], [2012, 4.00, 12.8], [2013, 4.28, 7.1], [2014, 4.13, -3.5],
+          [2015, 4.68, 13.3], [2016, 5.01, 7.0], [2017, 6.91, 37.9], [2018, 9.71, 40.6],
+          [2019, 11.72, 20.6], [2020, 10.92, -6.8], [2021, 16.68, 52.7], [2022, 26.91, 61.4],
+          [2023, 26.97, 0.2], [2024, 60.92, 125.9], [2025, 130.50, 114.2], [2026, 215.94, 65.5]
+        ]
+      },
+      "based_on": ["det_03", "det_08"]
+    },
+    "ana_02": {
+      "label": "The inflection: flat year to 3.5x in two years",
+      "content": "The single hinge of the story is the fiscal year ending January 2024. The prior year (FY-end 2023) was essentially flat at $26.97B, up just 0.2%. Then revenue jumped to $60.92B (+125.9%), and kept climbing to $130.50B and $215.94B — meaning revenue grew 3.5x in the two fiscal years after the flat year. The top five YoY growth years in NVIDIA's history are all clustered here: FY-end 2024 (+126%), 2025 (+114%), 2026 (+66%), plus the earlier crypto/datacenter ramp years 2022 (+61%) and 2021 (+53%).",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_financials.py", "lines": [26, 37], "output": "FY ending 2023: $26.97B (flat) -> FY ending 2024: $60.92B = +125.9%\nFY ending 2024: $60.92B -> FY ending 2026: $215.94B = 3.5x in two years" },
+      "data_table": {
+        "description": "Top 5 year-over-year revenue growth years",
+        "columns": ["fy_end_year", "revenue_b", "rev_yoy_pct"],
+        "rows": [[2024, 60.92, 125.9], [2025, 130.50, 114.2], [2026, 215.94, 65.5], [2022, 26.91, 61.4], [2021, 16.68, 52.7]]
+      },
+      "based_on": ["det_05", "det_06"]
+    },
+    "ana_03": {
+      "label": "Margins: the FY2023 dip and the 70%+ gross-margin era",
+      "content": "Gross margin climbed steadily from 39.8% (FY-end 2011) into the low 60s by the early 2020s, then jumped to a new tier — 72.7%, 75.0%, and 71.1% in FY-end 2024-2026, all above 70%. Net margin tells a more dramatic story: it peaked at 36.2% in FY-end 2022, then collapsed to 16.2% in FY-end 2023 (the crypto-bust / inventory-correction year), before snapping back to 48.9% (FY-end 2024) and peaking at 55.9% (FY-end 2025). The V-shaped net-margin dip in FY-end 2023 is the visible scar of the year before the boom.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_financials.py", "lines": [39, 48], "output": "Net margin 2022:36.23% -> 2023 DIP:16.19% -> 2024 RECOVERY:48.85% -> 2025 PEAK:55.85%\nGross margin FY2024-FY2026 all above 70%: [72.72, 74.99, 71.07]" },
+      "data_table": {
+        "description": "Gross and net margin (%) by FY ending year",
+        "columns": ["fy_end_year", "gross_margin_pct", "net_margin_pct"],
+        "rows": [
+          [2011, 39.77, 7.14], [2012, 51.44, 14.53], [2013, 52.02, 13.14], [2014, 54.91, 10.65],
+          [2015, 55.53, 13.47], [2016, 56.11, 12.26], [2017, 58.80, 24.11], [2018, 59.93, 31.37],
+          [2019, 61.21, 35.34], [2020, 61.99, 25.61], [2021, 62.34, 25.98], [2022, 64.93, 36.23],
+          [2023, 56.93, 16.19], [2024, 72.72, 48.85], [2025, 74.99, 55.85], [2026, 71.07, 55.60]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_04": {
+      "label": "Net income grew 474x: $0.25B to $120B",
+      "content": "Net income — the split-immune profit measure — grew from $0.25B in FY-end 2011 to $120.07B in FY-end 2026, a 474x increase. The acceleration mirrors revenue but is even steeper because margins expanded at the same time: profit jumped from $4.37B (FY-end 2023) to $29.76B (FY-end 2024), then to $72.88B (FY-end 2025, +144.9%) and $120.07B (FY-end 2026). NVIDIA went from earning a quarter of a billion dollars a year to earning more than $120 billion.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_financials.py", "lines": [49, 60], "output": "Net income FY-end 2024: $29.76B -> 2025: $72.88B -> 2026: $120.07B\nNet income 2024->2025 growth: +144.9%\nNet income FY2011 $0.25B -> FY2026 $120.07B = 474x" },
+      "data_table": {
+        "description": "Net income ($B) by FY ending year",
+        "columns": ["fy_end_year", "net_income_b"],
+        "rows": [
+          [2011, 0.25], [2012, 0.58], [2013, 0.56], [2014, 0.44], [2015, 0.63], [2016, 0.61],
+          [2017, 1.67], [2018, 3.05], [2019, 4.14], [2020, 2.80], [2021, 4.33], [2022, 9.75],
+          [2023, 4.37], [2024, 29.76], [2025, 72.88], [2026, 120.07]
+        ]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_05": {
+      "label": "The EPS trap: looks like a 75% drop, was a doubling",
+      "content": "This is the most important interpretive caveat in the dataset. Reported diluted EPS appears to fall from $11.93 (FY-end 2024) to $2.94 (FY-end 2025) — a 75% 'collapse' — yet net income over the same period rose from $29.76B to $72.88B. The reason: NVIDIA executed a 10-for-1 stock split in June 2024, and SEC EPS is reported as-filed (not split-adjusted), so the share count multiplied by ten. On a like-for-like basis, $11.93 becomes $1.19 post-split, which means the actual $2.94 reported is more than double. Anyone plotting raw EPS against the split-adjusted price would see a fake crash; net income is the honest series.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_financials.py", "lines": [61, 68], "output": "fy 2024 eps 11.93 ni 29.76B; fy 2025 eps 2.94 ni 72.88B; fy 2026 eps 4.90 ni 120.07B\n11.93/10=1.193 post-split-equivalent; reported 2.94 is HIGHER because earnings grew" },
+      "data_table": {
+        "description": "Reported diluted EPS vs net income across the 10:1 split",
+        "columns": ["fy_end_year", "eps_diluted", "net_income_b"],
+        "rows": [[2024, 11.93, 29.76], [2025, 2.94, 72.88], [2026, 4.90, 120.07]]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_06": {
+      "label": "R&D: record $18.5B yet a falling share of revenue",
+      "content": "Absolute R&D spend rose every year, from $0.85B (FY-end 2011) to a record $18.50B (FY-end 2026). But because revenue grew even faster, R&D as a share of revenue fell sharply: it peaked at 32.3% (FY-end 2014) and stayed in the 20-27% range through FY-end 2023, then plunged to 14.2%, 9.9%, and 8.6% in FY-end 2024-2026. NVIDIA is now spending more on R&D than ever in dollar terms while revenue outruns it by so much that R&D intensity has more than halved — a signature of extreme operating leverage.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze_financials.py", "lines": [69, 77], "output": "R&D FY2011 $0.85B -> FY2026 $18.5B\nR&D % of revenue peaked 32.3%, FY2026 down to 8.6%" },
+      "data_table": {
+        "description": "R&D expense ($B) and R&D as % of revenue by FY ending year",
+        "columns": ["fy_end_year", "rnd_b", "rnd_pct_rev"],
+        "rows": [
+          [2011, 0.85, 24.0], [2012, 1.00, 25.1], [2013, 1.15, 26.8], [2014, 1.34, 32.3],
+          [2015, 1.36, 29.0], [2016, 1.33, 26.6], [2017, 1.46, 21.2], [2018, 1.80, 18.5],
+          [2019, 2.38, 20.3], [2020, 2.83, 25.9], [2021, 3.92, 23.5], [2022, 5.27, 19.6],
+          [2023, 7.34, 27.2], [2024, 8.68, 14.2], [2025, 12.91, 9.9], [2026, 18.50, 8.6]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_07": {
+      "label": "Balance sheet: assets $4.5B to $207B, equity $3.2B to $157B",
+      "content": "The AI boom rebuilt NVIDIA's balance sheet. Total assets grew from $4.50B (FY-end 2011) to $206.80B (FY-end 2026), and stockholders' equity from $3.18B to $157.29B. The steepest jumps are in the boom years: assets went $41.18B (FY-end 2023) to $65.73B to $111.60B to $206.80B, roughly doubling each year on the back of accumulating cash from surging profits rather than debt.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze_financials.py", "lines": [78, 84], "output": "Total assets FY2011 $4.5B -> FY2026 $206.8B\nStockholders equity FY2011 $3.18B -> FY2026 $157.29B" },
+      "data_table": {
+        "description": "Total assets and stockholders' equity ($B) by FY ending year",
+        "columns": ["fy_end_year", "assets_b", "equity_b"],
+        "rows": [
+          [2011, 4.50, 3.18], [2012, 5.55, 4.15], [2013, 6.41, 4.83], [2014, 7.25, 4.46],
+          [2015, 7.20, 4.42], [2016, 7.37, 4.47], [2017, 9.84, 5.76], [2018, 11.24, 7.47],
+          [2019, 13.29, 9.34], [2020, 17.32, 12.20], [2021, 28.79, 16.89], [2022, 44.19, 26.61],
+          [2023, 41.18, 22.10], [2024, 65.73, 42.98], [2025, 111.60, 79.33], [2026, 206.80, 157.29]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_08": {
+      "label": "Split-adjusted price rose 348x alongside fundamentals",
+      "content": "Joining the split-adjusted closing price to each fiscal period_end (the correct join per the dataset caveat), the share price rose from $0.54 at FY-end 2011 to $187.66 at FY-end 2026 — a 348x increase. The price was nearly identical to revenue in absolute dollar terms by FY-end 2024 ($60.99 vs $60.92B) — a coincidence, but a striking one — before revenue in billions pulled ahead. The price series tracks the same flat-then-vertical shape as revenue and net income.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_price_vs_fundamentals.py", "lines": [22, 40], "output": "Price at FY-end 2011: $0.54 -> FY-end 2026: $187.66\nSplit-adjusted price multiple: 348x\nFY-end 2024 price $60.99 vs revenue $60.92B" },
+      "data_table": {
+        "description": "Split-adjusted price at fiscal period_end vs revenue and net income ($B)",
+        "columns": ["fy_end_year", "price_at_period_end", "revenue_b", "net_income_b"],
+        "rows": [
+          [2011, 0.54, 3.54, 0.25], [2012, 0.34, 4.00, 0.58], [2013, 0.29, 4.28, 0.56], [2014, 0.37, 4.13, 0.44],
+          [2015, 0.50, 4.68, 0.63], [2016, 0.71, 5.01, 0.61], [2017, 2.75, 6.91, 1.67], [2018, 6.02, 9.71, 3.05],
+          [2019, 3.97, 11.72, 4.14], [2020, 6.23, 10.92, 2.80], [2021, 12.95, 16.68, 4.33], [2022, 22.79, 26.91, 9.75],
+          [2023, 20.34, 26.97, 4.37], [2024, 60.99, 60.92, 29.76], [2025, 142.57, 130.50, 72.88], [2026, 187.66, 215.94, 120.07]
+        ]
+      },
+      "based_on": ["det_01", "det_07"]
+    },
+    "ana_09": {
+      "label": "Price tracks fundamentals at r=0.99 — but the multiple expanded",
+      "content": "The market priced NVIDIA almost perfectly off its fundamentals: the Pearson correlation between net income and the price-at-period-end is 0.991, and between revenue and price is 0.992. But correlation hides a re-rating. Over FY2011-FY2026 the share price grew 348x while net income grew 474x and revenue 61x — so price actually lagged net income's growth while massively outrunning revenue's, evidence that investors paid a far richer multiple on each dollar of sales by FY2026 than in 2011. Fundamentals and price moved together, but the valuation lens through which the market viewed each sales dollar expanded enormously.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_price_vs_fundamentals.py", "lines": [41, 50], "output": "Pearson corr net_income vs price: 0.991\nPearson corr revenue vs price: 0.992\nPrice grew 348x vs net income 474x vs revenue 61x" },
+      "data_table": {
+        "description": "Growth multiples over FY2011-FY2026 for comparison",
+        "columns": ["metric", "multiple_x"],
+        "rows": [["Revenue", 61], ["Split-adjusted price", 348], ["Net income", 474]]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_10": {
+      "label": "Stock returns: +239% in 2023, -50% in 2022",
+      "content": "Annual stock returns since 2011 were a roller coaster long before they were a rocket. The best calendar years were 2023 (+239.0%), 2016 (+227.0%), and 2024 (+171.3%) — the 2023 surge is the market front-running the AI revenue boom that would appear in FY-end 2024 financials. The worst years were 2022 (-50.3%), 2018 (-30.8%), and 2012 (-11.0%); the 2022 crash coincided with the crypto bust and the flat-revenue FY-end 2023. NVIDIA was never a smooth ride — it just trended violently upward.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze_price_vs_fundamentals.py", "lines": [51, 59], "output": "Best: 2023 +239.02%, 2016 +226.98%, 2024 +171.25%\nWorst: 2022 -50.26%, 2018 -30.81%, 2012 -10.99%" },
+      "data_table": {
+        "description": "Calendar-year stock return (%) since 2011",
+        "columns": ["year", "yoy_return_pct"],
+        "rows": [
+          [2011, -10.00], [2012, -10.99], [2013, 33.52], [2014, 27.41], [2015, 67.10], [2016, 226.98],
+          [2017, 81.98], [2018, -30.81], [2019, 76.94], [2020, 122.30], [2021, 125.48], [2022, -50.26],
+          [2023, 239.02], [2024, 171.25], [2025, 38.92], [2026, 15.46]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_11": {
+      "label": "Indexed to 100: price ran far ahead of revenue",
+      "content": "Indexing both series to FY-end 2011 = 100 makes the re-rating visible. By FY-end 2026 the revenue index sat at 6,094 while the price index reached 34,752 — the price compounded more than five times faster than revenue off the 2011 base. The gap between the two lines widens dramatically from FY-end 2017 onward (price index 509 vs revenue 195) and never closes, the geometric picture of a market awarding NVIDIA an ever-higher valuation per unit of sales as it became the indispensable supplier of AI compute.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze_price_vs_fundamentals.py", "lines": [60, 71], "output": "FY-end 2026: revenue_index 6094 vs price_index 34752\nFY-end 2017: price_index 509 vs revenue_index 195" },
+      "data_table": {
+        "description": "Revenue and split-adjusted price indexed to FY-end 2011 = 100",
+        "columns": ["fy_end_year", "revenue_index", "price_index"],
+        "rows": [
+          [2011, 100, 100], [2012, 113, 63], [2013, 121, 54], [2014, 117, 69], [2015, 132, 93],
+          [2016, 141, 131], [2017, 195, 509], [2018, 274, 1115], [2019, 331, 735], [2020, 308, 1154],
+          [2021, 471, 2398], [2022, 760, 4220], [2023, 761, 3767], [2024, 1719, 11294],
+          [2025, 3683, 26402], [2026, 6094, 34752]
+        ]
+      },
+      "based_on": ["det_07"]
+    }
+  },
+  "caveats": [
+    { "id": "ana_caveat_01", "content": "EPS is reported as-filed and is NOT split-adjusted, while prices ARE; raw EPS and price must never share an axis. Net income is the split-immune profit series (see ana_05)." },
+    { "id": "ana_caveat_02", "content": "NVIDIA's fiscal year ends in late January, so FY labels mostly cover the prior calendar year. All price-to-financials joins use period_end (the authoritative date), not the year number. The 'fy_end_year' column used throughout is the calendar year each fiscal year ends in." },
+    { "id": "ana_caveat_03", "content": "The source has an fy=2013 row ending 2014-01-26 and no row labeled fy=2014; this is a fiscal-vs-calendar labeling artifact. Using period_end calendar year (fy_end_year) yields a clean continuous 2011-2026 series." },
+    { "id": "ana_caveat_04", "content": "The 'revenue' field merges two XBRL tags (RevenueFromContractWithCustomerExcludingAssessedTax for recent years, Revenues for older ones)." }
+  ]
+}

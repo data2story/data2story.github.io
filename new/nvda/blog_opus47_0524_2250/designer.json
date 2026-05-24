@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Data-driven. This is an analytical financial time-series, so charts carry the argument; one atmospheric hero image sets tone; one guess-first interactive and one chart-synced sonification add embodiment. Video and stock imagery would be decorative for a financials story, so they are deliberately limited per the LEAN budget.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": { "used": true, "reason": "The dataset is quantitative time-series; charts are the primary evidence vehicle." },
+      "image": { "used": true, "reason": "One generated hero image conveys the flat-then-vertical 'cliff' emotionally before the data does. LEAN budget = exactly one image." },
+      "video": { "used": false, "reason": "A financials time-series has no event/process to animate; per the LEAN media budget no video is generated. The hero image and charts carry the visual load." },
+      "audio": { "used": true, "reason": "A 16-point ordered revenue sequence is exactly the kind of small ranked series sonification handles well — the reader can hear the flat decade then the vertical spike, synced to the revenue chart. Web Audio API only, no generated/embedded file needed." },
+      "interactive_or_map": { "used": true, "reason": "No geography, so the interactive is a guess-first reveal on the net-income scale jump plus a chart-synced sonification scrubber, turning surprising findings into participation." }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_00": {
+      "label": "Teaser hero image — the cliff",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "A cinematic abstract data visualization: a near-vertical glowing green ascending line erupting from a long flat baseline on a deep matte-black background, like a financial chart turning into a cliff face of light, faint silicon-wafer circuitry texture etched in the dark, volumetric haze, dramatic single light source, editorial finance magazine cover aesthetic, no text, no numbers, no logos, ultra high detail",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-viewport teaser. The generated abstract 'cliff of light' image fills the screen with no prose, only a faint scroll cue at the bottom. The image visually previews the flat-then-vertical revenue shape before any number appears. Dark, cinematic, restrained.",
+      "rationale": "The whole story is a shape — flat then vertical. A single atmospheric image lets the reader feel that shape before the charts prove it. One image only, per the LEAN budget.",
+      "based_on": []
+    },
+    "des_01": {
+      "label": "Revenue trajectory line chart (the cliff)",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_01",
+        "x": "fy_end_year",
+        "y": "revenue_b",
+        "highlight": { "fy_end_year": 2024, "note": "mark the inflection at the fiscal year ending Jan 2024" },
+        "interaction": "hover tooltip shows fy_end_year, revenue_b, and rev_yoy_pct",
+        "style": { "palette": "single accent green #76b900 line on dark", "no_gridlines": true, "point_markers": true, "y_label": "Revenue ($B)", "x_label": "Fiscal year ending" }
+      },
+      "brief": "A single line of annual revenue ($B) from FY-end 2011 to 2026, NVIDIA-green on a dark panel. The line is visibly flat through ~2016 then bends sharply upward after 2023. Add a vertical reference rule + annotation at fy_end_year 2024 labeled 'the cliff'. Points are dots; hover reveals exact revenue and YoY %. width:container.",
+      "rationale": "A line chart is the only honest way to show the flat-then-vertical shape; bars would obscure the slope change. This is the section that must make the cliff self-evident.",
+      "based_on": ["ana_01"]
+    },
+    "des_02": {
+      "label": "Hinge bar chart — top YoY growth years",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_02",
+        "x": "fy_end_year",
+        "y": "rev_yoy_pct",
+        "highlight": { "fy_end_year": 2024 },
+        "interaction": "hover tooltip shows revenue_b and rev_yoy_pct",
+        "style": { "palette": "green bars, FY-end 2024 bar brightest", "no_gridlines": true, "sort": "descending by rev_yoy_pct", "y_label": "YoY revenue growth (%)" }
+      },
+      "brief": "Horizontal or vertical bar chart of the top-5 YoY revenue growth years (FY-end 2024 +125.9%, 2025 +114.2%, 2026 +65.5%, 2022 +61.4%, 2021 +52.7%), sorted descending. The FY-end 2024 bar is the brightest/highlighted to mark the hinge. Hover shows the absolute revenue too.",
+      "rationale": "After the line chart, a ranked bar gives a different visual mode (no chart streak) and isolates just how extreme the inflection year was relative to NVIDIA's own history.",
+      "based_on": ["ana_02"]
+    },
+    "des_03": {
+      "label": "Hero / chapter-break image (reuse) for the hinge",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "(reused teaser image) abstract green cliff-of-light over a flat baseline on matte black",
+        "model": "openai/gpt-5.4-image-2",
+        "reuse_of": "des_00"
+      },
+      "brief": "Reuse the same hero.png as a full-width chapter-break image inside the hinge section, between the 'bad year' paragraph and the 'hinge turned' paragraph, to give the turn an emotional beat. No new asset generated — same file, per LEAN budget.",
+      "rationale": "The editor flagged [MEDIA: image] here. Reusing the single hero image as a chapter divider honors the LEAN one-image budget while still giving the turn a visual punctuation.",
+      "based_on": []
+    },
+    "des_04": {
+      "label": "Margins layered line chart",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_03",
+        "x": "fy_end_year",
+        "y": ["gross_margin_pct", "net_margin_pct"],
+        "highlight": { "fy_end_year": 2023, "note": "annotate the net-margin dip to 16.2%" },
+        "interaction": "hover tooltip shows both margins for the year",
+        "style": { "palette": "gross margin light green, net margin amber", "no_gridlines": true, "y_label": "Margin (%)", "legend": true }
+      },
+      "brief": "Two lines on one panel: gross margin and net margin (%), FY-end 2011-2026. Net margin shows the sharp V-dip at FY-end 2023 (16.2%) — annotate it. Gross margin steps up above 70% from FY-end 2024. Two-color legend, hover tooltip with both values.",
+      "rationale": "Layering both margins shows the FY2023 scar and the new 70%+ gross-margin tier in one view; the V-dip is the visual hook.",
+      "based_on": ["ana_03"]
+    },
+    "des_05": {
+      "label": "Net income guess-first interactive",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "A prompt: 'NVIDIA earned $0.25B in profit in FY2011. Guess its FY2026 net income.' Reader sees a slider (0 to $150B) or three multiple-choice chips ($20B / $60B / $120B) with a tiny flat-then-rising sparkline.",
+        "trigger": "Reader moves the slider / picks a chip and clicks Reveal",
+        "transition": "The full net-income bar chart (FY-end 2011-2026) animates in, bars growing from baseline, with the reader's guess shown as a dashed line for comparison",
+        "payoff": "Reveal $120.07B (a 474x increase) and the FY-end 2024 jump from $4.37B; most readers will have guessed far too low",
+        "data_source": "ana_04"
+      },
+      "brief": "Guess-first reveal. Reader commits to a guess for FY2026 net income, then the animated bar chart of net income ($B) by FY-end year appears with their guess overlaid as a dashed reference line and the actual $120.07B / 474x highlighted. Must work as a plain bar chart with a visible affordance (chips + Reveal button); the chart uses ana_04's data_table.",
+      "rationale": "Editor flagged [MEDIA: interactive]. The 474x figure is so large that letting readers guess first maximizes the surprise — far stronger than a passive chart, and it breaks the chart rhythm.",
+      "based_on": ["ana_04"]
+    },
+    "des_06": {
+      "label": "EPS trap dual chart (EPS vs net income)",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "dual_bar",
+        "data_source": "ana_05",
+        "x": "fy_end_year",
+        "y": ["eps_diluted", "net_income_b"],
+        "highlight": { "fy_end_year": 2025, "note": "EPS falls while net income more than doubles" },
+        "interaction": "hover tooltip shows both eps_diluted and net_income_b",
+        "style": { "palette": "EPS in red/coral (the misleading line), net income in green (the truth)", "no_gridlines": true, "dual_axis": true, "legend": true }
+      },
+      "brief": "Side-by-side / dual-axis comparison for FY-end 2024-2026: a coral EPS series that visibly DROPS from 11.93 to 2.94, next to a green net-income series ($B) that RISES from 29.76 to 72.88 to 120.07. Annotate the contradiction: 'EPS down 75%, profit up 145% — the 10:1 split is why.' Two separate y-axes, clearly labeled, with a caption that raw EPS and price must never share an axis.",
+      "rationale": "The whole point of the section is the visual contradiction between two series; placing the falling EPS bar next to the rising net-income bar makes the trap instantly legible.",
+      "based_on": ["ana_05"]
+    },
+    "des_07": {
+      "label": "Price vs revenue vs net income dual-axis chart",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_08",
+        "x": "fy_end_year",
+        "y": ["price_at_period_end", "revenue_b", "net_income_b"],
+        "highlight": { "fy_end_year": 2024, "note": "price $60.99 vs revenue $60.92B near-touch" },
+        "interaction": "hover tooltip shows price, revenue_b, net_income_b for the year",
+        "style": { "palette": "price white/teal, revenue green, net income muted gold", "no_gridlines": true, "dual_axis": true, "y_label_left": "Price ($, split-adj.)", "y_label_right": "$ Billions", "legend": true }
+      },
+      "brief": "Three lines, two y-axes: split-adjusted price ($) on the left axis, revenue and net income ($B) on the right. All three share the same flat-then-vertical shape. Annotate the FY-end 2024 point where price ($60.99) and revenue ($60.92B) nearly coincide. Caption notes the 0.991/0.992 correlation. Hover shows all three values.",
+      "rationale": "Showing price and fundamentals on the same time axis (different scales) makes the 0.99 correlation visible as parallel lines, setting up the re-rating reveal in the next section.",
+      "based_on": ["ana_08", "ana_09"]
+    },
+    "des_08": {
+      "label": "Indexed re-rating chart (log scale)",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_11",
+        "x": "fy_end_year",
+        "y": ["revenue_index", "price_index"],
+        "highlight": { "fy_end_year": 2026, "note": "price index 34,752 vs revenue index 6,094" },
+        "interaction": "hover tooltip shows revenue_index and price_index",
+        "style": { "palette": "revenue green, price white", "no_gridlines": true, "y_scale": "log", "y_label": "Index (FY-end 2011 = 100, log scale)", "legend": true, "fill_gap": "subtle shaded band between the two lines" }
+      },
+      "brief": "Two lines indexed to FY-end 2011 = 100 on a LOG y-axis so both fit: revenue index and price index. The price line sits well above revenue from ~2017 on and ends at 34,752 vs 6,094 — shade the widening gap between them to dramatize the re-rating. Log scale is essential or the early years collapse to zero. Hover shows both index values.",
+      "rationale": "Indexing + log scale is the cleanest way to show that price compounded faster than revenue despite the 0.99 correlation — the gap between the lines IS the valuation re-rating.",
+      "based_on": ["ana_11", "ana_09"]
+    },
+    "des_09": {
+      "label": "Annual returns diverging bar chart",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_10",
+        "x": "year",
+        "y": "yoy_return_pct",
+        "highlight": { "year": 2023, "note": "+239% best year; 2022 -50% worst" },
+        "interaction": "hover tooltip shows year and yoy_return_pct",
+        "style": { "palette": "green for positive returns, red for negative", "no_gridlines": true, "zero_baseline": true, "y_label": "Calendar-year return (%)" }
+      },
+      "brief": "Diverging bar chart of calendar-year stock returns since 2011: green bars above zero, red bars below. The +239% (2023) and +227% (2016) bars tower; the -50% (2022) and -31% (2018) bars plunge below the zero line. Explicit zero baseline. Hover shows exact %. Shows the violent volatility under the upward trend.",
+      "rationale": "A diverging bar chart makes the up-and-down whipsaw obvious in a way the smooth price line cannot — the right closing visual for 'never a smooth ride'.",
+      "based_on": ["ana_10"]
+    },
+    "des_10": {
+      "label": "R&D intensity stat callout",
+      "type": "stat_callout",
+      "section": "edt_08",
+      "content": { "value": "8.6%", "label": "of revenue now goes to R&D — a record $18.5B in dollars, down from a 32% peak", "data_source": "ana_06" },
+      "brief": "Large 64px stat: '8.6%' with the label below explaining it is a record $18.5B in absolute terms yet the lowest R&D-to-revenue ratio ever — the signature of extreme operating leverage. Centered, with vertical spacing.",
+      "rationale": "ana_06 is color, not a full chart-worthy section; a single stat callout lands the operating-leverage point without adding another chart to the closing section.",
+      "based_on": ["ana_06"]
+    },
+    "des_11": {
+      "label": "Revenue sonification — hear the cliff",
+      "type": "audio",
+      "section": "edt_01",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "Mapping the 16 annual revenue values to ascending pitch lets the reader HEAR the flat decade as a near-constant low drone then the sudden vertical leap as a rapid pitch climb — the same shape the eye sees in des_01, reinforced through a second sense.",
+        "trigger": "Click a 'Play the revenue curve' button beneath the revenue line chart (des_01). Never autoplay.",
+        "ui_form": "chart-synced sonification: as each year's tone plays, the matching point on the des_01 line chart highlights and a year/value label updates",
+        "content": {
+          "tool": "web_audio_api",
+          "data_mapping": { "field": "revenue_b", "from_ana": "ana_01", "scale": "log", "pitch_range_hz": [180, 1400], "note_duration_ms": 320, "waveform": "triangle" },
+          "legend": "Higher pitch = higher revenue; each note is one fiscal year, 2011 -> 2026."
+        },
+        "fallback": "If Web Audio is unavailable or muted, the des_01 line chart fully communicates the same shape; the play button shows a disabled tooltip.",
+        "novelty_note": "Not a standalone tone card — the tones are bound to the revenue line chart and only meaningful while watching the point highlight move across the cliff."
+      },
+      "brief": "A click-to-play sonification of the 16 annual revenue values (ana_01.data_table revenue_b), mapped log-pitch onto a triangle oscillator, 320ms per note, synced so the corresponding point on the des_01 revenue chart lights up as each note plays. Includes a tiny legend ('higher pitch = more revenue') and a mute-respecting visual fallback.",
+      "rationale": "Editor used a chart in edt_01; sonification adds a non-decorative audio channel that genuinely re-encodes the lead finding (the cliff shape) for a second sense, satisfying the data-driven audio default without a generic tone card.",
+      "based_on": ["ana_01"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, finance-magazine restraint with a single NVIDIA-green accent",
+    "text_visual_pattern": "text-then-visual; each section states the finding in prose, then proves it with a chart/interactive directly below",
+    "centrepiece": "des_01",
+    "anti_sameness_notes": "Avoid a chart-after-chart monotony by alternating modes: line (des_01) -> bar (des_02) -> dual-line margins (des_04) -> guess-first interactive (des_05) -> dual-axis EPS-vs-profit (des_06) -> price/fundamentals (des_07) -> log-indexed re-rating (des_08) -> diverging returns bar (des_09) + stat callout (des_10). The sonification (des_11) and one reused hero image are the only non-chart media, kept lean and data-bound rather than decorative.",
+    "typography_notes": "Large stat callout at 64px; section titles in system-ui caps with green underline accents; body in Georgia serif; pull the EPS-trap caption out as an italic warning. Dark background (#0b0b0d) with #76b900 accent."
+  }
+}

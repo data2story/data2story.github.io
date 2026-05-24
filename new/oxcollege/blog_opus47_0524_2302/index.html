@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eight Centuries in Two Bursts — The Founding of Oxford's Colleges</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style>
+  :root{
+    --ink:#23201b; --muted:#6b6258; --line:#e3ddd2; --bg:#f7f4ee;
+    --amber:#c8762a; --amber-deep:#a4521a; --slate:#8a8378; --slate-d:#5d574d;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:Georgia,'Times New Roman',serif;line-height:1.65;font-size:19px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+  h1,h2,h3,.kicker,.stat-number,.stat-label,figcaption,.ui,button,.tooltip{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  /* Teaser / hero */
+  .hero{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);max-width:none;height:100vh;min-height:560px;overflow:hidden;display:flex;align-items:flex-end}
+  .hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(20,16,12,.15) 0%,rgba(20,16,12,.05) 45%,rgba(20,16,12,.78) 100%)}
+  .hero .headline{position:relative;z-index:2;color:#fff;max-width:900px;margin:0 auto;padding:0 24px 9vh;width:100%}
+  .hero .kicker{text-transform:uppercase;letter-spacing:.22em;font-size:13px;font-weight:600;opacity:.92;margin-bottom:14px}
+  .hero h1{font-family:Georgia,serif;font-size:clamp(34px,6vw,62px);line-height:1.06;margin:0 0 16px;font-weight:700;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+  .hero .sub{font-size:clamp(17px,2.4vw,22px);max-width:640px;opacity:.95;text-shadow:0 1px 10px rgba(0,0,0,.4)}
+  /* Sections */
+  section{padding:40px 0 8px}
+  section h2{font-size:30px;line-height:1.15;margin:14px 0 6px;font-weight:700}
+  .kick2{font-family:system-ui,sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:var(--amber-deep)}
+  p{margin:0 0 20px}
+  .divider{border:none;border-top:1px solid var(--line);margin:34px 0 0}
+  /* Visual containers */
+  .visual-container,.interactive-container{margin:2rem 0;display:block;clear:both}
+  .chart-container{margin:2rem auto;max-width:720px;width:100%}
+  .chart-mount{width:100%;min-width:0;display:block}
+  figure{margin:2rem auto;text-align:center}
+  figcaption{font-size:13px;color:var(--muted);margin-top:10px;font-style:normal}
+  /* Stat callout */
+  .stat-callout{margin:2rem 0;text-align:center;display:block;padding:18px 0}
+  .stat-number{display:block;font-size:64px;font-weight:800;color:var(--amber-deep);line-height:1}
+  .stat-label{display:block;font-size:16px;color:var(--muted);margin-top:10px;max-width:420px;margin-left:auto;margin-right:auto}
+  /* Quiz interactive */
+  .quiz{background:#fff;border:1px solid var(--line);border-radius:14px;padding:26px 22px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .quiz .q{font-family:system-ui,sans-serif;font-weight:600;font-size:18px;text-align:center;margin-bottom:18px}
+  .cards{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .card{flex:1 1 170px;max-width:210px;min-height:140px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(160deg,#fffdf8,#f1eadd);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px;transition:transform .25s ease,box-shadow .25s ease,border-color .2s;font-family:system-ui,sans-serif;text-align:center}
+  .card:hover{transform:translateY(-3px);box-shadow:0 8px 22px rgba(0,0,0,.08)}
+  .card .cname{font-weight:600;font-size:16px}
+  .card .cyear{font-size:34px;font-weight:800;color:var(--amber-deep);margin-top:8px;opacity:0;transform:translateY(6px);transition:opacity .4s ease,transform .4s ease}
+  .card .ctag{font-size:12px;color:var(--muted);margin-top:6px;opacity:0;transition:opacity .4s ease}
+  .card.flipped .cyear,.card.flipped .ctag{opacity:1;transform:none}
+  .card.picked{border-color:var(--amber);box-shadow:0 0 0 2px rgba(200,118,42,.35)}
+  .qhint{font-family:system-ui,sans-serif;font-size:13px;color:var(--muted);text-align:center;margin-top:14px}
+  .reveal{margin-top:20px;opacity:0;max-height:0;overflow:hidden;transition:opacity .5s ease,max-height .5s ease}
+  .reveal.show{opacity:1;max-height:600px}
+  .tline{position:relative;height:64px;margin:8px 4px 4px;border-top:2px solid var(--line)}
+  .tdot{position:absolute;top:-7px;transform:translateX(-50%);text-align:center;font-family:system-ui,sans-serif}
+  .tdot .d{width:12px;height:12px;border-radius:50%;background:var(--amber);margin:0 auto}
+  .tdot.dead .d{background:var(--slate)}
+  .tdot .ty{font-size:11px;color:var(--muted);margin-top:8px;white-space:nowrap}
+  .tdot .tn{font-size:10px;color:var(--ink);margin-top:2px;max-width:64px}
+  .reveal .why{font-family:system-ui,sans-serif;font-size:15px;background:#faf6ee;border-left:3px solid var(--amber);padding:12px 16px;border-radius:0 8px 8px 0;margin-top:18px}
+  /* References */
+  .refs{font-family:system-ui,sans-serif;font-size:14px;color:var(--muted);padding:30px 0 70px}
+  .refs h2{font-family:system-ui,sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:.12em;color:var(--ink)}
+  .refs ul{padding-left:18px;line-height:1.7}
+  .refs a{color:var(--amber-deep)}
+  /* fade in */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  section{animation:fadeUp .7s ease both}
+  @media(max-width:520px){body{font-size:17px}.stat-number{font-size:52px}section h2{font-size:25px}}
+</style>
+</head>
+<body>
+
+<!-- TEASER / HERO -->
+<header class="hero" data-edt="teaser">
+  <img data-des="des_hero" src="assets/hero.png" alt="Oxford college spires and stone quadrangles at golden hour">
+  <div class="scrim"></div>
+  <div class="headline">
+    <div class="kicker">800 Years of the University of Oxford</div>
+    <h1>Eight Centuries, Built in Two Bursts</h1>
+    <div class="sub">Oxford never grew its colleges steadily. It built them in waves — and a quarter of them are already gone.</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- edt_01 -->
+<section data-edt="edt_01" data-det="det_02">
+  <div class="kick2">The Hook</div>
+  <h2>The Argument You Can't Win</h2>
+  <p data-ana="ana_03">Three Oxford colleges have argued for centuries over which is the oldest, and the data shows why no one will ever win. University College dates itself to 1249, Balliol to 1263, Merton to 1264 — all three packed into fifteen years.</p>
+  <p data-det="det_02">Each claim rests on a different test. University College points to a 1249 bequest, the earliest endowment. Balliol claims the longest unbroken occupation of its site since around 1263. Merton was simply the first to be handed a written constitution, in 1264. The dates measure different things, so the argument cannot be settled by counting.</p>
+  <p data-ana="ana_03">Only Rewley Abbey, founded in 1201 and long since dissolved, predates the trio — and being dead, it does not enter the contest.</p>
+
+  <div class="interactive-container">
+    <div class="quiz" id="des_01" data-des="des_01" data-ana="ana_03">
+      <div class="q">Which is Oxford's oldest college?</div>
+      <div class="cards" id="quizCards">
+        <div class="card" data-yr="1249" data-tag="Earliest endowment" onclick="pickCard(this)"><div class="cname">University College</div><div class="cyear">1249</div><div class="ctag"></div></div>
+        <div class="card" data-yr="1263" data-tag="Longest on its site" onclick="pickCard(this)"><div class="cname">Balliol College</div><div class="cyear">1263</div><div class="ctag"></div></div>
+        <div class="card" data-yr="1264" data-tag="First statutes" onclick="pickCard(this)"><div class="cname">Merton College</div><div class="cyear">1264</div><div class="ctag"></div></div>
+      </div>
+      <div class="qhint" id="qhint">Pick one to lock in your answer.</div>
+      <div class="reveal" id="quizReveal">
+        <div class="tline" id="tline"></div>
+        <div class="why" id="whyText"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- edt_02 -->
+<section data-edt="edt_02" data-det="det_03,det_04,det_05">
+  <div class="kick2">The Shape</div>
+  <h2>Two Waves, One Long Silence</h2>
+  <p data-ana="ana_02">Across eight centuries Oxford founded colleges in two great humps, not a steady climb. The 13th century opened with 7; the 16th peaked at 8; then the 18th century produced exactly one. The 19th and 20th centuries each delivered 9 — the busiest centuries in the whole dataset.</p>
+  <p data-ana="ana_08">Grouped into eras the rhythm is stark: 16 medieval foundations (1201–1499), 8 crammed into the Reformation century, just 4 across the two quiet centuries that followed, and then 20 in the modern expansion from 1870 onward. This is not accumulation. It is bursts and droughts.</p>
+  <p>What separates the waves is the most revealing part of the chart: a trough where almost nothing happens.</p>
+  <div class="chart-container" id="des_02" data-des="des_02" data-ana="ana_02"><div class="chart-mount" id="mount_02"></div></div>
+</section>
+
+<hr class="divider">
+
+<!-- edt_03 -->
+<section data-edt="edt_03" data-det="det_05">
+  <div class="kick2">The Trough</div>
+  <h2>The 156-Year Gap</h2>
+  <p data-ana="ana_04">The longest silence in Oxford's history runs 156 years, from Worcester College in 1714 to Keble College in 1870. For a century and a half the university that invented the college simply stopped making them.</p>
+  <p data-ana="ana_04">The other large gaps tell the same story of a system that moved in fits: 75 years before the short-lived Greek College in 1699, 51 years before Brasenose reopened the Tudor wave in 1509. The foundations cluster; the empty stretches between them are the real shape of the data.</p>
+  <div class="chart-container" id="des_03" data-des="des_03" data-ana="ana_04"><div class="chart-mount" id="mount_03"></div></div>
+</section>
+
+<hr class="divider">
+
+<!-- edt_04 -->
+<section data-edt="edt_04" data-det="det_03">
+  <div class="kick2">The Turn</div>
+  <h2>The Reformation Was a Demolition, Not a Boom</h2>
+  <p data-ana="ana_05">The 16th century looks like a building spree, but much of it was wreckage and renaming. Of all 50 colleges, 11 are defunct or merged — nearly a quarter of the list no longer stands alone.</p>
+  <div class="stat-callout" data-des="des_04" data-ana="ana_05">
+    <span class="stat-number">11 of 50</span>
+    <span class="stat-label">Oxford colleges in this dataset no longer stand alone</span>
+  </div>
+  <p data-det="det_03">The Reformation dissolved the monastic colleges — Gloucester, Durham, Canterbury — and turned others inside out. Thomas Wolsey's Cardinal College was suppressed when he fell, refounded as King Henry VIII's College, and finally re-established by the king in 1546 as Christ Church.</p>
+  <p data-ana="ana_06">That collision is written into the founder column. Of 28 colleges with a named founder, 27 are unique individuals — founding a college was a once-in-a-lifetime act. Only three names repeat, and two of them, Wolsey and Henry VIII, converge on the same institution: Christ Church, the survivor that swallowed their failures.</p>
+  <div class="chart-container" id="des_05" data-des="des_05" data-ana="ana_05"><div class="chart-mount" id="mount_05"></div></div>
+</section>
+
+<hr class="divider">
+
+<!-- edt_05 -->
+<section data-edt="edt_05" data-det="det_04,det_05,det_06">
+  <div class="kick2">The Second Wave</div>
+  <h2>The Modern Wave — Women, Then Graduates</h2>
+  <p data-ana="ana_10">The second great hump arrives in two clustered bursts. The 1870s alone produced 5 colleges — Keble and the first women's colleges, Lady Margaret Hall in 1878, Somerville and St Anne's in 1879. The 1960s produced another 5, the surge of new graduate colleges: Linacre, St Catherine's, St Cross, Wolfson, Templeton.</p>
+  <p data-det="det_04">The 1870s colleges were radical before they were normal: women attended lectures and sat exams there for over forty years before Oxford would grant them degrees, which finally came in 1920.</p>
+  <p data-ana="ana_07">As the colleges modernised, so did their names. Of 37 colleges with a recorded namesake, the religious dedications — Mary, the Holy Trinity, a roster of saints — never disappear but slowly cede ground to people and benefactors: Nuffield, Wolfson, Linacre. The honour roll secularises in step with the country.</p>
+  <div class="chart-container" id="des_06" data-des="des_06" data-ana="ana_10"><div class="chart-mount" id="mount_06"></div></div>
+</section>
+
+<hr class="divider">
+
+<!-- edt_06 -->
+<section data-edt="edt_06" data-det="det_05,det_07">
+  <div class="kick2">The Close</div>
+  <h2>A Website Is a Death Certificate</h2>
+  <p data-ana="ana_09">The dataset hides a perfect tell for which colleges are alive. All 39 current colleges have a website. Of the 11 defunct or merged ones, 10 have none.</p>
+  <p data-ana="ana_09">The single exception proves the rule: Templeton College's old URL still resolves — but only by redirecting to Green Templeton, the college it merged into in 2008. An 800-year-old institution announces its survival through one modern artifact, a live web address, and a dissolved medieval monastery shares the same blank cell as a 20th-century college that merged away.</p>
+  <p>The list of Oxford's colleges is not a monument. It is a seismograph — of who had money and faith and power, of when the country built and when it stopped, and of which foundations were strong enough to still answer when you knock.</p>
+  <div class="chart-container" id="des_07" data-des="des_07" data-ana="ana_09"><div class="chart-mount" id="mount_07"></div></div>
+</section>
+
+<hr class="divider">
+
+<!-- References -->
+<section class="refs" data-edt="references">
+  <h2>References & Method</h2>
+  <ul>
+    <li><strong>Data source:</strong> <a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> SPARQL endpoint (CC0), queried 2026-05-24. Colleges = items that are <em>instance of</em> "college of the University of Oxford" (Q2581649); founding via <em>inception</em> (P571), founders via <em>founded by</em> (P112), namesakes via <em>named after</em> (P138). 50 colleges, 1201–2019.</li>
+    <li><strong>Oldest-college dispute:</strong> <a href="https://balliolarchivist.wordpress.com/2011/10/06/q-a-oldest-established/" target="_blank" rel="noopener">Balliol College Archives — "Q&amp;A: oldest established"</a> and <a href="https://en.wikipedia.org/wiki/Merton_College,_Oxford" target="_blank" rel="noopener">Merton College, Oxford (Wikipedia)</a>.</li>
+    <li><strong>Reformation dissolutions &amp; Christ Church:</strong> <a href="https://en.wikipedia.org/wiki/Timeline_of_Oxford" target="_blank" rel="noopener">Timeline of Oxford</a>; <a href="https://en.wikipedia.org/wiki/Christ_Church,_Oxford" target="_blank" rel="noopener">Christ Church, Oxford (Wikipedia)</a>.</li>
+    <li><strong>Women's colleges &amp; degrees:</strong> <a href="https://en.wikipedia.org/wiki/Somerville_College,_Oxford" target="_blank" rel="noopener">Somerville College</a>; <a href="https://en.wikipedia.org/wiki/First_women_admitted_to_degrees_at_the_University_of_Oxford" target="_blank" rel="noopener">First women admitted to degrees (Wikipedia)</a>.</li>
+    <li><strong>Modern colleges:</strong> <a href="https://en.wikipedia.org/wiki/Reuben_College,_Oxford" target="_blank" rel="noopener">Reuben College</a>; <a href="https://en.wikipedia.org/wiki/Green_Templeton_College,_Oxford" target="_blank" rel="noopener">Green Templeton College (Wikipedia)</a>.</li>
+    <li><strong>Tools:</strong> charts built with Vega-Lite 5; hero image generated for atmosphere only. All numbers traced to the analysis scripts in <code>code/</code>.</li>
+  </ul>
+</section>
+
+</main>
+
+<script>
+/* ---------- Quiz interactive (des_01 / ana_03) ---------- */
+var QUIZ_DONE=false;
+/* timeline points: six earliest foundations (ana_03 data_table) */
+var TLINE=[
+  {name:"Rewley Abbey",year:1201,dead:true},
+  {name:"University Coll.",year:1249,dead:false},
+  {name:"Balliol",year:1263,dead:false},
+  {name:"Merton",year:1264,dead:false},
+  {name:"St Edmund Hall",year:1278,dead:false},
+  {name:"Gloucester",year:1283,dead:true}
+];
+function pickCard(el){
+  if(QUIZ_DONE) return;
+  QUIZ_DONE=true;
+  el.classList.add("picked");
+  var cards=document.querySelectorAll("#quizCards .card");
+  for(var i=0;i<cards.length;i++){
+    (function(c,d){setTimeout(function(){
+      c.classList.add("flipped");
+      c.querySelector(".ctag").textContent=c.getAttribute("data-tag");
+    },d);})(cards[i], i*180);
+  }
+  document.getElementById("qhint").textContent="You picked "+el.querySelector(".cname").textContent+". Here is why every answer is defensible.";
+  buildTimeline();
+  setTimeout(function(){document.getElementById("quizReveal").classList.add("show");},650);
+  document.getElementById("whyText").innerHTML="There is no single right answer. <strong>University College</strong> claims the earliest endowment (a 1249 bequest), <strong>Balliol</strong> the longest unbroken life on one site (~1263), and <strong>Merton</strong> the first written statutes (1264). The three sit within fifteen years of each other — which is exactly why the argument has never been settled.";
+}
+function buildTimeline(){
+  var t=document.getElementById("tline");
+  var min=1195, max=1289;
+  for(var i=0;i<TLINE.length;i++){
+    var p=TLINE[i];
+    var pct=((p.year-min)/(max-min))*100;
+    var dot=document.createElement("div");
+    dot.className="tdot"+(p.dead?" dead":"");
+    dot.style.left=pct+"%";
+    dot.innerHTML='<div class="d"></div><div class="ty">'+p.year+'</div><div class="tn">'+p.name+'</div>';
+    t.appendChild(dot);
+  }
+}
+
+/* ---------- Charts (Vega-Lite) ---------- */
+function tbl(cols,rows){return rows.map(function(r){var o={};for(var i=0;i<cols.length;i++)o[cols[i]]=r[i];return o;});}
+var AMBER="#c8762a", AMBER_DEEP="#a4521a", SLATE="#8a8378";
+var BASE={background:"transparent","config":{view:{stroke:null},axis:{grid:false,labelFont:"system-ui,sans-serif",titleFont:"system-ui,sans-serif",labelColor:"#6b6258",titleColor:"#6b6258",domainColor:"#cfc8bb",tickColor:"#cfc8bb"},axisX:{labelAngle:0}}};
+function embed(id,spec){spec.$schema="https://vega.io/schema/vega-lite/v5.json";spec.width="container";for(var k in BASE)if(k!=="config")spec[k]=BASE[k];spec.config=BASE.config;vegaEmbed(id,spec,{actions:false}).catch(console.error);}
+
+/* des_02 — foundations per century (ana_02) */
+embed("#mount_02",{
+  height:300,
+  data:{values:tbl(["century","colleges_founded"],[["13th",7],["14th",5],["15th",4],["16th",8],["17th",3],["18th",1],["19th",9],["20th",9],["21st",2],["unknown",2]])},
+  mark:{type:"bar",cornerRadiusEnd:3},
+  encoding:{
+    x:{field:"century",type:"nominal",sort:["13th","14th","15th","16th","17th","18th","19th","20th","21st","unknown"],axis:{title:null}},
+    y:{field:"colleges_founded",type:"quantitative",axis:{title:"Colleges founded"}},
+    color:{condition:{test:"datum.century==='18th'",value:SLATE},value:AMBER,legend:null},
+    tooltip:[{field:"century",title:"Century"},{field:"colleges_founded",title:"Colleges founded"}]
+  }
+});
+
+/* des_03 — largest gaps (ana_04) */
+embed("#mount_03",{
+  height:240,
+  data:{values:tbl(["college","founded_year","gap_years"],[["Keble College",1870,156],["Greek College",1699,75],["Brasenose College",1509,51],["University College",1249,48],["Lincoln College",1427,48]])},
+  mark:{type:"bar",cornerRadiusEnd:3},
+  encoding:{
+    y:{field:"college",type:"nominal",sort:"-x",axis:{title:null}},
+    x:{field:"gap_years",type:"quantitative",axis:{title:"Years since the previous foundation"}},
+    color:{condition:{test:"datum.college==='Keble College'",value:AMBER_DEEP},value:AMBER,legend:null},
+    tooltip:[{field:"college",title:"College"},{field:"founded_year",title:"Founded"},{field:"gap_years",title:"Gap (years)"}]
+  }
+});
+
+/* des_05 — current vs defunct (ana_05) */
+embed("#mount_05",{
+  height:260,
+  data:{values:tbl(["status","count"],[["current",39],["defunct/merged",11]])},
+  mark:{type:"bar",cornerRadiusEnd:3},
+  encoding:{
+    x:{field:"status",type:"nominal",axis:{title:null}},
+    y:{field:"count",type:"quantitative",axis:{title:"Colleges"}},
+    color:{condition:{test:"datum.status==='defunct/merged'",value:SLATE},value:AMBER,legend:null},
+    tooltip:[{field:"status",title:"Status"},{field:"count",title:"Colleges"}]
+  }
+});
+
+/* des_06 — modern boom by decade (ana_10) */
+embed("#mount_06",{
+  height:280,
+  data:{values:tbl(["decade","count"],[["1870s",5],["1880s",3],["1890s",1],["1920s",1],["1930s",1],["1950s",1],["1960s",5],["1990s",1],["2000s",1],["2010s",1]])},
+  mark:{type:"bar",cornerRadiusEnd:3},
+  encoding:{
+    x:{field:"decade",type:"nominal",sort:["1870s","1880s","1890s","1920s","1930s","1950s","1960s","1990s","2000s","2010s"],axis:{title:null}},
+    y:{field:"count",type:"quantitative",axis:{title:"Colleges founded"}},
+    color:{condition:{test:"datum.decade==='1870s'||datum.decade==='1960s'",value:AMBER_DEEP},value:AMBER,legend:null},
+    tooltip:[{field:"decade",title:"Decade"},{field:"count",title:"Colleges founded"}]
+  }
+});
+
+/* des_07 — website as survival marker (ana_09) */
+embed("#mount_07",{
+  height:280,
+  data:{values:[
+    {status:"current",website:"Has website",count:39},
+    {status:"current",website:"No website",count:0},
+    {status:"defunct/merged",website:"Has website",count:1},
+    {status:"defunct/merged",website:"No website",count:10}
+  ]},
+  mark:{type:"bar",cornerRadiusEnd:3},
+  encoding:{
+    x:{field:"status",type:"nominal",axis:{title:null}},
+    y:{field:"count",type:"quantitative",stack:null,axis:{title:"Colleges"}},
+    xOffset:{field:"website"},
+    color:{field:"website",type:"nominal",scale:{domain:["Has website","No website"],range:[AMBER,SLATE]},legend:{title:null,orient:"top"}},
+    tooltip:[{field:"status",title:"Status"},{field:"website",title:"Website"},{field:"count",title:"Colleges"}]
+  }
+});
+</script>
+</body>
+</html>

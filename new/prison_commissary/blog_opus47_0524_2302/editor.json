@@ -1,0 +1,87 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "In America's prisons, the price of basics like ramen, deodorant, or a fan to survive the heat depends almost entirely on which state you're locked up in — and against wages of pennies an hour, that geography decides what basic dignity costs.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — The same ramen, four times the price",
+      "purpose": "hook",
+      "title": "The Same Ramen, Four Times the Price",
+      "findings": ["ana_01", "ana_02"],
+      "context": ["det_01", "det_03"],
+      "triage": {
+        "ana_01": "lead",
+        "ana_02": "supporting"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "image",
+      "editorial_notes": "Ramen $0.24 (NC) / $1.06 (FL) = 4.4x and deodorant $0.06/$2.90 = 48x must be exact. Note 46-of-50-state snapshot near this chart."
+    },
+    "edt_02": {
+      "label": "The exchange rate is human labor",
+      "purpose": "evidence",
+      "title": "The Exchange Rate Is Human Labor",
+      "findings": ["ana_03"],
+      "context": ["det_02"],
+      "triage": {
+        "ana_03": "lead"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "interactive",
+      "editorial_notes": "382 hours for a fan at $0.06/hr is the centerpiece number — do not round. Keep wage figures as 'roughly'; they come from det_02, not the dataset."
+    },
+    "edt_03": {
+      "label": "The price of staying cool",
+      "purpose": "evidence",
+      "title": "The Price of Staying Cool",
+      "findings": ["ana_07"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_07": "supporting"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": null,
+      "editorial_notes": "Fan $10.02 (WY) to $43.80 (NV). Tie to heat/no-AC framing from det_06."
+    },
+    "edt_04": {
+      "label": "What costs the most is faith",
+      "purpose": "turn",
+      "title": "What Costs the Most Is Faith",
+      "findings": ["ana_04", "ana_05"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_04": "supporting",
+        "ana_05": "lead"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "Quran $25.99 vs Bible $5.21 must be exact. Acknowledge small samples for religious items lightly (use medians). This is the moral turn of the piece."
+    },
+    "edt_05": {
+      "label": "Who sets the price",
+      "purpose": "close",
+      "title": "Who Sets the Price",
+      "findings": ["ana_06", "ana_08"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": null,
+      "editorial_notes": "Keefe = 16 states; 29 of 46 outsourced. Michigan $0.93 vs Indiana $8.36 (9x). End on the geography-of-cost idea, not a summary."
+    }
+  },
+  "full_triage": {
+    "ana_01": "lead",
+    "ana_02": "supporting",
+    "ana_03": "lead",
+    "ana_04": "supporting",
+    "ana_05": "lead",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting"
+  }
+}

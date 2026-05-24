@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "LEAN media budget for this run: one generated hero image only; everything else is free data-driven visuals (Vega-Lite charts, an HTML/JS interactive, CSS stat callouts). No video, no audio, no generated music.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": { "used": true, "reason": "The dataset is fundamentally about counts over time and group differences — trend, ranking and group-diff charts carry the whole argument." },
+      "image": { "used": true, "reason": "A single atmospheric hero of Oxford architecture sets period and place before the data begins. Exactly one generated image per the run's strict LEAN budget." },
+      "video": { "used": false, "reason": "Run budget forbids video. The dataset is dates/founders/namesakes with no event or transformation that a clip would clarify better than a timeline chart." },
+      "audio": { "used": false, "reason": "Run budget forbids generated music/sonification. There is no sonic dimension to college founding dates that would explain anything beyond decoration." },
+      "interactive_or_map": { "used": true, "reason": "The 'oldest college' rivalry is a perfect guess-first reveal; no geographic dimension exists (all colleges are in one city) so a quiz, not a map, is the right interactive." }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_hero": {
+      "label": "Atmospheric Oxford hero image",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic wide atmospheric photograph of ancient Oxford college spires and honey-colored stone quadrangles at golden hour, layered architectural depth from medieval Gothic towers to modern facades fading into mist, dramatic raking light, editorial fine-art photography, muted warm palette of amber and slate, no people, no text, no signage",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed hero behind the headline. Warm amber/slate Oxford skyline at golden hour, layered from medieval to modern. A dark gradient overlay at the bottom lets white headline text sit cleanly on top. No text baked into the image.",
+      "rationale": "One restrained, period-setting still grounds an abstract dates dataset in a real place before the charts begin. Image, not video, per the LEAN budget.",
+      "based_on": []
+    },
+    "des_01": {
+      "label": "Guess the oldest college (quiz) + reveal chart",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "reader_quiz_then_chart",
+        "initial_state": "Three face-down cards labelled University College, Balliol, Merton with the prompt 'Which is Oxford's oldest college?'",
+        "trigger": "Reader clicks one card to commit a guess",
+        "transition": "All three flip to show founding years 1249 / 1263 / 1264; a small horizontal year-line then fades in placing the trio (plus Rewley Abbey 1201 and St Edmund Hall 1278) on a timeline.",
+        "payoff": "Reveal text: there is no single right answer — each claims 'oldest' on a different basis (endowment / continuous site / first statutes). The reader's pick is acknowledged but the point is the unresolvable 15-year cluster.",
+        "data_source": "ana_03"
+      },
+      "brief": "A guess-first interaction. Reader picks one of three colleges, then all flip to reveal years and a compact timeline strip shows the six earliest foundations with Univ/Balliol/Merton highlighted and Rewley Abbey/Gloucester marked as defunct. Vanilla JS, no library; the timeline strip is a flex row of positioned dots with year labels, scaled across 1201-1283.",
+      "rationale": "The finding is surprising and rivalry-driven — letting the reader commit before the reveal lands the 'unwinnable argument' far better than a static bar chart.",
+      "based_on": ["ana_03"]
+    },
+    "des_02": {
+      "label": "Foundations per century — two-wave column chart",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_02",
+        "x": "century",
+        "y": "colleges_founded",
+        "highlight": { "century": "18th" },
+        "interaction": "hover tooltip with century and exact count",
+        "style": { "palette": "warm amber bars, 18th-century bar muted/grey to mark the trough, no gridlines, large axis labels" }
+      },
+      "brief": "Vertical bar chart, one bar per century (13th -> 21st, plus a faint 'unknown' bar). Bars in warm amber; the 18th-century bar (value 1) rendered in a desaturated grey to make the trough between the two waves pop. X axis ordered chronologically. Title-free; let the surrounding prose carry meaning.",
+      "rationale": "A single decisive comparison across centuries — the double hump and the deep 18th-century valley read instantly in a column chart.",
+      "based_on": ["ana_02"]
+    },
+    "des_03": {
+      "label": "Largest gaps before a foundation — horizontal bars",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "bar_horizontal",
+        "data_source": "ana_04",
+        "x": "gap_years",
+        "y": "college",
+        "highlight": { "college": "Keble College" },
+        "interaction": "hover tooltip showing the college, its founding year, and the gap in years",
+        "style": { "palette": "amber bars, Keble (156) in deep accent color, sorted descending by gap, no gridlines" }
+      },
+      "brief": "Horizontal bar chart of the five longest gaps before a new foundation, sorted longest-first so Keble's 156-year gap sits on top in a strong accent color. Y axis = college (the one that ended the gap), X axis = gap_years. Each bar labelled with the founding year in the tooltip.",
+      "rationale": "The Georgian silence is best shown as length — a horizontal bar literally pictures the 156-year wait as the longest bar.",
+      "based_on": ["ana_04"]
+    },
+    "des_04": {
+      "label": "Current vs defunct stat callout",
+      "type": "stat_callout",
+      "section": "edt_04",
+      "content": { "value": "11 of 50", "label": "Oxford colleges in this dataset no longer stand alone", "data_source": "ana_05" },
+      "brief": "Large 64px stat '11 of 50' with the label below. Place above the status chart to set up the demolition framing.",
+      "rationale": "The defunct count is the surprise that flips 'building boom' into 'demolition' — it deserves headline size.",
+      "based_on": ["ana_05"]
+    },
+    "des_05": {
+      "label": "Status split — current vs defunct/merged",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_05",
+        "x": "status",
+        "y": "count",
+        "highlight": { "status": "defunct/merged" },
+        "interaction": "hover tooltip with status and count",
+        "style": { "palette": "current in amber, defunct/merged in slate-grey, no gridlines, large labels" }
+      },
+      "brief": "Two-bar chart: current (39) vs defunct/merged (11). Defunct bar in muted slate to read as 'lost'. Simple and decisive, paired beneath the stat callout.",
+      "rationale": "A two-bar comparison is the most literal way to show how much of the list is gone; no exploration needed.",
+      "based_on": ["ana_05"]
+    },
+    "des_06": {
+      "label": "The modern boom — foundations by decade",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_10",
+        "x": "decade",
+        "y": "count",
+        "highlight": { "decade": ["1870s", "1960s"] },
+        "interaction": "hover tooltip with decade and count",
+        "style": { "palette": "amber bars, the 1870s and 1960s bars (both value 5) in deep accent to mark the two micro-booms, no gridlines" }
+      },
+      "brief": "Column chart of foundations per decade from the 1870s to the 2010s. The two peak decades (1870s and 1960s, both 5) highlighted in a strong accent color to show the women's-college and graduate-college bursts; quieter decades in standard amber.",
+      "rationale": "Decade granularity reveals the two clustered bursts that the century chart hides — exactly the engine of the modern wave.",
+      "based_on": ["ana_10"]
+    },
+    "des_07": {
+      "label": "Website as survival marker — grouped bars",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "bar_grouped",
+        "data_source": "ana_09",
+        "x": "status",
+        "y": "value",
+        "color": "website (has/none)",
+        "highlight": { "status": "defunct/merged", "series": "no_website" },
+        "interaction": "hover tooltip with status, website-state, and count",
+        "style": { "palette": "has_website in living amber, no_website in slate-grey, no gridlines" }
+      },
+      "brief": "Grouped/stacked bar: two groups (current, defunct/merged), each split into has_website vs no_website. Current = 39 amber / 0 grey; defunct = 1 amber / 10 grey. The near-total grey of the defunct group visually = the death certificate. Tooltip notes Templeton as the lone amber defunct bar that redirects to Green Templeton.",
+      "rationale": "The grouped bar makes the near-perfect correlation between 'has a website' and 'still exists' immediately visible — the closing image of the piece.",
+      "based_on": ["ana_09"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm editorial on near-white, archival/scholarly with a single atmospheric hero",
+    "text_visual_pattern": "text-first: prose states the finding, the chart or interactive lands directly below it",
+    "centrepiece": "des_01",
+    "anti_sameness_notes": "Open with a guess-first card interaction rather than a chart; reserve the one generated image strictly for the hero; use a desaturated trough bar and a slate 'dead' palette so charts carry emotional weight without extra media. No audio card, no video — the restraint is the design.",
+    "typography_notes": "Serif (Georgia) body within a 720px column; system-ui for chart labels and the quiz UI. Stat callout at 64px. Highlight color = deep amber/burnt-orange accent against muted slate for 'lost' items. Section dividers as thin rules."
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["stanford_founders.csv", "founders_ranked.csv", "industry_breakdown.csv", "tech_companies.csv"],
+    "rows": 545,
+    "columns": 8,
+    "what_one_row_represents": "A single founder→organization link: one Stanford-educated person credited as a founder of one organization (company, foundation, PAC, school, etc.) on Wikidata.",
+    "time_range": "1913-2026 (founding years; 75 rows have no year)",
+    "geographic_scope": "Global, but heavily concentrated in the San Francisco Bay Area"
+  },
+  "items": {
+    "ana_00": {
+      "label": "Dataset profile and missingness",
+      "content": "The edge list holds 545 founder→organization links covering 394 distinct founders and 509 unique organizations. Founding years span 1913 to 2026, but the data is patchy: 75 links have no founding year, 179 have no headquarters, and 323 (59%) have no industry recorded at all. Multiple Stanford co-founders of the same company each get their own row, so any unique-company count must dedupe on company_id (545 rows collapse to 509 organizations).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [13, 24],
+        "output": "rows: 545\nunique companies (company_id): 509\nunique founders (founder_id): 394\nyear min/max: 1913 2026\nis_tech True rows: 104\nindustries (industry_breakdown rows): 149\nmissing founded_year: 75\nmissing headquarters: 179\nrows with no industry (unspecified): 323"
+      },
+      "data_table": {
+        "description": "Headline dataset counts",
+        "columns": ["metric", "value"],
+        "rows": [["founder→org links", 545], ["unique organizations", 509], ["distinct founders", 394], ["industries", 149], ["links missing industry", 323]]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_01": {
+      "label": "The founding boom peaked in the 2000s",
+      "content": "Plotting unique organizations by founding decade traces the rise of Silicon Valley itself. From a trickle in the early 20th century (3 in the 1910s), foundings climb through the postwar decades — 18 in the 1960s, 25 in the 1970s — then explode: 50 in the 1980s, 73 in the 1990s, and a peak of 120 in the 2000s, before the 2010s settle to 99. The dot-com and Web 2.0 era was the high-water mark of Stanford company creation in this data.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [26, 34],
+        "output": "1910s: 3\n1920s: 2\n1930s: 6\n1940s: 3\n1950s: 10\n1960s: 18\n1970s: 25\n1980s: 50\n1990s: 73\n2000s: 120\n2010s: 99\n2020s: 26\npeak decade: 2000 120"
+      },
+      "data_table": {
+        "description": "Unique organizations founded per decade (deduped on company_id)",
+        "columns": ["decade", "count"],
+        "rows": [["1910s", 3], ["1920s", 2], ["1930s", 6], ["1940s", 3], ["1950s", 10], ["1960s", 18], ["1970s", 25], ["1980s", 50], ["1990s", 73], ["2000s", 120], ["2010s", 99], ["2020s", 26]]
+      },
+      "based_on": ["det_02", "det_05"]
+    },
+    "ana_02": {
+      "label": "Most prolific founders — and what they really founded",
+      "content": "Ranked by raw count, Elon Musk tops the list with 15 entries, ahead of Peter Thiel (10), Larry Page (8), and Sergey Brin (8). But the counts are inflated by Wikidata's broad 'founded by' relation: Musk's 15 include America PAC, the America Party, and Astra Nova School; Thiel's 10 include the Thiel Fellowship and The Stanford Review; Herbert Hoover's 6 are relief commissions and institutes. The ranking is best read as 'things these Stanford people founded', not a company count — and Musk's #1 spot is doubly caveated, since he attended Stanford for only about two days.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [36, 38],
+        "output": "Elon Musk 15\nPeter Thiel 10\nLarry Page 8\nSergey Brin 8\nJeff Skoll 7\nMukesh Ambani 7\nHerbert Hoover 6\nWilliam Redington Hewlett 6\nJoe Lonsdale 5\nDavid Packard 4\nSam Altman 4\nAaron Swartz 3"
+      },
+      "data_table": {
+        "description": "Top founders by number of organizations founded (all org types)",
+        "columns": ["founder", "num_orgs"],
+        "rows": [["Elon Musk", 15], ["Peter Thiel", 10], ["Larry Page", 8], ["Sergey Brin", 8], ["Jeff Skoll", 7], ["Mukesh Ambani", 7], ["Herbert Hoover", 6], ["William R. Hewlett", 6], ["Joe Lonsdale", 5], ["David Packard", 4], ["Sam Altman", 4], ["Aaron Swartz", 3]]
+      },
+      "based_on": ["det_06", "det_07"],
+      "notable_instance": {
+        "name": "Elon Musk",
+        "value": "15 organizations, ~2 days at Stanford",
+        "why": "The #1 'Stanford founder' barely attended Stanford — the perfect illustration of how loose Wikidata's 'educated at' relation is."
+      }
+    },
+    "ana_03": {
+      "label": "Founding clusters within miles of campus",
+      "content": "Of the 338 organizations with a known headquarters, the Bay Area core swallows them: San Francisco (51), Mountain View (19), Palo Alto (17), Menlo Park (10), San Jose (8), Sunnyvale (8), Redwood City (5). The fifteen core Bay Area cities account for 125 of 338 known-HQ organizations (37%), and the broader region dominates once nearby towns are folded in. New York City (11) and Washington, D.C. (9) are the largest non-Bay clusters — the latter inflated by Herbert Hoover's government and relief bodies. The geography is the physical footprint of Frederick Terman's deliberate keep-them-near-campus strategy.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [40, 50],
+        "output": "San Francisco 51\nMountain View 19\nPalo Alto 17\nNew York City 11\nMenlo Park 10\nWashington, D.C. 9\nSan Jose 8\nLos Angeles 8\nSunnyvale 8\nAustin 6\nSeattle 5\nRedwood City 5\nHQ known: 338 | Bay Area core cities: 125 (37.0% of known-HQ companies)"
+      },
+      "data_table": {
+        "description": "Top headquarters cities (unique organizations with known HQ)",
+        "columns": ["city", "count"],
+        "rows": [["San Francisco", 51], ["Mountain View", 19], ["Palo Alto", 17], ["New York City", 11], ["Menlo Park", 10], ["Washington, D.C.", 9], ["San Jose", 8], ["Los Angeles", 8], ["Sunnyvale", 8], ["Austin", 6], ["Seattle", 5], ["Redwood City", 5]]
+      },
+      "based_on": ["det_09", "det_02"]
+    },
+    "ana_04": {
+      "label": "Top specified industries: software, hardware, AI, finance",
+      "content": "Once the 323 'unspecified' links are set aside, the largest named industries read like a Silicon Valley table of contents: financial services (18), software (13), retail (9), computer hardware (8), artificial intelligence (7), information technology (6), Internet (6), and semiconductors (5). Software, hardware, AI, IT, Internet, and semiconductors — the canonical tech stack — dominate the specified set, exactly as the founder-factory thesis predicts.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [52, 57],
+        "output": "financial services 18\nsoftware industry 13\nretail 9\ncomputer hardware industry 8\nartificial intelligence 7\ninformation technology 6\nInternet 6\nsemiconductor industry 5\nsoftware development 5\ne-commerce 5\ntelecommunications 5\nfilm industry 4\nunspecified count: 323 (52.1% of all industry tags)"
+      },
+      "data_table": {
+        "description": "Top named industries by company count (excludes unspecified)",
+        "columns": ["industry", "count"],
+        "rows": [["financial services", 18], ["software", 13], ["retail", 9], ["computer hardware", 8], ["artificial intelligence", 7], ["information technology", 6], ["Internet", 6], ["semiconductors", 5], ["software development", 5], ["e-commerce", 5], ["telecommunications", 5], ["film", 4]]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_05": {
+      "label": "The tech flag is a floor: 59% of links have no industry",
+      "content": "The is_tech flag is unreliable by construction. Of 545 links, 323 (59.3%) have no industry recorded on Wikidata at all, so they can never be flagged tech regardless of what the company actually does. Only 104 links (19.1%) carry the tech flag, and another 118 have an industry that simply isn't tech. The flag is a hard lower bound — many genuine tech firms sit silently in the 323-row 'unspecified' void — and any precise tech count must identify companies by name rather than trust the flag.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [59, 66],
+        "output": "total links: 545\nlinks with NO industry recorded: 323 (59.3%)\nlinks flagged is_tech=True: 104 (19.1%)\nlinks with an industry but not tech-flagged: 118"
+      },
+      "data_table": {
+        "description": "How Wikidata industry coverage breaks down across all 545 links",
+        "columns": ["category", "count", "pct"],
+        "rows": [["No industry recorded", 323, 59.3], ["Tech-flagged", 104, 19.1], ["Industry given, not tech", 118, 21.7]]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_06": {
+      "label": "Tech share holds steady at ~20-35% per decade",
+      "content": "Among links with any industry tag, the tech share per founding decade hovers in a 20-35% band whenever there is enough data: 28.6% in the 1930s (HP-era), 34.5% in the 1980s (the Sun/Cisco surge), 23.4% in the 2000s, and 27.6% in the 2020s. The 1960s and 1970s show 0% tech only because almost none of those older companies have an industry recorded — a coverage artifact, not a real absence of tech. Read alongside ana_05, the lesson is that the apparent tech share is governed by Wikidata's spotty industry tagging more than by any real shift.",
+      "type": "trend",
+      "strength": "weak",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [68, 79],
+        "output": "1930 total 7 tech 2 28.6\n1940 total 3 tech 1 33.3\n1950 total 10 tech 3 30.0\n1960 total 19 tech 0 0.0\n1970 total 27 tech 0 0.0\n1980 total 55 tech 19 34.5\n1990 total 80 tech 16 20.0\n2000 total 128 tech 30 23.4\n2010 total 107 tech 22 20.6\n2020 total 29 tech 8 27.6"
+      },
+      "data_table": {
+        "description": "Tech-flagged share of links per founding decade",
+        "columns": ["decade", "total", "tech", "tech_pct"],
+        "rows": [["1930s", 7, 2, 28.6], ["1940s", 3, 1, 33.3], ["1950s", 10, 3, 30.0], ["1960s", 19, 0, 0.0], ["1970s", 27, 0, 0.0], ["1980s", 55, 19, 34.5], ["1990s", 80, 16, 20.0], ["2000s", 128, 30, 23.4], ["2010s", 107, 22, 20.6], ["2020s", 29, 8, 27.6]]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_07": {
+      "label": "The landmark timeline: HP to Palantir",
+      "content": "The dataset contains the textbook Silicon Valley canon, datable end to end. It opens with Hewlett-Packard (1939), the original garage startup, then jumps to the 1980s wave — Silicon Graphics and Logitech (1981), Sun Microsystems (1982), Intuit (1983), Cisco (1984) — through Nvidia (1993), the dot-com duo PayPal and Google (1998), and into the social era with LinkedIn (2002) and Palantir (2003). Each of these is a household name, and each one is a single row in the same edge list that also contains America PAC and a Belgian relief commission.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [81, 89],
+        "output": "Hewlett-Packard 1939 David Packard\nSilicon Graphics 1981 Charles Kuta\nLogitech 1981 Daniel Borel\nSun Microsystems 1982 Andy Bechtolsheim\nIntuit 1983 Thomas Proulx\nCisco 1984 Leonard Bosack\nNvidia 1993 Jensen Huang\nPayPal 1998 Elon Musk\nGoogle 1998 Larry Page\nLinkedIn 2002 Reid Hoffman\nPalantir Technologies 2003 Joe Lonsdale"
+      },
+      "data_table": {
+        "description": "Landmark companies in the dataset, by founding year",
+        "columns": ["company", "year", "founder_shown"],
+        "rows": [["Hewlett-Packard", 1939, "David Packard"], ["Silicon Graphics", 1981, "Charles Kuta"], ["Logitech", 1981, "Daniel Borel"], ["Sun Microsystems", 1982, "Andy Bechtolsheim"], ["Intuit", 1983, "Thomas Proulx"], ["Cisco", 1984, "Leonard Bosack"], ["Nvidia", 1993, "Jensen Huang"], ["PayPal", 1998, "Elon Musk"], ["Google", 1998, "Larry Page"], ["LinkedIn", 2002, "Reid Hoffman"], ["Palantir Technologies", 2003, "Joe Lonsdale"]]
+      },
+      "based_on": ["det_03", "det_04"]
+    },
+    "ana_08": {
+      "label": "Stanford clusters: companies with multiple Stanford founders",
+      "content": "Stanford doesn't just supply lone founders — it supplies founding teams. 30 organizations in the dataset have more than one Stanford-educated founder. OpenAI leads with 4 Stanford-linked founders, followed by Founders Fund, Sun Microsystems, Palantir, and PayPal with 3 each, then Alphabet, Silicon Graphics, and Cromemco with 2. These multi-founder clusters are why companies like Sun and PayPal appear several times in the raw row count, and they show the network effect of cohorts starting companies together.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [91, 96],
+        "output": "companies with >1 Stanford founder: 30\nOpenAI 4\nFounders Fund 3\nSun Microsystems 3\nPalantir Technologies 3\nPayPal 3\nArtifact 2\nSono Luminus 2\nAlphabet Inc. 2\nSilicon Graphics 2\nCromemco 2"
+      },
+      "data_table": {
+        "description": "Organizations with the most Stanford-educated co-founders",
+        "columns": ["company", "stanford_founders"],
+        "rows": [["OpenAI", 4], ["Founders Fund", 3], ["Sun Microsystems", 3], ["Palantir Technologies", 3], ["PayPal", 3], ["Alphabet Inc.", 2], ["Silicon Graphics", 2], ["Cromemco", 2]]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_09": {
+      "label": "Where industry IS known, tech is the plurality",
+      "content": "Restrict to the 202 organizations that actually have an industry recorded, and tech becomes the largest single bloc: 88 (43.6%) are tech-flagged, versus 114 in all other industries combined. In other words, when Wikidata bothers to label a Stanford-founded company, it is more likely to be tech than anything else — direct support for the founder-factory thesis, once the 59% missing-industry fog is cleared away.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/profile_and_findings.py",
+        "lines": [98, 104],
+        "output": "companies with a specified industry: 202\nof those, tech-flagged: 88 (43.6%)\nnon-tech specified: 114"
+      },
+      "data_table": {
+        "description": "Tech vs non-tech among companies that have any industry recorded",
+        "columns": ["group", "count", "pct"],
+        "rows": [["Tech-flagged", 88, 43.6], ["Other industries", 114, 56.4]]
+      },
+      "based_on": ["det_08"]
+    }
+  },
+  "caveats": [
+    {"id": "ana_caveat_01", "content": "'Founded by' (Wikidata P112) includes non-companies — foundations, PACs, prizes, schools. Founder rankings (ana_02) count organizations of all types, not just companies."},
+    {"id": "ana_caveat_02", "content": "'Educated at Stanford' (P69) does not distinguish degrees from brief enrollment. The #1 founder, Elon Musk, attended for about two days."},
+    {"id": "ana_caveat_03", "content": "The is_tech flag undercounts: 323/545 links (59%) have no industry recorded, so tech counts and per-decade tech shares (ana_05, ana_06) are lower bounds driven by Wikidata coverage."},
+    {"id": "ana_caveat_04", "content": "Multiple Stanford co-founders of one company each get a row; unique-organization counts dedupe on company_id (545 rows -> 509 organizations)."},
+    {"id": "ana_caveat_05", "content": "75 links lack a founding year and 179 lack a headquarters; trend (ana_01, ana_06) and geography (ana_03) findings cover only the rows that have those fields."}
+  ]
+}

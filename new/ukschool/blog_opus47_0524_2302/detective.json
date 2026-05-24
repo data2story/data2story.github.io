@@ -1,0 +1,151 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "What the dataset is and where it comes from",
+      "content": "This dataset compares the University of Oxford and the University of Cambridge as producers of two kinds of elite Britons: Prime Ministers and Nobel laureates. It was built on 2026-05-24 by querying the free Wikidata SPARQL endpoint. Prime Ministers are everyone who has held the position 'Prime Minister of the United Kingdom' (Wikidata Q14211), filtered to real humans (instance of Q5) to strip out fictional PMs that Wikidata also lists, such as Harriet Jones from Doctor Who and Francis Urquhart from House of Cards. University attribution uses the 'educated at' (P69) property and follows the 'part of' (P361) chain, so attending a constituent college such as Christ Church or Trinity counts toward the parent university. The dataset is a clean, reproducible snapshot rather than an official record, and the headline split it captures is one of the most durable facts in British public life.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.wikidata.org",
+          "title": "Wikidata SPARQL endpoint",
+          "facts": [
+            "Prime Ministers identified as holders of position Q14211 filtered to instance-of human Q5",
+            "University attribution via educated-at P69 following part-of P361 college chain",
+            "Free, no API key, queried 2026-05-24"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Why Oxford produces so many Prime Ministers",
+      "content": "Oxford's grip on Downing Street is not random — it is institutional. The Sutton Trust attributes it to three reinforcing mechanisms. First, the Oxford Union, founded in 1823 and described as a 'children's House of Commons', is where future politicians learn to debate and build networks; at least 12 Prime Ministers learned their trade there, including Gladstone, Macmillan, Heath, Johnson and May. Second, the Philosophy, Politics and Economics (PPE) degree, created in the 1920s, became the de facto training course for British political life — three of the last six Prime Ministers studied PPE, and 24 MPs in the last parliament held the degree. Third, an institutional division of identity: since the early 20th century Oxford positioned itself as the university of humanities and politics while Cambridge leaned toward science and technology, steering politically ambitious students one way and scientifically ambitious students the other. This is the causal story behind the numbers in the data.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.suttontrust.com/news-opinion/all-news-opinion/the-stomping-ground-of-the-political-elite-why-does-oxford-produce-so-many-prime-ministers/",
+          "title": "The stomping ground of the political elite — The Sutton Trust",
+          "facts": [
+            "At least 12 Prime Ministers learned to debate at the Oxford Union (founded 1823)",
+            "Three of the last six Prime Ministers studied PPE at Oxford",
+            "24 MPs in the last parliament studied PPE",
+            "Oxford positioned itself as the university of humanities and politics, Cambridge toward science and technology",
+            "9 of Oxford's PMs studied at Christ Church College"
+          ]
+        },
+        {
+          "url": "https://oxford-union.org/pages/our-history",
+          "title": "A Brief History of the Oxford Union Society",
+          "facts": [
+            "The Oxford Union was established in March 1823 as the United Debating Society",
+            "Gladstone was the first of many PMs to hone his debating skills there"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Cambridge as the science and Nobel powerhouse",
+      "content": "If Oxford owns politics, Cambridge owns science. Cambridge is the most Nobel-decorated university in the world by many counts — external listings credit it with roughly 120-126 affiliated laureates, ahead of Oxford's roughly 76. The concentration is extreme even within Cambridge: Trinity College alone claims around 34 Nobel laureates, more than the entire University of Oxford on some counts. The Cavendish Laboratory, home to the discovery of the electron, the neutron and the structure of DNA, anchors this tradition. The mirror-image specialisation — Oxford for statesmen, Cambridge for scientists — is exactly the division the dataset measures, though the dataset's own counts (30 Oxford vs 79 Cambridge) are lower because they use only Wikidata 'educated at' links rather than the broader 'affiliated with' definitions used by university PR.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://oxfordsummercourses.com/articles/how-many-nobel-prizes-does-cambridge-have",
+          "title": "How Many Nobel Prizes Does Cambridge Have?",
+          "facts": [
+            "Cambridge affiliates have received more Nobel Prizes than any other institution (~120-126)",
+            "Trinity College Cambridge has 34 Nobel Laureates, the most of any Oxbridge college",
+            "Oxford ranks second among UK universities with about 76 laureates"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Coverage bias — Wikidata is not a census",
+      "content": "The single most important caveat the analyst must respect: the 'total alumni on Wikidata' figures (39,259 for Oxford, 31,284 for Cambridge) are NOT enrolment counts. They count only people notable enough to have a Wikidata item with an 'educated at' field. So they measure relative notability coverage, not headcount, and must never be presented as 'Oxford is bigger'. Likewise, the Nobel counts use 'educated at', so a laureate can be linked as a former student OR as a later academic affiliate, depending on how Wikidata happened to record them — they should be described as 'associated with' rather than 'graduated from'. Finally, the PM total of 59 includes a couple of pre-1801 Great Britain prime ministers, so it can differ by one or two from lists that start at a different date.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.wikidata.org",
+          "title": "Wikidata dataset README caveats",
+          "facts": [
+            "Total alumni figures are coverage-biased, counting only people with a Wikidata item and educated-at field",
+            "Nobel affiliation can be as student or later academic",
+            "The 59 PM total includes pre-1801 Great Britain prime ministers"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "The Prime Ministers who never went to university",
+      "content": "Four of the 59 PMs have no university recorded on Wikidata, and at least two of those are genuine: David Lloyd George (PM 1916) trained as a solicitor and never attended university, and James Callaghan (PM 1976) left school at sixteen to work as a tax clerk and is the only 20th-century PM never to attend university. Winston Churchill, John Major and others attended no university either but appear under 'Other' or are otherwise non-Oxbridge. This matters because it shows the Oxford pipeline, however dominant, is not absolute — and because since 1937 every PM who attended an English university went to Oxford, with the sole exception of Gordon Brown (Edinburgh). The exceptions are as revealing as the rule.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/List_of_prime_ministers_of_the_United_Kingdom_by_education",
+          "title": "List of prime ministers of the United Kingdom by education — Wikipedia",
+          "facts": [
+            "David Lloyd George and James Callaghan never attended university",
+            "Every PM since 1937 who attended an English university went to Oxford, except Gordon Brown",
+            "As of July 2024, 31 PMs were educated at Oxford and 14 at Cambridge"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Cambridge's vanished political dominance",
+      "content": "Cambridge was not always the runner-up in politics. In the 18th century it produced a string of Prime Ministers — Robert Walpole (Britain's first PM, Trinity College), William Pitt the Younger (Pembroke), and several dukes and earls. But Cambridge has not produced a single Prime Minister since Stanley Baldwin, whose final term ended in 1937. That is nearly a century with no Cambridge PM, against a backdrop of almost unbroken Oxford supremacy. The dataset's chronological 'term_start' field captures this regime change directly: early Cambridge PMs give way to a near-monopoly of Oxford from the mid-20th century onward.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.suttontrust.com/news-opinion/all-news-opinion/the-stomping-ground-of-the-political-elite-why-does-oxford-produce-so-many-prime-ministers/",
+          "title": "The stomping ground of the political elite — The Sutton Trust",
+          "facts": [
+            "Cambridge has not produced a single Prime Minister since Stanley Baldwin (1935/1937)",
+            "Every PM since 1937 who attended university (bar Gordon Brown) went to Oxford"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Why this matters — elite reproduction and access",
+      "content": "This is not trivia. The concentration of national leadership in two universities — and increasingly one — is a live debate about social mobility and elite reproduction in Britain. The Sutton Trust, a social-mobility charity, frames Oxbridge dominance as a access problem: 21% of MPs at the last election were Oxbridge-educated, far above their share of the population, and the Oxford Union network gives a small group of young people early connections to power. A reader cares because the question 'who runs the country, and where were they made?' sits at the heart of arguments about meritocracy, privilege, and whether the route to the top is open or closed.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.suttontrust.com/news-opinion/all-news-opinion/the-stomping-ground-of-the-political-elite-why-does-oxford-produce-so-many-prime-ministers/",
+          "title": "The stomping ground of the political elite — The Sutton Trust",
+          "facts": [
+            "21% of MPs at the last election were Oxbridge-educated",
+            "19 PMs attended Eton; 13 went to both Oxford and Eton"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Scope suggestions for the analyst",
+      "content": "Given the data shape, the analyst should: (1) quantify the headline split precisely — Oxford vs Cambridge PMs and Nobel laureates — and compute the cross-ratios that make the 'division of labour' vivid; (2) use the term_start dates to show the chronological shift, especially the post-1937 Oxford streak and the long Cambridge drought; (3) break down which colleges feed PMs (Christ Church looks dominant); (4) categorise the non-Oxbridge and no-university PMs carefully, keeping Lloyd George and Callaghan visible; (5) always normalise or caveat the 'total alumni' numbers so they are never read as enrolment. The strongest, most counterintuitive framing is the mirror image: the same two institutions split the nation's elite cleanly into rulers and discoverers.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.wikidata.org",
+          "title": "Dataset structure",
+          "facts": [
+            "uk_prime_ministers.csv has term_start dates and per-college institutions field",
+            "oxbridge_comparison.csv has PMs, Nobel laureates, total alumni per university"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_note",
+      "note": "No reference images downloaded. This is a comparative statistical dataset about institutions; specific portrait photos of individual PMs would be decorative rather than evidentiary, and the strongest visual is the data itself (the Oxford/Cambridge split). The Designer is authorised to generate ONE atmospheric hero image (per the lean media budget). Omission of reference media is intentional.",
+      "relates_to": ["det_01", "det_08"]
+    }
+  ],
+  "instances": []
+}

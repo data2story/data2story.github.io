@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Stanford Founder Factory</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  :root {
+    --bg: #14181f;
+    --panel: #1c222c;
+    --ink: #e9e6df;
+    --muted: #9aa3af;
+    --teal: #3fb6a8;
+    --amber: #e6a23c;
+    --line: #2a313c;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height: 1.7;
+    font-size: 18px;
+    overflow-x: hidden;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, h3, .ui { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+  p { margin: 1.1rem 0; }
+
+  /* Teaser */
+  .teaser {
+    position: relative;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    max-width: none;
+    height: 100vh;
+    min-height: 560px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+  }
+  .teaser img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .teaser .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,12,16,0.92) 0%, rgba(10,12,16,0.35) 45%, rgba(10,12,16,0.15) 100%);
+  }
+  .teaser .teaser-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px 8vh;
+    width: 100%;
+  }
+  .teaser .kicker { font-family: system-ui, sans-serif; color: var(--amber); letter-spacing: .18em; text-transform: uppercase; font-size: .8rem; margin-bottom: 1rem; }
+  .teaser h1 {
+    font-size: clamp(2.1rem, 6vw, 4rem);
+    line-height: 1.05;
+    margin: 0 0 1rem;
+    color: #fff;
+    text-shadow: 0 2px 24px rgba(0,0,0,.6);
+  }
+  .teaser .sub { font-size: clamp(1rem, 2.4vw, 1.35rem); color: #d8d4cc; max-width: 640px; }
+
+  section { padding: 3.2rem 0 1rem; border-top: 1px solid var(--line); }
+  section:first-of-type { border-top: none; }
+  .sec-num { font-family: system-ui, sans-serif; color: var(--amber); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; }
+  h2 { font-size: clamp(1.6rem, 4vw, 2.2rem); line-height: 1.15; margin: .4rem 0 1.2rem; color: #fff; }
+
+  /* Visual containers */
+  .visual-container { margin: 2rem 0; display: block; clear: both; }
+  .chart-container { width: 100%; max-width: 720px; margin: 2rem auto; display: block; clear: both; }
+  .chart-mount { width: 100%; min-width: 0; display: block; }
+  .interactive-container { margin: 2rem 0; display: block; clear: both; }
+  figure { margin: 2rem auto; }
+
+  /* Stat callout */
+  .stat-callout { margin: 2.4rem 0; text-align: center; display: block; }
+  .stat-callout .stat-number { font-family: system-ui, sans-serif; font-weight: 800; font-size: clamp(3.4rem, 12vw, 6rem); color: var(--amber); line-height: 1; display: block; }
+  .stat-callout .stat-label { font-family: system-ui, sans-serif; color: var(--muted); font-size: 1.05rem; display: block; margin-top: .6rem; }
+
+  /* Timeline */
+  .timeline { display: flex; gap: 14px; overflow-x: auto; padding: 8px 2px 18px; scroll-snap-type: x mandatory; }
+  .tl-card {
+    flex: 0 0 220px;
+    scroll-snap-align: center;
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color .2s ease, transform .2s ease;
+  }
+  .tl-card:hover, .tl-card.active { border-color: var(--amber); transform: translateY(-3px); }
+  .tl-card.origin { border-color: var(--amber); }
+  .tl-year { font-family: system-ui, sans-serif; font-weight: 800; color: var(--amber); font-size: 1.5rem; }
+  .tl-name { font-family: system-ui, sans-serif; font-weight: 700; margin: 4px 0; color: #fff; }
+  .tl-founder { color: var(--muted); font-size: .9rem; }
+  .tl-note { color: var(--ink); font-size: .85rem; margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 8px; }
+  .tl-hint { font-family: system-ui, sans-serif; color: var(--muted); font-size: .8rem; text-align: center; margin-top: -6px; }
+  @media (max-width: 600px) {
+    .timeline { flex-direction: column; overflow-x: visible; }
+    .tl-card { flex: 1 1 auto; }
+  }
+
+  #hqmap { height: 460px; width: 100%; max-width: 720px; margin: 2rem auto; border-radius: 12px; border: 1px solid var(--line); }
+  .leaflet-popup-content { font-family: system-ui, sans-serif; }
+
+  .caption { font-family: system-ui, sans-serif; color: var(--muted); font-size: .85rem; text-align: center; margin-top: .6rem; }
+
+  /* References */
+  .refs { font-family: system-ui, sans-serif; font-size: .9rem; color: var(--muted); }
+  .refs h2 { font-size: 1.3rem; }
+  .refs a { color: var(--teal); }
+  .refs ul { padding-left: 1.1rem; }
+  .refs li { margin: .5rem 0; }
+
+  a { color: var(--teal); }
+
+  /* fade-in */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  section { animation: fadeUp .6s ease both; }
+</style>
+</head>
+<body>
+
+<!-- ===== TEASER ===== -->
+<div class="teaser" data-des="des_teaser">
+  <img data-des="des_teaser" src="assets/hero.png" alt="A 1930s Palo Alto garage at golden hour dissolving into a modern Silicon Valley skyline" style="max-width:100%;">
+  <div class="scrim"></div>
+  <div class="teaser-inner">
+    <div class="kicker">The Stanford → Silicon Valley pipeline</div>
+    <h1>The Stanford Founder Factory</h1>
+    <div class="sub">One university, 545 companies, and the messy data that proves a clean legend.</div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- ===== edt_01 ===== -->
+  <section data-edt="edt_01" data-det="det_06,det_07,det_01">
+    <div class="sec-num">01</div>
+    <h2>The Most Prolific Stanford Founder Went to Stanford for Two Days</h2>
+
+    <p data-ana="ana_02" data-det="det_06">The most prolific founder to come out of Stanford is Elon Musk, with fifteen organizations to his name. He also attended Stanford for about two days, in 1995, before walking out of a physics PhD to go chase the internet.</p>
+
+    <p>That single fact is the whole story of this dataset in miniature. Stanford really is a founder factory — but the records that prove it are built on words like "founded" and "educated" that turn out to be far looser than they sound.</p>
+
+    <p data-ana="ana_00" data-det="det_01">The raw material is 545 founder&rarr;organization links pulled from Wikidata: 394 distinct Stanford-educated people credited with starting 509 different organizations across 149 industries. It is the spine of Silicon Valley, captured as a spreadsheet.</p>
+
+    <div class="chart-container" id="des_01" data-des="des_01" data-ana="ana_02">
+      <div class="chart-mount" id="mount_des_01"></div>
+      <div class="caption">Top founders by number of organizations founded. Wikidata's "founded by" counts foundations, PACs, and schools too &mdash; and "educated at Stanford" can mean a two-day enrollment.</div>
+    </div>
+  </section>
+
+  <!-- ===== edt_02 ===== -->
+  <section data-edt="edt_02" data-det="det_02,det_05">
+    <div class="sec-num">02</div>
+    <h2>A Curve Shaped Like Silicon Valley</h2>
+
+    <p data-ana="ana_01">Lay the foundings out by decade and you get the rise of Silicon Valley as a single line. A trickle before the war &mdash; three organizations in the 1910s &mdash; climbs to eighteen in the 1960s, fifty in the 1980s, seventy-three in the 1990s, and peaks at a hundred and twenty in the 2000s.</p>
+
+    <p data-det="det_02">None of this was an accident. In the 1930s Stanford's engineering dean, Frederick Terman, started pushing his students to build companies near campus instead of leaving for the East Coast. He leased university land to high-tech firms and earned the title "father of Silicon Valley." The curve is the shape of his strategy paying off.</p>
+
+    <p data-det="det_05">By 2011, a Stanford survey counted nearly forty thousand active alumni-founded companies generating $2.7 trillion a year &mdash; output on the scale of the world's tenth-largest economy. This dataset is a tiny, famous slice of that machine.</p>
+
+    <div class="chart-container" id="des_02" data-des="des_02" data-ana="ana_01">
+      <div class="chart-mount" id="mount_des_02"></div>
+      <div class="caption">Unique organizations founded per decade (deduped on company ID).</div>
+    </div>
+  </section>
+
+  <!-- ===== edt_03 ===== -->
+  <section data-edt="edt_03" data-det="det_03,det_04">
+    <div class="sec-num">03</div>
+    <h2>From a Garage to Palantir</h2>
+
+    <p data-ana="ana_07" data-det="det_03">The list reads like the table of contents of a Silicon Valley history. It opens with Hewlett-Packard in 1939 &mdash; two Stanford students, a rented Palo Alto garage, the building now stamped "Birthplace of Silicon Valley."</p>
+
+    <p data-ana="ana_07" data-det="det_04">Then the 1980s wave: Silicon Graphics and Logitech in 1981, Sun Microsystems in 1982, Cisco in 1984. Sun's name was literally a pun on "Stanford University Network," and its first machine was built from spare parts in the campus computer lab. Cisco's router software descended from code written at Stanford. These companies weren't founded by alumni who happened to study there &mdash; they were spun straight out of the labs.</p>
+
+    <p data-ana="ana_07">From there it runs through Nvidia in 1993 and the dot-com duo of PayPal and Google in 1998, into LinkedIn and Palantir in the 2000s. Every name a household word, every one a single row in the same file.</p>
+
+    <p data-ana="ana_08" data-det="det_04">And Stanford rarely supplies just one founder per company. Thirty organizations here have more than one Stanford-educated founder &mdash; four at OpenAI, three apiece at Sun, Palantir, and PayPal. The factory ships teams, not just individuals.</p>
+
+    <div class="interactive-container" id="des_03" data-des="des_03" data-ana="ana_07">
+      <div class="tl-hint ui">Click a company to see its story &middot; scroll the rail &rarr;</div>
+      <div class="timeline" id="timeline"></div>
+      <div class="caption">The landmark canon, datable end to end. HP (1939) is the origin point.</div>
+    </div>
+  </section>
+
+  <!-- ===== edt_04 ===== -->
+  <section data-edt="edt_04" data-det="det_08">
+    <div class="sec-num">04</div>
+    <h2>Most of the Records Can't Tell You What They Are</h2>
+
+    <div class="stat-callout" id="des_04" data-des="des_04" data-ana="ana_05">
+      <span class="stat-number">59%</span>
+      <span class="stat-label">of records don't say what the company even does (323 of 545)</span>
+    </div>
+
+    <p data-ana="ana_05" data-det="det_08">Here is where the clean story gets honest. The dataset has a tidy "is technology" flag &mdash; but it is built on Wikidata's industry field, and 323 of the 545 records, fifty-nine percent, have no industry recorded at all. Only 104 links carry the tech flag. The flag is a floor, not a count: the famous tech firms sitting in that 59% fog are simply invisible to it.</p>
+
+    <p data-ana="ana_06">That fog distorts everything downstream. The tech share per decade looks like it collapses to zero in the 1960s and 1970s &mdash; not because Stanford stopped making tech companies, but because almost none of those older records have an industry filled in. Where the data exists, tech holds a steady twenty to thirty-five percent.</p>
+
+    <div class="chart-container" id="des_05" data-des="des_05" data-ana="ana_05">
+      <div class="chart-mount" id="mount_des_05"></div>
+      <div class="caption">How Wikidata's industry coverage splits all 545 links. The grey "no industry" bar is the data's blind spot.</div>
+    </div>
+  </section>
+
+  <!-- ===== edt_05 ===== -->
+  <section data-edt="edt_05" data-det="det_08">
+    <div class="sec-num">05</div>
+    <h2>Clear the Fog and Tech Wins</h2>
+
+    <p data-ana="ana_09">So clear the fog. Look only at the 202 organizations that actually have an industry recorded, and technology becomes the single largest bloc: eighty-eight of them, almost forty-four percent, are tech &mdash; more than every other industry combined.</p>
+
+    <p data-ana="ana_04">And when you list those named industries, they read like Silicon Valley's own glossary: software, computer hardware, artificial intelligence, information technology, the Internet, semiconductors. The founder-factory thesis survives contact with the messy data &mdash; you just have to know which numbers are a floor and which are the signal.</p>
+
+    <div class="chart-container" id="des_06" data-des="des_06" data-ana="ana_04">
+      <div class="chart-mount" id="mount_des_06"></div>
+      <div class="caption">Top named industries (excluding the 323 "unspecified" links). Tech-stack industries highlighted in teal.</div>
+    </div>
+  </section>
+
+  <!-- ===== edt_06 ===== -->
+  <section data-edt="edt_06" data-det="det_09,det_02">
+    <div class="sec-num">06</div>
+    <h2>The Factory Has an Address</h2>
+
+    <p data-ana="ana_03" data-det="det_09">Map the headquarters and Terman's strategy is still visible on the ground. Of the companies with a known location, they pile up within a few miles of campus: San Francisco, Mountain View, Palo Alto, Menlo Park, Sunnyvale, San Jose. New York and Washington trail far behind &mdash; and Washington's count is mostly Herbert Hoover's relief commissions, not startups.</p>
+
+    <p>Eighty-odd years after a dean told his students to stay close to home, the map of what they built still clusters around the same handful of Peninsula towns. The factory has an address.</p>
+
+    <div class="interactive-container" data-des="des_07" data-ana="ana_03">
+      <div id="hqmap"></div>
+      <div class="caption">Headquarters of Stanford-founded organizations with a known location. Marker size scales with company count.</div>
+    </div>
+  </section>
+
+  <!-- ===== REFERENCES ===== -->
+  <section class="refs" data-edt="refs">
+    <h2>References</h2>
+    <ul>
+      <li><strong>Data source:</strong> <a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> SPARQL endpoint (P112 "founded by", P69 "educated at", Q41506 Stanford University). Queried 2026-05-24. Free, no API key.</li>
+      <li><strong>Frederick Terman & the founder strategy:</strong> <a href="https://en.wikipedia.org/wiki/Frederick_Terman" target="_blank" rel="noopener">Frederick Terman — Wikipedia</a>.</li>
+      <li><strong>HP Garage (1939):</strong> <a href="https://en.wikipedia.org/wiki/HP_Garage" target="_blank" rel="noopener">HP Garage — Wikipedia</a>.</li>
+      <li><strong>Sun = Stanford University Network:</strong> <a href="https://en.wikipedia.org/wiki/Sun_Microsystems" target="_blank" rel="noopener">Sun Microsystems — Wikipedia</a>; <a href="https://web.stanford.edu/~tcr/tcr-cisco.html" target="_blank" rel="noopener">Origin of Cisco Systems</a>.</li>
+      <li><strong>Economic impact ($2.7T, 5.4M jobs):</strong> <a href="https://engineering.stanford.edu/news/study-reports-stanford-alumni-create-nearly-3-trillion-economic-impact" target="_blank" rel="noopener">Stanford Engineering — alumni economic impact study</a>.</li>
+      <li><strong>Elon Musk's two days at Stanford:</strong> <a href="https://fortune.com/2022/02/15/why-elon-musk-dropped-out-of-stanford/" target="_blank" rel="noopener">Fortune — Why Elon Musk dropped out of Stanford after two days</a>.</li>
+      <li><strong>Tools:</strong> Vega-Lite 5 (charts), Leaflet 1.9 + OpenStreetMap (map). Hero image generated via text2image.</li>
+    </ul>
+  </section>
+
+</main>
+
+<script>
+// ---------- Shared Vega-Lite config ----------
+var ACCENT = "#e6a23c", TEAL = "#3fb6a8", MUTED = "#5b6675", INK = "#e9e6df", GRID = "#2a313c";
+var vlConfig = {
+  background: "transparent",
+  view: { stroke: null },
+  font: "system-ui, -apple-system, Segoe UI, Roboto, sans-serif",
+  axis: { labelColor: INK, titleColor: "#c8c2b8", domainColor: GRID, tickColor: GRID, gridColor: GRID, labelFontSize: 12, titleFontSize: 12 },
+  legend: { labelColor: INK, titleColor: "#c8c2b8" },
+  title: { color: INK }
+};
+function embed(id, spec){ spec.config = vlConfig; spec.width = "container"; vegaEmbed("#"+id, spec, {actions:false, renderer:"svg"}); }
+
+// ---------- des_01: Founders bar ----------
+var foundersRows = [["Elon Musk",15],["Peter Thiel",10],["Larry Page",8],["Sergey Brin",8],["Jeff Skoll",7],["Mukesh Ambani",7],["Herbert Hoover",6],["William R. Hewlett",6],["Joe Lonsdale",5],["David Packard",4],["Sam Altman",4],["Aaron Swartz",3]];
+embed("mount_des_01", {
+  data: { values: foundersRows.map(function(r){ return {founder:r[0], num_orgs:r[1], isMusk: r[0]==="Elon Musk"}; }) },
+  height: 320,
+  mark: { type: "bar", cornerRadiusEnd: 3 },
+  encoding: {
+    y: { field: "founder", type: "nominal", sort: "-x", title: null },
+    x: { field: "num_orgs", type: "quantitative", title: "Organizations founded", axis: { grid: false } },
+    color: { field: "isMusk", type: "nominal", scale: { domain:[true,false], range:[ACCENT, TEAL] }, legend: null },
+    tooltip: [ {field:"founder", title:"Founder"}, {field:"num_orgs", title:"Organizations"} ]
+  }
+});
+
+// ---------- des_02: Decade area ----------
+var decRows = [["1910s",3],["1920s",2],["1930s",6],["1940s",3],["1950s",10],["1960s",18],["1970s",25],["1980s",50],["1990s",73],["2000s",120],["2010s",99],["2020s",26]];
+embed("mount_des_02", {
+  data: { values: decRows.map(function(r){ return {decade:r[0], count:r[1]}; }) },
+  height: 300,
+  layer: [
+    { mark: { type: "area", line: {color: TEAL, strokeWidth: 2}, color: {x1:1,y1:1,x2:1,y2:0, gradient:"linear", stops:[{offset:0,color:"rgba(230,162,60,0.02)"},{offset:1,color:"rgba(230,162,60,0.5)"}]} },
+      encoding: {
+        x: { field: "decade", type: "ordinal", title: null, axis:{grid:false, labelAngle:0} },
+        y: { field: "count", type: "quantitative", title: "Organizations founded", axis:{grid:false} },
+        tooltip: [ {field:"decade", title:"Decade"}, {field:"count", title:"Founded"} ]
+      }
+    },
+    { transform:[{filter:"datum.decade==='2000s'"}],
+      mark: { type:"point", filled:true, size:90, color: ACCENT },
+      encoding: { x:{field:"decade", type:"ordinal"}, y:{field:"count", type:"quantitative"} } },
+    { transform:[{filter:"datum.decade==='2000s'"}],
+      mark: { type:"text", dy:-14, color: ACCENT, fontSize:12, fontWeight:"bold", font:"system-ui" },
+      encoding: { x:{field:"decade", type:"ordinal"}, y:{field:"count", type:"quantitative"}, text:{value:"peak: 120"} } }
+  ]
+});
+
+// ---------- des_05: Industry coverage ----------
+var covRows = [["No industry recorded",323,59.3],["Industry given, not tech",118,21.7],["Tech-flagged",104,19.1]];
+embed("mount_des_05", {
+  data: { values: covRows.map(function(r){ return {category:r[0], count:r[1], pct:r[2], isVoid: r[0]==="No industry recorded"}; }) },
+  height: 180,
+  mark: { type:"bar", cornerRadiusEnd:3 },
+  encoding: {
+    y: { field:"category", type:"nominal", sort:"-x", title:null },
+    x: { field:"count", type:"quantitative", title:"Links (of 545)", axis:{grid:false} },
+    color: { field:"isVoid", type:"nominal", scale:{domain:[true,false], range:[MUTED, TEAL]}, legend:null },
+    tooltip: [ {field:"category", title:"Category"}, {field:"count", title:"Links"}, {field:"pct", title:"Percent"} ]
+  }
+});
+
+// ---------- des_06: Named industries ----------
+var techSet = {"software":1,"computer hardware":1,"artificial intelligence":1,"information technology":1,"Internet":1,"semiconductors":1,"software development":1,"e-commerce":1};
+var indRows = [["financial services",18],["software",13],["retail",9],["computer hardware",8],["artificial intelligence",7],["information technology",6],["Internet",6],["semiconductors",5],["software development",5],["e-commerce",5],["telecommunications",5],["film",4]];
+embed("mount_des_06", {
+  data: { values: indRows.map(function(r){ return {industry:r[0], count:r[1], isTech: techSet[r[0]]?true:false}; }) },
+  height: 320,
+  mark: { type:"bar", cornerRadiusEnd:3 },
+  encoding: {
+    y: { field:"industry", type:"nominal", sort:"-x", title:null },
+    x: { field:"count", type:"quantitative", title:"Companies", axis:{grid:false} },
+    color: { field:"isTech", type:"nominal", scale:{domain:[true,false], range:[TEAL, MUTED]}, legend:{title:"Tech stack", orient:"bottom-right", labelExpr:"datum.value ? 'Tech industry' : 'Other'"} },
+    tooltip: [ {field:"industry", title:"Industry"}, {field:"count", title:"Companies"} ]
+  }
+});
+
+// ---------- des_03: Timeline ----------
+var landmarks = [
+  ["Hewlett-Packard",1939,"David Packard","The original garage startup — 367 Addison Ave, the \"Birthplace of Silicon Valley.\""],
+  ["Silicon Graphics",1981,"Charles Kuta","High-end graphics workstations; spun from Stanford computer-graphics research."],
+  ["Logitech",1981,"Daniel Borel","Founded by Stanford grads — the mouse that went global."],
+  ["Sun Microsystems",1982,"Andy Bechtolsheim","SUN = Stanford University Network. First machine built from spare parts in the CS lab."],
+  ["Intuit",1983,"Thomas Proulx","Personal finance software — Quicken, then TurboTax."],
+  ["Cisco",1984,"Leonard Bosack","Router software descended from code written on Stanford's campus network."],
+  ["Nvidia",1993,"Jensen Huang","Graphics chips that would later power the AI boom."],
+  ["PayPal",1998,"Elon Musk","The \"PayPal Mafia\" seeded a generation of Stanford-linked startups."],
+  ["Google",1998,"Larry Page","Born from a Stanford PhD project by Page and Brin."],
+  ["LinkedIn",2002,"Reid Hoffman","The professional network — another PayPal-alumnus venture."],
+  ["Palantir Technologies",2003,"Joe Lonsdale","Data analytics; three of its founders are Stanford-linked."]
+];
+(function(){
+  var tl = document.getElementById("timeline");
+  landmarks.forEach(function(m, i){
+    var c = document.createElement("div");
+    c.className = "tl-card" + (i===0 ? " origin active" : "");
+    c.innerHTML = '<div class="tl-year">'+m[1]+'</div><div class="tl-name">'+m[0]+'</div><div class="tl-founder">'+m[2]+'</div><div class="tl-note">'+m[3]+'</div>';
+    c.addEventListener("click", function(){
+      var cards = tl.querySelectorAll(".tl-card");
+      for (var k=0;k<cards.length;k++) cards[k].classList.remove("active");
+      c.classList.add("active");
+    });
+    tl.appendChild(c);
+  });
+})();
+
+// ---------- des_07: Leaflet map ----------
+(function(){
+  var cities = [
+    ["San Francisco",37.7749,-122.4194,51],
+    ["Mountain View",37.3861,-122.0839,19],
+    ["Palo Alto",37.4419,-122.1430,17],
+    ["New York City",40.7128,-74.0060,11],
+    ["Menlo Park",37.4530,-122.1817,10],
+    ["Washington, D.C.",38.9072,-77.0369,9],
+    ["San Jose",37.3382,-121.8863,8],
+    ["Los Angeles",34.0522,-118.2437,8],
+    ["Sunnyvale",37.3688,-122.0363,8],
+    ["Austin",30.2672,-97.7431,6],
+    ["Seattle",47.6062,-122.3321,5],
+    ["Redwood City",37.4848,-122.2281,5]
+  ];
+  var map = L.map("hqmap", { scrollWheelZoom:false }).setView([37.55, -122.15], 9);
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+    attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18
+  }).addTo(map);
+  cities.forEach(function(c){
+    L.circleMarker([c[1],c[2]], {
+      radius: 5 + Math.sqrt(c[3])*2.4,
+      color: "#e6a23c", weight: 1.5, fillColor: "#e6a23c", fillOpacity: 0.45
+    }).addTo(map).bindPopup("<b>"+c[0]+"</b><br>"+c[3]+" organizations");
+  });
+})();
+</script>
+</body>
+</html>

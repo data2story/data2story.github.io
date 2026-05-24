@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "LEAN budget (orchestrator constraint): at most ONE generated image (hero), no video, no music. Prefer free data-driven charts, CSS/SVG, and interactive HTML. Media mix is data-first within that constraint.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The dataset is a set of clean quantitative comparisons (Oxford vs Cambridge counts, eras, funnel stages) — charts are the natural backbone."
+      },
+      "image": {
+        "used": true,
+        "reason": "ONE atmospheric hero image only, per the lean budget. A conceptual politics-vs-science split visualises the central 'fork' thesis without decorating individual stats."
+      },
+      "video": {
+        "used": false,
+        "reason": "Lean budget forbids video generation. The dataset is statistical/comparative with no event or process that motion would clarify; the chronological 'regime change' is better shown as an interactive era stepper than a clip."
+      },
+      "audio": {
+        "used": false,
+        "reason": "Lean budget forbids generated music. The dataset has no sonic dimension; a sonification of 4-5 aggregate counts would be decorative rather than explanatory, and no relevant real recording illustrates a specific data point. Audio is deliberately skipped."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "No geography to map, but the chronological regime change (edt_04) is best felt by letting the reader step through eras and watch Cambridge fade as Oxford surges. A guess-first reveal also heightens the surprise of the central fork."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_teaser": {
+      "label": "Guess-first teaser: which university makes PMs?",
+      "type": "interactive",
+      "section": "teaser",
+      "content": {
+        "interaction_type": "guess_first_reveal",
+        "initial_state": "Full-viewport dark stage. A single line: 'Of Britain's 59 Prime Ministers, how many went to Oxford?' Two large clickable buttons frame the guess: a slider or three chips (About 15 / About 25 / About 31). Below, faint: 'Then we'll show you what Cambridge took instead.'",
+        "trigger": "Reader picks a guess chip",
+        "transition": "The chosen chip locks; the number 31 counts up in large type; then a second line fades in: '...and Cambridge took the Nobel Prizes — 79 to Oxford's 30.' The two paired bars (PMs / Nobels) animate in beneath.",
+        "payoff": "Reader has committed to a guess and is then shown the clean two-way split — the fork — before reading a single paragraph. Scroll cue appears.",
+        "data_source": "ana_01"
+      },
+      "brief": "A full-bleed dark teaser that asks the reader to guess Oxford's PM count before revealing it, then immediately reveals the mirror-image Cambridge Nobel dominance. No prose, no headline yet. Uses the ana_01 data_table values (31, 15, 30, 79). Pure vanilla JS + CSS count-up and bar grow animation; works with no external library.",
+      "rationale": "The central finding is genuinely surprising, so a guess-first interaction lands the fork harder than a static hero. Chosen over a generated video (forbidden by lean budget) and over a passive chart.",
+      "based_on": ["ana_01"]
+    },
+    "des_hero": {
+      "label": "Hero image: politics vs science split",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic split-screen conceptual still. Left: a dim oak-panelled debating chamber with green leather benches and a dispatch box, warm tungsten light. Right: a cold blue science laboratory with brass instruments and a chalkboard of equations. A single shaft of light divides the two halves. No people, no text, no logos. Editorial photography, dramatic chiaroscuro, 16:9.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "A single atmospheric image splitting a warm parliamentary debating chamber (left) from a cold science lab (right), visualising the politics-vs-science fork. Placed as a full-width band under the edt_01 prose. No text in frame.",
+      "rationale": "The only generated asset (lean budget). It gives the abstract 'two factories' thesis a concrete visual anchor without decorating any single number.",
+      "based_on": []
+    },
+    "des_01": {
+      "label": "The fork: paired bars, PMs vs Nobels",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_01",
+        "x": "category",
+        "y": "count",
+        "color": "university",
+        "highlight": {"Oxford": "Prime Ministers", "Cambridge": "Nobel laureates"},
+        "interaction": "hover tooltip with exact count and which university+category",
+        "style": {"palette": {"Oxford": "#0b3d91", "Cambridge": "#9e1b32"}, "no_gridlines": true, "width": "container", "large_labels": true}
+      },
+      "brief": "Grouped bar chart: two clusters (Prime Ministers, Nobel laureates), each with an Oxford bar (deep blue) and a Cambridge bar (crimson). In the PM cluster the Oxford bar dominates (31 vs 15); in the Nobel cluster the Cambridge bar dominates (79 vs 30). The visual crossover IS the story — the tallest bar swaps universities between clusters. Tooltip shows exact counts.",
+      "rationale": "A grouped bar makes the mirror-image crossover instantly legible: the same two colours trade dominance between the two categories.",
+      "based_on": ["ana_01"]
+    },
+    "des_02": {
+      "label": "Where all 59 PMs went: horizontal bar",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_02",
+        "x": "count",
+        "y": "route",
+        "color": "route",
+        "highlight": {"route": "Oxford only"},
+        "interaction": "hover tooltip with count and pct",
+        "style": {"sort": "descending by count", "no_gridlines": true, "width": "container", "highlight_color": "#0b3d91", "muted_color": "#c8ccd4"}
+      },
+      "brief": "Horizontal bar chart of the five PM routes (Oxford only 30, Cambridge only 14, Other 10, No university 4, Both 1), sorted descending. The 'Oxford only' bar is highlighted in deep blue; the rest muted grey. Labels show count and %. Communicates how lopsided the single largest route is.",
+      "rationale": "A ranked horizontal bar reads cleanly for five labelled categories and lets the Oxford bar visually own the section.",
+      "based_on": ["ana_02"]
+    },
+    "des_03": {
+      "label": "Stat callout: a college bigger than a university",
+      "type": "stat_callout",
+      "section": "edt_03",
+      "content": {
+        "value": "13",
+        "label": "Prime Ministers educated at a single Oxford college, Christ Church",
+        "data_source": "ana_06"
+      },
+      "brief": "Large 72px stat: '13' with the label 'Prime Ministers educated at a single Oxford college, Christ Church'. A small subline notes this is nearly as many as the whole of Cambridge (15). Centered, generous margin.",
+      "rationale": "The Christ Church number is striking enough to stand alone as a headline stat before the funnel chart.",
+      "based_on": ["ana_06"]
+    },
+    "des_04": {
+      "label": "The narrowing funnel to power",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "funnel_bar",
+        "data_source": "ana_07",
+        "x": "count",
+        "y": "stage",
+        "color": "stage",
+        "highlight": {"stage": "Attended Eton AND Oxford"},
+        "interaction": "hover tooltip with count and pct_of_59",
+        "style": {"order": "as listed (59 -> 31 -> 20 -> 14)", "no_gridlines": true, "width": "container", "gradient": "blues darkening as funnel narrows"}
+      },
+      "brief": "A funnel-style horizontal bar chart with four descending stages: All UK PMs (59), Attended Oxford (31), Attended Eton (20), Attended Eton AND Oxford (14). Each bar shorter than the last, darkening blue as it narrows, so the eye reads a tightening corridor to Downing Street. Tooltip shows count and % of 59.",
+      "rationale": "A funnel literally visualises the editor's 'corridor' metaphor — each stage cuts the field, ending at the dense Eton-Oxford channel.",
+      "based_on": ["ana_07"]
+    },
+    "des_05": {
+      "label": "Era stepper: the regime change",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "era_stepper",
+        "initial_state": "A stacked/grouped bar showing PM counts by route for the first era (1700s), plus an era label and a horizontal era timeline the reader can click through (1700s, 1800-1849, 1850-1899, 1900-1949, 1950-present).",
+        "trigger": "Reader clicks an era on the timeline or presses a Next button; optional auto-advance on first scroll-into-view",
+        "transition": "Bars animate to the new era's counts (Oxford, Cambridge, Both, Other, None). As the reader advances, the Cambridge bar visibly shrinks toward zero while the Oxford bar grows toward 13.",
+        "payoff": "By the final step the reader has watched Cambridge fall to 0 and Oxford surge to 13 — the regime change felt as motion, not just read.",
+        "data_source": "ana_05"
+      },
+      "brief": "An interactive era stepper driven by the ana_05 data_table (five eras x five routes). The reader clicks through eras and the grouped bars animate between states. Oxford in deep blue, Cambridge in crimson, others muted. A caption updates each step (e.g. '1950-present: Cambridge 0, Oxford 13'). Implemented as a single Vega-Lite chart re-rendered per step, or vanilla-JS animated CSS bars; either way data comes only from ana_05. Include prev/next buttons and clickable era chips as affordances.",
+      "rationale": "The chronological collapse is the story's turn; letting the reader scrub eras makes Cambridge's disappearance a felt event rather than a static stacked chart.",
+      "based_on": ["ana_05"]
+    },
+    "des_06": {
+      "label": "Per-10k normalisation: the split survives",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_09",
+        "x": "metric",
+        "y": "value",
+        "color": "university",
+        "highlight": {"Cambridge": "nobel_per_10k", "Oxford": "pms_per_10k"},
+        "interaction": "hover tooltip with exact per-10k rate",
+        "style": {"palette": {"Oxford": "#0b3d91", "Cambridge": "#9e1b32"}, "no_gridlines": true, "width": "container", "caption": "Rates per 10,000 notable Wikidata alumni — a measure of association, not enrolment."}
+      },
+      "brief": "Grouped bar chart with two metric clusters (PMs per 10k, Nobel per 10k), each with an Oxford and Cambridge bar from ana_09 (Oxford 7.90/7.64, Cambridge 4.79/25.25). Even normalised, Oxford leads PMs and Cambridge dominates Nobels — the same crossover as des_01. A mandatory caption restates the coverage-bias caveat directly under the chart.",
+      "rationale": "Mirrors des_01's crossover after normalisation, closing the fairness argument visually while keeping the caveat attached to the number.",
+      "based_on": ["ana_09"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial with two-colour political/scientific palette (deep Oxford blue #0b3d91, Cambridge crimson #9e1b32) on a near-black ground, warm cream serif body on light section bands",
+    "text_visual_pattern": "interactive-first teaser, then alternating prose -> chart, with one image band and one stat callout to break chart streaks",
+    "centrepiece": "des_05",
+    "anti_sameness_notes": "Avoids the standard hero-image-then-three-charts rhythm: opens with a guess-first interactive, uses a funnel for the corridor metaphor and an era stepper for the regime change, and uses only ONE generated image. No audio card, no video.",
+    "typography_notes": "Large 64-72px stat callouts and count-up numbers; section titles in a tight condensed sans; body in Georgia serif at ~19px; the two-colour scheme (blue=Oxford/politics, crimson=Cambridge/science) used consistently so colour itself carries meaning."
+  }
+}
