@@ -494,17 +494,36 @@ body {
 <section class="abstract-section fade-in">
   <h2>Abstract</h2>
   <p>
-    Data tells stories that shape society, and the data journalist's job is to turn raw information into
-    a story that non-expert audiences can understand and trust through to the end. A high-quality news
-    feature routinely takes a newsroom team weeks. We introduce <strong>Data Journalist Agent (Data2Story)</strong>,
-    a multi-agent framework that orchestrates specialised roles into a single virtual newsroom. Data2Story
-    highlights two innovations: <strong>(i) claims are evidence-grounded and reproducible</strong> &mdash; an
-    "Inspector" associates intermediate results so numbers, angles, and assets are grounded in data, code,
-    or a reference, building verifiability into the fact itself; and <strong>(ii) articles are multimodally
-    generative</strong> &mdash; rather than defaulting to plain text and static charts, Data2Story reasons about
-    what readers want to read and interact with, then deploys multimodal tools so the article fits both the
-    data topic and the intended audience. We evaluate Data2Story on 18 articles from diverse topics and
-    sources, each paired with the originally published expert-written piece.
+    Data tells stories that shape society, and the data journalist's job is to turn raw information into a
+    story that non-expert audiences can understand and trust through to the end. A high-quality news feature
+    routinely takes a newsroom team weeks, including hunting for context, running statistics, choosing an
+    angle, and designing visuals. Recent agents are individually capable at each individual step: automated
+    data-science agents close the analysis loop, while design agents can synthesize beautiful websites.
+    <em>But can an agent serve as a data journalist end to end?</em> We introduce <strong>Data Journalist
+    Agent (Data2Story)</strong>, a multi-agent framework that orchestrates specialised roles into a single
+    virtual newsroom. Data2Story highlights two innovations over prior approaches.
+    <strong>(i) Claims are evidence-grounded and reproducible.</strong> We introduce an "Inspector", which
+    associates the intermediate results produced by individual roles so that the numbers, angles, and assets
+    are grounded in data, code, or a reference (e.g., an external URL), so that verifiability is built into
+    the fact itself. <strong>(ii) Articles are multimodally generative.</strong> Rather than defaulting to
+    plain text and static charts, Data2Story reasons about what its readers will want to read and interact
+    with, then deploys multimodal tools so that the article fits both the data topic and the intended audience
+    (e.g., an interactive map with zoom for a geography piece, or an audio clip for a music piece), making the
+    result readable and engaging. We evaluate Data Journalist Agent on 18 articles from diverse topics and
+    publication sources, each paired with the originally published expert-written piece, along three axes:
+    <strong>(a) Human–agent angle coverage</strong>, measuring the overlap and complementarity of angles
+    between Data2Story and human-authored articles, to characterize what each side covers;
+    <strong>(b) Rubric evaluation with a human study</strong> across 53 human participants, with the rubric
+    covering visual design, narrative pacing, data transparency, claim-data alignment, and insight value;
+    <strong>(c) Computer-use agents as judges</strong>: as an automatic proxy for how real-world users
+    navigate and interact with the article, we employ computer-use agents that fully perceive the interface
+    through actions such as clicking and scrolling; and lastly, <strong>(d) Reproducibility</strong>, where a
+    coding verifier re-executes every statement against the data and checks that the claims are reproducible
+    or can be grounded in a reference. Our experimental results show that Data2Story receives favorable
+    ratings from human participants and agent judges in both rubric-based evaluation and side-by-side
+    preference. Notably, the Inspector substantially improves the transparency of data and methods, making
+    auditability explicit and measurable. We hope this work moves toward a reproducible, auditable, and
+    data-intelligent system.
   </p>
 </section>
 
