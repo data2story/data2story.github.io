@@ -1,0 +1,4 @@
+[
+  {"type": "composite_chart_overflow", "count": 1, "lines": [919, 932], "note": "Reduced hconcat panel widths from 320px to 270px and labelLimit from 140 to 110 so the side-by-side current-artist chart fits inside the 720px article column with chart-container padding."},
+  {"type": "missing_image_responsive", "count": 1, "lines": [386], "note": "Added inline max-width/height/display/object-fit styles to the teaser fallback img inside the <video> element so it renders cleanly when the video poster fails to load."}
+]

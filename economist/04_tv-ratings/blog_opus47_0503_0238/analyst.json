@@ -1,0 +1,390 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["IMDb_Economist_tv_ratings.csv"],
+    "rows": 2266,
+    "columns": 7,
+    "what_one_row_represents": "One season of one American TV drama series available on IMDb (titleId, seasonNumber, title, premiere date, season-average IMDb rating, season's share of yearly votes, comma-separated genre list).",
+    "time_range": "1990-01-03 to 2018-10-10",
+    "geographic_scope": "United States (American TV dramas, filtered via IMDb + OMDb metadata by The Economist)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset profile: 2,266 seasons of 868 dramas, 1990-2018",
+      "content": "The dataset contains 2,266 seasons drawn from 868 unique drama series (876 unique IMDb title-IDs — a few shows have multiple IDs after relaunches), spanning premiere dates from 3 January 1990 to 10 October 2018. Across all 2,266 season-rows, the average IMDb rating is 8.06 with a median of 8.12 and a standard deviation of 0.67 — i.e. season ratings cluster tightly in the high 7s and 8s. The minimum is 2.70 (ABC's Doubt, 2017) and the maximum is 9.68 (NBC's Parenthood, 1990, but voted on retrospectively by a small audience). The vast majority of seasons fall between 7.4 and 8.7. This narrow range is itself a clue: IMDb voting culture compresses everything into a band roughly 5 points wide, not 10.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [22, 35],
+        "output": "Rows (seasons): 2266\nUnique titles: 868\nUnique titleIds: 876\nYear range: 1990 to 2018\nMean av_rating: 8.061\nMedian av_rating: 8.115\nStd dev av_rating: 0.671\nMin av_rating: 2.704\nMax av_rating: 9.682"
+      },
+      "data_table": {
+        "description": "Single-row dataset summary",
+        "columns": ["seasons", "shows", "year_min", "year_max", "rating_mean", "rating_median", "rating_sd", "rating_min", "rating_max"],
+        "rows": [
+          [2266, 868, 1990, 2018, 8.06, 8.12, 0.67, 2.70, 9.68]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_02": {
+      "label": "Median IMDb rating per premiere year, 1990-2018",
+      "content": "The median IMDb rating moves up — but slowly. In the 1990s, the median season rating sits at 7.88. In the 2010s (through 2018), it sits at 8.17. That is a shift of +0.29 points on a 10-point scale across two decades, drifting upward almost every year from 2003 onward. The visible step changes are 1990s≈7.88, early-2000s≈8.0, 2014-2018≈8.15-8.28. The single highest median year is 2014 at 8.28, which lines up with peak Breaking Bad / Game of Thrones / True Detective territory. The lowest median year is 1992 at 7.82, on a thin sample of just 10 seasons. Translation: the 'Golden Age' is real in the data, but as a quarter-point lift in the *typical* show, not a wholesale revolution.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [37, 64],
+        "output": "1990s median: 7.876, mean: 7.833, n=207\n2010s median: 8.170, mean: 8.108, n=1468\nMedian lift 1990s→2010s: +0.294"
+      },
+      "data_table": {
+        "description": "Per-year season count, p10, median, p90 of IMDb av_rating, 1990-2018",
+        "columns": ["year", "n_seasons", "p10", "p50", "p90"],
+        "rows": [
+          [1990, 22, 7.372, 7.864, 9.350],
+          [1991, 17, 7.161, 8.027, 8.584],
+          [1992, 10, 7.154, 7.818, 8.523],
+          [1993, 19, 7.125, 7.800, 9.008],
+          [1994, 21, 7.323, 7.929, 8.806],
+          [1995, 19, 7.013, 7.800, 8.963],
+          [1996, 22, 7.202, 7.957, 8.400],
+          [1997, 29, 6.904, 7.800, 8.486],
+          [1998, 22, 7.437, 7.958, 8.412],
+          [1999, 26, 7.211, 7.846, 8.577],
+          [2000, 32, 6.263, 7.846, 8.607],
+          [2001, 32, 7.456, 8.041, 8.807],
+          [2002, 42, 7.420, 7.901, 8.630],
+          [2003, 45, 7.510, 8.176, 8.564],
+          [2004, 50, 7.736, 8.266, 8.751],
+          [2005, 62, 7.282, 8.119, 8.714],
+          [2006, 72, 7.218, 8.033, 8.706],
+          [2007, 90, 7.364, 8.059, 8.500],
+          [2008, 73, 7.409, 8.066, 8.649],
+          [2009, 93, 7.490, 8.033, 8.757],
+          [2010, 98, 7.391, 8.116, 8.728],
+          [2011, 125, 7.423, 8.117, 8.654],
+          [2012, 115, 7.439, 8.148, 8.768],
+          [2013, 142, 7.344, 8.160, 8.720],
+          [2014, 166, 7.421, 8.284, 8.925],
+          [2015, 193, 7.324, 8.182, 8.916],
+          [2016, 215, 7.457, 8.223, 8.864],
+          [2017, 230, 7.228, 8.121, 8.897],
+          [2018, 184, 7.354, 8.148, 8.766]
+        ]
+      },
+      "based_on": ["det_02", "det_06"]
+    },
+    "ana_03": {
+      "label": "Peak TV: drama seasons aired per year grew 10.5x, 1990 → 2017",
+      "content": "The number of American drama seasons released per year exploded. In 1990 the dataset records 22 seasons. By 2017 — the last full year — it records 230. That is a 10.5x increase. The growth is monotonic from 2002 onward (apart from a small 2008-writers'-strike dip): 42 in 2002, 90 in 2007, 142 in 2013, 215 in 2016. 2018 shows 184 seasons but only because the dataset cuts off in October. This matches FX boss John Landgraf's industry-wide tally — 182 scripted shows in 2002 and 487 by 2017 — so the dataset is tracking the same Peak TV phenomenon, not just a sampling artefact.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [66, 76],
+        "output": "Seasons in 1990: 22\nSeasons in 2017 (last full year): 230\nGrowth multiple: 10.5x"
+      },
+      "data_table": {
+        "description": "Number of drama seasons in dataset by premiere year",
+        "columns": ["year", "n_seasons"],
+        "rows": [
+          [1990, 22], [1991, 17], [1992, 10], [1993, 19], [1994, 21],
+          [1995, 19], [1996, 22], [1997, 29], [1998, 22], [1999, 26],
+          [2000, 32], [2001, 32], [2002, 42], [2003, 45], [2004, 50],
+          [2005, 62], [2006, 72], [2007, 90], [2008, 73], [2009, 93],
+          [2010, 98], [2011, 125], [2012, 115], [2013, 142], [2014, 166],
+          [2015, 193], [2016, 215], [2017, 230], [2018, 184]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_04": {
+      "label": "The floor rises, the ceiling does not — and that is the real Golden Age signal",
+      "content": "Splitting each year's seasons into floor (10th percentile), median (50th), and ceiling (90th) reveals the most counterintuitive finding: the so-called Golden Age is mostly a *floor* phenomenon. Comparing 1995 to 2017, the floor rises from 7.01 to 7.23 (+0.22), the median rises from 7.80 to 8.12 (+0.32) — but the ceiling is essentially flat, drifting from 8.96 to 8.90 (-0.06). The very best 1990s shows scored as well as the very best 2010s shows. What changed is that the bottom decile of mid-2010s drama is roughly a quarter-point better than the bottom decile of mid-1990s drama. Cable and streaming did not invent a new category of brilliance; they raised the standard for unremarkable.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [78, 110],
+        "output": "Floor (p10) 1995 vs 2017: 7.01 → 7.23 (Δ +0.22)\nMedian (p50) 1995 vs 2017: 7.80 → 8.12 (Δ +0.32)\nCeiling (p90) 1995 vs 2017: 8.96 → 8.90 (Δ -0.07)"
+      },
+      "data_table": {
+        "description": "Year-by-year floor (p10), median (p50), ceiling (p90) of season ratings — same data as ana_02 reused",
+        "columns": ["year", "n_seasons", "p10", "p50", "p90"],
+        "rows": [
+          [1990, 22, 7.372, 7.864, 9.350],
+          [1991, 17, 7.161, 8.027, 8.584],
+          [1992, 10, 7.154, 7.818, 8.523],
+          [1993, 19, 7.125, 7.800, 9.008],
+          [1994, 21, 7.323, 7.929, 8.806],
+          [1995, 19, 7.013, 7.800, 8.963],
+          [1996, 22, 7.202, 7.957, 8.400],
+          [1997, 29, 6.904, 7.800, 8.486],
+          [1998, 22, 7.437, 7.958, 8.412],
+          [1999, 26, 7.211, 7.846, 8.577],
+          [2000, 32, 6.263, 7.846, 8.607],
+          [2001, 32, 7.456, 8.041, 8.807],
+          [2002, 42, 7.420, 7.901, 8.630],
+          [2003, 45, 7.510, 8.176, 8.564],
+          [2004, 50, 7.736, 8.266, 8.751],
+          [2005, 62, 7.282, 8.119, 8.714],
+          [2006, 72, 7.218, 8.033, 8.706],
+          [2007, 90, 7.364, 8.059, 8.500],
+          [2008, 73, 7.409, 8.066, 8.649],
+          [2009, 93, 7.490, 8.033, 8.757],
+          [2010, 98, 7.391, 8.116, 8.728],
+          [2011, 125, 7.423, 8.117, 8.654],
+          [2012, 115, 7.439, 8.148, 8.768],
+          [2013, 142, 7.344, 8.160, 8.720],
+          [2014, 166, 7.421, 8.284, 8.925],
+          [2015, 193, 7.324, 8.182, 8.916],
+          [2016, 215, 7.457, 8.223, 8.864],
+          [2017, 230, 7.228, 8.121, 8.897],
+          [2018, 184, 7.354, 8.148, 8.766]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_05": {
+      "label": "Top 10 highest-rated seasons in the dataset",
+      "content": "The 10 highest-rated seasons in the dataset span the full 1990-2018 window — far from being concentrated in the streaming era. Six of the top ten predate 2008. The single highest-rated entry is the first season of NBC's Parenthood (1990, 9.68). Three classics from the prestige era do crack the top ten: Breaking Bad's final season (2013, 9.55), Game of Thrones season six (2016, 9.49), and Game of Thrones season four (2014, 9.43). BoJack Horseman's fifth season (2018, 9.47) is also there. But so are Touched by an Angel and an obscure Greek (2011) season. This top ten is the strongest evidence against a 'rising ceiling' story — the very top of the distribution looks era-blind.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/top_bottom_swings.py",
+        "lines": [21, 24],
+        "output": "1. Parenthood S1 (1990): 9.682\n2. Homicide: Life on the Street S6 (1997): 9.600\n3. Touched by an Angel S5 (1998): 9.600\n4. Breaking Bad S5 (2013): 9.554\n5. Game of Thrones S6 (2016): 9.494\n6. BoJack Horseman S5 (2018): 9.474\n7. Are You Afraid of the Dark? S3 (1994): 9.435\n8. Game of Thrones S4 (2014): 9.428\n9. Greek S4 (2011): 9.400\n10. L.A. Law S4 (1990): 9.400"
+      },
+      "data_table": {
+        "description": "Top 10 highest-rated seasons across all years",
+        "columns": ["rank", "title", "season", "year", "av_rating"],
+        "rows": [
+          [1, "Parenthood", 1, 1990, 9.682],
+          [2, "Homicide: Life on the Street", 6, 1997, 9.600],
+          [3, "Touched by an Angel", 5, 1998, 9.600],
+          [4, "Breaking Bad", 5, 2013, 9.554],
+          [5, "Game of Thrones", 6, 2016, 9.494],
+          [6, "BoJack Horseman", 5, 2018, 9.474],
+          [7, "Are You Afraid of the Dark?", 3, 1994, 9.435],
+          [8, "Game of Thrones", 4, 2014, 9.428],
+          [9, "Greek", 4, 2011, 9.400],
+          [10, "L.A. Law", 4, 1990, 9.400]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_06": {
+      "label": "Three-era split: pre-Sopranos vs. cable-prestige vs. streaming",
+      "content": "Bucketing the data into three TV eras — pre-Sopranos (1990-1998), cable prestige (1999-2012, the Sopranos→Breaking Bad arc) and streaming (2013-2018, the Netflix-original era) — gives a clean before/middle/after view. Median season rating climbs from 7.88 (pre-Sopranos) to 8.07 (cable prestige) to 8.19 (streaming), a total lift of +0.31 across roughly a generation. Mean follows the same pattern: 7.84 → 8.03 → 8.12. But the 90th percentile barely budges (8.70, 8.70, 8.86) and the 10th percentile actually fluctuates (7.05, 7.40, 7.34). Each era added more shows than the last (181 → 955 → 1,130 seasons in 6 years vs. 9 vs. 14), so the streaming era's middle improved despite tripling the volume.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/era_buckets.py",
+        "lines": [12, 28],
+        "output": "Pre-Sopranos (1990–1998): n=181, median=7.881, mean=7.840, p10=7.045, p90=8.704\nCable prestige (1999–2012): n=955, median=8.073, mean=8.030, p10=7.400, p90=8.702\nStreaming era (2013–2018): n=1130, median=8.187, mean=8.122, p10=7.337, p90=8.857"
+      },
+      "data_table": {
+        "description": "Three-era summary: n, median, mean, p10, p90 per era",
+        "columns": ["era", "n_seasons", "median", "mean", "p10", "p90"],
+        "rows": [
+          ["Pre-Sopranos (1990–1998)", 181, 7.881, 7.840, 7.045, 8.704],
+          ["Cable prestige (1999–2012)", 955, 8.073, 8.030, 7.400, 8.702],
+          ["Streaming era (2013–2018)", 1130, 8.187, 8.122, 7.337, 8.858]
+        ]
+      },
+      "based_on": ["det_02", "det_03"]
+    },
+    "ana_07": {
+      "label": "Genre drift: Horror jumped, Thriller and Sci-Fi did not",
+      "content": "Genres did not all rise together. The biggest 1990s→2010s lift belongs to Horror dramas, where the median jumped from 7.48 to 8.38 (+0.90), reflecting the rise of prestige horror like American Horror Story, The Walking Dead, and Stranger Things. Adventure (+0.57) and Action (+0.45) also rose substantially. Drama and Crime — the workhorses of cable-prestige — moved a more modest +0.29 each. Two genres actually went the other way: Thriller fell -0.30 and Sci-Fi fell -0.20. Sci-Fi is particularly interesting: Star Trek: Deep Space Nine and Babylon 5 set such a high bar in the early 1990s that 2010s offerings could not keep pace.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/genres.py",
+        "lines": [26, 41],
+        "output": "Drama  1990s_med=7.876 2010s_med=8.170 Δ=+0.294\nMystery 7.913 → 8.136 +0.224\nSci-Fi 8.168 → 7.971 -0.197\nAdventure 7.700 → 8.271 +0.570\nAction 7.802 → 8.253 +0.450\nCrime 7.900 → 8.191 +0.291\nFantasy 8.095 → 8.334 +0.239\nFamily 8.110 → 8.224 +0.114\nRomance 7.800 → 8.092 +0.292\nComedy 7.869 → 8.090 +0.221\nThriller 8.539 → 8.238 -0.301\nHorror 7.481 → 8.383 +0.902"
+      },
+      "data_table": {
+        "description": "Median IMDb rating by genre, 1990s vs 2010s, with delta",
+        "columns": ["genre", "n_1990s", "n_2010s", "median_1990s", "median_2010s", "delta"],
+        "rows": [
+          ["Horror", 10, 101, 7.481, 8.383, 0.902],
+          ["Adventure", 39, 103, 7.700, 8.271, 0.570],
+          ["Action", 41, 247, 7.802, 8.253, 0.450],
+          ["Drama", 207, 1468, 7.876, 8.170, 0.294],
+          ["Romance", 23, 135, 7.800, 8.092, 0.292],
+          ["Crime", 55, 543, 7.900, 8.191, 0.291],
+          ["Fantasy", 26, 127, 8.095, 8.334, 0.239],
+          ["Mystery", 52, 336, 7.913, 8.136, 0.224],
+          ["Comedy", 62, 317, 7.869, 8.090, 0.221],
+          ["Family", 27, 34, 8.110, 8.224, 0.114],
+          ["Sci-Fi", 10, 107, 8.168, 7.971, -0.197],
+          ["Thriller", 5, 118, 8.539, 8.238, -0.301]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_08": {
+      "label": "The within-show collapse: Dexter S8, NYPD Blue, Lethal Weapon, Bloodline",
+      "content": "Some of the most interesting motion in the data is *inside* shows — seasons that fell catastrophically below their own previous peak. NYPD Blue plunged from S1 (8.32) to S4 (4.70) — a 3.62-point free-fall, the largest in the dataset. Are You Afraid of the Dark? lost 3.41 points between its third and sixth seasons. Among streaming-era shows, Dexter is the textbook case: cruising in the high 8s and low 9s for seven seasons, then crashing to 6.95 in the 2013 finale season — a drop of 2.20 points from its peak that is still a punchline in TV writing classes today. Bloodline (-1.99 between S2 and S3) and Royal Pains (-1.93) are streaming-era counterparts. The famous Game of Thrones season-eight collapse (4.0/10 series finale in 2019) sits *outside* this dataset — but its trajectory is foreshadowed: GoT's S5 (9.13) was a half-point dip before the show recovered to S6 (9.49), then began drifting again in S7 (9.30).",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/top_bottom_swings.py",
+        "lines": [37, 73],
+        "output": "Biggest drops from previous peak (within-show):\nNYPD Blue S1→S4: 8.32 → 4.70  (Δ -3.62, 1997)\nAre You Afraid of the Dark? S3→S6: 9.43 → 6.02  (Δ -3.41, 1999)\nLethal Weapon S2→S3: 8.48 → 6.10  (Δ -2.38, 2018)\nLaw & Order: SVU S6→S16: 8.94 → 6.59  (Δ -2.35, 2015)\nScrubs S8→S9: 8.70 → 6.42  (Δ -2.28, 2010)\nDexter S4→S8: 9.15 → 6.95  (Δ -2.20, 2013)\nRoseanne S3→S9: 7.92 → 5.89  (Δ -2.03, 1997)\nBloodline S2→S3: 8.58 → 6.59  (Δ -1.99, 2017)"
+      },
+      "data_table": {
+        "description": "Top 8 within-show drops from a previous peak",
+        "columns": ["title", "from_season", "to_season", "from_rating", "to_rating", "delta", "year_to"],
+        "rows": [
+          ["NYPD Blue", 1, 4, 8.32, 4.70, -3.62, 1997],
+          ["Are You Afraid of the Dark?", 3, 6, 9.43, 6.02, -3.41, 1999],
+          ["Lethal Weapon", 2, 3, 8.48, 6.10, -2.38, 2018],
+          ["Law & Order: SVU", 6, 16, 8.94, 6.59, -2.35, 2015],
+          ["Scrubs", 8, 9, 8.70, 6.42, -2.28, 2010],
+          ["Dexter", 4, 8, 9.15, 6.95, -2.20, 2013],
+          ["Roseanne", 3, 9, 7.92, 5.89, -2.03, 1997],
+          ["Bloodline", 2, 3, 8.58, 6.59, -1.99, 2017]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_09": {
+      "label": "Marquee prestige-era trajectories: Sopranos, Wire, Breaking Bad, Mad Men, GoT",
+      "content": "The five canonical 'Golden Age' shows trace neat upward arcs. The Sopranos opens at 8.74 in 1999 and stays in the 8.4-8.9 band across six seasons, with a small dip in S4 (8.41) before recovering. The Wire is unusually flat for a 'great' show at 8.24-8.42, slow-build television that IMDb voters never spiked. Breaking Bad is the cleanest growth curve in the data: 8.71 → 8.77 → 8.75 → 9.11 → 9.55 over five seasons. Mad Men climbs from 8.23 to 8.85 over seven seasons. Game of Thrones is the most volatile: a high opening (9.13), a peak in S6 (9.49), and a foreshadowing dip in S7 (9.30) before the dataset cuts off. None of these legendary shows started with their best season — every one of them rose, season over season, suggesting prestige-era audiences gave shows time to grow into themselves.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/era_buckets.py",
+        "lines": [40, 80],
+        "output": "Game of Thrones S1-S7: 9.13, 9.09, 9.29, 9.43, 9.13, 9.49, 9.30\nBreaking Bad S1-S5: 8.71, 8.77, 8.75, 9.11, 9.55\nThe Sopranos S1-S6: 8.75, 8.76, 8.88, 8.41, 8.79, 8.77\nThe Wire S1-S5: 8.32, 8.24, 8.42, 8.39, 8.41\nMad Men S1-S7: 8.23, 8.31, 8.63, 8.85, 8.73, 8.40, 8.81"
+      },
+      "data_table": {
+        "description": "Season-by-season ratings for five marquee prestige shows",
+        "columns": ["title", "seasonNumber", "year", "av_rating", "share"],
+        "rows": [
+          ["The Sopranos", 1, 1999, 8.745, 13.42],
+          ["The Sopranos", 2, 2000, 8.761, 10.87],
+          ["The Sopranos", 3, 2001, 8.883, 9.26],
+          ["The Sopranos", 4, 2002, 8.407, 5.52],
+          ["The Sopranos", 5, 2004, 8.786, 7.10],
+          ["The Sopranos", 6, 2006, 8.772, 4.58],
+          ["The Wire", 1, 2002, 8.323, 7.66],
+          ["The Wire", 2, 2003, 8.238, 7.94],
+          ["The Wire", 3, 2004, 8.416, 6.97],
+          ["The Wire", 4, 2006, 8.394, 2.58],
+          ["The Wire", 5, 2008, 8.409, 2.43],
+          ["Mad Men", 1, 2007, 8.226, 2.81],
+          ["Mad Men", 2, 2008, 8.312, 2.36],
+          ["Mad Men", 3, 2009, 8.626, 2.08],
+          ["Mad Men", 4, 2010, 8.847, 1.62],
+          ["Mad Men", 5, 2012, 8.726, 1.45],
+          ["Mad Men", 6, 2013, 8.403, 0.81],
+          ["Mad Men", 7, 2014, 8.813, 0.87],
+          ["Breaking Bad", 1, 2008, 8.711, 11.55],
+          ["Breaking Bad", 2, 2009, 8.765, 15.42],
+          ["Breaking Bad", 3, 2010, 8.747, 12.34],
+          ["Breaking Bad", 4, 2011, 9.107, 10.79],
+          ["Breaking Bad", 5, 2013, 9.554, 18.95],
+          ["Game of Thrones", 1, 2011, 9.127, 13.62],
+          ["Game of Thrones", 2, 2012, 9.085, 14.20],
+          ["Game of Thrones", 3, 2013, 9.288, 11.14],
+          ["Game of Thrones", 4, 2014, 9.428, 11.07],
+          ["Game of Thrones", 5, 2015, 9.132, 9.63],
+          ["Game of Thrones", 6, 2016, 9.494, 15.18],
+          ["Game of Thrones", 7, 2017, 9.301, 10.53]
+        ]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_10": {
+      "label": "Dexter S8: the canonical prestige-era flame-out",
+      "content": "Dexter spent seven seasons in the 8.4-9.1 IMDb band — solid prestige territory. Its 2013 final season collapsed to 6.95 in average rating, a fall of 2.20 points from the show's S4 peak (9.15) and 1.96 from S7 (8.91). The season's ending — Dexter Morgan abandoning Miami to become a lumberjack in the Pacific Northwest after faking his own death — is now standard shorthand in TV criticism for finales that betray their show. The data captures the moment cleanly: the show is on a respectable upward arc, then snaps. This is the same archetype Game of Thrones S8 would later become for streaming-era television, a year after this dataset ends.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/data_tables.py",
+        "lines": [80, 105],
+        "output": "Dexter S1-S8: 8.92, 8.93, 8.63, 9.15, 8.73, 8.44, 8.91, 6.95"
+      },
+      "data_table": {
+        "description": "Dexter season-by-season trajectory, 2006-2013",
+        "columns": ["title", "seasonNumber", "year", "av_rating", "share"],
+        "rows": [
+          ["Dexter", 1, 2006, 8.923, 5.37],
+          ["Dexter", 2, 2007, 8.929, 4.51],
+          ["Dexter", 3, 2008, 8.628, 4.35],
+          ["Dexter", 4, 2009, 9.148, 4.74],
+          ["Dexter", 5, 2010, 8.732, 2.92],
+          ["Dexter", 6, 2011, 8.444, 2.32],
+          ["Dexter", 7, 2012, 8.907, 3.25],
+          ["Dexter", 8, 2013, 6.949, 2.50]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_11": {
+      "label": "Vote share rises with rating, but only modestly",
+      "content": "The data does include a 'share' field — what fraction of total IMDb votes that season received in its premiere year. In principle this lets us check whether the most-watched seasons are also the best-rated. The answer is yes, but weakly. Dividing seasons into share quartiles, the lowest 25% have a median rating of 7.90, the highest 25% have a median rating of 8.31 — a 0.40-point gap. The Pearson correlation between log(share) and rating is +0.25, a modest positive relationship. Translation: popular shows tend to be slightly better-rated than obscure ones, but the relationship is far from deterministic. Plenty of widely-voted seasons land in the 7s, and plenty of niche seasons score above 9.",
+      "type": "correlation",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/genres.py",
+        "lines": [44, 80],
+        "output": "share quartiles: q1=0.10, q2=0.32, q3=1.09, max=55.65\nQ1 (lowest 25%): n=616, median=7.901, mean=7.827\nQ4 (highest 25%): n=566, median=8.306, mean=8.245\nPearson r (log share, rating): 0.248"
+      },
+      "data_table": {
+        "description": "Median and mean rating per share quartile",
+        "columns": ["share_quartile", "n", "median_rating", "mean_rating"],
+        "rows": [
+          ["Q1: lowest 25% votes", 616, 7.901, 7.827],
+          ["Q2", 531, 8.061, 8.027],
+          ["Q3", 553, 8.224, 8.165],
+          ["Q4: highest 25% votes", 566, 8.306, 8.245]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_12": {
+      "label": "Full scatter — every season as a dot, the Economist's original chart",
+      "content": "The complete dataset is 2,266 dots, one per season, each at a (premiere date, IMDb rating) coordinate. This is the visual the original Economist chart uses, and it is the cleanest way to see the Golden-Age signal: a faint upward drift in the cloud's centre of mass plus a dramatic densification on the right side. The cloud's lower edge does rise; the upper edge stays at roughly 9.5; and the volume of dots in 2014-2018 absolutely dwarfs 1990-2000. Marquee shows like Breaking Bad, Game of Thrones, BoJack Horseman, and Mad Men trace visible upward staircases when their seasons are connected. Mediocre prestige-era casualties like Dexter S8 stand out as sharp downward outliers.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/data_tables.py",
+        "lines": [40, 60],
+        "output": "Wrote scatter_all.json with 2266 rows; sample row: ['2016-03', 8.489, 0.51, '11.22.63', 1]"
+      },
+      "data_table": {
+        "description": "Full scatter — every season as one row. Columns: ym (year-month string for x-axis), av_rating, share, title, season. 2,266 rows. Loaded by the Programmer for the centerpiece scatter chart.",
+        "columns": ["ym", "av_rating", "share", "title", "season"],
+        "rows_file": "code/scatter_all.json",
+        "rows_count": 2266
+      },
+      "based_on": ["det_01"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "IMDb ratings are self-selected — voters who feel strongly turn up, casual viewers do not. Absolute levels (everything clustered in the 7s and 8s) reflect IMDb voting culture more than 'objective' quality. Differences between years and within shows are still meaningful; absolute comparisons to a 5.5 midpoint are not."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Dataset cuts off in October 2018 — so the famous Game of Thrones season 8 collapse (2019, 4.0/10 finale) is foreshadowed but not present in the data. 2018 itself is a partial year (184 seasons through October vs. 230 in 2017)."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "'Share' is defined as a season's percent of yearly votes, so its scale changes year-to-year. Older shows that ran when fewer titles existed (X-Files, Twin Peaks, early Sopranos) dominate the 'top share' rankings in absolute terms. Use share for relative attention within a year, not as a cross-year popularity metric."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Some shows have multiple titleIds because of relaunches (e.g. Roseanne 1988-1997 vs. Roseanne 2018). 868 unique titles vs. 876 unique IDs."
+    }
+  ]
+}

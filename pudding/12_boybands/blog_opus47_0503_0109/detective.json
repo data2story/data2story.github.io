@@ -1,0 +1,312 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: Pudding's Internet Boy Band Database (Nov 2018)",
+      "content": "The dataset comes from The Pudding's November 2018 visual essay 'Internet Boy Band Database', written by Amber Thomas with motion graphics by Malik Yusuf and design/development by Russell Samora. The team began with a candidate list pulled from five sources (BuzzFeed, Billboard, Teen Vogue, the Wikipedia 'American boy bands' category, and Ranker), then filtered to 55 acts that (a) had at least one song chart on the U.S. Billboard Hot 100 between 1980 and 2018 and (b) had a YouTube version of that highest-charting (and earliest, in case of ties) song available. From those 55 music videos, more than 40 volunteers manually annotated 234 individual band members for hair, clothing, accessories, instruments, skin tone, height, and date of birth — each member double-coded with a third reviewer breaking ties. This is therefore not a survey of every boy band ever; it is a careful field guide to what charting boy bands actually looked like on screen.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/11/boy-bands/",
+          "title": "Internet Boy Band Database — The Pudding",
+          "facts": [
+            "55 boy bands with at least one Billboard Hot 100 song between 1980 and 2018",
+            "Each band represented by its highest-charting song's music video",
+            "Designed and developed by Russell Samora and Amber Thomas; illustration/animation by Malik Yusuf"
+          ]
+        },
+        {
+          "url": "https://github.com/the-pudding/data/tree/master/boybands",
+          "title": "the-pudding/data — boybands directory",
+          "facts": [
+            "Public bands.csv covers 55 bands; boys.csv covers 234 members",
+            "Members were reviewed by two annotators with a third resolving disagreements",
+            "Reviewers described members 'when all members were featured together in the same shot'"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Definition trap: 'classifying boy bands is not an exact science'",
+      "content": "Pudding's editors acknowledge the genre is fuzzy. The dataset's filtering rule — Billboard Hot 100 + a charting music video + a manageable number of male singers — picks up vocal R&B groups (Boyz II Men, Jodeci, Blackstreet, Shai), rap-adjacent acts (Bell Biv DeVoe, Mindless Behavior), and global imports (Westlife, Take That, Aventura, BTS) alongside the prototypical American 'prefab' acts. That is a feature, not a bug: it lets us see how a category that pop culture treats as a single thing — 'boy band' — actually contains four or five overlapping micro-genres whose look and music differ markedly. Any finding from this data should be read as 'across the kinds of male vocal groups that crossed over to U.S. pop charts', not as a universal claim about all boy bands.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/11/boy-bands/",
+          "title": "Internet Boy Band Database — The Pudding",
+          "facts": [
+            "The article opens by noting 'classifying boy bands is not an exact science'",
+            "The roster mixes pop, R&B, K-pop, Latin, and rap-adjacent groups under one umbrella"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Background: what 'boy band' actually means",
+      "content": "Boy bands are usually defined as vocal groups of young male singers — typically four or five — built for a teenage audience, with harmony and choreographed performance over instrumental virtuosity. Britannica and Wikipedia trace the modern term to the 1980s, when MTV-era groups like Menudo, New Edition, and New Kids on the Block established the template. The format reached commercial peak in the late 1990s and early 2000s with the Backstreet Boys and NSYNC, who together sold more than 200 million records, and was reinterpreted in the 2010s by One Direction (Western pop) and BTS (K-pop), the latter becoming the first non-English boy band to top the Billboard 200. Crucially, the genre is built on visible identity: each member usually plays a distinct 'type' (the cute one, the bad boy, the dancer, the singer), and the music video — not the album — is the primary product.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Boy_band",
+          "title": "Boy band — Wikipedia",
+          "facts": [
+            "Boy bands are vocal groups of young male performers aimed at teen and pre-teen audiences",
+            "Backstreet Boys are the best-selling boy band ever with over 100 million records sold",
+            "BTS broke the Western/Asian commercial barrier for K-pop boy bands"
+          ]
+        },
+        {
+          "url": "https://www.britannica.com/art/boy-band",
+          "title": "Boy band — Britannica",
+          "facts": [
+            "The term 'boy band' dates to the 1980s",
+            "MTV-era groups like New Edition and New Kids on the Block defined the modern template"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "The era waves: 1989-1991 R&B teen swing, 1996-2001 pop boom, 2010s Tumblr/K-pop",
+      "content": "Music historians generally divide the boy band era into three waves. Wave one (1988-1992) is dominated by New Edition's R&B descendants — Bell Biv DeVoe, Boyz II Men, Color Me Badd, Hi-Five, Shai, Jodeci — with formal suits, soulful slow jams, and a New Jack Swing edge. Wave two (1996-2001) is the prefabricated pop explosion engineered by managers like Lou Pearlman (Backstreet Boys, NSYNC, O-Town, LFO) plus the British/Irish import wave (Take That, Westlife, 5ive). Wave three (2010-present) breaks the formula: One Direction emerges from a TV show in matching streetwear and skinny jeans, and BTS exports a fundamentally different aesthetic — South Korean idol training, choreography, and visual concepts — into the American Top 40. Reading 1980-2018 boyband data without this scaffolding flattens three different genres into one chart line.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.britannica.com/art/boy-band",
+          "title": "Boy band — Britannica",
+          "facts": [
+            "Three commonly cited boy band 'waves': late-80s R&B, late-90s pop, 2010s revival",
+            "Lou Pearlman managed Backstreet Boys and NSYNC, fueling the late-1990s boom"
+          ]
+        },
+        {
+          "url": "https://www.rollingstone.com/music/music-features/n-sync-vs-backstreet-boys-remembering-the-nineties-definitive-boy-band-rivalry-204787/",
+          "title": "Remembering the NSYNC vs. Backstreet Boys rivalry — Rolling Stone",
+          "facts": [
+            "Backstreet Boys and NSYNC dominated 1998-2001 chart pop",
+            "Their rivalry produced two competing #1 boy band albums in 2000 (No Strings Attached, Black & Blue)"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Boy_band",
+          "title": "Boy band — Wikipedia",
+          "facts": [
+            "BTS is credited with breaking the Western language barrier for K-pop boy bands",
+            "K-pop's modern format originated with Seo Taiji and Boys (1992)"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Why frosted tips became a 1999 signal",
+      "content": "Frosted tips — bleached or colored hair ends over a darker base — became a defining visual marker of late-90s/early-2000s teen pop, worn by Justin Timberlake of NSYNC, Brian Littrell of Backstreet Boys, Lance Bass, and many imitators. Hair stylists at the time tied the look to the choreographed-pop aesthetic: dark roots gave on-camera contrast under stage lighting, and the bleach-tip effect aged 16-year-old members up for music videos without crossing into adult-rock territory. The look has since become a costume-only marker of that exact moment in pop history, which means any spike in 'frosted_tips=yes' in the data should map cleanly to 1996-2002.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Boy_band",
+          "title": "Boy band — Wikipedia",
+          "facts": [
+            "Late-1990s boy bands developed identifiable hair and wardrobe trends, including frosted tips"
+          ]
+        },
+        {
+          "url": "https://www.rollingstone.com/music/music-features/n-sync-vs-backstreet-boys-remembering-the-nineties-definitive-boy-band-rivalry-204787/",
+          "title": "NSYNC vs. Backstreet Boys — Rolling Stone",
+          "facts": [
+            "NSYNC and Backstreet Boys members were widely associated with frosted/dyed hair tips circa 1998-2000"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Why a music-video sample matters",
+      "content": "Pudding intentionally coded the highest-charting single's music video, not press photos or candid shots. That matters because music videos are the most stage-managed view of a boy band: stylists, choreographers, and label image consultants control every visible detail. So the frequencies in the dataset are not a neutral sample of how members looked off duty — they are a sample of what the industry decided viewers should see. When 110 of 234 members are in dress pants and 91 are wearing 'navy blue' or 'black' bottoms, that is a deliberate visual codification, not a statement about real-life fashion of young men in the 1990s.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://github.com/the-pudding/data/tree/master/boybands",
+          "title": "the-pudding/data — boybands README",
+          "facts": [
+            "Reviewers were instructed to describe members 'when all members were featured together in the same shot'",
+            "Each band's highest-ranking music video on YouTube was the only source examined"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Why this matters: a generational visual language",
+      "content": "Boy bands are how a large slice of two generations learned what masculinity-on-stage looks like. The choreography, the matching outfits, the carefully cast 'types' (the bad boy, the heartthrob, the youngest one) shaped how young viewers thought about charm, friendship, and bodies in motion long before social media. Quantifying their visible language — how often they wear suits, how often they carry instruments, how the typical hairstyle changed by decade — is a way of treating pop ephemera as cultural data. Even people who never bought an NSYNC album recognize a boy band when they see one: this dataset shows exactly which signals make that recognition automatic.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.britannica.com/art/boy-band",
+          "title": "Boy band — Britannica",
+          "facts": [
+            "Boy bands are described as among the most influential pop formats for teen audiences"
+          ]
+        },
+        {
+          "url": "https://billboard.com/music/music-news/billboard-explains-boy-bands-1235029089/amp",
+          "title": "Billboard Explains: The Magic of Boy Bands",
+          "facts": [
+            "Boy bands consistently break sales records and reshape global pop visual style"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Scope suggestion: lean into the multi-modal payload",
+      "content": "The dataset is unusual because every row of bands.csv comes with an actual music video, and the Pudding article also treats album art and Spotify-adjacent listening as first-class media. The Analyst should treat the YouTube ID as a queryable field (decade × video link), the Editor should plan around at least one section that is more 'gallery / browser' than 'chart', and the Designer can take advantage of three media layers — embedded video for hero examples, hair/clothing thumbnails for the field-guide section, and timeline/lineage diagrams for the historical arc. Skipping any of these three layers wastes the dataset's strongest feature.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/11/boy-bands/",
+          "title": "Internet Boy Band Database — The Pudding",
+          "facts": [
+            "The original article uses Lottie/After Effects animation, embedded videos, and a band-by-band browser"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Benchmark: U.S. ethnic and skin-tone composition for context",
+      "content": "U.S. Census 2010-2018 figures show that the country's male population aged 15-24 — roughly the age range of charting boy band members — was approximately 60% non-Hispanic white, 14% Black, 18% Hispanic, and 6% Asian. The Pudding skin-tone coding ('light' / 'medium-light' / 'medium' / 'medium-dark' / 'dark') does not map perfectly to those census categories, but it lets us check whether the people who sang on Top 40 radio looked like the kids who were buying the records. If, say, 'dark' members account for 16% of boy band members but Black men are 14% of the relevant U.S. population, the boy band ecosystem broadly mirrored its audience; large gaps in either direction would be a story.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://www.census.gov/topics/population/race/data.html",
+          "title": "U.S. Census Bureau — Population by race",
+          "facts": [
+            "U.S. males aged 15-24, 2018 ACS: ~60% non-Hispanic white, ~14% Black, ~18% Hispanic, ~6% Asian"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_backstreet_boys.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Backstreet_Boys_2019_by_Glenn_Francis.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons (photo by Glenn Francis / WorldRedEye)",
+      "description": "Backstreet Boys group photo, 2019 — one of the two anchor acts of the late-1990s boom.",
+      "relates_to": ["det_03", "det_04"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_nsync.png",
+      "url": "https://commons.wikimedia.org/wiki/File:NSYNC_members_2000s.png",
+      "license": "CC BY-SA",
+      "source": "Wikimedia Commons",
+      "description": "NSYNC group photo from the early 2000s — frosted tips, matching denim.",
+      "relates_to": ["det_04", "det_05"]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "ref_nkotb.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:NKOTB_2008-11-06.jpg",
+      "license": "CC BY-SA",
+      "source": "Wikimedia Commons",
+      "description": "New Kids On The Block on tour, 2008 — the band that launched the modern boy band template in 1989.",
+      "relates_to": ["det_03", "det_04"]
+    },
+    {
+      "id": "det_media_04",
+      "filename": "ref_bts_whitehouse.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:BTS_at_the_White_House_on_May_31,_2022_04.jpg",
+      "license": "Public domain (U.S. White House photo)",
+      "source": "Wikimedia Commons",
+      "description": "BTS at the White House, May 2022 — the K-pop wave that breaks the formula and ends the dataset's chart story.",
+      "relates_to": ["det_04"]
+    }
+  ],
+  "instances": [
+    {
+      "id": "inst_01",
+      "type": "youtube",
+      "label": "NSYNC — It's Gonna Be Me",
+      "embed_url": "https://www.youtube.com/embed/GQMlWwIXg3M",
+      "source_url": "https://www.youtube.com/watch?v=GQMlWwIXg3M",
+      "license": "Standard YouTube embed (NSYNCVEVO)",
+      "verified": true,
+      "verified_title": "*NSYNC - It's Gonna Be Me (Official Video) — NSYNCVEVO",
+      "relates_to": ["det_04", "det_05"],
+      "why": "The peak-2000 NSYNC video is the textbook example of frosted tips, matching denim, and choreographed pop — and was the band's #1 charting hit in this dataset."
+    },
+    {
+      "id": "inst_02",
+      "type": "youtube",
+      "label": "Backstreet Boys — Quit Playing Games (With My Heart)",
+      "embed_url": "https://www.youtube.com/embed/Ug88HO2mg44",
+      "source_url": "https://www.youtube.com/watch?v=Ug88HO2mg44",
+      "license": "Standard YouTube embed (BackstreetBoysVEVO)",
+      "verified": true,
+      "verified_title": "Backstreet Boys - Quit Playing Games (With My Heart) (Official HD Video) — BackstreetBoysVEVO",
+      "relates_to": ["det_03", "det_04"],
+      "why": "The biggest-selling boy band's archetypal slow-jam video — bare chests, dramatic rain, choreographed yearning."
+    },
+    {
+      "id": "inst_03",
+      "type": "youtube",
+      "label": "Boyz II Men — End of the Road",
+      "embed_url": "https://www.youtube.com/embed/zDKO6XYXioc",
+      "source_url": "https://www.youtube.com/watch?v=zDKO6XYXioc",
+      "license": "Standard YouTube embed (BoyzIIMenVEVO)",
+      "verified": true,
+      "verified_title": "Boyz II Men - End Of The Road — BoyzIIMenVEVO",
+      "relates_to": ["det_03", "det_04"],
+      "why": "1992 R&B-vocal canon: this defines the suit-and-tie, harmony-only mode that 90s prefab pop later inherited."
+    },
+    {
+      "id": "inst_04",
+      "type": "youtube",
+      "label": "New Kids On The Block — I'll Be Loving You (Forever)",
+      "embed_url": "https://www.youtube.com/embed/ZT_7UjCVELg",
+      "source_url": "https://www.youtube.com/watch?v=ZT_7UjCVELg",
+      "license": "Standard YouTube embed (NewKidsVEVO)",
+      "verified": true,
+      "verified_title": "New Kids On The Block - I'll Be Loving You (Forever) (Official Video) — NewKidsVEVO",
+      "relates_to": ["det_03", "det_04"],
+      "why": "The 1989 video that sets the template the next decade rebuilds: matching outfits, soft-focus, slow choreography."
+    },
+    {
+      "id": "inst_05",
+      "type": "youtube",
+      "label": "Hanson — MMMBop",
+      "embed_url": "https://www.youtube.com/embed/NHozn0YXAeE",
+      "source_url": "https://www.youtube.com/watch?v=NHozn0YXAeE",
+      "license": "Standard YouTube embed (HansonVEVO)",
+      "verified": true,
+      "verified_title": "Hanson - MMMBop (Official Music Video) — HansonVEVO",
+      "relates_to": ["det_02", "det_03"],
+      "why": "Counter-example: a #1 hit, three brothers, three guitars — the dataset's instrument-carrying outlier and a reminder that 'boy band' is a fuzzy category."
+    },
+    {
+      "id": "inst_06",
+      "type": "youtube",
+      "label": "BTS — DNA",
+      "embed_url": "https://www.youtube.com/embed/MBdVXkSdhwU",
+      "source_url": "https://www.youtube.com/watch?v=MBdVXkSdhwU",
+      "license": "Standard YouTube embed (HYBE LABELS)",
+      "verified": true,
+      "verified_title": "BTS (방탄소년단) 'DNA' Official MV — HYBE LABELS",
+      "relates_to": ["det_04"],
+      "why": "The K-pop wave: the only non-English-language entry in the dataset, dyed hair across the entire group, and the visual 'turn' that breaks the 90s American formula."
+    },
+    {
+      "id": "inst_07",
+      "type": "youtube",
+      "label": "One Direction — Best Song Ever",
+      "embed_url": "https://www.youtube.com/embed/o_v9MY_FMcw",
+      "source_url": "https://www.youtube.com/watch?v=o_v9MY_FMcw",
+      "license": "Standard YouTube embed (OneDirectionVEVO)",
+      "verified": true,
+      "verified_title": "One Direction - Best Song Ever — OneDirectionVEVO",
+      "relates_to": ["det_03", "det_04"],
+      "why": "The 2010s rebound: streetwear and skinny jeans replace suits and frosted tips, but the choreography-and-harmony format survives."
+    }
+  ]
+}

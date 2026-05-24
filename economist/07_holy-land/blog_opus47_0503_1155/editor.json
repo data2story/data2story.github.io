@@ -1,0 +1,123 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "Israel's settlement map is a slow-motion arithmetic problem: the population beyond the 1967 Green Line has tripled in two decades, the bulk of growth has gone to the rings Israel expects to keep, and somewhere around 2018 the Jewish majority of the entire Holy Land quietly disappeared.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — the line that quietly crossed",
+      "purpose": "hook",
+      "title": "The line that quietly crossed",
+      "findings": ["ana_03", "ana_02"],
+      "context": ["det_04", "det_01"],
+      "triage": {
+        "ana_03": "lead",
+        "ana_02": "supporting"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The 2018 crossover (Jews 6,669,138 vs Arabs 6,669,571, gap 433) is THE lead number. Build a guess-first interaction around 'in what year did Arabs first outnumber Jews between the river and the sea?'."
+    },
+    "edt_02": {
+      "label": "How the settler count tripled",
+      "purpose": "evidence",
+      "title": "How the settler count tripled",
+      "findings": ["ana_05", "ana_10", "ana_11"],
+      "context": ["det_05", "det_01"],
+      "triage": {
+        "ana_05": "lead",
+        "ana_10": "supporting",
+        "ana_11": "supporting"
+      },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": null,
+      "editorial_notes": "The 3.06x multiple and 506,558 figure must be exact. The 2.17x faster-than-Israel-proper line is structural — keep it."
+    },
+    "edt_03": {
+      "label": "A map of distance from a green pencil line",
+      "purpose": "turn",
+      "title": "A map of distance from a green pencil line",
+      "findings": ["ana_07", "ana_08", "ana_09"],
+      "context": ["det_02", "det_06"],
+      "triage": {
+        "ana_07": "lead",
+        "ana_08": "supporting",
+        "ana_09": "supporting"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": "map",
+      "editorial_notes": "This is the section the entire piece pivots on. The map is the centerpiece. The 62.8%-within-5km and 14.9%-deeper-than-15km numbers must be exact."
+    },
+    "edt_04": {
+      "label": "The fastest growth happened nearest the line",
+      "purpose": "evidence",
+      "title": "The fastest growth happened where evacuation is least likely",
+      "findings": ["ana_08", "ana_09"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_08": "lead",
+        "ana_09": "supporting"
+      },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": null,
+      "editorial_notes": "5.22x is the lead number. Note both directions: the closest band grew fastest, AND two-thirds of growth happened within 5 km."
+    },
+    "edt_05": {
+      "label": "East Jerusalem holds more settlers than any West Bank ring",
+      "purpose": "context",
+      "title": "East Jerusalem, in a column of its own",
+      "findings": ["ana_06", "ana_07"],
+      "context": ["det_03"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_07": "color"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Keep the legal-status caveat (annexed 1980, UN Resolution 478) visible. The 31.5% and 47.4% must be exact."
+    },
+    "edt_06": {
+      "label": "Ninety-two Gazas",
+      "purpose": "turn",
+      "title": "Ninety-two Gazas",
+      "findings": ["ana_13"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_13": "lead"
+      },
+      "chart_placeholder": "ana_13",
+      "media_placeholder": "image",
+      "editorial_notes": "Anchor on 8,000 / 92.5x / 9.5. The Gaza disengagement framing is what gives 'large number of settlers' physical scale. An atmospheric image of an evacuation-style scene would help here, but only if it feels generic — do not depict any specific real event."
+    },
+    "edt_07": {
+      "label": "What the arithmetic forces",
+      "purpose": "close",
+      "title": "What the arithmetic forces",
+      "findings": ["ana_12", "ana_03"],
+      "context": ["det_04", "det_08"],
+      "triage": {
+        "ana_12": "supporting",
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Always say 'projection' explicitly when referring to 2019-2021 numbers. End on tension, not policy advice."
+    }
+  },
+  "full_triage": {
+    "ana_01": "cut",
+    "ana_02": "supporting",
+    "ana_03": "lead",
+    "ana_04": "supporting",
+    "ana_05": "lead",
+    "ana_06": "supporting",
+    "ana_07": "lead",
+    "ana_08": "lead",
+    "ana_09": "supporting",
+    "ana_10": "supporting",
+    "ana_11": "supporting",
+    "ana_12": "supporting",
+    "ana_13": "lead"
+  }
+}

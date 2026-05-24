@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Default to all five channels chosen in a data-driven way; the dataset is fundamentally about *audio* (an hour of recorded performance) so the audio channel here is an actual official Netflix-channel clip embed, not a sonification. Charts are minimal and architectural — three of them stripe the page and let the staircase, the depth-vs-laughter relationship, and the chapter map speak for themselves.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "We have several quantitative comparisons (laugh-duration histogram, minute-by-minute profile, depth × laughter, chapter map, callback distance, climax staircase) that the prose claims rely on."
+      },
+      "image": {
+        "used": true,
+        "reason": "Two atmospheric images frame the piece: an empty spotlit stage at the open and a stone archway at the close as a visual metaphor for structural support."
+      },
+      "video": {
+        "used": true,
+        "reason": "image2video animates the teaser still (slow push-in, dust drift) so the opening feels like a curtain rising. Avoids generic event-reenactment video."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Two complementary audio decisions: (1) a real official Netflix-channel YouTube clip embedded inline in the climax section as an instance — readers can hear Wong's actual voice and feel the staircase rather than read about it; (2) a generated jazz-club ambience bed gated behind a click-to-play control on the page, evoking the Neptune Theater between bits without competing with the embedded clip."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "An interactive 'tree of topics' lets the reader explore the six-level nesting structure that the prose names as the architectural backbone. There's no map dimension to the data."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero image — empty spotlit stage",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Editorial photograph: a single empty stage spotlight beaming down from the rafters of an old theater, dust motes drifting through the cone of warm yellow light, the stage floor is a polished dark wood, deep shadows recede into black, no people, no text, atmospheric, cinematic, large format film aesthetic, mood of anticipation just before a comedian walks on",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "A still image of a spotlit empty stage from above. No comic on stage yet — anticipation. The visual centrepiece of the teaser, used as the first frame of an image2video clip.",
+      "rationale": "The dataset is a recorded live performance. A visual that evokes the room before the performance starts creates curiosity without revealing any finding.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion — animated spotlight (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "very slow parallax push-in toward the spotlight, gentle drift of dust particles falling through the cone of light, subtle flicker on the bulb, no camera shake, no people enter frame",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "A 6-second loopable animation of the teaser image: very subtle parallax push-in, dust drifting through the spotlight beam. Plays autoplay-muted on page load.",
+      "rationale": "We already have a strong still; image2video preserves the composition and adds the kinetic edge that pure stills lack — and audio comedy is fundamentally a kinetic, time-based art.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Stat callout — the unique 10-second laugh",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "10s",
+        "label": "the longest single laugh in the hour",
+        "data_source": "ana_02"
+      },
+      "brief": "Big 80px stat showing '10s' with the label 'the longest single laugh in the hour' below. Sits at the very top of the first prose section, as the lede.",
+      "rationale": "The peak is uniquely 10 seconds — exactly one caption out of 925. That singularity deserves a headline number, not a chart.",
+      "based_on": ["ana_02"]
+    },
+    "des_04": {
+      "label": "Laugh-duration histogram",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_03",
+        "x": "bucket",
+        "y": "count",
+        "highlight": {"bucket": "10+"},
+        "interaction": "hover tooltip with exact count",
+        "style": {"palette": "muted warm, single accent on the 10+ bar", "no_gridlines": true, "y_log": false}
+      },
+      "brief": "A bar chart of laugh-duration buckets across all 925 captions. The leftmost '0' bar dominates (573 captions); each successive bucket is smaller. The rightmost '10+' bar has count 1 — a tiny but visible accent-coloured bar that the reader can hover for the climax line. Annotation arrow on the '10+' bar saying 'one caption'.",
+      "rationale": "The shape of the distribution — long tail with a single 10-second outlier — is the strongest visual proof of the 'rare detonations' point in the prose.",
+      "based_on": ["ana_03"]
+    },
+    "des_05": {
+      "label": "Stat callout — laughter share of the hour",
+      "type": "stat_callout",
+      "section": "edt_02",
+      "content": {
+        "value": "20.7%",
+        "label": "of stage time is just the audience laughing — about 12 minutes of an hour",
+        "data_source": "ana_01"
+      },
+      "brief": "Stat callout displaying 20.7% with caption explaining the framing.",
+      "rationale": "20.7% is a memorable, narratable number. It anchors the 'shape of the hour' section.",
+      "based_on": ["ana_01"]
+    },
+    "des_06": {
+      "label": "Minute-by-minute laughter chart",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "area",
+        "data_source": "ana_04",
+        "x": "minute",
+        "y": "laugh_seconds",
+        "highlight": {"minute": 11},
+        "interaction": "hover tooltip showing 'minute X — Ys of laughter'; vertical reference rule at minute 11 labelled 'climax line at 11:48'",
+        "style": {"palette": "warm single-tone area fill (amber); no gridlines; minimal axis", "annotation": "vertical labelled rule at minute 11"}
+      },
+      "brief": "A 60-bin area chart of laughter seconds per minute of the special. Minute 11 has a clear local peak. Annotation marks the climax timestamp 11:48. Other peaks at minutes 8, 13, 33, 37 are visible but unlabelled.",
+      "rationale": "An area chart treats laughter as a continuous wave through the hour — appropriate metaphor for a live audience reaction. Lets the reader see at a glance that the climax minute really is the loudest.",
+      "based_on": ["ana_04"]
+    },
+    "des_07": {
+      "label": "Topic tree explorer (interactive)",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "topic_tree_explorer",
+        "initial_state": "A small bar chart shows the count of topics at each of the 6 levels (10, 21, 43, 31, 19, 7). Below it, a horizontal bar at the top represents level 1 (10 segments). Levels 2-6 are collapsed by default.",
+        "trigger": "Click on a level to expand it, revealing the topics at that level as a row of small labelled segments.",
+        "transition": "Smooth height transition; clicking again collapses.",
+        "payoff": "Reader sees that the routine literally has 6 layers, with level 3 the broadest. Reinforces the prose claim that this set is a tree, not a list.",
+        "data_source": "ana_06"
+      },
+      "brief": "A simple, restrained interactive: stack of horizontal bands, each band representing one level (1 at top, 6 at bottom), filled with small segments proportional to the topic counts. Click a band to reveal a tooltip with example topic names. No fancy node-link diagram — keep it readable.",
+      "rationale": "The tree fact is the structural backbone of the argument. An interactive lets the reader engage with the depth claim without overwhelming a static chart.",
+      "based_on": ["ana_06"]
+    },
+    "des_08": {
+      "label": "Depth × laughter chart",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "dual_bar",
+        "data_source": "ana_07",
+        "x": "level",
+        "y": "avg_laugh",
+        "secondary_y": "max_laugh",
+        "highlight": {"level": 4},
+        "interaction": "hover tooltip showing avg, max, and caption count at each level",
+        "style": {"palette": "two muted shades — one for avg, one for max; no gridlines"}
+      },
+      "brief": "Grouped bar chart with level on the x-axis (1 to 6) and two y series: average laugh seconds (primary, darker) and max laugh (secondary, lighter). Level 4 is the visible peak — it owns both the highest average curve approach and the lone 10-second max.",
+      "rationale": "The data table has six rows and two metrics — a grouped bar makes the pattern pop in one glance: laughter rises with depth, max peaks at level 4.",
+      "based_on": ["ana_07"]
+    },
+    "des_09": {
+      "label": "The climax staircase chart",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "stepped_bar",
+        "data_source": "ana_09",
+        "x": "time",
+        "y": "laugh",
+        "highlight": {"time": "11:48"},
+        "interaction": "hover any bar to see its exact caption text in a tooltip",
+        "style": {"palette": "monochrome warm; only the 11:48 bar in accent colour; the four big-laugh captions get small annotation labels", "annotation": "Each of the four laughs >= 4s gets a one-line label; the 10s bar's label is the climax line in italic quotes"}
+      },
+      "brief": "A horizontal-time bar chart showing 16 caption rows from 11:11 to 12:34. Each bar's height = laugh seconds. Reader sees the staircase: 1.0 → 1.0 → 3.0 → 1.5 → 0 → 4.0 → 0 → 10.0 → 0 → 6.0 → 6.5. The 10s bar at 11:48 is the visible peak. The label on it shows the exact climax line.",
+      "rationale": "This is the load-bearing chart of the piece. The prose argues that the 10s laugh is the apex of a 24-second staircase; the chart must literally show that staircase.",
+      "based_on": ["ana_09"]
+    },
+    "des_10": {
+      "label": "The Netflix clip — Ali Wong on stage",
+      "type": "instance",
+      "section": "edt_04",
+      "content": {
+        "instance_ref": "inst_01",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/XY9h-0x1Oao",
+        "caption": "An official Netflix-channel clip from Baby Cobra. Wong on stage, seven months pregnant, in the room where the staircase was built."
+      },
+      "brief": "Standard YouTube iframe embed inside a styled card with rounded corners and a short caption below. Sits inside the climax section after the staircase chart, so the reader can hear how the bit actually sounds.",
+      "rationale": "The dataset describes audio. Embedding the official clip turns the chart into something the reader can audibly verify. Strict rule: this embed_url is copied verbatim from detective.json inst_01 (verified: true).",
+      "based_on": []
+    },
+    "des_11": {
+      "label": "Callbacks reach-back chart",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_arc",
+        "data_source": "ana_08",
+        "x": "time_in_show",
+        "highlight": {"callback_label": "blaming mom — third-world parent"},
+        "interaction": "hover to see the seed text and the callback text",
+        "style": {"palette": "thin warm arcs over a neutral timeline; the 46-minute arc is the most prominent"}
+      },
+      "brief": "A horizontal timeline of the hour (0 to 60 min). Each of the three callbacks is drawn as an arc from its seed time to its callback time. The 46-minute arc (mom callback) is the longest and most prominent. Smaller text above each arc shows the callback label and reach-back duration.",
+      "rationale": "Callback distance is fundamentally a 'reach' from one point in time to another. An arc visualisation literalises that reach across the hour-long horizontal axis.",
+      "based_on": ["ana_08"]
+    },
+    "des_12": {
+      "label": "Chapter map of the special",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "stacked_horizontal_bar",
+        "data_source": "ana_10",
+        "x": "span_sec",
+        "y": "single_row",
+        "color": "chapter",
+        "interaction": "hover each segment to see span and laugh seconds; clicking pulses the corresponding row in a small table below",
+        "style": {"palette": "five chapter colours, marriage clearly the biggest segment; intro and conclusion are tiny end-caps"}
+      },
+      "brief": "A single horizontal stacked bar representing the full hour, divided into the five level-1 chapters. The marriage segment dominates (30:40); pregnancy is second (19:20); paintball is a sliver (10s); intro/conclusion are end-caps. Below the bar is a small data table listing each chapter's span, laugh seconds, and laugh share — sortable by clicking column headers.",
+      "rationale": "The chapter map answers a side question the prose raises: 'What do we mean when we say Baby Cobra is about pregnancy?' The hour is mostly about marriage.",
+      "based_on": ["ana_10"]
+    },
+    "des_13": {
+      "label": "Closing image — the architectural arch",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "closing_arch.png",
+        "tool": "text2image",
+        "prompt": "Conceptual editorial photograph: a single tall stone archway under dramatic warm spotlight, the keystone at the top illuminated, the supporting voussoirs and pillars receding into shadow, a metaphor for architecture supporting a single peak moment, no people, no text, monochrome warm tones, large format film aesthetic, contemplative mood",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "A still image of a stone arch with its illuminated keystone — visual rhyme for the argument that the climax line is the keystone of the structural arch. Sits alone at the bottom of the closing section.",
+      "rationale": "The closing section explicitly invokes 'arch' and 'keystone'. A literal architectural still rhymes the prose without competing with it.",
+      "based_on": []
+    },
+    "des_14": {
+      "label": "Generated club-ambience audio",
+      "type": "audio",
+      "section": "edt_06",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "The chapter-map section transitions from analysis to closing reflection. A short bed of jazz-club ambience invites the reader to mentally relocate to the Neptune Theater for a moment. The clip is gated behind a click — not autoplay.",
+        "trigger": "Click on a small 'Listen — the room' control just under the chapter map",
+        "ui_form": "Small inline mini-player tucked into the chapter map's bottom right — no oversized waveform card.",
+        "content": {
+          "filename": "club_ambience.wav",
+          "tool": "text2music",
+          "prompt": "A single sparse 30-second bed of warm jazz club ambience: muted standup bass walking line, soft brushed snare ticking quarter notes, very faint distant audience murmur and clinking glasses, no melody lead, low volume, instrumental, evokes a smoky comedy club between sets, no vocals",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "If audio is muted or unsupported, the chart and prose are complete on their own. The control is greyed and labelled 'audio unavailable'.",
+        "novelty_note": "Avoids the generic 'click-to-play tone card' pattern by tucking the player inline beside the chapter map and only using it as atmosphere — not as a sonification."
+      },
+      "brief": "A small click-to-play control under the chapter map. When pressed, plays a 30-second jazz-club ambience clip. Visual fallback: the chart and prose are complete without it.",
+      "rationale": "The dataset's other audio slot is the YouTube embed of the actual special. Adding a soft ambience bed elsewhere on the page complements rather than competes — and keeps audio earned by adding atmosphere the chart cannot supply.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm dark editorial — the colour of stage lighting against black; serif body type; restrained accent colour reserved for highlighted data points",
+    "text_visual_pattern": "stat callout → prose → chart, repeated; one image at open and one at close; a single embedded video clip in the climax section",
+    "centrepiece": "des_09",
+    "anti_sameness_notes": "Avoids the 'guess first quiz at the top' pattern. Avoids autoplay sonification cards. The teaser is a quiet still that becomes a slow video, not a flashy interactive. The page structure rhymes its argument: it builds, peaks at the climax-staircase chart, and comes back down through the chapter map and the closing image.",
+    "typography_notes": "Stat callouts at 64-80px, weight 700, with a thin label below. Body text Georgia / 18px / 1.6 line-height. Section titles in a system serif at 28px. Caption captions in italic at 14px. A single accent colour (warm amber, e.g. #d97a3a) used only on highlighted bars and the climax laugh."
+  }
+}

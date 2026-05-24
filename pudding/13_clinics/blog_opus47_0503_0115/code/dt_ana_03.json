@@ -1,0 +1,1 @@
+{"description":"Drive-time metrics at each gestation week (open scenario)","columns":["weeks","city_mean_hours","pop_weighted_hours","pct_pop_0h","pct_pop_4plus_h"],"rows":[[8,0.4,0.25,88.8,1.4],[12,0.48,0.3,86.4,1.7],[16,0.82,0.59,78.1,5.2],[20,1.3,1.02,66.9,10.8]]}

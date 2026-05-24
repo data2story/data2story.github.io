@@ -1,0 +1,4 @@
+[
+  {"type": "chart_mount_zero_width", "count": 5, "note": "Added explicit inline width:100%; min-width:0; display:block on the 5 vega-mount divs as defensive style on top of the existing CSS rule, to ensure Vega-Lite doesn't render into a zero-width parent."},
+  {"type": "missing_image_responsive", "count": 2, "note": "Added inline max-width:100%; height:auto; display:block; margin:0 auto on the two non-teaser images (section3_drive, section7_baseline) on top of the existing .visual-container img CSS rule."}
+]

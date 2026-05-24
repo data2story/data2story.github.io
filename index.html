@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Journalist Agent (Data2Story)</title>
+<link rel="icon" type="image/png" href="assets/logo4.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #F7F8FB;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FFFFFF;
+  --border: #E2E8F0;
+  --border-hover: #CBD5E1;
+  --text: #0F172A;
+  --text-muted: #475569;
+  --text-dim: #94A3B8;
+  --accent: #2563EB;
+  --accent-glow: rgba(37, 99, 235, 0.1);
+  --gold: #D97706;
+  --green: #059669;
+  --purple: #7C3AED;
+  --pink: #DB2777;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── Hero ── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(96,165,250,0.16) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 80% at 80% 70%, rgba(167,139,250,0.13) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 60% 20%, rgba(244,114,182,0.1) 0%, transparent 70%);
+  animation: meshDrift 12s ease-in-out infinite alternate;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 75% 25%, rgba(52,211,153,0.09) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 70% at 30% 80%, rgba(96,165,250,0.1) 0%, transparent 60%);
+  animation: meshDrift2 16s ease-in-out infinite alternate;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(37,99,235,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37,99,235,0.05) 1px, transparent 1px);
+  background-size: 100px 100px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+}
+
+.hero-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.hero-particles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: rgba(96,165,250,0.3);
+  animation: float linear infinite;
+}
+
+@keyframes meshDrift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, -20px) scale(1.1); }
+}
+@keyframes meshDrift2 {
+  0% { transform: translate(0, 0) scale(1.05); }
+  100% { transform: translate(-40px, 20px) scale(1); }
+}
+@keyframes float {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.hero-logo {
+  width: clamp(72px, 12vw, 104px);
+  height: auto;
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 6px 24px rgba(96,165,250,0.35));
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #60A5FA, #A78BFA, #F472B6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 2rem;
+}
+
+/* ── Authors ── */
+.authors {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.1rem;
+  font-size: 1.02rem;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.authors a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+.authors a:hover { color: var(--accent); }
+.authors sup { color: var(--accent); font-size: 0.7em; font-weight: 600; }
+
+.affils {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem 1.5rem;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.affils sup { color: var(--accent); font-weight: 600; }
+
+.corr-note {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  margin-bottom: 1.75rem;
+}
+
+.org-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 2rem;
+}
+.org-logos img {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* ── Action buttons ── */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.4rem;
+  border: 1px solid var(--border-hover);
+  border-radius: 100px;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn:hover {
+  border-color: var(--accent);
+  background: var(--accent-glow);
+  transform: translateY(-2px);
+}
+.btn .ico { font-size: 1.05rem; }
+
+.btn.primary {
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.3);
+}
+.btn.primary:hover {
+  background: linear-gradient(135deg, #1D4ED8, #6D28D9);
+  border-color: transparent;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  z-index: 1;
+  animation: bob 2s ease-in-out infinite;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #60A5FA, #A78BFA, #F472B6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* ── Abstract ── */
+.abstract-section {
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+  border-top: 1px solid var(--border);
+}
+.abstract-section h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+.abstract-section p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.abstract-section strong { color: var(--text); font-weight: 600; }
+
+/* ── Gallery ── */
+.gallery-section {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 2rem;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.section-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+.section-lede {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin: 0 auto 2.5rem;
+  max-width: 680px;
+  text-align: center;
+}
+
+/* ── Card Grid (static, no flip) ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 14px 40px rgba(15,23,42,0.12);
+  transform: translateY(-4px);
+}
+
+.card-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #141924, #1A2233);
+}
+.card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.card:hover .card-thumb img { transform: scale(1.05); }
+
+.card-idx, .card-year {
+  position: absolute;
+  top: 0.6rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: rgba(3,5,9,0.65);
+  backdrop-filter: blur(4px);
+  z-index: 1;
+}
+.card-idx  { left:  0.6rem; color: var(--text); }
+.card-year { right: 0.6rem; color: var(--gold); }
+
+.card-body {
+  padding: 1rem 1.25rem 1.15rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text);
+  margin: 0;
+}
+
+.card-desc {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+}
+.card-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  color: var(--text-dim);
+  background: rgba(96,165,250,0.08);
+  border: 1px solid rgba(96,165,250,0.15);
+  padding: 1px 7px;
+  border-radius: 3px;
+}
+
+.card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 0.4rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--border);
+}
+.card-src {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--pink);
+}
+.card:hover .card-cta .arrow { transform: translateX(3px); }
+.card-cta .arrow { transition: transform 0.2s; }
+
+/* ── Responsive ── */
+@media (max-width: 720px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .org-logos { gap: 1.5rem; }
+}
+
+/* ── Fade-in ── */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-particles" id="particles"></div>
+
+  <div class="hero-inner">
+    <img class="hero-logo" src="assets/logo4.png" alt="Data2Story logo">
+
+    <h1>Data Journalist Agent</h1>
+    <div class="hero-tagline">Transforming Data into Reproducible Multimodal Story</div>
+
+    <div class="authors">
+      <span><a href="https://qhlin.me/" target="_blank" rel="noopener">Kevin Qinghong Lin</a><sup>1</sup></span>
+      <span><a href="https://ellabs.ai/#/works" target="_blank" rel="noopener">Batu EI</a><sup>2</sup></span>
+      <span>Yuhong Shi<sup>1</sup></span>
+      <span><a href="https://lupantech.github.io/" target="_blank" rel="noopener">Pan Lu</a><sup>2</sup></span>
+      <span><a href="https://eng.ox.ac.uk/people/philip-torr" target="_blank" rel="noopener">Philip Torr</a><sup>1,&#9993;</sup></span>
+      <span><a href="https://www.james-zou.com/" target="_blank" rel="noopener">James Zou</a><sup>2,&#9993;</sup></span>
+    </div>
+
+    <div class="affils">
+      <span><sup>1</sup> University of Oxford</span>
+      <span><sup>2</sup> Stanford University</span>
+    </div>
+    <div class="corr-note">&#9993; Corresponding authors</div>
+
+    <div class="org-logos">
+      <img src="assets/ox.png" alt="University of Oxford">
+      <img src="assets/stf.png" alt="Stanford University">
+    </div>
+
+    <div class="actions">
+      <a class="btn" href="#" target="_blank" rel="noopener"><span class="ico">&#128196;</span> Paper</a>
+      <a class="btn" href="https://github.com/QinghongLin/data2story-skill" target="_blank" rel="noopener"><span class="ico">&#128187;</span> Code</a>
+      <a class="btn primary" href="#gallery"><span class="ico">&#128218;</span> Gallery</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ GALLERY ═══════════ -->
+<section class="gallery-section" id="gallery">
+  <div class="section-header fade-in">
+    <h2>Agent-Generated Stories</h2>
+  </div>
+  <p class="section-lede fade-in">
+    All articles are generated by our Data2Story agent. Open any story to explore!
+  </p>
+
+  <div class="card-grid" id="card-grid"></div>
+</section>
+
+<!-- ═══════════ ABSTRACT ═══════════ -->
+<section class="abstract-section fade-in">
+  <h2>Abstract</h2>
+  <p>
+    Data tells stories that shape society, and the data journalist's job is to turn raw information into
+    a story that non-expert audiences can understand and trust through to the end. A high-quality news
+    feature routinely takes a newsroom team weeks. We introduce <strong>Data Journalist Agent (Data2Story)</strong>,
+    a multi-agent framework that orchestrates specialised roles into a single virtual newsroom. Data2Story
+    highlights two innovations: <strong>(i) claims are evidence-grounded and reproducible</strong> &mdash; an
+    "Inspector" associates intermediate results so numbers, angles, and assets are grounded in data, code,
+    or a reference, building verifiability into the fact itself; and <strong>(ii) articles are multimodally
+    generative</strong> &mdash; rather than defaulting to plain text and static charts, Data2Story reasons about
+    what readers want to read and interact with, then deploys multimodal tools so the article fits both the
+    data topic and the intended audience. We evaluate Data2Story on 18 articles from diverse topics and
+    sources, each paired with the originally published expert-written piece.
+  </p>
+</section>
+
+<script>
+(function() {
+  const container = document.getElementById('particles');
+  const colors = ['rgba(96,165,250,0.25)', 'rgba(167,139,250,0.2)', 'rgba(244,114,182,0.15)', 'rgba(52,211,153,0.15)'];
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement('span');
+    s.style.left = Math.random() * 100 + '%';
+    s.style.width = s.style.height = (2 + Math.random() * 3) + 'px';
+    s.style.background = colors[Math.floor(Math.random() * colors.length)];
+    s.style.animationDuration = (8 + Math.random() * 16) + 's';
+    s.style.animationDelay = (Math.random() * 12) + 's';
+    container.appendChild(s);
+  }
+})();
+</script>
+
+<script>
+const BASE = ".";
+const projects = [
+  // ── Economist (6) ──
+  { idx:"E·1", year:"Oct 2018", src:"The Economist", title:"The Great Launch Inversion — 1957 to 2018",
+    tags:["space","launches","geopolitics"],
+    desc:"Sixty years of orbital launches show that by 2018 the space race was no longer between superpowers — it was a market, and the leaders of 1985 had been almost entirely displaced by entrants that did not yet exist.",
+    dir:   "economist/01_space-launches/blog_opus47_0503_0236",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"E·2", year:"Nov 2018", src:"The Economist", title:"The Golden Age of TV is real — but it is the floor that rose",
+    tags:["TV","ratings","prestige"],
+    desc:"TV's \"Golden Age\" is real — but it's the floor that rose, not the ceiling, and the streaming-era explosion in show count is the bigger story than the modest improvement in average quality.",
+    dir:   "economist/04_tv-ratings/blog_opus47_0503_0238",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"E·3", year:"Jan 2019", src:"The Economist", title:"Managers in football matter much less than fans think",
+    tags:["football","managers","stats"],
+    desc:"Across 15 seasons in Europe's top leagues, almost every football manager performs within a hair's breadth of what their squad's quality already predicts — and the few who genuinely lift their teams are the rare exception, not the rule fans imagine.",
+    dir:   "economist/06_football-managers/blog_opus47_0503_1137",
+    thumb: "assets/teaser_dugout.png" },
+  { idx:"E·4", year:"Feb 2019", src:"The Economist", title:"The line that quietly crossed — settlements, distance, and arithmetic in the Holy Land",
+    tags:["Israel","demographics","geopolitics"],
+    desc:"Israel's settlement map is a slow-motion arithmetic problem — the population beyond the 1967 Green Line has tripled in two decades, and somewhere in the data the Jewish majority of the entire Holy Land quietly disappears.",
+    dir:   "economist/07_holy-land/blog_opus47_0503_1155",
+    thumb: "assets/teaser.png" },
+  { idx:"E·5", year:"Mar 2019", src:"The Economist", title:"Best Picture, Forgotten Picture",
+    tags:["Oscars","film","culture"],
+    desc:"For sixteen straight years from 2001 to 2016, no Best Picture winner has been the most-referenced film of its own year — the Academy keeps anointing prestige pictures while the culture reaches for something else.",
+    dir:   "economist/09_oscars-influence/blog_opus47_0503_1157",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"E·6", year:"Mar 2020", src:"The Economist", title:"A map that already lied — Tracking the stealthy killer, March 2020",
+    tags:["COVID","public-health","tourism"],
+    desc:"In early March 2020, the world's COVID-19 case map was less a record of where the virus was than a record of where countries were looking — and tourism flows showed exactly which countries were not looking hard enough.",
+    dir:   "economist/13_covid19/blog_opus47_0503_1207",
+    thumb: "assets/teaser_hero.png" },
+
+  // ── Pudding (6) ──
+  { idx:"P·1", year:"Feb 2018", src:"The Pudding", title:"One Ten-Second Laugh — The Architecture of Ali Wong's Baby Cobra",
+    tags:["stand-up","comedy","text"],
+    desc:"In a one-hour stand-up special, the loudest laugh is not the funniest line — it is the line where the most structure converges, and Ali Wong's Baby Cobra gives us seconds-by-seconds proof.",
+    dir:   "pudding/02_stand-up/blog_opus47_0503_0049",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"P·2", year:"Aug 2019", src:"The Pudding", title:"The Top of the Charts Sang Higher in 2019 Than in Any Year Since 1958",
+    tags:["music","register","vocals"],
+    desc:"It is not that men in 2019 are singing higher than men used to. It is that the very top of the chart suddenly demands a high voice — a stylistic gap between hit songs and merely-charting songs that has never existed at this scale.",
+    dir:   "pudding/06_register/blog_opus47_0503_0049",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"P·3", year:"May 2023", src:"The Pudding", title:"The Silence Between the Songs — Country Radio in 2022",
+    tags:["country","radio","gender"],
+    desc:"Country radio's \"don't play two women back-to-back\" rule, named publicly by a programmer in 2015 and ridiculed at the time, is still operating in 2022 — measurably and at every single one of the 29 large-market stations The Pudding sampled.",
+    dir:   "pudding/09_country-radio/blog_opus47_0503_0049",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"P·4", year:"Nov 2018", src:"The Pudding", title:"The look you remember is one of four — Boy bands, by the data",
+    tags:["pop","boybands","fashion"],
+    desc:"35 years of charting boy bands isn't one genre — it's three or four, and the dataset's own visual fields (hair, skin tone, dress pants vs. jeans, frosted tips) record the turnover frame-by-frame.",
+    dir:   "pudding/12_boybands/blog_opus47_0503_0109",
+    thumb: "assets/teaser_silhouettes.png" },
+  { idx:"P·5", year:"Sep 2017", src:"The Pudding", title:"How far is too far? — A 2017 baseline of US clinic drives",
+    tags:["healthcare","clinics","access"],
+    desc:"For most urban Americans the nearest abortion clinic is functionally next door at 8 weeks of pregnancy and a day's drive away at 20 — and the system is fragile enough that the closure of a single clinic moves the country between those two pictures.",
+    dir:   "pudding/13_clinics/blog_opus47_0503_0115",
+    thumb: "assets/teaser_highway.png" },
+  { idx:"P·6", year:"May 2018", src:"The Pudding", title:"The Most-Average Chocolate Chip Cookie Has Bourbon In It",
+    tags:["baking","recipes","NLP"],
+    desc:"Across 209 chocolate chip cookie recipes scraped from the internet, the \"average cookie\" turns out to contain 68 ingredients — including bourbon, zucchini, and coriander — and that joke is a small, edible parable about what averaging does to anything humans actually make.",
+    dir:   "pudding/15_cookies/blog_opus47_0503_0134",
+    thumb: "assets/teaser_hero.png" },
+
+  // ── TidyTuesday (6) ──
+  { idx:"T·1", year:"2024", src:"TidyTuesday", title:"The forecast that aged — Moore's Law on the data",
+    tags:["technology","semiconductors","forecasting"],
+    desc:"Across 49 years and seven orders of magnitude, real chips have followed Gordon Moore's 1975 prediction to within 0.03 of a year — a forecast accuracy almost no other quantitative claim in technology can match.",
+    dir:   "tidytuesday/03_moores-law/blog_opus47_0503_1218",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"T·2", year:"2026", src:"TidyTuesday", title:"A million digits of pi behave like a fair ten-sided die",
+    tags:["pi","randomness","math"],
+    desc:"A million digits of pi is a controlled experiment in randomness: every reasonable test fails to reject the hypothesis that pi's digits are uniform IID, except for one famous early anomaly (the Feynman point at decimal 762) and the tantalising absence of '0123456789', which doesn't appear until digit 17.4 billion.",
+    dir:   "tidytuesday_2026/12_pi-million-digits/blog_opus47_0504_0148",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"T·3", year:"Sep 2020", src:"TidyTuesday", title:"Beyoncé and Taylor Swift, as two corpora",
+    tags:["music","lyrics","NLP"],
+    desc:"When you treat Beyoncé and Taylor Swift as two text corpora and two chart-position tables, the popular framing of who-writes-what flips: Beyoncé says \"love\" more, Taylor's catalog stays net-positive across thirteen years and then breaks in 2020.",
+    dir:   "tidytuesday/11_taylor-swift-beyonce/blog_opus47_0503_1329",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"T·4", year:"2026", src:"TidyTuesday", title:"What 178,749 repair attempts say about design",
+    tags:["repair","sustainability","crowd-data"],
+    desc:"A volunteer-collected ledger of 178,749 repair attempts shows that whether a broken object can be saved is mostly a property of its design, not of effort or skill — and 26 rows in 2023–2026 quietly mark the entry of generative AI into the global repair-cafe toolkit.",
+    dir:   "tidytuesday_2026/14_repair-cafes/blog_opus47_0504_0148",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"T·5", year:"Feb 2026", src:"TidyTuesday", title:"Milano Cortina 2026 — the schedule as a map of attention",
+    tags:["olympics","schedule","sports"],
+    desc:"The Milano Cortina 2026 schedule is a map of attention and access — engineered to concentrate medals in prime-time slots and final days, while hiding huge variation in how thin each gold's competing field actually was.",
+    dir:   "tidytuesday_2026/06_winter-olympics-2026/blog_opus47_0504_0228",
+    thumb: "assets/teaser_hero.png" },
+  { idx:"T·6", year:"2024", src:"TidyTuesday", title:"The snowman is wrong (and Switzerland is hotter)",
+    tags:["weather","Switzerland","climate"],
+    desc:"Zurich's exploding-snowman summer forecast doesn't work — and over the same century the snowman has been wrong about, Swiss summers have grown unmistakably hotter on a schedule the snowman cannot see.",
+    dir:   "tidytuesday/15_sechselauten-snowman/blog_opus47_0503_1411",
+    thumb: "assets/teaser_pyre.png" }
+];
+
+const grid = document.getElementById('card-grid');
+
+function render() {
+  grid.innerHTML = projects.map((p, i) => {
+    const ours = `${BASE}/${p.dir}/viewer.html`;
+    const thumb = `${BASE}/${p.dir}/${p.thumb}`;
+    return `
+    <a class="card fade-in" href="${ours}" style="transition-delay: ${i * 0.04}s">
+      <div class="card-thumb">
+        <span class="card-year">${p.year}</span>
+        <img src="${thumb}" alt="" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <div class="card-body">
+        <div class="card-title">${p.title}</div>
+        <div class="card-desc">${p.desc}</div>
+        <div class="card-tags">
+          ${p.tags.map(t => `<span class="card-tag">${t}</span>`).join('')}
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.card.fade-in').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 50);
+    });
+  });
+}
+
+render();
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

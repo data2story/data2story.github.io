@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "TidyTuesday 2020-09-29 origin",
+      "content": "This dataset was contributed to TidyTuesday on 2020-09-29 (Week 40) by Rosie Baillie and Dr. Sara Stoudt. The release packaged together four tables: full lyrics from Beyoncé (~22,616 lines across her catalog) and Taylor Swift (track-level lyric blocks), plus discography sales totals and country-by-country chart positions scraped from Wikipedia. The framing of the Tidytuesday call-out was explicit: Rosie had already published a tidytext analysis of Taylor Swift; the prompt invited the community to do similar work for Beyoncé. So the dataset was always set up as a comparison study — same artist tier, very different careers.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://github.com/rfordatascience/tidytuesday/blob/main/data/2020/2020-09-29/readme.md",
+          "title": "TidyTuesday 2020-09-29 — Beyoncé and Taylor Swift Lyrics",
+          "facts": [
+            "Released as TidyTuesday week of 2020-09-29 (Week 40, 2020).",
+            "Contributors: Rosie Baillie and Dr. Sara Stoudt.",
+            "Includes beyonce_lyrics.csv, taylor_swift_lyrics.csv, sales.csv, charts.csv.",
+            "The readme directly invites users to replicate Rosie's tidytext analysis on Beyoncé."
+          ]
+        },
+        {
+          "url": "https://rpubs.com/RosieB/taylorswiftlyricanalysis",
+          "title": "Rosie Baillie — Taylor Swift Lyric Analysis (RPubs)",
+          "facts": [
+            "Rosie Baillie's original RPubs notebook is the seed analysis the dataset was built around."
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Catalog scale — Beyoncé vs Taylor Swift on Wikipedia",
+      "content": "By the time the dataset was scraped (Sept 2020), Beyoncé had been releasing albums for 17 years (Dangerously in Love, 2003) and Taylor Swift for 14 (her self-titled debut, 2006). Both artists' Wikipedia discographies report album-level total sales and chart positions in many countries. Taylor's catalog at scrape time spanned eight studio albums (debut → folklore, 2020); Beyoncé's spanned six solo studio albums (Dangerously in Love → Lemonade, 2016, with Beyoncé self-titled in 2013). This makes the dataset's chart and sales tables a snapshot of two careers that overlap for ~14 years but began very differently — Beyoncé as a Destiny's Child graduate already proven on the Hot 100, Taylor as a 16-year-old country debutante.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Beyonc%C3%A9_discography",
+          "title": "Beyoncé discography — Wikipedia",
+          "facts": [
+            "Dangerously in Love released 2003.",
+            "Six solo studio albums by Sept 2020 (latest then: Lemonade, 2016)."
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Taylor_Swift_discography",
+          "title": "Taylor Swift discography — Wikipedia",
+          "facts": [
+            "Self-titled debut released October 2006.",
+            "Eight studio albums by Sept 2020 (latest then: folklore, 2020)."
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Genius/lyric data origin",
+      "content": "The Beyoncé lyric file is one row per line of one song, identified by song_id and a song_line index — the format used by Genius's API and by the geniusr / genius R packages that wrap it. Taylor Swift's table is one row per song with the entire lyric blob in a Lyrics column, which is the format you get if you scrape lyric pages directly. This asymmetry matters for any analysis: Beyoncé's table is already pre-tokenized to lines (so 'how many lines does Halo have?' is a row count), while Swift's lyrics need to be split on newlines or tokenized before line-level questions are answerable. The scale gap is real — 22,616 Beyoncé lines vs Taylor's 132 songs — but it's an artifact of granularity and catalog scope, not a literal claim that Beyoncé wrote 22k more lines.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://docs.genius.com/",
+          "title": "Genius API documentation",
+          "facts": [
+            "Genius is the canonical source for crowd-sourced song lyrics with annotations.",
+            "Genius assigns numeric song_id and artist_id values, which match the columns in beyonce_lyrics.csv."
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Why these two together",
+      "content": "Beyoncé and Taylor Swift were paired in the dataset because they are the two contemporary female solo artists most often invoked as the benchmark for cultural and commercial dominance in the 2010s — and because the 2009 VMAs incident (Kanye interrupting Taylor; Beyoncé later inviting her on stage) became one of the defining cultural beats that linked their careers in the public imagination. Both are also writers credited on most of their material, both have careers that span the rise of streaming, and both have been the subject of large amounts of fan-driven lyric annotation (which is why this Genius-derived dataset exists). The pairing isn't arbitrary; it's the comparison the culture has been making for a decade.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.eonline.com/news/1066857/the-truth-about-the-night-kanye-west-interrupted-taylor-swift-at-the-2009-mtv-vmas",
+          "title": "E! News — The truth about the night Kanye West interrupted Taylor Swift at the 2009 MTV VMAs",
+          "facts": [
+            "Kanye West interrupted Taylor Swift's acceptance speech for Best Female Video at the 2009 MTV VMAs.",
+            "Kanye's protest was that Beyoncé's 'Single Ladies' video deserved the award.",
+            "Beyoncé later invited Taylor back on stage during her own win to give Taylor her moment.",
+            "The image of Beyoncé and Taylor Swift backstage at the 2009 VMAs is the cover image of the TidyTuesday readme."
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "tidytext as the canonical analysis style",
+      "content": "Rosie Baillie's RPubs notebook used the tidytext approach: lyrics → unnested into one-row-per-token, stop words filtered, then word frequencies, sentiment scores (with NRC, AFINN, or Bing lexicons), and tf-idf computed across albums. This is the analysis style the readme explicitly endorses and the audience expects. Two implications for downstream work: (1) word-frequency and sentiment-by-album are the well-trodden paths, so the most interesting findings will probably be the ones that contradict expectations (e.g. an album labelled 'breakup' that scores positive); (2) the AFINN/NRC sentiment lexicons systematically misread Black Vernacular English and slang ('bad' meaning 'good', 'killing it'), which is an important caveat when comparing Beyoncé's sentiment scores to Taylor Swift's.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.tidytextmining.com/sentiment.html",
+          "title": "Text Mining with R — Sentiment analysis with tidy data (Silge & Robinson)",
+          "facts": [
+            "tidytext is built around the principle 'one token per row' (unnest_tokens).",
+            "AFINN, Bing, and NRC are the three lexicons most commonly demoed.",
+            "Sentiment lexicons assign valence at the dictionary-word level and ignore context."
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Sales table provenance and limits",
+      "content": "The sales.csv table is derived from each artist's Wikipedia discography 'Sales' column, where studio albums report cumulative sales by country (US, UK, FRA, GER, etc.) plus a worldwide total ('WW'). These figures are not RIAA-audited point-of-sale numbers — they are the values Wikipedia editors aggregated from a mix of certifications, IFPI press releases, and earlier industry reports, which means they tend to be conservative for albums that kept selling after the table was last updated and inflated for albums where label PR seeded a high number that propagated. The implication: rank ordering across the artists' top albums is reliable; precise dollar values are not.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Beyonc%C3%A9_discography#Studio_albums",
+          "title": "Beyoncé studio-album sales — Wikipedia (snapshot)",
+          "facts": [
+            "Wikipedia discography pages aggregate sales across multiple labels and certifications.",
+            "Most numbers are reported as 'over X million' rather than precise auditable totals."
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Charts table — what 'chart_position' really means",
+      "content": "The charts.csv file flattens album-level peak positions across ten national charts (US, AUS, CAN, FRA, GER, IRE, JPN, NZ, SWE, UK). Each value is the album's peak position (so '1' = #1, '5' = peaked at #5). Empty / NA cells should be read as 'did not chart' rather than 'no data'. The number of national charts scraped is not symmetric across artists: Taylor Swift's table includes more US-and-anglophone-focused chart entries, while Beyoncé's table reports fewer European charts (because Beyoncé charted on fewer of them). This means raw counts of 'top 10 entries' favour the artist with the fuller table by construction, so per-album normalisations are safer.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://github.com/rfordatascience/tidytuesday/blob/main/data/2020/2020-09-29/readme.md",
+          "title": "TidyTuesday data dictionary — charts.csv",
+          "facts": [
+            "chart column maps to a country code: US, AUS, CAN, FRA, GER, IRE, JPN, NZ, SWE, UK.",
+            "chart_position is described as 'Highest Chart position'."
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Beyoncé palette — community signal that color matters here",
+      "content": "There is an R package called `beyonce` whose entire purpose is to provide curated color palettes drawn from Beyoncé album covers and music videos. The TidyTuesday readme explicitly links to it. This is a small but telling signal: in the data-viz community, Beyoncé's catalog is recognised as a *visual* canon, not just a sonic one. Taylor Swift has parallel visual eras (the Eras Tour was built on it). For a designer, this is permission — and in fact, encouragement — to lean into album-cover-coded color palettes rather than defaulting to the Tableau-10 categorical scheme.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://github.com/dill/beyonce",
+          "title": "dill/beyonce — R package of Beyoncé color palettes",
+          "facts": [
+            "GitHub repository providing R color palettes derived from Beyoncé album visuals.",
+            "Linked directly from the TidyTuesday readme as a recommended companion package."
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "../../../../data_preprint/tidytuesday/11_taylor-swift-beyonce/pic1.png",
+      "url": "local",
+      "license": "Bundled with TidyTuesday dataset",
+      "source": "TidyTuesday 2020-09-29 dataset folder",
+      "description": "Reference figure shipped with the dataset — see DATA_DIR/pic1.png.",
+      "relates_to": ["det_01"]
+    }
+  ],
+  "instances": [
+    {
+      "id": "inst_01",
+      "type": "spotify",
+      "label": "Halo — Beyoncé (I Am... Sasha Fierce)",
+      "embed_url": "https://open.spotify.com/embed/track/3ERa3mEeOnrh2Mc47qM6T1",
+      "verified": true,
+      "verified_title": "Halo",
+      "relates_to": ["det_02", "det_04"],
+      "why": "The Beyoncé track most readers can hum without prompting — anchors any sentiment-by-album discussion of I Am... Sasha Fierce."
+    },
+    {
+      "id": "inst_02",
+      "type": "spotify",
+      "label": "Single Ladies (Put a Ring on It) — Beyoncé",
+      "embed_url": "https://open.spotify.com/embed/track/5R9a4t5t5O0IsznsrKPVro",
+      "verified": true,
+      "verified_title": "Single Ladies (Put a Ring on It)",
+      "relates_to": ["det_04"],
+      "why": "The exact song Kanye said deserved the 2009 VMA over Taylor — the canonical link between the two careers."
+    },
+    {
+      "id": "inst_03",
+      "type": "spotify",
+      "label": "Crazy in Love (feat. JAY-Z) — Beyoncé (Dangerously in Love)",
+      "embed_url": "https://open.spotify.com/embed/track/5IVuqXILoxVWvWEPm82Jxr",
+      "verified": true,
+      "verified_title": "Crazy In Love (feat. JAY-Z)",
+      "relates_to": ["det_02"],
+      "why": "Beyoncé's 2003 solo breakthrough — the first track on the first album in the dataset."
+    },
+    {
+      "id": "inst_04",
+      "type": "spotify",
+      "label": "Love Story — Taylor Swift (Fearless)",
+      "embed_url": "https://open.spotify.com/embed/track/1vrd6UOGamcKNGnSHJQlSt",
+      "verified": true,
+      "verified_title": "Love Story",
+      "relates_to": ["det_02"],
+      "why": "The country-pop crossover that ended Taylor's debut era and powered Fearless to its 2008 numbers."
+    },
+    {
+      "id": "inst_05",
+      "type": "spotify",
+      "label": "Shake It Off — Taylor Swift (1989)",
+      "embed_url": "https://open.spotify.com/embed/track/5xTtaWoae3wi06K5WfVUUH",
+      "verified": true,
+      "verified_title": "Shake It Off",
+      "relates_to": ["det_02"],
+      "why": "1989's lead single, the moment Taylor abandoned country and went full pop."
+    },
+    {
+      "id": "inst_06",
+      "type": "spotify",
+      "label": "Blank Space — Taylor Swift (1989)",
+      "embed_url": "https://open.spotify.com/embed/track/1p80LdxRV74UKvL8gnD7ky",
+      "verified": true,
+      "verified_title": "Blank Space",
+      "relates_to": ["det_02"],
+      "why": "Self-aware persona song that became the cleanest example of Taylor leaning into her tabloid image."
+    }
+  ]
+}

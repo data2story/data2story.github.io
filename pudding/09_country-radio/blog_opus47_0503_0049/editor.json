@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "Country radio's 'don't play two women back-to-back' rule, named publicly in 2015, is still active and measurable on every one of the 29 large-market stations The Pudding sampled in 2022 — and at 18 of them the observed pattern is statistically impossible without an active separation rule on top of women's small airplay share.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — A song you cannot hear after another song",
+      "purpose": "hook",
+      "title": null,
+      "findings": ["ana_01", "ana_03"],
+      "context": ["det_01", "det_02", "det_07"],
+      "triage": {
+        "ana_01": "lead",
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "instance",
+      "editorial_notes": "Numbers 0.51%, 65.01%, 128x, and 1,917x must appear exactly. The Hill quote should be verbatim. End the section on the WUBE 1,917x line — it is the punch."
+    },
+    "edt_02": {
+      "label": "The number that should not exist (permutation test)",
+      "purpose": "evidence",
+      "title": "The number that should not exist",
+      "findings": ["ana_04"],
+      "context": ["det_07", "det_10"],
+      "triage": {
+        "ana_04": "supporting"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": "interactive",
+      "editorial_notes": "18 of 29 stations had p=0 in 1,000 simulations — emphasize this. The (0.11)^2 = 1.2% chance baseline is the cleanest mental model; keep it. Show the per-station observed-vs-chance ratio chart."
+    },
+    "edt_03": {
+      "label": "Quarantine, not absence",
+      "purpose": "turn",
+      "title": "Quarantine, not absence",
+      "findings": ["ana_05", "ana_06"],
+      "context": ["det_08"],
+      "triage": {
+        "ana_05": "supporting",
+        "ana_06": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The phrase 'play them where it doesn't show' is load-bearing. The 43% / 21% OVN+EVE breakdown for women's b2bs needs the chart to make it visible."
+    },
+    "edt_04": {
+      "label": "A category of one — race and queerness",
+      "purpose": "evidence",
+      "title": "A category of one",
+      "findings": ["ana_10", "ana_11"],
+      "context": ["det_05", "det_06"],
+      "triage": {
+        "ana_10": "supporting",
+        "ana_11": "color"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "instance",
+      "editorial_notes": "List the 5 POC women artists with exact play counts. The Mickey Guyton instance (inst_01) goes here as an embedded Spotify track — the audio is the argument. Don't render this section as a chart; it's a roster + an audio embed."
+    },
+    "edt_05": {
+      "label": "Three women carry the format's progress narrative",
+      "purpose": "evidence",
+      "title": "Three women, thirty-two careers",
+      "findings": ["ana_09", "ana_08"],
+      "context": ["det_09"],
+      "triage": {
+        "ana_09": "supporting",
+        "ana_08": "color"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "instance",
+      "editorial_notes": "The 52.2% vs 20.3% concentration contrast must remain exact. Embed Lainey Wilson's 'Things A Man Oughta Know' (inst_02) so the reader hears the bottleneck."
+    },
+    "edt_06": {
+      "label": "30% of station-days produce zero back-to-back",
+      "purpose": "evidence",
+      "title": "Thirty percent of days, zero",
+      "findings": ["ana_12", "ana_02"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_12": "supporting",
+        "ana_02": "supporting"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": null,
+      "editorial_notes": "WSM-FM Jan 28 2022 — 53 women plays / 0 b2bs — is the strongest single-day anchor. Lead with it. The ranked-station chart (ana_02) is the visual centerpiece of this section: it should show ALL 29 stations and the chance baseline as a reference line."
+    },
+    "edt_07": {
+      "label": "What the rule actually costs",
+      "purpose": "close",
+      "title": "What the rule costs",
+      "findings": ["ana_09"],
+      "context": ["det_03", "det_04"],
+      "triage": {
+        "ana_09": "color"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "instance",
+      "editorial_notes": "End on the tomatoes/lettuce line. No CTA, no 'what we can do', no summary. The Brandi Carlile quote stays as a question, not a thesis. A final embedded track (Carrie Underwood 'Before He Cheats' as the canonical 'gold' women's track, inst_03) closes the piece audibly."
+    }
+  },
+  "full_triage": {
+    "ana_01": "lead",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "cut",
+    "ana_08": "color",
+    "ana_09": "supporting",
+    "ana_10": "supporting",
+    "ana_11": "color",
+    "ana_12": "supporting",
+    "ana_13": "cut"
+  }
+}

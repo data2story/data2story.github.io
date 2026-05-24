@@ -1,0 +1,308 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Default to all five channels (chart, image, video, audio, interactive_or_map). The dataset's strongest currency is statistical: distributions, leaderboards, regression-to-the-mean dynamics. So charts dominate, but the page is paced with cinematic stills and one event re-enactment video to humanise the analytical density. Audio is a generated reading bed (no autoplay) for atmosphere — the data has no inherent sonic dimension. Interactivity comes from a tenure-pair scrubber and a band picker.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The dataset is fundamentally about distributions, rankings, time-series of tenures and a correlation that the eye must see fail. Charts are the primary evidence."
+      },
+      "image": {
+        "used": true,
+        "reason": "Three editorial stills — the empty dugout teaser, a tactics-notebook close-up, and a long line of empty manager's chairs — give the page atmospheric pacing between dense charts."
+      },
+      "video": {
+        "used": true,
+        "reason": "Two short clips: the teaser still animated with image2video (slow parallax push-in over the dugout) and a 5-second text2video re-enactment of an empty press-conference room as a chapter-break mid-page. Both speak to the dataset's central image — the manager who isn't really there in the way the industry imagines."
+      },
+      "audio": {
+        "used": true,
+        "reason": "A 30-second generated cinematic underscore (sparse piano, soft strings, faint stadium murmur, no vocals) is offered as a click-to-play reading bed for the closing sections. Visual fallback: the page works fully without sound. No autoplay."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The killer-test section gets a tenure-pair scrubber: pick a manager, see their two tenures plotted side by side. The active-board section gets a band-picker: drag a slider across the projection axis, watch the histogram counts update. No real geographic dimension, so no map."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — empty dugout (still)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_dugout.png",
+        "tool": "text2image",
+        "prompt": "Cinematic wide editorial photograph of an empty football manager's technical area at night, two pristine white tactics-board chairs and a coiled headset, rain-soaked turf catching warm floodlight from the left, deep shallow depth of field, evocative editorial mood, no people, no text, no logos, color palette muted teal and charcoal with a single warm key light",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed teaser image: an empty technical area on a stadium touchline at night. Two white chairs, one coiled headset, rain-slicked turf catching a warm side-light. The image whispers absence: this is where the manager would sit, except the data says it might not matter very much who does. No text, no logo, no readable scoreboard.",
+      "rationale": "A still frame that withholds the human subject is the right opening for a piece arguing that human is overestimated. The teaser builds curiosity before the first sentence.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion — image2video parallax push-in",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_dugout.png",
+        "prompt": "Slow cinematic parallax push-in toward the empty dugout chairs, soft drift of rain micro-droplets in the warm key light, subtle stadium light flicker in the distance, no camera shake, no people entering frame, no text",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Animated version of the teaser still. 6-second loop, slow push-in, drifting micro-droplets, faint flicker. Plays muted on autoplay (looped) so the page never demands a click to feel alive. Falls back to the still on browsers that block autoplay video.",
+      "rationale": "We already invested in a strong still; image2video preserves the composition while giving the teaser kinetic life. Restrained motion fits the editorial register.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Headline distribution — points-per-game above expectation",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "histogram",
+        "data_source": "ana_03",
+        "x": "bin_left",
+        "y": "count",
+        "highlight": {"bin": "+0.10 to +0.20"},
+        "interaction": "Hover any bar for the exact tenure count; an annotation marks Leicester (Ranieri) at +0.47 and Abelardo (#1) at +0.57",
+        "style": {"palette": "single warm-orange bar with the central cluster lightly desaturated", "no_gridlines": true, "axis_label_size": 12, "annotation_visible": true}
+      },
+      "brief": "Centerpiece histogram, 13 bins from -0.70 to +0.60 in 0.10 steps. The tall central peak at -0.10 to +0.10 must visually dominate. Two thin annotated guide lines at +0.47 (Leicester) and +0.57 (Abelardo) show the rare overachievers as outliers. Y-axis: tenure count. X-axis: ppg above expectation.",
+      "rationale": "The lead finding is a distribution. A histogram with the tail-outliers annotated lets the reader see the entire shape and the rare exceptions in one frame.",
+      "based_on": ["ana_03"]
+    },
+    "des_04": {
+      "label": "Methodology — MAE per league bar chart",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_01",
+        "x": "mae_points",
+        "y": "league",
+        "interaction": "Hover bar for exact MAE and team-season count",
+        "style": {"palette": "single muted teal, no gridlines, x-axis ranges 6.5 to 8.0", "axis_label_size": 12}
+      },
+      "brief": "Five horizontal bars (one per league) showing the model's mean absolute error in points per team-season. Sorted alphabetically. The bars are tightly packed (range 7.01-7.50) — visual point: the model performs comparably across all five leagues. Add a thin reference line at 8.1 labelled 'preseason betting markets, English campaigns'.",
+      "rationale": "The reader needs a quick way to trust the forecast. A compact bar with the betting-market reference line carries the credibility argument visually.",
+      "based_on": ["ana_01"]
+    },
+    "des_05": {
+      "label": "Top-12 leaderboard bar chart",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_04",
+        "x": "above",
+        "y": "manager",
+        "interaction": "Hover bar for full label: club, games, ppg, expected ppg, above-expectation",
+        "style": {"palette": "warm orange for #1 Abelardo and Ranieri (Leicester) highlighted in deeper amber; rest muted gray", "no_gridlines": true, "sorted_descending": true, "axis_label_size": 12}
+      },
+      "brief": "12 horizontal bars sorted descending. Each bar labelled 'Manager (Club, games)'. Highlight Ranieri's Leicester bar in amber to anchor the most-cited reference and Abelardo's bar in orange as the leader. The bars get only marginally shorter — reinforcing the editor's point that the top is a flat plateau.",
+      "rationale": "A leaderboard is the natural form for ranked data; the colour-callout to Ranieri keeps the famous-name anchor without breaking the chart's analytical purpose.",
+      "based_on": ["ana_04"]
+    },
+    "des_06": {
+      "label": "Quartile collapse chart — tenure-1 quartile vs tenure-2 mean",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "vertical_bar",
+        "data_source": "ana_09",
+        "x": "quartile",
+        "y": "tenure2_mean_above",
+        "interaction": "Hover bar for tenure-2 mean and number of managers in that quartile",
+        "style": {"palette": "single muted indigo, dashed reference line at y=0", "no_gridlines": false, "axis_label_size": 12, "y_range": [-0.3, 0.3]}
+      },
+      "brief": "Four vertical bars (Q1 worst → Q4 best) showing each tenure-1 quartile's mean tenure-2 ppg-above-expectation. All four bars are tiny and clustered around zero — the visual punchline: split managers however you like, they all regress to roughly the same place. Dashed zero line for reference.",
+      "rationale": "The most counter-intuitive finding deserves the most legible chart. A four-bar bar chart against a zero line shows the entire phenomenon in one frame.",
+      "based_on": ["ana_09"]
+    },
+    "des_07": {
+      "label": "Tenure-pair scrubber (interactive)",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "manager_pair_picker",
+        "initial_state": "Reader sees a scatter plot: each dot is a manager, x = tenure-1 ppg above, y = tenure-2 ppg above. A diagonal y=x reference line shows what perfect predictability would look like. The cloud is amorphous (r=0.04).",
+        "trigger": "Reader clicks any dot or selects a manager from a dropdown (preselected: Ronald Koeman, Jupp Heynckes, Antonio Conte, Luciano Spalletti)",
+        "transition": "The selected dot enlarges to amber; a small panel below shows that manager's tenure 1 and tenure 2 numbers and clubs",
+        "payoff": "Even Antonio Conte, who shows up second-tenure-still-strong (+0.38), sits inside a cloud where most other managers do not retain their level",
+        "data_source": "ana_08"
+      },
+      "brief": "Scatter plot of all 222 manager-tenure pairs with a 45-degree reference line. Selectable dots/dropdown reveal a manager's two stints. The visual point: most dots are far from the reference line — past performance does not project to future.",
+      "rationale": "An interactive scatter is the only way to convey both the global cloud (no relationship) and the individual cases simultaneously. A passive chart cannot satisfy both.",
+      "based_on": ["ana_08"]
+    },
+    "des_08": {
+      "label": "Empty press conference video (chapter break)",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "video",
+        "filename": "empty_presser.mp4",
+        "tool": "text2video",
+        "prompt": "Slow editorial cinematic shot of an empty press conference room at night: a manager's nameplate on a long table, microphones angled toward the empty seat, water glass and a folded jacket draped over the chair, soft fluorescent overhead light flickering once, dust motes in the beam, no people, no text on signage, no logos visible, photoreal, 5 seconds",
+        "model": "bytedance/seedance-2.0",
+        "duration": 5,
+        "aspect_ratio": "16:9"
+      },
+      "brief": "5-second muted-autoplay loop placed as the chapter break above edt_05. The empty press conference room visualises 'the data refuses to hear a manager's voice clearly until he has worked for two decades' — the lectern is set up but no one has sat there long enough to count.",
+      "rationale": "The section is about voice and time. A still wouldn't carry the absence; the slight flicker and dust motion in a video do.",
+      "based_on": []
+    },
+    "des_09": {
+      "label": "Shrinkage carry-over chart — games vs % retained",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_18",
+        "x": "games",
+        "y": "carry_pct",
+        "highlight": {"point": "Ferguson (data window) at 342 games, 42.6% retained"},
+        "interaction": "Hover any point for the full label",
+        "style": {"palette": "single dark teal line with circle markers, no gridlines, y-axis 0-70%, x-axis log-scaled to give early-career detail", "axis_label_size": 12}
+      },
+      "brief": "Curved line showing how much of a manager's record survives the 461-game shrinkage. The curve rises slowly: 7.6% at one season, 19.8% at three, ~45% at ten, 62% at twenty. Mark Ferguson at 42.6% explicitly. The visual point: it takes decades of work to earn the model's confidence.",
+      "rationale": "The shrinkage formula is conceptually slippery; the curve makes it tangible.",
+      "based_on": ["ana_18"]
+    },
+    "des_10": {
+      "label": "Tactics notebook still (atmosphere)",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "notebook_tactics.png",
+        "tool": "text2image",
+        "prompt": "Top-down editorial still life of a worn manager's leather notebook open on a wooden tactics table, faint hand-drawn pencil arrows and circles, a tactical pen resting beside it, warm desk-lamp glow from the upper right, subtle film grain, color palette warm cream paper and dark walnut wood, no text legible, no logos",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Atmospheric still: an open tactics notebook with faint pencil arrows. Used as a small inset image in edt_05 between the shrinkage curve and the Ferguson paragraph. Conveys patient, unglamorous, accumulative work — the only thing the data rewards.",
+      "rationale": "The reader needs a non-chart breath here. A still life of the tools of the trade keeps the section visually paced.",
+      "based_on": []
+    },
+    "des_11": {
+      "label": "Klopp three-club staircase chart",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "vertical_bar",
+        "data_source": "ana_16",
+        "x": "club",
+        "y": "above",
+        "interaction": "Hover bar for full label: years, games, ppg actual, ppg expected",
+        "style": {"palette": "three-step gradient from pale teal (Mainz) to mid teal (Dortmund) to deep teal (Liverpool)", "no_gridlines": true, "axis_label_size": 12}
+      },
+      "brief": "Three vertical bars in chronological order: Mainz 05 (+0.05) → Borussia Dortmund (+0.18) → Liverpool (+0.31). Each bar labelled with the years and games covered. The staircase shape is the entire visual argument.",
+      "rationale": "Three bars in order are the simplest way to read a trajectory. The gradient reinforces the chronology.",
+      "based_on": ["ana_16"]
+    },
+    "des_12": {
+      "label": "Famous-names dot strip",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "dot_strip",
+        "data_source": "ana_17",
+        "x": "above",
+        "y": "manager",
+        "interaction": "Hover any dot for club, games, ppg actual, ppg expected",
+        "style": {"palette": "Ancelotti's dots highlighted coral; others muted slate; reference line at 0", "no_gridlines": true, "axis_label_size": 12}
+      },
+      "brief": "Each manager occupies one row; each tenure is a dot positioned by ppg above expectation. Several rows therefore have multiple dots showing how a single manager's measured impact varies by club. Ancelotti's row gets coral dots to call attention to the negative-to-zero spread. A vertical reference line at 0 anchors the eye.",
+      "rationale": "A dot strip lets a single chart carry many comparisons; one figure per manager misses the per-club variation that is the heart of the section's surprise.",
+      "based_on": ["ana_17"]
+    },
+    "des_13": {
+      "label": "Long line of empty chairs (atmosphere)",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "long_line_chairs.png",
+        "tool": "text2image",
+        "prompt": "Editorial wide photograph at golden hour of a long line of empty manager's chairs on a stadium touchline, vanishing into the distance with motion-blurred figures of unidentifiable coaches walking away from camera, rain droplets caught in side-light, deep cinematic atmosphere, color palette desaturated golds and slate grey, no text, no logos, no jersey numbers visible",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Wide editorial still placed as a section opener for edt_07. A receding line of identical empty chairs with anonymous figures walking out of frame. The image visualises the editor's argument that managers are interchangeable in the metric.",
+      "rationale": "The section's emotional core is interchangeability; the image embodies it without needing a caption to explain.",
+      "based_on": []
+    },
+    "des_14": {
+      "label": "Active-board top-10 horizontal bar",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_05",
+        "x": "projection_per_season",
+        "y": "manager",
+        "interaction": "Hover bar for current team and prev career matches",
+        "style": {"palette": "Klopp's bar highlighted in liverpool-red; rest muted indigo", "no_gridlines": true, "sorted_descending": true, "axis_label_size": 12}
+      },
+      "brief": "Top-10 active managers (late 2018) by projected points-added per season. Klopp's row in Liverpool red. The visual point: the difference between #1 and #10 is barely 1.2 points per season — for the very best of the working population.",
+      "rationale": "A horizontal bar with one branded callout reads like a real-world top-10 board, which is exactly what this section is.",
+      "based_on": ["ana_05"]
+    },
+    "des_15": {
+      "label": "Population band picker (interactive)",
+      "type": "interactive",
+      "section": "edt_08",
+      "content": {
+        "interaction_type": "histogram_band_picker",
+        "initial_state": "Reader sees a horizontal histogram of all 596 active managers' projections, 6 bands from 'below -1.0' to 'above +1.0'. A horizontal slider runs across the x-axis with two thumbs.",
+        "trigger": "Reader drags the two slider thumbs to define a band of interest",
+        "transition": "Counts update live: 'X managers project in this band (Y% of population)'",
+        "payoff": "Reader can verify directly that 432 of 596 managers fall below 0, that the band ±0.5 contains half the population, and that fewer than 50 cross +1.0",
+        "data_source": "ana_07"
+      },
+      "brief": "An interactive histogram where dragging slider thumbs returns a live count of how many managers fall inside the chosen band. Designed so the reader is the one who discovers the long left tail.",
+      "rationale": "Letting readers find the 72.5% sub-average finding themselves is more persuasive than telling them — the slider transforms a passive number into a small experiment.",
+      "based_on": ["ana_07"]
+    },
+    "des_16": {
+      "label": "Closing reading bed audio",
+      "type": "audio",
+      "section": "edt_09",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "Adds editorial atmosphere to the closing argument; the reading bed gives the closing two paragraphs a slightly slower felt pace without intruding.",
+        "trigger": "Click the small 'reading bed' play button next to the closing heading",
+        "ui_form": "section-integrated mini-player — a small inline button + caption next to the closing heading; not a full audio card",
+        "content": {
+          "filename": "reading_bed.mp3",
+          "tool": "text2music",
+          "prompt": "Sparse instrumental cinematic underscore in C minor: distant low piano notes, soft string pads, faint stadium murmur layered underneath like white noise, tempo 60 BPM, 30 seconds, mood pensive and analytical, no vocals, no drums, suitable for an editorial data-journalism reading bed",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "Page works fully without sound; play button is hidden if the audio file fails to load.",
+        "novelty_note": "Implemented as a tiny inline button next to the closing-section heading rather than the standard centered audio-card pattern; the bed underscores the closing argument rather than functioning as a separate exhibit."
+      },
+      "brief": "Optional 30-second instrumental underscore offered as a click-to-play button next to the closing heading. Never autoplay. Visual fallback: the closing reads perfectly without sound.",
+      "rationale": "Audio is optional but earns its slot here as a pacing layer — the closing makes a softer, slower argument and a sparse cinematic bed reinforces that. We avoid the standard audio-card pattern by making the player tiny and inline.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial — muted teal/charcoal/cream, generous whitespace, restrained typography",
+    "text_visual_pattern": "visual-first teaser, then alternating prose-then-chart with two cinematic stills and one re-enactment video as breathing room",
+    "centrepiece": "des_03",
+    "anti_sameness_notes": "Avoid the recent stack-of-charts rhythm by inserting two cinematic stills (notebook, long line of chairs) and one short text2video clip (empty presser) as chapter breaks. The teaser is video-on-still rather than a generated motion piece — restrained. Audio is a tiny inline button, not a full audio card.",
+    "typography_notes": "Body in Georgia or system serif at 18px. Headlines in a heavy display serif. Stat callouts where a single number stands alone (none mandatory). Use a single accent colour (warm amber) for highlights inside charts; reserve red for the Klopp bar in edt_08 only."
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "Across 209 chocolate chip cookie recipes scraped from the internet, the strict mathematical 'average cookie' contains 68 ingredients — including bourbon, zucchini, and white pepper — a small edible parable about how averaging anything humans actually make produces a Frankenstein superset, not a typical instance.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — The most-average cookie has bourbon in it",
+      "purpose": "hook",
+      "title": "The most-average cookie has bourbon in it",
+      "findings": ["ana_07", "ana_04"],
+      "context": ["det_04", "det_03"],
+      "triage": {
+        "ana_07": "lead",
+        "ana_04": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "The 68-ingredient count and the verbatim 'Chewy and very chocolatey...' quote are load-bearing. Bourbon at 0.019 tablespoons must be exact (do not round to 0.02). 23 single-recipe ingredients must match ana_04."
+    },
+    "edt_02": {
+      "label": "But the average cookie is also boringly normal",
+      "purpose": "context",
+      "title": "But the average cookie is also boringly normal",
+      "findings": ["ana_06", "ana_03"],
+      "context": ["det_02", "det_07"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "image",
+      "editorial_notes": "Top-12 quantities from ana_06 must be exact (3.526 cups flour, 2.979 tsp vanilla, etc.). The 'cliff' from 74.6% (semisweet chip) to 23.9% (baking powder) must be visible in the chart."
+    },
+    "edt_03": {
+      "label": "A close look at the ingredient vector",
+      "purpose": "evidence",
+      "title": "A close look at the ingredient vector",
+      "findings": ["ana_17", "ana_05"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_17": "supporting",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_17",
+      "media_placeholder": null,
+      "editorial_notes": "This is the centrepiece chart — show all 68 ingredients with prevalence on log/log-like scale. The 'cliff face + long tail' shape is the visual argument. 49 ingredients <5% must be visible."
+    },
+    "edt_04": {
+      "label": "Where the bakers actually disagree",
+      "purpose": "turn",
+      "title": "Where the bakers actually disagree",
+      "findings": ["ana_08", "ana_09", "ana_11", "ana_10"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_08": "supporting",
+        "ana_09": "color",
+        "ana_11": "supporting",
+        "ana_10": "lead"
+      },
+      "chart_placeholder": "ana_11",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The interactive should be a guess-first reveal on the brown-vs-white sugar question (36.8% / 47.4% / 15.8%) — that is the most counterintuitive finding in this section. Bittersweet bakers' 4.4 cups average must be exact."
+    },
+    "edt_05": {
+      "label": "The oven hasn't moved in 80 years",
+      "purpose": "evidence",
+      "title": "The oven hasn't moved in 80 years",
+      "findings": ["ana_16", "ana_15"],
+      "context": ["det_02"],
+      "triage": {
+        "ana_16": "supporting",
+        "ana_15": "color"
+      },
+      "chart_placeholder": "ana_16",
+      "media_placeholder": null,
+      "editorial_notes": "350F at 74 mentions vs 375F at 46 should be visually decisive. The bigram counts (191, 191, 166, 123) are exact."
+    },
+    "edt_06": {
+      "label": "What averaging is actually for",
+      "purpose": "close",
+      "title": "What averaging is actually for",
+      "findings": ["ana_07"],
+      "context": ["det_05", "det_03"],
+      "triage": {
+        "ana_07": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "The cannelini-beans n-gram failure and the 'white sugar five times' neural net failure are load-bearing — keep both. Close on the recommendation-algorithm parallel."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "color",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "lead",
+    "ana_08": "supporting",
+    "ana_09": "color",
+    "ana_10": "lead",
+    "ana_11": "supporting",
+    "ana_12": "cut",
+    "ana_13": "cut",
+    "ana_14": "cut",
+    "ana_15": "color",
+    "ana_16": "supporting",
+    "ana_17": "supporting"
+  }
+}

@@ -1,0 +1,331 @@
+{
+  "meta": {"role": "analyst", "version": "2.0"},
+  "dataset": {
+    "files": ["pi_digits.csv"],
+    "rows": 1000001,
+    "columns": 2,
+    "what_one_row_represents": "One decimal digit of pi at a specific position (position 1 is the leading 3, positions 2..1000001 are the first one million decimal digits).",
+    "time_range": "n/a (mathematical constant)",
+    "geographic_scope": "n/a"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Per-digit frequencies in the first million digits",
+      "content": "Across all 1,000,001 digits (the leading 3 plus the first million decimals), each digit 0-9 lands within 0.05 percentage points of the expected 10.0%. The most-frequent digit is 5 at 100,359 occurrences (10.0359%, +0.0359pp) and the least-frequent is 6 at 99,548 occurrences (9.9548%, -0.0452pp). The largest gap between any two digits is just 811 counts. Every single digit's 95% binomial confidence interval comfortably contains 10%, so there is no individual digit whose frequency is statistically distinguishable from uniform.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/digit_frequency.py", "lines": [18, 31], "output": "digit 0: count=  99959, pct=9.9959%, dev=-0.0041pp\ndigit 1: count=  99758, pct=9.9758%, dev=-0.0242pp\ndigit 2: count= 100026, pct=10.0026%, dev=+0.0026pp\ndigit 3: count= 100230, pct=10.0230%, dev=+0.0230pp\ndigit 4: count= 100230, pct=10.0230%, dev=+0.0230pp\ndigit 5: count= 100359, pct=10.0359%, dev=+0.0359pp\ndigit 6: count=  99548, pct=9.9548%, dev=-0.0452pp\ndigit 7: count=  99800, pct=9.9800%, dev=-0.0200pp\ndigit 8: count=  99985, pct=9.9985%, dev=-0.0015pp\ndigit 9: count= 100106, pct=10.0106%, dev=+0.0106pp"},
+      "data_table": {
+        "description": "Counts, percentages, deviation from 10% in pp, and 95% CI half-width for each digit.",
+        "columns": ["digit", "count", "pct", "dev_pp", "ci_lo", "ci_hi"],
+        "rows": [
+          [0, 99959, 9.9959, -0.0041, 9.9371, 10.0547],
+          [1, 99758, 9.9758, -0.0242, 9.9170, 10.0346],
+          [2, 100026, 10.0026, 0.0026, 9.9438, 10.0614],
+          [3, 100230, 10.0230, 0.0230, 9.9642, 10.0818],
+          [4, 100230, 10.0230, 0.0230, 9.9642, 10.0818],
+          [5, 100359, 10.0359, 0.0359, 9.9771, 10.0947],
+          [6, 99548, 9.9548, -0.0452, 9.8960, 10.0136],
+          [7, 99800, 9.9800, -0.0200, 9.9212, 10.0388],
+          [8, 99985, 9.9985, -0.0015, 9.9397, 10.0573],
+          [9, 100106, 10.0106, 0.0106, 9.9518, 10.0694]
+        ]
+      },
+      "based_on": ["det_03", "det_06"]
+    },
+    "ana_02": {
+      "label": "Chi-squared test on length-1 frequencies vs uniform",
+      "content": "A Pearson chi-squared goodness-of-fit test comparing the observed digit counts to a uniform null (100,000.1 expected per cell, df=9) gives chi-squared = 5.5137, p = 0.7874. The critical value at alpha=0.05 is 16.92, so we are nowhere near rejecting uniformity — in fact a p-value of 0.79 means a fair die would produce a more uneven count than pi gave us about 79% of the time. This is exactly the kind of 'boringly random' result the normality conjecture predicts.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/digit_frequency.py", "lines": [33, 41], "output": "chi2 = 5.5137\ndf = 9\np-value = 0.7874\nCritical chi2 at alpha=0.05, df=9: 16.9190"},
+      "data_table": {
+        "description": "Chi-squared test result and critical values.",
+        "columns": ["statistic", "value"],
+        "rows": [["chi_squared", 5.5137], ["df", 9], ["p_value", 0.7874], ["critical_alpha_0.05", 16.9190]]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_03": {
+      "label": "Maximum digit-count deviation",
+      "content": "The biggest miss is digit 6, which appears 99,548 times — 452 fewer than the expected 100,000.1. In percentage-point terms that is -0.045pp. The next biggest miss is digit 5 at +359 (and +0.036pp). Said another way: across one million trials, no digit drifts more than half a thousandth of a percentage point from its theoretical share. For a result that is supposed to look like a sequence of fair die rolls, the digits of pi do an unsettlingly good job.",
+      "type": "anomaly",
+      "strength": "weak",
+      "calculation": {"file": "code/digit_frequency.py", "lines": [43, 49], "output": "least frequent digit: 6 with 99548\nmost  frequent digit: 5 with 100359\nmax|count - expected| = 452.1\nmax deviation in pp: 0.0452"},
+      "data_table": {
+        "description": "Largest under- and over-shoot vs expected.",
+        "columns": ["which", "digit", "count", "deviation_from_expected"],
+        "rows": [["least frequent", 6, 99548, -452], ["most frequent", 5, 100359, 359]]
+      },
+      "based_on": []
+    },
+    "ana_04": {
+      "label": "Self-transition rates: digit i followed by digit i",
+      "content": "For each digit i, P(digit_{n+1}=i | digit_n=i) is the diagonal of the transition matrix. The largest is digit 5 at 10.1954% (+0.195pp from baseline) and the smallest is digit 7 at 9.8206% (-0.179pp). Every diagonal entry sits within +/- 0.20pp of 10%, well inside the +/- 0.19pp 95% binomial half-width for ~100k trials per row — most are inside +/- 0.10pp. The gauge-chart hero of the original TidyTuesday submission is reproduced exactly: there is no detectable 'sticky' or 'avoiding' digit. A digit knowing what it just was tells you essentially nothing about what comes next.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/transitions.py", "lines": [25, 35], "output": "digit 0: P(0->0) = 9.9421% (dev -0.0579pp)\ndigit 1: P(1->1) = 10.0885% (dev +0.0885pp)\ndigit 2: P(2->2) = 10.0594% (dev +0.0594pp)\ndigit 3: P(3->3) = 10.0030% (dev +0.0030pp)\ndigit 4: P(4->4) = 9.9351% (dev -0.0649pp)\ndigit 5: P(5->5) = 10.1954% (dev +0.1954pp)\ndigit 6: P(6->6) = 9.8636% (dev -0.1364pp)\ndigit 7: P(7->7) = 9.8206% (dev -0.1794pp)\ndigit 8: P(8->8) = 10.0895% (dev +0.0895pp)\ndigit 9: P(9->9) = 10.0733% (dev +0.0733pp)"},
+      "data_table": {
+        "description": "Self-transition rate (diagonal of P) for each digit, with deviation from 10% and 95% CI.",
+        "columns": ["digit", "self_count", "self_pct", "dev_pp", "ci_lo", "ci_hi"],
+        "rows": [
+          [0, 9938, 9.9421, -0.0579, 9.7561, 10.1281],
+          [1, 10074, 10.0885, 0.0885, 9.9023, 10.2747],
+          [2, 10068, 10.0594, 0.0594, 9.8735, 10.2453],
+          [3, 10024, 10.0030, 0.0030, 9.8173, 10.1887],
+          [4, 9956, 9.9351, -0.0649, 9.7494, 10.1209],
+          [5, 10232, 10.1954, 0.1954, 10.0098, 10.3810],
+          [6, 9819, 9.8636, -0.1364, 9.6772, 10.0499],
+          [7, 9801, 9.8206, -0.1794, 9.6345, 10.0068],
+          [8, 10078, 10.0895, 0.0895, 9.9036, 10.2755],
+          [9, 10090, 10.0733, 0.0733, 9.8875, 10.2592]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_05": {
+      "label": "Full 10x10 transition matrix",
+      "content": "The conditional matrix P[i,j] = Pr(next=j | current=i) shows percentages for every possible digit-to-digit step. All 100 cells lie between 9.74% and 10.23%, with no row or column drifting away from 10% on average. The most extreme entries are P(5->1)=9.756% and P(9->4)=10.228%. As a heatmap the matrix is visually featureless — that is the point: a true 'pattern' would show as a stripe, an off-diagonal, or a hot/cold corner, and none appears.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/transitions.py", "lines": [37, 47], "output": "row 0: 9.9421 9.8951 10.0521 10.0421 9.9521 10.0461 9.9001 9.9551 10.1772 10.0381\nrow 1: 10.0304 10.0885 9.7447 10.0364 9.8991 10.0163 9.9582 9.9682 10.0855 10.1727\nrow 2: 9.9024 10.1074 10.0594 9.9484 10.0574 9.9864 9.8554 10.2213 9.9524 9.9094\nrow 3: 10.0279 9.9162 10.0319 10.0030 9.9371 10.1646 9.9022 10.0748 9.9282 10.0140\nrow 4: 9.9940 9.9870 9.9571 9.9860 9.9351 10.0120 10.1696 10.0200 9.8913 10.0479\nrow 5: 10.0300 9.7560 10.0190 10.0140 10.1575 10.1954 9.9742 10.0091 9.8825 9.9622\nrow 6: 10.1931 9.9409 10.1308 10.0193 10.0595 10.0263 9.8636 9.9118 9.9249 9.9299\nrow 7: 9.9058 10.1152 9.9820 10.0892 10.0421 9.9830 10.1323 9.8206 10.0110 9.9188\nrow 8: 10.0305 9.9555 10.0745 10.0485 9.9615 9.9235 9.9515 9.9255 10.0895 10.0395\nrow 9: 9.9035 9.9974 9.9744 10.0424 10.2282 10.0044 9.8406 9.8925 10.0434 10.0733"},
+      "data_table": {
+        "description": "Conditional probability P(next=j | current=i) in percent. 100 cells; rows are i (current), columns are j (next).",
+        "columns": ["from_digit", "to_0", "to_1", "to_2", "to_3", "to_4", "to_5", "to_6", "to_7", "to_8", "to_9"],
+        "rows": [
+          [0, 9.9421, 9.8951, 10.0521, 10.0421, 9.9521, 10.0461, 9.9001, 9.9551, 10.1772, 10.0381],
+          [1, 10.0304, 10.0885, 9.7447, 10.0364, 9.8991, 10.0163, 9.9582, 9.9682, 10.0855, 10.1727],
+          [2, 9.9024, 10.1074, 10.0594, 9.9484, 10.0574, 9.9864, 9.8554, 10.2213, 9.9524, 9.9094],
+          [3, 10.0279, 9.9162, 10.0319, 10.0030, 9.9371, 10.1646, 9.9022, 10.0748, 9.9282, 10.0140],
+          [4, 9.9940, 9.9870, 9.9571, 9.9860, 9.9351, 10.0120, 10.1696, 10.0200, 9.8913, 10.0479],
+          [5, 10.0300, 9.7560, 10.0190, 10.0140, 10.1575, 10.1954, 9.9742, 10.0091, 9.8825, 9.9622],
+          [6, 10.1931, 9.9409, 10.1308, 10.0193, 10.0595, 10.0263, 9.8636, 9.9118, 9.9249, 9.9299],
+          [7, 9.9058, 10.1152, 9.9820, 10.0892, 10.0421, 9.9830, 10.1323, 9.8206, 10.0110, 9.9188],
+          [8, 10.0305, 9.9555, 10.0745, 10.0485, 9.9615, 9.9235, 9.9515, 9.9255, 10.0895, 10.0395],
+          [9, 9.9035, 9.9974, 9.9744, 10.0424, 10.2282, 10.0044, 9.8406, 9.8925, 10.0434, 10.0733]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_06": {
+      "label": "Chi-squared test on length-2 strings (100 cells)",
+      "content": "Treating each two-digit string as a category (100 cells, expected count 10,000 each), Pearson's chi-squared on the full transition matrix gives chi-squared = 94.21, df = 99, p = 0.617. The critical value at alpha = 0.05 is 123.23, so we again fail to reject uniformity by a wide margin. Pi's two-step independence holds at the precision a million digits can resolve: the digits don't just look uniformly distributed individually, they look pairwise-independent too.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/transitions.py", "lines": [49, 56], "output": "expected per cell = 10000.0\nchi2 = 94.2130\ndf = 99\np-value = 0.6172\ncritical chi2 at alpha=0.05, df=99: 123.2252"},
+      "data_table": {
+        "description": "Chi-squared on length-2 strings.",
+        "columns": ["statistic", "value"],
+        "rows": [["chi_squared", 94.2130], ["df", 99], ["p_value", 0.6172], ["critical_alpha_0.05", 123.2252]]
+      },
+      "based_on": ["det_03", "det_06"]
+    },
+    "ana_07": {
+      "label": "Most and least frequent digit-pairs",
+      "content": "The single most frequent two-digit transition is '94', occurring 10,239 times (1.0239%). The least frequent is '12' at 9,721 times (0.9721%). The full range across all 100 pair counts is just 518 — every pair sits within ~3% of its expected value, which for ~10,000 trials is exactly what binomial noise predicts.",
+      "type": "ranking",
+      "strength": "weak",
+      "calculation": {"file": "code/transitions.py", "lines": [58, 70], "output": "5 least frequent transitions:\n  1->2: 9721 (0.9721%)\n  5->1: 9791 (0.9791%)\n  7->7: 9801 (0.9801%)\n  6->6: 9819 (0.9819%)\n  9->6: 9851 (0.9851%)\n5 most frequent transitions:\n  4->6: 10193 (1.0193%)\n  5->4: 10194 (1.0194%)\n  2->7: 10224 (1.0224%)\n  5->5: 10232 (1.0232%)\n  9->4: 10239 (1.0239%)"},
+      "data_table": {
+        "description": "Five most and least frequent length-2 strings.",
+        "columns": ["pair", "count", "pct"],
+        "rows": [
+          ["12", 9721, 0.9721],
+          ["51", 9791, 0.9791],
+          ["77", 9801, 0.9801],
+          ["66", 9819, 0.9819],
+          ["96", 9851, 0.9851],
+          ["46", 10193, 1.0193],
+          ["54", 10194, 1.0194],
+          ["27", 10224, 1.0224],
+          ["55", 10232, 1.0232],
+          ["94", 10239, 1.0239]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_08": {
+      "label": "Longest run of each digit in the first million decimals",
+      "content": "Working only on the million decimals (excluding the leading 3), we find the longest consecutive run of each digit and where it starts. The headline: digit 9 has a run of six starting at decimal place 762 — the famous Feynman point. Digit 3 owns the longest run overall, seven consecutive 3's starting at decimal place 710,100. Digits 1, 2, 4, 5, 6, 7, 8, and 9 all top out at runs of length six. Digit 0 is the shortest-running digit in our sample — its longest run is just five, starting at decimal place 17,534.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {"file": "code/runs_and_substrings.py", "lines": [22, 41], "output": "digit 0: longest run = 5, starts at decimal place 17534\ndigit 1: longest run = 6, starts at decimal place 255945\ndigit 2: longest run = 6, starts at decimal place 963024\ndigit 3: longest run = 7, starts at decimal place 710100\ndigit 4: longest run = 6, starts at decimal place 828499\ndigit 5: longest run = 6, starts at decimal place 244453\ndigit 6: longest run = 6, starts at decimal place 252499\ndigit 7: longest run = 6, starts at decimal place 399579\ndigit 8: longest run = 6, starts at decimal place 222299\ndigit 9: longest run = 6, starts at decimal place 762"},
+      "data_table": {
+        "description": "Longest streak of each digit and where it starts (1-indexed in decimals).",
+        "columns": ["digit", "longest_run", "start_position"],
+        "rows": [
+          [0, 5, 17534],
+          [1, 6, 255945],
+          [2, 6, 963024],
+          [3, 7, 710100],
+          [4, 6, 828499],
+          [5, 6, 244453],
+          [6, 6, 252499],
+          [7, 6, 399579],
+          [8, 6, 222299],
+          [9, 6, 762]
+        ]
+      },
+      "based_on": ["det_04", "det_08"]
+    },
+    "ana_09": {
+      "label": "First runs of length 3, 4, 5, 6, 7",
+      "content": "Where does pi first repeat itself k times in a row? The first triple is '111' at decimal place 153. The first quadruple, quintuple, AND sextuple all arrive simultaneously: '999999' starting at decimal place 762 — three records set in one go, exactly the Feynman point. The first run of seven identical digits is '3333333' starting at decimal place 710,100. (In Wikipedia's reference reality, the first seven-9's run is at 1,722,776 — past our window — so within a million decimals the first 7-in-a-row is 3's, not 9's, even though 9's grabbed every earlier record.)",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {"file": "code/runs_and_substrings.py", "lines": [43, 50], "output": "first run of length >= 3: '111' starts at decimal place 153 (digit 1)\nfirst run of length >= 4: '999999' starts at decimal place 762 (digit 9)\nfirst run of length >= 5: '999999' starts at decimal place 762 (digit 9)\nfirst run of length >= 6: '999999' starts at decimal place 762 (digit 9)\nfirst run of length >= 7: '3333333' starts at decimal place 710100 (digit 3)"},
+      "data_table": {
+        "description": "First occurrence of consecutive identical-digit runs of each length.",
+        "columns": ["run_length", "first_string", "decimal_position", "digit"],
+        "rows": [
+          [3, "111", 153, 1],
+          [4, "9999", 762, 9],
+          [5, "99999", 762, 9],
+          [6, "999999", 762, 9],
+          [7, "3333333", 710100, 3]
+        ]
+      },
+      "based_on": ["det_04", "det_08"]
+    },
+    "ana_10": {
+      "label": "Where famous substrings first appear (and which don't)",
+      "content": "We searched the first million decimals for thirteen culturally loaded strings. The hits: '42' at decimal 92, '666' at 2,440, '0000' at 13,390, '1234' at 13,807, '271828' (the start of e) at 33,789, '314159' (pi reading itself) at 176,451, '888888' at 222,299, '999999' at 762. The notable misses: '0123456789', '9876543210', '123456' (six ascending), '123456789' (nine ascending), and '000000' all FAIL TO APPEAR in the first million decimals. The textbook answer for '0123456789' is decimal place 17,387,594,880 — about 17.4 billion in — confirming our window is too small for it. This is the most counter-intuitive single fact in the dataset: pi readily delivers six 9's at place 762 but doesn't have the ten ordered digits within its first million.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {"file": "code/runs_and_substrings.py", "lines": [52, 71], "output": "'0123456789': NOT FOUND in first 1,000,000 decimals\n'9876543210': NOT FOUND\n'314159': first occurrence at decimal place 176451\n'271828': first occurrence at decimal place 33789\n'999999': first occurrence at decimal place 762\n'000000': NOT FOUND\n'888888': first occurrence at decimal place 222299\n'1234': first occurrence at decimal place 13807\n'0000': first occurrence at decimal place 13390\n'42': first occurrence at decimal place 92\n'666': first occurrence at decimal place 2440\n'123456': NOT FOUND\n'123456789': NOT FOUND"},
+      "data_table": {
+        "description": "First-occurrence (decimal place) of selected substrings; -1 means not found in 1,000,000 decimals. Reference value for '0123456789' from external lookup (MathWorld).",
+        "columns": ["substring", "label", "first_decimal_place", "in_first_million"],
+        "rows": [
+          ["42", "the answer 42", 92, true],
+          ["666", "beast 666", 2440, true],
+          ["999999", "Feynman point (six 9s)", 762, true],
+          ["0000", "0000", 13390, true],
+          ["1234", "1234", 13807, true],
+          ["271828", "first 6 digits of e", 33789, true],
+          ["888888", "six 8s", 222299, true],
+          ["314159", "pi reading itself", 176451, true],
+          ["000000", "six 0s", -1, false],
+          ["123456", "six ascending", -1, false],
+          ["9876543210", "ten descending", -1, false],
+          ["123456789", "nine ascending", -1, false],
+          ["0123456789", "ten ascending (textbook answer 17,387,594,880)", -1, false]
+        ]
+      },
+      "based_on": ["det_04", "det_05", "det_08"]
+    },
+    "ana_11": {
+      "label": "Coverage of length-k strings: 100% at k=4, 99.99% at k=5, 63.15% at k=6",
+      "content": "How thoroughly does a million digits cover the space of all possible substrings? At length 4 every one of the 10,000 possible strings appears. At length 5, 99,992 of 100,000 appear (99.992%) — only 8 missing. At length 6, just 631,548 of 1,000,000 distinct strings appear, a coverage of 63.15%. At length 7 we collapse to 951,284 of 10 million (9.51%). This means: about 37% of all 6-digit dates (DDMMYY in any format) are NOT in pi's first million digits — the famous 'your birthday is in pi' parlor trick succeeds only ~63% of the time at this depth.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/runs_and_substrings.py", "lines": [73, 86], "output": "distinct 6-digit strings present: 631,548 / 1,000,000 = 63.15%\nlength-4 coverage: 10,000 / 10,000 = 100.00%\nlength-5 coverage: 99,992 / 100,000 = 99.99%\nlength-6 coverage: 631,548 / 1,000,000 = 63.15%\nlength-7 coverage: 951,284 / 10,000,000 = 9.51%"},
+      "data_table": {
+        "description": "Fraction of length-k strings that occur somewhere in the first million decimals.",
+        "columns": ["length_k", "distinct_present", "total_possible", "coverage_pct", "expected_pct"],
+        "rows": [
+          [4, 10000, 10000, 100.0, 100.0],
+          [5, 99992, 100000, 99.992, 99.995],
+          [6, 631548, 1000000, 63.155, 63.21],
+          [7, 951284, 10000000, 9.513, 9.516]
+        ]
+      },
+      "based_on": ["det_05", "det_07"]
+    },
+    "ana_12": {
+      "label": "When each pair (00..99) first appears",
+      "content": "Every two-digit pair from 00 to 99 appears within the first 605 decimal places. The earliest pairs are '14', '41', '15', '59', '92' — directly from the start of pi (3.14159265…). The pairs that take longest to make their debut: '57' (place 404), '18' (424), '77' (559), '76' (569), and the laggard '68' (place 605). Eventually, of course, all 100 pairs appear thousands of times, but their first-appearance schedule shows a small distribution from place 1 to place 605.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {"file": "code/runs_and_substrings.py", "lines": [88, 99], "output": "first 5 pairs to appear:\n  '14' at decimal 1\n  '41' at decimal 2\n  '15' at decimal 3\n  '59' at decimal 4\n  '92' at decimal 5\nlast 5 pairs to appear:\n  '57' at decimal 404\n  '18' at decimal 424\n  '77' at decimal 559\n  '76' at decimal 569\n  '68' at decimal 605"},
+      "data_table": {
+        "description": "Earliest 5 and latest 5 first-appearances of pairs 00..99.",
+        "columns": ["pair", "first_decimal_place"],
+        "rows": [
+          ["14", 1], ["41", 2], ["15", 3], ["59", 4], ["92", 5],
+          ["57", 404], ["18", 424], ["77", 559], ["76", 569], ["68", 605]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_13": {
+      "label": "Cumulative digit frequency at log-spaced n",
+      "content": "Sampled at n = 10, 30, 100, 300, 1k, ..., 1M, the running per-digit percentages tell the convergence story. At n=10 some digits are 0% and others are 20%; at n=100 they are within ~4pp; at n=10,000 within ~0.6pp; at n=1,000,000 they are all within 0.05pp. Convergence to the 10% target follows the textbook 1/sqrt(n) law: doubling n shrinks the standard error by sqrt(2). The chart that shows this — ten thin curves zigzagging toward 10% as the x-axis goes log — is the visual heart of 'random eventually'.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {"file": "code/convergence.py", "lines": [13, 27], "output": "n=10:    [0.000, 20.000, 10.000, 20.000, 10.000, 20.000, 10.000, 0.000, 0.000, 10.000]\nn=100:   [8.000, 8.000, 12.000, 12.000, 10.000, 8.000, 9.000, 8.000, 12.000, 13.000]\nn=10000: [9.680, 10.260, 10.210, 9.750, 10.120, 10.460, 10.210, 9.700, 9.470, 10.140]\nn=1000000: [9.996, 9.976, 10.003, 10.023, 10.023, 10.036, 9.955, 9.980, 9.998, 10.011]"},
+      "data_table": {
+        "description": "Running cumulative pct for each digit at log-spaced n. Long format: n, digit, pct.",
+        "columns": ["n", "d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7", "d8", "d9"],
+        "rows": [
+          [10, 0.000, 20.000, 10.000, 20.000, 10.000, 20.000, 10.000, 0.000, 0.000, 10.000],
+          [30, 0.000, 6.667, 13.333, 23.333, 10.000, 10.000, 10.000, 6.667, 10.000, 10.000],
+          [100, 8.000, 8.000, 12.000, 12.000, 10.000, 8.000, 9.000, 8.000, 12.000, 13.000],
+          [300, 8.667, 10.000, 11.667, 10.333, 12.333, 9.000, 10.333, 6.333, 11.333, 10.000],
+          [1000, 9.300, 11.600, 10.300, 10.300, 9.300, 9.700, 9.400, 9.500, 10.100, 10.500],
+          [3000, 8.633, 10.267, 10.100, 8.867, 10.600, 10.500, 10.067, 9.567, 10.333, 11.067],
+          [10000, 9.680, 10.260, 10.210, 9.750, 10.120, 10.460, 10.210, 9.700, 9.470, 10.140],
+          [30000, 9.993, 10.160, 9.657, 9.930, 10.190, 10.163, 10.040, 9.913, 9.907, 10.047],
+          [100000, 9.999, 10.137, 9.908, 10.026, 9.971, 10.026, 10.028, 10.025, 9.978, 9.902],
+          [300000, 10.000, 10.011, 9.960, 10.046, 9.948, 10.091, 9.963, 10.075, 9.975, 9.930],
+          [1000000, 9.996, 9.976, 10.003, 10.023, 10.023, 10.036, 9.955, 9.980, 9.998, 10.011]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_14": {
+      "label": "When does each digit settle within +/-0.1pp of 10%?",
+      "content": "Defining 'settled' as the smallest n* such that for every n >= n* the running percentage stays in [9.9%, 10.1%]: digit 0 settles first at n=25,991, then 4 (32,733), 8 (42,070), 6 (44,307), 3 (57,639). The slow-coachers are digits 7 (368,515) and 5 (302,080) — both don't lock in until almost a third of the way through the dataset, because mid-sample swings keep nudging them out of the band. Digit 9 settles at 288,751. By n = 369k all ten digits have permanently joined the +/-0.1pp club.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {"file": "code/convergence.py", "lines": [29, 51], "output": "digit 0: settles at n = 25991\ndigit 1: settles at n = 132327\ndigit 2: settles at n = 121325\ndigit 3: settles at n = 57639\ndigit 4: settles at n = 32733\ndigit 5: settles at n = 302080\ndigit 6: settles at n = 44307\ndigit 7: settles at n = 368515\ndigit 8: settles at n = 42070\ndigit 9: settles at n = 288751"},
+      "data_table": {
+        "description": "Smallest n at which the running pct stays within +/-0.1pp of 10% for all subsequent n.",
+        "columns": ["digit", "settle_n"],
+        "rows": [
+          [0, 25991],
+          [1, 132327],
+          [2, 121325],
+          [3, 57639],
+          [4, 32733],
+          [5, 302080],
+          [6, 44307],
+          [7, 368515],
+          [8, 42070],
+          [9, 288751]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_15": {
+      "label": "Hero numbers, plain English",
+      "content": "A scoreboard of single-glance facts for the lede: chi-squared p-value 0.79 (digits look uniform), full transition matrix p-value 0.62 (pairs look independent), 1,000,001 digits in dataset, 100,001 expected per digit, 100,359 max actual count (digit 5), 99,548 min actual count (digit 6), 0.045pp largest deviation, 762 = position of Feynman point, 17,387,594,880 = position where 0123456789 first appears (~17,000x past our window), 63.15% of all 6-digit dates appear, 15 = digits NASA actually uses for spacecraft navigation.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {"file": "code/digit_frequency.py", "lines": [33, 49], "output": "(see ana_01..ana_03, ana_06, ana_08..ana_11; det_05, det_09, det_10 for benchmarks)"},
+      "data_table": {
+        "description": "Hero stat callouts.",
+        "columns": ["label", "value", "unit", "source_ana_or_det"],
+        "rows": [
+          ["digits in dataset", 1000001, "count", "ana_01"],
+          ["expected per digit", 100000.1, "count", "ana_01"],
+          ["max digit count (5)", 100359, "count", "ana_01"],
+          ["min digit count (6)", 99548, "count", "ana_01"],
+          ["max deviation", 0.0452, "pp", "ana_03"],
+          ["chi-squared p-value (length-1)", 0.7874, "p", "ana_02"],
+          ["chi-squared p-value (length-2)", 0.6172, "p", "ana_06"],
+          ["Feynman point position", 762, "decimal place", "ana_09"],
+          ["first 0123456789 position", 17387594880, "decimal place", "det_05"],
+          ["coverage of 6-digit strings", 63.15, "%", "ana_11"],
+          ["NASA digits for spacecraft", 15, "digits", "det_10"]
+        ]
+      },
+      "based_on": ["det_05", "det_09", "det_10"]
+    }
+  },
+  "caveats": [
+    {"id": "ana_caveat_01", "content": "All 'first occurrence' positions for runs and substrings are 1-indexed in the decimals (i.e., the digit immediately AFTER the decimal point is at position 1). The leading 3 is excluded from substring searches. This matches the standard convention used by Wikipedia, MathWorld, and the Pi-Search Page."},
+    {"id": "ana_caveat_02", "content": "A million digits cannot prove pi is normal; it can only fail to refute it. Statistical consistency with a uniform null is necessary but very far from sufficient. The strongest known empirical results come from Trueb (2016) over 22.4 trillion digits."},
+    {"id": "ana_caveat_03", "content": "The TidyTuesday CSV includes the leading 3 (position 1) as a regular row. Digit-frequency analyses use all 1,000,001 rows; substring searches operate only on positions 2..1,000,001 (the million decimals)."}
+  ]
+}

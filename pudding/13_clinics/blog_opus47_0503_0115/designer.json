@@ -1,0 +1,283 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Map is the centerpiece — the dataset is geographic and the editor's spine is the gestation collapse made visible across geography. Charts and stat callouts surround the map; images and a single animated still set documentary tone; audio is a low-key ambient bed pinned to the closing baseline section. Skip generic political imagery — the piece is about geography, not protest.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "The dataset is full of distributions, rankings, and gestation curves that only resolve through quantitative comparison."},
+      "image": {"used": true, "reason": "Two atmospheric stills set the documentary tone the topic demands without resorting to charged political imagery: an empty Mountain West highway (the literal subject of the dataset) and an abstract topographic-data motif for the closing baseline section."},
+      "video": {"used": true, "reason": "The teaser is animated via image2video — a slow dolly into the highway still — to convert the static image into a motion that mirrors the journey the data describes."},
+      "audio": {"used": true, "reason": "A short ambient piano/marimba bed paired with the closing map section. Click-to-play, never autoplay, with a visible mute toggle. Audio earns its slot by holding the long final map open while the reader explores."},
+      "interactive_or_map": {"used": true, "reason": "The dataset is geographic, gestational, and stress-tested — the centerpiece interactive Leaflet map lets the reader toggle gestation (8/12/16/20) and scenario (open/closed) on a single canvas. A second guess-first interactive in the hook lets the reader feel the gestation collapse before reading any prose."}
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser — animated empty Mountain West highway",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_highway.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_highway.png",
+        "prompt": "very slow steady cinematic dolly push-in toward the distant mountains, faint atmospheric haze drifting, the single car in the distance moving at constant speed away, no camera shake, no zoom, golden hour light",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first",
+        "fallback_image": "assets/teaser_highway.png"
+      },
+      "brief": "A six-second loopable clip: a single car receding down an empty Idaho highway at golden hour, sage-brush plain, distant mountains. The camera barely moves — a slow dolly-in. Plays muted, autoplay, loop. Falls back to teaser_highway.png if video fails to load.",
+      "rationale": "The dataset is fundamentally about driving. A still highway image announces the subject without text or charts; the slow motion converts it into a quiet promise of the rest of the piece.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser hero still (poster + fallback)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_highway.png",
+        "tool": "text2image",
+        "prompt": "Aerial landscape photograph of an empty two-lane highway cutting through the high desert of southern Idaho at golden hour, sage brush plain stretching to distant Sawtooth-like mountains, soft warm sunset light raking across the valley, single car receding into the distance, deep cinematic shadows, muted earth tones, editorial documentary photography, 16:9, no text in frame, no logos",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Cinematic still of the highway, used as the video poster and as a fallback if the video does not autoplay (e.g. iOS data-saver mode).",
+      "rationale": "The video needs a poster, and some readers will see only the still. It must work as the standalone teaser.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Hook — 'How far?' guess-first slider + reveal stat",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "guess_then_reveal",
+        "initial_state": "Reader sees the prompt 'How many of America's 749 largest cities sit beyond a one-hour round-trip from the nearest abortion clinic — even at 8 weeks of pregnancy?' with a slider from 0 to 749 and a labeled axis.",
+        "trigger": "Reader drags the slider, then clicks 'Reveal' (or releases on mobile).",
+        "transition": "The slider fixes their guess as a marker. The actual answer (151) animates in as a second marker. The bar between the two markers is colored to show overshoot or undershoot. Three small follow-on numbers fade in below: 255 cities at 16 weeks, 339 at 20 weeks.",
+        "payoff": "The reader has anchored their own intuition before seeing the data, which makes the gestation collapse from 151 to 339 land as a discovery rather than a quoted fact.",
+        "data_source": "ana_04",
+        "values_to_show": [
+          {"label": "8 weeks", "value": 151},
+          {"label": "12 weeks", "value": 180},
+          {"label": "16 weeks", "value": 255},
+          {"label": "20 weeks", "value": 339}
+        ]
+      },
+      "brief": "Pure CSS + vanilla JS: a horizontal slider with tick marks at 0/200/400/600/749. Reader drags, sees their guess as a green marker; clicks 'Reveal' and the actual 151 appears as an amber marker with a connecting bar. Below the slider, four small badges (8 wk, 12 wk, 16 wk, 20 wk) reveal sequentially with their counts.",
+      "rationale": "The Pudding's headline number (151) is surprising. A guess-first interaction maximizes that surprise. It also previews the gestation toggle that the centerpiece map will use.",
+      "based_on": ["ana_04"]
+    },
+    "des_04": {
+      "label": "Gestation curve — pop-weighted drive over 8 → 20 weeks",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_03",
+        "x": "weeks",
+        "y": "pop_weighted_hours",
+        "color": null,
+        "highlight": {"point": 20, "label": "1.0 hr"},
+        "interaction": "hover tooltip showing exact hours and the pct_pop_4plus_h share at each point",
+        "style": {"palette": "single-amber", "no_gridlines": true, "x_ticks": [8, 12, 16, 20], "y_format": ".1f"}
+      },
+      "brief": "Single-line chart: x = weeks (8/12/16/20), y = population-weighted round-trip hours, ascending from 0.25 to 1.02. Annotate the 20-week point with the value. Below the line, a small secondary chart or sparkline shows the pct of population facing 4+ hours rising from 1.4% to 10.8%. Use one warm amber color, no grid, large axis labels.",
+      "rationale": "The curve is the simplest possible visualization of the gestation collapse — a single rising line. It earns its place as the supporting chart for the hook because the interactive above it is the surprise; this is the proof.",
+      "based_on": ["ana_03"]
+    },
+    "des_05": {
+      "label": "Distribution histogram — round-trip drives by gestation",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "small_multiples_bar",
+        "data_source": "ana_15",
+        "x": "hours",
+        "y": ["wk8", "wk12", "wk16", "wk20"],
+        "color": null,
+        "highlight": {"x": 0},
+        "interaction": "hover tooltip with city count at each hour",
+        "style": {"palette": "amber-fade", "no_gridlines": true, "facet_columns": 4, "facet_titles": ["8 wk", "12 wk", "16 wk", "20 wk"]}
+      },
+      "brief": "Four side-by-side bar charts (8/12/16/20 weeks) showing city counts at each round-trip hour (0-11). The 0-hour bar dominates at 8 weeks (598) and steadily shrinks; the long tail extends rightward as gestation increases. Use a single warm color across all four, no legend.",
+      "rationale": "The histogram makes the gestation collapse visible as a flattening of the distribution — not just a rising mean. It is the right form here because the editor wants to show the rosy 8-week picture before pulling it apart.",
+      "based_on": ["ana_15"]
+    },
+    "des_06": {
+      "label": "Section 3 still — long view from a car driving the West",
+      "type": "asset",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "section3_drive.png",
+        "tool": "text2image",
+        "prompt": "Documentary still photograph: interior of a modern car driving on a long straight highway through American mountain west landscape at dusk, view from the back seat looking through the windshield, dashboard slightly visible, sun setting behind distant mountains, sense of long journey ahead, soft blue-magenta dusk light, melancholy mood, no faces visible, no text, no logos, cinematic editorial photography, 16:9",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Single full-width still: looking through a car windshield at a long Mountain West highway at dusk. No text. The image sits between the two paragraphs of section 3 and silently illustrates 'a second-trimester patient drives across or out of the state.'",
+      "rationale": "Section 3 is the turn of the piece — the gestation collapse made literal through the Boise example. A documentary image of a long drive carries the emotional weight a chart cannot, and avoids the politicized iconography that would mislead the framing.",
+      "based_on": ["ana_07"]
+    },
+    "des_07": {
+      "label": "State ranking — 20-week round-trip drive",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_06",
+        "x": "wk20_hours",
+        "y": "state",
+        "color": "wk8_hours",
+        "highlight": {"state": "Idaho"},
+        "interaction": "hover tooltip showing wk8, wk20, collapse_8_to_20",
+        "style": {"palette": "amber-with-dark-foot", "no_gridlines": true, "sort": "desc", "y_label": null, "x_label": "20-week round-trip hours (pop-weighted)"}
+      },
+      "brief": "Horizontal bar chart with 12 states sorted by 20-week round-trip drive descending. Each bar is split: a dark foot showing the 8-week drive and a lighter extension showing the growth to 20 weeks. Idaho is annotated with a callout: '8.4-hour increase between 8 and 20 weeks.' The chart visualizes both the 20-week absolute and the gestation-collapse delta in one form.",
+      "rationale": "Two findings (ana_06 and ana_12) compress neatly into one stacked bar. Showing both the floor (wk8) and the ceiling (wk20) on the same bar makes the within-state collapse self-evident.",
+      "based_on": ["ana_06", "ana_12"]
+    },
+    "des_08": {
+      "label": "Bismarck stat callout — 11 hours",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": {
+        "value": "11 hours",
+        "label": "round-trip from Bismarck to a 20-week clinic",
+        "data_source": "ana_09"
+      },
+      "brief": "Big number on its own line — '11 hours' at ~72px, with the label 'round-trip from Bismarck, ND, to a 20-week clinic' below. Surrounded by margin to give the number space.",
+      "rationale": "The Bismarck row is the dataset's longest 20-week drive and the cleanest single example of the gestational ladder breaking a city. A stat callout earns its place when the number alone is more powerful than a chart.",
+      "based_on": ["ana_09"]
+    },
+    "des_09": {
+      "label": "Cities ranking — longest 20-week round-trip drives",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_09",
+        "x": "wk20_h",
+        "y": "city_state_label",
+        "color": "wk8_h",
+        "highlight": {"city": "Bismarck"},
+        "interaction": "hover tooltip with city, state, wk8 and wk20 hours",
+        "style": {"palette": "amber-with-dark-foot", "no_gridlines": true, "sort": "desc"}
+      },
+      "brief": "Horizontal bar chart of 15 cities ranked by 20-week round-trip drive. Each label reads 'City, ST'. Bars are again split (dark foot = wk8, light extension = growth to wk20). Bismarck is annotated. The chart carries the 'cities at the end of every column' beat directly.",
+      "rationale": "The cities are individually evocative names (Bismarck, Lubbock, Boise, Missoula). Ranking them in a horizontal bar gives each a label slot and lets the reader scan a familiar geography.",
+      "based_on": ["ana_09"]
+    },
+    "des_10": {
+      "label": "Open vs closed scenario chart — gestation curve under stress test",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "dual_line",
+        "data_source": "ana_05",
+        "x": "weeks",
+        "y": ["open_pop_weighted_h", "closed_pop_weighted_h"],
+        "color": "scenario",
+        "highlight": {"weeks": 20},
+        "interaction": "hover tooltip with both lines' values and the pct_pop_0h pair",
+        "style": {"palette": ["#a86c1d", "#7a1e1e"], "no_gridlines": true, "legend": true, "x_ticks": [8,12,16,20]}
+      },
+      "brief": "Two lines on the same axis: open scenario (warm amber, 0.25 → 1.02 hours) and closed scenario (deep red, 0.58 → 2.31 hours). The gap between them widens at every gestation. Annotate the 20-week endpoint of the closed line: '2.3 hours pop-weighted — the system under stress.' Two side-by-side stat callouts under the chart show the 0-hour pop coverage at 20 weeks: open 66.9%, closed 42.7%.",
+      "rationale": "The closed scenario is the section's central concept — the system's fragility. Putting the open and closed curves on the same axis is the cleanest way to show that the closed columns are not catastrophe; they are routine, and the routine is bad.",
+      "based_on": ["ana_05"]
+    },
+    "des_11": {
+      "label": "Closure-fragility city stat callouts",
+      "type": "stat_callout",
+      "section": "edt_06",
+      "content": {
+        "value": "0 → 11 hours",
+        "label": "Salt Lake City's 20-week round-trip if the nearest clinic closed",
+        "data_source": "ana_11"
+      },
+      "brief": "Triple stat callout in a row, each showing a 'before → after' for a single closure: 'McAllen, TX: 0 → 6h (8wk)', 'Bismarck, ND: 5 → 11h (8wk)', 'Salt Lake City, UT: 0 → 11h (20wk)'. Stacks to one column on mobile. Each number is large, with the city/scenario as a small caption below.",
+      "rationale": "The closure findings are individually striking enough that each deserves the stat-callout treatment. Three side-by-side numbers carry the section's argument better than another bar chart.",
+      "based_on": ["ana_10", "ana_11"]
+    },
+    "des_12": {
+      "label": "Centerpiece — interactive Leaflet US map of round-trip drives",
+      "type": "interactive",
+      "section": "edt_07",
+      "content": {
+        "interaction_type": "leaflet_map_with_toggles",
+        "initial_state": "A US contiguous-states map fills the section width. 749 city circles are scattered across it, sized by population (sqrt scale) and colored by 8-week round-trip drive (sequential amber → deep red palette: 0 = pale amber, 4+ = saturated red). A control panel above the map has two segmented controls: gestation (8 / 12 / 16 / 20 weeks) and scenario (open / closed). Both default to 8 / open.",
+        "trigger": "Reader clicks any segment to switch.",
+        "transition": "All city circles smoothly recolor in 250ms. The legend updates. The header above the map updates to read e.g. '20-week round-trip drives, nearest clinic closed.' Total circles do not move; only color changes.",
+        "payoff": "The reader can replay the gestation collapse and the closure fragility live on the same map surface. Clicking a circle pops a tooltip with city, state, population, and exact round-trip in the current scenario.",
+        "data_source": "ana_13"
+      },
+      "brief": "Leaflet.js interactive map. Tile layer: minimal OpenStreetMap (e.g. CartoDB Positron). 749 circle markers from ana_13's data_table — radius = sqrt(population)/200 px (clamped 3-22), fill color from a 0-1-2-3-4-6-9+ amber→red sequential ramp, fill opacity 0.7, no border. Map height 520px desktop / 380px mobile. Legend bottom-right showing the color ramp. Two toggle rows above: gestation (default 8) and scenario (default 'open'). Clicking a circle opens a small popup with city, state, population, current drive in hours. Default zoom: continental US fit.",
+      "rationale": "The map is the editor's centerpiece — and the dataset is geographic. Two toggles on one map surface let the reader replay both the gestation collapse and the closure fragility in seconds. Leaflet keeps the implementation light and works on file://. Colored circles, not choropleth, because the data is city-level not state-level.",
+      "based_on": ["ana_13"]
+    },
+    "des_13": {
+      "label": "Section 7 closing image — abstract topographic motif",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "section7_baseline.png",
+        "tool": "text2image",
+        "prompt": "Topographic map fragment in cool monochrome — an abstract minimal data-art rendering of the contiguous United States seen as cartographic contour lines and faint highway grids, with diffuse glowing dots clustered on the coasts and sparse on the interior plains, deep indigo and faint amber palette, editorial data-journalism aesthetic, no labels, no text, 16:9",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Atmospheric closing image — placed beneath the centerpiece map, full-width. An abstract topo-map motif of the contiguous US that echoes the map above without trying to reproduce it. Carries the 'baseline' tone of the closing prose.",
+      "rationale": "The closing section is interpretive — a bridge from 2017 to today. An abstract image is more honest than another chart here, and pairs visually with the literal map directly above.",
+      "based_on": []
+    },
+    "des_14": {
+      "label": "Ambient score — quiet bed under the map exploration",
+      "type": "audio",
+      "section": "edt_07",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "The closing map invites slow exploration — the reader drags the toggle, hovers cities, and reads. A quiet ambient bed (piano and marimba, no percussion) extends the time the reader spends on the map without competing for attention. It is never autoplay; the reader chooses to turn it on.",
+        "trigger": "Reader clicks a small circular play button beside the map header. The button shows a play triangle when paused and a pause icon when playing. A mute toggle is always visible.",
+        "ui_form": "Compact section-integrated mini-player anchored to the map header — a single circular button + a thin progress bar + a 'Sound on / off' label. Not a separate audio card.",
+        "content": {
+          "filename": "ambient_score.wav",
+          "tool": "text2music",
+          "prompt": "ambient minimal piano drone, slow sustained low notes, sparse high marimba accents at irregular intervals, no percussion, no vocals, contemplative documentary score, key of A minor, very slow tempo, building gradually over 30 seconds, melancholy editorial mood",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "The map and the prose work fully without audio. The play button can be removed entirely if the wav file is missing.",
+        "novelty_note": "Not a sonification or a tone card — a deliberate ambient bed pinned to the closing visual, with full visual fallback."
+      },
+      "brief": "A 30-second ambient piano + marimba bed, click-to-play, attached to the centerpiece map header. Mute toggle. Loops while the reader explores. Visual fallback: the map and prose are complete without audio.",
+      "rationale": "Audio is included by default but must earn its slot. A subdued bed under a long final exploration earns it. Sonification would be wrong here — the data is geographic, not ranked, and the dataset has 749 entries which would be incomprehensible as pitch.",
+      "based_on": []
+    },
+    "des_15": {
+      "label": "Population vs drive scatter (small explanatory)",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "stat_callout",
+        "data_source": "ana_14",
+        "value": "88.8%",
+        "label": "share of urban Americans whose nearest clinic is in their own city — at 8 weeks"
+      },
+      "brief": "Single inline stat callout immediately following the first paragraph of section 2. Large number ('88.8%') with the label below. Small, restrained, paired with the histogram further down.",
+      "rationale": "Section 2 has two findings (cities and population shares) that need to land. The histogram covers cities; the stat carries the population side without needing its own chart.",
+      "based_on": ["ana_14"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm editorial — soft amber + deep red on cream, Georgia for body, system-ui for chart labels and UI",
+    "text_visual_pattern": "text-then-visual, with the centerpiece map breaking out of the 720px column",
+    "centrepiece": "des_12",
+    "anti_sameness_notes": "No clinic photos, no protest imagery, no Supreme Court icons, no red-and-blue political coloring. The piece is about geography. A single warm-amber palette ramps to deep red only when distance grows. Audio is quiet, optional, and fades into the map exploration rather than fronting itself as a chart-attached sonification.",
+    "typography_notes": "Section titles in a thin serif at ~32px; stat callouts at ~64-72px in serif; body Georgia 18px. The map header has a thinner sans-serif so the toggle feels native. Pull-quote treatment (Italic Georgia, hanging quotation marks) for the Idaho and Bismarck single-sentence paragraphs."
+  }
+}

@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "The Structure of Stand-Up Comedy (Pudding, Feb 2018) — Ali Wong's Baby Cobra",
+    "domain": "comedy / performance / linguistics"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: The Pudding's hand-coded transcript",
+      "content": "This dataset was created by The Pudding for a February 2018 visual essay titled 'The Structure of Stand-Up Comedy' by Russell Samora and Matt Daniels. The team began with the closed-caption file from Ali Wong's Netflix special Baby Cobra and then 'individually annotated the entire routine, then collectively reviewed and merged into a single data set,' with assistance from Amber Thomas and Caitlyn Ralph. Two CSV files result: ali-wong--captions.csv (925 caption rows, each with start/stop timestamps, the spoken text, a per-caption laughter duration, and a topic-group ID) and ali-wong--topics.csv (131 rows describing the hierarchical topic structure with levels 1-6 and explicit callback links). The Pudding's last-modified date is 12 February 2018.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/02/stand-up",
+          "title": "The Structure of Stand-Up Comedy — The Pudding",
+          "facts": [
+            "The piece was published in February 2018 by Russell Samora and Matt Daniels.",
+            "The team hand-collected captions and individually annotated the routine before merging.",
+            "Amber Thomas and Caitlyn Ralph assisted with annotation."
+          ]
+        },
+        {
+          "url": "https://github.com/the-pudding/data/tree/master/stand-up",
+          "title": "the-pudding/data: stand-up README",
+          "facts": [
+            "ali-wong--captions.csv has columns start, stop, caption, laugh, group, timeStart, timeStop.",
+            "ali-wong--topics.csv has columns callback, level, group, end, timeStart, totalStop, index, topicEnd.",
+            "Last modified 12 February 2018."
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Subject: Ali Wong's Baby Cobra (2016)",
+      "content": "Baby Cobra is a Netflix stand-up special filmed in September 2015 at the Neptune Theater in Seattle and released on Mother's Day, 8 May 2016. Ali Wong was seven months pregnant during the recording — a fact that becomes a recurring structural element in the routine. The special is roughly an hour long (the dataset's last caption ends at 3,535 seconds, or about 58:55, which matches the special's running time when titles are excluded). Reception was strong: New York Magazine described its release as 'the sort of star-making moment that unites the tastes of the unlikeliest fans,' and Baby Cobra is widely credited with launching Wong from comedy-writer (Fresh Off the Boat) to mainstream comedy star.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ali_Wong",
+          "title": "Ali Wong — Wikipedia",
+          "facts": [
+            "Baby Cobra was filmed in September 2015 at the Neptune Theater in Seattle.",
+            "Released on Netflix on Mother's Day 2016.",
+            "Wong was seven months pregnant when she performed the one-hour special.",
+            "New York Magazine called it 'the sort of star-making moment that unites the tastes of the unlikeliest fans.'"
+          ]
+        },
+        {
+          "url": "https://www.netflix.com/title/80101493",
+          "title": "Ali Wong: Baby Cobra — Netflix",
+          "facts": [
+            "Released 5 May 2016."
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Background: what a callback is",
+      "content": "A callback is a structural device in stand-up: the comic refers to material established earlier in the same set and recontextualizes it for a new laugh. Callbacks are not simple repetitions — they must work as a fresh joke and reward the audience for having paid attention. Practitioners describe two effects that matter for The Pudding's argument. First, callbacks make a long set feel less like a list and more like a single connected piece of writing. Second, distance matters: a callback that arrives a few seconds later feels like part of the original beat, while a callback that arrives many minutes later operates more like a surprise reveal, because the audience has half-forgotten the seed. In Wong's special, the topics CSV records three explicit callbacks (rows where the `callback` column points back to a prior topic's start time), so the dataset lets us see this technique used at long range.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Callback_(comedy)",
+          "title": "Callback (comedy) — Wikipedia",
+          "facts": [
+            "A callback is a joke that refers to one previously told in the set.",
+            "It must be structured as a new joke, not a repetition."
+          ]
+        },
+        {
+          "url": "https://www.backstage.com/magazine/article/callback-comedy-explained-76712/",
+          "title": "Callback Comedy: How to Perform and Write Callbacks — Backstage",
+          "facts": [
+            "Callbacks recontextualize earlier material for a new laugh.",
+            "Distance between setup and callback affects comedic impact."
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Why it matters: what the original Pudding piece argued",
+      "content": "The original Pudding essay argues that stand-up exists on a spectrum from one-liners (Mitch Hedberg) to fully narrative, structurally interconnected routines, and that Ali Wong's special sits far down the structural end. Their core claim — and the reason this dataset is useful — is that Wong's biggest laugh, the 'laughter climax', does not get its size from the punchline alone. It gets its size because by that moment the audience is holding several earlier topics in their head simultaneously, and the joke ties them together. The dataset lets readers test this claim: each caption row carries a measured laughter duration in seconds, and the topics CSV records when one bit calls back to another. We can therefore line up the moments where structure converges with the moments where the audience laughed hardest.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/02/stand-up",
+          "title": "The Structure of Stand-Up Comedy — The Pudding",
+          "facts": [
+            "Stand-up exists on a spectrum from one-liners to narrative-driven comedy.",
+            "Wong's biggest laugh, the 'laughter climax', succeeds because it connects multiple earlier references."
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Interpretive hook: laughter as the only ground truth",
+      "content": "Caption-level laughter duration is an unusual quantitative signal. Most analyses of comedy text are about word choice, timing, or rhythm; here the audience's reaction is measured in seconds and attached to the exact line that triggered it. That gives us a direct dependent variable. But two confounds deserve a flag for the analyst. First, laughter is contagious and lagged — the seconds tagged to a caption are partly a reaction to *that* line and partly tail-off from the previous beat. Second, the laughter values are quantized in coarse units (whole and half seconds) by hand, so very small differences should not be over-interpreted. The headline patterns — biggest single laugh, distribution shape, where laughter clusters — are robust to both confounds.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://github.com/the-pudding/data/tree/master/stand-up",
+          "title": "the-pudding/data: stand-up README",
+          "facts": [
+            "Laughter duration is a manually entered numeric field per caption."
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Scope suggestion: what the analyst should hunt for",
+      "content": "Given the structure of the data, the most productive analyses are: (1) where exactly the largest laugh sits in the hour and what topic produced it; (2) the shape of the laughter distribution — is comedy mostly small reactions punctuated by occasional spikes, or evenly distributed?; (3) topic depth — how deep does Wong's nesting go, and does deeper nesting correlate with bigger laughs?; (4) the three explicit callbacks — when does each one arrive, how far back does it reach, and how big is the laugh at the moment of convergence?; (5) talk-vs-laugh share — what fraction of the hour is the audience laughing rather than the comic talking? These directly test the Pudding piece's central claim that structure, not punchline, drives the climax.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/02/stand-up",
+          "title": "The Structure of Stand-Up Comedy — The Pudding",
+          "facts": [
+            "The Pudding piece centres on the laughter climax and structural convergence."
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Benchmark: typical laugh-track and audience reaction durations",
+      "content": "For context on the laughter durations recorded in this dataset: standard sitcom laugh tracks tend to insert reactions of around 1.5-3 seconds, and live audience laughter on late-night talk shows generally runs 2-5 seconds for a strong joke. Anything above roughly 6 seconds is unusual — it implies the audience kept laughing through the silence the comic deliberately left. This benchmark is what lets us call a 10-second laugh in the data 'extreme' rather than just 'big': it's well outside the normal range of laughter responses for filmed comedy.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Laugh_track",
+          "title": "Laugh track — Wikipedia",
+          "facts": [
+            "Canned laughter clips on traditional sitcoms typically run a few seconds."
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "url": "https://www.youtube.com/watch?v=XY9h-0x1Oao",
+      "title": "Ali Wong: Baby Cobra — The Pregnant Female Comedian (Netflix Is A Joke)",
+      "license": "Netflix promotional clip",
+      "source": "YouTube (Netflix Is A Joke channel)",
+      "description": "Official Netflix-uploaded clip from Baby Cobra showing Wong on stage visibly pregnant — useful as visual context for who the comic is and what the staging looked like, without requiring access to the full special.",
+      "relates_to": ["det_02"]
+    }
+  ],
+  "instances": [
+    {
+      "id": "inst_01",
+      "type": "youtube",
+      "label": "Ali Wong: Baby Cobra — The Pregnant Female Comedian (official Netflix clip)",
+      "embed_url": "https://www.youtube.com/embed/XY9h-0x1Oao",
+      "source_url": "https://www.youtube.com/watch?v=XY9h-0x1Oao",
+      "license": "Netflix promotional upload (official channel)",
+      "relates_to": ["det_02", "det_04"],
+      "why": "An official Netflix-channel clip of the actual special. Lets the reader hear Wong's voice and see the visible pregnancy that becomes a structural through-line in the routine — context the dataset's CSVs cannot supply on their own.",
+      "verified": true,
+      "verified_title": "Ali Wong: Baby Cobra - The Pregnant Female Comedian | Netflix Is A Joke"
+    }
+  ]
+}

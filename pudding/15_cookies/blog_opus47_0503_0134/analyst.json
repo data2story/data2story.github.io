@@ -1,0 +1,502 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["choc_chip_cookie_ingredients.csv", "All_directions.txt"],
+    "rows": 1990,
+    "columns": 7,
+    "what_one_row_represents": "A single ingredient line from a single chocolate chip cookie recipe (e.g., '3 cups all purpose flour' from recipe AR_1). 209 distinct recipes are represented across the rows.",
+    "time_range": "Recipes uploaded to AllRecipes, Epicurious, and the wider internet prior to February 2018",
+    "geographic_scope": "Global English-language recipe internet"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset shape: 209 recipes, 68 distinct ingredients",
+      "content": "The corpus contains 1,990 ingredient rows spanning 209 distinct chocolate chip cookie recipes (the README cites 211; two appear to have been removed during cleaning). Across all of those recipes, just 68 unique ingredients ever appear. Three sources contribute the recipes: AllRecipes (806 rows, prefix AR_), Epicurious (183 rows, prefix E_), and a hand-collected 'Misc' set (1,001 rows). All quantities are pre-scaled to a 48-cookie yield, which is what makes apples-to-apples averaging possible at all.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [8, 18],
+        "output": "Rows: 1990\nColumns: 7\nUnique recipes: 209\nUnique ingredients: 68\nSource breakdown:\nMisc    1001\nAR       806\nE        183"
+      },
+      "data_table": {
+        "description": "Recipes per source",
+        "columns": ["source", "recipes"],
+        "rows": [
+          ["AllRecipes", 806],
+          ["Misc (hand-collected)", 1001],
+          ["Epicurious", 183]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_02": {
+      "label": "A typical recipe uses about 10 ingredients",
+      "content": "Recipes are tightly clustered around a small ingredient count. The mean is 9.52 ingredients, the median is exactly 10, and the standard deviation is just 2.05. The shortest recipe lists 1 ingredient (clearly an incomplete entry); the longest lists 16 (AR_101). 112 of 209 recipes — more than half — use 9 or 10 ingredients. The chocolate chip cookie is, statistically, an extraordinarily standardized dish: the variation lives in proportions, not in component selection.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [19, 32],
+        "output": "Mean ingredients per recipe: 9.52\nMedian: 10.0\nMin: 1\nMax: 16\nStd: 2.05\nDistribution buckets:\n1-6       16\n7-8       25\n9-10     112\n11-12     43\n13-15     12\n16+        1"
+      },
+      "data_table": {
+        "description": "How many recipes use N ingredients (binned)",
+        "columns": ["bucket", "recipes"],
+        "rows": [
+          ["1-6", 16],
+          ["7-8", 25],
+          ["9-10", 112],
+          ["11-12", 43],
+          ["13-15", 12],
+          ["16+", 1]
+        ]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_03": {
+      "label": "The nine universal staples (>74% of recipes)",
+      "content": "Nine ingredients appear in three quarters or more of all 209 recipes: egg (97.6%), vanilla (93.8%), all-purpose flour (92.3%), baking soda (89.5%), sugar (83.3%), light brown sugar (81.3%), salt (79.9%), butter (76.1%), and semisweet chocolate chip (74.6%). This is the canonical Toll House lineup, almost untouched in eight decades. After this group there is a sharp cliff: the next ingredient, baking powder, appears in only 23.9% of recipes — a 50-percentage-point drop.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_ingredient_frequency.py",
+        "lines": [9, 16],
+        "output": "egg                             204  97.6\nvanilla                         196  93.8\nall purpose flour               193  92.3\nbaking soda                     187  89.5\nsugar                           174  83.3\nlight brown sugar               170  81.3\nsalt                            167  79.9\nbutter                          159  76.1\nsemisweet chocolate chip        156  74.6\nbaking powder                    50  23.9"
+      },
+      "data_table": {
+        "description": "Top 10 most common ingredients with recipe count and percentage",
+        "columns": ["ingredient", "recipes", "pct"],
+        "rows": [
+          ["egg", 204, 97.6],
+          ["vanilla", 196, 93.8],
+          ["all purpose flour", 193, 92.3],
+          ["baking soda", 187, 89.5],
+          ["sugar", 174, 83.3],
+          ["light brown sugar", 170, 81.3],
+          ["salt", 167, 79.9],
+          ["butter", 159, 76.1],
+          ["semisweet chocolate chip", 156, 74.6],
+          ["baking powder", 50, 23.9]
+        ]
+      },
+      "based_on": ["det_02", "det_07"]
+    },
+    "ana_04": {
+      "label": "The long tail: 23 ingredients appear in exactly one recipe",
+      "content": "The corpus has a stark long tail. 23 ingredients appear in exactly one recipe out of 209: applesauce, bourbon, brown rice flour, chocolate raisins, coconut extract, cookie mix, coriander, cream, espresso, graham cracker, instant coffee, lemon juice, macadamia, marshmallows, molasses, nestle (a brand reference), peanut butter chips, raisins, wheat, xanthan gum, zucchini, white pepper, and a recipe simply listing 'flour' as a separate ingredient. These are the curiosities that make 'averaging' the recipes so misleading: the mean takes the entire union of ingredients, then keeps every minority taste in trace quantities.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_ingredient_frequency.py",
+        "lines": [18, 24],
+        "output": "Ingredients appearing in 1-3 recipes only: 38\nThe 'curiosities' (the long tail of trace ingredients):\nxanthan gum                1  0.5\nnestle                     1  0.5\napplesauce                 1  0.5\nbourbon                    1  0.5\n...\nzucchini                   1  0.5\nwhite pepper               1  0.5"
+      },
+      "data_table": {
+        "description": "All 23 single-recipe ingredients (the 'long tail')",
+        "columns": ["ingredient", "recipes", "pct"],
+        "rows": [
+          ["xanthan gum", 1, 0.5],
+          ["applesauce", 1, 0.5],
+          ["bourbon", 1, 0.5],
+          ["brown rice flour", 1, 0.5],
+          ["chocolate raisin", 1, 0.5],
+          ["coconut extract", 1, 0.5],
+          ["cookie mix", 1, 0.5],
+          ["coriander", 1, 0.5],
+          ["cream", 1, 0.5],
+          ["espresso", 1, 0.5],
+          ["graham cracker", 1, 0.5],
+          ["instant coffee", 1, 0.5],
+          ["lemon juice", 1, 0.5],
+          ["marshmallows", 1, 0.5],
+          ["peanut butter chips", 1, 0.5],
+          ["macadmia", 1, 0.5],
+          ["zucchini", 1, 0.5],
+          ["white pepper", 1, 0.5],
+          ["raisins", 1, 0.5],
+          ["wheat", 1, 0.5],
+          ["molasses", 1, 0.5],
+          ["nestle", 1, 0.5],
+          ["flour", 1, 0.5]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_05": {
+      "label": "Frequency distribution shape: 'cliff' between staples and curiosities",
+      "content": "When ingredients are bucketed by recipe-prevalence, a striking U-shape emerges. 8 ingredients appear in 75-100% of recipes (the staples), 1 ingredient in 50-75% (semisweet chip is right at the edge), 0 ingredients in 25-50%, 10 ingredients in 5-25%, and 49 ingredients in under 5% of recipes. There is no middle ground: an ingredient is either canonical or a one-baker quirk. This is unusual — most natural-language vocabulary distributions are more gradual.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_ingredient_frequency.py",
+        "lines": [25, 31],
+        "output": "<5% (rare)             49\n5-25%                  10\n25-50%                  0\n50-75%                  1\n75-100% (universal)     8"
+      },
+      "data_table": {
+        "description": "Ingredient count by prevalence bucket",
+        "columns": ["bucket", "ingredients"],
+        "rows": [
+          ["<5% (rare)", 49],
+          ["5-25%", 10],
+          ["25-50%", 0],
+          ["50-75%", 1],
+          ["75-100% (universal)", 8]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_06": {
+      "label": "The mathematical average recipe: 12 leading ingredients",
+      "content": "Averaging quantities across all 209 recipes (treating absent ingredients as zero) produces the headline 'average' recipe. The top 12 ingredients by population mean are: 3.526 cups all-purpose flour, 2.979 teaspoons vanilla, 2.896 eggs, 1.833 cups semisweet chocolate chip, 1.370 teaspoons baking soda, 1.194 cups light brown sugar, 1.139 teaspoons salt, 1.133 cups butter, 1.025 cups (white) sugar, 0.538 tablespoons milk, 0.394 teaspoons baking powder, and 0.378 ounces of cake mix. These are the ratios that, when actually baked by O'Brien, produced cookies described as 'chewy and very chocolatey.'",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_average_recipe.py",
+        "lines": [12, 27],
+        "output": "all purpose flour                 3.526         cup           193      92.3\nvanilla                           2.979    teaspoon           196      93.8\negg                               2.896         egg           204      97.6\nsemisweet chocolate chip          1.833         cup           156      74.6\nbaking soda                       1.370    teaspoon           187      89.5\nlight brown sugar                 1.194         cup           170      81.3\nsalt                              1.139    teaspoon           167      79.9\nbutter                            1.133         cup           159      76.1\nsugar                             1.025         cup           174      83.3\nmilk                              0.538  tablespoon            15       7.2\nbaking powder                     0.394    teaspoon            50      23.9\ncake mix                          0.378       ounce             3       1.4"
+      },
+      "data_table": {
+        "description": "The mathematical average recipe — top 12 ingredients by mean quantity",
+        "columns": ["ingredient", "mean_quantity", "unit", "pct_recipes"],
+        "rows": [
+          ["all purpose flour", 3.526, "cup", 92.3],
+          ["vanilla", 2.979, "teaspoon", 93.8],
+          ["egg", 2.896, "egg", 97.6],
+          ["semisweet chocolate chip", 1.833, "cup", 74.6],
+          ["baking soda", 1.370, "teaspoon", 89.5],
+          ["light brown sugar", 1.194, "cup", 81.3],
+          ["salt", 1.139, "teaspoon", 79.9],
+          ["butter", 1.133, "cup", 76.1],
+          ["sugar", 1.025, "cup", 83.3],
+          ["milk", 0.538, "tablespoon", 7.2],
+          ["baking powder", 0.394, "teaspoon", 23.9],
+          ["cake mix", 0.378, "ounce", 1.4]
+        ]
+      },
+      "based_on": ["det_03", "det_07"]
+    },
+    "ana_07": {
+      "label": "The average cookie has 68 ingredients in trace amounts",
+      "content": "Because 'mean quantity' takes the union of every ingredient that appears in any recipe, the strict mathematical average has 68 distinct ingredients — the entire corpus vocabulary. 10 of them have a mean above 0.5 of their unit; 46 have a mean above 0.01; 19 are 'trace' ingredients with population means under 0.01. This is the joke at the centre of O'Brien's essay: an average is not a typical recipe. The average cookie technically contains a microgram of bourbon (0.019 tablespoons across 209 recipes), a smear of zucchini, and a homeopathic dust of coriander.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_average_recipe.py",
+        "lines": [29, 34],
+        "output": "Total distinct ingredients across all 211 recipes: 68\nNumber of ingredients with mean > 0.5 of unit: 10\nNumber of ingredients with mean > 0.01: 46\nNumber of trace ingredients (mean < 0.01): 19"
+      },
+      "data_table": {
+        "description": "Number of ingredients in the average recipe by quantity threshold",
+        "columns": ["threshold", "ingredient_count"],
+        "rows": [
+          [">0.5 unit (substantial)", 10],
+          [">0.01 unit (visible)", 46],
+          ["<0.01 unit (trace)", 19],
+          ["Total", 68]
+        ]
+      },
+      "based_on": ["det_04", "det_05"]
+    },
+    "ana_08": {
+      "label": "Flour distribution is wide: 1.5 to 8 cups (5th-95th)",
+      "content": "Among the 192 recipes that include all-purpose flour (91.9%), the mean is 3.84 cups per 48 cookies and the median 3.33 cups. The standard deviation is 2.15 cups — an enormous spread. The 5th-95th percentile range is 1.5 to 8 cups. The widest recipe lists 16 cups of flour, and the lowest 0.32 cups. Flour is the staple where bakers disagree the most about how much is enough.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_core_distributions.py",
+        "lines": [26, 33],
+        "output": "All purpose flour: 192/209 recipes use it (91.9%)\nMean: 3.838 cups, Median: 3.333333333, Std: 2.147\nMin: 0.32, Max: 16.0\n5th-95th percentile: 1.50 - 8.00"
+      },
+      "data_table": {
+        "description": "Flour quantity distribution (cups per 48 cookies, recipes using flour)",
+        "columns": ["bucket_cups", "recipes"],
+        "rows": [
+          ["0-1", 3],
+          ["1-2", 30],
+          ["2-3", 57],
+          ["3-4", 37],
+          ["4-5", 24],
+          ["5+", 38]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_09": {
+      "label": "Butter distribution: median 1.26 cups, mean 1.49",
+      "content": "Among 159 recipes that include butter (76.1%), the mean is 1.49 cups and the median 1.26 cups (per 48 cookies). The 5th-95th percentile range is 0.53 to 3.02 cups. About 24% of recipes use butter at less than half a cup; about 11% use more than two cups. The 50 recipes without butter typically substitute margarine or shortening — though some do not include any solid fat at all.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/04_core_distributions.py",
+        "lines": [35, 42],
+        "output": "Butter: 159/209 recipes use it (76.1%)\nMean: 1.489 cups, Median: 1.263157895, Std: 0.978\nMin: 0.00390625, Max: 8.0\n5th-95th percentile: 0.53 - 3.02"
+      },
+      "data_table": {
+        "description": "Butter quantity distribution (cups per 48 cookies)",
+        "columns": ["bucket_cups", "recipes"],
+        "rows": [
+          ["0-0.5", 8],
+          ["0.5-1", 61],
+          ["1-1.5", 33],
+          ["1.5-2", 38],
+          ["2+", 18]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_10": {
+      "label": "Brown sugar wins: 36.8% of recipes use more brown than white",
+      "content": "When recipes use both white sugar and light brown sugar (152 of 209), the mean ratio of brown:white is 1.36, and the median is exactly 1.00. 56 recipes (36.8%) use more brown sugar than white; 24 (15.8%) use more white than brown; the remaining 72 (47.4%) use exactly equal amounts. Brown sugar's molasses content is what gives a chocolate chip cookie its chewy texture, and the population is leaning toward chewier cookies. The Nestle Toll House recipe, by contrast, calls for equal cups of each.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_core_distributions.py",
+        "lines": [44, 57],
+        "output": "White sugar: used in 174/209 (83.3%), mean = 1.231 cups\nLight brown sugar: used in 170/209 (81.3%), mean = 1.468 cups\nRecipes using both: 152\nBrown:White ratio (mean): 1.357, median: 1.000\nRecipes with MORE brown than white: 56 (36.8%)\nRecipes with MORE white than brown: 24 (15.8%)"
+      },
+      "data_table": {
+        "description": "Brown vs white sugar dominance among recipes using both",
+        "columns": ["pattern", "recipes", "pct"],
+        "rows": [
+          ["More brown sugar", 56, 36.8],
+          ["Equal", 72, 47.4],
+          ["More white sugar", 24, 15.8]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_11": {
+      "label": "Chocolate chips: 93.8% of recipes; mean 2.81 cups",
+      "content": "When all chocolate chip varieties (semisweet, milk, dark, bittersweet, white) are summed, 196 of 209 recipes (93.8%) use at least some kind of chip, with a mean total of 2.81 cups per 48 cookies and a median of 2.34. Semisweet dominates the variety question — 156 recipes (74.6%) use semisweet, vs. 31 milk, 17 bittersweet, 9 dark, and 9 white. The bittersweet bakers, when they do use it, use the most: a mean of 4.35 cups per recipe. Some recipes go up to 12 cups of chips per batch — past the point where it stops being a cookie and becomes 'chocolate held together by dough'.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_core_distributions.py",
+        "lines": [59, 71],
+        "output": "Any chocolate chip: 196/209 recipes (93.8%)\nMean total chips: 2.814 cups, Median: 2.342857143, Std: 2.030\n  bittersweet chocolate chip: 17 recipes (8.1%), mean = 4.352 cups\n  dark chocolate chip: 9 recipes (4.3%), mean = 2.607 cups\n  milk chocolate chip: 31 recipes (14.8%), mean = 1.963 cups\n  semisweet chocolate chip: 156 recipes (74.6%), mean = 2.456 cups\n  white chocolate chip: 9 recipes (4.3%), mean = 1.132 cups"
+      },
+      "data_table": {
+        "description": "Chocolate chip variety usage across recipes",
+        "columns": ["variety", "recipes", "pct", "mean_cups_when_used"],
+        "rows": [
+          ["semisweet", 156, 74.6, 2.456],
+          ["milk", 31, 14.8, 1.963],
+          ["bittersweet", 17, 8.1, 4.352],
+          ["dark", 9, 4.3, 2.607],
+          ["white", 9, 4.3, 1.132]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_12": {
+      "label": "Eggs: 97.6% of recipes, mean 2.97",
+      "content": "Eggs are the most universal ingredient in the corpus, present in 97.6% of recipes. The population mean is 2.97 eggs per 48 cookies and the median 2.67. Bakers cluster around 2 to 3 eggs; very few use more than 4.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_core_distributions.py",
+        "lines": [73, 80],
+        "output": "Eggs: 204/209 recipes (97.6%)\nMean: 2.967, Median: 2.666666667"
+      },
+      "data_table": null,
+      "based_on": []
+    },
+    "ana_13": {
+      "label": "Ratings (where present): mean 0.81, median 0.87, biased high",
+      "content": "Ratings are present for 98 of 209 recipes (46.9%) — only the AllRecipes and Epicurious entries. The mean rating is 0.81, the median 0.87, and 54 of 98 rated recipes (55.1%) are above 0.85. The distribution is squashed against the ceiling: the maximum is 1.00 and only 12 recipes are below 0.6. As warned by the detective, this looks like classic survivorship-rating bias on review platforms — most published recipes hover at 'pretty good or better.' Treat ratings as 'baseline acceptable' rather than discriminating signal.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/05_ratings_and_directions.py",
+        "lines": [12, 23],
+        "output": "Recipes with rating: 98/209 (46.9%)\nRating mean: 0.811\nRating median: 0.869\nRating std: 0.138\nMin: 0.375, Max: 1.000\nRating buckets:\n<0.6        12\n0.6-0.7      6\n0.7-0.8     16\n0.8-0.85    10\n0.85-0.9    23\n0.9-0.95    27\n0.95+        4"
+      },
+      "data_table": {
+        "description": "Rating distribution (n=98)",
+        "columns": ["rating_bucket", "recipes"],
+        "rows": [
+          ["<0.6", 12],
+          ["0.6-0.7", 6],
+          ["0.7-0.8", 16],
+          ["0.8-0.85", 10],
+          ["0.85-0.9", 23],
+          ["0.9-0.95", 27],
+          ["0.95+", 4]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_14": {
+      "label": "Directions corpus: 1,110 instruction lines, 31,288 words",
+      "content": "The directions corpus runs to 1,110 non-empty instruction lines and 31,288 words, averaging 28 words per line. That is enough text to learn shared baking idioms — but is also small enough that O'Brien's neural network character-level model overfit to it and produced surreal output like '1.904 cups seconds.'",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/05_ratings_and_directions.py",
+        "lines": [25, 32],
+        "output": "Total non-empty lines: 1110\nTotal words: 31288\nMean words per instruction line: 28.19"
+      },
+      "data_table": null,
+      "based_on": ["det_03"]
+    },
+    "ana_15": {
+      "label": "Top instruction phrases: 'baking soda', 'chocolate chips', 'preheat oven'",
+      "content": "The most common bigrams in the directions corpus reveal a shared instructional grammar. After grammatical fillers like 'in the' and 'in a', the most common content phrases are 'baking soda' (191), 'chocolate chips' (191), 'stir in' (166), 'baking sheets' (164), 'the flour' (155), 'preheat oven' (123), and 'bake for' (105). The verbs 'stir', 'cream', 'bake', 'cool', 'add', 'preheat', and 'drop' (as in 'drop by spoonfuls') form the core vocabulary of cookie-making.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/05_ratings_and_directions.py",
+        "lines": [35, 47],
+        "output": "Top 25 bigrams in cookie directions:\nin the: 384\nin a: 229\noven to: 197\nbaking soda: 191\nchocolate chips: 191\nstir in: 166\nbaking sheets: 164\nthe flour: 155\nto minutes: 141\nadd the: 140\nfor minutes: 128\nbaking sheet: 126\npreheat oven: 123\nto cool: 121\nto degrees: 120"
+      },
+      "data_table": {
+        "description": "Top content bigrams in directions (excluding pure grammatical fillers)",
+        "columns": ["bigram", "count"],
+        "rows": [
+          ["baking soda", 191],
+          ["chocolate chips", 191],
+          ["stir in", 166],
+          ["baking sheets", 164],
+          ["the flour", 155],
+          ["preheat oven", 123],
+          ["to cool", 121],
+          ["bake for", 105],
+          ["the butter", 117],
+          ["the cookies", 111]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_16": {
+      "label": "350F is the canonical oven temperature (74 mentions)",
+      "content": "Across the directions corpus, 350F is mentioned 74 times — far more than any other temperature. 375F (46) is the runner-up, with 325F (6), 300F (3), and 385F (1) trailing far behind. Roughly 60% of all temperature mentions land on 350F, the temperature Wakefield's original Toll House recipe specifies. After 80 years and several thousand bakers, the oven has not moved.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_ratings_and_directions.py",
+        "lines": [48, 55],
+        "output": "Most common oven temperatures (Fahrenheit):\n350F: 74 mentions\n375F: 46 mentions\n325F: 6 mentions\n300F: 3 mentions\n385F: 1 mentions"
+      },
+      "data_table": {
+        "description": "Oven temperature mentions in directions corpus",
+        "columns": ["temperature_F", "mentions"],
+        "rows": [
+          [350, 74],
+          [375, 46],
+          [325, 6],
+          [300, 3],
+          [385, 1]
+        ]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_17": {
+      "label": "Full ingredient table for the Average Cookie visualization",
+      "content": "This is the complete master table of all 68 ingredients with three values each: population mean (the strict average across all 209 recipes), conditional mean (the average across only recipes that include this ingredient), and prevalence (% of recipes using it). This is what powers the headline 'most-average cookie ingredient vector' visualization — a flat list of every ingredient that ever appears in a chocolate chip cookie recipe on the internet, with the share each contributes when you average them all together.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_ingredient_full_table.py",
+        "lines": [11, 36],
+        "output": "Total ingredients: 68\negg: 2.896 (97.6%)\nvanilla: 2.979 (93.8%)\nall purpose flour: 3.526 (92.3%)\n... 65 more rows ..."
+      },
+      "data_table": {
+        "description": "All 68 ingredients across 209 recipes — population mean (avg over all 209 recipes), conditional mean (avg when used), unit, recipe count, prevalence %",
+        "columns": ["ingredient", "mean_population", "mean_when_used", "unit", "recipes", "pct"],
+        "rows": [
+          ["egg", 2.896, 2.855, "egg", 204, 97.6],
+          ["vanilla", 2.9793, 3.177, "teaspoon", 196, 93.8],
+          ["all purpose flour", 3.5261, 3.818, "cup", 193, 92.3],
+          ["baking soda", 1.37, 1.531, "teaspoon", 187, 89.5],
+          ["sugar", 1.0248, 1.224, "cup", 174, 83.3],
+          ["light brown sugar", 1.1944, 1.468, "cup", 170, 81.3],
+          ["salt", 1.1386, 1.417, "teaspoon", 167, 79.9],
+          ["butter", 1.1332, 1.48, "cup", 159, 76.1],
+          ["semisweet chocolate chip", 1.833, 2.409, "cup", 156, 74.6],
+          ["baking powder", 0.3938, 1.646, "teaspoon", 50, 23.9],
+          ["walnut", 0.3268, 1.751, "cup", 39, 18.7],
+          ["milk chocolate chip", 0.2912, 1.963, "cup", 31, 14.8],
+          ["shortening", 0.1597, 1.151, "cup", 29, 13.9],
+          ["dark brown sugar", 0.1252, 1.377, "cup", 19, 9.1],
+          ["oat", 0.2271, 2.498, "cup", 19, 9.1],
+          ["bittersweet chocolate chip", 0.354, 4.352, "cup", 17, 8.1],
+          ["milk", 0.5376, 7.491, "tablespoon", 15, 7.2],
+          ["margarine", 0.0497, 0.944, "cup", 11, 5.3],
+          ["pecan", 0.0619, 1.176, "cup", 11, 5.3],
+          ["nuts", 0.0551, 1.279, "cup", 9, 4.3],
+          ["dark chocolate chip", 0.1123, 2.607, "cup", 9, 4.3],
+          ["white chocolate chip", 0.0488, 1.132, "cup", 9, 4.3],
+          ["cornstarch", 0.1368, 4.086, "teaspoon", 7, 3.3],
+          ["bread flour", 0.0981, 2.93, "cup", 7, 3.3],
+          ["pudding mix", 0.0383, 1.333, "ounce", 6, 2.9],
+          ["cake flour", 0.0821, 2.861, "cup", 6, 2.9],
+          ["vegetable oil", 0.0201, 0.841, "cup", 5, 2.4],
+          ["cinnamon", 0.0276, 1.153, "teaspoon", 5, 2.4],
+          ["almond extract", 0.0144, 0.75, "teaspoon", 4, 1.9],
+          ["water", 0.0104, 0.542, "cup", 4, 1.9],
+          ["cake mix", 0.3784, 26.361, "ounce", 3, 1.4],
+          ["wheat flour", 0.048, 3.342, "cup", 3, 1.4],
+          ["crispy rice", 0.0094, 0.656, "cup", 3, 1.4],
+          ["vinegar", 0.0191, 1.333, "teaspoon", 3, 1.4],
+          ["tartar", 0.0271, 1.889, "teaspoon", 3, 1.4],
+          ["liquer", 0.0957, 10.0, "teaspoon", 2, 1.0],
+          ["coconut", 0.0064, 0.667, "cup", 2, 1.0],
+          ["sour cream", 0.088, 9.2, "tablespoon", 2, 1.0],
+          ["honey", 0.0035, 0.361, "cup", 2, 1.0],
+          ["toffee", 0.022, 2.3, "cup", 2, 1.0],
+          ["corn syrup", 0.0574, 6.0, "tablespoon", 2, 1.0],
+          ["nutmeg", 0.002, 0.214, "teaspoon", 2, 1.0],
+          ["peanut butter", 0.0064, 0.667, "cup", 2, 1.0],
+          ["almonds", 0.0112, 1.167, "cup", 2, 1.0],
+          ["maple", 0.0327, 3.412, "tablespoon", 2, 1.0],
+          ["wheat", 0.0019, 0.4, "cup", 1, 0.5],
+          ["raisins", 0.0064, 1.333, "cup", 1, 0.5],
+          ["white pepper", 0.0048, 1.0, "teaspoon", 1, 0.5],
+          ["xanthan gum", 0.0032, 0.667, "teaspoon", 1, 0.5],
+          ["macadmia", 0.0048, 1.0, "cup", 1, 0.5],
+          ["peanut butter chips", 0.0021, 0.444, "cup", 1, 0.5],
+          ["nestle", 0.0019, 0.4, "cup", 1, 0.5],
+          ["applesauce", 0.0024, 0.5, "cup", 1, 0.5],
+          ["bourbon", 0.0191, 4.0, "tablespoon", 1, 0.5],
+          ["brown rice flour", 0.0064, 1.333, "cup", 1, 0.5],
+          ["chocolate raisin", 0.0191, 4.0, "cup", 1, 0.5],
+          ["coconut extract", 0.0191, 4.0, "teaspoon", 1, 0.5],
+          ["cookie mix", 0.0128, 2.667, "cup", 1, 0.5],
+          ["coriander", 0.0011, 0.24, "teaspoon", 1, 0.5],
+          ["cream", 0.0064, 1.333, "teaspoon", 1, 0.5],
+          ["espresso", 0.0191, 4.0, "teaspoon", 1, 0.5],
+          ["flour", 0.0108, 2.25, "cup", 1, 0.5],
+          ["graham cracker", 0.0018, 0.369, "cup", 1, 0.5],
+          ["instant coffee", 0.0287, 6.0, "teaspoon", 1, 0.5],
+          ["lemon juice", 0.0057, 1.2, "teaspoon", 1, 0.5],
+          ["marshmallows", 0.0096, 2.0, "cup", 1, 0.5],
+          ["molasses", 0.0048, 1.0, "tablespoon", 1, 0.5],
+          ["zucchini", 0.0096, 2.0, "cup", 1, 0.5]
+        ]
+      },
+      "based_on": ["det_04", "det_07"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "The README cites 211 recipes, but the cleaned CSV contains only 209 distinct Recipe_Index values. Two appear to have been removed during cleanup; downstream stages should report 209 (the actual number)."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "The CSV uses 'sugar' to refer to white granulated sugar (per the dataset README's standardization rules). The brown sugar variants are tagged separately as 'light brown sugar' and 'dark brown sugar'."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Ratings are only present for 98 of 209 recipes (46.9%) and skew high (mean 0.81). Treat ratings as 'baseline acceptable' rather than discriminating signal."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Some ingredient labels look like data quality artifacts (e.g., 'macadmia', 'liquer', 'flour' as a separate ingredient from 'all purpose flour', 'nestle' as an ingredient). They are preserved as-is to match the source data."
+    }
+  ]
+}

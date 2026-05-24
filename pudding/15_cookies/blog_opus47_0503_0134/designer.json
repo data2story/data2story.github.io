@@ -1,0 +1,328 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive_or_map); each channel chosen and executed in a data-driven way; skipping any channel requires an explicit reason in media_decisions",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The dataset is fundamentally about ingredient distributions (prevalence, quantity, ratio, oven-temp counts). Charts carry the load: an ingredient-prevalence cliff/tail, a pie-or-bar of brown-vs-white sugar, and a stark 350F vs everything-else bar."
+      },
+      "image": {
+        "used": true,
+        "reason": "Cookies are a visually rich, sensory subject. We generated four atmospheric stills: a Frankenstein hero (cookie ringed by trace ingredients), a classic Toll House cookie, a 23-cell scientific grid of long-tail oddities, and a vintage 1930s oven."
+      },
+      "video": {
+        "used": true,
+        "reason": "The teaser hero is a strong still that earns motion: image2video adds a slow push-in and dust drift so the bourbon and zucchini around the central cookie reveal themselves cinematically. No native video on the data, so we animate the still rather than fabricating a generated event."
+      },
+      "audio": {
+        "used": true,
+        "reason": "A short generated ambient bed (warm 1930s home kitchen) plays click-to-listen alongside the 'oven hasn't moved in 80 years' section. It evokes the canonical Wakefield kitchen as period grounding for the 350F finding. Always paired with the visual chart and gated behind a play button."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The brown-vs-white sugar finding (36.8% vs 15.8%) is the most counterintuitive number in the piece. A guess-first quiz lets the reader commit before the reveal — far stronger than another passive bar chart."
+      }
+    },
+    "media_blockers": [
+      {
+        "category": "video_duration",
+        "reason": "google/veo-3.1-fast does not accept duration=5; it requires {4,6,8}. Re-ran with duration=6 successfully.",
+        "attempted_command": "image2video --duration 5",
+        "fallback_des": "des_02 (re-run with duration=6)"
+      },
+      {
+        "category": "audio_stream",
+        "reason": "First text2music call returned 'no audio chunks received from stream' on the first prompt attempt. Re-ran with a simpler acoustic prompt and got a 1.2MB WAV.",
+        "attempted_command": "text2music with detailed period-specific prompt",
+        "fallback_des": "des_15 (kitchen_ambient.wav from a simpler prompt)"
+      }
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — Frankenstein cookie surrounded by trace ingredients",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic overhead still life. A single golden-brown chocolate chip cookie at the center of a dark wooden surface, surrounded by an absurd array of trace ingredients arranged in tiny piles: zucchini chunks, white pepper, a thimble of bourbon, a single marshmallow, a coffee bean, coriander, applesauce. Editorial food photography, warm directional key light, deep shadows, painterly mood, no text in frame.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed teaser hero before the headline. A normal-looking cookie ringed by visibly weird trace ingredients — the visual joke of the piece, before any prose. Mood: dark editorial, restrained, slightly absurd.",
+      "rationale": "The whole essay is the gap between 'looks normal' and 'contains everything.' The teaser image lays that gap out before any words. Generated still beats text-only because the absurdity needs to be seen.",
+      "based_on": ["ana_07", "ana_04"]
+    },
+    "des_02": {
+      "label": "Teaser motion — animated push-in on the hero",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "Slow cinematic push-in toward the cookie, gentle drift of dust motes catching the warm light, very subtle shimmer on the bourbon, no camera shake, restrained motion, atmospheric.",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Full-viewport autoplay-muted-loop video built from teaser_hero.png. A 6-second slow push-in with subtle dust drift, anchoring the still as the first frame. Sits as the page's first impression; replaces the static teaser image.",
+      "rationale": "We already invested in a strong still — image2video preserves that composition while adding the cinematic edge that turns a still into an opening shot. The data has no native event to film, so animating the strongest image is the right way to use the video channel.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Hook image — bourbon and zucchini context still",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "long_tail_grid.png",
+        "tool": "text2image",
+        "prompt": "Scientific still life on dark slate: 23 small individual glass dishes in a precise grid, each containing a single bizarre cookie ingredient — zucchini, coriander, marshmallow, bourbon, applesauce, coffee bean, white pepper, graham cracker, espresso grind. Top-down overhead, museum-display, no text labels visible.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Mid-section image laid out like a museum display: 23 small dishes, one per single-recipe ingredient from ana_04. Pairs with the prose listing bourbon, zucchini, white pepper. The reader sees the long tail as physical objects, not just words.",
+      "rationale": "The 'bourbon and zucchini' joke needs object-permanence to feel real. A neat scientific grid says 'these are real ingredients in real recipes' more concretely than a chart row.",
+      "based_on": ["ana_04"]
+    },
+    "des_04": {
+      "label": "Top staples bar chart with cliff highlight",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_03",
+        "x": "pct",
+        "y": "ingredient",
+        "color": "pct",
+        "highlight": {"ingredient": "baking powder", "annotation": "the 50pp cliff"},
+        "interaction": "hover tooltip with exact recipe count and percentage",
+        "style": {"sort_y_desc": true, "y_axis_labels_left": true, "no_gridlines": true, "palette": "warm_amber", "annotated_gap": "draw a horizontal divider between semisweet chip (74.6%) and baking powder (23.9%) labeled 'the cliff'"}
+      },
+      "brief": "Horizontal bar chart of the top 10 ingredients from ana_03 by recipe prevalence. Bars sorted descending. Visually decisive cliff: a clear gap or annotated divider between the 9th bar (semisweet chocolate chip, 74.6%) and the 10th (baking powder, 23.9%) showing the 50-point drop. Hover tooltips show exact counts (e.g., 'egg — 204 of 209 recipes, 97.6%').",
+      "rationale": "ana_03's 'cliff' is the structural argument. A static, decisive horizontal bar chart with explicit cliff annotation is the cleanest way to show the U-shape; exploration would dilute the surprise.",
+      "based_on": ["ana_03"]
+    },
+    "des_05": {
+      "label": "Classic cookie image (Toll House anchor)",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "classic_cookie.png",
+        "tool": "text2image",
+        "prompt": "Editorial macro photograph: a perfect classic chocolate chip cookie freshly baked, golden edges, gooey center, melted chocolate chips visible, on a vintage off-white ceramic plate. Warm soft window light, shallow depth of field. The canonical 1938 Toll House cookie. No text in frame.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Sectional image paired with the Toll House paragraph. Anchors the prose about Wakefield's 1938 recipe with the visual identity of the canonical cookie — clean, golden, unstyled. Keeps the eye fed between two heavy charts.",
+      "rationale": "edt_02 has two prose-heavy paragraphs and a chart; an image preventing chart-streak fatigue is helpful. The cookie itself is the centre of the dataset.",
+      "based_on": ["ana_06"]
+    },
+    "des_06": {
+      "label": "Centerpiece — full ingredient distribution (cliff + tail)",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "lollipop_or_bar",
+        "data_source": "ana_17",
+        "x": "ingredient",
+        "y": "pct",
+        "color": "pct",
+        "highlight": {"top_9": "warm amber bars for the staples", "tail": "muted grey for ingredients <5%", "annotated_zones": ["75-100% Staples (8 ingredients)", "5-25% Tail (10 ingredients)", "<5% Curiosities (49 ingredients)"]},
+        "interaction": "hover any bar to show ingredient name, exact pct, recipe count, mean quantity when used; click to scroll-highlight in legend",
+        "style": {"x_axis_rotated_45": true, "log_y_axis": false, "linear_y_with_secondary_dotted_25pct_threshold": true, "no_gridlines": true, "all_68_ingredients_visible": true, "horizontal_divider_at_25pct_with_label_gap": "the 50-point gap"}
+      },
+      "brief": "The page centerpiece. A wide bar chart showing all 68 ingredients on the x-axis (rotated labels), prevalence pct on y-axis. The first 8-9 bars are tall amber 'staples'; then a sharp visual gap; then a long muted-grey shallow tail running across the rest of the chart. Annotated zones label the three regions. Hover reveals exact name, count, and mean-when-used. This is the visual argument — geological cliff face on the left, long tail to the right.",
+      "rationale": "ana_17 is the only finding that *literally* shows the geological shape Editor describes. Anything smaller would lose the visual argument. Static-with-hover beats interactive filtering — the shape is the point.",
+      "based_on": ["ana_17", "ana_05"]
+    },
+    "des_07": {
+      "label": "Brown-vs-white sugar guess-first quiz",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Reader sees the question: 'When bakers use both sugars, who wins — more brown, equal, or more white?' with three large clickable option cards (More brown / Equal / More white).",
+        "trigger": "Reader clicks one option card",
+        "transition": "Selected card highlights, then a horizontal stacked bar fades in showing the actual split (36.8% / 47.4% / 15.8%). The card the reader picked gets a check or x mark.",
+        "payoff": "Reveal text appears beneath: 'Brown-sugar bakers are 2.3x more common than white-sugar bakers among the 152 recipes that use both.' If the reader picked More brown they get a small check; otherwise the correct card is highlighted.",
+        "data_source": "ana_10"
+      },
+      "brief": "A three-card guess interaction inside edt_04. Reader commits to a guess about brown:white sugar dominance before seeing the data. After the click, the actual percentages appear as a stacked bar. Designed to make the counterintuitive 36.8-vs-15.8 finding land harder than a passive chart would.",
+      "rationale": "Editorial notes call this out as the most counterintuitive finding. The interactive_or_map channel needs to earn its slot — a guess-first reveal turns the moment of surprise into a personal moment, which is what the editor wanted.",
+      "based_on": ["ana_10"]
+    },
+    "des_08": {
+      "label": "Chocolate chip variety bar chart",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_11",
+        "x": "variety",
+        "y_left": "pct",
+        "y_right": "mean_cups_when_used",
+        "color": "variety",
+        "highlight": {"variety": "bittersweet", "annotation": "4.4 cups when used — twice the semisweet crowd"},
+        "interaction": "hover tooltip with both metrics simultaneously",
+        "style": {"dual_axis": true, "left_bars_show_pct": true, "right_bars_show_cups": true, "no_gridlines": true, "palette": "chocolate_browns"}
+      },
+      "brief": "Dual-metric grouped bar chart for chocolate chip varieties (semisweet/milk/bittersweet/dark/white): one set of bars shows recipe-prevalence pct, a second set shows mean cups when used. Bittersweet's tall second bar (4.4 cups) is the visual punchline — most-used by least many.",
+      "rationale": "ana_11 has two interesting numbers per variety; presenting them together makes 'small but devoted club' immediately readable. Static beats interactive — the contrast is the point.",
+      "based_on": ["ana_11"]
+    },
+    "des_09": {
+      "label": "Flour spread distribution histogram",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "histogram",
+        "data_source": "ana_08",
+        "x": "bucket_cups",
+        "y": "recipes",
+        "color": "bucket_cups",
+        "highlight": {"annotation": "Median 3.3 cups; range 1.5 - 8 cups (5th - 95th)"},
+        "interaction": "hover tooltip with bucket and exact count",
+        "style": {"no_gridlines": true, "palette": "warm_neutral", "median_line": true}
+      },
+      "brief": "Histogram of flour quantity buckets across the 192 recipes that use flour. Visually shows how wide the disagreement is — the long right tail and the spike at 2-3 cups. Annotated median line and 5th-95th percentile range labels.",
+      "rationale": "Editorial calls flour out as the ingredient where bakers disagree most. A histogram is the obvious way to show distribution shape. Static is enough — exploration would not add anything.",
+      "based_on": ["ana_08"]
+    },
+    "des_10": {
+      "label": "Oven temperature bar chart (350F dominance)",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_16",
+        "x": "mentions",
+        "y": "temperature_F",
+        "color": "mentions",
+        "highlight": {"temperature_F": 350, "annotation": "60% of mentions; Wakefield's 1938 spec"},
+        "interaction": "hover tooltip with exact count",
+        "style": {"sort_y_by_temp": false, "sort_y_by_mentions": true, "no_gridlines": true, "palette": "amber_oven", "350_bar_extra_warm": true}
+      },
+      "brief": "Horizontal bar chart of oven temperature mentions across the directions corpus. 350F is a long warm-amber bar; 375F is half its length; 325/300/385 are barely visible slivers. The dominance is the visual point.",
+      "rationale": "ana_16's 74-vs-46-vs-everything-else is decisive. A horizontal bar communicates dominance at a single glance.",
+      "based_on": ["ana_16"]
+    },
+    "des_11": {
+      "label": "Vintage oven atmosphere image",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "vintage_oven.png",
+        "tool": "text2image",
+        "prompt": "A vintage 1930s home oven with a glowing warm interior, tray of chocolate chip cookies inside through cracked door. Soft amber kitchen glow, dust motes. Editorial photography, atmospheric, no text in frame.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Sectional image after the 350F finding. A 1930s home oven with cookies inside, period-appropriate. Anchors 'the oven hasn't moved in 80 years' visually.",
+      "rationale": "edt_05 is about temporal continuity from 1938 to today. The image makes that continuity tactile in a way the chart cannot.",
+      "based_on": ["ana_16"]
+    },
+    "des_12": {
+      "label": "Bigram instruction stat strip",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": {
+        "stats": [
+          {"value": "191", "label": "mentions of 'baking soda'"},
+          {"value": "191", "label": "mentions of 'chocolate chips'"},
+          {"value": "166", "label": "mentions of 'stir in'"},
+          {"value": "123", "label": "mentions of 'preheat oven'"}
+        ],
+        "data_source": "ana_15"
+      },
+      "brief": "A four-stat horizontal callout strip showing the most common content bigrams in the directions corpus. Three big numbers in a row. Sits below the prose listing the top phrases.",
+      "rationale": "ana_15 has four near-identical big numbers — they read better as a stat strip than as another bar chart. Stat callouts also break up the chart streak in this section.",
+      "based_on": ["ana_15"]
+    },
+    "des_13": {
+      "label": "68-ingredient headline stat",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "68",
+        "label": "distinct ingredients in the average cookie",
+        "subtext": "10 substantial · 46 visible · 19 trace",
+        "data_source": "ana_07"
+      },
+      "brief": "Large 96px '68' with a label and a thin subtext breaking down the substantial / visible / trace counts. Sits inside or just after edt_01's hook prose.",
+      "rationale": "The whole piece hangs on 68. Putting it on the page as a headline number anchors the reader before the chart machinery shows up.",
+      "based_on": ["ana_07"]
+    },
+    "des_14": {
+      "label": "Bourbon trace stat callout",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "0.019",
+        "label": "tablespoons of bourbon in the average cookie",
+        "subtext": "from a single recipe out of 209",
+        "data_source": "ana_04"
+      },
+      "brief": "Companion stat to des_13. The literal trace amount of bourbon — visually small label, large number, with the 'one recipe out of 209' subtext.",
+      "rationale": "The exact 0.019 figure is editorial-load-bearing per the editor's notes. Showing it as a callout reinforces precision.",
+      "based_on": ["ana_04"]
+    },
+    "des_15": {
+      "label": "1930s kitchen ambient — sectional play button",
+      "type": "audio",
+      "section": "edt_05",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "edt_05 argues that the 350F oven hasn't moved in 80 years. A short period-appropriate kitchen ambience — gentle piano, brushed snare, mid-century jazz mood — lets the reader feel the era while reading. Not background music; click-to-play, paired with the oven chart and image.",
+        "trigger": "Reader clicks a small play button labeled 'Listen: 1930s kitchen ambience'",
+        "ui_form": "section-integrated mini-player tucked next to the vintage oven image; visible label, play/pause button, mute fallback",
+        "content": {
+          "filename": "kitchen_ambient.wav",
+          "tool": "text2music",
+          "prompt": "Warm acoustic kitchen ambient: gentle piano arpeggio in C major, soft brushed snare, mid-century jazz mood, no vocals, peaceful, restrained tempo about 90 BPM",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "If audio is muted/unsupported, the oven image and 350F bar chart fully communicate the section. Audio is purely additive.",
+        "novelty_note": "Not a tone card and not a click-to-play centerpiece — it's a side button next to the period image, framed as an optional cue to inhabit the era while reading.",
+        "data_source": null
+      },
+      "brief": "A small mini-player attached to the vintage oven image in edt_05. Click 'Listen: 1930s kitchen ambience' to play a 30-second period soundscape. Default state: muted, paused, controls visible.",
+      "rationale": "Audio earns its slot only if it adds to interpretation. Tying period sound to the 80-year continuity finding is the only place sound naturally fits this dataset; everywhere else it would be decoration.",
+      "based_on": []
+    },
+    "des_16": {
+      "label": "10 / 46 / 19 / 68 threshold strip",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "stacked_horizontal_bar",
+        "data_source": "ana_07",
+        "x": "ingredient_count",
+        "y": "threshold",
+        "color": "threshold",
+        "highlight": {"total": 68, "trace_segment": 19, "visible_segment": 46, "substantial_segment": 10},
+        "interaction": "hover each segment for label and definition",
+        "style": {"single_horizontal_stacked_bar": true, "no_gridlines": true, "labels_inside_segments": true, "palette": "amber_to_grey"}
+      },
+      "brief": "A single stacked horizontal bar showing the 68-ingredient breakdown: 10 substantial (warm amber), 46 visible (mid amber), 19 trace (faint grey). Each segment labeled with its count and threshold. Sits near des_13.",
+      "rationale": "Communicates how the 68 splits across thresholds at a glance, which the prose names but the stat callout alone cannot show.",
+      "based_on": ["ana_07"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm-dark editorial",
+    "text_visual_pattern": "visual-first teaser, then alternating prose-with-charts, with image and stat-callout breaks to prevent chart streaks",
+    "centrepiece": "des_06",
+    "anti_sameness_notes": "No tone-card audio, no full-bleed hero photo as the only opener — instead the teaser is image2video. The audio is sectional and period-justified, attached to the oven section, not the centre of the page. The interactive is a guess-first quiz on a counterintuitive number, not a generic filterable chart. Stat callouts intersperse with charts to break visual rhythm.",
+    "typography_notes": "Stat callouts at 72-96px serif, body in Georgia, chart labels in system-ui. Amber accents on warm/staples elements; muted grey on long-tail elements. Section headers small caps. Use horizontal dividers between sections rather than dramatic backgrounds."
+  }
+}

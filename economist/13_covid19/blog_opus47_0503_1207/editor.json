@@ -1,0 +1,104 @@
+{
+  "meta": {"role": "editor", "version": "2.0"},
+  "core_claim": "In early March 2020, COVID-19's case map showed where countries were looking — not where the virus was. Tourism flows revealed exactly who was looking the wrong way.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — A map that already lied",
+      "purpose": "hook",
+      "title": "A map that already lied",
+      "findings": ["ana_01"],
+      "context": ["det_01", "det_03"],
+      "triage": {"ana_01": "supporting"},
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "image",
+      "editorial_notes": "95,124 / 80,271 / 67,332 / 70% must be exact. The hook frames the rest — landing the global picture and the doubt simultaneously."
+    },
+    "edt_02": {
+      "label": "The yardstick — Chinese tour groups",
+      "purpose": "context",
+      "title": "The yardstick: Chinese tour groups",
+      "findings": ["ana_03"],
+      "context": ["det_02"],
+      "triage": {"ana_03": "supporting"},
+      "chart_placeholder": "ana_03",
+      "media_placeholder": null,
+      "editorial_notes": "Thailand 1.55m; Japan 1.25m; top 10 = 74% — exact. Explains the proxy."
+    },
+    "edt_03": {
+      "label": "The model — OECD-only fit",
+      "purpose": "context",
+      "title": "The OECD line",
+      "findings": ["ana_02"],
+      "context": ["det_05", "det_06"],
+      "triage": {"ana_02": "lead"},
+      "chart_placeholder": "ana_02",
+      "media_placeholder": null,
+      "editorial_notes": "Coefficients -8.44 intercept, 1.13 slope, R-squared 0.59 — exact. This is the model that everything else turns on."
+    },
+    "edt_04": {
+      "label": "The reveal — under the line",
+      "purpose": "evidence",
+      "title": "Below the line",
+      "findings": ["ana_04", "ana_07"],
+      "context": ["det_07"],
+      "triage": {"ana_04": "lead", "ana_07": "supporting"},
+      "chart_placeholder": "ana_07",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Russia 3 vs 517; Indonesia 2 vs 330; Myanmar 0 vs 110 — exact. Reader should *see* the residual visually before getting numbers — strongly recommend an interactive scatter where the OECD line and the residual gap are clear."
+    },
+    "edt_05": {
+      "label": "The other end — Iran, Italy, Korea",
+      "purpose": "turn",
+      "title": "Above the line",
+      "findings": ["ana_05"],
+      "context": ["det_04"],
+      "triage": {"ana_05": "supporting"},
+      "chart_placeholder": "ana_05",
+      "media_placeholder": null,
+      "editorial_notes": "Iran 2,922 vs 12; Italy 3,089 vs 156; SK 5,621 vs 392 — exact. The 'other end' completes the model's two diagnoses."
+    },
+    "edt_06": {
+      "label": "The asymmetry — OECD vs not",
+      "purpose": "evidence",
+      "title": "A surveillance gap, by group",
+      "findings": ["ana_06"],
+      "context": ["det_06"],
+      "triage": {"ana_06": "supporting"},
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "-0.85 log-units; 43% of OECD-predicted level; 64% vs 56% — exact. Group-level number for those who want the systematic claim."
+    },
+    "edt_07": {
+      "label": "The multiplier",
+      "purpose": "evidence",
+      "title": "What the model says is missing",
+      "findings": ["ana_08"],
+      "context": ["det_04", "det_07"],
+      "triage": {"ana_08": "supporting"},
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "image",
+      "editorial_notes": "Russia 172x, Indonesia 165x, Myanmar 110x — exact. Subsequent peer-reviewed multipliers (Iran 34x, Italy 73x, Spain 161x) come from det_04. Frame as 'the model implies', not 'we proved'."
+    },
+    "edt_08": {
+      "label": "Close — Reading the gaps",
+      "purpose": "close",
+      "title": "Reading the gaps",
+      "findings": [],
+      "context": ["det_05", "det_07"],
+      "triage": {},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Pure narrative close. No new data — synthesis of the framing. End on the move itself ('fit on the part of the world that measures well, read the gap')."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "supporting",
+    "ana_04": "lead",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting"
+  }
+}

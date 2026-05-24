@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "In a one-hour stand-up special, the loudest laugh is not the funniest line — it is the line where the most structure converges, and Ali Wong's Baby Cobra gives us seconds-by-seconds proof.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — One ten-second laugh",
+      "purpose": "hook",
+      "title": "One ten-second laugh",
+      "findings": ["ana_02", "ana_03"],
+      "context": ["det_02", "det_07"],
+      "triage": {
+        "ana_02": "lead",
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": null,
+      "editorial_notes": "10s exact. The climax line must appear verbatim: 'Colonize the colonizer.'"
+    },
+    "edt_02": {
+      "label": "The shape of the hour",
+      "purpose": "context",
+      "title": "The shape of the hour",
+      "findings": ["ana_01", "ana_04"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_01": "supporting",
+        "ana_04": "supporting"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "20.7% and 727s should remain exact. Minute 11 is the peak — the chart should make that visible."
+    },
+    "edt_03": {
+      "label": "A six-level tree",
+      "purpose": "evidence",
+      "title": "A six-level tree, not a flat list",
+      "findings": ["ana_06", "ana_07"],
+      "context": ["det_03", "det_04"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_07": "lead"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The depth-vs-laugh point is structurally crucial. Show level on x, average laugh on y, max laugh as a second mark. An interactive that lets the reader explore the tree itself would land here."
+    },
+    "edt_04": {
+      "label": "Anatomy of the climax",
+      "purpose": "turn",
+      "title": "Anatomy of the climax",
+      "findings": ["ana_09", "ana_02"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_09": "lead",
+        "ana_02": "supporting"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "instance",
+      "editorial_notes": "Load-bearing section. The chart must show the 24-second staircase: 1s → 3s → 4s → 10s. Do not soften the climax line. The Netflix clip belongs here."
+    },
+    "edt_05": {
+      "label": "Callbacks at thirty-three minutes",
+      "purpose": "evidence",
+      "title": "Callbacks at thirty-three minutes",
+      "findings": ["ana_08"],
+      "context": ["det_03"],
+      "triage": {
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "video",
+      "editorial_notes": "Three callbacks. Their reach distances (12, 33, 46 minutes) should be visible at a glance. Atmosphere video here helps with section pacing — animate a still showing arc-of-time."
+    },
+    "edt_06": {
+      "label": "Marriage spine, pregnancy punch",
+      "purpose": "context",
+      "title": "Marriage is the spine, pregnancy is the punch",
+      "findings": ["ana_10", "ana_05"],
+      "context": ["det_02"],
+      "triage": {
+        "ana_10": "lead",
+        "ana_05": "color"
+      },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": null,
+      "editorial_notes": "Chapter-level chart with span and laughter side by side. Marriage is 30:40, dwarfs everything else."
+    },
+    "edt_07": {
+      "label": "Closing — comedy as architecture",
+      "purpose": "close",
+      "title": "Comedy is architecture",
+      "findings": ["ana_03", "ana_07", "ana_09"],
+      "context": ["det_04", "det_05"],
+      "triage": {
+        "ana_03": "color",
+        "ana_07": "supporting",
+        "ana_09": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "End on tension — the joke isn't the joke. A single quiet image (architectural metaphor: arch, keystone, scaffolding) is the right closer; no chart."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "color",
+    "ana_06": "supporting",
+    "ana_07": "lead",
+    "ana_08": "supporting",
+    "ana_09": "lead",
+    "ana_10": "lead",
+    "ana_11": "cut"
+  }
+}

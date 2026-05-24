@@ -1,0 +1,250 @@
+{
+  "meta": {"role": "detective", "version": "2.0"},
+  "items": {
+    "det_01": {
+      "label": "The Pudding's 2017 driving-time investigation",
+      "content": "This dataset powered The Pudding's September 2017 essay 'How far is too far? An analysis of driving times to abortion clinics in the US,' written by data journalists at Polygraph/The Pudding (lead author Russell Goldenberg). The piece reframed abortion access as a driving-time problem rather than a legal one: rather than counting clinics per state or arguing about laws, the team computed round-trip driving times from every contiguous-US city with population over 50,000 to its nearest operating clinic, then re-ran the calculation under the counterfactual that each city's nearest clinic had closed. The four gestation columns (8, 12, 16, 20 weeks) capture the fact that as a pregnancy progresses, fewer clinics will provide care, so the same city can have a one-hour round-trip at 8 weeks and a nine-hour round-trip at 16 weeks. The dataset and headline finding (151 urban areas lack accessible clinics within a one-hour round-trip drive) made the piece an early reference point for how 'access' became operationalized as travel time in journalism.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2017/09/clinics/",
+          "title": "How far is too far? — The Pudding (Sep 2017)",
+          "facts": [
+            "151 urban areas lack accessible clinics within a one-hour round-trip drive",
+            "Some Americans face approximately nine hours round-trip to the nearest clinic",
+            "Boise, Idaho residents face nearly nine hours round-trip at 16 weeks vs under one hour at 12 weeks",
+            "Meridian, Idaho residents at 20 weeks face a 10-hour round-trip to Utah, then must stay for two appointments three days apart"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Methodology — clinics, gestation cutoffs, closures",
+      "content": "The Pudding excluded hospitals and physicians' offices because clinics account for ~95% of US abortions; only the contiguous US is included (Alaska and Hawaii excluded because they typically require air travel rather than driving). All clinic locations came from the Safe Place Project — a clinic database launched in May 2017 by Maddy Rasmussen, then a high-school student in Seattle. Operating status of each of the 623 clinics was verified manually, and gestational cutoffs (the latest week into pregnancy a clinic will perform either a medical or surgical procedure) were obtained from clinic websites or by phone. Cutoffs were binned into four equally-spaced buckets — 8, 12, 16, and 20 weeks — and round-trip driving times were rounded down to the nearest hour. The 'closed' columns simulate the closure of the closest clinic to each city by routing to the next-nearest available option, modeling the impact of any single closure.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2017/09/clinics/",
+          "title": "How far is too far? — The Pudding (methodology)",
+          "facts": [
+            "Clinics account for ~95% of annual abortions in the US",
+            "Out of 623 operating clinics, detailed timing was unavailable for only 2",
+            "Alaska and Hawaii excluded because they typically require air travel",
+            "Cutoffs binned into 8 / 12 / 16 / 20 weeks",
+            "Round-trip times rounded down to the nearest hour"
+          ]
+        },
+        {
+          "url": "https://www.refinery29.com/en-us/2017/06/158521/map-of-every-abortion-clinic-maddy-rasmussen",
+          "title": "This high school girl made a map identifying every abortion clinic",
+          "facts": [
+            "Safe Place Project launched May 2017 by Maddy Rasmussen",
+            "Includes name, address, phone, and last-verified open date for each clinic"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Why later procedures involve fewer clinics",
+      "content": "The four gestation columns are not arbitrary intervals — they reflect how the universe of available clinics shrinks as pregnancy progresses. Roughly 89-91% of US abortions occur in the first trimester (before 13 weeks); only about 1.3% take place after 21 weeks. Most clinics offer medical abortion (the pill, generally up to ~10 weeks) or first-trimester surgical abortion. Far fewer offer second-trimester surgical procedures (D&E), which require additional training, equipment, and longer appointments — often spread across two or three days because of state-mandated waiting periods. The result: the city that had a 20-minute drive to its nearest clinic at 8 weeks may have a four-hour drive at 16 weeks because most of the closer clinics simply do not perform later procedures. This is the structural reason that driving-time access collapses for the patients who most need a procedure (later gestations are disproportionately people who discovered the pregnancy late, encountered fetal anomalies, or were delayed by exactly the access barriers this dataset measures).",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.kff.org/state-health-policy-data/state-indicator/gestational-limit-abortions/",
+          "title": "KFF: gestational limits on abortion",
+          "facts": [
+            "About 89-91% of US abortions occur before 13 weeks",
+            "About 1.3% of US abortions take place after 21 weeks",
+            "Less than 1% occur after 24 weeks"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Late_termination_of_pregnancy",
+          "title": "Late termination of pregnancy",
+          "facts": [
+            "Second-trimester procedures require D&E and additional training; offered by far fewer providers",
+            "State-mandated waiting periods often force two-trip schedules"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "TRAP laws and the Texas closures (HB2 / Whole Woman's Health)",
+      "content": "The 2017 dataset captures the system in the immediate aftermath of the most consequential abortion-clinic policy fight of the decade. In 2013 Texas passed HB2, a TRAP (Targeted Restrictions on Abortion Providers) law that required clinics to meet ambulatory-surgical-center standards and required physicians to have hospital admitting privileges within 30 miles. The number of Texas clinics fell from 42 to 19 between November 2013 and October 2015. In June 2016 the Supreme Court struck down those provisions in Whole Woman's Health v. Hellerstedt (5-3), ruling that they imposed an undue burden without medical justification. But the closed clinics did not snap back: by 2017 only a handful had reopened, and Texas drives remained dramatically longer than they had been in 2012. This is why a Pudding map of 2017 driving times reads, in places like West Texas and the Texas/Louisiana borderlands, as a residue of HB2 even after HB2 was overturned. It is also why the dataset's 'what if the closest clinic closed' columns matter — closures rarely happen in isolation, and modeling one clinic's loss is a proxy for what waves of TRAP-driven closures actually did.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Whole_Woman%27s_Health_v._Hellerstedt",
+          "title": "Whole Woman's Health v. Hellerstedt — Wikipedia",
+          "facts": [
+            "Texas HB2 enacted 2013; required admitting privileges and ASC standards",
+            "Number of Texas clinics fell from 42 to 19 between November 2013 and October 2015",
+            "Supreme Court struck down HB2 5-3 on June 27, 2016"
+          ]
+        },
+        {
+          "url": "https://www.populationinstitute.org/wp-content/uploads/2021/11/PI-3053-_09-Trap-Laws-3.pdf",
+          "title": "Beyond Roe: TRAP Laws (Population Institute)",
+          "facts": [
+            "TRAP laws impose medically unnecessary requirements that drive clinic closures"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Abortion deserts (Cartwright et al., 2018)",
+      "content": "An ANSIRH/UCSF research team led by Alice Cartwright identified 27 US cities of population >100,000 in early 2017 that did not have a publicly advertised abortion facility within 100 miles — a category they named 'abortion deserts.' The deserts were heavily concentrated in the South and Midwest (15 states represented, with Texas leading at 10 desert cities). The most extreme case in their dataset was Rapid City, South Dakota, where residents had to travel 318 miles to reach a clinic. Cartwright and colleagues published their findings in Contraception in 2018; the methodology overlaps almost exactly with The Pudding's 2017 dataset (50,000+ population cities, distance to nearest clinic) and provides an academic benchmark for the journalism. Both projects converged on the same picture: a striking minority of urban Americans live functionally outside the clinic network, and that minority is geographically clustered.",
+      "category": "related_work",
+      "sources": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5972217/",
+          "title": "Cartwright et al. — Identifying National Availability of Abortion Care",
+          "facts": [
+            "27 US cities of population >100,000 had no abortion facility within 100 miles in early 2017",
+            "Rapid City, SD residents had to travel 318 miles (512 km) to a clinic",
+            "Texas had 10 of the 27 desert cities; 15 unique states represented"
+          ]
+        },
+        {
+          "url": "https://www.ansirh.org/research/research/novel-study-identifies-27-large-us-cities-abortion-deserts",
+          "title": "ANSIRH: Novel study identifies 27 US cities as abortion deserts",
+          "facts": [
+            "Deserts are concentrated in the South and Midwest",
+            "Long travel disproportionately affects low-income people and pushes care to later gestations"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Distance reduces abortion rate, nonlinearly",
+      "content": "A literature stretching back to Joyce, Henshaw and Skatrun has documented that increased driving distance to the nearest abortion provider lowers the abortion rate by 10-31%, with the largest effects from the first 25-100 miles of added distance and diminishing effects after that. Subsequent work — notably exploiting the Texas HB2 closures as a natural experiment — found 'even modest increases in travel distances caused large reductions in abortions, and that the effect of travel distance on abortion rates is nonlinear, with initial increases in distance having the largest effects.' This matters for interpreting The Pudding's data: a city that crosses from a 30-minute round-trip to a four-hour round-trip is not a marginal change. It is the part of the curve where access most rapidly disappears, and it disproportionately affects low-income, uninsured, and rural patients who cannot easily absorb a multi-day trip plus state-mandated waiting periods.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.thelancet.com/journals/lanpub/article/PIIS2468-2667(17)30158-5/fulltext",
+          "title": "Bearak et al. — Disparities in distance to abortion in the USA (Lancet Public Health 2017)",
+          "facts": [
+            "Increasing driving distance reduces abortion rates by 10-31%",
+            "Effect of distance on abortion rates is nonlinear; the first miles matter most"
+          ]
+        },
+        {
+          "url": "https://www.nber.org/system/files/working_papers/w23366/revisions/w23366.rev1.pdf",
+          "title": "Lindo et al. — How Far Is Too Far? Abortion Clinic Closures (NBER 2017)",
+          "facts": [
+            "Even modest increases in travel distance caused large reductions in abortion in Texas"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Mandatory waiting periods compound the drive",
+      "content": "27 US states required a mandatory waiting period (typically 18, 24, 48, or 72 hours) between counseling and the procedure as of 2017, and 14 of those required the counseling to be in person — meaning a patient must make two trips to the same clinic. For a patient whose round-trip drive is nine hours, this is not a 'wait'; it is a multi-day expedition that requires lodging, time off work, child care, and (for people of childbearing age, who are disproportionately low-income) often a network of support to cover gas and a hotel. The Pudding's Meridian, Idaho example — a 10-hour round-trip to Utah, two appointments three days apart — is the standard outcome of stacking a long drive on top of a waiting period. Driving time alone understates the burden; the legal calendar attached to that drive is what makes it a genuine barrier.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.guttmacher.org/state-policy/explore/counseling-and-waiting-periods-abortion",
+          "title": "Guttmacher — Counseling and Waiting Periods for Abortion",
+          "facts": [
+            "27 states required waiting periods in 2017",
+            "14 states required in-person counseling, forcing two trips"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "What 'closest clinic closed' is really modeling",
+      "content": "Each gestation column has a sister 'closed' column that recomputes the drive after removing the city's nearest clinic. This is a sensitivity analysis: how fragile is access? The columns let you measure the 'second-clinic gap' — the difference between depending on one clinic versus on two. Cities where this gap is large (e.g. an extra 6+ hours when one clinic disappears) are essentially single-clinic dependent. This was not hypothetical in 2017: Wyoming's only abortion-providing clinic closed in July 2017, leaving the state without one. North Dakota had only one clinic in Fargo. South Dakota's restrictions meant the same. Looking at the closed columns is therefore less of a thought experiment than a dress rehearsal for the closures that were already happening or one law away.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Abortion_in_Wyoming",
+          "title": "Abortion in Wyoming",
+          "facts": [
+            "Wyoming's only abortion clinic closed in July 2017"
+          ]
+        },
+        {
+          "url": "https://pudding.cool/2017/09/clinics/",
+          "title": "Pudding piece — North Dakota single-clinic note",
+          "facts": [
+            "North Dakota has only one clinic, in Fargo; closure would severely impact nearby regions"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Total US clinics in 2017",
+      "content": "Guttmacher's Abortion Provider Census recorded 808 clinic facilities providing abortions in the US in 2017 — a 2% increase from 2014. The Pudding's dataset uses 623 'operating clinics' from the Safe Place Project; the gap reflects definitional differences (Safe Place Project lists publicly advertised clinics, excludes hospitals/physicians' offices, and is contiguous-US only — Guttmacher includes Alaska, Hawaii, and a broader provider definition). The point: even at the higher 808 figure, that is one clinic per ~407,000 Americans — and the geography is far from uniform.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://www.guttmacher.org/report/abortion-incidence-service-availability-us-2017",
+          "title": "Guttmacher — Abortion Incidence and Service Availability 2017",
+          "facts": [
+            "808 clinic facilities in 2017",
+            "Clinics provide 95% of US abortions",
+            "2% increase in clinics from 2014 to 2017"
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "arithmetic",
+        "formula": "329e6 / 808",
+        "result": "~407,000 Americans per clinic"
+      }
+    },
+    "det_10": {
+      "label": "Scope suggestion for the analyst",
+      "content": "Given the dataset's structure (city-level rows; population, lat/lng; four gestation drives + four 'closed' counterfactuals), the most distinctive analyses are: (1) population-weighted distributions of round-trip drive at each gestation, not unweighted city averages — a 0-minute drive in NYC outweighs hundreds of small Western cities; (2) the *delta* between gestation columns (how much does the drive grow from 8 to 16 weeks within the same city?) — this isolates the second-trimester collapse; (3) the *delta* between normal and 'closed' columns (the second-clinic gap) — this maps fragility; (4) state-level rollups; (5) the share of the US urban population at each drive-time threshold (1h, 2h, 4h, 6h+); (6) the cities and states most exposed under each scenario; (7) zero-time cities (where a clinic is in-city) versus everyone else. The map is the natural medium — the Pudding's choropleth-of-cities is the obvious treatment — but the strongest editorial hook is likely the 8 → 16 week collapse and the second-clinic fragility map, both of which the original Pudding piece highlights.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2017/09/clinics/",
+          "title": "Pudding piece (editorial reference)",
+          "facts": [
+            "Pudding leads with the 1h round-trip threshold and the gestation collapse",
+            "Highlights single-clinic states (ND) and Idaho's 8→16 week jump"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "Why this dataset still matters in the post-Roe era",
+      "content": "The 2017 snapshot landed in a specific window: HB2 had just been struck down, but the closed clinics had not reopened. The dataset documents the ground state of the access network just before the Dobbs v. Jackson Women's Health (June 2022) decision overturned Roe v. Wade and triggered a wave of total bans and 6/12/15-week bans across roughly half the country. Today many of the cities in this dataset that had a 30-minute round-trip drive in 2017 now have *no* in-state clinic at all — their 2025 round-trip is whatever the drive is to Illinois, New Mexico, Colorado, or Kansas. Reading 2017 numbers in 2026 is a reading of a baseline: the worst-case driving times of 2017 are now the median experience for whole regions of the country. The methodology — bin gestational availability, model nearest-clinic closure — has become standard in the post-Roe access literature.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://reproductiverights.org/maps/abortion-laws-by-state/",
+          "title": "After Roe Fell — Center for Reproductive Rights",
+          "facts": [
+            "Dobbs v. Jackson Women's Health overturned Roe v. Wade in June 2022",
+            "Roughly half of US states have enacted total bans or early gestational limits"
+          ]
+        }
+      ]
+    },
+    "det_12": {
+      "label": "Caveats the analyst should watch for",
+      "content": "Three caveats stand out. (1) 'In-city' is encoded as a 0-minute round-trip — many large cities have a clinic, so the dataset has a mass of zeros that will dominate any unweighted statistic. Weight by population, or treat zeros as a separate group. (2) Driving time is rounded down to the nearest hour and binned, so 'one hour' and 'two hours' are coarse-grained — fine for narrative but bad for fine arithmetic. (3) The 'closed' columns assume only the closest clinic disappears; real-world closures (HB2 in Texas, Wyoming 2017, post-Dobbs sweeps) often closed many at once, so the 'closed' column understates the worst case. The dataset cannot, on its own, model concurrent multi-clinic closures.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2017/09/clinics/",
+          "title": "Pudding piece — methodology caveats",
+          "facts": [
+            "Round-trip times rounded down to the nearest hour and binned",
+            "City rows include 0-minute drives when a clinic is in-city"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "note": "Skipped — generic clinic-exterior photos and protest imagery would mislead about the dataset's geography. The Pudding's choropleth/dot-density map is the right reference; we will let the Designer build the map natively from the data rather than borrow a third-party screenshot. No public-domain map of 2017 driving times exists at this resolution. Generic stock images of clinic exteriors or political imagery (protesters, Supreme Court) would falsely frame this as a politics piece rather than a geography piece."
+    }
+  ],
+  "instances": []
+}

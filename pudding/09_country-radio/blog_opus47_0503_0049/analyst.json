@@ -1,0 +1,406 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": [
+      "output/summary.csv",
+      "output/daySummary.csv",
+      "input/{city}_{station}-FM-Workbook-Full2022.csv (29 files)",
+      "analysis/pvals.csv"
+    ],
+    "rows": 209572,
+    "stations": 29,
+    "cities": 16,
+    "owners": 10,
+    "columns": 124,
+    "what_one_row_represents": "summary.csv: one row per station for 2022 sample. daySummary: one row per station-date. raw input files: one row per song play (date, time, station, artist, title, gender, race, programming bucket, daypart, ensemble).",
+    "time_range": "2022 (19 sampled dates: 12 month-end Fridays + 7 dates aligned with new releases by women artists)",
+    "geographic_scope": "29 large-market US country stations across 16 cities (Austin, Charlotte, Chicago, Cincinnati, Columbus, Dallas, Greensboro, Houston, Indianapolis, Kansas City, Los Angeles, Nashville, Philadelphia, San Antonio, Tampa, Washington DC)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "The headline asymmetry: 0.51% women b2b vs 65.01% men b2b",
+      "content": "Across the 182,848 plays in The Pudding's 29-station 2022 sample, songs by women appeared back-to-back 928 times — 0.51% of all plays. Songs by men appeared back-to-back 118,861 times — 65.01% of all plays. That is a 128-fold gap, even though men's airplay share (81.5%) is only about 8x women's airplay share (10.1%). The gap between the two ratios is the smoking gun: if back-to-backs scaled with airplay alone, the men:women b2b ratio would be roughly 64x, not 128x. Mixed-gender plays sit at 8.4% of plays and 0.47% as back-to-backs, behaving roughly like the women's number.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/station_rankings.py",
+        "lines": [16, 33],
+        "output": "Total plays across 29 stations (2022 sample): 182,848\nPlays by women only:   18,412 (10.07%)\nPlays by men only:     149,068 (81.53%)\nBack-to-back women:    928 (0.51% of all plays)\nBack-to-back men:      118,861 (65.01% of all plays)\nMen's b2b rate is 128x women's b2b rate"
+      },
+      "data_table": {
+        "description": "Aggregate gender breakdown of all plays vs all back-to-backs across the 29-station 2022 sample",
+        "columns": ["category", "all_plays_count", "all_plays_pct", "b2b_count", "b2b_pct"],
+        "rows": [
+          ["Women only", 18412, 10.07, 928, 0.51],
+          ["Men only", 149068, 81.53, 118861, 65.01],
+          ["Mixed-gender", 15364, 8.40, 857, 0.47]
+        ]
+      },
+      "based_on": ["det_01", "det_02", "det_07"]
+    },
+    "ana_02": {
+      "label": "Per-station ranking: every station has women b2b under 1.3%",
+      "content": "All 29 stations in the sample sit between 0.03% and 1.27% women's back-to-back. The lowest is Cincinnati's WUBE-FM (Hubbard) at 0.032% — 2 women's back-to-backs across 6,221 plays in 19 sampled days. The highest is Los Angeles's KKGO-FM (Mount Wilson FM) at 1.27% — and KKGO is independent and atypical for the format. The median across the 29 stations is 0.39%, the mean 0.50%. Eight stations come in under 0.25%; seventeen stations come in under 0.50%.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/station_rankings.py",
+        "lines": [37, 52],
+        "output": "Cincinnati WUBE-FM 0.032%; Austin KVET-FM 0.086%; KansasCity KFKF-FM 0.162%; ...; LosAngeles KKGO-FM 1.270%; median 0.387%; mean 0.502%."
+      },
+      "data_table": {
+        "description": "All 29 stations sorted by women's back-to-back rate (lowest first), with airplay share for context",
+        "columns": ["city", "station", "owner", "total_plays", "women_share_pct", "women_b2b_pct", "men_b2b_pct"],
+        "rows": [
+          ["Cincinnati", "WUBE-FM", "Hubbard", 6221, 10.42, 0.032, 61.61],
+          ["Austin", "KVET-FM", "iHeartMedia", 5842, 12.77, 0.086, 65.05],
+          ["Kansas City", "KFKF-FM", "Steel City", 6172, 9.07, 0.162, 73.61],
+          ["Cincinnati", "WYGY-FM", "Hubbard", 6696, 11.22, 0.194, 68.41],
+          ["Columbus", "WCOL-FM", "iHeartMedia", 5571, 8.08, 0.197, 67.35],
+          ["Dallas", "KSCS-FM", "Audacy/Entercom", 6359, 8.04, 0.204, 63.77],
+          ["Indianapolis", "WFMS-FM", "Cumulus", 6210, 7.34, 0.225, 65.83],
+          ["Cincinnati", "WNNF-FM", "Cumulus", 6060, 10.25, 0.231, 64.72],
+          ["Dallas", "KPLX-FM", "Cumulus", 6028, 11.60, 0.249, 66.74],
+          ["Charlotte", "WKKT-FM", "iHeartMedia", 6118, 7.21, 0.311, 68.22],
+          ["Houston", "KILT-FM", "Audacy/Entercom", 6630, 8.97, 0.317, 69.40],
+          ["Tampa", "WFUS-FM", "iHeartMedia", 6125, 8.24, 0.327, 67.30],
+          ["Kansas City", "KBEQ-FM", "Steel City", 6272, 10.73, 0.383, 65.96],
+          ["Washington DC", "WMZQ-FM", "iHeartMedia", 5705, 9.26, 0.386, 64.56],
+          ["Charlotte", "WSOC-FM", "Beasley", 6454, 8.68, 0.387, 64.32],
+          ["Greensboro", "WTQR-FM", "iHeartMedia", 6194, 7.04, 0.420, 69.76],
+          ["Indianapolis", "WLHK-FM", "Emmis", 7211, 8.15, 0.472, 65.07],
+          ["Greensboro", "WPAW-FM", "Audacy/Entercom", 7123, 9.70, 0.576, 63.29],
+          ["Tampa", "WQYK-FM", "Beasley", 6523, 9.50, 0.598, 67.45],
+          ["Nashville", "WSM-FM", "Cumulus", 6536, 15.73, 0.612, 59.56],
+          ["San Antonio", "KAJA-FM", "iHeartMedia", 5813, 9.00, 0.637, 67.09],
+          ["Nashville", "WKDF-FM", "Cumulus", 5943, 10.57, 0.656, 60.86],
+          ["Houston", "KKBQ-FM", "Cox", 6503, 9.98, 0.707, 63.23],
+          ["Austin", "KASE-FM", "iHeartMedia", 5876, 9.89, 0.834, 65.76],
+          ["Philadelphia", "WXTU-FM", "Beasley", 6383, 11.81, 0.909, 60.36],
+          ["Kansas City", "WDAF-FM", "Audacy/Entercom", 6807, 12.11, 0.984, 59.14],
+          ["San Antonio", "KCYY-FM", "Cox", 6474, 11.45, 0.989, 65.35],
+          ["Chicago", "WUSN-FM", "Audacy/Entercom", 6619, 11.87, 1.194, 63.26],
+          ["Los Angeles", "KKGO-FM", "Mount Wilson FM", 6380, 12.84, 1.270, 59.44]
+        ]
+      },
+      "based_on": ["det_01", "det_07", "det_11"]
+    },
+    "ana_03": {
+      "label": "The single worst station: Cincinnati's WUBE-FM, 2 b2bs in 6,221 plays",
+      "content": "WUBE-FM in Cincinnati (owner: Hubbard) is the format's outer floor. Across the 19 sampled days in 2022 the station played 6,221 songs, 648 of them by women (10.42% airplay share), and aired exactly two back-to-back women's pairs all year — 0.032%. The men's b2b rate at the same station was 61.61%. Put differently, this station produced one men's back-to-back roughly every 1.6 plays; one women's back-to-back roughly every 3,110 plays. The men's rate is 1,917 times the women's rate, the largest single-station ratio in the sample.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/station_rankings.py",
+        "lines": [38, 90],
+        "output": "Cincinnati WUBE-FM: total_COUNT=6221, women=648 (10.42%), b2b_women=2 (0.032%), b2b_men=61.61%; men:women b2b ratio = 1917x"
+      },
+      "data_table": {
+        "description": "Comparison of WUBE-FM extremes vs sample medians",
+        "columns": ["metric", "WUBE_FM", "29_station_median"],
+        "rows": [
+          ["Women's airplay share", 10.42, 9.89],
+          ["Women's b2b rate", 0.032, 0.387],
+          ["Men's b2b rate", 61.61, 65.07],
+          ["Men:women b2b ratio", 1917, 166]
+        ]
+      },
+      "based_on": ["det_07", "det_11"],
+      "notable_instance": {
+        "name": "Cincinnati WUBE-FM",
+        "value": "2 women's back-to-backs across 6,221 plays = 0.032%",
+        "why": "The most extreme single-station observation in the entire dataset and the rawest illustration of what 'don't play two women in a row' looks like in practice."
+      }
+    },
+    "ana_04": {
+      "label": "All 29 stations had observed b2b rates BELOW chance — and 18 below 0.001 chance",
+      "content": "The Pudding's permutation test took each station's 24-hour log, shuffled the order 1,000 times with no avoidance rule, and asked: how often does the simulated women's b2b rate fall as low as the observed rate? At 25 of 29 stations the observed value was below the 5th percentile of the simulated distribution (p < 0.05). At 20 stations p < 0.01. At 18 stations the p-value was zero — meaning the observed rate never occurred in 1,000 simulations of unrestricted programming. By the simpler back-of-envelope check (expected b2b under independence ≈ share²), all 29 stations come in below the chance baseline; the median observed/expected ratio is 0.51, and the worst-offending station's observed rate is 3% of the chance baseline. The pattern is not a side effect of women being rarer; it is an active separation rule on top of the rarity.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/simulation_pvals.py",
+        "lines": [16, 70],
+        "output": "Stations with p < 0.05: 25/29; p < 0.01: 20/29; p < 0.001: 18/29; p = 0: 18/29; median observed/expected ratio: 0.515; stations below chance expectation: 29/29"
+      },
+      "data_table": {
+        "description": "Per-station p-value (1000-iteration permutation simulation) and observed-vs-chance ratio",
+        "columns": ["city", "station", "women_share_pct", "women_b2b_pct", "expected_b2b_pct_at_chance", "observed_over_expected", "pval_simulation"],
+        "rows": [
+          ["Cincinnati", "WUBE-FM", 10.42, 0.032, 1.085, 0.030, 0.000],
+          ["Austin", "KVET-FM", 12.77, 0.086, 1.631, 0.052, 0.000],
+          ["Cincinnati", "WYGY-FM", 11.22, 0.194, 1.258, 0.154, 0.000],
+          ["Dallas", "KPLX-FM", 11.60, 0.249, 1.345, 0.185, 0.000],
+          ["Kansas City", "KFKF-FM", 9.07, 0.162, 0.823, 0.197, 0.000],
+          ["Cincinnati", "WNNF-FM", 10.25, 0.231, 1.050, 0.220, 0.000],
+          ["Nashville", "WSM-FM", 15.73, 0.612, 2.474, 0.247, 0.000],
+          ["Columbus", "WCOL-FM", 8.08, 0.197, 0.652, 0.303, 0.000],
+          ["Dallas", "KSCS-FM", 8.04, 0.204, 0.646, 0.317, 0.000],
+          ["Kansas City", "KBEQ-FM", 10.73, 0.383, 1.151, 0.332, 0.000],
+          ["Houston", "KILT-FM", 8.97, 0.317, 0.805, 0.393, 0.000],
+          ["Indianapolis", "WFMS-FM", 7.34, 0.225, 0.539, 0.418, 0.000],
+          ["Washington DC", "WMZQ-FM", 9.26, 0.386, 0.857, 0.450, 0.000],
+          ["Tampa", "WFUS-FM", 8.24, 0.327, 0.680, 0.480, 0.000],
+          ["Charlotte", "WSOC-FM", 8.68, 0.387, 0.753, 0.515, 0.000],
+          ["Nashville", "WKDF-FM", 10.57, 0.656, 1.117, 0.588, 0.000],
+          ["Charlotte", "WKKT-FM", 7.21, 0.311, 0.520, 0.598, 0.010],
+          ["Greensboro", "WPAW-FM", 9.70, 0.576, 0.941, 0.612, 0.002],
+          ["Philadelphia", "WXTU-FM", 11.81, 0.909, 1.395, 0.651, 0.000],
+          ["Tampa", "WQYK-FM", 9.50, 0.598, 0.903, 0.662, 0.003],
+          ["Kansas City", "WDAF-FM", 12.11, 0.984, 1.465, 0.672, 0.000],
+          ["Indianapolis", "WLHK-FM", 8.15, 0.472, 0.665, 0.709, 0.025],
+          ["Houston", "KKBQ-FM", 9.98, 0.707, 0.996, 0.710, 0.010],
+          ["San Antonio", "KCYY-FM", 11.45, 0.989, 1.310, 0.755, 0.013],
+          ["Los Angeles", "KKGO-FM", 12.84, 1.270, 1.648, 0.770, 0.014],
+          ["San Antonio", "KAJA-FM", 9.00, 0.637, 0.809, 0.786, 0.065],
+          ["Chicago", "WUSN-FM", 11.87, 1.194, 1.410, 0.846, 0.070],
+          ["Greensboro", "WTQR-FM", 7.04, 0.420, 0.495, 0.847, 0.206],
+          ["Austin", "KASE-FM", 9.89, 0.834, 0.978, 0.853, 0.128]
+        ]
+      },
+      "based_on": ["det_07", "det_10"]
+    },
+    "ana_05": {
+      "label": "Women's plays cluster at night: 33% in overnights",
+      "content": "Of the 18,412 women's plays in the 2022 sample, 6,069 (33.0%) happened in overnight hours (midnight to 6 a.m.). Another 3,862 (21.0%) happened in evening hours (7 p.m. to midnight). Together those two low-listenership dayparts hold 54.0% of women's plays, even though the day has five dayparts of varying length. By contrast, the morning drive (6-10 a.m. AMD) holds 12.1% and afternoon drive (3-7 p.m. PMD) holds 14.5% — the two slots where listenership and ad rates are highest, and where men's plays are stacked.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/dayparts.py",
+        "lines": [27, 40],
+        "output": "OVN 6,069 (32.96%); AMD 2,231 (12.12%); MID 3,571 (19.39%); PMD 2,679 (14.55%); EVE 3,862 (20.98%)"
+      },
+      "data_table": {
+        "description": "Daypart distribution of women's plays vs men's plays",
+        "columns": ["daypart", "label", "women_count", "women_pct", "men_count", "men_pct"],
+        "rows": [
+          ["OVN", "Overnight (12am-6am)", 6069, 32.96, 40861, 27.41],
+          ["AMD", "Morning drive (6am-10am)", 2231, 12.12, 19570, 13.13],
+          ["MID", "Midday (10am-3pm)", 3571, 19.39, 32241, 21.63],
+          ["PMD", "Afternoon drive (3pm-7pm)", 2679, 14.55, 25120, 16.85],
+          ["EVE", "Evening (7pm-12am)", 3862, 20.98, 31276, 20.98]
+        ]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_06": {
+      "label": "Women's back-to-backs cluster harder: 63.4% in OVN+EVE",
+      "content": "When women are played twice in a row, it happens disproportionately overnight or in the evening. Of the 928 women's back-to-back plays in the sample, 395 (42.6%) occurred in overnight hours and 193 (20.8%) in evening hours — combined, 63.4% of women's back-to-backs in the dayparts where listenership is at its weekly low. Only 9.3% of women's back-to-backs land in afternoon drive (PMD), the slot that drives ad revenue. Men's b2b plays are spread far more evenly: roughly 50% in OVN+EVE versus 50% spread across AMD, MID, and PMD.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/dayparts.py",
+        "lines": [42, 55],
+        "output": "OVN 395 (42.56%); AMD 142 (15.30%); MID 112 (12.07%); PMD 86 (9.27%); EVE 193 (20.80%); OVN+EVE = 588/928 (63.4%)"
+      },
+      "data_table": {
+        "description": "Daypart distribution of women's BACK-TO-BACK plays (n=928)",
+        "columns": ["daypart", "label", "b2b_count", "b2b_pct_of_women_b2b"],
+        "rows": [
+          ["OVN", "Overnight (12am-6am)", 395, 42.56],
+          ["AMD", "Morning drive (6am-10am)", 142, 15.30],
+          ["MID", "Midday (10am-3pm)", 112, 12.07],
+          ["PMD", "Afternoon drive (3pm-7pm)", 86, 9.27],
+          ["EVE", "Evening (7pm-12am)", 193, 20.80]
+        ]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_07": {
+      "label": "Women's share of plays varies under 13% across every daypart",
+      "content": "Inside any given daypart, women never exceed 13% of plays. The widest representation is overnights (12.93% of plays in OVN are by women, comparing women+men only); the narrowest is afternoon drive (9.64%). The narrow range tells us the daypart effect is not really about playing women more during prime time vs. less; it is about quarantining women's back-to-backs to OVN, while keeping per-hour airplay roughly flat.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/dayparts.py",
+        "lines": [70, 80],
+        "output": "OVN 12.93%; AMD 10.23%; MID 9.97%; PMD 9.64%; EVE 10.99% (women's share of women+men only)"
+      },
+      "data_table": {
+        "description": "Within-daypart women's share of plays (women / (women+men) only, ignoring mixed-gender)",
+        "columns": ["daypart", "label", "women_count", "men_count", "women_share_pct"],
+        "rows": [
+          ["OVN", "Overnight (12am-6am)", 6069, 40861, 12.93],
+          ["AMD", "Morning drive (6am-10am)", 2231, 19570, 10.23],
+          ["MID", "Midday (10am-3pm)", 3571, 32241, 9.97],
+          ["PMD", "Afternoon drive (3pm-7pm)", 2679, 25120, 9.64],
+          ["EVE", "Evening (7pm-12am)", 3862, 31276, 10.99]
+        ]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_08": {
+      "label": "Women's back-to-backs concentrate in Recurrent and Gold, not Current",
+      "content": "Country radio sorts every song into Gold (older hits), Recurrent (recent hits cycling out), and Current (active promotion). When women DO get back-to-backed, it is usually two safe older hits, not two new releases: 33.3% of women's back-to-backs are Gold, 44.7% Recurrent, and 22.0% Current. Women's individual plays as a whole break 43.3% Gold / 39.0% Recurrent / 17.7% Current — so the back-to-back distribution skews even further away from Current. The pattern matters because new artists need Current spins to build heat; women's Current bucket is small (3,254 plays) and the b2b spike inside it (22%) does not change that the whole bucket is starved.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/grc_buckets.py",
+        "lines": [16, 55],
+        "output": "Women plays: G=7,978 (43.3%); R=7,180 (39.0%); C=3,254 (17.7%). Women b2b: G=309 (33.3%); R=415 (44.7%); C=204 (22.0%)."
+      },
+      "data_table": {
+        "description": "Programming-bucket composition of women's plays vs back-to-backs (Gold/Recurrent/Current)",
+        "columns": ["bucket", "bucket_label", "women_plays", "women_plays_pct", "women_b2b", "women_b2b_pct"],
+        "rows": [
+          ["G", "Gold (older hits)", 7978, 43.33, 309, 33.30],
+          ["R", "Recurrent (recent rotating)", 7180, 39.00, 415, 44.72],
+          ["C", "Current (active promotion)", 3254, 17.67, 204, 21.98]
+        ]
+      },
+      "based_on": ["det_09"]
+    },
+    "ana_09": {
+      "label": "The bottleneck: 3 women hold 52.2% of all current-women's airplay",
+      "content": "In 2022's 'current' rotation — songs labels are actively promoting to chart — there are 35 unique women artists and 158 unique men artists across all 29 stations. The top three women (Gabby Barrett, Kelsea Ballerini, Lainey Wilson) collected 1,697 of the 3,254 women's current plays — 52.2%. The top three men (Jelly Roll, Jimmie Allen, Zac Brown Band) collected 2,158 of 10,617 men's current plays — 20.3%. Among women in the current rotation, just three artists do two-thirds of the work that 35 artists are nominally on the bench for. This is the bottleneck The Pudding describes: three women's careers stand in for the entire format's progress narrative.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/top_artists.py",
+        "lines": [12, 45],
+        "output": "Top 3 current women: BARRETT,GABBY 754; BALLERINI,KELSEA 554; WILSON,LAINEY 389 (52.2% of 3,254). Top 3 current men: JELLY ROLL 921; ALLEN,JIMMIE 677; ZAC BROWN BAND 560 (20.3% of 10,617)."
+      },
+      "data_table": {
+        "description": "Top 10 'Current' bucket women and men by play count, 2022 sample",
+        "columns": ["rank", "women_artist", "women_plays", "women_pct_of_current", "men_artist", "men_plays", "men_pct_of_current"],
+        "rows": [
+          [1, "Gabby Barrett", 754, 23.2, "Jelly Roll", 921, 8.7],
+          [2, "Kelsea Ballerini", 554, 17.0, "Jimmie Allen", 677, 6.4],
+          [3, "Lainey Wilson", 389, 12.0, "Zac Brown Band", 560, 5.3],
+          [4, "Priscilla Block", 298, 9.2, "Jordan Davis", 554, 5.2],
+          [5, "Carly Pearce", 281, 8.6, "Brett Young", 533, 5.0],
+          [6, "Taylor Swift", 181, 5.6, "Nate Smith", 395, 3.7],
+          [7, "Hailey Whitters", 122, 3.7, "Jason Aldean", 369, 3.5],
+          [8, "Caroline Jones", 98, 3.0, "Cody Johnson", 270, 2.5],
+          [9, "Kassi Ashton", 74, 2.3, "Randy Houser", 269, 2.5],
+          [10, "Miranda Lambert", 71, 2.2, "Parker McCollum", 265, 2.5]
+        ]
+      },
+      "based_on": ["det_09"],
+      "notable_instance": {
+        "name": "Lainey Wilson",
+        "value": "389 plays — 12.0% of all current-women plays in 2022",
+        "instance_ref": "inst_02",
+        "why": "One of the three artists who carry over half the women's current bucket; useful as a concrete listenable anchor."
+      }
+    },
+    "ana_10": {
+      "label": "Race: 5 POC women got 27 plays. Zero of them back-to-back.",
+      "content": "Across all 29 stations and 19 dates in 2022 — 182,848 plays — the 5 women of color in the country radio rotation received 27 plays total. Tiera Kennedy got 13. Runaway June got 11. Gloria Estefan, Whitney Houston, and Loretta Lynn (coded as Native or non-white in The Pudding's framework, which treats Lynn's Cherokee heritage as part of the artist's racial coding) each got 1. Across the entire dataset, two women of color were never played back-to-back — there are zero such pairings. 21 of the 29 stations played zero women of color in 2022.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/race_and_lgbtq.py",
+        "lines": [70, 95],
+        "output": "POC women plays: 27 across 5 unique artists. KENNEDY,TIERA 13; RUNAWAY JUNE 11; ESTEFAN,GLORIA 1; HOUSTON,WHITNEY 1; LYNN,LORETTA 1. Stations with zero POC women plays: 21 of 29. Back-to-back POC women: 0."
+      },
+      "data_table": {
+        "description": "All women-of-color plays across the 29-station 2022 sample",
+        "columns": ["artist", "plays", "back_to_back"],
+        "rows": [
+          ["Tiera Kennedy", 13, 0],
+          ["Runaway June", 11, 0],
+          ["Gloria Estefan", 1, 0],
+          ["Whitney Houston", 1, 0],
+          ["Loretta Lynn", 1, 0]
+        ]
+      },
+      "based_on": ["det_05", "det_06"]
+    },
+    "ana_11": {
+      "label": "LGBTQ+ artists: 1 back-to-back across the entire 2022 sample",
+      "content": "LGBTQ+ artists received 318 plays across the 29-station 2022 sample — 0.17% of all plays. Across 182,848 songs in 2022, exactly one back-to-back LGBTQ+ pair appears in the dataset, on a single station. 27 of 29 stations played at least one LGBTQ+ song; only one station produced a back-to-back. The LGBTQ+ category is statistically a category of one in 2022 country radio.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/race_and_lgbtq.py",
+        "lines": [55, 65],
+        "output": "LGBTQ+ plays: 318 (0.174%); LGBTQ+ b2b: 1 across 29 stations and 182,848 songs."
+      },
+      "data_table": {
+        "description": "Sexual-orientation breakdown of plays vs back-to-backs",
+        "columns": ["category", "plays", "plays_pct", "b2b", "b2b_pct"],
+        "rows": [
+          ["Straight-coded", 182530, 99.83, 119717, 65.48],
+          ["LGBTQ+", 318, 0.174, 1, 0.0005]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_12": {
+      "label": "30% of all sampled station-days had ZERO women back-to-backs",
+      "content": "When you collapse the 2022 sample to the station-day level (29 stations × 19 dates = 551 station-day rows), 166 of those days (30.1%) had zero women's back-to-back plays. Another 136 had exactly one. Only 25 station-days had six or more — meaning on a typical day at a typical station, a listener would not hear two women's songs in a row at all. The single most striking station-day: WSM-FM in Nashville, January 28, 2022 — 53 women's songs aired in a 24-hour period (15.6% airplay), zero of them back-to-back.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/day_level.py",
+        "lines": [12, 50],
+        "output": "Total station-day rows: 551. Days with zero women b2bs: 166 (30.1%); 1 b2b: 136; 2-5 b2bs: 224; 6+ b2bs: 25. WSM-FM Jan 28 2022: 53 women plays, 0 b2bs."
+      },
+      "data_table": {
+        "description": "Station-day distribution of women's back-to-back counts (n=551 station-days)",
+        "columns": ["b2b_count_bucket", "n_station_days", "pct_of_station_days"],
+        "rows": [
+          ["0 (none)", 166, 30.1],
+          ["1", 136, 24.7],
+          ["2-5", 224, 40.7],
+          ["6 or more", 25, 4.5]
+        ]
+      },
+      "based_on": ["det_07"],
+      "notable_instance": {
+        "name": "WSM-FM, January 28 2022",
+        "value": "53 women's plays in a 24-hour day, zero back-to-back",
+        "why": "The cleanest single-day demonstration that the avoidance rule is active even when many women's songs are played."
+      }
+    },
+    "ana_13": {
+      "label": "Owner-level rollup: Hubbard at 0.12%, Steel City at 0.27%, all major chains under 0.7%",
+      "content": "Five of the ten ownership groups in the sample run at women's b2b rates below 0.4% across their stations. Hubbard (2 stations) sits at 0.12%; Steel City (2 stations) at 0.27%; Cumulus (5 stations) at 0.40%; iHeartMedia (8 stations, the largest group) at 0.40%; Emmis (1 station) at 0.47%. Beasley, Audacy/Entercom, and the two Cox entries climb above 0.6%. Mount Wilson FM (the LA independent) sits highest at 1.27% — but it is a single boutique station, not a chain. The chains that program most country listeners' commute home (iHeart, Cumulus, Audacy) are clustered around 0.4-0.7%.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/owners.py",
+        "lines": [10, 30],
+        "output": "Hubbard 0.116%; Steel City 0.273%; Cumulus 0.396%; iHeartMedia 0.400%; Emmis 0.472%; Beasley 0.630%; Audacy/Entercom 0.659%; COX 0.707%; Cox 0.989%; Mount Wilson FM 1.270%"
+      },
+      "data_table": {
+        "description": "Owner-level aggregates of women's b2b rate (and station counts)",
+        "columns": ["owner", "n_stations", "total_plays", "women_share_pct", "women_b2b_pct", "men_b2b_pct"],
+        "rows": [
+          ["Hubbard", 2, 12917, 10.83, 0.116, 65.14],
+          ["Steel City", 2, 12444, 9.91, 0.273, 69.75],
+          ["Cumulus", 5, 30777, 11.15, 0.396, 63.50],
+          ["iHeartMedia", 8, 47244, 8.91, 0.400, 66.92],
+          ["Emmis", 1, 7211, 8.15, 0.472, 65.07],
+          ["Beasley", 3, 19360, 9.99, 0.630, 64.07],
+          ["Audacy/Entercom", 5, 33538, 10.16, 0.659, 63.74],
+          ["COX (Houston)", 1, 6503, 9.98, 0.707, 63.23],
+          ["Cox (San Antonio)", 1, 6474, 11.45, 0.989, 65.35],
+          ["Mount Wilson FM", 1, 6380, 12.84, 1.270, 59.44]
+        ]
+      },
+      "based_on": ["det_03", "det_07"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "The sample is 19 sampled dates from 2022, not full-year programming logs. It includes 12 month-end Fridays plus 7 release-day dates designed to give women the best possible airplay window. The findings therefore likely UNDERSTATE the gap on a typical day."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Race and orientation coding is hand-applied by The Pudding's analysts using public information about each artist; some artists with private or unreported identities may be miscoded. Loretta Lynn is coded as non-white due to her self-reported partial Cherokee ancestry, which is a debatable choice."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Mediabase logs reflect what each station programmed, not what listeners chose to hear. The pattern is about programmer behavior, not audience preference."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "The 'COX' (Houston KKBQ-FM) and 'Cox' (San Antonio KCYY-FM) ownership entries differ in capitalization in the source CSV. They are the same parent company — the analysis preserves the source's label for traceability."
+    }
+  ]
+}

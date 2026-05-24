@@ -1,0 +1,265 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "data-driven; the dataset is sonic at its core, so every channel earns its place by connecting to register, voice, or chart. Audio leans on real Spotify embeds rather than a generic generated tone card; interactives pivot on the rap-vs-sung filter; charts emphasize the gap rather than the trend.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "The story is built on three load-bearing time series and one anomaly comparison — charts are unavoidable."},
+      "image": {"used": true, "reason": "The story spans five decades; one cinematic teaser plus two atmospheric era images give the reader a visual anchor for what 1988 and 2019 sound like."},
+      "video": {"used": false, "reason": "No event, transformation, or scene needs to be shown in motion that audio embeds and the teaser still cannot already convey. Video would be decorative; we are using image2video skipping intentionally to keep the pace lean and let the Spotify embeds carry the temporal/sonic feel."},
+      "audio": {"used": true, "reason": "This is a dataset *about sound*. We embed three verified Spotify tracks (Pony as the scale anchor, Stayin' Alive as the previous high-register era, Talk as the modern face), one verified YouTube embed (Vox Earworm), and one short generated tenor-range vocalise as a chapter-break atmosphere bed. Each is opt-in, never autoplay."},
+      "interactive_or_map": {"used": true, "reason": "The 2019.csv genre/spoken split is the single clearest piece of evidence for why the all-songs average stayed flat. A reader-controlled filter lets readers see the rap-vs-sung gap themselves rather than read about it."}
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero image",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic editorial illustration: a single male singer at a studio microphone in low warm key light, head tilted upward as if reaching a high note, eyes closed, the air around him filled with subtle vertical streaks of light suggesting rising pitch, deep red and amber color palette, shallow depth of field, no text, no logos, photographic style, 16:9 framing",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed teaser image: a male singer reaching upward at a microphone, his form half-dissolved into vertical streaks of warm light. The streaks visually echo the rising-register motif. No text overlay. The image absorbs the entire viewport before the headline lands.",
+      "rationale": "Stillness reads as gravity. Motion would commit the reader to a tone before the data arrives. We let the image hold quiet so the 1.65-point gap can land hard.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Hook chart — top-10 register, 1958-2019, with 2019 highlighted",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "line_with_highlight",
+        "data_source": "ana_01",
+        "x": "year",
+        "y": "avg_top10",
+        "highlight": {"year": 2019, "label": "2019: 7.60 — all-time top-10 high"},
+        "interaction": "hover tooltip shows year + register; the 2019 point is rendered as an emphasized red dot with an inline annotation; a secondary annotation marks 1988 (7.21) as 'previous record'",
+        "style": {"palette": "muted gray line with red highlight", "no_gridlines": true, "y_domain": [5.5, 7.8], "y_zero": false, "width": "container"}
+      },
+      "brief": "A clean line chart of the top-10 male-led register year by year from 1958-2019. The series is rendered in soft gray; 2019 is a single emphasized red point with an inline label calling out '7.60 — all-time top-10 high'. A secondary smaller annotation marks 1988 (7.21) as the previous record. Y-axis must NOT start at zero — domain is [5.5, 7.8] so the spike is visible.",
+      "rationale": "The story is about a single year breaking a 60-year ceiling. A bar chart would flatten the pattern; a line chart with a highlight point shows the shape of pop history and the 2019 outlier in one read.",
+      "based_on": ["ana_01"]
+    },
+    "des_03": {
+      "label": "Stat callout — the 1.65 gap",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "1.65",
+        "label": "register-point gap between the 2019 male-led top-10 and the rest of the chart — more than double anything in the previous 60 years",
+        "data_source": "ana_03"
+      },
+      "brief": "A large 96px '1.65' centered above the smaller caption. Place this immediately under the hook chart. Tag with both data-des and data-ana=ana_03.",
+      "rationale": "The gap is the entire piece in three syllables. It deserves its own breath of white space.",
+      "based_on": ["ana_03"]
+    },
+    "des_04": {
+      "label": "Distribution chart — register histogram of all 11,944 songs",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_07",
+        "x": "register",
+        "y": "pct",
+        "highlight": {"register": 7, "label": "27.7% — the modal register"},
+        "interaction": "hover tooltip shows count and percentage",
+        "style": {"palette": "warm amber gradient (low=pale, high=saturated)", "no_gridlines": true, "width": "container"}
+      },
+      "brief": "Vertical bar chart, x-axis = register 2-10, y-axis = % of dataset. Bars colored by a warm amber gradient (low register = pale cream, high register = deep amber) so the visual itself encodes height. Bar at register 7 is highlighted with the inline label '27.7% — the modal register'. Annotate register 2 with 'Theme From Shaft' and register 10 with 'Pony — Ginuwine, the scale anchor'.",
+      "rationale": "Visualizing the scale before the argument keeps the reader oriented when the next sections start moving averages around. The amber gradient turns the chart into a small instrument of the story.",
+      "based_on": ["ana_07", "ana_06"]
+    },
+    "des_05": {
+      "label": "Pony embed — the scale anchor",
+      "type": "instance",
+      "section": "edt_02",
+      "content": {
+        "instance_ref": "inst_01",
+        "embed_type": "spotify",
+        "embed_url": "https://open.spotify.com/embed/track/6mz1fBdKATx6qP4oP1I65G",
+        "caption": "Ginuwine's 'Pony' (1996) — the textbook 10/10 Pandora register. Listen for the falsetto verse against the synth-bass riff."
+      },
+      "brief": "Standard Spotify track embed (152px height), wrapped in a soft rounded card with the caption below. Place after the histogram chart in edt_02 so the reader can hear the right anchor of the scale they just looked at.",
+      "rationale": "Spotify oembed makes 'a 10' audible in fifteen seconds. Far better than describing it.",
+      "based_on": ["ana_06"]
+    },
+    "des_06": {
+      "label": "1980s era atmospheric image",
+      "type": "asset",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "era_1980s.png",
+        "tool": "text2image",
+        "prompt": "Editorial photograph: a stage view of a hair-metal-era rock concert circa 1988, dramatic spotlights cutting through dry-ice haze, a male singer leaning back at the microphone stand, period-accurate big hair and torn denim, neon stage lights of magenta and cyan in the background, no text, no recognizable logos, no faces of real celebrities, atmospheric and slightly grainy, 16:9 framing",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Atmospheric image of a 1988-era rock stage, used as a chapter-break inside edt_03. Centered, max-width 720px, with a small italic caption 'The 1980s, when 40% of charting male-led songs scored register 8 or higher'.",
+      "rationale": "The 1980s argument benefits from one moment of mood — readers feel the era, then the bar chart cements it.",
+      "based_on": ["ana_08", "ana_11"]
+    },
+    "des_07": {
+      "label": "Yearly share-of-high-register chart (1958-2019)",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "area_with_band",
+        "data_source": "ana_08",
+        "x": "year",
+        "y": "pct_hi",
+        "highlight": {"range": [1979, 1991], "label": "1979-1991: 31-40% every year"},
+        "annotation_points": [
+          {"year": 1988, "label": "1988 peak: 40.2%"},
+          {"year": 2017, "label": "2017 floor: 5.8%"},
+          {"year": 2019, "label": "2019: 16.2%"}
+        ],
+        "interaction": "hover tooltip with year and pct_hi",
+        "style": {"palette": "warm amber fill, gray axis", "no_gridlines": true, "y_domain": [0, 45], "width": "container"}
+      },
+      "brief": "Area chart of the share of charting male-led songs with register>=8 by year, 1958-2019. A shaded amber band highlights 1979-1991. Three labeled markers: the 1988 peak, the 2017 floor, the 2019 figure. Y-axis 0-45%.",
+      "rationale": "Shows the 1980s plateau as a *plateau* (twelve consecutive years), not a single peak. The reader sees the era as a wide phenomenon, which makes the 2019 single-year top-10 spike feel even more anomalous.",
+      "based_on": ["ana_08"]
+    },
+    "des_08": {
+      "label": "Stayin' Alive embed — the 1970s falsetto era",
+      "type": "instance",
+      "section": "edt_03",
+      "content": {
+        "instance_ref": "inst_02",
+        "embed_type": "spotify",
+        "embed_url": "https://open.spotify.com/embed/track/4UDmDIqJIbrW0hMBQMFOsM",
+        "caption": "Bee Gees' 'Stayin' Alive' (1977) — four weeks at #1, anchor of the dataset's 1970s falsetto plateau."
+      },
+      "brief": "Spotify embed in a rounded card with caption. Place after the share chart so the reader can hear the historical comparison era they just saw on the chart.",
+      "rationale": "The plot needs an audible anchor for what 'high-register era' sounded like before the modern moment.",
+      "based_on": ["ana_11"]
+    },
+    "des_09": {
+      "label": "The 2019 top-10 (the turn): five-song annotated card row",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "annotated_card_strip",
+        "initial_state": "Five horizontal cards, one per 2019 top-10 male-led hit, each showing: peak rank as a small superscript number, song title, and a vertical register meter (1-10) with the song's register highlighted. Cards are arranged left-to-right by peak rank.",
+        "trigger": "Hover/tap on a card",
+        "transition": "The hovered card lifts slightly; its register meter pulses; the four other cards dim. A tooltip surfaces points and a one-line note (e.g. 'Sucker — falsetto-led pop, register 9').",
+        "payoff": "After hovering through all five, the reader sees that four of five sit in the upper third of the meter. The one outlier (I Don't Care, register 5) is visually obvious.",
+        "data_source": "ana_04"
+      },
+      "brief": "A horizontal strip of five cards (one per 2019 top-10 male-led hit), each with: rank, song title, artist (in caption since artist isn't in the data — the Programmer must hard-code: Sucker = Jonas Brothers; I Don't Care = Ed Sheeran & Justin Bieber; If I Can't Have You = Shawn Mendes; Talk = Khalid; No Guidance = Chris Brown ft. Drake), and a small vertical 1-10 register meter with the song's register highlighted. On hover, the meter pulses and a tooltip shows points + a sentence. The strip is the visual answer to the section's argument.",
+      "rationale": "An annotated card strip is more memorable than a five-bar chart because it forces the reader to read the songs as objects, not as data. The register meter on each card lets them feel the gap between 9 and 5.",
+      "based_on": ["ana_04"]
+    },
+    "des_10": {
+      "label": "Talk embed — the modern face",
+      "type": "instance",
+      "section": "edt_04",
+      "content": {
+        "instance_ref": "inst_03",
+        "embed_type": "spotify",
+        "embed_url": "https://open.spotify.com/embed/track/0rTV5WefWd1J3OwIheTzxM",
+        "caption": "Khalid's 'Talk' (2019) — register 7, peaked #3, ranked #8 on Billboard's 2019 year-end Hot 100."
+      },
+      "brief": "Spotify embed with caption. Place at the end of edt_04 so the reader exits the section having heard the modern equivalent of Stayin' Alive.",
+      "rationale": "The pairing of Stayin' Alive (edt_03) with Talk (edt_04) is the audible spine of the piece.",
+      "based_on": ["ana_04"]
+    },
+    "des_11": {
+      "label": "Genre/spoken interactive — what holds the all-songs average down",
+      "type": "interactive",
+      "section": "edt_05",
+      "content": {
+        "interaction_type": "filter_explorer",
+        "initial_state": "A horizontal bar chart of mean register by genre in 2019 (R&B 7.33, Rock 7.0, no genre 6.36, Dance 6.0, Pop 6.0, Country 5.30, Latin 5.0, Rap/Hip hop 4.45). Below the chart, two toggle pills: 'All 248 songs' (default selected) and 'Sung only (spoken<=4)'. A bold annotation reads 'All 248 mean: 5.95'.",
+        "trigger": "Click the 'Sung only' pill",
+        "transition": "Bars animate to new heights — Rap/Hip hop near-disappears, Pop and 'no genre' get taller, the overall mean line moves up to 6.31.",
+        "payoff": "Reader sees that the 2019 all-songs mean is dragged down by rapped tracks. Removing them lifts the mean a third of a register point, exactly the inverse of what's happening at the top of the chart.",
+        "data_source": ["ana_09"]
+      },
+      "brief": "Horizontal bar chart of mean register by genre, with a toggle that filters in/out rapped tracks. Bars in muted teal; the rap/hip-hop bar in coral to mark it as the puller-down. A horizontal dotted line shows the overall mean and animates when the toggle is flipped. This is the centerpiece interactive.",
+      "rationale": "The flat all-songs mean is the most counterintuitive sub-claim. A reader-controlled filter is the only way to make it click without exposition.",
+      "based_on": ["ana_09"]
+    },
+    "des_12": {
+      "label": "Gender baseline stat callout",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": {
+        "value": "+1.09",
+        "label": "register points by which the 2019 male top-10 average (7.60) exceeds the 2019 female-led songs average (6.51) — a stylistic crossover at the very top of the chart",
+        "data_source": "ana_10"
+      },
+      "brief": "A medium-large stat (60-72px) with the label below. Place after the genre interactive in edt_05.",
+      "rationale": "The male-vs-female crossover at the top is genuinely strange and deserves its own breath. It also seeds the close.",
+      "based_on": ["ana_10", "ana_01"]
+    },
+    "des_13": {
+      "label": "Atmospheric 2010s home-studio image",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "era_2010s_studio.png",
+        "tool": "text2image",
+        "prompt": "Editorial photograph of a contemporary R&B/pop singer's home recording booth, soft natural daylight from a side window, acoustic foam panels in muted dusty pink and cream, a condenser microphone with pop filter on a boom arm, laptop showing waveforms, plant in the corner, no people, no text, no recognizable logos, lifestyle magazine aesthetic, 16:9 framing",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "A bedroom-pop home studio image to land the closing argument visually. Centered, max-width 720px, italic caption 'The 2010s sound. Higher at the top, lower everywhere else.'",
+      "rationale": "Pairs with the 1980s image at edt_03 to bookend the eras. The image is calm and low-key — fits the bedroom-pop aesthetic the close is gesturing at.",
+      "based_on": []
+    },
+    "des_14": {
+      "label": "Vox Earworm video — exit point",
+      "type": "instance",
+      "section": "edt_06",
+      "content": {
+        "instance_ref": "inst_04",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/qJT2h5uGAC0",
+        "caption": "Vox Earworm: 'We measured pop music's falsetto obsession' — the companion video that built on this dataset, with opera singer Anthony Roth Costanzo demonstrating the difference between falsetto and chest-voice register."
+      },
+      "brief": "Standard YouTube embed (315px height) at the end of the closing section. Tag with data-des. The reader who wants more leaves through this door.",
+      "rationale": "The Earworm video is the only piece of media in the universe that does what we are arguing the dataset should do: makes the trend audible across decades. It is the appropriate exit.",
+      "based_on": []
+    },
+    "des_15": {
+      "label": "Optional ambient register sweep — chapter-break audio",
+      "type": "audio",
+      "section": "edt_02",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "A 12-second tenor vocalise that climbs from low chest to falsetto gives the reader an embodied feel for what 'register' means before the histogram explains it numerically.",
+        "trigger": "click 'Hear the scale' button below the histogram",
+        "ui_form": "section-integrated mini-player — a small caption with a play/pause button under the histogram chart, never autoplay",
+        "content": {
+          "filename": "register_sweep.mp3",
+          "tool": "text2music",
+          "prompt": "A 12-second instrumental motif: solo male vocalise rising slowly across a full tenor range from a low warm chest-voice hum (~G2) to a soaring head-voice falsetto note (~A4), accompanied only by a soft sustained synth pad in C minor, no lyrics, no percussion, no reverb tail",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "If audio is muted/unsupported, the histogram and the Pony embed below still convey the scale; the play button is hidden.",
+        "novelty_note": "Generated audio is used as a single embodied moment under the scale chart — not as a generic tone-card sonification, and not as a replacement for the real Spotify embeds elsewhere."
+      },
+      "brief": "Compact play button + caption ('Hear a tenor sweep across the scale, low to high — 12 seconds') under the histogram. Uses the generated mp3. Reader-controlled, no autoplay.",
+      "rationale": "The histogram and the scale anchors are conceptual; one embodied auditory moment cements them.",
+      "based_on": ["ana_07"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm editorial — amber and red against deep gray, like a dim concert hall lit from a single direction",
+    "text_visual_pattern": "alternating: prose → chart → audio inset → prose → image → chart, with stat callouts breaking the rhythm at the moments of greatest tension",
+    "centrepiece": "des_09",
+    "anti_sameness_notes": "Avoids the standard 'animated trend line + decorative image + autoplay video' pattern. The centerpiece is an annotated card strip rather than a chart. Audio is real Spotify embeds (3) plus one short generated bed, not a click-to-play tone card. The genre interactive uses a single toggle rather than a filter checklist.",
+    "typography_notes": "Headline in a serif display face, body in Georgia. Stat callouts at 96px (1.65) and 60-72px (gender baseline). All charts use the same warm amber accent so the page reads as a single instrument."
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: The Economist's 2019 manager analysis",
+      "content": "This dataset accompanies The Economist's January 2019 Graphic Detail article 'Managers in football matter much less than most fans think.' The Economist's data team built a forecasting model using FIFA video-game player ratings to estimate how many points each squad in Europe's 'big five' leagues — England, Spain, Germany, Italy and France — should win in a season based purely on player skill. They then compared each team's actual results to these expectations to isolate the manager's contribution. The analysis covered 15 seasons of league fixtures from August 2004 through December 2018, and was deliberately framed against an industry that fires roughly 50 head coaches per top-flight season across these leagues.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2019/01/19/managers-in-football-matter-much-less-than-most-fans-think",
+          "title": "Managers in football matter much less than most fans think",
+          "facts": [
+            "Article published 2019-01-19 in The Economist's Graphic Detail column",
+            "Analysis covers Europe's big-five leagues: England, Spain, Germany, Italy, France",
+            "Time range: August 2004 to December 2018"
+          ]
+        },
+        {
+          "url": "https://github.com/TheEconomist/big-mac-data",
+          "title": "The Economist data repository",
+          "facts": [
+            "The Economist publishes its data and methodology openly for selected Graphic Detail pieces"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "FIFA video-game ratings as a player-skill proxy",
+      "content": "The Economist used player ratings from EA Sports' FIFA video-game series, scraped from FIFAindex.com, as their measure of player ability. FIFA ratings combine objective performance data — shots, passes, tackles — with subjective evaluations from a panel of about 9,000 dedicated scouts. Worst regular top-flight starters score around 65; Lionel Messi and Cristiano Ronaldo can reach 95. The analysts chose FIFA ratings because they were the only publicly available skill estimate that did not depend on team results (unlike league standings or pundit ratings) and that covered at least ten years. To use these ratings as forecasts, they z-scored each player by season and position group (goalkeeper, defender, attacker), then exponentiated the z-scores so the gap between elite and merely good players grew non-linearly.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "http://www.espnfc.co.uk/blog/espn-fc-united-blog/68/post/2959703/fifa-17-player-ratings-system-blends-advanced-stats-and-subjective-scouting",
+          "title": "FIFA 17 player ratings system blends advanced stats and subjective scouting",
+          "facts": [
+            "FIFA ratings draw on data from a panel of approximately 9,000 dedicated scouts",
+            "Top players such as Messi and Ronaldo reach the mid-90s on the FIFA scale",
+            "Regular top-division starters typically score around 65"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Manager-replacement frequency in elite football",
+      "content": "Football is one of the most managerially volatile professional sports. Across Europe's top divisions, sporting directors fire roughly 50 head coaches per season — clubs typically reach for a new manager whenever results dip below expectations, even though academic studies have repeatedly found weak evidence that mid-season sackings produce meaningful improvement once one accounts for mean reversion. Premier League sackings alone average around 8-10 per season. The English second tier (the Championship) routinely tops 20 firings in a single campaign, suggesting clubs treat the manager as the cheapest variable to swap when results disappoint.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://lmamagazine.com/why-do-managers-get-sacked/",
+          "title": "Why do football managers get sacked? — League Managers Association",
+          "facts": [
+            "More than 50 manager dismissals per season is common across the English football pyramid",
+            "Average manager tenure in the English Football League has been around 16 months in recent years"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Academic evidence: mid-season sackings rarely help",
+      "content": "Multiple peer-reviewed studies in sports economics and management have found that mid-season manager dismissals do not, on average, improve team results once you control for the regression to the mean that would have happened anyway. A team that fires its coach is by definition underperforming; a team that underperforms tends to revert toward its expected level whether the coach is sacked or not. Bas ter Weel's 2011 paper in De Economist matched dismissed managers to a control group of similarly poor-performing managers who kept their jobs, and found no significant performance lift after a sacking. Other work by Heuer and Rubner reaches similar conclusions for the Bundesliga.",
+      "category": "related_work",
+      "sources": [
+        {
+          "url": "https://link.springer.com/article/10.1007/s10645-011-9170-9",
+          "title": "Does Manager Turnover Improve Firm Performance? Evidence from Dutch Soccer (Ter Weel, 2011)",
+          "facts": [
+            "Mid-season manager dismissals show no statistically significant performance gain over a matched control group",
+            "The apparent post-sacking 'bounce' is largely explained by regression to the mean"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Why this matters: clubs spend hundreds of millions on the wrong lever",
+      "content": "Top-flight clubs spend enormous sums hiring and firing managers — payoff settlements at top clubs routinely exceed £10 million, before counting the cost of the new hire's contract or any squad turnover the new boss demands. If managers add only a small amount of variance over and above what the squad's player-skill predicts, those firing decisions look closer to scapegoating than competitive strategy. The Economist's data offered the strongest publicly available evidence that fans and owners alike systematically overestimate manager impact, with implications for how clubs allocate resources.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.theguardian.com/football/2019/jan/19/economist-managers-impact-overrated",
+          "title": "The Economist on manager impact (re-reported in The Guardian)",
+          "facts": [
+            "Premier League clubs paid more than £90 million in manager severance during the 2018-19 season"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Sir Alex Ferguson — the canonical outlier",
+      "content": "Sir Alex Ferguson managed Manchester United from November 1986 to June 2013, an extraordinary 27 years that included 13 Premier League titles, 2 UEFA Champions Leagues, and 5 FA Cups. He is the most-cited counter-example whenever someone argues that managers do not matter — and he is, indeed, an outlier in The Economist's data. But the data also makes clear that Ferguson is the *exception* that proves the rule: most of his peers, even celebrated ones, are statistically indistinguishable from a league-average coach once you account for squad quality.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Alex_Ferguson",
+          "title": "Sir Alex Ferguson — Wikipedia",
+          "facts": [
+            "Ferguson managed Manchester United for 27 years (Nov 1986 – Jun 2013)",
+            "He won 13 Premier League titles and 2 UEFA Champions Leagues with United"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "The 'new-manager bounce' folk theory",
+      "content": "Fans and pundits frequently invoke a 'new-manager bounce' — the idea that a fresh face injects energy and lifts results in the short term. Empirical work has repeatedly shown the bounce is almost entirely a statistical artifact: a team that has just sacked its coach was, by definition, underperforming, and underperforming teams tend to drift back toward their long-run mean regardless of whether the coach changes. The Economist's analysis goes further by quantifying how much regression to the mean a manager's record exhibits — it found that an extraordinary 461 games of league-average performance must be 'added' to any manager's actual record to produce the best forecast of his next job, meaning a single-season tenure of 38 games carries only about 8% predictive weight.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.theguardian.com/football/blog/2014/jan/30/sacking-managers-research-saturday-supplement",
+          "title": "Why sacking the manager rarely works — The Guardian",
+          "facts": [
+            "Statistical analyses repeatedly find no 'bounce' beyond what regression to the mean predicts"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Benchmark: how good is FIFA-rating-based forecasting?",
+      "content": "The Economist's forecast model, built only from preseason FIFA player ratings, achieved an average error of 7.7 points per team per season across 15 seasons in five leagues. For the most recent three English Premier League campaigns at the time, their model scored an average error of 8.5 points — only marginally worse than the 8.1-point average error of preseason betting markets, which incorporate professional gamblers' aggregate wisdom. This benchmark matters because it justifies treating the FIFA-derived expected points as a credible counterfactual against which manager overperformance can be measured.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2019/01/19/managers-in-football-matter-much-less-than-most-fans-think",
+          "title": "Managers in football matter much less than most fans think — The Economist",
+          "facts": [
+            "Forecast model average error: 7.7 points per team per season",
+            "Preseason betting market average error for English campaigns: 8.1 points",
+            "FIFA-model average error for the same campaigns: 8.5 points"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Klopp at Borussia Dortmund: the textbook overperformer",
+      "content": "Jurgen Klopp is the example used in the original Economist piece's third chart: a manager whose results consistently and substantially exceeded what his squad's quality predicted. Across his tenure at Borussia Dortmund (2008-2015), Klopp's teams accumulated points-per-game well above the FIFA-based forecast, peaking in the 2010-11 and 2011-12 Bundesliga title-winning seasons. Klopp's pattern is rare — the Economist's optimisation suggests barely any manager has enough sustained overperformance to be confidently distinguished from luck, and Klopp is one of the few who clears that bar.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/J%C3%BCrgen_Klopp",
+          "title": "Jürgen Klopp — Wikipedia",
+          "facts": [
+            "Klopp managed Borussia Dortmund from 2008 to 2015 and won the Bundesliga in 2010-11 and 2011-12"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Scope suggestion for the Analyst",
+      "content": "The Analyst should focus on: (1) the distribution of points-per-game above expectation across all manager tenures — this is the spine of the story; (2) the rank-ordered table of managers by projected points added per season, since this is where Ferguson, Klopp, Guardiola etc. show up as outliers; (3) the year-over-year stability test: if you split each manager's career in half, does first-half overperformance predict second-half overperformance? (the Economist found roughly 51% of overachievers continued to overachieve, barely above coin-flip); (4) the regression-to-the-mean shrinkage parameter — 461 games of zero overperformance must be added to any manager's record for best out-of-sample prediction; (5) team-level expected vs actual points to confirm the forecast is unbiased. Watch for survivorship bias: managers who fail are sacked quickly, so very long tenures are an upper-tail-only sample.",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [],
+  "instances": []
+}

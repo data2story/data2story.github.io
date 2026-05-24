@@ -1,0 +1,3 @@
+[
+  {"type": "missing_traceability", "count": 2, "lines": [445, 485], "note": "Moved data-des onto the .chart-mount div itself (chart_hour, chart_disc) per error rule that data-des must be on the visual element, not just its container."}
+]

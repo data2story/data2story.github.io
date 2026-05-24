@@ -1,0 +1,197 @@
+{
+  "meta": {"role": "detective", "version": "2.0"},
+  "items": {
+    "det_01": {
+      "label": "Origin: Moore's 1965 Electronics article",
+      "content": "Moore's Law began as a four-page trade-magazine article — not a law of physics. In April 1965, Gordon Moore, then Director of R&D at Fairchild Semiconductor, wrote 'Cramming More Components onto Integrated Circuits' for the journal Electronics. With only five years of integrated-circuit data in hand (1959-1965), he plotted component count against time on a log axis, drew a straight line, and projected that 'by 1975 economics may dictate squeezing as many as 65,000 components on a single silicon chip.' At the time he claimed a doubling roughly every 12 months. The term 'Moore's Law' itself was not coined until around 1970, when Caltech professor Carver Mead started using it. In 1975 Moore revised the rate to a doubling every two years — that is the version that has stuck.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.computerhistory.org/siliconengine/moores-law-predicts-the-future-of-integrated-circuits/",
+          "title": "1965: Moore's Law Predicts the Future of Integrated Circuits — Computer History Museum",
+          "facts": [
+            "Moore was Director of R&D at Fairchild Semiconductor when he published the 1965 article",
+            "He projected ~65,000 components on a single chip by 1975",
+            "The original 1965 paper proposed doubling every 12 months",
+            "In 1975 Moore revised the doubling rate to every two years",
+            "The term 'Moore's law' was coined around 1970 by Carver Mead"
+          ]
+        },
+        {
+          "url": "https://hasler.ece.gatech.edu/Published_papers/Technology_overview/gordon_moore_1965_article.pdf",
+          "title": "Gordon Moore (1965) — Cramming more components onto integrated circuits, Electronics, vol. 38 no. 8, April 19, 1965",
+          "facts": [
+            "The article was published in Electronics magazine, Volume 38, Number 8, April 19, 1965"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Two-year doubling = 41% CAGR",
+      "content": "A doubling every two years is a compound annual growth rate of 2^(1/2) - 1 = 0.4142, i.e. 41.4%. For Moore's later 18-month-doubling variant (popularised by Intel's David House) the implied CAGR is 2^(1/1.5) - 1 = 0.5874, i.e. 58.7%. Whichever variant you cite, this is an exponential rate that compounds for decades — and any analysis of the dataset's empirical doubling time should compare the slope of log(transistor_count) vs year against ln(2)/2 ≈ 0.347 per year (two-year doubling) or ln(2)/1.5 ≈ 0.462 (18-month).",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Moore%27s_law",
+          "title": "Moore's law — Wikipedia",
+          "facts": [
+            "A doubling every two years implies ~41% compound annual growth",
+            "An 18-month-doubling variant implies ~59% compound annual growth"
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "arithmetic",
+        "formula": "2^(1/2) - 1; ln(2)/2",
+        "result": "41.4% CAGR; slope ~0.347 per year"
+      }
+    },
+    "det_03": {
+      "label": "Intel 4004: where the microprocessor begins",
+      "content": "The first commercial microprocessor — the chip that anchors the left edge of the CPU dataset — is the Intel 4004, released in November 1971. It packed 2,300 transistors at a 10-micron process node, ran at 740 kHz, and was originally built for Busicom's 141-PF printing calculator. The team was led by Federico Faggin, who developed the silicon-gate technology that made it possible, with Ted Hoff (architecture), Stan Mazor, and Masatoshi Shima (logic design). Faggin signed the die with his initials 'F.F.' Half a century on, this same lineage — Intel 4004 in 1971 with 2,300 transistors → AMD EPYC Rome in 2019 with 32 billion in this dataset — represents a roughly 14-million-fold increase. Real-world high-end chips have since pushed past one trillion (Cerebras WSE-3 at 4 trillion in 2024), but those wafer-scale parts are outside the consumer-CPU/GPU/RAM scope of this Wikipedia table.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Intel_4004",
+          "title": "Intel 4004 — Wikipedia",
+          "facts": [
+            "Intel 4004 was the first commercial microprocessor available for general use",
+            "It contained 2,300 transistors on a single chip",
+            "First fully operational 4004 was delivered in March 1971; general sales began in July 1971",
+            "Design was led by Federico Faggin with contributions from Ted Hoff, Stan Mazor, and Masatoshi Shima",
+            "Faggin used silicon-gate technology (SGT) to achieve the integration"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Dennard scaling broke around 2005 — clock speeds stalled",
+      "content": "From 1974 onward, transistors got smaller AND faster AND more power-efficient at the same time, a free-lunch known as Dennard scaling (after Robert Dennard at IBM). Around 2005-2007, that compound benefit collapsed: at gate lengths near 90 nm, leakage current and thermal density made it impossible to keep shrinking voltage, so single-threaded clock speeds plateaued at roughly 3-4 GHz. The industry response was to keep doubling transistor counts but spend the new budget on parallelism — multi-core CPUs, then GPUs, then specialised AI accelerators — rather than higher clocks. Crucially, the dataset only records transistor_count and process node, not clock speed or power, so the visible exponential continues even though the *experience* of computing changed: after ~2005 the curve stops translating into proportionally faster single threads.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Dennard_scaling",
+          "title": "Dennard scaling — Wikipedia",
+          "facts": [
+            "The breakdown of Dennard scaling occurred between 2005 and 2007",
+            "Since 2005 clock frequency has stagnated at 4-6 GHz",
+            "After 2006 CPU clock speeds stalled around 3-4 GHz",
+            "The breakdown of Dennard scaling caused most CPU manufacturers to focus on multicore processors",
+            "Around 2005, gate length reached 90 nm when Dennard scaling ended"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Final ITRS roadmap (2016) — Moore's Law was officially un-mapped",
+      "content": "For nearly two decades the industry coordinated transistor scaling through the International Technology Roadmap for Semiconductors (ITRS), a global document that effectively codified Moore's Law. In 2016 ITRS released its final roadmap and dissolved. The closing report concluded that traditional 2-D transistor scaling would hit an economic wall by ~2021, after which the industry would have to lean on 3-D stacking, advanced packaging, and specialised accelerators rather than simple lithographic shrink. SIA, a major ITRS sponsor, formally announced the transition. This makes 2016 a useful narrative inflection point — but the dataset cuts off in 2019, so it captures the very first chips of the post-ITRS era (Apple A12X, Nvidia Turing, AMD EPYC Rome) without yet reaching the trillion-transistor wafer-scale chips that arrived afterward.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.hpcwire.com/2016/07/28/transistors-wont-shrink-beyond-2021-says-final-itrs-report/",
+          "title": "Transistors Won't Shrink Beyond 2021, Says Final ITRS Report — HPCwire (Jul 28, 2016)",
+          "facts": [
+            "ITRS produced its final roadmap in 2016 after using Moore's Law to drive the industry since 1998",
+            "The report projected traditional transistor scaling would hit an economic wall around 2021"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/International_Technology_Roadmap_for_Semiconductors",
+          "title": "International Technology Roadmap for Semiconductors — Wikipedia",
+          "facts": [
+            "SIA announced the conclusion of ITRS and a transition to new ways to advance semiconductor research"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Why the data has three tables (CPU / GPU / RAM)",
+      "content": "Wikipedia's 'Transistor count' page splits the canonical history into separate tables by chip role, and TidyTuesday preserved that split. CPUs are general-purpose programmable processors; GPUs are massively-parallel graphics-and-compute processors that took off after the late-1990s and absolutely dominated the post-2010 transistor curve once deep learning created demand for parallel arithmetic; RAM is dense memory whose 'transistor count' is essentially the bit-cell count and is therefore tied directly to capacity rather than to logic complexity. Comparing them on the same axis is fair (they are all etched on the same lithography roadmap) but the three lines tell different stories: CPUs were the early leaders, GPUs caught up in the 2000s and have led the absolute count since the late 2010s, and RAM tracks capacity scaling that is more linear-in-bits-per-die than logic.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Transistor_count",
+          "title": "Transistor count — Wikipedia",
+          "facts": [
+            "Wikipedia organises transistor counts into separate tables for CPUs, GPUs, and memory",
+            "Transistor counts are widely used as a proxy for chip complexity"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "After the dataset: trillion-transistor wafer-scale chips",
+      "content": "The dataset stops at 2019. Anyone reading the blog today will know the curve has continued to accelerate, not slow down — but along radically different vectors. In 2022 Apple's M1 Ultra fused two M1 Max dies via a 2.5-D silicon interposer for 114 billion transistors on a 5 nm node, the most ever in a personal-computer chip. In 2024 Cerebras unveiled the WSE-3 wafer-scale engine: a single piece of silicon with 4 trillion transistors, more than 100 times the count of any chip in the TidyTuesday tables. AMD's MI300A AI accelerator integrated ~150 billion. None of these appear in the dataset, so the analysis must be careful to say 'within the dataset' when describing the maximum and the leader, and to note that the modern frontier is now driven by AI accelerators and chiplet packaging rather than by the classic CPU race the dataset starts with.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.cerebras.ai/press-release/cerebras-announces-third-generation-wafer-scale-engine",
+          "title": "Cerebras Systems Unveils World's Fastest AI Chip with Whopping 4 Trillion Transistors — Cerebras",
+          "facts": [
+            "The Cerebras WSE-3 contains 4 trillion transistors",
+            "WSE-3 is built on a 5nm process and powers the Cerebras CS-3 AI supercomputer"
+          ]
+        },
+        {
+          "url": "https://www.apple.com/newsroom/2022/03/apple-unveils-m1-ultra-the-worlds-most-powerful-chip-for-a-personal-computer/",
+          "title": "Apple unveils M1 Ultra, the world's most powerful chip for a personal computer — Apple Newsroom (Mar 2022)",
+          "facts": [
+            "Apple M1 Ultra contains 114 billion transistors",
+            "M1 Ultra is fabricated on TSMC's 5 nm process",
+            "M1 Ultra interconnects two M1 Max dies via UltraFusion"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Why this dataset matters: the most cited curve in tech",
+      "content": "Few empirical observations in any field have been quoted as often as Moore's Law. It has driven half a century of capital allocation in the semiconductor industry, framed public policy on chip subsidies (most recently the US CHIPS Act and Europe's Chips Act), and shaped reasonable expectations about technological progress in adjacent fields — AI, telecom, biotech sequencing, even space hardware. A reader who can read the actual log-scale curve, see where the 1965 paper's projection landed, recognise the 2005 inflection where Dennard ran out, and understand which chip families are doing the heavy lifting today, has a far better mental model of why a phone in 2019 has more raw compute than a 1990s supercomputer.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Moore%27s_law",
+          "title": "Moore's law — Wikipedia",
+          "facts": [
+            "Moore's Law has driven the semiconductor industry's investment, R&D priorities, and capital planning for over five decades"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Caveats: the dataset is a curated Wikipedia snapshot",
+      "content": "The TidyTuesday tables come from Wikipedia's Transistor count article, scraped on or before September 2019. Wikipedia includes only chips that someone documented with citations, so the data is biased toward famous, mainstream consumer/server chips and away from custom ASICs, embedded chips, and niche industrial silicon. Many entries have NA values for transistor_count, process node, or area — including the very first row (Garrett AiResearch MP944, 1970), which has no transistor count recorded. Date_of_introduction is a single year, not a release date, and process node uses the marketed-node naming convention (e.g. '7 nm') which has been only loosely tied to actual physical dimensions since around the 22 nm node. Treat absolute counts as accurate to ~10-20% and trust the slope more than any individual point.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Transistor_count",
+          "title": "Transistor count — Wikipedia",
+          "facts": [
+            "The TidyTuesday CPU/GPU/RAM tables are derived from Wikipedia's Transistor count article",
+            "Many process node labels (e.g. '7 nm') are marketing names rather than physical gate dimensions"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_intel_4004.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Intel_4004.jpg",
+      "license": "CC BY-SA 3.0 / GFDL",
+      "source": "Wikimedia Commons",
+      "description": "The Intel 4004, the first commercial microprocessor (1971, 2,300 transistors). Anchors the left edge of the CPU dataset.",
+      "relates_to": ["det_03"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_gordon_moore.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Gordon_Moore.jpg",
+      "license": "Public domain (per Wikimedia Commons listing)",
+      "source": "Wikimedia Commons",
+      "description": "Gordon Moore, co-founder of Intel and author of the 1965 Electronics article that became Moore's Law.",
+      "relates_to": ["det_01"]
+    }
+  ],
+  "instances": []
+}

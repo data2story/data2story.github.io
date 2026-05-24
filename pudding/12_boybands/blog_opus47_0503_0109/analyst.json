@@ -1,0 +1,677 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["bands.csv", "boys.csv"],
+    "rows": 289,
+    "columns": 23,
+    "what_one_row_represents": "bands.csv: one charting boy band; boys.csv: one band member as he appears in the band's highest-charting music video",
+    "time_range": "1983-2017 (highest-charting song dates)",
+    "geographic_scope": "Bands that charted on the U.S. Billboard Hot 100; coded across U.S., U.K., Ireland, Latin America, Korea"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset shape: 55 bands, 234 members, 35 years",
+      "content": "The dataset contains 55 boy bands and 234 individual members coded across 23 fields. Their highest-charting songs span 1983 to 2017 — a 35-year window. The average band size is 4.25 members (median 4); the smallest band coded is a trio and the largest is BTS at 7. Compared to the 55 thousands of boy bands that have existed in popular music, this is a deliberate field guide to the ones that crossed into the U.S. Billboard Hot 100 with a music video that survived to YouTube.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_load_and_profile.py",
+        "lines": [22, 32],
+        "output": "bands rows: 55\nboys rows:  234\nyear range: 1983 - 2017\nband size: min=3, max=7, mean=4.25, median=4"
+      },
+      "data_table": {
+        "description": "Top-line dataset shape",
+        "columns": ["metric", "value"],
+        "rows": [
+          ["bands", 55],
+          ["members", 234],
+          ["mean_band_size", 4.25],
+          ["median_band_size", 4],
+          ["min_band_size", 3],
+          ["max_band_size", 7],
+          ["year_min", 1983],
+          ["year_max", 2017]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_02": {
+      "label": "10 of 55 bands hit #1 — and 60% reached the Top 10",
+      "content": "Of the 55 charting boy bands in the dataset, 10 (18.2%) reached the top of the Billboard Hot 100 with their biggest single, and 33 (60.0%) reached the top 10. Only 8 bands (14.5%) peaked between #51 and #100 — the kind of one-hit footnote rarely remembered. So the 'boy band' label, by Pudding's filter, almost guarantees a real hit: the median peak position across the 55 acts is just #5.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_load_and_profile.py",
+        "lines": [34, 56],
+        "output": "  #1       :  10  (18.2%)\n  #2-#5    :  17  (30.9%)\n  #6-#10   :   6  (10.9%)\n  #11-#25  :   8  (14.5%)\n  #26-#50  :   6  (10.9%)\n  #51-#100 :   8  (14.5%)\n# bands that hit #1: 10 (18.2%)\n# bands that hit top 10: 33 (60.0%)"
+      },
+      "data_table": {
+        "description": "Distribution of bands by peak Billboard Hot 100 position",
+        "columns": ["bucket", "bands", "pct"],
+        "rows": [
+          ["#1", 10, 18.2],
+          ["#2-#5", 17, 30.9],
+          ["#6-#10", 6, 10.9],
+          ["#11-#25", 8, 14.5],
+          ["#26-#50", 6, 10.9],
+          ["#51-#100", 8, 14.5]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_03": {
+      "label": "Boy bands by 5-year era: peak in 1995-2004",
+      "content": "Charting activity for boy bands is heavily concentrated in a 10-year window: 14 bands have their biggest hit between 1995 and 1999, and 13 between 2000 and 2004. By the late 2000s the format collapses (4 bands in 2005-2009), recovers modestly in the early 2010s with One Direction and 5 Seconds of Summer (5 bands), then trickles to 1 band — BTS — in the 2015-2018 window. The single biggest year is 2000, with 9 bands posting their peak Hot 100 entry.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_load_and_profile.py",
+        "lines": [76, 110],
+        "output": "Bands by 5-year era:\n  1980-84: 1\n  1985-89: 3\n  1990-94: 14\n  1995-99: 14\n  2000-04: 13\n  2005-09: 4\n  2010-14: 5\n  2015-18: 1\npeak year: 2000 with 9 bands"
+      },
+      "data_table": {
+        "description": "Boy band count by 5-year era (year of highest-charting song)",
+        "columns": ["era", "bands"],
+        "rows": [
+          ["1980-84", 1],
+          ["1985-89", 3],
+          ["1990-94", 14],
+          ["1995-99", 14],
+          ["2000-04", 13],
+          ["2005-09", 4],
+          ["2010-14", 5],
+          ["2015-18", 1]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_04": {
+      "label": "Bands by year — the 2000 spike",
+      "content": "Year-by-year, 2000 stands alone as the peak: 9 different boy bands reached their highest Billboard Hot 100 position that single year — more than three times the typical year. The four years 1996, 1997, 1998, 1999 each contribute 3 bands, and 2001 adds another 3. This 1996-2001 cluster is the textbook 'boy band era' compressed into the data: 21 bands in six consecutive years.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_load_and_profile.py",
+        "lines": [73, 76],
+        "output": "  2000: 9\n  1996: 3\n  1997: 3\n  1998: 3\n  1999: 3\n  2001: 3"
+      },
+      "data_table": {
+        "description": "Number of boy bands per year (highest-charting song year)",
+        "columns": ["year", "bands"],
+        "rows": [
+          [1983, 1],
+          [1985, 1],
+          [1989, 2],
+          [1990, 4],
+          [1991, 3],
+          [1992, 2],
+          [1993, 3],
+          [1994, 2],
+          [1995, 2],
+          [1996, 3],
+          [1997, 3],
+          [1998, 3],
+          [1999, 3],
+          [2000, 9],
+          [2001, 3],
+          [2003, 1],
+          [2005, 2],
+          [2008, 2],
+          [2011, 2],
+          [2012, 1],
+          [2013, 1],
+          [2014, 1],
+          [2017, 1]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_05": {
+      "label": "62% of biggest hits are 'pop'/upbeat, 38% are slow jams",
+      "content": "Pudding coded each band's biggest hit as either 'pop' (upbeat dance) or 'slow' (soulful slow jam). 34 of the 55 (61.8%) were pop dance songs and 21 (38.2%) were slow jams. Slow jams are over-represented at the very top: 6 of the 10 #1 hits in the dataset are coded slow, including New Kids' 'I'll Be Loving You', All-4-One's 'I Swear', and Boyz II Men's 'End of the Road'. The boy band #1 stereotype is the dance hit; the actual #1 record is the ballad.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_load_and_profile.py",
+        "lines": [60, 66],
+        "output": "pop   :  34 (61.8%)\nslow  :  21 (38.2%)"
+      },
+      "data_table": {
+        "description": "Dance-speed split of biggest hit by band",
+        "columns": ["danceSpeed", "bands", "pct"],
+        "rows": [
+          ["pop", 34, 61.8],
+          ["slow", 21, 38.2]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_06": {
+      "label": "87% black or brown hair; 'exotic' colors are a 3% rounding error",
+      "content": "Across 234 members, 135 (57.7%) have black hair as their base color and 69 (29.5%) have brown — together, 87.2% of every member who appeared on screen. Blondes are a small minority at 9.0%. The 'exotic' palette — strawberry blonde, red, green, blue, silver — accounts for just 7 members (3.0%). The visible hair palette of charting boy bands is far narrower than memory suggests.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [29, 41],
+        "output": "  'black'   135  (57.7%)\n  'brown'    69  (29.5%)\n  'blonde'   21  (9.0%)\n black + brown share: 87.2%\n exotic colors total: 7 (3.0%)"
+      },
+      "data_table": {
+        "description": "Hair color across all 234 members",
+        "columns": ["color", "members", "pct"],
+        "rows": [
+          ["black", 135, 57.7],
+          ["brown", 69, 29.5],
+          ["blonde", 21, 9.0],
+          ["strawberry blonde", 2, 0.9],
+          ["red", 2, 0.9],
+          ["green", 1, 0.4],
+          ["blue", 1, 0.4],
+          ["silver", 1, 0.4],
+          ["unrecorded", 2, 0.9]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_07": {
+      "label": "Frosted tips: only 5.1% of all members — and almost all of them charted between 2000 and 2004",
+      "content": "Across all 234 members, only 12 (5.1%) wear traditional bleached frosted tips, plus 2 (0.9%) with red or green tips. The look is a rounding error in the dataset overall — but it is concentrated almost exclusively in one window. Of those 12 frosted-tip members, 8 are in bands whose biggest hit lands between 2000 and 2004 — a single five-year era contributes 67% of every frosted tip in 35 years of charting boy bands. The era's per-period rate hits 14.8%, an order of magnitude above any other window.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [44, 53],
+        "output": "  'no'      217  (92.7%)\n  'yes'      12  (5.1%)\n  'red'       1  (0.4%)\n  'green'     1  (0.4%)"
+      },
+      "data_table": {
+        "description": "Frosted-tip status overall",
+        "columns": ["status", "members", "pct"],
+        "rows": [
+          ["no", 217, 92.7],
+          ["yes", 12, 5.1],
+          ["red", 1, 0.4],
+          ["green", 1, 0.4],
+          ["unrecorded", 3, 1.3]
+        ]
+      },
+      "based_on": ["det_05"],
+      "notable_instance": {
+        "name": "NSYNC — It's Gonna Be Me",
+        "value": "frosted tips on Justin Timberlake, peak #1 in 2000",
+        "instance_ref": "inst_01",
+        "why": "The dataset's archetypal frosted-tips moment — the look's most-watched on-screen example."
+      }
+    },
+    "ana_08": {
+      "label": "Frosted-tip rate by era: 0% to 14.8% to 0%",
+      "content": "Era by era, frosted tips behave like a textbook fashion micro-cycle: 0% in the 1980s (no examples), 1.8% in the early 1990s, 1.8% in the late 1990s, then 14.8% in the early 2000s — about 1 in every 7 boy band members on screen — before falling back to 5.9%, 4.5%, and 0% by the late 2010s. Adding red and green tips raises the early-2000s rate to 18.5%. The bleach-tip aesthetic is the closest thing this dataset has to a carbon-dated fossil layer.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_era_crosstab.py",
+        "lines": [56, 70],
+        "output": "  1980s (1980-1989): yes=0 (0.0%)\n  Early 1990s (1990-1994): yes=1 (1.8%)\n  Late 1990s (1995-1999): yes=1 (1.8%)\n  Early 2000s (2000-2004): yes=8 (14.8%), red=1, green=1\n  Late 2000s (2005-2009): yes=1 (5.9%)\n  Early 2010s (2010-2014): yes=1 (4.5%)\n  Late 2010s (2015-2018): yes=0 (0.0%)"
+      },
+      "data_table": {
+        "description": "Frosted-tip rate by 5-10 year era (yes only, not red/green)",
+        "columns": ["era", "members", "yes_count", "yes_pct"],
+        "rows": [
+          ["1980s", 20, 0, 0.0],
+          ["Early 1990s", 57, 1, 1.8],
+          ["Late 1990s", 57, 1, 1.8],
+          ["Early 2000s", 54, 8, 14.8],
+          ["Late 2000s", 17, 1, 5.9],
+          ["Early 2010s", 22, 1, 4.5],
+          ["Late 2010s", 7, 0, 0.0]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_09": {
+      "label": "Most members wear short hair — but not in the 1980s",
+      "content": "58.5% of members have short hair, 33.3% medium, 6.0% long. The era breakdown is sharper: short-hair share runs from 45% in the 1980s up to 74% in the late 1990s, drops to 32% in the early 2010s as One Direction-style mid-length swoops and 5SOS shaggy cuts return, and ends at 0% short hair (everyone is medium-length) in the late 2010s sample. The genre's 'haircut decade' is 1995-2004; before and after, hair is longer.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_era_crosstab.py",
+        "lines": [82, 92],
+        "output": "  1980s: short 45% / medium 50% / long 5%\n  Early 1990s: short 56% / medium 33% / long 7%\n  Late 1990s: short 74% / medium 16% / long 5%\n  Early 2000s: short 70% / medium 26% / long 4%\n  Late 2000s: short 53% / medium 47% / long 0%\n  Early 2010s: short 32% / medium 50% / long 18%\n  Late 2010s: short 0% / medium 100% / long 0%"
+      },
+      "data_table": {
+        "description": "Hair length percentages by era",
+        "columns": ["era", "short_pct", "medium_pct", "long_pct"],
+        "rows": [
+          ["1980s", 45, 50, 5],
+          ["Early 1990s", 56, 33, 7],
+          ["Late 1990s", 74, 16, 5],
+          ["Early 2000s", 70, 26, 4],
+          ["Late 2000s", 53, 47, 0],
+          ["Early 2010s", 32, 50, 18],
+          ["Late 2010s", 0, 100, 0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_10": {
+      "label": "Hairstyle leaderboard: fade and spiked dominate",
+      "content": "Across 234 members, the most-coded styles are 'fade' (24%) and 'spiked' (17%) — together more than 40% of every haircut. 'High-top' adds another 11%, 'shaggy' 10%, and 'crew' 8%. The 21 distinct hairstyles in the dataset are heavily long-tailed: the top 5 cover almost 70% of members, and the bottom 11 styles together account for fewer than 10%.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [60, 72],
+        "output": "  'fade'        56  (23.9%)\n  'spiked'      40  (17.1%)\n  'high-top'    25  (10.7%)\n  'shaggy'      23  (9.8%)\n  'crew'        19  (8.1%)\n  'curly'       18  (7.7%)\n  'swept'       11  (4.7%)\n  'slick'        9  (3.8%)\n  'bangs'        8  (3.4%)\n  'ponytail'     5  (2.1%)"
+      },
+      "data_table": {
+        "description": "Top 10 hairstyles by member count",
+        "columns": ["style", "members", "pct"],
+        "rows": [
+          ["fade", 56, 23.9],
+          ["spiked", 40, 17.1],
+          ["high-top", 25, 10.7],
+          ["shaggy", 23, 9.8],
+          ["crew", 19, 8.1],
+          ["curly", 18, 7.7],
+          ["swept", 11, 4.7],
+          ["slick", 9, 3.8],
+          ["bangs", 8, 3.4],
+          ["ponytail", 5, 2.1]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_11": {
+      "label": "72% have brown eyes; 19% have blue",
+      "content": "Eye color is more concentrated than hair: 168 of 234 members (71.8%) have brown eyes, 45 (19.2%) have blue, and the remaining 9% spread across green, hazel, gray, or unrecorded. Brown eyes are slightly more common in members coded slow-jam acts, but the headline is the breadth: across 35 years and 55 bands, almost three quarters of every face on screen looks back with brown eyes.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [78, 84],
+        "output": "  'brown'  168  (71.8%)\n  'blue'    45  (19.2%)\n  'green'    9  (3.8%)\n  'hazel'    7  (3.0%)"
+      },
+      "data_table": {
+        "description": "Eye color across all members",
+        "columns": ["color", "members", "pct"],
+        "rows": [
+          ["brown", 168, 71.8],
+          ["blue", 45, 19.2],
+          ["green", 9, 3.8],
+          ["hazel", 7, 3.0],
+          ["gray", 1, 0.4],
+          ["other/unknown", 4, 1.7]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_12": {
+      "label": "Skin tone: 41.5% 'light', 25.2% 'medium-dark', 15.8% 'dark'",
+      "content": "Of 234 members, 97 (41.5%) are coded light, 18 (7.7%) medium-light, 23 (9.8%) medium, 59 (25.2%) medium-dark, and 37 (15.8%) dark. Compared with the U.S. male 15-24 population (~60% non-Hispanic white, ~14% Black), light-skin members are slightly under-represented and dark-skin members are slightly over-represented — but the closest reading is that the boy band ecosystem is roughly representative of its audience, with an outsized presence of medium-dark and dark members compared to other Top 40 acts of the same era.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [86, 100],
+        "output": "  light          97  (41.5%)\n  medium-light   18  (7.7%)\n  medium         23  (9.8%)\n  medium-dark    59  (25.2%)\n  dark           37  (15.8%)\n light-or-medium-light: 49.1%\n medium-dark-or-dark:   41.0%"
+      },
+      "data_table": {
+        "description": "Skin tone distribution across members",
+        "columns": ["tone", "members", "pct"],
+        "rows": [
+          ["light", 97, 41.5],
+          ["medium-light", 18, 7.7],
+          ["medium", 23, 9.8],
+          ["medium-dark", 59, 25.2],
+          ["dark", 37, 15.8]
+        ]
+      },
+      "based_on": ["det_09"]
+    },
+    "ana_13": {
+      "label": "Skin-tone composition flips by era",
+      "content": "Skin-tone composition turns over almost completely across the 35 years. In the early 1990s, only 14% of members are coded light; 77% are medium-dark or dark — the New Edition / Boyz II Men / Jodeci R&B-pop wave. Five years later in the late 1990s, light-skin share jumps to 33%; in the early 2000s it reaches 61%, and medium-dark-or-dark falls to 22% — the prefab Backstreet/NSYNC peak. By the early 2010s, light-skin members are 59% and medium-dark-or-dark members are 5% — the One Direction / 5SOS / The Wanted slice is overwhelmingly white. The boy band charts visibly desegregated for one decade and then re-segregated.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_era_crosstab.py",
+        "lines": [104, 116],
+        "output": "  1980s: light 9/20 (45%); medium-dark+dark 9/20 (45%)\n  Early 1990s: light 8/57 (14%); medium-dark+dark 44/57 (77%)\n  Late 1990s: light 19/57 (33%); medium-dark+dark 25/57 (44%)\n  Early 2000s: light 33/54 (61%); medium-dark+dark 12/54 (22%)\n  Late 2000s: light 8/17 (47%); medium-dark+dark 5/17 (29%)\n  Early 2010s: light 13/22 (59%); medium-dark+dark 1/22 (5%)\n  Late 2010s: light 7/7 (100%); medium-dark+dark 0/7 (0%)"
+      },
+      "data_table": {
+        "description": "Skin tone share by era (light vs medium-dark+dark)",
+        "columns": ["era", "members", "light_pct", "md_or_dark_pct"],
+        "rows": [
+          ["1980s", 20, 45, 45],
+          ["Early 1990s", 57, 14, 77],
+          ["Late 1990s", 57, 33, 44],
+          ["Early 2000s", 54, 61, 22],
+          ["Late 2000s", 17, 47, 29],
+          ["Early 2010s", 22, 59, 5],
+          ["Late 2010s", 7, 100, 0]
+        ]
+      },
+      "based_on": ["det_09"]
+    },
+    "ana_14": {
+      "label": "Slow-jam acts are visibly darker than pop-dance acts",
+      "content": "Splitting members by their band's biggest-hit dance speed: in 'pop' (upbeat) acts, 47% of members are coded light and 33% medium-dark-or-dark. In 'slow' (jam/ballad) acts, only 33% are light, while 54% are medium-dark-or-dark — a 21-percentage-point swing. The 'slow jam = R&B-coded = darker on screen' association in U.S. pop is sharply visible in this dataset.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_era_crosstab.py",
+        "lines": [121, 130],
+        "output": "  pop: light=47%, medium-light=9%, medium=12%, medium-dark=19%, dark=14%\n  slow: light=33%, medium-light=6%, medium=7%, medium-dark=35%, dark=19%"
+      },
+      "data_table": {
+        "description": "Skin tone by danceSpeed of biggest hit",
+        "columns": ["danceSpeed", "light_pct", "ml_pct", "m_pct", "md_pct", "d_pct"],
+        "rows": [
+          ["pop", 47, 9, 12, 19, 14],
+          ["slow", 33, 6, 7, 35, 19]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_15": {
+      "label": "47% wear dress pants, 41% wear jeans — together 88% of all bottoms",
+      "content": "Across 234 members, 110 (47.0%) wear dress pants in the music video and 95 (40.6%) wear jeans (including 3 in acid-wash jeans). Together those two categories cover 88% of every member's bottoms. Sweat pants, shorts, cargo pants, and overalls — the casual streetwear vocabulary — together account for 12%. This is a costume-coded format: most members are presented as either dressed-up adults (suit-and-pant) or model-casual (jeans), with very little middle.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [114, 130],
+        "output": "  'dress pants'      110  (47.0%)\n  'jeans'             92  (39.3%)\n  'overalls'           9  (3.8%)\n  'sweat pants'        8  (3.4%)\n  'cargo pants'        6  (2.6%)\n  'shorts'             6  (2.6%)\n  'acid wash jeans'    3  (1.3%)\n suit-jacket-style tops: 39 (16.7%)\n dress pants share: 47.0%\n jeans (incl. acid wash): 40.6%"
+      },
+      "data_table": {
+        "description": "Bottom-style distribution",
+        "columns": ["style", "members", "pct"],
+        "rows": [
+          ["dress pants", 110, 47.0],
+          ["jeans", 92, 39.3],
+          ["overalls", 9, 3.8],
+          ["sweat pants", 8, 3.4],
+          ["cargo pants", 6, 2.6],
+          ["shorts", 6, 2.6],
+          ["acid wash jeans", 3, 1.3]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_16": {
+      "label": "Dress pants peak in the late 1990s; jeans take over in 2010",
+      "content": "Bottom style turns over by era. In the 1980s, members are 95% in jeans and 0% in dress pants — the New Kids/New Edition look. By the late 1990s, dress pants reach 60% and jeans 21% — the prefab era's formal-pop costume. The trend reverses again in the late 2000s onward: by the late 2010s, 71% are back in jeans. Dress pants and jeans trade places like two sine waves 180° out of phase, and the swap maps cleanly onto the genre's stylistic generations.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_era_crosstab.py",
+        "lines": [73, 80],
+        "output": "  1980s (1980-1989): dress pants 0/20 (0%), jeans 19/20 (95%), other 1\n  Early 1990s (1990-1994): dress pants 32/57 (56%), jeans 16/57 (28%), other 9\n  Late 1990s (1995-1999): dress pants 34/57 (60%), jeans 12/57 (21%), other 11\n  Early 2000s (2000-2004): dress pants 24/54 (44%), jeans 22/54 (41%), other 8\n  Late 2000s (2005-2009): dress pants 7/17 (41%), jeans 10/17 (59%), other 0\n  Early 2010s (2010-2014): dress pants 11/22 (50%), jeans 11/22 (50%), other 0\n  Late 2010s (2015-2018): dress pants 2/7 (29%), jeans 5/7 (71%), other 0"
+      },
+      "data_table": {
+        "description": "Dress pants vs. jeans by era (percent of members)",
+        "columns": ["era", "members", "dress_pants_pct", "jeans_pct", "other_pct"],
+        "rows": [
+          ["1980s", 20, 0, 95, 5],
+          ["Early 1990s", 57, 56, 28, 16],
+          ["Late 1990s", 57, 60, 21, 19],
+          ["Early 2000s", 54, 44, 41, 15],
+          ["Late 2000s", 17, 41, 59, 0],
+          ["Early 2010s", 22, 50, 50, 0],
+          ["Late 2010s", 7, 29, 71, 0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_17": {
+      "label": "47.4% wear black, white, or navy on top AND bottom",
+      "content": "The unofficial uniform of the music video is monochrome: 111 of 234 members (47.4%) wear shirts and bottoms drawn entirely from black, white, or navy blue. The single most common combination is white shirt + black bottoms (33 members, 14.1%), followed by black shirt + navy blue (30, 12.8%), all-black (26, 11.1%), and white + navy blue (22, 9.4%). Across 23 shirt colors and 10 bottom colors — over 200 possible combos — five of them account for over half the members.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_uniforms.py",
+        "lines": [11, 32],
+        "output": "  'white' + 'black'    33  (14.1%)\n  'black' + 'navy blue'  30  (12.8%)\n  'black' + 'black'    26  (11.1%)\n  'white' + 'navy blue'  22  (9.4%)\n  'white' + 'white'    14  (6.0%)\n  black/white/navy uniform total: 111/234 (47.4%)"
+      },
+      "data_table": {
+        "description": "Top 5 shirt+bottom color combinations",
+        "columns": ["shirt_color", "bottom_color", "members", "pct"],
+        "rows": [
+          ["white", "black", 33, 14.1],
+          ["black", "navy blue", 30, 12.8],
+          ["black", "black", 26, 11.1],
+          ["white", "navy blue", 22, 9.4],
+          ["white", "white", 14, 6.0],
+          ["blue", "black", 11, 4.7],
+          ["blue", "navy blue", 9, 3.8],
+          ["red", "navy blue", 9, 3.8]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_18": {
+      "label": "Bottom color: 79% navy or black",
+      "content": "Of 234 members, 94 wear navy blue bottoms (40.2%) and 91 wear black (38.9%) — 79.1% combined. White is a distant third at 10.7%; every other bottom color (tan, light blue, yellow, light gray, gray, red, green) accounts for fewer than 10% of members combined.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [148, 162],
+        "output": "  'navy blue'  94  (40.2%)\n  'black'      91  (38.9%)\n  'white'      25  (10.7%)\n  'tan'         5  (2.1%)\n  'light blue'  5  (2.1%)\n  'yellow'      4  (1.7%)"
+      },
+      "data_table": {
+        "description": "Bottom color distribution",
+        "columns": ["color", "members", "pct"],
+        "rows": [
+          ["navy blue", 94, 40.2],
+          ["black", 91, 38.9],
+          ["white", 25, 10.7],
+          ["tan", 5, 2.1],
+          ["light blue", 5, 2.1],
+          ["yellow", 4, 1.7],
+          ["light gray", 4, 1.7],
+          ["gray", 3, 1.3],
+          ["red", 2, 0.9],
+          ["other", 1, 0.4]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_19": {
+      "label": "84% never touch an instrument on screen",
+      "content": "Of 234 members, 197 (84.2%) play no instrument in the music video. Among the 37 who do, guitar is the most common (17, 7.3%), followed by drums (7), keyboard (6), and bass (5). Era trend: in the late 2000s, 53% of members on screen are playing an instrument — driven entirely by the Jonas Brothers and 5 Seconds of Summer's pop-rock hybrid bands. By the late 2010s, the rate is back to 0%. The boy band format is, definitionally, a vocal-and-choreography package: hands stay free.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [134, 144],
+        "output": "  '(none)'   197  (84.2%)\n  'guitar'    17  (7.3%)\n  'drums'      7  (3.0%)\n  'keyboard'   6  (2.6%)\n  'bass'       5  (2.1%)\n no instrument visible: 197/234 = 84.2%"
+      },
+      "data_table": {
+        "description": "Instruments visible in music videos (members who play one)",
+        "columns": ["instrument", "members", "pct"],
+        "rows": [
+          ["none", 197, 84.2],
+          ["guitar", 17, 7.3],
+          ["drums", 7, 3.0],
+          ["keyboard", 6, 2.6],
+          ["bass", 5, 2.1],
+          ["piano", 1, 0.4],
+          ["tambourine", 1, 0.4]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_20": {
+      "label": "Accessories: 35% wear earrings, 23% a necklace; 41% have nothing",
+      "content": "Tokenizing accessories (one member can wear several), 81 of 234 members wear earrings (34.6%) and 54 wear a necklace (23.1%). Glasses appear on 15 members, sunglasses on 11. 95 members (40.6%) wear no accessories at all. Earrings and necklaces are the clearest stylistic 'tells' of the genre — almost no other 1990s/2000s pop format puts ornament on its men this consistently.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [104, 124],
+        "output": "  'earrings'   81  (34.6%)\n  'necklace'   54  (23.1%)\n  'glasses'    15\n  'sunglasses' 11\n  'tie'         9\n (none) accessory share: 40.6%"
+      },
+      "data_table": {
+        "description": "Top accessory tokens (members wearing this token)",
+        "columns": ["token", "members", "pct"],
+        "rows": [
+          ["earrings", 81, 34.6],
+          ["necklace", 54, 23.1],
+          ["glasses", 15, 6.4],
+          ["sunglasses", 11, 4.7],
+          ["tie", 9, 3.8],
+          ["baseball hat", 8, 3.4],
+          ["wrist straps", 5, 2.1],
+          ["rings", 4, 1.7],
+          ["beanie hat", 3, 1.3],
+          ["flat hat", 2, 0.9],
+          ["none", 95, 40.6]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_21": {
+      "label": "56% are clean-shaven; mustache is the dominant facial-hair style",
+      "content": "Of 234 members, 131 (56.0%) appear clean-shaven in their breakthrough music video. Among the 103 with facial hair, mustache (alone or in combination) accounts for 60% — 42 members wear a mustache only, plus 12 mustache+goatee, 12 with five-o'clock shadow, and 22 with a goatee. Full beards appear on just 2 members. This is consistent with the genre's youth-coded image: the average member is 21 years old in his music video and the styling team keeps faces young.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [88, 100],
+        "output": "  '(none)'  131  (56.0%)\n  'mustache'  42  (17.9%)\n  'goatee'    22  (9.4%)\n  \"five o'clock shadow\" 12  (5.1%)\n  'mustache, goatee' 12  (5.1%)\n  'sideburns'  5"
+      },
+      "data_table": {
+        "description": "Top facial-hair categories",
+        "columns": ["style", "members", "pct"],
+        "rows": [
+          ["clean-shaven", 131, 56.0],
+          ["mustache", 42, 17.9],
+          ["goatee", 22, 9.4],
+          ["five o'clock shadow", 12, 5.1],
+          ["mustache + goatee", 12, 5.1],
+          ["sideburns", 5, 2.1],
+          ["beard variants", 6, 2.6],
+          ["other", 4, 1.7]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_22": {
+      "label": "Average member height: 69.6 inches — basically the U.S. adult male median",
+      "content": "Heights are recorded for 119 of 234 members (51%); the rest are missing. Among those measured, the mean is 69.6 inches (176.8 cm) and the median is 69 inches (175.3 cm) — almost exactly the CDC's reported U.S. adult male median of 69.1 inches. The shortest member coded is 60 inches (152 cm) and the tallest is 79 inches (200 cm). Boy bands are not built from unusually short or unusually tall men; they are built from the population mean, which is precisely what makes them look 'castable'.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_appearance.py",
+        "lines": [164, 176],
+        "output": "  members with height: 119/234\n  mean: 69.59 in (176.8 cm)\n  median: 69 in (175.3 cm)\n  min: 60 in / max: 79 in\n  US adult male median height (CDC): 69.1 in / 175.4 cm"
+      },
+      "data_table": {
+        "description": "Height stats — boy band members vs. U.S. adult male median",
+        "columns": ["metric", "value_in", "value_cm"],
+        "rows": [
+          ["mean", 69.59, 176.8],
+          ["median", 69.0, 175.3],
+          ["min", 60, 152.4],
+          ["max", 79, 200.7],
+          ["US adult male median (CDC)", 69.1, 175.4]
+        ]
+      },
+      "based_on": ["det_09"]
+    },
+    "ana_23": {
+      "label": "Slow-jam bands wear suit jackets twice as often as pop bands",
+      "content": "Among 234 members, 39 (16.7%) wear a suit-jacket-style top. Splitting by their band's dance speed: pop acts have 12% suit-jacket members, while slow-jam acts have 25% — about 2x as many. This is the visual rule the genre teaches without saying it: dance hits dress casual, slow-jam ballads put on the suit.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_era_crosstab.py",
+        "lines": [136, 144],
+        "output": "  pop: suit-jacket-tops 17/146 (12%)\n  slow: suit-jacket-tops 22/88 (25%)"
+      },
+      "data_table": {
+        "description": "Suit-jacket top share by danceSpeed",
+        "columns": ["danceSpeed", "members", "suit_pct"],
+        "rows": [
+          ["pop", 146, 12],
+          ["slow", 88, 25]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_24": {
+      "label": "10 #1 boy band hits — and the slow-jam ballad wins more than the dance song",
+      "content": "Ten boy bands in the dataset hit Billboard #1 with their biggest single. By dance-speed coding, 6 of 10 are slow jams: NKOTB's 'I'll Be Loving You', Color Me Badd's 'I Adore Mi Amor', Boyz II Men's 'End of the Road', SILK's 'Freak Me', All-4-One's 'I Swear', and Hi-Five's 'I Like the Way' (coded pop). The remaining 4 slot to dance pop: Hi-Five (1991), Blackstreet's 'No Diggity', Hanson's 'MMMBop', NSYNC's 'It's Gonna Be Me', and B2K's 'Bump, Bump, Bump'. The tightly-choreographed dance-pop hit is iconic, but the actual chart-topping mode of the genre is the ballad.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_era_crosstab.py",
+        "lines": [165, 178],
+        "output": "Bands that hit #1 (10):\n  1989-06-17  New Kids On The Block (slow)\n  1991-05-18  Hi-Five (pop)\n  1991-09-21  Color Me Badd (slow)\n  1992-08-15  Boyz II Men (slow)\n  1993-05-01  SILK (slow)\n  1994-05-21  All-4-One (slow)\n  1996-11-09  Blackstreet (pop)\n  1997-05-24  Hanson (pop)\n  2000-07-29  NSYNC (pop)\n  2003-02-01  B2K (pop)"
+      },
+      "data_table": {
+        "description": "Boy band #1 hits with dance-speed coding",
+        "columns": ["band", "song", "year", "danceSpeed"],
+        "rows": [
+          ["New Kids On The Block", "I'll Be Loving You (Forever)", 1989, "slow"],
+          ["Hi-Five", "I Like The Way", 1991, "pop"],
+          ["Color Me Badd", "I Adore Mi Amor", 1991, "slow"],
+          ["Boyz II Men", "End of the Road", 1992, "slow"],
+          ["SILK", "Freak Me", 1993, "slow"],
+          ["All-4-One", "I Swear", 1994, "slow"],
+          ["Blackstreet", "No Diggity (ft. Dr. Dre)", 1996, "pop"],
+          ["Hanson", "MMMBop", 1997, "pop"],
+          ["NSYNC", "It's Gonna Be Me", 2000, "pop"],
+          ["B2K", "Bump, Bump, Bump (ft. P. Diddy)", 2003, "pop"]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_25": {
+      "label": "Visible 'lineages' the dataset traces",
+      "content": "The 55 charting bands cluster into a handful of clear lineages. New Edition spawns Bell Biv DeVoe (literal members of NE). The Lou Pearlman empire produces Backstreet Boys, NSYNC, O-Town, and LFO. British/Irish imports (Take That, BBMak, Westlife, 5ive, Brother Beyond) form the late-1990s Anglo wave. Disney/tween-TV produces Jonas Brothers, Big Time Rush, and Mindless Behavior. Imports outside the Anglo world include BTS (K-pop), Aventura (Bachata/Latin), Menudo (Puerto Rico), and Son by Four. Reality-TV pop produces One Direction, The Wanted, and 5 Seconds of Summer. Reading the dataset as one chart line obscures these branches; reading them as a tree explains why hair, skin tone, and dance speed turn over so sharply era-by-era.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_era_crosstab.py",
+        "lines": [148, 165],
+        "output": "  New Edition (parent): ['New Edition', 'Bell Biv DeVoe']\n  Lou Pearlman empire: ['Backstreet Boys', 'NSYNC', 'O-Town', 'LFO']\n  Motown Records (Boyz II Men/IMx): ['Boyz II Men', 'IMx']\n  Disney/Tween-TV: ['Jonas Brothers', 'Big Time Rush', 'Mindless Behavior']\n  British/Irish import: ['Take That', 'BBMak', 'Westlife', '5ive', 'Brother Beyond']\n  K-pop / Latin import: ['BTS', 'Aventura', 'Menudo', 'Son by Four']\n  Reality-TV pop: ['One Direction', 'The Wanted', '5 Seconds of Summer']"
+      },
+      "data_table": {
+        "description": "Bands grouped into stylistic lineages",
+        "columns": ["lineage", "bands", "n"],
+        "rows": [
+          ["New Edition descendants", "New Edition; Bell Biv DeVoe", 2],
+          ["Lou Pearlman empire", "Backstreet Boys; NSYNC; O-Town; LFO", 4],
+          ["Motown / R&B pop", "Boyz II Men; IMx", 2],
+          ["British / Irish import", "Take That; BBMak; Westlife; 5ive; Brother Beyond", 5],
+          ["Disney / tween-TV", "Jonas Brothers; Big Time Rush; Mindless Behavior", 3],
+          ["Latin / K-pop import", "BTS; Aventura; Menudo; Son by Four", 4],
+          ["Reality-TV pop", "One Direction; The Wanted; 5 Seconds of Summer", 3]
+        ]
+      },
+      "based_on": ["det_04"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "All visual codings come from a single music video per band — the highest-charting (or earliest) song with a YouTube version available. Bands' off-stage looks, later-album styles, and tour outfits are not represented."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Heights are recorded for only 119/234 members (51%) — partly because online sources for less-famous members are unreliable. Height-based comparisons exclude unrecorded members."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "The skin-tone scale ('light' through 'dark') was assigned by volunteer reviewers using emoji shades. It is a visual/screen coding, not a self-reported racial or ethnic identity, and reviewers did not have access to lighting metadata."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Some five-year era buckets are small (Late 2010s = 7 members across BTS); rates from those buckets are descriptive, not predictive."
+    }
+  ]
+}

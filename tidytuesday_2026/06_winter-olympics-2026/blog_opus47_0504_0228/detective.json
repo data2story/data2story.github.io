@@ -1,0 +1,190 @@
+{
+  "meta": {"role": "detective", "version": "2.0"},
+  "items": {
+    "det_01": {
+      "label": "Most geographically spread Winter Games ever",
+      "content": "Milano Cortina 2026 was the most geographically widespread Winter Olympic Games in history, with venues sprawled across more than 22,000 square kilometres of northern Italy. The schedule moved athletes and spectators across a 530-mile arc connecting Milan (ice sports), Bormio (men's alpine + ski mountaineering), Livigno (snowboard, freestyle), Cortina d'Ampezzo (women's alpine, sliding, curling), Predazzo and Tesero in Val di Fiemme (ski jumping, cross-country, Nordic combined), Anterselva in South Tyrol (biathlon), and Verona (closing ceremony). A full circuit of mountain venues required nearly 13 hours of non-stop driving — a fact baked into how 'spread thin' the daily schedule looks in the data: 14 distinct venues hosting 1,866 sessions over 19 days.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_Winter_Olympics",
+          "title": "2026 Winter Olympics - Wikipedia",
+          "facts": [
+            "Games covered an area spanning more than 22,000 square kilometres (8,500 sq mi)",
+            "Most geographically widespread Winter Olympic Games in history",
+            "Used existing venues across northern Italy"
+          ]
+        },
+        {
+          "url": "https://www.the-ski-guru.com/2026/02/06/milano-cortina-2026-travel-between-venues/",
+          "title": "Milano-Cortina 2026: How to Travel Between Olympic Venues",
+          "facts": [
+            "Venue circuit covers over 530 miles",
+            "Anterselva biathlon stadium is about 150 km from Cortina",
+            "Bormio is about 200 km from Milan"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Ski mountaineering: the lone debut sport",
+      "content": "Ski mountaineering ('skimo') was the only sport making its Olympic debut at Milano Cortina 2026. Three medal events were contested at the Stelvio Ski Centre in Bormio: men's sprint, women's sprint, and a mixed relay. Only 36 athletes — 18 men and 18 women — were allowed to compete, drawn from just 13 nations plus one Individual Neutral Athlete. By comparison, established sports like Alpine Skiing involve over 80 NOCs. Spain's Oriol Cardona Coll claimed the inaugural men's title; Switzerland's Marianne Fatton won the first women's gold. The thin field is exactly the kind of detail this dataset surfaces: skimo only has 21 sessions in the schedule (9 medal events visible in the discipline_name × is_medal_event split), the smallest footprint of any sport on the program.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ski_mountaineering_at_the_2026_Winter_Olympics_%E2%80%93_Qualification",
+          "title": "Ski mountaineering at the 2026 Winter Olympics – Qualification",
+          "facts": [
+            "13 nations qualified plus one Individual Neutral Athlete",
+            "Maximum 36 athletes total (18 male, 18 female)",
+            "Three medal events: men's sprint, women's sprint, mixed relay"
+          ]
+        },
+        {
+          "url": "https://www.olympics.com/en/milano-cortina-2026/news/winter-olympics-2026-oriol-cardona-coll-wins-historic-first-olympic-men-s-ski-mountaineering-sprint-gold",
+          "title": "Oriol Cardona Coll wins historic first Olympic men's ski mountaineering sprint gold",
+          "facts": [
+            "Spain's Oriol Cardona Coll won the inaugural men's ski mountaineering sprint",
+            "Switzerland's Marianne Fatton won the first women's gold"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "92 NOCs, 2,900 athletes",
+      "content": "The 2026 Winter Olympics drew 2,900 athletes from 92 National Olympic Committees. The participation gap between popular winter sports and niche ones is enormous: hockey, alpine skiing, and biathlon attract dozens of nations apiece, while sliding sports (luge, skeleton, bobsleigh) and the new ski mountaineering events are typically contested by under 25 NOCs. That means the data's per-discipline session counts are a rough proxy for global participation: the more sessions a sport has, the wider its competing field. A reader trying to spot which gold medals were 'easiest' to win — purely by counting how few competitors lined up — will find the answer hidden in plain sight in the schedule's discipline mix.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_Winter_Olympics",
+          "title": "2026 Winter Olympics - Wikipedia",
+          "facts": [
+            "2,900 athletes from 92 NOCs participated",
+            "Games ran 6-22 February 2026"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Norway tops the medal table; record-breaking US run",
+      "content": "Norway finished first with 41 total medals (18 gold, 12 silver, 11 bronze), surpassing its own 2018 record of 39 — confirming Norway's grip on the Winter Games. The United States finished second with 33 medals (12 gold, 12 silver, 9 bronze), the most US gold at any Winter Olympics ever. Netherlands took third (10 gold, 7 silver, 3 bronze). Italy as host claimed 30 medals (10G/6S/14B). These outcomes give context to the dataset's medal-event geography: Norway's haul came overwhelmingly from cross-country and biathlon, both staged in Val di Fiemme and Anterselva, while US medals concentrated in the freestyle and snowboard events at Livigno.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_Winter_Olympics_medal_table",
+          "title": "2026 Winter Olympics medal table - Wikipedia",
+          "facts": [
+            "Norway 41 medals (18G/12S/11B) — record",
+            "USA 33 medals (12G/12S/9B) — most ever US Winter gold",
+            "Netherlands 20 medals (10G/7S/3B)",
+            "Italy 30 medals (10G/6S/14B)"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "NBC's 23.5M average; viewership doubles vs Beijing",
+      "content": "Milano Cortina 2026 became the highest-rated Winter Games on US television since Sochi 2014, averaging 23.5 million viewers across NBC, Peacock, CNBC and USA Network — up 96% from Beijing 2022. The Saturday primetime slot peaked at 28.5 million combined viewers. The men's hockey final pulled 20.7 million — the biggest hockey audience since the 2010 gold-medal game — while the US-Canada women's hockey gold final drew a record-breaking 5.3 million. These numbers matter for the dataset because they hint at which prime-time evening sessions the schedule was engineered around: ice hockey medal games and figure skating finals tend to dominate the late-evening Italian local time slots that align with US prime time.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.axios.com/2026/02/24/2026-winter-olympics-viewership-milan-cortina",
+          "title": "2026 Winter Olympics average 23.5 million viewers",
+          "facts": [
+            "23.5 million average viewers — highest Winter audience since Sochi 2014",
+            "Up 96% from Beijing 2022"
+          ]
+        },
+        {
+          "url": "https://frontofficesports.com/nbcs-winter-olympics-viewership-tear-continues/",
+          "title": "NBC's Winter Olympics Viewership Tear Continues",
+          "facts": [
+            "Men's hockey final drew 20.7 million viewers",
+            "US-Canada women's hockey gold drew record 5.3 million",
+            "Saturday primetime peaked at 28.5 million"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "The schedule frame: 6 Feb opening, 22 Feb closing",
+      "content": "Officially the Games ran 6-22 February 2026, with the opening ceremony at Milan's San Siro and the closing ceremony at Verona's Arena. But the dataset's earliest sessions are 4 February — alpine downhill training at Stelvio and Tofane, plus the first curling round-robins. Curling and team sports started early because their pool stages need many days. The dataset captures this 19-day operational window (4-22 February), which is wider than the 17-day 'official' Games window. The 02-15 Sunday and 02-22 closing weekend are the busiest medal days, while 02-04 to 02-05 are nearly all training.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.olympics.com/en/milano-cortina-2026/news/milano-cortina-2026-key-facts-and-figures",
+          "title": "Milano Cortina 2026: Key facts and figures",
+          "facts": [
+            "Opening Ceremony 6 February at San Siro Stadium",
+            "Closing Ceremony 22 February at Verona Arena",
+            "First competition days began before Opening Ceremony"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Curling's session-count outlier",
+      "content": "Curling occupies a uniquely large slice of the schedule — 436 sessions in the dataset, more than any other sport — because its pool play and round-robin format requires every team to play every other team across both men's, women's, and mixed doubles disciplines. Each session is also long (2+ hours). This is a known quirk: curling has only 8 medal events but consumes hundreds of session slots. Designers should treat the curling spike as a structural feature of the data, not a story angle on its own. Conversely, sports like ski mountaineering (only 21 sessions, but 9 medal events relative to that low total) have a much higher 'medal density' per session.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.olympics.com/en/milano-cortina-2026/sports/curling",
+          "title": "Olympic Curling | Milano Cortina 2026",
+          "facts": [
+            "Three medal events: men's, women's, mixed doubles",
+            "Round-robin pool play across many days"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Mascots Tina & Milo and the Italian frame",
+      "content": "The Games' mascots, Tina and Milo, are stoat siblings — Tina (Olympic mascot, white coat) is named for Cortina, Milo (Paralympic mascot, brown coat, born without a leg) is named for Milano. Their reveal at the 2024 Sanremo festival was a self-aware Italian moment: organizers dubbed them 'the first openly Gen Z mascots.' The visual language of Milano Cortina 2026 explicitly fuses the urban (Milan's Duomo) and the alpine (Dolomite peaks), which is exactly the geographic split the dataset reflects in its venue list: ice sports clustered in metropolitan Milan, snow sports scattered across Lombardy, Trentino, Veneto and South Tyrol mountains.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Tina_and_Milo",
+          "title": "Tina and Milo - Wikipedia",
+          "facts": [
+            "Mascots named after Cortina and Milano",
+            "Milo born without a leg, uses tail to walk",
+            "Unveiled 7 Feb at Sanremo Music Festival 2024"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Time zone math for prime-time scheduling",
+      "content": "Italy is on Central European Time (UTC+1) in February. US Eastern Time runs UTC-5, so an event starting at 19:00 local Italian time begins at 13:00 ET — perfect for NBC's 'prime afternoon' window. A 21:00 Italian start hits 15:00 ET, just before East Coast evening prime time. China and East Asia (UTC+8) are 7 hours ahead of Italy, meaning an Italian morning session lands in Chinese late afternoon. This affects the dataset's start_time distribution: high-profile medal events skew to mid-evening Italian time, while pool play and training fill morning slots. The schedule's start-hour histogram should reveal a bimodal pattern — late mornings for training, evenings for medals — and the medal-event subset will hug 17:00–21:00 local.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.timeanddate.com/worldclock/converter.html",
+          "title": "Time zone converter (general reference)",
+          "facts": [
+            "Italy uses CET (UTC+1) in February",
+            "US Eastern Time is UTC-5 in February"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Scope suggestion for Analyst",
+      "content": "Worth analyzing deeply: (1) Sessions per discipline, separating medal vs non-medal; ski mountaineering, ice hockey-medal, and curling-medal will look like outliers in opposite directions. (2) Daily medal-event count (calendar heatmap) — peaks should fall on 02-15 (mid-Games Sunday) and 02-22 (final day). (3) Start-hour distribution split by is_medal_event — medal events should cluster 17:00-21:00 local. (4) Venue load (events per venue per day) — Milano Ice Skating Arena and the curling stadium will dominate. (5) Average session duration by discipline — sliding sports are short (1 hr), curling is long (2.5 hrs), ice hockey games are medium (~3 hrs). Watch out for: training vs competition split (training is 75%+ of all sessions), 'estimated_start' flag (some times are placeholders), commas inside event_description that break naive CSV parsing — use pandas not awk.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://github.com/chendaniely/olympics-2026",
+          "title": "Olympics 2026 dataset repository",
+          "facts": [
+            "1,866 events in the dataset",
+            "Includes both training and competition sessions",
+            "Contains medal-event flag and venue codes"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [],
+  "instances": []
+}

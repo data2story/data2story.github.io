@@ -1,0 +1,338 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Default to all five channels; let the dataset decide form. The story is a 60-year arc of inversion, so the centerpiece is the bloc-stacked area chart paired with a year scrubber. The teaser is the dataset's emotional spine: Earth from orbit, animated. The SpaceX cumulative line is the second visual anchor.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Six decades of yearly data, multiple categorical splits (bloc, agency_type, decade), strong ranking comparisons. Charts carry the analytical weight."
+      },
+      "image": {
+        "used": true,
+        "reason": "Two cinematic stills frame the editorial mood — Earth-from-orbit teaser and a SpaceX-style booster landing for the SpaceX section. The dataset is space, which is inherently visual."
+      },
+      "video": {
+        "used": true,
+        "reason": "image2video animates the teaser still with subtle camera dolly + atmospheric drift. Motion adds the kinetic 'this is happening' feeling that a static still cannot."
+      },
+      "audio": {
+        "used": false,
+        "reason": "Attempted a Lyria-generated cinematic ambient bed for the teaser; the OpenRouter Lyria endpoint returned 'no audio chunks received from stream' on two attempts. Skipped generated audio rather than ship a broken asset. The dataset itself has no inherent sonic dimension (no songs, speech, or ranked sequences worth sonifying that aren't already covered visually). See meta.media_blockers."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The bloc-handover chart (edt_03) ships with a year-scrubber that lets the reader sweep through 1957-2018 and see the duopoly invert in real time — the strongest interaction available given the data."
+      }
+    },
+    "media_blockers": [
+      {
+        "category": "audio",
+        "reason": "google/lyria-3-pro-preview returned 'no audio chunks received from stream' on two consecutive attempts (concrete C-minor ambient prompt and a more abstract prompt). Streaming endpoint appears to be returning empty or interrupted streams.",
+        "attempted_command": "python3 tools/openrouter-text2music/scripts/generate_music.py --prompt 'Slow cinematic ambient soundtrack for a space documentary...' --download assets/era_ambient.wav",
+        "fallback_des": "Page intentionally ships with no audio; the teaser video carries the atmospheric weight."
+      }
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — Earth from orbit (still)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "prompt": "Cinematic editorial wide shot of Earth from low orbit at night, the curve of the planet glowing along the horizon, faint constellation of orbital satellites scattered across the darkness above, deep blue-black palette with warm ember light from atmospheric glow, no text, no people, ultra-detailed astrophotography aesthetic, painterly editorial mood for a data journalism piece on the global space race"
+      },
+      "brief": "Full-bleed first-frame still of Earth from low orbit at night. Dark blue-black palette with a warm horizon glow and scattered satellite-like points. The teaser_motion.mp4 is the same image animated; if video fails the still is the fallback poster.",
+      "rationale": "The dataset's subject is orbital launch — putting the reader in orbit before any prose lands sets emotional context that no chart can.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion — Earth dolly (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "model": "google/veo-3.1-fast",
+        "source_image": "assets/teaser_hero.png",
+        "frame_role": "first",
+        "prompt": "very slow cinematic camera dolly forward toward Earth, gentle drift of distant stars and orbital satellites in the upper third of the frame, subtle glow pulsing along the planet's atmospheric horizon, no camera shake, no jump cuts",
+        "duration": 6,
+        "aspect_ratio": "16:9"
+      },
+      "brief": "6-second autoplay-loop video of the teaser still with subtle camera dolly forward + atmospheric horizon glow. Muted, plays inline as the teaser. Fallback to teaser_hero.png as poster if video fails.",
+      "rationale": "Animating the strong teaser still preserves the composition and adds the kinetic 'this is unfolding right now' feeling that a still cannot — the page opens with movement, not stasis.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Inversion stat strip — Soviet 1982 vs Russia 2018",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value_set": [
+          {"value": "108", "label": "Soviet launches in 1982 (peak year)", "data_source": "ana_03"},
+          {"value": "10", "label": "Russian launches in 2018", "data_source": "ana_03"},
+          {"value": "28", "label": "Chinese launches in 2018 (most of any state)", "data_source": "ana_18"},
+          {"value": "17", "label": "SpaceX launches in 2018 (more than Russia)", "data_source": "ana_07"}
+        ],
+        "data_source": ["ana_03", "ana_07", "ana_18"]
+      },
+      "brief": "Four giant statistics arranged in a 2-column grid (108, 10) on top and (28, 17) below. Each number is rendered at ~84px in a serif display face with a one-line label below. The 108 and 17 should glow slightly to mark them as the headline figures.",
+      "rationale": "The hook is fundamentally numerical — four numbers tell the story before any chart loads. A stat strip is more memorable than a chart for this exact comparison.",
+      "based_on": ["ana_03", "ana_07", "ana_18"]
+    },
+    "des_04": {
+      "label": "Yearly global launch arc, 1957-2018",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_01",
+        "x": "year",
+        "y": "count",
+        "highlight": [
+          {"year": 1967, "label": "Cold War peak: 139"},
+          {"year": 2004, "label": "post-Cold War trough: 53"},
+          {"year": 1991, "label": "Soviet dissolution"}
+        ],
+        "interaction": "hover any year to see exact count + a small annotation pulled from the data",
+        "style": {
+          "stroke_color": "#FFD27D",
+          "background": "#0a0e1a",
+          "no_gridlines_x": true,
+          "soft_y_grid": true,
+          "shaded_eras": [
+            {"x_start": 1957, "x_end": 1991, "fill": "rgba(255,210,125,0.06)", "label": "Cold War"},
+            {"x_start": 1992, "x_end": 2018, "fill": "rgba(125,200,255,0.06)", "label": "Post-Cold War"}
+          ]
+        }
+      },
+      "brief": "Single warm-colored line on a dark canvas. Two faint shaded blocks behind the line label the Cold War (1957-1991) and Post-Cold War (1992-2018) eras. Mark 1967, 1991, and 2004 with small dots + on-chart annotations. Hover shows exact yearly count.",
+      "rationale": "The 60-year arc is fundamentally one curve — the simplest chart that makes the rise-fall-recovery shape visible.",
+      "based_on": ["ana_01"]
+    },
+    "des_05": {
+      "label": "Bloc-stacked area + year scrubber (interactive)",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "year_scrubber",
+        "initial_state": "Stacked area chart 1957-2018 split by 4 blocs (USSR/Russia, United States, China, Other). A draggable year-slider sits below; the year display starts at 1982.",
+        "trigger": "Reader drags the slider, or clicks specific milestone years marked along the slider track (1967, 1982, 1991, 2004, 2018)",
+        "transition": "A vertical year line on the chart moves with the slider; below the chart, four large bloc-counter cards show the exact launch counts for the selected year, animating from value-to-value with a 200ms tween.",
+        "payoff": "Sweep the slider from 1957 → 2018 and visually watch the Soviet wall collapse and the China line rise — the inversion happens under the reader's finger.",
+        "data_source": "ana_02",
+        "chart_type": "stacked_area",
+        "x": "year",
+        "y": ["USSR/Russia", "United States", "China", "Other"],
+        "color_scheme": {
+          "USSR/Russia": "#E3553D",
+          "United States": "#5BAEE3",
+          "China": "#F4C842",
+          "Other": "#9DA1A8"
+        },
+        "style": {
+          "background": "#0a0e1a",
+          "show_legend": true,
+          "stroke_inner_lines": false
+        }
+      },
+      "brief": "Centerpiece visual. A stacked area chart on a dark canvas with the four blocs colored distinctively (USSR/Russia red, US blue, China gold, Other gray). Below the chart, a year-slider with milestone tick marks at 1967, 1982, 1991, 2004, 2018. Below the slider, four bloc-counter cards animate to show the exact 4-bloc breakdown for the chosen year. Default year: 1982.",
+      "rationale": "The story IS the inversion. A static stacked chart hides the dynamic; a scrubber turns the chart into a time machine the reader can drive themselves.",
+      "based_on": ["ana_02"]
+    },
+    "des_06": {
+      "label": "Agency-type yearly stack",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "stacked_area",
+        "data_source": "ana_05",
+        "x": "year",
+        "y": ["state", "private", "startup"],
+        "color_scheme": {
+          "state": "#5BAEE3",
+          "private": "#7BCFAE",
+          "startup": "#E3553D"
+        },
+        "highlight": [
+          {"year": 1984, "label": "first private launch"},
+          {"year": 2000, "label": "private overtakes state in cadence"},
+          {"year": 2006, "label": "first startup launch (Falcon 1)"}
+        ],
+        "interaction": "hover any year to see all three bands' counts",
+        "style": {
+          "background": "#0a0e1a",
+          "show_legend": true
+        }
+      },
+      "brief": "Three-band stacked area. State band carries the entire chart pre-1984, private peels off after 1984, startup wedge appears after 2006. Three event annotations on the chart. Hover shows exact values.",
+      "rationale": "The state-to-market shift is best seen as the relative size of the three bands changing over time — that is exactly what a stacked area chart shows.",
+      "based_on": ["ana_05"]
+    },
+    "des_07": {
+      "label": "SpaceX cumulative line + Falcon land-back annotation",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_09",
+        "x": "year",
+        "y": "cumulative",
+        "highlight": [
+          {"year": 2015, "label": "Falcon 9 first land-back"},
+          {"year": 2018, "value": 68, "label": "68 cumulative launches by Oct 2018"}
+        ],
+        "interaction": "hover to see cumulative count by year",
+        "style": {
+          "stroke_color": "#FFD27D",
+          "fill_under": "rgba(255,210,125,0.18)",
+          "background": "#0a0e1a",
+          "stroke_width": 3
+        }
+      },
+      "brief": "A single sharply-rising line filled underneath. The 2015 land-back marker is a small annotation above the line at the inflection point. Final point (2018, 68) is highlighted as a hollow circle.",
+      "rationale": "Cumulative trajectory is the single best visualisation of compounding growth. The slope IS the story.",
+      "based_on": ["ana_09"]
+    },
+    "des_08": {
+      "label": "SpaceX section image — Falcon-style booster landing",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "spacex_landing.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "prompt": "Editorial cinematic still of a Falcon-9-style reusable rocket booster descending toward an autonomous drone ship at sea, dramatic blue-orange sunset light, plume of exhaust below the booster, ocean waves visible, distant horizon, photorealistic but slightly painterly, no text, no logos, deep contrast, atmosphere of a defining engineering moment"
+      },
+      "brief": "Editorial photo-style still of a reusable booster on its descent toward an autonomous drone ship. Used as a chapter break above the cumulative chart in the SpaceX section.",
+      "rationale": "The 2015 land-back is the cultural milestone behind the line's slope change — a single image of that moment lands harder than another chart.",
+      "based_on": []
+    },
+    "des_09": {
+      "label": "Failure rate by decade — bar chart",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_10",
+        "x": "decade",
+        "y": "fail_pct",
+        "highlight": [
+          {"decade": 1950, "label": "53.8%"},
+          {"decade": 1980, "label": "2.9% — lowest"}
+        ],
+        "interaction": "hover bar shows total launches + failure count",
+        "style": {
+          "background": "#0a0e1a",
+          "bar_color": "#E3553D",
+          "label_above_bars": true,
+          "y_axis_format": "%"
+        }
+      },
+      "brief": "Seven vertical bars, one per decade, colored a muted red. Bar heights collapse from 53.8% in the 1950s to 2.9% in the 1980s, with the modern decades hovering between 3% and 5%. Each bar has its percentage labeled above.",
+      "rationale": "Decade-by-decade is the natural granularity for a learning curve. Bar chart is decisive — no exploration needed beyond the labels.",
+      "based_on": ["ana_10"]
+    },
+    "des_10": {
+      "label": "Failure rate by agency type — small comparison",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "bar_horizontal",
+        "data_source": "ana_11",
+        "x": "fail_pct",
+        "y": "agency_type",
+        "highlight": [
+          {"agency_type": "private", "label": "lowest: 2.6%"}
+        ],
+        "interaction": "static, no hover",
+        "style": {
+          "background": "transparent",
+          "bar_color": "#5BAEE3",
+          "label_inline": true
+        }
+      },
+      "brief": "Three short horizontal bars: private (2.6%), state (6.6%), startup (7.1%). Labels inline. Tiny — a sidekick to the main decade bar chart.",
+      "rationale": "The private-vs-state-vs-startup ordering is counter-intuitive enough to deserve its own visual, but small — the decade chart is the lead.",
+      "based_on": ["ana_11"]
+    },
+    "des_11": {
+      "label": "State-by-state launch totals — bar chart",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "bar_horizontal",
+        "data_source": "ana_14",
+        "x": "count",
+        "y": "name",
+        "highlight": [
+          {"name": "Soviet Union", "label": "all-time leader: 2,444"},
+          {"name": "China", "label": "2018 leader: 28"}
+        ],
+        "interaction": "hover bar shows count + share %",
+        "style": {
+          "background": "#0a0e1a",
+          "bar_color_by_bloc": {
+            "Soviet Union": "#E3553D",
+            "Russia": "#E3553D",
+            "United States": "#5BAEE3",
+            "China": "#F4C842",
+            "default": "#9DA1A8"
+          },
+          "sort_descending": true
+        }
+      },
+      "brief": "Top-12 horizontal bar chart of launches by state. Bars colored by bloc (red for SU/RU, blue for US, gold for CN, gray for everyone else). The Soviet bar dominates at the top; everyone after the top six is a faint trace.",
+      "rationale": "A geography-of-providers chart that doesn't depend on lat/long (which are missing in the source data). Cleaner than a brittle map.",
+      "based_on": ["ana_14"]
+    },
+    "des_12": {
+      "label": "2018 leaderboard — closing chart",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "bar_horizontal",
+        "data_source": "ana_07",
+        "x": "count",
+        "y": "name",
+        "color": "type",
+        "highlight": [
+          {"name": "China (state-level)", "label": "1st: 28"},
+          {"name": "SpaceX", "label": "2nd: 17 — single firm beats Russia"},
+          {"name": "Russia (state-level)", "label": "9 — once the world's leader"}
+        ],
+        "interaction": "hover shows operator type + exact count",
+        "style": {
+          "background": "#0a0e1a",
+          "color_scheme": {
+            "state": "#5BAEE3",
+            "private": "#7BCFAE",
+            "startup": "#E3553D"
+          },
+          "sort_descending": true
+        }
+      },
+      "brief": "Twelve-bar horizontal chart of every operator that launched in 2018, colored by agency_type. Closing visual that ties the data into the editorial: state agencies still big, but SpaceX (red) sits between China and Russia.",
+      "rationale": "The closing question of the piece is 'what does the new order look like?' This chart IS the answer.",
+      "based_on": ["ana_07"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial — deep navy/black canvas with warm-orange and cool-blue data accents; serif display headlines; generous whitespace",
+    "text_visual_pattern": "visual-first per section — every section opens with prose, then drops into its visual; charts inherit the dark canvas so they read as continuous with the page rather than as Vega-Lite default boxes",
+    "centrepiece": "des_05",
+    "anti_sameness_notes": "Avoid the standard chart-after-chart-after-chart rhythm. Open with an animated still (rare in this pipeline), show four giant numbers as the hook, drop into a year-scrubber as the centerpiece, break with a cinematic landing image before the SpaceX cumulative line, close with a rank chart that recolors by operator type.",
+    "typography_notes": "Headlines: Georgia or system serif at 56-72px on the hook stat block. Body: Georgia at 18px, line-height 1.7. Labels: system-ui at 13px. Stat callouts: 84px on the hook block, 56px elsewhere. Generous 4rem gap between sections."
+  }
+}

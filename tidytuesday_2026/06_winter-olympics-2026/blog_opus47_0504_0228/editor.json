@@ -1,0 +1,101 @@
+{
+  "meta": {"role": "editor", "version": "2.0"},
+  "core_claim": "The Milano Cortina 2026 schedule is a map of attention and access — engineered to concentrate medals in prime-time slots and final days, while hiding huge variation in how thin each gold's competing field actually was.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — 1,866 sessions across six clusters",
+      "purpose": "hook",
+      "title": "1,866 sessions, six valleys, 19 days",
+      "findings": ["ana_06","ana_09"],
+      "context": ["det_01","det_06"],
+      "triage": {"ana_06":"supporting","ana_09":"supporting"},
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "image",
+      "editorial_notes": "Use 1,866 / 138 / 30 / 22,000 km^2 verbatim."
+    },
+    "edt_02": {
+      "label": "The 'easiest' gold",
+      "purpose": "evidence",
+      "title": "Where the gold was easier to win",
+      "findings": ["ana_04","ana_02"],
+      "context": ["det_02","det_03"],
+      "triage": {"ana_04":"lead","ana_02":"supporting"},
+      "chart_placeholder": "ana_04",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Speed skating 1.68 vs Alpine 0.375 is the lead contrast. Frame ski mountaineering as 'mid-table at 0.69' not 'easy'. NOC counts are estimates."
+    },
+    "edt_03": {
+      "label": "When medals actually happen",
+      "purpose": "evidence",
+      "title": "The schedule's two clocks",
+      "findings": ["ana_08","ana_07"],
+      "context": ["det_05","det_09"],
+      "triage": {"ana_08":"lead","ana_07":"supporting"},
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "interactive",
+      "editorial_notes": "13:00 and 20:00 local Italian peaks map to NBC US ET morning and afternoon prime."
+    },
+    "edt_04": {
+      "label": "The mountain map",
+      "purpose": "evidence",
+      "title": "Where each medal lives",
+      "findings": ["ana_11","ana_09"],
+      "context": ["det_01"],
+      "triage": {"ana_11":"lead","ana_09":"supporting"},
+      "chart_placeholder": "ana_11",
+      "media_placeholder": "map",
+      "editorial_notes": "Sankey or flow chart showing cluster -> discipline. Anterselva 100% medal density is the punch line."
+    },
+    "edt_05": {
+      "label": "Which sport eats the most schedule",
+      "purpose": "context",
+      "title": "Curling vs. short track: the schedule's longest and shortest sessions",
+      "findings": ["ana_01","ana_05"],
+      "context": ["det_07"],
+      "triage": {"ana_01":"supporting","ana_05":"supporting"},
+      "chart_placeholder": "ana_01",
+      "media_placeholder": null,
+      "editorial_notes": "Lean into the 160 min vs 12.6 min contrast as the closing line of the section."
+    },
+    "edt_06": {
+      "label": "Closing-weekend sprint",
+      "purpose": "turn",
+      "title": "The back-loaded medal calendar",
+      "findings": ["ana_12","ana_13"],
+      "context": ["det_06"],
+      "triage": {"ana_13":"supporting","ana_12":"supporting"},
+      "chart_placeholder": "ana_13",
+      "media_placeholder": null,
+      "editorial_notes": "The 62.2% second-half medal share is the spine."
+    },
+    "edt_07": {
+      "label": "Close — what the schedule admits",
+      "purpose": "close",
+      "title": "What the schedule admits",
+      "findings": ["ana_03","ana_14"],
+      "context": ["det_06"],
+      "triage": {"ana_03":"color","ana_14":"color"},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "End on tension: 1,866 events but not 1,866 equal experiences."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "supporting",
+    "ana_03": "color",
+    "ana_04": "lead",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "lead",
+    "ana_09": "supporting",
+    "ana_10": "cut",
+    "ana_11": "lead",
+    "ana_12": "supporting",
+    "ana_13": "supporting",
+    "ana_14": "color",
+    "ana_15": "cut",
+    "ana_16": "cut"
+  }
+}

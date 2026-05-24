@@ -1,0 +1,187 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "A volunteer-collected ledger of 178,749 repair attempts shows that whether a broken object can be saved is mostly a property of its design, not of effort or skill — and 26 rows in 2023-2026 quietly mark the entry of generative AI into the global repair-cafe toolkit.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — Sewing vs circuits",
+      "purpose": "hook",
+      "title": null,
+      "findings": ["ana_02", "ana_04", "ana_08"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_02": "supporting",
+        "ana_04": "lead",
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": "image",
+      "editorial_notes": "97.5% knives and 36.8% printers must be exact. Do not round."
+    },
+    "edt_02": {
+      "label": "A short history of the fix-it cafe",
+      "purpose": "context",
+      "title": "From Amsterdam-West to a global hockey stick",
+      "findings": ["ana_06", "ana_01"],
+      "context": ["det_01", "det_02"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "Activity grew 1,613x; show the dip in 2020-2021 because of COVID, then rebound."
+    },
+    "edt_03": {
+      "label": "The two items everyone brings",
+      "purpose": "evidence",
+      "title": "What everyone brings to the cafe",
+      "findings": ["ana_03", "ana_05"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_03": "supporting",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": null,
+      "editorial_notes": "NL=50.8% caveat must stay attached to product rankings."
+    },
+    "edt_04": {
+      "label": "What kills a vacuum",
+      "purpose": "evidence",
+      "title": "It's the parts, mostly",
+      "findings": ["ana_21", "ana_09", "ana_14"],
+      "context": ["det_04", "det_06"],
+      "triage": {
+        "ana_21": "supporting",
+        "ana_09": "lead",
+        "ana_14": "supporting"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": null,
+      "editorial_notes": "Mention EU Right-to-Repair Directive 2024/1799 explicitly."
+    },
+    "edt_05": {
+      "label": "The brand that vacuums won't survive",
+      "purpose": "turn",
+      "title": "When brand is destiny",
+      "findings": ["ana_16"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_16": "supporting"
+      },
+      "chart_placeholder": "ana_16",
+      "media_placeholder": null,
+      "editorial_notes": "Dyson 47.4% is the clean punch. Henry 69.2% is the contrast. Use both."
+    },
+    "edt_06": {
+      "label": "The vintage rebound",
+      "purpose": "evidence",
+      "title": "Why old things win",
+      "findings": ["ana_18", "ana_19"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_18": "supporting",
+        "ana_19": "supporting"
+      },
+      "chart_placeholder": "ana_18",
+      "media_placeholder": null,
+      "editorial_notes": "U-shape is the core visual. Sewing machines are the king of vintage."
+    },
+    "edt_07": {
+      "label": "When fixers ask the chatbot",
+      "purpose": "turn",
+      "title": "The chatbot enters the cafe",
+      "findings": ["ana_12", "ana_13"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_12": "lead",
+        "ana_13": "color"
+      },
+      "chart_placeholder": "ana_12",
+      "media_placeholder": "video",
+      "editorial_notes": "Tiny absolute counts — do not let the chart understate by using percentages alone. Show counts."
+    },
+    "edt_08": {
+      "label": "The trouser test",
+      "purpose": "color",
+      "title": "Hemming is repair",
+      "findings": ["ana_20", "ana_08"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_20": "supporting",
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": "ana_20",
+      "media_placeholder": null,
+      "editorial_notes": "The 'te lang' (too long) defect is the surprise — clothing alteration disguised as repair."
+    },
+    "edt_09": {
+      "label": "The voices in the failure column",
+      "purpose": "color",
+      "title": "Field notes from the failure column",
+      "findings": ["ana_23"],
+      "context": ["det_08"],
+      "triage": {
+        "ana_23": "color"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "instance",
+      "editorial_notes": "Show original-language quotes with English translations side by side. The cigar-smoke amplifier line is essential."
+    },
+    "edt_10": {
+      "label": "2,707 tonnes, and counting",
+      "purpose": "close",
+      "title": "Counting the carbon",
+      "findings": ["ana_22"],
+      "context": ["det_03", "det_04"],
+      "triage": {
+        "ana_22": "supporting"
+      },
+      "chart_placeholder": "ana_22",
+      "media_placeholder": null,
+      "editorial_notes": "Attribute the 24 kg/repair figure to Steve Privett by name. EU 2024/1799 transposition deadline July 2026."
+    },
+    "edt_11": {
+      "label": "Close — Fixable is a design choice",
+      "purpose": "close",
+      "title": "Fixable is a design choice",
+      "findings": ["ana_15", "ana_04"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_15": "supporting",
+        "ana_04": "supporting"
+      },
+      "chart_placeholder": "ana_15",
+      "media_placeholder": null,
+      "editorial_notes": "End on the manufacturer's responsibility, not on the volunteer's effort."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "lead",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "cut",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "cut",
+    "ana_11": "cut",
+    "ana_12": "supporting",
+    "ana_13": "color",
+    "ana_14": "supporting",
+    "ana_15": "supporting",
+    "ana_16": "supporting",
+    "ana_17": "cut",
+    "ana_18": "supporting",
+    "ana_19": "supporting",
+    "ana_20": "supporting",
+    "ana_21": "supporting",
+    "ana_22": "supporting",
+    "ana_23": "color"
+  }
+}

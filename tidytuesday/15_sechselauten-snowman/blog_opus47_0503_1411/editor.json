@@ -1,0 +1,109 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "Zurich's exploding-snowman folk forecast does not predict summer temperature - the correlation is non-significant and points the wrong way - while the same 67-year record shows real, accelerating warming on the Swiss Plateau.",
+  "items": {
+    "edt_01": {
+      "label": "The snowman gets a microphone",
+      "purpose": "hook",
+      "title": "The snowman gets a microphone",
+      "findings": ["ana_03", "ana_09"],
+      "context": ["det_01", "det_02", "det_05"],
+      "triage": {
+        "ana_03": "supporting",
+        "ana_09": "lead"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "instance",
+      "editorial_notes": "Hook with 2023's 57-min burn followed by 20.07C summer. Embed the Boeoegg burning video (inst_01). Hook should land before any prose explaining what the festival is."
+    },
+    "edt_02": {
+      "label": "The folk rule, in one chart",
+      "purpose": "evidence",
+      "title": "The folk rule, in one chart",
+      "findings": ["ana_05", "ana_06", "ana_12"],
+      "context": ["det_02", "det_03"],
+      "triage": {
+        "ana_05": "supporting",
+        "ana_06": "supporting",
+        "ana_12": "lead"
+      },
+      "chart_placeholder": "ana_12",
+      "media_placeholder": null,
+      "editorial_notes": "r=0.194 and p=0.121 are exact, do not round. Highlight that correlation is the wrong direction. The scatter is the centerpiece chart of the whole blog."
+    },
+    "edt_03": {
+      "label": "How wrong, exactly",
+      "purpose": "turn",
+      "title": "How wrong, exactly",
+      "findings": ["ana_07", "ana_08"],
+      "context": ["det_02", "det_03"],
+      "triage": {
+        "ana_07": "lead",
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "interactive",
+      "editorial_notes": "Best place for a guess-first interaction: ask the reader to predict whether fast burns are followed by hotter summers. Then reveal the 41.5% vs 84.6% comparison. Numbers 6.3% / 24.2% / 41.5% / 84.6% must be exact."
+    },
+    "edt_04": {
+      "label": "But the burns themselves keep getting weirder",
+      "purpose": "context",
+      "title": "But the burns themselves keep getting weirder",
+      "findings": ["ana_02", "ana_11"],
+      "context": ["det_05", "det_07"],
+      "triage": {
+        "ana_02": "supporting",
+        "ana_11": "lead"
+      },
+      "chart_placeholder": "ana_11",
+      "media_placeholder": null,
+      "editorial_notes": "Decadal mean duration chart - 2020s averaging 33.6 min stands out. Tie the swings to MeteoSwiss's pyre / humidity / accelerant explanation."
+    },
+    "edt_05": {
+      "label": "And the summers really are getting hotter",
+      "purpose": "turn",
+      "title": "And the summers really are getting hotter",
+      "findings": ["ana_10", "ana_13", "ana_04"],
+      "context": ["det_08"],
+      "triage": {
+        "ana_10": "lead",
+        "ana_13": "supporting",
+        "ana_04": "supporting"
+      },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "image",
+      "editorial_notes": "1.86C, 4.15C, 66.7% are exact numbers. The visual centerpiece here should let the reader see the trend (line of best fit + record-summer markers). Do NOT frame this as a hidden snowman skill - it is the snowman's blind spot."
+    },
+    "edt_06": {
+      "label": "What we keep watching",
+      "purpose": "close",
+      "title": "What we keep watching",
+      "findings": ["ana_09"],
+      "context": ["det_06", "det_09"],
+      "triage": {
+        "ana_09": "color"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "instance",
+      "editorial_notes": "Closing beat that explains the 2020/2024 NAs and ends on an open question. Embed inst_02 (DW Euromaxx explainer) for non-Swiss readers who want the festival itself, or repeat inst_01. Avoid summary - end on tension."
+    }
+  },
+  "full_triage": {
+    "ana_01": "cut",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "lead",
+    "ana_08": "supporting",
+    "ana_09": "lead",
+    "ana_10": "lead",
+    "ana_11": "lead",
+    "ana_12": "lead",
+    "ana_13": "supporting"
+  }
+}

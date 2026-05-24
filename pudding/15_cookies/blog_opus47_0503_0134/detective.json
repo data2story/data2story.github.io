@@ -1,0 +1,172 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: Pudding 2018 essay by Elle O'Brien",
+      "content": "This dataset comes from 'Baking the Most Average Chocolate Chip Cookie', a data-journalism essay published by The Pudding in May 2018, written by Elle O'Brien (machine learning and recipe creation) with editorial collaboration from Amber Thomas. O'Brien collected an initial pool of about 915 chocolate chip cookie recipes from AllRecipes and Epicurious and filtered down to 211 'traditional' cookie recipes (excluding bars, brownies, alternative flavor variations, and dietary substitutions like vegan/gluten-free). All ingredient lists were rescaled to a common output of 48 cookies so quantities could be compared apples-to-apples. The essay's premise is mischievous: what does the *average* chocolate chip cookie actually look like, and what happens if you bake it?",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/05/cookies/",
+          "title": "Baking the Most Average Chocolate Chip Cookie — The Pudding",
+          "facts": [
+            "Published May 2018 by Elle O'Brien and Amber Thomas",
+            "Initial pool of 915 recipes from AllRecipes and Epicurious",
+            "Filtered to 211 traditional chocolate chip cookie recipes",
+            "All recipes scaled to 48 servings before averaging"
+          ]
+        },
+        {
+          "url": "https://amber.rbind.io/2018/05/10/cookies/",
+          "title": "Baking the Most Average Chocolate Chip Cookie — Amber Thomas portfolio",
+          "facts": [
+            "Three different algorithms tested: mathematical averaging, n-gram predictive text, neural network",
+            "All three computer-generated recipes were physically baked and tested"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Background: the chocolate chip cookie recipe canon",
+      "content": "The chocolate chip cookie was invented by Ruth Wakefield at the Toll House Inn in Whitman, Massachusetts around 1938. Her 'Toll House Crunch Cookie' recipe appeared in the 1938 edition of *Tried and True*. Nestle bought the rights to print the recipe on every bag of chocolate chips, which is why a single 'canonical' recipe — flour, butter, white sugar, brown sugar, eggs, vanilla, baking soda, salt, and chocolate chips — has been copied, tweaked, and re-uploaded by tens of thousands of home bakers ever since. This is why a corpus of 211 internet recipes is unusually homogeneous compared to almost any other dish: the variation is mostly in proportions, not in ingredient identity. That homogeneity is what makes 'averaging' even possible here. Bread, by contrast, has hundreds of distinct variants; chocolate chip cookies, almost one.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Chocolate_chip_cookie",
+          "title": "Chocolate chip cookie — Wikipedia",
+          "facts": [
+            "Invented by Ruth Wakefield at the Toll House Inn in Whitman, Massachusetts in 1938",
+            "Original recipe is the 'Toll House Crunch Cookie'",
+            "Nestle printed the recipe on every bag of chocolate chips"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "How the average was computed",
+      "content": "O'Brien used three approaches in parallel and baked the result of each. (1) Mathematical Averaging: take every recipe scaled to 48 cookies, compute the mean quantity for each ingredient that ever appears, and use a sentence-vector cluster of the directions to pick a representative set of instructions. This produces the headline 'average' recipe. (2) N-gram predictive text: a 4-gram model that predicts the next word in a recipe based on word frequencies, generating a recipe one word at a time. The first attempt fell into an endless loop on a single recipe containing cannelini beans (no, really — that recipe had to be removed). (3) Character-level neural network: a deep model trained letter-by-letter that produced surrealist outputs like '1.904 cups seconds' and obsessively repeated white sugar five times across one ingredient list. The clean comparison shows that 'averaging' is not one method but a family of methods — and only the mathematical mean produced something edible.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/05/cookies/",
+          "title": "Baking the Most Average Chocolate Chip Cookie",
+          "facts": [
+            "Three algorithms: mathematical mean, n-gram predictive text, character-level neural network",
+            "N-gram model entered an endless loop on a recipe containing cannelini beans",
+            "Neural network output included nonsense measurements like '1.904 cups seconds'",
+            "Neural network repeated white sugar 5 times in one ingredient list"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "What surprised even the author: 60 ingredients in one cookie",
+      "content": "The most striking feature of the mathematical average isn't its proportions — it's its *length*. Because the mean is taken over the union of every ingredient that appears in any recipe, the average cookie contains roughly 60 ingredients, including trace quantities of bourbon (0.019 tbsp), applesauce (0.002 cups), zucchini (0.010 cup), espresso, coriander, marshmallows, and crispy rice. O'Brien kept these micro-quantities 'for science.' This is the corpus's hidden long tail: the median home baker uses about 8-10 ingredients, but the union across 211 recipes runs into dozens. This is the most blog-worthy interpretive hook — averaging a population of recipes does not produce the median recipe, it produces a Frankenstein superset. Yet the cookie tastes fine: 'Chewy and very chocolatey, no one would suspect these cookies were made with everything in your pantry.'",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/05/cookies/",
+          "title": "Baking the Most Average Chocolate Chip Cookie",
+          "facts": [
+            "Mathematical average recipe contains around 60 distinct ingredients",
+            "Trace ingredients include bourbon (0.019 tbsp), applesauce (0.002 cups), zucchini (0.010 cup)",
+            "Author kept micro-quantities 'for science'",
+            "Author quote: 'Chewy and very chocolatey, no one would suspect these cookies were made with everything in your pantry.'"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Why this matters: averaging vs. preferring",
+      "content": "Beyond the cookie itself, the essay is a small argument about machine-learning style 'recommendation by average'. Algorithms that recommend films, songs, or news articles often optimize toward the average preference of a population — which, like the average cookie, can include trace amounts of every minority taste, mush them together, and call the result a representative output. The cookie experiment makes the failure mode tactile: average is not the same as typical, and it is definitely not the same as good. The mathematical-average cookie is technically edible. The neural-network cookie is gibberish. The n-gram cookie loops on cannelini beans. None of them are what a person would actually call their favorite chocolate chip cookie.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/05/cookies/",
+          "title": "Baking the Most Average Chocolate Chip Cookie",
+          "facts": [
+            "Essay is positioned as a playful demonstration of automated recipe generation methods",
+            "Three computer-generated recipes were physically baked and judged"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Caveat: rating data is partial and skewed high",
+      "content": "The dataset includes a normalized 0-1 rating column, but it is only present for AllRecipes (`AR_*`) and Epicurious (`E_*`) recipes — the 'Misc_' recipes (hand-collected) are mostly NA. AllRecipes ratings are also famously high: most recipes hover above 0.85 because users tend to rate the recipes they actually finished baking, which biases toward survivorship. The analyst should treat ratings as 'baseline acceptable' more than 'discriminating signal,' and not over-fit findings to the 5th decimal of average rating.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.allrecipes.com/article/our-rating-system/",
+          "title": "How AllRecipes ratings work",
+          "facts": [
+            "AllRecipes uses a 5-star rating with optional written reviews",
+            "Most published recipes have average ratings above 4 stars due to survivorship bias"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Benchmark: what a 'standard' Toll House recipe looks like",
+      "content": "The original Toll House recipe (per Nestle's package, scaled mentally to 48 cookies) calls for roughly: 2.25 cups all-purpose flour, 1 cup butter, 0.75 cup white sugar, 0.75 cup brown sugar, 2 eggs, 1 tsp vanilla, 1 tsp baking soda, 1 tsp salt, and 2 cups chocolate chips. This gives a yield close to 48 cookies. The interesting question for the analyst is: how much do the 211 internet recipes drift from this 80-year-old reference? Are bakers using more chocolate? Less butter? More brown sugar than white?",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://www.verybestbaking.com/toll-house/recipes/original-nestle-toll-house-chocolate-chip-cookies/",
+          "title": "Original Nestle Toll House Chocolate Chip Cookies",
+          "facts": [
+            "Standard yield: 60 cookies (≈48 when scaled down slightly)",
+            "Recipe uses 2.25 cups flour, 1 cup butter, 0.75 cup each of white and brown sugar, 2 eggs, 2 cups chips"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Scope suggestion for the Analyst",
+      "content": "The data has three things worth investigating deeply: (1) the *core* ingredient distributions (flour, butter, sugars, eggs, chips) — how tight or loose the distributions are, where the mean lands, what the variance looks like; (2) the *long tail* of rare ingredients — how many recipes use bourbon, espresso, coconut, oats, and how trace ingredients accumulate when averaged; (3) the *recipe length* and complexity question — how many ingredients does a typical recipe use, and what is the population shape? The directions text corpus is secondary but offers a window into shared instruction language ('cream the butter and sugars', 'drop by spoonfuls'). Ratings should be reported but not over-interpreted.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2018/05/cookies/",
+          "title": "Baking the Most Average Chocolate Chip Cookie",
+          "facts": [
+            "Original essay focuses on average ingredient quantities and recipe generation algorithms"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_cookie_closeup.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Chocolate_chip_cookie_closeup.jpg",
+      "license": "CC BY-SA 2.5",
+      "source": "Wikimedia Commons (photo by Editor at Large)",
+      "description": "Macro close-up of a single chocolate chip cookie, showing texture and chip distribution. Useful as a reference for the visual identity of a 'normal' cookie.",
+      "relates_to": ["det_02"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_cookies_baking_sheet.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Chocolate_chip_cookies_on_a_baking_sheet,_September_2009.jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "Wikimedia Commons (photo by YoAmes via Flickr)",
+      "description": "Multiple chocolate chip cookies arranged on a baking sheet. Shows what a batch looks like in its natural setting — useful tone reference for the Designer.",
+      "relates_to": ["det_01", "det_07"]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "ref_cookies_kimberly.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Chocolate_Chip_Cookies_-_kimberlykv.jpg",
+      "license": "CC BY 2.0",
+      "source": "Wikimedia Commons (photo by Kimberly Vardeman via Flickr)",
+      "description": "A pile of homemade chocolate chip cookies. Warm, golden tone — useful as inspiration for an editorial 'pile of cookies' hero image.",
+      "relates_to": ["det_04"]
+    }
+  ],
+  "instances": []
+}

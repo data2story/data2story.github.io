@@ -1,0 +1,112 @@
+{
+  "meta": {"role": "detective", "version": "2.0"},
+  "items": {
+    "det_01": {
+      "label": "What this dataset is and where it came from",
+      "content": "The TidyTuesday 2026 week 12 dataset is the first 1,000,001 decimal digits of pi (the leading '3' plus 1,000,000 fractional digits), shipped as a tidy CSV with two columns: digit_position (1-indexed) and digit (0-9). It was curated by Manasseh Oduor for the R-for-Data-Science TidyTuesday community, with the cleaning script pulling raw text from Eve Andersson's classic one-million-digits collection mirrored at github.com/eneko/Pi. Pi has been computed to 100 trillion places (Emma Haruka Iwao, 2022), so a million digits is a tiny but more-than-enough slice for empirical statistics: every length-5 string occurs on average 10 times, and every digit appears about 100,000 times in expectation.",
+      "category": "origin",
+      "sources": [
+        {"url": "https://github.com/eneko/Pi/blob/master/one-million.txt", "title": "Eneko Pi: one-million.txt", "facts": ["Source file is one million decimal digits of pi, 50 digits per line, prefixed by '3.'."]},
+        {"url": "https://en.wikipedia.org/wiki/Pi", "title": "Pi (Wikipedia)", "facts": ["Emma Haruka Iwao computed 100 trillion digits of pi in 2022.", "Earlier milestone: 10 trillion digits by Alexander Yee and Shigeru Kondo in 2011."]}
+      ]
+    },
+    "det_02": {
+      "label": "Pi is provably irrational and transcendental",
+      "content": "Two facts ground every story about pi's digits. First, Johann Heinrich Lambert proved in 1768 that pi is irrational — its decimal expansion never terminates and never falls into a permanent repeating block. Second, Ferdinand von Lindemann proved in 1882 that pi is transcendental — it is not the root of any non-zero polynomial with integer coefficients, which in particular implies the ancient problem of squaring the circle is impossible. Irrationality is what licenses us to ask 'are the digits random?' at all: a rational number's digits are eventually periodic, full stop, no statistics needed.",
+      "category": "background",
+      "sources": [
+        {"url": "https://en.wikipedia.org/wiki/Pi", "title": "Pi (Wikipedia)", "facts": ["Lambert proved pi irrational in 1768.", "Lindemann proved pi transcendental in 1882 (Lindemann-Weierstrass theorem)."]}
+      ]
+    },
+    "det_03": {
+      "label": "The normality conjecture — is pi a normal number?",
+      "content": "A real number is 'normal in base 10' if every digit 0-9 occurs in the limit with frequency 1/10, every two-digit string with frequency 1/100, every three-digit string with 1/1000, and so on for every length. Pi is widely conjectured to be normal but this has never been proved — and remarkably, no naturally occurring mathematical constant has been proven normal in any base. Empirical evidence is overwhelming: in the first 22.4 trillion digits (Trueb 2016), all length-1, length-2, and length-3 frequencies are statistically consistent with normality. Bailey and Crandall recast the question as a conjecture about chaotic dynamical systems, but a proof remains open. So when we look at the first million digits and find each digit close to 100,000 occurrences, we are seeing strong empirical support for a still-unsolved problem.",
+      "category": "background",
+      "sources": [
+        {"url": "https://www.davidhbailey.com/dhbpapers/normality-digits-pi.pdf", "title": "Bailey & Borwein, Normality and the Digits of pi", "facts": ["No naturally occurring mathematical constant has been proven normal in any base.", "Bailey and Crandall connected pi's normality to a conjecture about chaotic dynamics."]},
+          {"url": "https://en.wikipedia.org/wiki/Pi", "title": "Pi (Wikipedia)", "facts": ["Trueb (2016) reports digit frequencies up to length 3 consistent with normality across 22,459,157,718,361 digits.", "Yasumasa Kanada's tests on pi's digits found no statistical evidence of a pattern."]}
+      ]
+    },
+    "det_04": {
+      "label": "The Feynman point: six 9s starting at position 762",
+      "content": "Starting at decimal place 762 of pi sits the most famous digit-curiosity in mathematics: the run 999999. Six consecutive 9s, this early, would be expected only about 0.08% of the time for a uniformly random sequence. The string is colloquially called the 'Feynman point' because Richard Feynman is said to have joked he would memorize pi up to that point so he could end with '...nine nine nine nine nine nine and so on!' implying pi was rational. The attribution is shaky — Hofstadter's 1985 Metamagical Themas is the earliest written mention, and Feynman's biographer never recorded the line. The Feynman point also marks the first occurrence in pi of four-in-a-row, five-in-a-row, AND six-in-a-row of the same digit: all three records arrive at once, at the same position, with the digit 9. The next six-9 run is far away at position 193,034.",
+      "category": "interpretive_hook",
+      "sources": [
+        {"url": "https://en.wikipedia.org/wiki/Six_nines_in_pi", "title": "Six nines in pi (Wikipedia)", "facts": ["Six consecutive 9s start at decimal place 762.", "Probability ~0.08% for any particular six-digit string this early in a normal number.", "The string at 762 is also the first occurrence of four and five consecutive identical digits.", "The next six-9 run begins at position 193,034.", "Feynman attribution is disputed; first written mention is Hofstadter 1985."]},
+        {"url": "https://mathworld.wolfram.com/PiDigits.html", "title": "Pi Digits (Wolfram MathWorld)", "facts": ["The first occurrence of six 8s begins at position 222,299."]}
+      ]
+    },
+    "det_05": {
+      "label": "0123456789 lives 17 billion digits away — well beyond a million",
+      "content": "A natural question is: where in pi does the sequence 0123456789 first appear? The answer is position 17,387,594,880 — about 17.4 billion digits in. That is far beyond the one-million-digit window of this dataset, so we should NOT find 0123456789 here. We can, however, find every length-5 substring: in a million digits there are roughly 999,996 length-5 windows and only 100,000 possible 5-digit strings, so by the pigeonhole principle every 5-digit pattern is overwhelmingly likely (and in fact does) appear, often many times. The longer the pattern, the rarer: a length-7 string is expected only ~10 times in a million digits, length-8 once, length-9 effectively never. Knowing 0123456789 is 17 billion digits away gives the right context for what 'a million digits' can and cannot reveal.",
+      "category": "interpretive_hook",
+      "sources": [
+        {"url": "https://mathworld.wolfram.com/PiDigits.html", "title": "Pi Digits (Wolfram MathWorld)", "facts": ["The sequence 0123456789 first appears at position 17,387,594,880 in pi.", "The sequence 27182818284 (digits of e) first appears at position 45,111,908,393.", "314159 (the leading digits of pi itself) reappears at positions 176,451 and 1,259,351 within pi."]}
+      ],
+      "calculation": {"method": "arithmetic", "formula": "1,000,000 / 10^k expected occurrences of any length-k string", "result": "k=5 -> ~10; k=6 -> ~1; k=7 -> ~0.1; k=10 -> ~10^-4"}
+    },
+    "det_06": {
+      "label": "Why a 'transition matrix' on pi's digits is interesting",
+      "content": "A common test for randomness is independence: knowing digit n should give no information about digit n+1. The 10x10 matrix P, where P[i,j] = Pr(next digit = j | current digit = i), should be a uniform 10% in every cell if pi behaves like fair iid die rolls. Two complementary tests fall out: (1) the diagonal — 'self-transitions' P[i,i] — should each be 10%, with deviations bounded by the binomial standard error which for ~100,000 trials per row is about 0.095% (so 95% of cells should fall within roughly +/- 0.19 percentage points of 10%); (2) off-diagonal entries should also hover near 10% with no row or column structure. The TidyTuesday submission's hero plot already visualizes the diagonal as ten gauge charts; we can go further by displaying the full 10x10 heatmap and computing a chi-squared statistic against the uniform null.",
+      "category": "scope_suggestion",
+      "sources": [
+        {"url": "https://www.davidhbailey.com/dhbpapers/normality-digits-pi.pdf", "title": "Bailey & Borwein, Normality and the Digits of pi", "facts": ["Normality requires uniform frequency for every length-k pattern, including length-2 (transition pairs)."]}
+      ],
+      "calculation": {"method": "arithmetic", "formula": "stderr ~= sqrt(p*(1-p)/n) with p=0.1, n=100000", "result": "~0.095 percentage points; 95% CI half-width ~= 0.19pp"}
+    },
+    "det_07": {
+      "label": "The birthday-in-pi parlor trick",
+      "content": "A reliably charming pi fact: pick any 6-digit date (DDMMYY or YYMMDD), and it almost certainly appears somewhere in the first million digits. With ~999,995 length-6 windows and 1,000,000 possible 6-digit strings, the expected number of matches for any specific date is just under 1. With ~10 million windows you get ~10 matches. The probability that a specific 6-digit string appears at least once in n windows is roughly 1 - (1 - 10^-6)^n ~= 1 - exp(-n/10^6); at n = 999,995 that is 63%, at n = 3 million it is 95%, at n = 6.9 million it is 99.9%. The parlor trick is real, but the dataset is borderline: about 37% of birthdays will NOT appear in the first million digits — a far less famous, slightly disappointing fact.",
+      "category": "benchmark",
+      "sources": [
+        {"url": "https://www.angio.net/pi/", "title": "The Pi-Search Page", "facts": ["Pi-Search lets you find any string up to 120 digits in the first 200 million digits of pi.", "The probability of finding a specific 10-digit string in 200 million digits is about 0.995%."]}
+      ],
+      "calculation": {"method": "arithmetic", "formula": "P(at least one hit) = 1 - (1 - 10^-6)^999995", "result": "~0.632, i.e. 63.2% of 6-digit dates appear in first 1M digits"}
+    },
+    "det_08": {
+      "label": "What is achievable in a million digits — and what is not",
+      "content": "Setting expectations sharpens the story. In the first million digits we can: (a) measure each digit's frequency to ~0.03 percentage points of accuracy; (b) test the 100-cell 10x10 transition matrix with ~10,000 expected counts per cell — comfortably enough power for chi-squared; (c) find every 5-digit pattern, almost every 6-digit pattern, and the famous early 'firsts' like the Feynman point at position 762; (d) chart the longest run of each digit. We canNOT: (a) find 0123456789 (it is at digit 17.4 billion); (b) find runs of 7 or more identical digits (the first 7-in-a-row of any digit is at position 1,722,776 — just past our window for nines); (c) prove normality (no finite sample can). Communicating this 'reachable horizon' upfront is half the storytelling.",
+      "category": "scope_suggestion",
+      "sources": [
+        {"url": "https://en.wikipedia.org/wiki/Six_nines_in_pi", "title": "Six nines in pi (Wikipedia)", "facts": ["First seven-in-a-row of 9s in pi occurs at position 1,722,776 (just outside one million)."]},
+        {"url": "https://mathworld.wolfram.com/PiDigits.html", "title": "Pi Digits (Wolfram MathWorld)", "facts": ["0123456789 first appears at digit 17,387,594,880 of pi."]}
+      ]
+    },
+    "det_09": {
+      "label": "Why anyone should care about a million digits of pi",
+      "content": "Pi engineering needs are tiny: NASA's JPL navigates spacecraft across the solar system using just 15 digits of pi; 40 digits would let you compute the circumference of the observable universe to within the width of a hydrogen atom. So a million digits has zero engineering value. Its value is mathematical and pedagogical: pi's digits behave like a perfect random number generator (without being one), and that is the most accessible empirical example we have of a deterministic mathematical object that defeats every reasonable predictor. The dataset is a hands-on lesson in the difference between 'random' (process) and 'random-looking' (output) — a distinction at the heart of cryptography, statistical testing, and the philosophy of probability.",
+      "category": "why_it_matters",
+      "sources": [
+        {"url": "https://www.jpl.nasa.gov/edu/news/how-many-decimals-of-pi-do-we-really-need/", "title": "How Many Decimals of Pi Do We Really Need? — NASA JPL", "facts": ["JPL's highest accuracy calculations use 15 digits of pi.", "40 digits of pi would compute the circumference of the observable universe to within a hydrogen atom's width."]}
+      ]
+    },
+    "det_10": {
+      "label": "Reference: NASA JPL's '15 digits is enough'",
+      "content": "JPL's Marc Rayman explained that for the most precise navigation in the Deep Space Network — propagating Voyager 1 across roughly 12.5 billion miles — they use 3.141592653589793 (15 decimal places). Going to even 16 places would change the result by an amount smaller than the diameter of a hydrogen atom. This is the canonical 'how much pi do you really need' answer, and it is the perfect foil for our story: we have 60,000 times more digits than NASA, and we are using them to chase questions about randomness rather than engineering.",
+      "category": "benchmark",
+      "sources": [
+        {"url": "https://www.jpl.nasa.gov/edu/news/how-many-decimals-of-pi-do-we-really-need/", "title": "How Many Decimals of Pi Do We Really Need? — NASA JPL", "facts": ["Voyager 1 navigation uses 15 decimal places of pi.", "Going from 15 to 16 decimals changes a calculation by less than the width of a hydrogen atom across 12.5 billion miles."]}
+      ]
+    },
+    "det_11": {
+      "label": "Analyst scope guidance",
+      "content": "Five high-yield analyses for one million digits, prioritized: (1) digit frequencies with chi-squared vs uniform null and per-digit 95% confidence intervals — direct test of normality at length 1; (2) full 10x10 transition matrix as a heatmap, with chi-squared for length-2 normality; per-row standard errors expected ~0.095pp; (3) running cumulative frequencies for digit-by-digit convergence to 10% — when does each digit 'settle'?; (4) longest run of each digit and where it occurs — the Feynman point should appear at position 762; (5) substring search: where does the user's 'birthday' first appear, and where does each of 00, 11, ..., 99 first appear? AVOID: drawing conclusions about normality (the dataset is not large enough), or reporting any pattern in the digits as meaningful without comparing to the null. Use chi-squared, not just visual judgement.",
+      "category": "scope_suggestion",
+      "sources": [
+        {"url": "https://www.davidhbailey.com/dhbpapers/normality-digits-pi.pdf", "title": "Bailey & Borwein, Normality and the Digits of pi", "facts": ["Normality requires testing every length-k pattern frequency."]}
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "pi_self_transitions.png",
+      "url": "(local in DATA_DIR)",
+      "license": "TidyTuesday community submission, attribution Manasseh Oduor",
+      "source": "DATA_DIR/pi_self_transitions.png",
+      "description": "Original TidyTuesday hero figure: ten gauge charts, one per digit, showing the self-transition rate (probability digit i is followed by digit i again). All hover within ~0.2pp of 10%. Good visual reference for the hero of our blog.",
+      "relates_to": ["det_03", "det_06"]
+    }
+  ],
+  "instances": []
+}

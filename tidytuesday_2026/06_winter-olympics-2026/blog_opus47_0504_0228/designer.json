@@ -1,0 +1,264 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Lead with the schedule itself as a visual document. Default to charts where data is rich; lean on a guess-first interactive for the lead finding (medals-per-NOC); use a single hero video animating an Italian alpine still; restrained image set tied to specific findings; sonification of medal-density-by-day for audio.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "Six rich quantitative findings each anchor a chart: calendar heatmap, medals-per-NOC bar, hour-of-day distribution, cluster Sankey, discipline session counts, and first/second-half split."},
+      "image": {"used": true, "reason": "Three editorial images set place (Dolomites teaser), structural rhythm (curling sheet for the long-session story), and individual stake (ski mountaineer for the new-sport beat)."},
+      "video": {"used": true, "reason": "One image2video on the teaser still — a slow parallax across the alpine valley — is enough motion to set the cinematic frame without runaway video calls."},
+      "audio": {"used": true, "reason": "Sonification mapping daily medal-event count to ascending pitch over a 19-day timeline. Lets the reader hear the back-loaded medal calendar build."},
+      "interactive_or_map": {"used": true, "reason": "Lead chart (medals-per-NOC) is presented as a guess-first interactive: reader picks which discipline they think had the thinnest field per medal, then the bar chart reveals. Calendar heatmap also has hover interaction."}
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero image — Dolomites at twilight",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "prompt": "Cinematic wide shot of the Italian Dolomites at twilight: snow-covered alpine peaks under a deep navy sky with a faint orange afterglow, a single lit ski jumping ramp glowing in the foreground."
+      },
+      "brief": "Full-bleed hero image of the Italian Dolomites at dusk. Establishes geography and mood before any text.",
+      "rationale": "The dataset is fundamentally about a place — northern Italy at the height of winter. A still image of that place is a more honest opening than any chart.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion (image2video on teaser_hero)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "model": "google/veo-3.1-fast",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "Slow cinematic parallax push toward the lit ski jumping ramp, gentle drift of fine snow particles across the foreground.",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Six-second loopable video derived from the teaser hero. Plays muted on scroll into view, with poster fallback to teaser_hero.png.",
+      "rationale": "Animates the strongest still without forcing a separate text2video shoot — preserves composition while giving the page a kinetic open.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Top-line stat callouts — by the numbers",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "callouts": [
+          {"value": "1,866", "label": "scheduled sessions over 19 days", "data_source": "ana_06"},
+          {"value": "344", "label": "medal events", "data_source": "ana_02"},
+          {"value": "13", "label": "venues across six valleys", "data_source": "ana_09"},
+          {"value": "22,000+ km²", "label": "geographic spread of the Games", "data_source": null}
+        ]
+      },
+      "brief": "Four big-number callouts in a single horizontal row at the top of the hook section. Large 56-72px figures, small caps captions underneath.",
+      "rationale": "Open with verifiable scale before any chart. The reader gets the size of the thing in five seconds.",
+      "based_on": ["ana_06","ana_02","ana_09"]
+    },
+    "des_04": {
+      "label": "Calendar heatmap — events per day",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "calendar_heatmap",
+        "data_source": "ana_06",
+        "x": "date",
+        "y": "single row",
+        "color": "total",
+        "secondary_color_metric": "medal",
+        "highlight": {"date": "2026-02-13", "label": "Peak: 138 sessions"},
+        "interaction": "Hover any cell to show that date's total/medal/training counts; toggle button switches color encoding between 'total events' and 'medal events'.",
+        "style": {"palette": "blues_to_warm", "no_gridlines": true, "cell_size": 38}
+      },
+      "brief": "Single-row 19-cell calendar heatmap (one cell per day). Two encodings: total events and medal events, toggleable. Friday Feb 13 (138 events) gets a small label, the closing day Sunday Feb 22 (30 events / 14 medal) gets an end label. Below, a slim secondary row shows the medal-event share with the same date axis.",
+      "rationale": "The 19-day rhythm of the Games maps perfectly onto a horizontal calendar strip. Two color toggles let readers see the difference between 'busy' and 'consequential' days.",
+      "based_on": ["ana_06"]
+    },
+    "des_05": {
+      "label": "Lead interactive — Guess the easiest gold",
+      "type": "interactive",
+      "section": "edt_02",
+      "content": {
+        "interaction_type": "reader_quiz_then_chart",
+        "initial_state": "Six discipline cards arranged horizontally with the prompt 'Of these six sports, which had the most medals available per qualifying nation? (i.e. the thinnest field per gold)' Cards: Speed Skating, Alpine Skiing, Figure Skating, Ski Mountaineering, Ice Hockey, Cross-Country Skiing.",
+        "trigger": "Reader clicks one card",
+        "transition": "Selected card animates upward; the full 16-discipline ranked bar chart fades in below with the reader's pick highlighted in gold and the actual top finisher highlighted in red.",
+        "payoff": "Reveal text appears: 'Speed skating awarded 1.68 medal events per qualifying nation — over four times more than alpine skiing or figure skating (0.375 each).'",
+        "data_source": "ana_04"
+      },
+      "brief": "Guess-first interactive that asks readers to predict the medal-density leader before the chart loads. After they pick, the full bar chart of medals-per-NOC across all 16 disciplines appears with both their guess and the true top highlighted.",
+      "rationale": "This is the lead finding and also a counter-intuitive one — a quiz commits the reader to a position before the data lands, dramatically increasing the surprise.",
+      "based_on": ["ana_04"]
+    },
+    "des_06": {
+      "label": "Hour-of-day chart — the schedule's two clocks",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "stacked_bar",
+        "data_source": "ana_08",
+        "x": "hour",
+        "y": "count",
+        "stack": ["medal","non_medal"],
+        "highlight": [
+          {"hour": 13, "label": "13:00 = 07:00 ET (NBC morning)"},
+          {"hour": 20, "label": "20:00 = 14:00 ET (NBC prime)"}
+        ],
+        "interaction": "Hover bar shows total/medal split; small toggle to overlay an annotation strip showing the corresponding US Eastern Time.",
+        "style": {"palette": ["#d62728","#a0a0a0"], "annotations": "right-side ET clock"}
+      },
+      "brief": "Stacked vertical bars by start hour 8-22 local. Medal events stacked atop non-medal. Two annotation pins highlight 13:00 and 20:00, the dual peaks engineered for NBC.",
+      "rationale": "A simple stacked bar reads cleanly while the dual-peak structure carries the editorial point about prime-time engineering.",
+      "based_on": ["ana_08"]
+    },
+    "des_07": {
+      "label": "Cluster Sankey — where each medal lives",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "sankey",
+        "data_source": "ana_11",
+        "left_nodes": ["Anterselva","Bormio","Cortina","Livigno","Milan","Val di Fiemme","Unassigned"],
+        "right_nodes": "discipline list (ana_11.rows.discipline)",
+        "value": "medal_count",
+        "highlight": {"left": "Anterselva", "annotation": "100% medal density (33/33)"},
+        "interaction": "Hover ribbon shows cluster→discipline medal count and the cluster's total medal share.",
+        "style": {"palette": "italian_alpine: #1f3a5f navy, #d6c489 sand, #8b1c2b oxblood", "label_font": "12px"}
+      },
+      "brief": "Six-cluster left, twelve-discipline right Sankey diagram. Ribbon thickness = medal count. Anterselva→Biathlon ribbon is annotated as the only single-discipline cluster.",
+      "rationale": "Sankey makes the geographic concentration visible at a glance — Milan owning ice, Livigno owning freestyle/snowboard, Val di Fiemme owning Nordic.",
+      "based_on": ["ana_11"]
+    },
+    "des_08": {
+      "label": "Cluster map illustration",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "cluster_map.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "prompt": "Stylized aerial illustration of the six Olympic clusters connected by curved lines."
+      },
+      "brief": "Editorial info-graphic illustration sitting beside the Sankey: a stylized aerial of northern Italy showing the six clusters as glowing points connected by faint curved arcs.",
+      "rationale": "Pairs with the Sankey to anchor the reader geographically — the chart shows the math, the illustration shows the place.",
+      "based_on": ["ana_09"]
+    },
+    "des_09": {
+      "label": "Discipline session-count chart",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_01",
+        "x": "sessions",
+        "y": "discipline",
+        "highlight": [
+          {"discipline": "Curling", "label": "23.4% of all sessions"},
+          {"discipline": "Ski Mountaineering", "label": "1.2% — the new sport"}
+        ],
+        "secondary_chart": {
+          "type": "horizontal_bar_inset",
+          "data_source": "ana_05",
+          "x": "mean_min",
+          "y": "discipline",
+          "title": "Avg session length (min)"
+        },
+        "interaction": "Hover shows session count and avg duration side by side.",
+        "style": {"palette": "single_blue", "label_aligned_right": true}
+      },
+      "brief": "Two-panel horizontal bar: left panel = total sessions per discipline, right panel = average session duration. Sorted by sessions descending. Curling and ski mountaineering are flagged.",
+      "rationale": "Two angles on the same set of disciplines; the contrast between Curling (#1 sessions, longest avg) and Short Track (avg 12.6 min) is the editorial punch.",
+      "based_on": ["ana_01","ana_05"]
+    },
+    "des_10": {
+      "label": "Curling sheet image",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "curling_quiet.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "prompt": "Empty curling sheet, soft overhead arena lights, four red and yellow stones near the house."
+      },
+      "brief": "Quiet, atmospheric photograph of an empty curling sheet — pairs with the section's argument that curling occupies a fifth of the schedule with long, repetitive matches.",
+      "rationale": "An emotional counterweight to the chart-heavy section: the picture earns its slot by visually expressing 'duration' as much as the chart expresses 'count'.",
+      "based_on": []
+    },
+    "des_11": {
+      "label": "First vs second half split",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "two_pane_donut_or_stacked",
+        "data_source": "ana_13",
+        "left_pane": "First half (Feb 4-12): 130 medal of 836",
+        "right_pane": "Second half (Feb 13-22): 214 medal of 1030",
+        "highlight": {"second": "62.2% of all medals"},
+        "interaction": "Click each donut to swap to ana_12 closing-weekend breakdown by discipline.",
+        "style": {"palette": "italian_red_navy"}
+      },
+      "brief": "Two compact donut/ring charts side by side comparing first-half vs second-half medal density. A click swaps to show the closing-weekend medal breakdown by discipline.",
+      "rationale": "Two compact rings communicate the back-loading instantly; the click swap connects to ana_12 without adding another full chart slot.",
+      "based_on": ["ana_13","ana_12"]
+    },
+    "des_12": {
+      "label": "Skimo athlete image",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "skimo_athlete.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "prompt": "Ski mountaineer mid-stride during a sprint race climbing a steep snowy slope under cold morning light."
+      },
+      "brief": "A single athlete image inset beside the medals-per-NOC chart, captioned with the ski mountaineering Olympic-debut detail (13 nations, 9 medal sessions).",
+      "rationale": "Puts a face to the abstract metric; the new sport's debut is the strongest narrative thread inside the medal-density story.",
+      "based_on": ["ana_04"]
+    },
+    "des_13": {
+      "label": "Medal-density sonification (audio)",
+      "type": "audio",
+      "section": "edt_06",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "Reading 'medal events ramp from 0 on day 1 to 26 on Feb 11 then settle around 22 with a closing kick of 14' is hard. Hearing 19 ascending tones, one per day, with intensity mapped to medal count, makes the rhythm immediately felt.",
+        "trigger": "Click 'Hear the 19-day medal rhythm' button beside the calendar heatmap (des_04) and below the half-split chart (des_11).",
+        "ui_form": "chart-synced sonification — heatmap cell highlights as its tone plays",
+        "content": {
+          "filename": "medal_rhythm.wav",
+          "tool": "text2music",
+          "prompt": "Nineteen short marimba notes played in sequence at 180 BPM, pitch ascending with daily medal count from C3 (0 medals) to C5 (26 medals), no reverb, dry minimal tone, slight crescendo on the closing-weekend notes",
+          "model": "google/lyria-3-pro-preview",
+          "data_mapping": {"field": "medal_per_day_from_ana_06", "scale": "C major", "range_hz": [130, 1050], "duration_per_note_ms": 200}
+        },
+        "fallback": "If audio is muted or unsupported, the calendar heatmap row alone communicates the daily medal rhythm.",
+        "novelty_note": "Bound to the calendar heatmap rather than a generic floating audio card — the user only triggers it while watching the cells light up."
+      },
+      "brief": "Click-to-play 4-second marimba sweep through the 19 days of the Games, pitch encoding daily medal count. The calendar heatmap cells flash in sync.",
+      "rationale": "The dataset has a small ordered sequence (19 days) — perfect length for sonification without overwhelming the page.",
+      "based_on": ["ana_06","ana_13"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "editorial dark with Italian alpine accents (deep navy, snow white, oxblood red, warm sand)",
+    "text_visual_pattern": "video-first hook → stat row → calendar heatmap → guess-first interactive → chart → image break → chart → image break → ring chart → close",
+    "centrepiece": "des_05",
+    "anti_sameness_notes": "Avoid the standard chart-card-grid pattern. Use the calendar strip and Sankey as structural visual signatures unique to a schedule dataset. The audio is a sonification tied to a real chart, not a generic player card.",
+    "typography_notes": "Section headers in a tight serif (Playfair or similar). Stat callouts at 56-72px. Pull-quote treatment for the closing line. Keep prose column to ~720px for readability."
+  }
+}

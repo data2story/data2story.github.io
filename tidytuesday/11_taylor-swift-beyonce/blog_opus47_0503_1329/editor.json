@@ -1,0 +1,121 @@
+{
+  "meta": {"role": "editor", "version": "2.0"},
+  "core_claim": "Treated as two corpora, the headline framings invert: Beyoncé says 'love' more per word than Taylor, and Taylor's eight-album sentiment line stays positive until folklore.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — Two corpora, one comparison",
+      "purpose": "hook",
+      "title": null,
+      "findings": ["ana_01"],
+      "context": ["det_01", "det_04"],
+      "triage": {"ana_01": "supporting"},
+      "chart_placeholder": null,
+      "media_placeholder": "instance",
+      "editorial_notes": "Open with the dataset and the 2009 VMAs link; embed Single Ladies (inst_02) as the bridge between the two artists."
+    },
+    "edt_02": {
+      "label": "The lyric-size gap is structural",
+      "purpose": "context",
+      "title": "The 3.3x lyric gap is built into the dataset",
+      "findings": ["ana_01", "ana_03"],
+      "context": ["det_03"],
+      "triage": {"ana_01": "supporting", "ana_03": "supporting"},
+      "chart_placeholder": "ana_03",
+      "media_placeholder": null,
+      "editorial_notes": "Lemonade Film (Script) at 336 lines and 'Get Me Bodied' live versions must be visible — they're the proof that this isn't an artistic gap."
+    },
+    "edt_03": {
+      "label": "48 chants vs 12 hooks",
+      "purpose": "evidence",
+      "title": "48 chants vs 12 hooks",
+      "findings": ["ana_04"],
+      "context": [],
+      "triage": {"ana_04": "supporting"},
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "48 and 12 are the central numbers — they must appear in the prose AND be visually highlighted."
+    },
+    "edt_04": {
+      "label": "Beyoncé says love more",
+      "purpose": "turn",
+      "title": "Beyoncé says \"love\" more than Taylor does",
+      "findings": ["ana_06", "ana_05"],
+      "context": ["det_05"],
+      "triage": {"ana_06": "lead", "ana_05": "supporting"},
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "instance",
+      "editorial_notes": "ana_06 (1.5x ratio) is the LEAD finding of the whole piece. Embed Halo (inst_01) as the listening evidence."
+    },
+    "edt_05": {
+      "label": "Distinctive vocabularies",
+      "purpose": "evidence",
+      "title": "Bodies and rooms vs landscapes and daylight",
+      "findings": ["ana_15"],
+      "context": [],
+      "triage": {"ana_15": "supporting"},
+      "chart_placeholder": "ana_15",
+      "media_placeholder": null,
+      "editorial_notes": "Make the asymmetry between Beyoncé-leaning and Taylor-leaning words visible at a glance."
+    },
+    "edt_06": {
+      "label": "Folklore the only sad album",
+      "purpose": "turn",
+      "title": "Folklore is the only sad Taylor album",
+      "findings": ["ana_13", "ana_14"],
+      "context": ["det_05"],
+      "triage": {"ana_13": "lead", "ana_14": "supporting"},
+      "chart_placeholder": "ana_13",
+      "media_placeholder": "interactive",
+      "editorial_notes": "−0.21 must be exact and the only net-negative album. Show all 8 albums in order; let the reader feel the line cross zero."
+    },
+    "edt_07": {
+      "label": "Different markets, different #1s",
+      "purpose": "evidence",
+      "title": "Different markets, different #1s",
+      "findings": ["ana_10", "ana_11"],
+      "context": ["det_07"],
+      "triage": {"ana_10": "supporting", "ana_11": "color"},
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "interactive",
+      "editorial_notes": "100%, 87.5%, 75%, 87.5% are the country-by-country % numbers — show all 10 countries."
+    },
+    "edt_08": {
+      "label": "Per-album sales nearly identical",
+      "purpose": "evidence",
+      "title": "Per album, the sales gap nearly disappears",
+      "findings": ["ana_12", "ana_07"],
+      "context": ["det_06"],
+      "triage": {"ana_12": "supporting", "ana_07": "supporting"},
+      "chart_placeholder": "ana_07",
+      "media_placeholder": null,
+      "editorial_notes": "6.80M vs 6.90M is the headline; show all reported worldwide albums together so the proximity is visible."
+    },
+    "edt_09": {
+      "label": "Close — what the corpus says back",
+      "purpose": "close",
+      "title": null,
+      "findings": [],
+      "context": ["det_05", "det_08"],
+      "triage": {},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "BVE caveat goes here. Don't summarise; close on the asymmetry."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "cut",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "lead",
+    "ana_07": "supporting",
+    "ana_08": "cut",
+    "ana_10": "supporting",
+    "ana_11": "color",
+    "ana_12": "supporting",
+    "ana_13": "lead",
+    "ana_14": "supporting",
+    "ana_15": "supporting"
+  }
+}

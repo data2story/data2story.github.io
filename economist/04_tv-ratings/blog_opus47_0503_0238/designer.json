@@ -1,0 +1,395 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive_or_map); each channel chosen and executed in a data-driven way; skipping any channel requires an explicit reason in media_decisions",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The whole story is a comparison of distributions over time — full scatter, era boxplots, percentile bands, genre deltas, within-show trajectories. Charts are the load-bearing channel."
+      },
+      "image": {
+        "used": true,
+        "reason": "Two atmospheric stills set tone where prose and charts cannot — a wall-of-screens teaser image for the open and a CRT-in-empty-room horror still for the genre section. Both evoke the cultural feel of TV at scale rather than data."
+      },
+      "video": {
+        "used": true,
+        "reason": "The dataset is fundamentally about cumulative explosion (Peak TV) and slow upward drift. A short cinematic clip of the screen wall coming alive (teaser_motion) and a generated time-lapse of TVs accumulating into perspective (peak_tv_explosion) make those two ideas felt rather than read."
+      },
+      "audio": {
+        "used": true,
+        "reason": "The 30-year era progression (7.88 → 8.07 → 8.19) is exactly the kind of small ranked sequence sonification was made for. A short ascending piano-and-pad bed pairs with the era boxplot so the reader hears the modest lift while seeing it."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The whole essay turns on a counterintuitive finding (ceiling did not move). A guess-first reader quiz on the teaser scatter forces the reader to commit to a prediction — has TV gotten better? — before the data argues otherwise. No geographic dimension exists in the data, so the interactive form is a quiz, not a map."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — wall of glowing screens",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic editorial photograph: a vast wall of glowing television screens in the dark, hundreds of small panels stacked in a grid stretching into deep perspective, each screen a soft warm-toned vignette of indistinguishable footage, subtle bloom and color cast across the wall, dramatic chiaroscuro lighting, museum-like stillness, deep blue-black background with one warm golden cluster slightly brighter than the rest, no text, no logos, photorealistic 35mm film aesthetic",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed cinematic image of a vast grid of glowing TV screens disappearing into perspective. One small cluster glows warmer than the rest — a quiet visual hint of the 'Golden' in Golden Age without spoiling the finding. Used as the teaser background, behind the headline.",
+      "rationale": "An establishing image is the right opening for a 30-year cultural-form story. A still frames the abstract scale of TV in a single glance — better than charging straight into a chart.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Animated teaser still (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "extremely slow parallax push-in toward the warm golden cluster, faint flicker of individual screens, gentle drift of ambient dust motes, no camera shake, no jump cuts, restrained cinematic motion",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "The teaser_hero.png still is animated with a slow parallax push toward the warm cluster. Plays muted, autoplay, loop, with poster=teaser_hero.png. Sits behind the headline as a full-bleed living teaser. Reader can scroll past at any time.",
+      "rationale": "We invested in a strong still; image2video preserves that composition while adding restrained motion. Using the same composition for both still poster and video is intentional — it loads instantly and gracefully degrades on slow connections.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Reader quiz — guess the trend",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Above the full scatter chart, three big buttons: 'TV got a lot better', 'TV got a little better', 'TV stayed the same'. The scatter underneath is initially blurred / dimmed.",
+        "trigger": "Reader clicks one of the three buttons.",
+        "transition": "Selected button is highlighted, the scatter unblurs and fades in fully, and a small caption appears noting where the typical median actually moved (from 7.88 in the 1990s to 8.17 in the 2010s — a quarter point).",
+        "payoff": "Reader has committed to a prediction, then confronts the actual cloud of 2,266 dots. The caption only appears after the click, so the answer feels earned, not handed over.",
+        "data_source": "ana_12"
+      },
+      "brief": "Three-button guess-first interaction layered above the centerpiece scatter. The reader must pick a position (a lot / a little / not at all) before the chart resolves. After the click, the scatter unblurs and a single line of text reveals the actual 1990s vs. 2010s median.",
+      "rationale": "The blog's central tension is counterintuitive (ceiling didn't move). Forcing a guess turns the scatter from passive evidence into a payoff. It also avoids the standard chart-then-prose rhythm of the rest of the page.",
+      "based_on": ["ana_02", "ana_12"]
+    },
+    "des_04": {
+      "label": "Centerpiece scatter — every season as a dot",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "scatter",
+        "data_source": "ana_12",
+        "data_file": "code/scatter_all.json",
+        "columns": ["ym", "av_rating", "share", "title", "season"],
+        "x": "ym",
+        "x_type": "temporal",
+        "y": "av_rating",
+        "y_type": "quantitative",
+        "y_scale": {"domain": [4, 10]},
+        "size": "share",
+        "color": null,
+        "highlight": {
+          "shows": ["Breaking Bad", "Game of Thrones", "The Sopranos", "The Wire", "Mad Men", "Parenthood", "Dexter"]
+        },
+        "interaction": "Hover any dot for tooltip with title, season number, year-month, and exact rating. Highlighted shows are slightly larger and warm-colored; the rest are translucent grey dots.",
+        "style": {
+          "palette": "muted grey + warm accent",
+          "no_gridlines": true,
+          "opacity_default": 0.35,
+          "opacity_highlight": 0.9
+        }
+      },
+      "brief": "Full-width scatter (1990–2018 on x-axis, IMDb rating on y-axis). All 2,266 dots in muted grey. A handful of canonical shows (Sopranos, Wire, Breaking Bad, Mad Men, Game of Thrones, Parenthood, Dexter) are colored warm gold so the reader can pick out story-bearing dots. Hover gives exact title/season/rating. y-domain locked to 4–10 to show the actual distribution band, not zero.",
+      "rationale": "This is The Economist's original chart, redrawn. The full cloud is the only honest summary of the data — every section that follows is a zoom into one slice of it. Kept minimal so the cloud's shape (rising floor, flat top, densifying right side) is readable.",
+      "based_on": ["ana_12", "ana_05"]
+    },
+    "des_05": {
+      "label": "Era stats — three big numbers callout",
+      "type": "stat_callout",
+      "section": "edt_02",
+      "content": {
+        "values": [
+          {"value": "7.88", "label": "1990s median"},
+          {"value": "8.07", "label": "Cable-prestige median"},
+          {"value": "8.19", "label": "Streaming-era median"}
+        ],
+        "tagline": "+0.31 across nearly thirty years",
+        "data_source": "ana_06"
+      },
+      "brief": "Three big numbers in a horizontal row, each at ~64px, with small labels underneath. Below the row, a single caption: '+0.31 across nearly thirty years'. Visual weight should make clear the lift is real but small.",
+      "rationale": "These three numbers are the load-bearing exact values for the whole essay. Pulled out as a callout instead of buried in the chart so the reader sees the arithmetic of the Golden Age in one glance.",
+      "based_on": ["ana_06", "ana_02"]
+    },
+    "des_06": {
+      "label": "Era boxplot with sonification",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "boxplot",
+        "data_source": "ana_06",
+        "x": "era",
+        "y": "median",
+        "extra_marks": "Show p10, median, mean, p90 as a small range bar per era; n_seasons labeled above each.",
+        "highlight": {"era": "Streaming era (2013–2018)"},
+        "interaction": "Below the chart, a small 'Play era progression' button triggers the audio file (golden_age_sonification.wav). While playing, each era's median bar pulses in turn.",
+        "style": {"palette": "warm gold accent on cool grey", "no_gridlines": true}
+      },
+      "brief": "Three-bucket comparison (Pre-Sopranos / Cable prestige / Streaming era). Each era shows median + p10/p90 range. n_seasons labeled (181 / 955 / 1,130). A play button on the right plays the 30s sonification while pulsing each era's median in sequence — so the reader hears the +0.31 lift while seeing it.",
+      "rationale": "Boxplot here, not bar chart, because the spread per era matters as much as the median (the p90s are nearly identical even though the medians rose). Pairing with the sonification makes the modest lift audible and turns this section into the audio anchor of the page.",
+      "based_on": ["ana_06"]
+    },
+    "des_07": {
+      "label": "Era progression sonification audio",
+      "type": "audio",
+      "section": "edt_02",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "The 30-year median progression is a small ranked sequence (7.88 → 8.07 → 8.19) that sonification handles cleanly. Hearing the lift makes a +0.31 abstract-number argument concrete in a way the chart alone cannot.",
+        "trigger": "User clicks 'Play era progression' button next to the era boxplot.",
+        "ui_form": "chart-synced sonification — each era's median bar pulses in time with its corresponding audio segment. Mute toggle persists in sessionStorage. No autoplay.",
+        "content": {
+          "filename": "golden_age_sonification.wav",
+          "tool": "text2music",
+          "prompt": "Sparse cinematic ambient soundscape, slow ascending warm piano notes that gently rise in pitch over 30 seconds, evoking the gradual upward drift of a quality curve, subtle warm string pad underneath, no drums, no vocals, contemplative editorial mood, 80 BPM",
+          "model": "google/lyria-3-pro-preview",
+          "data_mapping": {
+            "field": "median",
+            "scale": "ascending warm piano",
+            "eras_played_in_sequence": ["Pre-Sopranos (1990–1998)", "Cable prestige (1999–2012)", "Streaming era (2013–2018)"]
+          }
+        },
+        "fallback": "If audio is muted or unsupported, the boxplot alone communicates the lift; the play button shows a tooltip 'audio unavailable' and is disabled.",
+        "novelty_note": "Not a generic click-to-play tone card. The sonification only makes sense when paired with the era boxplot — the synced visual highlight is the whole point."
+      },
+      "brief": "30-second ambient piano progression generated to match the era median progression. Plays only on click, syncs with era boxplot pulse animation. Visual fallback is the chart itself.",
+      "rationale": "Audio earns its slot here because the central argument is about a slow drift. Hearing a slow drift while watching a slow drift is the right reinforcement, and avoids the common mistake of slapping audio on a section that does not need it.",
+      "based_on": ["ana_06"]
+    },
+    "des_08": {
+      "label": "Floor vs. ceiling percentile bands chart",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "line_with_bands",
+        "data_source": "ana_04",
+        "x": "year",
+        "y_lines": ["p10", "p50", "p90"],
+        "y_scale": {"zero": false, "domain": [6.5, 9.5]},
+        "highlight": {
+          "p10_color": "warm gold",
+          "p90_color": "muted blue",
+          "annotations": [
+            {"label": "1995 ceiling 8.96", "year": 1995, "y": 8.96},
+            {"label": "2017 ceiling 8.90", "year": 2017, "y": 8.90},
+            {"label": "1995 floor 7.01", "year": 1995, "y": 7.01},
+            {"label": "2017 floor 7.23", "year": 2017, "y": 7.23}
+          ]
+        },
+        "interaction": "Hover any year for the exact p10/p50/p90 triplet.",
+        "style": {"palette": "warm gold for floor, muted slate for median, blue for ceiling", "no_gridlines": true}
+      },
+      "brief": "Three-line chart 1990-2018 showing p10 (floor), p50 (median), p90 (ceiling) per year. y-axis explicitly NOT zero-based (locked 6.5–9.5) so the reader can see that the three lines are nearly parallel except the floor rises slightly while the ceiling drifts flat. Annotations call out 1995 vs 2017 for both the floor and the ceiling.",
+      "rationale": "This chart carries the central counterintuitive finding. Putting the three percentile lines on the same y-axis lets the reader literally see the ceiling not moving while the floor rises. zero=false is critical here — a zero baseline would compress the differences into invisibility.",
+      "based_on": ["ana_04"]
+    },
+    "des_09": {
+      "label": "Volume bar chart — seasons per year",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_03",
+        "x": "year",
+        "y": "n_seasons",
+        "highlight": {
+          "annotations": [
+            {"label": "22 seasons", "year": 1990, "y": 22},
+            {"label": "230 seasons (10.5×)", "year": 2017, "y": 230},
+            {"label": "writers' strike dip", "year": 2008, "y": 73}
+          ]
+        },
+        "interaction": "Hover any bar for exact n_seasons.",
+        "style": {"palette": "warm gold gradient by year", "no_gridlines": true}
+      },
+      "brief": "Bar chart of drama seasons per year, 1990 through 2018 (2018 partial). Light annotations call out the 1990 baseline (22), the 2017 peak (230), and the small 2008 writers'-strike dip. The shape is the centerpiece: a textbook hockey-stick.",
+      "rationale": "Bar (not line) so each year's count is concrete and discrete. The hockey-stick is the cleanest visual argument for the 'volume is the bigger story' claim.",
+      "based_on": ["ana_03"]
+    },
+    "des_10": {
+      "label": "Peak TV explosion video",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "video",
+        "filename": "peak_tv_explosion.mp4",
+        "tool": "text2video",
+        "prompt": "Cinematic time-lapse: a single old television set in a dark room, then dozens, then hundreds of TVs cascading and stacking outward into infinity, each screen flickering different content, soft warm glow, perspective recedes into deep darkness, no humans, no text, gentle camera dolly back, dramatic accumulation effect representing television show explosion, 16:9 cinematic",
+        "model": "bytedance/seedance-2.0",
+        "duration": 5,
+        "aspect_ratio": "16:9"
+      },
+      "brief": "5-second cinematic clip of a single TV multiplying into hundreds, dollying back into deep perspective. Plays muted, autoplay-on-scroll-into-view, loop. Used as a chapter-break beat between the bar chart of n_seasons and the next section, so the reader feels the multiplication rather than only reading 'ten times more shows'.",
+      "rationale": "edt_04 is fundamentally about scale. A still cannot convey accumulation; a chart conveys the number but not the visceral feel. A short video lands the size of the change in a way prose and bar chart together cannot.",
+      "based_on": ["ana_03"]
+    },
+    "des_11": {
+      "label": "Marquee shows multi-line trajectory chart",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "multi_line",
+        "data_source": "ana_09",
+        "x": "year",
+        "y": "av_rating",
+        "y_scale": {"zero": false, "domain": [7.5, 10]},
+        "color": "title",
+        "highlight": {
+          "key_points": [
+            {"title": "Breaking Bad", "season": 5, "annotation": "8.71 → 9.55"},
+            {"title": "Game of Thrones", "season": 7, "annotation": "S7 dip 9.30"},
+            {"title": "Mad Men", "season": 4, "annotation": "8.85"}
+          ]
+        },
+        "interaction": "Click a show name in the legend to isolate that line. Hover any point for tooltip with show, season, year, rating.",
+        "style": {"palette": "5 distinct warm/cool tones", "no_gridlines": true}
+      },
+      "brief": "Multi-line chart of season ratings vs year for the five marquee prestige shows (Sopranos, Wire, Breaking Bad, Mad Men, Game of Thrones). Each show is one connected line traced by season. y-axis locked 7.5–10 to show the actual band these shows live in. Annotations highlight Breaking Bad's clean climb and GoT's S7 dip.",
+      "rationale": "These five shows are the recognizable handholds for the prestige-era story. A multi-line chart lets the reader see Breaking Bad's textbook arc against The Wire's flat mastery against GoT's volatility — five different shapes of 'rising'.",
+      "based_on": ["ana_09"]
+    },
+    "des_12": {
+      "label": "Game of Thrones S8 trailer (YouTube embed)",
+      "type": "instance",
+      "section": "edt_05",
+      "content": {
+        "instance_ref": "inst_01",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/rlR4PJn8b8I",
+        "caption": "The HBO trailer for Game of Thrones season 8 — the canonical streaming-era flame-out. The IMDb finale rating that followed (4.0/10) sits one year outside this dataset but is foreshadowed by the S7 dip you can see in the chart above."
+      },
+      "brief": "16:9 YouTube iframe embed of the official HBO Game of Thrones S8 trailer, with a short caption tying it to the foreshadowing visible in the marquee chart above.",
+      "rationale": "The detective verified one real instance (inst_01). It earns its place because GoT is in both the marquee chart and the flame-out section — the trailer is the artefact that connects the upward arc to its eventual collapse.",
+      "based_on": []
+    },
+    "des_13": {
+      "label": "Within-show flame-out trajectory chart (Dexter focus)",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "line_with_drop_annotation",
+        "data_source": "ana_10",
+        "x": "seasonNumber",
+        "y": "av_rating",
+        "y_scale": {"zero": false, "domain": [6, 10]},
+        "highlight": {
+          "annotations": [
+            {"label": "S4 peak 9.15", "season": 4, "y": 9.15},
+            {"label": "S8 finale 6.95 (−2.20)", "season": 8, "y": 6.95}
+          ]
+        },
+        "interaction": "Hover any point for season + year + exact rating.",
+        "style": {"palette": "warm line with red drop arrow at S7→S8", "no_gridlines": true}
+      },
+      "brief": "Single-line chart of Dexter's eight seasons with a sharp drop annotation between S7 and S8. The S4 peak (9.15) and S8 finale (6.95) are both labeled. y-axis locked 6–10 so the cliff is visible.",
+      "rationale": "Dexter's collapse is the textbook prestige flame-out and the editor leans on the exact 9.15 → 6.95 drop. A focused single-show line chart shows the shape of the cliff in one glance — better than re-using a bar of all flame-outs which would dilute the punchline.",
+      "based_on": ["ana_10", "ana_08"]
+    },
+    "des_14": {
+      "label": "Genre delta horizontal bar chart",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "diverging_bar",
+        "data_source": "ana_07",
+        "x": "delta",
+        "y": "genre",
+        "sort": "delta_descending",
+        "highlight": {
+          "annotations": [
+            {"label": "Horror +0.90", "genre": "Horror"},
+            {"label": "Sci-Fi −0.20", "genre": "Sci-Fi"},
+            {"label": "Thriller −0.30", "genre": "Thriller"}
+          ]
+        },
+        "interaction": "Hover any bar for genre + n_1990s + n_2010s + median deltas.",
+        "style": {"palette": "warm gold for positive deltas, cool blue for negative", "no_gridlines": true, "diverging_baseline": 0}
+      },
+      "brief": "Horizontal diverging bar chart, one bar per genre, sorted by delta. Positive deltas (rising genres) in warm gold, the two negatives (Sci-Fi and Thriller) in cool blue, baseline at 0. Horror's 0.90 sits alone at the top.",
+      "rationale": "A diverging bar makes the rare negative deltas pop visually. Sorting by delta reads as a leaderboard of which genres won the Golden Age — a cleaner argument than a heatmap or grouped bar.",
+      "based_on": ["ana_07"]
+    },
+    "des_15": {
+      "label": "Horror genre atmospheric still",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "horror_genre.png",
+        "tool": "text2image",
+        "prompt": "Editorial collage-style photograph evoking television horror genre: empty haunted suburban living room at night, single old CRT television glowing pale blue in the dark, faint static on screen, long shadows on patterned wallpaper, atmospheric fog, melancholic and unsettling mood, muted teal and amber palette, 35mm film grain, cinematic, no text in frame",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Atmospheric still of a CRT TV in an empty haunted-feeling living room. Sits at the top of edt_07 as a tone-setter before the genre delta chart. Breaks chart-density rhythm and visually anchors the 'Horror won the Golden Age' headline.",
+      "rationale": "Visual variation matters here — we have just been through three charts in a row. A single moody still pulls the page out of chart-fatigue and matches the editor's note that an atmospheric horror image would fit well.",
+      "based_on": ["ana_07"]
+    },
+    "des_16": {
+      "label": "Three big synthesis numbers",
+      "type": "stat_callout",
+      "section": "edt_08",
+      "content": {
+        "values": [
+          {"value": "10.5×", "label": "more drama seasons in 2017 than 1990", "data_source": "ana_03"},
+          {"value": "+0.31", "label": "median lift, pre-Sopranos → streaming", "data_source": "ana_06"},
+          {"value": "8.96 → 8.90", "label": "ceiling 1995 → 2017", "data_source": "ana_04"}
+        ]
+      },
+      "brief": "Three big numbers in a row at the top of edt_08: the volume multiplier, the median lift, and the flat ceiling. Each number ~64px, label in small caps below, separated by thin vertical dividers. Functions as the synthesis summary.",
+      "rationale": "edt_08 is the synthesis section. Putting the three load-bearing numbers as a single visual block makes the argument hold even if a reader skips the prose around it.",
+      "based_on": ["ana_03", "ana_06", "ana_04"]
+    },
+    "des_17": {
+      "label": "Closing scatter callback",
+      "type": "chart",
+      "section": "edt_09",
+      "content": {
+        "chart_type": "scatter_static_reference",
+        "data_source": "ana_12",
+        "data_file": "code/scatter_all.json",
+        "columns": ["ym", "av_rating", "share", "title", "season"],
+        "x": "ym",
+        "y": "av_rating",
+        "y_scale": {"domain": [4, 10]},
+        "highlight": {
+          "annotations_added_vs_top_chart": [
+            {"label": "Floor rises", "y_band": [6.8, 7.5]},
+            {"label": "Ceiling stays", "y_band": [9.2, 9.7]},
+            {"label": "Cloud densifies", "year_band": [2014, 2018]}
+          ]
+        },
+        "interaction": "No interaction. Pure callback. Hover still works for tooltip.",
+        "style": {"palette": "same as des_04 but with three soft annotation bands overlaid"}
+      },
+      "brief": "The same scatter from edt_01, but now with three subtle annotation bands overlaid: 'Floor rises' (lower part of cloud), 'Ceiling stays' (top edge), 'Cloud densifies' (right side). Reader sees the same image they saw at the top, now with the argument made visible.",
+      "rationale": "The editor explicitly asked for this bookend. Re-showing the chart with annotation bands closes the loop: the reader looks at the same dot cloud they started with, but now reads it with the three findings visible.",
+      "based_on": ["ana_12", "ana_04", "ana_03"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial — deep navy/black background, warm gold accent, ivory typography",
+    "text_visual_pattern": "visual-first: teaser image+motion, then guess interaction, then chart, then prose; subsequent sections alternate stat-callouts and charts with one image and one video to break density",
+    "centrepiece": "des_04",
+    "anti_sameness_notes": "Avoid the common chart-after-chart-after-chart pacing. Insert: (1) a guess-first quiz on the teaser, (2) a stat-callout row in edt_02 and edt_08, (3) a horror still in edt_07, (4) a Peak TV time-lapse video as a chapter break in edt_04, (5) a chart-synced sonification in edt_02 instead of a generic audio card. The opening and closing chart are the same scatter — the reader literally re-reads it at the end with annotations on.",
+    "typography_notes": "Stat callouts at 64px in light gold. Body in Georgia/serif 18px. Section headers in system-ui semibold 28px. Pull-out era numbers in a horizontal row separated by thin vertical dividers."
+  }
+}

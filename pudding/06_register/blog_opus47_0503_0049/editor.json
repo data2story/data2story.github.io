@@ -1,0 +1,114 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "It is not that men in 2019 sing higher than men used to — the all-songs average is below 1958. It is that the very top of the chart suddenly demands a high voice, opening a 1.65-point register gap between hits and merely-charting songs that has never existed before.",
+  "headline": "The Top of the Charts Sang Higher in 2019 Than in Any Year Since 1958",
+  "subhead": "Pop's average voice barely moved. The voice that wins the chart did.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — A 1.65-point gap that did not exist before",
+      "purpose": "hook",
+      "title": "A 1.65-point gap that did not exist before",
+      "findings": ["ana_03", "ana_01", "ana_02"],
+      "context": ["det_01", "det_04"],
+      "triage": {
+        "ana_03": "lead",
+        "ana_01": "supporting",
+        "ana_02": "supporting"
+      },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "image",
+      "editorial_notes": "7.60, 5.95, and 1.65 must be exact — these are the three load-bearing numbers."
+    },
+    "edt_02": {
+      "label": "How register is measured (and what it isn't)",
+      "purpose": "context",
+      "title": "How register is measured (and what it isn't)",
+      "findings": ["ana_07", "ana_06"],
+      "context": ["det_02", "det_03"],
+      "triage": {
+        "ana_07": "supporting",
+        "ana_06": "supporting"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": "instance",
+      "editorial_notes": "Pony (inst_01) is the scale anchor — embed it here, not later. Use the falsetto-vs-register distinction in det_03."
+    },
+    "edt_03": {
+      "label": "The 1980s were the all-songs peak, not 2019",
+      "purpose": "evidence",
+      "title": "The 1980s were the actual peak",
+      "findings": ["ana_11", "ana_08", "ana_05"],
+      "context": ["det_04", "det_08"],
+      "triage": {
+        "ana_11": "supporting",
+        "ana_08": "supporting",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "image",
+      "editorial_notes": "Use the Bee Gees / hair-metal era reference image. Do not let this section feel like a digression — it sets up edt_04's twist."
+    },
+    "edt_04": {
+      "label": "But the top of the chart is a different country",
+      "purpose": "turn",
+      "title": "But the top of the chart is a different country",
+      "findings": ["ana_04", "ana_03", "ana_13"],
+      "context": ["det_04", "det_05"],
+      "triage": {
+        "ana_04": "lead",
+        "ana_03": "supporting",
+        "ana_13": "color"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "instance",
+      "editorial_notes": "Embed Khalid's Talk (inst_03) here — the human face of the finding. Name all five 2019 top-10 songs explicitly."
+    },
+    "edt_05": {
+      "label": "Why the all-songs average barely moved",
+      "purpose": "evidence",
+      "title": "Why the all-songs average barely moved",
+      "findings": ["ana_09", "ana_12", "ana_10"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_09": "supporting",
+        "ana_12": "supporting",
+        "ana_10": "color"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "interactive",
+      "editorial_notes": "An interactive genre/spoken filter helps the reader see the rap-vs-sung gap in 2019 directly."
+    },
+    "edt_06": {
+      "label": "Close — what the chart wants now",
+      "purpose": "close",
+      "title": "What the chart wants now",
+      "findings": ["ana_03", "ana_01"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_03": "supporting",
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "instance",
+      "editorial_notes": "The Vox Earworm video (inst_04) is the natural exit point — readers who care will go watch it next."
+    }
+  },
+  "full_triage": {
+    "ana_01": "lead",
+    "ana_02": "supporting",
+    "ana_03": "lead",
+    "ana_04": "lead",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "color",
+    "ana_11": "supporting",
+    "ana_12": "supporting",
+    "ana_13": "color"
+  }
+}

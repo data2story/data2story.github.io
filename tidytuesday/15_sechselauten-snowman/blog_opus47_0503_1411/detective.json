@@ -1,0 +1,207 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin of Sechselaeuten and the Boeoegg ritual",
+      "content": "Sechselaeuten is Zurich's spring guild festival, traced to a 1525 city-council decision that summer working hours would end at six bells instead of five. The pyre-and-effigy ritual in its modern form dates to 1902, when the parade was combined with the official Boeoegg burn. Since 1892 the figure has resembled a snowman, standing for winter being driven out by spring. Today the Boeoegg is roughly 3.40 m tall, weighs about 80 kg, is made of jute, wood-wool and cardboard, has roughly 100 firework charges packed into its head, and sits atop a 10-metre wood pyre lit at exactly 6 p.m. on the third Monday of April. The CSV used here covers 1923-2025 and was assembled by Phil Shem from official Zurich sources, then merged with MeteoSwiss summer climate data by Matt for TidyTuesday week 2025-12-02.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sechsel%C3%A4uten",
+          "title": "Sechselaeuten - Wikipedia",
+          "facts": [
+            "Sechselaeuten traces to a Zurich Council decision dated 11 March 1525.",
+            "The combination of the Sechselaeuten parade and the official Boeoegg burn was introduced in 1902.",
+            "The Boeoegg is 3.40 m tall and resembles a snowman."
+          ]
+        },
+        {
+          "url": "https://www.zuerich.com/en/events-nightlife/typical-events/sechselauten/who-is-the-boogg",
+          "title": "Who or What is the Boeoegg? - zuerich.com",
+          "facts": [
+            "The Boeoegg is built from jute, wood-wool and cardboard, weighs 80 kg, and sits on a 10-metre wood pyre.",
+            "The pyre is lit at 6 p.m. on the dot during Sechselaeuten."
+          ]
+        },
+        {
+          "url": "https://github.com/philshem/Sechselaeuten-data",
+          "title": "philshem/Sechselaeuten-data - GitHub",
+          "facts": [
+            "This is the open-source repository compiling Boeoegg burn-duration timings used as the duration column in the dataset."
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "The folk-science claim: faster burn predicts hotter summer",
+      "content": "The popular saying is simple and beloved: the quicker the Boeoegg's head explodes, the finer the coming summer will be. A long, smoldering burn is read as a portent of cold and rain. The claim has been repeated in Swiss media since at least the early 20th century and is the entire reason the dataset's burn-duration column carries any meaning at all. The festival treats the snowman's head explosion as a one-shot annual forecast for the June-August Swiss Plateau weather. This folk forecast is what the dataset is trying to test against MeteoSwiss climate measurements.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.zuerich.com/en/events-nightlife/typical-events/sechselauten/who-is-the-boogg",
+          "title": "Who or What is the Boeoegg? - zuerich.com",
+          "facts": [
+            "Tradition: the time between lighting the pyre and the explosion of the Boeoegg's head indicates the coming summer; quick = warm and sunny, drawn-out = cold and rainy."
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "MeteoSwiss verdict: no significant correlation",
+      "content": "Switzerland's national meteorological office, MeteoSwiss, has analyzed the burn-time series against subsequent summer temperatures on the Swiss Plateau and concluded there is no significant correlation between the two. Their public page states the Boeoegg's predictive value cannot be scientifically supported, calling the snowman a 'very poor forecaster' and contrasting it with the agency's own seasonal climate model, which does show statistically significant correlation with observed summer temperatures. MeteoSwiss attributes the noise to physical factors that have nothing to do with future weather: pyre construction, firewood humidity, the type and amount of accelerant used, and weather on the day of Sechselaeuten itself.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.meteoswiss.admin.ch/weather/weather-and-climate-from-a-to-z/boeoegg-prediction.html",
+          "title": "Boeoegg prediction - MeteoSwiss",
+          "facts": [
+            "Statistical analysis shows no significant correlation between Boeoegg burn time and summer temperatures in the Swiss Plateau.",
+            "MeteoSwiss describes the Boeoegg as a 'very poor forecaster'.",
+            "Burn time depends on pyre construction, firewood humidity, weather on the day, and the amount of accelerant used."
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Famous misses on extreme-summer years",
+      "content": "MeteoSwiss highlights how badly the Boeoegg has called the most extreme recent summers. Before the record-hot summer of 2003, the Boeoegg burned in just 5 minutes 42 seconds, a forecast that looks brilliant in hindsight but which the agency calls pure coincidence. Before the second-hottest summer (2022), it took nearly 40 minutes to explode. Before the third- and fourth-hottest summers (2018 and 2015), burn times were 20-21 minutes - middling. Before 2019's fifth-hottest summer, it burned for just under 18 minutes. These are the celebrity counter-examples used to argue that the apparent 2003 hit was a fluke, not skill.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.meteoswiss.admin.ch/weather/weather-and-climate-from-a-to-z/boeoegg-prediction.html",
+          "title": "Boeoegg prediction - MeteoSwiss",
+          "facts": [
+            "2003 (hottest summer): Boeoegg burned in 5 minutes 42 seconds - 'pure coincidence' per MeteoSwiss.",
+            "2022 (second hottest): Boeoegg burned for nearly 40 minutes.",
+            "2018 and 2015 (third and fourth hottest): burn times of 20-21 minutes.",
+            "2019 (fifth hottest): burn time just under 18 minutes."
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Record extremes in burn duration",
+      "content": "The dataset contains both extremes Swiss media routinely cite. The shortest official burn on record is 5 minutes 7 seconds, set in 1974 (recorded as 5.12 minutes in this CSV). The longest is 57 minutes, set in 2023 - a notoriously slow, smoldering burn that drew live-TV jokes about whether the head would explode at all. These extremes anchor the duration distribution and provide natural narrative bookends.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sechsel%C3%A4uten",
+          "title": "Sechselaeuten - Wikipedia",
+          "facts": [
+            "Shortest time on record: 5:07 minutes in 1974.",
+            "Longest: 57:00 minutes in 2023."
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "2020 cancelled, 2024 cancelled - data gaps",
+      "content": "Two recent NA values in the duration column have specific stories. In 2020 the parade and burn were cancelled because of the COVID-19 pandemic - the first cancellation in nearly a century. In 2024, for the first time ever in the festival's modern era, the burn itself was called off because of stormy weather: gusts of 60-80 km/h across Canton Zurich made the pyre unsafe to ignite. The climate columns for those years still exist (because MeteoSwiss kept measuring), but the snowman never spoke. These are the only two NAs the analyst will encounter in modern years.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Sechsel%C3%A4uten",
+          "title": "Sechselaeuten - Wikipedia",
+          "facts": [
+            "In 2020 and 2021 the Sechselaeuten parade was cancelled because of the COVID-19 pandemic.",
+            "2024: traditional Boeoegg burn cancelled because of stormy weather, with gusts of 60-80 km/h across Canton Zurich - first such cancellation."
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Why burn time is mostly noise: physical confounders",
+      "content": "The mechanism MeteoSwiss invokes for why burn duration tells you nothing about July is straightforward physics. Each year the pyre is freshly built; the firewood is bought from different suppliers and stored differently, so its moisture content varies. The weather on the festival afternoon - wind, rain, ambient temperature - shifts how flames climb the wood stack. The amount of fire accelerant the guild uses is a direct lever on speed-of-ignition. And the head is packed with about 100 explosive charges whose ignition order depends on how the heat front reaches them. None of these factors carries information about the upcoming June-August jet stream over the Alps, so any correlation that does emerge is dominated by these confounders.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.meteoswiss.admin.ch/weather/weather-and-climate-from-a-to-z/boeoegg-prediction.html",
+          "title": "Boeoegg prediction - MeteoSwiss",
+          "facts": [
+            "Burn time depends on the structure of the pyre, the humidity and type of wood used, weather on the day, and the amount of accelerant used."
+          ]
+        },
+        {
+          "url": "https://www.zuerich.com/en/events-nightlife/typical-events/sechselauten/who-is-the-boogg",
+          "title": "Who or What is the Boeoegg? - zuerich.com",
+          "facts": [
+            "The Boeoegg's head contains about 100 explosive capsules."
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Climate signal: Swiss summers really are getting hotter",
+      "content": "Independent of any folk forecast, the Swiss Plateau has warmed measurably over the dataset's time span. MeteoSwiss flags summers above 19 degrees Celsius mean as 'record' years, and the long-term trend is unambiguous in the analyst's own data. The interesting framing is that the snowman is being asked to predict a target that is itself drifting: a 1923 'hot summer' would be a moderate summer today. So the climate signal in the data is real and visible, but it is not the snowman's signal.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.meteoswiss.admin.ch/weather/weather-and-climate-from-a-to-z/boeoegg-prediction.html",
+          "title": "Boeoegg prediction - MeteoSwiss",
+          "facts": [
+            "MeteoSwiss's seasonal climate model demonstrates statistically significant correlation with actual summer temperatures - a contrast deliberately drawn against the Boeoegg."
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "lookup",
+        "formula": "summer mean temperature >= 19 deg C => record == TRUE in dataset",
+        "result": "record column threshold defined in dataset"
+      }
+    },
+    "det_09": {
+      "label": "Why long-tail audiences love this dataset",
+      "content": "This dataset hits a sweet spot for a data blog: it is cute, photogenic, and centuries old, but it puts a sharp falsifiable claim at its center. Burning a giant snowman to predict July weather is the kind of folk ritual people travel to see, yet the same ritual produces a clean numeric series anyone can analyze. The story is whether a beloved tradition survives contact with regression. That is the reason a tiny weekly Tidy-Tuesday drop punches above its weight as 'long-tail gem' material.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.swissinfo.ch/eng/swiss-oddities/the-b%C3%B6%C3%B6gg-switzerlands-exploding-psychic-snowman/89083824",
+          "title": "The Boeoegg, Switzerland's exploding psychic snowman - SWI swissinfo.ch",
+          "facts": [
+            "The Boeoegg ceremony has been described in Swiss media as the country's exploding psychic snowman - a recurring annual cultural-news beat."
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_boegg_burning_2023.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:The_b%C3%B6%C3%B6gg_burning_on_Sechsel%C3%A4uten_2023.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons (User:Paradise_Chronicle)",
+      "description": "The Boeoegg snowman effigy mid-burn at Sechselaeuten 2023 - the year the pyre took a record 57 minutes to explode the head. Smoke plume and snowman silhouette atop the wood pyre.",
+      "relates_to": ["det_01", "det_05"]
+    }
+  ],
+  "instances": [
+    {
+      "id": "inst_01",
+      "type": "youtube",
+      "label": "Burning of the Boeoegg, Sechselaeuten Zurich 2014 (Geoff Pegler / NewInZurich)",
+      "embed_url": "https://www.youtube.com/embed/irlSXt8zSTQ",
+      "source_url": "https://www.youtube.com/watch?v=irlSXt8zSTQ",
+      "license": "Standard YouTube Licence (embeddable)",
+      "relates_to": ["det_01", "det_02"],
+      "why": "A real, full pyre-to-explosion sequence so the reader can see what the dataset's duration column is actually timing.",
+      "verified": true,
+      "verified_title": "Burning of the Böögg for Sechselaeuten Zurich 2014 by Geoff Pegler"
+    },
+    {
+      "id": "inst_02",
+      "type": "youtube",
+      "label": "Zurich's Burning Snowman Festival - DW Euromaxx explainer",
+      "embed_url": "https://www.youtube.com/embed/ejRgA4igfQs",
+      "source_url": "https://www.youtube.com/watch?v=ejRgA4igfQs",
+      "license": "Standard YouTube Licence (embeddable)",
+      "relates_to": ["det_01", "det_02", "det_09"],
+      "why": "Short English-language explainer of the festival, the snowman's head, and the prediction tradition - useful as broader context for non-Swiss readers.",
+      "verified": true,
+      "verified_title": "Zurich's Burning Snowman Festival | The Most Explosive Weather Forecast | Sechseläuten"
+    }
+  ]
+}

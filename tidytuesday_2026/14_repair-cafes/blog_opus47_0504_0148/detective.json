@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: Martine Postma's Amsterdam experiment, October 2009",
+      "content": "The first Repair Cafe was held on 18 October 2009 in the Fijnhout Theater in Amsterdam-West, organized by Dutch journalist Martine Postma. After the birth of her second child she became preoccupied with how much serviceable stuff Europeans throw away, and decided to test a simple idea: invite neighbors to bring broken household items to a community space where volunteer fixers help them repair the item, free of charge, over coffee. On 2 March 2010 the Repair Cafe Foundation was set up to professionalize the model and license a starter kit (manuals, posters, tool lists, public liability advice) to local groups in the Netherlands and abroad. By 2025 the movement had spread to more than 40 countries on six continents, with nearly 3,200 active branches; this dataset is the digital exhaust of that grassroots experiment.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Repair_Caf%C3%A9",
+          "title": "Repair Cafe (Wikipedia)",
+          "facts": [
+            "First Repair Cafe held 18 October 2009 at Fijnhout Theater, Amsterdam-West",
+            "Repair Cafe Foundation set up 2 March 2010",
+            "Movement has spread to more than 40 countries on six continents"
+          ]
+        },
+        {
+          "url": "https://www.csmonitor.com/World/Making-a-difference/2025/0107/repair-cafe-broken-appliances",
+          "title": "The Repair Cafe movement is building a fix-it culture (Christian Science Monitor, Jan 2025)",
+          "facts": [
+            "Nearly 3,200 Repair Cafes in operation worldwide as of 2025",
+            "200-plus community repair programs in the United States"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "What Repair Monitor is, and why this dataset exists",
+      "content": "Repair Monitor (dashboard.repairmonitor.org) is the Repair Cafe Foundation's voluntary data-collection arm. Volunteers at participating cafes log each repair attempt: what the item was, who made it, the year, what was wrong, what they did, and whether it ended up repaired, half-repaired, or unfixable. The dashboard aggregates these logs into eight public visualizations showing the most-presented products and brands, participating cafes, and reasons repairs failed. The 2018 Repair Monitor analysis reported a 65% repair success rate and noted that in 46% of unsuccessful cases the blocker was a non-replaceable broken part. The TidyTuesday 2026 release exposes the raw row-level data behind that dashboard for the first time, including the long free-text fields (defect_found, problem_description, failure_reason_open, suggestions) that volunteers wrote in their own words.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://dashboard.repairmonitor.org/",
+          "title": "RepairMonitor Dashboard",
+          "facts": [
+            "Dashboard contains eight visualizations: most frequently offered products, brands, participating cafes, and failure reasons"
+          ]
+        },
+        {
+          "url": "https://www.repaircafe.org/en/repairmonitor-dashboard-provides-insight-into-repair-data/",
+          "title": "RepairMonitor dashboard provides insight into repair data",
+          "facts": [
+            "65% of all logged repairs were successful in the 2018 analysis",
+            "In 46% of unsuccessful cases the obstacle was a non-replaceable broken part",
+            "Coffee machines, vacuum cleaners and lamps were the three most frequently presented items"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Carbon: one repair prevents about 24 kg of CO2",
+      "content": "British researcher Steve Privett (University of Surrey, master's degree work) developed the Repair Cafe Foundation's carbon estimation method. Their headline figure is that one product successfully repaired at a Repair Cafe prevents roughly 24 kilograms of CO2 emissions, mostly avoided by not manufacturing a replacement. Scaled up, the foundation estimates the global Repair Cafe network could save over 8.5 million kilograms of CO2 per year if all branches were active. In 2019 alone, 420,000 successful repairs across 2,000 active cafes prevented up to 10 million kilograms of CO2. The Farnham Repair Cafe (UK) released a free Repair Cafe Carbon Calculator in 2024 so cafes can compute their own carbon savings — translating, for example, 35 kg of repaired electrical items into 306 kg of avoided CO2, equivalent to 191 hot showers. This is the climate frame for any 'repair vs replace' finding the analyst surfaces.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://www.repaircafe.org/en/one-repair-can-prevent-24-kilos-of-co2-emissions/",
+          "title": "One repair can prevent 24 kilos of CO2 emissions",
+          "facts": [
+            "One successful repair prevents about 24 kg of CO2",
+            "Global network could save over 8.5 million kg CO2 per year"
+          ]
+        },
+        {
+          "url": "https://www.repaircafe.org/en/repair-cafes-prevent-420000-kilos-of-waste-in-2019/",
+          "title": "Repair Cafes prevent 420,000 kilos of waste in 2019",
+          "facts": [
+            "420,000 successful repairs in 2019 prevented up to 10 million kg CO2",
+            "2,000 active Repair Cafes worldwide in 2019"
+          ]
+        },
+        {
+          "url": "https://sublimemagazine.com/free-repair-cafe-carbon-calculator/",
+          "title": "Free Repair Carbon Calculator (Sublime Magazine)",
+          "facts": [
+            "35 kg of repaired electrical items saves 306 kg CO2, equivalent to 191 hot showers"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "EU Right to Repair Directive 2024/1799",
+      "content": "The European Union adopted Directive 2024/1799 on common rules promoting the repair of goods on 30 May 2024; it entered into force 30 July 2024 and member states must transpose it into national law by 31 July 2026 — three months after the most recent rows in this dataset. The directive obliges manufacturers of covered products (washing machines, dishwashers, vacuum cleaners, smartphones, etc.) to offer repair within reasonable time and price, prohibits hardware/software anti-repair techniques 'unless objectively justified', and extends the legal sales guarantee by one year when consumers choose repair over replacement. Critics including a 2024 ScienceDirect critical assessment argue the directive still fails to address planned obsolescence head-on, the limited availability of repair manuals, or affordable spare parts. The Repair Cafe data is the largest community-collected ground truth on what actually breaks in European homes, and is increasingly cited by EU policy advocates.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://eur-lex.europa.eu/EN/legal-content/summary/common-rules-promoting-the-repair-of-goods-and-amending-related-eu-legislation.html",
+          "title": "Common rules promoting the repair of goods (EUR-Lex summary)",
+          "facts": [
+            "Directive 2024/1799 entered into force 30 July 2024",
+            "Member states must transpose by 31 July 2026",
+            "Legal guarantee extended by one year when consumer chooses repair over replacement"
+          ]
+        },
+        {
+          "url": "https://www.europarl.europa.eu/news/en/press-room/20240419IPR20590/right-to-repair-making-repair-easier-and-more-appealing-to-consumers",
+          "title": "Right to repair: Making repair easier and more appealing to consumers (European Parliament)",
+          "facts": [
+            "Manufacturers must offer repair 'within a reasonable time' and 'for a reasonable price'",
+            "Hardware/software techniques that hinder repair are prohibited unless objectively justified"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Planned obsolescence: the cultural backdrop",
+      "content": "Planned obsolescence is the design strategy of building products with artificially short lifespans — through fragile components, software-locked spare parts, glued-shut shells, or proprietary screws — so that consumers replace rather than repair. It surfaces in this dataset as the most common failure reason recorded by Repair Cafe volunteers: 'spare parts not available' and 'damage to the device cannot be repaired'. The repairability column (1 = difficult, 10 = easy) is essentially a volunteer-given anti-obsolescence rating. The Repair Cafe movement positions itself explicitly as a counter-narrative to throwaway consumer culture, with Postma framing it as a way to 'reignite the do-it-together and do-it-yourself spirit'. This frames the analyst's job: each unrepairable record is a small piece of evidence about a specific product that resisted being fixed.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Repair_Caf%C3%A9",
+          "title": "Repair Cafe (Wikipedia)",
+          "facts": [
+            "Repair Cafe is a grassroots movement against waste, overconsumption, and planned obsolescence",
+            "Movement aims to reinforce social cohesion and the do-it-together spirit"
+          ]
+        },
+        {
+          "url": "https://www.sciencedirect.com/science/article/pii/S0921344924005871",
+          "title": "A critical assessment of the European Directive proposal on the common rules promoting the repair of goods",
+          "facts": [
+            "Critics say the EU repair directive fails to address planned obsolescence, repair instructions, and spare parts availability"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Failure-mode taxonomy from prior Repair Monitor analyses",
+      "content": "The Repair Cafe Foundation's own 2018 analysis already identified the dominant blockers to successful repair: in 46% of failures a non-replaceable broken part was the issue, in 20% a replacement part was too expensive or unavailable, and in 14% the repair itself was too complex, time-consuming, or expensive. These three buckets sum to roughly 80% of all failed cases — meaning the analyst's free-text NLP work on `failure_reason_open` and `failure_reasons` should expect parts-availability and economic-blocker themes to dominate. Anything outside that envelope (e.g. user-error patterns, brand-specific weak points, software locks) is a story.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.repaircafe.org/en/repairmonitor-dashboard-provides-insight-into-repair-data/",
+          "title": "RepairMonitor dashboard provides insight into repair data",
+          "facts": [
+            "46% of failed repairs blocked by non-replaceable broken part",
+            "20% blocked by spare parts being too expensive or unavailable",
+            "14% blocked by repair complexity, time, or cost"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Scope suggestion: the analyst's targets",
+      "content": "Five quantitative directions are most worth time. (1) Product mix: top 15 kind_of_product items by frequency, broken into repaired/half/no — the canonical 'what breaks most' chart. (2) Repairability ratings by product and category — does the volunteer 1-10 score line up with success rate? (3) Brand-level survival: which brands of coffee maker, vacuum, smartphone are most repairable? Beware sample-size bias. (4) Geography: 25 countries but Netherlands dominates (>50% of rows) — split NL vs rest of world to avoid Dutch coffee-machine bias. (5) Free-text mining: tokenize defect_found and failure_reason_open, surface the most common defect verbs ('does not turn on', 'leaks', 'no power') and the most common failure-reason phrases. (6) Information sources: filter `repair_info_source` for YouTube vs ChatGPT/AI mentions over time — the dataset goes through 2026 so there is enough runway to see GenAI rising. Caveats to watch: NL-Dutch dominance, lots of NA values in repairability when failure occurred, free-text fields are multilingual (Dutch, French, English).",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.repaircafe.org/en/repairmonitor-dashboard-provides-insight-into-repair-data/",
+          "title": "RepairMonitor dashboard provides insight into repair data",
+          "facts": [
+            "Dashboard's eight visualizations focus on product mix, brand mix, cafes, and failure reasons"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Why a general reader cares: anti-consumerism in microcosm",
+      "content": "The Repair Cafe row-level data offers something a press release cannot: a granular, volunteer-collected ledger of which specific objects in twenty-five countries refused to be thrown away. Each row carries a small political statement (someone chose to fix instead of buy) but also a quiet failure mode (sometimes the object refused to be fixed). That tension — repair as virtue, planned obsolescence as opponent — is where the story spine lives. The 'why is it broken' free text is especially rare: industrial repair statistics usually come from manufacturer warranty data, which excludes anything out of warranty and never records what the user thinks happened. Repair Cafe data does both. Translating one repair into ~24 kg of avoided CO2 (det_03) and the EU's new Right-to-Repair regime (det_04) gives the reader two reasons the numbers matter beyond Saturday-afternoon hobbyism.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.repaircafe.org/en/about/",
+          "title": "About Repair Cafe",
+          "facts": [
+            "Repair Cafes provide free help to fix broken household items in a community setting"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "note": "Skipping reference image downloads. The dataset is fundamentally tabular/text — generic photos of repair cafes or fixers would be visual filler, not specific evidence. The Designer will commission targeted illustrations of the actual product mix surfaced by the analysis (vacuum cleaners, coffee makers, trousers, sewing machines) where visuals add value."
+    }
+  ],
+  "instances": []
+}

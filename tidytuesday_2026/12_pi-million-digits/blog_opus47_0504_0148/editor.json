@@ -1,0 +1,100 @@
+{
+  "meta": {"role": "editor", "version": "2.0"},
+  "core_claim": "A million digits of pi is a controlled experiment in randomness: every reasonable test fails to reject the hypothesis that pi's digits are uniform IID, except for one famous early anomaly (the Feynman point at decimal 762) and the tantalizing absence of '0123456789', which doesn't appear until digit 17.4 billion.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — pi is suspiciously well-behaved",
+      "purpose": "hook",
+      "title": "Pi behaves like a fair ten-sided die",
+      "findings": ["ana_01", "ana_02", "ana_03"],
+      "context": ["det_02", "det_03", "det_09"],
+      "triage": {"ana_01": "lead", "ana_02": "supporting", "ana_03": "color"},
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "image",
+      "editorial_notes": "Lead with the chi-squared p-value of 0.7874. Frame as 'a fair die would do worse 79% of the time.' Do not round."
+    },
+    "edt_02": {
+      "label": "Self-transitions",
+      "purpose": "evidence",
+      "title": "Does a digit avoid itself?",
+      "findings": ["ana_04"],
+      "context": ["det_06"],
+      "triage": {"ana_04": "supporting"},
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "This is the original TidyTuesday hero figure's quantity. Show it as gauges or a small dot-plot; mention that all values lie within +/- 0.20pp of 10%."
+    },
+    "edt_03": {
+      "label": "Full transition matrix",
+      "purpose": "evidence",
+      "title": "100 numbers, all the same",
+      "findings": ["ana_05", "ana_06", "ana_07"],
+      "context": ["det_06", "det_03"],
+      "triage": {"ana_05": "lead", "ana_06": "supporting", "ana_07": "color"},
+      "chart_placeholder": "ana_05",
+      "media_placeholder": null,
+      "editorial_notes": "The 10x10 heatmap is the visual centerpiece of the whole post. p = 0.6172, df=99. Most/least frequent pair are color callouts only."
+    },
+    "edt_04": {
+      "label": "The Feynman point",
+      "purpose": "turn",
+      "title": "The Feynman point — pi's one famous misbehavior",
+      "findings": ["ana_08", "ana_09"],
+      "context": ["det_04"],
+      "triage": {"ana_09": "lead", "ana_08": "supporting"},
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "image",
+      "editorial_notes": "Decimal place 762 is the headline number. Mention 0.08% probability. The Hofstadter/Feynman attribution caveat must be stated. Visual: zoom into decimals around 762 highlighting '999999'."
+    },
+    "edt_05": {
+      "label": "Where 0123456789 isn't",
+      "purpose": "turn",
+      "title": "The substring that isn't here",
+      "findings": ["ana_10", "ana_11"],
+      "context": ["det_05", "det_07"],
+      "triage": {"ana_10": "lead", "ana_11": "supporting"},
+      "chart_placeholder": "ana_11",
+      "media_placeholder": "interactive",
+      "editorial_notes": "17,387,594,880 is the headline external number. Within our million, six famous strings are present, five (including 0123456789) are absent. Build a tiny lookup-style 'where in pi?' interactive listing the famous substrings and their positions."
+    },
+    "edt_06": {
+      "label": "Convergence",
+      "purpose": "evidence",
+      "title": "How fast does pi 'become random'?",
+      "findings": ["ana_13", "ana_14"],
+      "context": ["det_03"],
+      "triage": {"ana_13": "lead", "ana_14": "supporting"},
+      "chart_placeholder": "ana_13",
+      "media_placeholder": null,
+      "editorial_notes": "Use log-x. Ten thin lines converging to a horizontal line at 10%. Slowest digit is 7 (n=368,515). Fastest is 0 (n=25,991)."
+    },
+    "edt_07": {
+      "label": "Close",
+      "purpose": "close",
+      "title": "What a million digits can and cannot tell us",
+      "findings": ["ana_15"],
+      "context": ["det_03", "det_09", "det_10"],
+      "triage": {"ana_15": "supporting"},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Anchor on the JPL fact (15 digits suffices for spacecraft navigation). Final paragraph should land on the open problem, not a recap."
+    }
+  },
+  "full_triage": {
+    "ana_01": "lead",
+    "ana_02": "supporting",
+    "ana_03": "color",
+    "ana_04": "supporting",
+    "ana_05": "lead",
+    "ana_06": "supporting",
+    "ana_07": "color",
+    "ana_08": "supporting",
+    "ana_09": "lead",
+    "ana_10": "lead",
+    "ana_11": "supporting",
+    "ana_12": "cut",
+    "ana_13": "lead",
+    "ana_14": "supporting",
+    "ana_15": "supporting"
+  }
+}

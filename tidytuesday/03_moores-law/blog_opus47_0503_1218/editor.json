@@ -1,0 +1,113 @@
+{
+  "meta": {"role": "editor", "version": "2.0"},
+  "core_claim": "Across 49 years and seven orders of magnitude, real chips have followed Moore's 1975 prediction to within 0.03 of a year — a forecast accuracy almost no other quantitative claim in technology can match.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — The forecast that aged",
+      "purpose": "hook",
+      "title": "The forecast that aged",
+      "findings": ["ana_01", "ana_03"],
+      "context": ["det_01", "det_02"],
+      "triage": {"ana_01": "lead", "ana_03": "supporting"},
+      "chart_placeholder": "ana_17",
+      "media_placeholder": "image",
+      "editorial_notes": "The 2.03 vs 2.00 number must be exact. The 14.2 million-fold figure must be the Intel 4004 → AMD EPYC Rome ratio."
+    },
+    "edt_02": {
+      "label": "The man and the curve",
+      "purpose": "context",
+      "title": "The man and the curve",
+      "findings": ["ana_15"],
+      "context": ["det_01", "det_03"],
+      "triage": {"ana_15": "supporting"},
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "Use the existing ref images: ref_gordon_moore.jpg and ref_intel_4004.jpg."
+    },
+    "edt_03": {
+      "label": "Three families, three slopes",
+      "purpose": "evidence",
+      "title": "Three families, three slopes",
+      "findings": ["ana_02", "ana_04"],
+      "context": ["det_06"],
+      "triage": {"ana_02": "supporting", "ana_04": "supporting"},
+      "chart_placeholder": "ana_04",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Reader should be able to compare CPU/GPU/RAM curves directly. The doubling-time numbers (2.03/1.85/1.56) must show on the visual."
+    },
+    "edt_04": {
+      "label": "Where Moore was wrong",
+      "purpose": "turn",
+      "title": "Where Moore was wrong",
+      "findings": ["ana_09"],
+      "context": ["det_01"],
+      "triage": {"ana_09": "supporting"},
+      "chart_placeholder": "ana_09",
+      "media_placeholder": null,
+      "editorial_notes": "65,000 vs 5,000-8,500 is essential — frame as a useful imperfection, not a takedown."
+    },
+    "edt_05": {
+      "label": "Where it slowed without anyone noticing",
+      "purpose": "turn",
+      "title": "Where it slowed without anyone noticing",
+      "findings": ["ana_06"],
+      "context": ["det_04"],
+      "triage": {"ana_06": "supporting"},
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "2005 break must be explicit — 2.02→2.51 yr for CPU. Connect to Dennard scaling collapse."
+    },
+    "edt_06": {
+      "label": "Crossings, jumps, and the chips that beat the line",
+      "purpose": "evidence",
+      "title": "Crossings, jumps, and the chips that beat the line",
+      "findings": ["ana_10", "ana_11", "ana_12"],
+      "context": ["det_03"],
+      "triage": {"ana_10": "color", "ana_11": "color", "ana_12": "supporting"},
+      "chart_placeholder": "ana_12",
+      "media_placeholder": null,
+      "editorial_notes": "Show the over-line / under-line residual chart; it makes the design-philosophy split visible."
+    },
+    "edt_07": {
+      "label": "The Moore line on the data",
+      "purpose": "evidence",
+      "title": "The Moore line on the data",
+      "findings": ["ana_16", "ana_17"],
+      "context": ["det_01", "det_02"],
+      "triage": {"ana_16": "lead", "ana_17": "supporting"},
+      "chart_placeholder": "ana_16",
+      "media_placeholder": "video",
+      "editorial_notes": "Visual centrepiece: every chip overlaid with the Moore prediction line. A small video chapter break here is welcome."
+    },
+    "edt_08": {
+      "label": "After the dataset",
+      "purpose": "close",
+      "title": "After the dataset",
+      "findings": ["ana_13"],
+      "context": ["det_05", "det_07"],
+      "triage": {"ana_13": "color"},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "End on the open question — the dataset cuts off in 2019, but reference Apple M1 Ultra (114B, 2022) and Cerebras WSE-3 (4T, 2024) as post-data context."
+    }
+  },
+  "full_triage": {
+    "ana_01": "lead",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "cut",
+    "ana_06": "supporting",
+    "ana_07": "cut",
+    "ana_08": "cut",
+    "ana_09": "supporting",
+    "ana_10": "color",
+    "ana_11": "color",
+    "ana_12": "supporting",
+    "ana_13": "color",
+    "ana_14": "cut",
+    "ana_15": "supporting",
+    "ana_16": "lead",
+    "ana_17": "supporting"
+  }
+}

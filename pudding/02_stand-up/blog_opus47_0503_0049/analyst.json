@@ -1,0 +1,329 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["ali-wong--captions.csv", "ali-wong--topics.csv"],
+    "rows": 925,
+    "columns": 7,
+    "what_one_row_represents": "One row in the captions file = one closed-caption line of Ali Wong's Baby Cobra, with start/stop time and a manually measured laughter duration. One row in the topics file = one annotated topic in the routine's hierarchical structure (level 1-6).",
+    "time_range": "2016 (Baby Cobra was filmed Sep 2015, released May 2016 on Netflix); the dataset's internal timeline is the special's runtime, 0:28-58:55.",
+    "geographic_scope": "Filmed at the Neptune Theater, Seattle"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Audience laughs for one-fifth of the hour",
+      "content": "Across the 58:27 of stage time covered by the captions, 727 seconds — 20.7% — were spent in audible audience laughter. That's roughly 12 minutes of an hour-long set where the audience, not the comic, is making the noise. Of 925 caption lines, 38.1% (352) carry a non-zero laughter value; the remaining 573 are setups, transitions, or beats with no measurable laugh. When laughter does happen, the median duration is 1.5 seconds and the mean is 2.07 seconds — short reactions are the rule, big ones the exception.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/laughter_analysis.py",
+        "lines": [16, 26],
+        "output": "Total laughter seconds: 727.0\nTotal set duration (first caption to last): 3507 s\nLaughter share of stage time: 20.7%\nLaugh-bearing captions: 352 of 925 (38.1%)\nMean laugh duration when present: 2.07 s\nMedian laugh duration when present: 1.50 s"
+      },
+      "data_table": {
+        "description": "Time accounting for the special: laughter vs. talk/silence",
+        "columns": ["category", "seconds", "pct"],
+        "rows": [
+          ["Audience laughter", 727.0, 20.7],
+          ["Talk and silence", 2780.0, 79.3]
+        ]
+      },
+      "based_on": ["det_01", "det_07"]
+    },
+    "ana_02": {
+      "label": "The single biggest laugh — the climax line",
+      "content": "Exactly one caption in the entire hour is tagged with a 10-second laugh: 'Colonize the colonizer!' at 11:48, in the topic group '166-hooking up'. Nothing else matches it. The next-largest laugh, 9.5 seconds, comes 38 minutes later ('That's right. 'Cause I don't wanna work anymore' at 50:11, in the conception bit). The 10-second moment is the unique top of the distribution — and it sits early, only 20% of the way through the hour, inside the long marriage chapter rather than the pregnancy chapter most people associate with the special.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/laughter_analysis.py",
+        "lines": [29, 41],
+        "output": "Largest laugh: 10.0 s\nCaption: 'Colonize the colonizer\"! You know?'\nTime: 708 s (11:48)\nTopic group: 166-hooking up\nPosition in hour: 20.2% through"
+      },
+      "data_table": {
+        "description": "Top 10 longest single-line laughs in the special",
+        "columns": ["seconds", "time", "topic", "caption"],
+        "rows": [
+          [10.0, "11:48", "166-hooking up", "Colonize the colonizer\"! You know?"],
+          [9.5, "50:11", "789-conception", "That's right. 'Cause I don't wanna work anymore."],
+          [8.5, "37:45", "599-paintball", "Never go paintballing with a Vietnam veteran."],
+          [8.5, "43:17", "681-recycle", "go to the park, do this shit.\""],
+          [7.5, "8:48", "124-trap men", "When, really, it's a public park..."],
+          [7.5, "21:58", "317-lean in", "I wanna lie down."],
+          [7.5, "26:25", "389-rushed wipe", "looks like it's been run over by the Goonies."],
+          [7.5, "35:45", "554-control", "Because I'm the real boss."],
+          [7.5, "49:30", "782-orgasm", "...where they look like they just got bit by a zombie, just..."],
+          [7.0, "45:09", "697-wet", "I don't know what kind of mother I'm gonna be."]
+        ]
+      },
+      "based_on": ["det_04", "det_07"],
+      "notable_instance": {
+        "name": "Baby Cobra — the official Netflix promo clip",
+        "value": "10-second laugh at 11:48",
+        "instance_ref": "inst_01",
+        "why": "The clip lets the reader hear Wong's voice on stage so the dataset's numeric peaks have a real human texture behind them."
+      }
+    },
+    "ana_03": {
+      "label": "The shape of laughter: long tail",
+      "content": "The distribution of laugh durations is sharply long-tailed. 573 of 925 captions get no laugh at all. Among lines that do trigger laughter, most are short — 41 sit at 0.5s, 47 at 1.0s, 34 at 1.5s. As you move out into the longer durations the counts collapse: only 28 captions hit 5 seconds or more, only 11 reach 7 seconds, only 4 reach 8 seconds, and exactly one reaches 10 seconds. Comedy on this evidence is not a steady stream of equally funny moments — it is a baseline of small smiles punctuated by a handful of rare detonations.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/laughter_analysis.py",
+        "lines": [44, 67],
+        "output": "0          573\n0.5         41\n1.0         47\n1.5         34\n2.0         42\n2.5         27\n3-3.5       46\n4-4.5       15\n5-5.5        9\n6-6.5        8\n7-7.5        7\n8-9.5        3\n10+          1\nMax: 10.0\nCaptions with laugh >= 5s: 28\nCaptions with laugh >= 7s: 11\nCaptions with laugh >= 10s: 1"
+      },
+      "data_table": {
+        "description": "Histogram of laugh durations across all 925 caption lines",
+        "columns": ["bucket", "count"],
+        "rows": [
+          ["0", 573],
+          ["0.5", 41],
+          ["1.0", 47],
+          ["1.5", 34],
+          ["2.0", 42],
+          ["2.5", 27],
+          ["3-3.5", 46],
+          ["4-4.5", 15],
+          ["5-5.5", 9],
+          ["6-6.5", 8],
+          ["7-7.5", 7],
+          ["8-9.5", 3],
+          ["10+", 1]
+        ]
+      },
+      "based_on": ["det_05", "det_07"]
+    },
+    "ana_04": {
+      "label": "Laughter by minute — where the hour peaks",
+      "content": "Aggregated minute by minute, the laughter profile of Baby Cobra is uneven but rarely silent. The peak is minute 11, with 21.8 seconds of laughter packed into 60 seconds of stage time — that's the minute that contains the climax line at 11:48. Other strong minutes are 8 (21.0s, the 'trap men' bit), 13 (20.5s, the 'racist together' beat that follows the climax), 33 (19.5s, control / boss), and 37 (20.2s, paintball / Vietnam vet). The quietest non-zero minute is 3.75 seconds. Minute 59 registers zero — that's the closing 'thank you' tail of the special.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/laughter_analysis.py",
+        "lines": [70, 82],
+        "output": "Peak minute: 11 (21.8 s of laughter)\nQuietest non-zero minute: 3.75"
+      },
+      "data_table": {
+        "description": "Total laughter seconds for each minute of the show (0-59)",
+        "columns": ["minute", "laugh_seconds"],
+        "rows": [
+          [0, 4.0], [1, 12.0], [2, 17.0], [3, 13.5], [4, 8.75], [5, 15.0],
+          [6, 15.5], [7, 11.75], [8, 21.0], [9, 11.75], [10, 12.5], [11, 21.75],
+          [12, 16.5], [13, 20.5], [14, 15.5], [15, 12.5], [16, 10.25], [17, 15.0],
+          [18, 11.5], [19, 16.0], [20, 5.25], [21, 19.5], [22, 11.25], [23, 13.0],
+          [24, 10.0], [25, 14.75], [26, 13.75], [27, 9.5], [28, 10.5], [29, 9.0],
+          [30, 10.75], [31, 10.25], [32, 7.25], [33, 19.5], [34, 14.25], [35, 13.5],
+          [36, 3.75], [37, 20.25], [38, 4.75], [39, 9.75], [40, 14.25], [41, 13.0],
+          [42, 9.0], [43, 17.0], [44, 6.25], [45, 14.5], [46, 12.0], [47, 6.75],
+          [48, 8.0], [49, 16.0], [50, 12.0], [51, 9.75], [52, 9.75], [53, 14.25],
+          [54, 6.25], [55, 10.0], [56, 13.0], [57, 7.0], [58, 15.5], [59, 0.0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_05": {
+      "label": "Topic ranking: which bits earned the most laughter",
+      "content": "Aggregating the per-caption laughter to the 120 topic groups in the captions file, the bits that got the most total laughter are short, punchy ones: 'hooking up' tops the list at 20.5s of laughter packed into just 35 seconds of stage time (a 0.59 laugh-per-second rate, the highest among long-running bits). 'Bad drivers' (19.8s in 81s on stage) comes second by total but at a much slower rate (0.24/s). The conception bit gets only 24 seconds of stage time but produces 15.2 seconds of laughter — a 0.64/s density, denser even than the hooking-up climax. Twenty bits got zero measured laughter; these are mostly setup or connective topics that pay off later.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/laughter_analysis.py",
+        "lines": [85, 99],
+        "output": "Top 15 topic groups by total laugh seconds:\n  20.5s  [  35s on stage, 0.59 laugh/s] 166-hooking up\n  19.8s  [  81s on stage, 0.24 laugh/s] 649-bad drivers\n  17.8s  [  53s on stage, 0.33 laugh/s] 697-wet\n  17.5s  [  67s on stage, 0.26 laugh/s] 912-debt\n  17.0s  [  56s on stage, 0.30 laugh/s] 681-recycle\n  15.5s  [  32s on stage, 0.48 laugh/s] 124-trap men\n  15.2s  [  24s on stage, 0.64 laugh/s] 789-conception\n  14.2s  [  53s on stage, 0.27 laugh/s] 838-poop\n  14.0s  [  32s on stage, 0.44 laugh/s] 529-power turn-on\n  13.5s  [  48s on stage, 0.28 laugh/s] 554-control\n  12.5s  [  54s on stage, 0.23 laugh/s] 271-proposing\nGroups with zero laughter: 20"
+      },
+      "data_table": {
+        "description": "Top 15 topics by total laughter seconds, with on-stage time and laugh density (laugh/sec on stage)",
+        "columns": ["topic", "total_laugh", "on_stage", "laugh_per_sec"],
+        "rows": [
+          ["hooking up", 20.5, 35, 0.59],
+          ["bad drivers", 19.8, 81, 0.24],
+          ["wet (pregnancy)", 17.8, 53, 0.34],
+          ["debt", 17.5, 67, 0.26],
+          ["recycle", 17.0, 56, 0.30],
+          ["trap men", 15.5, 32, 0.48],
+          ["conception", 15.2, 24, 0.63],
+          ["poop", 14.2, 53, 0.27],
+          ["power turn-on", 14.0, 32, 0.44],
+          ["control", 13.5, 48, 0.28],
+          ["proposing", 12.5, 54, 0.23],
+          ["dependent", 12.0, 55, 0.22],
+          ["toilet paper", 12.0, 39, 0.31],
+          ["homeless", 11.2, 70, 0.16],
+          ["restaurant", 11.2, 35, 0.32]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_06": {
+      "label": "Topic structure: a six-level nest",
+      "content": "Wong's set is unusually deep structurally. The annotators recorded 131 topics arranged across 6 nesting levels — 10 at the top, 21 at level 2, 43 at level 3 (the most populated level), 31 at level 4, 19 at level 5, and 7 at level 6. Most stand-up sets are flat lists of bits; this one branches like a tree, with sub-topics sprouting from sub-topics. Level 3 is the workhorse — that's where most of the actual content lives. Levels 4-6 are deep digressions that, structurally, are children of children of children of one of the ten top-level chapters.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/laughter_analysis.py",
+        "lines": [102, 109],
+        "output": "Level 1: 10 topics\nLevel 2: 21 topics\nLevel 3: 43 topics\nLevel 4: 31 topics\nLevel 5: 19 topics\nLevel 6: 7 topics\nMax depth: 6"
+      },
+      "data_table": {
+        "description": "Number of topics at each nesting depth in the topics file",
+        "columns": ["level", "n_topics"],
+        "rows": [
+          [1, 10],
+          [2, 21],
+          [3, 43],
+          [4, 31],
+          [5, 19],
+          [6, 7]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_07": {
+      "label": "Deeper bits get bigger laughs",
+      "content": "When you bucket every caption by the nesting level of the topic it lives in, average laughter rises with depth — and so do the maximums. Level-1 captions average 0.57s of laughter; level 4 averages 0.90s and contains the only 10-second laugh in the set. Levels 5 and 6 average 0.97s and 0.87s. Level 1 and 2 captions are mostly chapter introductions ('let's talk about marriage', 'let's talk about pregnancy') that exist to set up later bits, not to be funny themselves. The further Wong burrows down a digression, the harder the audience laughs at what she finds. This is the dataset's clearest endorsement of The Pudding's structural argument: payoff tracks depth.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/laughter_analysis.py",
+        "lines": [112, 128],
+        "output": "Level 1: total=22.8s, captions=40, avg=0.57s, max=8.5s\nLevel 2: total=56.5s, captions=108, avg=0.52s, max=7.0s\nLevel 3: total=223.2s, captions=316, avg=0.71s, max=7.5s\nLevel 4: total=203.0s, captions=225, avg=0.90s, max=10.0s\nLevel 5: total=163.2s, captions=169, avg=0.97s, max=9.5s\nLevel 6: total=58.2s, captions=67, avg=0.87s, max=7.5s"
+      },
+      "data_table": {
+        "description": "Average and max laughter for captions at each nesting depth",
+        "columns": ["level", "n_captions", "avg_laugh", "max_laugh"],
+        "rows": [
+          [1, 40, 0.57, 8.5],
+          [2, 108, 0.52, 7.0],
+          [3, 316, 0.71, 7.5],
+          [4, 225, 0.90, 10.0],
+          [5, 169, 0.97, 9.5],
+          [6, 67, 0.87, 7.5]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_08": {
+      "label": "Three callbacks — and they reach back further than you'd expect",
+      "content": "The topics CSV records exactly three explicit callbacks. The shortest reach-back is still 12 minutes 24 seconds; the longest is 46 minutes 11 seconds. The first ('When I pee, I need to see ten gallons of bleach' → hippies routine, fired at 49:43) reaches back 33 minutes. The second ('blaming mom' → 'told my mom from a third world country', fired at 50:57) reaches back 46 minutes — across nearly the entire special. The third (the 'wet' callback at 56:48 referencing a 'wet' beat at 44:24) reaches back 12 minutes. Distance between setup and callback is enormous: in two of three cases the seed was planted in the first ten minutes of the show and harvested in the last ten.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/structure_analysis.py",
+        "lines": [33, 60],
+        "output": "Callback at 49:43 (787-hippies) → target topic at 16:35 (239-hippies); reach back: 1988s (33m 8s)\nCallback at 50:57 (805-mom) → target topic at 4:46 (62-blaming mom); reach back: 2771s (46m 11s)\nCallback at 56:48 (896-wet) → target topic at 44:24 (697-wet); reach back: 744s (12m 24s)"
+      },
+      "data_table": {
+        "description": "Each of the three callbacks: when the seed was planted, when it was paid off, and how long the audience had to remember it",
+        "columns": ["seed_time", "callback_time", "reach_back_min", "callback_label"],
+        "rows": [
+          ["16:35", "49:43", 33.1, "hippies — peeing in the park"],
+          ["4:46", "50:57", 46.2, "blaming mom — third-world parent"],
+          ["44:24", "56:48", 12.4, "wet — pregnancy callback"]
+        ]
+      },
+      "based_on": ["det_03", "det_04"]
+    },
+    "ana_09": {
+      "label": "Anatomy of the climax: the line lands because of what came before",
+      "content": "Reading the 30 caption lines around the 11:48 climax shows the structural staircase. The setup begins at 11:24 with a 1.0-second laugh ('when a white dude eats my pussy'), grows to 3.0s at 11:31 ('absorbing all of that privilege'), pauses, then jumps to 4.0s at 11:41 ('I could just crush your head at any moment, white man!'). The 10-second peak at 11:48 ('Colonize the colonizer!') only works because the audience has spent the previous 24 seconds tracking the layered conceit — sex as power, power as colonial reversal, the white man as the colonized. Ninety seconds of stage time delivered 39.8 seconds of laughter — twice the show's average density.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/structure_analysis.py",
+        "lines": [62, 78],
+        "output": "Window: 60s either side of climax at 11:48\nCaptions in window: 30\nTotal laugh seconds in window: 39.8\n  4.0s @ 11:41 [166-hooking up]: I'm, like, \"I could just crush your head at any moment, white man!\n 10.0s @ 11:48 [166-hooking up]: Colonize the colonizer\"! You know?\n  6.0s @ 12:12 [176-racist]: and be racist together. \n  6.5s @ 12:34 [182-korean]: And we spend 100 percent of our time shitting on Korean people."
+      },
+      "data_table": {
+        "description": "The build-up to the climax, line by line. Includes the four +4s reactions in this window.",
+        "columns": ["time", "laugh", "caption"],
+        "rows": [
+          ["11:11", 0.5, "and disturbing documentaries."],
+          ["11:14", 0.25, "They introduce you to cool stuff like that"],
+          ["11:16", 0.0, "and it's very, you know, it's hot hookin' up with a white dude."],
+          ["11:20", 0.0, "I mean, nothing makes me feel more powerful"],
+          ["11:24", 1.0, "than when a white dude eats my pussy. Oh, my God."],
+          ["11:27", 1.0, "I just feel like I'm absorbing all of that privilege"],
+          ["11:31", 3.0, "and all of that entitlement..."],
+          ["11:34", 1.5, "...you know, just right there, through the money hole and just..."],
+          ["11:38", 0.0, "And then also, he's so vulnerable down there."],
+          ["11:41", 4.0, "I'm, like, \"I could just crush your head at any moment, white man!"],
+          ["11:44", 0.0, "I could just kill you right now! Crush those brains!"],
+          ["11:48", 10.0, "Colonize the colonizer\"! You know?"],
+          ["12:01", 0.0, "But I think that for marriage,"],
+          ["12:08", 0.0, "The advantage is that you get to go home..."],
+          ["12:12", 6.0, "and be racist together."],
+          ["12:34", 6.5, "And we spend 100 percent of our time shitting on Korean people."]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_10": {
+      "label": "Marriage runs longer — but pregnancy laughs harder",
+      "content": "The five distinct level-1 chapters, in order: intro (0:28-0:49), getting older (0:49-6:50, 83.8s of laughter, 23% of chapter time), marriage (6:55-37:35, by far the longest at 30 minutes 40 seconds, 404s of laughter), paintball (37:38-37:48, a 10-second mini-chapter that scores 8.5s of laugh — 85% of the chapter is laughter), pregnancy (37:57-57:17, 19m 20s, 211s of laughter), and the conclusion. Marriage is the spine of the special — almost half the runtime. Pregnancy is a third of the runtime but earns the second-highest cumulative laughter. The closing two minutes carry zero laugh; that's Wong winding down.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/structure_analysis.py",
+        "lines": [13, 30],
+        "output": "0-intro                    0:28–0:49  span=21s  laugh=2.0s\n6-getting older            0:49–6:50  span=361s  laugh=83.8s  (23.2% of chapter)\n96-marriage                6:55–37:35  span=1840s  laugh=404.0s  (22.0% of chapter)\n599-paintball              37:38–37:48  span=10s  laugh=8.5s  (85.0% of chapter)\n601-pregnancy              37:57–57:17  span=1160s  laugh=211.2s  (18.2% of chapter)\n904-conclusion             57:22–58:55  span=23-3s  laugh=0.0s"
+      },
+      "data_table": {
+        "description": "The five distinct level-1 chapters: span, laughter, and laughter share",
+        "columns": ["chapter", "start", "end", "span_sec", "laugh_sec", "laugh_pct"],
+        "rows": [
+          ["intro", "0:28", "0:49", 21, 2.0, 9.5],
+          ["getting older", "0:49", "6:50", 361, 83.8, 23.2],
+          ["marriage", "6:55", "37:35", 1840, 404.0, 22.0],
+          ["paintball", "37:38", "37:48", 10, 8.5, 85.0],
+          ["pregnancy", "37:57", "57:17", 1160, 211.2, 18.2],
+          ["conclusion", "57:22", "58:55", 26, 0.0, 0.0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_11": {
+      "label": "Motif frequency: what the show is actually about",
+      "content": "Counting how often specific words and phrases recur across the 925 captions is a different kind of structural map — it shows the running threads. 'Asian / Korean / Japanese / Vietnamese' appears in 25 captions, 'husband' in 21, 'mom / mother' in 15, 'money / dollars' in 10, 'HPV' in 8 (clustered in a single bit), 'trap' in 8 (the 'trapping a man' running metaphor). 'Colonize / white guy / white people' appears in just 4 captions — a sparse motif that nevertheless contains the climax. The recurring words trace the show's themes: Asianness, marriage, money, the body. The climax line is dense, not frequent.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/structure_analysis.py",
+        "lines": [80, 100],
+        "output": "husband                                   mentioned in 21 captions\nmom / mother                              mentioned in 15 captions\nmoney / dollars                           mentioned in 10 captions\nAsian / asian / korean / Japanese         mentioned in 25 captions\nwhite guy / colonize                      mentioned in 4 captions\nhpv                                       mentioned in 8 captions\nfeminism / feminist                       mentioned in 4 captions\ntrap                                      mentioned in 8 captions"
+      },
+      "data_table": {
+        "description": "Caption-frequency of selected motifs across the special",
+        "columns": ["motif", "n_captions"],
+        "rows": [
+          ["Asian / Korean / Japanese / Vietnamese", 25],
+          ["husband", 21],
+          ["mom / mother", 15],
+          ["money / dollars", 10],
+          ["HPV", 8],
+          ["trap", 8],
+          ["white guy / colonize", 4],
+          ["feminism", 4]
+        ]
+      },
+      "based_on": []
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "Laughter durations are hand-measured by The Pudding annotators in coarse half-second steps, so absolute small-number differences (e.g. 0.5s vs 1.0s) should not be over-interpreted. The headline patterns — the unique 10-second peak, the long-tailed distribution, the depth-versus-laughter trend — are robust to this measurement granularity."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Laughter is contagious and lagged: the seconds tagged to a caption are partly a reaction to that line and partly tail-off from the previous beat. We treat per-caption durations as a directional signal rather than a precise per-line measurement."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "The level-1 chapters list shows the same group label twice for marriage, pregnancy, getting-older, and conclusion because the topics CSV uses level-1 rows both to open and to close a chapter. We aggregated to one row per (group, start, end) tuple for the data table."
+    }
+  ]
+}

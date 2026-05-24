@@ -1,0 +1,484 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["sechselaeuten.csv"],
+    "rows": 67,
+    "columns": 9,
+    "what_one_row_represents": "One Sechselaeuten festival year - the Boeoegg burn duration (minutes) plus that year's June-August summer climate measurements from MeteoSwiss for the Swiss Plateau",
+    "time_range": "1923 to 2025 (sparse pre-1952, near-complete after 1952; 2 NA durations - 2020 cancelled by COVID, 2024 cancelled by storm)",
+    "geographic_scope": "Zurich (festival) and Swiss Plateau (climate aggregate)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset profile and missingness",
+      "content": "The dataset has 67 rows spanning 1923 to 2025, with 9 columns: festival year, Boeoegg burn duration in minutes, and six MeteoSwiss climate variables for the Swiss Plateau summer (mean, min, max temperature; total sunshine; sunshine percentage of possible; total precipitation), plus a record flag for summers with mean >= 19 deg C. Only the duration column has missing values, with two NAs - 2020 (COVID-19 cancellation) and 2024 (cancelled because of stormy weather). All 67 climate observations are present. The series is sparse before 1952 (only 1923 is recorded between 1923 and 1951), then near-complete from 1952 onward. The non-null duration count is 65.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_distributions.py",
+        "lines": [18, 26],
+        "output": "rows: 67\ncolumns: ['year', 'duration', 'tre200m0', 'tre200mn', 'tre200mx', 'sre000m0', 'sremaxmv', 'rre150m0', 'record']\nyear range: 1923 to 2025\nyears with NA duration: [2020, 2024]\nnon-null duration rows: 65"
+      },
+      "data_table": {
+        "description": "Dataset summary card",
+        "columns": ["metric", "value"],
+        "rows": [
+          ["rows", 67],
+          ["non-null duration rows", 65],
+          ["year range start", 1923],
+          ["year range end", 2025],
+          ["NA duration years", "2020 (COVID), 2024 (storm)"]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_02": {
+      "label": "Boeoegg burn-duration distribution",
+      "content": "Across 65 recorded burns, the duration ranges from 4.00 to 60.00 minutes, with a mean of 17.64 min and a median of just 13.00 min - the distribution is right-skewed because most burns end fairly fast and only a handful drag on past 30 minutes. The standard deviation is 11.87 min. Quartiles: 25% of burns are under 10 minutes, 50% are under 13, 75% are under 23.5, and 90% finish within 32 minutes. Histogram bins (in minutes) show 1 burn under 5, 15 burns 5-10, 19 burns 10-15, 7 burns 15-20, 11 burns 20-25, 5 burns 25-30, 2 burns 30-40, and 5 burns 40-60.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_distributions.py",
+        "lines": [28, 41],
+        "output": "count: 65\nmean: 17.64  median: 13.00  std: 11.87\nmin: 4.00  max: 60.00\nquantiles:\n0.10     6.000\n0.25    10.000\n0.50    13.000\n0.75    23.500\n0.90    31.908\nhistogram bins: [(0,5,1),(5,10,15),(10,15,19),(15,20,7),(20,25,11),(25,30,5),(30,40,2),(40,60,5)]"
+      },
+      "data_table": {
+        "description": "Histogram of burn durations across 65 recorded years",
+        "columns": ["bin_start", "bin_end", "count"],
+        "rows": [
+          [0, 5, 1],
+          [5, 10, 15],
+          [10, 15, 19],
+          [15, 20, 7],
+          [20, 25, 11],
+          [25, 30, 5],
+          [30, 40, 2],
+          [40, 60, 5]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_03": {
+      "label": "Extremes - shortest and longest burns",
+      "content": "The shortest five burns are 4.00 min (1956), 5.00 (1971), 5.00 (1968), 5.12 (1974) and 5.70 (2003). The longest five are 40.00 (1988), 40.00 (1970), 43.57 (2016), 57.00 (2023) and 60.00 (1923). Of the five fastest, only 2003 was a record-hot summer (21.67 deg C); the other four were ordinary. Of the five slowest, only 2023 was a record summer - 57 minutes of smoldering before a 20.07 deg C summer. The two extremes that frame the dataset (1956 at 4 min, 1923 at 60 min) sit on opposite ends of the duration scale but were both followed by below-average summers (15.07 and 16.67 deg C respectively).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_distributions.py",
+        "lines": [42, 49],
+        "output": "shortest 5:\n 1956  4.00 15.07 False\n 1971  5.00 16.97 False\n 1968  5.00 16.03 False\n 1974  5.12 16.57 False\n 2003  5.70 21.67  True\nlongest 5:\n 1988 40.00 16.93 False\n 1970 40.00 17.07 False\n 2016 43.57 18.27 False\n 2023 57.00 20.07  True\n 1923 60.00 16.67 False"
+      },
+      "data_table": {
+        "description": "Top-5 shortest and top-5 longest burns with that year's mean summer temperature and record flag",
+        "columns": ["category", "year", "duration_min", "summer_T_C", "record"],
+        "rows": [
+          ["shortest", 1956, 4.0, 15.07, false],
+          ["shortest", 1971, 5.0, 16.97, false],
+          ["shortest", 1968, 5.0, 16.03, false],
+          ["shortest", 1974, 5.12, 16.57, false],
+          ["shortest", 2003, 5.7, 21.67, true],
+          ["longest", 1988, 40.0, 16.93, false],
+          ["longest", 1970, 40.0, 17.07, false],
+          ["longest", 2016, 43.57, 18.27, false],
+          ["longest", 2023, 57.0, 20.07, true],
+          ["longest", 1923, 60.0, 16.67, false]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_04": {
+      "label": "Swiss-Plateau summer temperature distribution",
+      "content": "The summer-mean temperature column spans 15.07 to 21.67 deg C across all 67 years, with mean 17.61 and median 17.50 (sd 1.34). 11 of the 67 summers cross the 19 deg C MeteoSwiss record threshold: 1983, 1994, 2003, 2015, 2017, 2018, 2019, 2022, 2023, 2024 and 2025. Note 2024 has no burn duration (the snowman was not lit), so only 10 record summers can be paired with a burn time.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_and_distributions.py",
+        "lines": [50, 60],
+        "output": "count: 67  mean: 17.61  median: 17.50  std: 1.34\nmin: 15.07  max: 21.67\nyears above 19C (record summers): 11\nrecord-summer rows:\n 1983 19.07 24.33\n 1994 19.13 21.92\n 2003 21.67  5.70\n 2015 20.17 20.65\n 2017 19.53  9.93\n 2018 20.17 20.52\n 2019 19.73 17.73\n 2022 20.40 37.98\n 2023 20.07 57.00\n 2024 19.50  NaN\n 2025 19.60 26.50"
+      },
+      "data_table": {
+        "description": "Every record summer (mean >= 19 deg C) with year, summer T, and that year's burn duration (NaN where snowman was cancelled)",
+        "columns": ["year", "summer_T_C", "duration_min"],
+        "rows": [
+          [1983, 19.07, 24.33],
+          [1994, 19.13, 21.92],
+          [2003, 21.67, 5.7],
+          [2015, 20.17, 20.65],
+          [2017, 19.53, 9.93],
+          [2018, 20.17, 20.52],
+          [2019, 19.73, 17.73],
+          [2022, 20.4, 37.98],
+          [2023, 20.07, 57.0],
+          [2024, 19.5, null],
+          [2025, 19.6, 26.5]
+        ]
+      },
+      "based_on": ["det_05", "det_08"]
+    },
+    "ana_05": {
+      "label": "Pearson correlations: burn duration vs each climate variable",
+      "content": "Across 65 paired observations, the Pearson correlation between burn duration and the headline climate variable - summer mean temperature (tre200m0) - is just r = 0.194, with p = 0.121, not statistically significant. The folk rule predicts a NEGATIVE correlation (faster burn = hotter summer); the data shows a weak POSITIVE one (slower burn associates very mildly with hotter summers). The only correlation that reaches conventional significance is duration vs absolute summer maximum temperature (tre200mx) at r = 0.276, p = 0.026, again positive. Sunshine totals (r = 0.168) and sunshine percentage (r = 0.170) are also non-significant; precipitation is r = -0.113 and non-significant. Across all six climate variables, none supports the folk-science direction.",
+      "type": "correlation",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/correlations.py",
+        "lines": [25, 34],
+        "output": "n = 65 years (NA durations dropped)\ntre200m0  summer mean temperature                     0.194    0.1209\ntre200mn  summer absolute min temp                    0.111    0.3789\ntre200mx  summer absolute max temp                    0.276    0.0263\nsre000m0  summer total sunshine (hours)               0.168    0.1799\nsremaxmv  summer sunshine % of possible max           0.170    0.1764\nrre150m0  summer total precipitation (mm)            -0.113    0.3696"
+      },
+      "data_table": {
+        "description": "Pearson correlation of burn duration with each climate variable, with p-value (n=65)",
+        "columns": ["variable", "description", "r", "p", "significant"],
+        "rows": [
+          ["tre200m0", "summer mean temp (deg C)", 0.194, 0.1209, false],
+          ["tre200mn", "summer min temp (deg C)", 0.111, 0.3789, false],
+          ["tre200mx", "summer max temp (deg C)", 0.276, 0.0263, true],
+          ["sre000m0", "summer sunshine (hours)", 0.168, 0.1799, false],
+          ["sremaxmv", "summer sunshine % of max", 0.17, 0.1764, false],
+          ["rre150m0", "summer precipitation (mm)", -0.113, 0.3696, false]
+        ]
+      },
+      "based_on": ["det_02", "det_03"],
+      "notable_instance": {
+        "name": "tre200m0 - summer mean temperature",
+        "value": "r = 0.194, p = 0.121",
+        "why": "This is the headline test of the folk claim - and the snowman fails it: the correlation is in the wrong direction and not statistically significant."
+      }
+    },
+    "ana_06": {
+      "label": "Spearman rank correlations - robustness check",
+      "content": "Spearman rank correlations remove the influence of the dataset's most extreme burns (4 min in 1956, 60 min in 1923, 57 min in 2023). With ranks, the correlation between duration and summer mean temperature drops further to rho = 0.173 (p = 0.168), and the previously significant correlation with summer max (0.276) collapses to rho = 0.169 (p = 0.180). Sunshine correlations vanish (rho = 0.005 and 0.007). The conclusion does not depend on outliers: there is no robust statistical signal in any direction.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/correlations.py",
+        "lines": [36, 42],
+        "output": "tre200m0   0.173    0.1675\ntre200mn   0.096    0.4481\ntre200mx   0.169    0.1796\nsre000m0   0.005    0.9705\nsremaxmv   0.007    0.9550\nrre150m0  -0.049    0.6980"
+      },
+      "data_table": {
+        "description": "Spearman rank correlation (rho) of burn duration with each climate variable",
+        "columns": ["variable", "description", "rho", "p"],
+        "rows": [
+          ["tre200m0", "summer mean temp", 0.173, 0.1675],
+          ["tre200mn", "summer min temp", 0.096, 0.4481],
+          ["tre200mx", "summer max temp", 0.169, 0.1796],
+          ["sre000m0", "summer sunshine hours", 0.005, 0.9705],
+          ["sremaxmv", "summer sunshine % of max", 0.007, 0.955],
+          ["rre150m0", "summer precipitation", -0.049, 0.698]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_07": {
+      "label": "Folk-rule split test: fast burns vs slow burns",
+      "content": "Splitting the 65 burns at the median (13 min), the folk rule predicts the 32 fast-burn years should be hotter than the 33 slow-burn years. They are not. The fast group's mean summer temperature is 17.49 deg C; the slow group's is 17.64 deg C - a difference of -0.148 deg C in the wrong direction. The Welch t-test gives t = -0.45, p = 0.66, indistinguishable from zero. Just as starkly, only 2 of the 32 fast-burn years (6.3%) were record summers, while 8 of the 33 slow-burn years (24.2%) were. By the only criterion the folk rule cares about, slow burns predict record summers four times more often than fast burns do.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/correlations.py",
+        "lines": [44, 55],
+        "output": "median duration cutoff: 13.00 min\nfast burns (n=32): mean summer T = 17.49C, record summers = 2/32\nslow burns (n=33): mean summer T = 17.64C, record summers = 8/33\ndiff in mean T (fast - slow): -0.148C\nWelch t-test on mean summer T: t=-0.45, p=0.6571"
+      },
+      "data_table": {
+        "description": "Comparing fast (<13 min) vs slow (>=13 min) burns",
+        "columns": ["group", "n", "mean_summer_T_C", "record_summers", "record_pct"],
+        "rows": [
+          ["fast (<13 min)", 32, 17.49, 2, 6.3],
+          ["slow (>=13 min)", 33, 17.64, 8, 24.2]
+        ]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_08": {
+      "label": "Folk-rule classification accuracy vs base rate",
+      "content": "Treating fast burns as a folk-rule prediction of a record summer, the confusion matrix shows 25 true negatives, 30 false alarms, 8 misses, and just 2 hits. Total agreement is 27/65 = 41.5%. Critically, the base-rate strategy of always predicting 'no record summer' achieves 55/65 = 84.6% accuracy. The folk rule is roughly half as accurate as just saying nothing - it has informative value below noise.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/correlations.py",
+        "lines": [57, 67],
+        "output": "actual record summer  False  True \nfolk says hot                     \nFalse                    25      8\nTrue                     30      2\nagreement: 27/65 = 41.5%\nbase-rate accuracy of always saying 'not record': 55/65 = 84.6%"
+      },
+      "data_table": {
+        "description": "2x2 confusion matrix and accuracy comparison vs base rate",
+        "columns": ["folk_says_hot", "actual_record", "count"],
+        "rows": [
+          [false, false, 25],
+          [false, true, 8],
+          [true, false, 30],
+          [true, true, 2]
+        ]
+      },
+      "based_on": ["det_02", "det_03"]
+    },
+    "ana_09": {
+      "label": "Celebrity case studies: famous hits and misses",
+      "content": "The dataset reproduces every example MeteoSwiss cites. 1974 - shortest burn (5.12 min) - was followed by an unremarkable 16.57 deg C summer; the snowman was wrong. 2003 - second shortest at 5.70 min - was followed by a record-shattering 21.67 deg C summer; the snowman was right but, MeteoSwiss says, by chance. 2022 burned for 37.98 min and the summer hit 20.40 deg C (a record); the snowman was wrong. 2023 burned for a record 57 min, then the summer was 20.07 deg C (a record); the snowman was wrong. Even 2025 burned for 26.50 min, a slow time, and was followed by a 19.60 deg C record summer. Across the eight celebrity years (1974, 2003, 2015, 2018, 2019, 2022, 2023, 2025), the folk rule is right once.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/correlations.py",
+        "lines": [69, 78],
+        "output": "1974: duration 5.12 min, summer T 16.57C, record=False\n2003: duration 5.70 min, summer T 21.67C, record=True\n2015: duration 20.65 min, summer T 20.17C, record=True\n2018: duration 20.52 min, summer T 20.17C, record=True\n2019: duration 17.73 min, summer T 19.73C, record=True\n2022: duration 37.98 min, summer T 20.40C, record=True\n2023: duration 57.00 min, summer T 20.07C, record=True\n2025: duration 26.50 min, summer T 19.60C, record=True"
+      },
+      "data_table": {
+        "description": "MeteoSwiss-cited celebrity years with burn duration, summer T, record flag",
+        "columns": ["year", "duration_min", "summer_T_C", "record", "folk_call_correct"],
+        "rows": [
+          [1974, 5.12, 16.57, false, false],
+          [2003, 5.7, 21.67, true, true],
+          [2015, 20.65, 20.17, true, false],
+          [2018, 20.52, 20.17, true, false],
+          [2019, 17.73, 19.73, true, false],
+          [2022, 37.98, 20.4, true, false],
+          [2023, 57.0, 20.07, true, false],
+          [2025, 26.5, 19.6, true, false]
+        ]
+      },
+      "based_on": ["det_04"],
+      "notable_instance": {
+        "name": "2003",
+        "value": "5.70 min burn, 21.67 deg C summer (hottest on record)",
+        "why": "The one famous 'hit' that MeteoSwiss explicitly attributes to coincidence - and the only year out of eight celebrity cases where the folk rule was correct."
+      }
+    },
+    "ana_10": {
+      "label": "Long-run trend in Swiss-Plateau summer temperature",
+      "content": "Linear regression over all 67 years gives a slope of +0.0415 deg C per year, r = 0.675, p = 3.81e-10 - a strong, highly significant warming trend. Implied 100-year warming is 4.15 deg C. Comparing the first 30 years on record (1923-1987) with the last 30 years (1995-2025), mean summer temperature rises from 16.67 deg C to 18.53 deg C - a 1.86 deg C gap. So while the snowman fails to predict whether any individual summer is hot, the underlying summers are getting hotter on a schedule.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/trends.py",
+        "lines": [16, 28],
+        "output": "n = 67\nslope: 0.0415 C/year   r = 0.675   p = 3.81e-10\n100-year warming implied by slope: 4.15 C\nfirst 30 yrs covered (1923-1987) mean T: 16.67C\nlast 30 yrs covered (1995-2025) mean T: 18.53C\ndiff: 1.86C"
+      },
+      "data_table": {
+        "description": "Year vs summer mean temperature (deg C), all 67 rows for trend chart",
+        "columns": ["year", "summer_T_C", "record"],
+        "rows": [
+          [1923, 16.67, false],
+          [1952, 18.73, false],
+          [1953, 16.67, false],
+          [1956, 15.07, false],
+          [1958, 17.0, false],
+          [1959, 17.63, false],
+          [1961, 16.47, false],
+          [1965, 15.87, false],
+          [1966, 15.83, false],
+          [1967, 16.97, false],
+          [1968, 16.03, false],
+          [1969, 16.13, false],
+          [1970, 17.07, false],
+          [1971, 16.97, false],
+          [1972, 15.77, false],
+          [1973, 17.4, false],
+          [1974, 16.57, false],
+          [1975, 16.53, false],
+          [1976, 17.63, false],
+          [1977, 16.07, false],
+          [1978, 15.4, false],
+          [1979, 16.3, false],
+          [1980, 15.6, false],
+          [1981, 16.53, false],
+          [1982, 17.5, false],
+          [1983, 19.07, true],
+          [1984, 16.8, false],
+          [1985, 16.8, false],
+          [1986, 16.7, false],
+          [1987, 16.3, false],
+          [1988, 16.93, false],
+          [1989, 17.1, false],
+          [1990, 17.53, false],
+          [1991, 18.03, false],
+          [1992, 18.37, false],
+          [1993, 17.0, false],
+          [1994, 19.13, true],
+          [1995, 17.43, false],
+          [1996, 17.03, false],
+          [1997, 17.3, false],
+          [1998, 18.07, false],
+          [1999, 17.23, false],
+          [2000, 17.63, false],
+          [2001, 17.7, false],
+          [2002, 18.4, false],
+          [2003, 21.67, true],
+          [2004, 17.63, false],
+          [2005, 17.63, false],
+          [2006, 18.3, false],
+          [2007, 17.27, false],
+          [2008, 17.8, false],
+          [2009, 18.33, false],
+          [2010, 18.03, false],
+          [2011, 17.5, false],
+          [2012, 18.3, false],
+          [2013, 18.5, false],
+          [2015, 20.17, true],
+          [2016, 18.27, false],
+          [2017, 19.53, true],
+          [2018, 20.17, true],
+          [2019, 19.73, true],
+          [2020, 18.67, false],
+          [2021, 17.97, false],
+          [2022, 20.4, true],
+          [2023, 20.07, true],
+          [2024, 19.5, true],
+          [2025, 19.6, true]
+        ]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_11": {
+      "label": "Long-run trend in Boeoegg burn duration (and decadal pattern)",
+      "content": "The headline regression of duration on year is statistically inconclusive: slope +0.0756 min/year, r = 0.136, p = 0.281. But the decadal medians tell a clearer story than the slope. The 1950s-60s averaged 6-11 min burns, the 1970s-80s averaged 17-21 min, the 1990s and 2000s drifted back down to roughly 10-15 min, and the 2020s have so far averaged 33.6 min - more than five times the 1950s. This is the period MeteoSwiss flags as having loose, smoldering pyres rather than a meaningful climate signal.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/trends.py",
+        "lines": [30, 42],
+        "output": "n = 65\nslope: 0.0756 min/year   r = 0.136   p = 0.2811\n100-year change implied by slope: 7.56 min\ndecade  count   mean  median\n1920        1  60.00   60.00\n1950        5   6.80    8.00\n1960        6  10.67    8.50\n1970       10  17.51   15.50\n1980       10  20.95   19.50\n1990       10  13.36   10.36\n2000       10  15.24   12.66\n2010        9  20.39   17.73\n2020        4  33.61   32.24"
+      },
+      "data_table": {
+        "description": "Decadal mean and median burn duration (count of years per decade)",
+        "columns": ["decade", "n_years", "mean_duration_min", "median_duration_min"],
+        "rows": [
+          ["1920s", 1, 60.0, 60.0],
+          ["1950s", 5, 6.8, 8.0],
+          ["1960s", 6, 10.67, 8.5],
+          ["1970s", 10, 17.51, 15.5],
+          ["1980s", 10, 20.95, 19.5],
+          ["1990s", 10, 13.36, 10.36],
+          ["2000s", 10, 15.24, 12.66],
+          ["2010s", 9, 20.39, 17.73],
+          ["2020s", 4, 33.61, 32.24]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_12": {
+      "label": "Year-by-year duration vs summer T (full scatter table)",
+      "content": "All 65 paired (year, duration, summer T, record) observations are stored in this finding for the main scatter chart that visualizes the failure of the folk rule. Visually, the cloud is unstructured: short burns appear in cool years (1956, 1968) and hot years (2003, 2017); long burns appear in cool years (1923, 1988, 1970) and hot years (2022, 2023). Record summers (n=10 with non-null duration) sit at burn times ranging from 5.7 min to 57 min - the entire spread.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/trends.py",
+        "lines": [43, 50],
+        "output": "joint rows: 65 (table of year,duration,T,record)"
+      },
+      "data_table": {
+        "description": "All 65 paired (year, duration, summer mean T, record) rows for the main scatter",
+        "columns": ["year", "duration_min", "summer_T_C", "record"],
+        "rows": [
+          [1923, 60.0, 16.67, false],
+          [1952, 6.0, 18.73, false],
+          [1953, 8.0, 16.67, false],
+          [1956, 4.0, 15.07, false],
+          [1958, 8.0, 17.0, false],
+          [1959, 8.0, 17.63, false],
+          [1961, 7.0, 16.47, false],
+          [1965, 20.0, 15.87, false],
+          [1966, 16.0, 15.83, false],
+          [1967, 6.0, 16.97, false],
+          [1968, 5.0, 16.03, false],
+          [1969, 10.0, 16.13, false],
+          [1970, 40.0, 17.07, false],
+          [1971, 5.0, 16.97, false],
+          [1972, 8.0, 15.77, false],
+          [1973, 26.0, 17.4, false],
+          [1974, 5.12, 16.57, false],
+          [1975, 22.0, 16.53, false],
+          [1976, 11.0, 17.63, false],
+          [1977, 27.0, 16.07, false],
+          [1978, 12.0, 15.4, false],
+          [1979, 19.0, 16.3, false],
+          [1980, 17.0, 15.6, false],
+          [1981, 14.17, 16.53, false],
+          [1982, 13.0, 17.5, false],
+          [1983, 24.33, 19.07, true],
+          [1984, 22.0, 16.8, false],
+          [1985, 24.0, 16.8, false],
+          [1986, 14.0, 16.7, false],
+          [1987, 17.0, 16.3, false],
+          [1988, 40.0, 16.93, false],
+          [1989, 24.0, 17.1, false],
+          [1990, 10.5, 17.53, false],
+          [1991, 12.0, 18.03, false],
+          [1992, 10.22, 18.37, false],
+          [1993, 23.5, 17.0, false],
+          [1994, 21.92, 19.13, true],
+          [1995, 5.85, 17.43, false],
+          [1996, 8.0, 17.03, false],
+          [1997, 7.5, 17.3, false],
+          [1998, 10.22, 18.07, false],
+          [1999, 23.87, 17.23, false],
+          [2000, 16.75, 17.63, false],
+          [2001, 26.38, 17.7, false],
+          [2002, 12.4, 18.4, false],
+          [2003, 5.7, 21.67, true],
+          [2004, 11.7, 17.63, false],
+          [2005, 17.87, 17.63, false],
+          [2006, 10.47, 18.3, false],
+          [2007, 12.15, 17.27, false],
+          [2008, 26.02, 17.8, false],
+          [2009, 12.92, 18.33, false],
+          [2010, 12.9, 18.03, false],
+          [2011, 10.93, 17.5, false],
+          [2012, 12.12, 18.3, false],
+          [2013, 35.18, 18.5, false],
+          [2015, 20.65, 20.17, true],
+          [2016, 43.57, 18.27, false],
+          [2017, 9.93, 19.53, true],
+          [2018, 20.52, 20.17, true],
+          [2019, 17.73, 19.73, true],
+          [2021, 12.95, 17.97, false],
+          [2022, 37.98, 20.4, true],
+          [2023, 57.0, 20.07, true],
+          [2025, 26.5, 19.6, true]
+        ]
+      },
+      "based_on": ["det_02", "det_03"]
+    },
+    "ana_13": {
+      "label": "Record summers by decade",
+      "content": "Frequency of record summers (mean >= 19 deg C) by decade reveals an unmistakable acceleration. The 1920s through 1970s contain ZERO record summers across 22 observed years. The 1980s, 1990s and 2000s each contain just 1 record summer in 10 years (10%). The 2010s jump to 4 in 9 years (44.4%). The 2020s already sit at 4 record summers in 6 observed years (66.7%). What used to be a once-a-decade event is now the modal outcome - the climate signal is loud and obvious in the same dataset where the snowman signal is silent.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/trends.py",
+        "lines": [52, 58],
+        "output": "decade   record_yrs  total_yrs   pct\n1920              0          1   0.0\n1950              0          5   0.0\n1960              0          6   0.0\n1970              0         10   0.0\n1980              1         10  10.0\n1990              1         10  10.0\n2000              1         10  10.0\n2010              4          9  44.4\n2020              4          6  66.7"
+      },
+      "data_table": {
+        "description": "Record-summer count and percentage by decade",
+        "columns": ["decade", "record_yrs", "total_yrs", "pct"],
+        "rows": [
+          ["1920s", 0, 1, 0.0],
+          ["1950s", 0, 5, 0.0],
+          ["1960s", 0, 6, 0.0],
+          ["1970s", 0, 10, 0.0],
+          ["1980s", 1, 10, 10.0],
+          ["1990s", 1, 10, 10.0],
+          ["2000s", 1, 10, 10.0],
+          ["2010s", 4, 9, 44.4],
+          ["2020s", 4, 6, 66.7]
+        ]
+      },
+      "based_on": ["det_08"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "Two NA durations - 2020 (COVID-19 cancellation) and 2024 (storm cancellation, never occurred before in the modern festival's history) - are excluded from all duration-based analyses. The climate values for those years are still in the dataset and contribute to long-run trend statistics."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "The duration column is heterogeneous in precision: pre-1980 entries are mostly rounded to whole minutes, while post-1990 entries are reported to two decimal places (typically derived from second-resolution timing). This may slightly inflate variance in the early decades but does not affect the central correlation results."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "The dataset is sparse before 1952. Treat the 1923 row (60-minute burn, 16.67C summer) as a single data point not a representative pre-war sample. All correlation tests use the 65 burns that exist, with no imputation."
+    }
+  ]
+}

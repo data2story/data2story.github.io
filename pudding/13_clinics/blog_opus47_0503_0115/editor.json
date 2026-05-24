@@ -1,0 +1,100 @@
+{
+  "meta": {"role": "editor", "version": "2.0"},
+  "core_claim": "For most urban Americans the nearest abortion clinic is functionally next door at 8 weeks of pregnancy and a day's drive away at 20 — and the closure of a single clinic moves the country from the first picture toward the second.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — How far is too far?",
+      "purpose": "hook",
+      "title": "How far is too far?",
+      "findings": ["ana_04", "ana_03"],
+      "context": ["det_01"],
+      "triage": {"ana_04": "lead", "ana_03": "supporting"},
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "interactive",
+      "editorial_notes": "151 must be exact. The interactive should let the reader feel the gestation slider before any prose explains it."
+    },
+    "edt_02": {
+      "label": "At 8 weeks, most cities feel close",
+      "purpose": "context",
+      "title": "Eight weeks: the friendly map",
+      "findings": ["ana_02", "ana_14"],
+      "context": ["det_03"],
+      "triage": {"ana_02": "lead", "ana_14": "supporting"},
+      "chart_placeholder": "ana_15",
+      "media_placeholder": null,
+      "editorial_notes": "79.8% (cities) and 88.8% (population) are both load-bearing. Don't conflate."
+    },
+    "edt_03": {
+      "label": "At 16 weeks, the map breaks",
+      "purpose": "turn",
+      "title": "Sixteen weeks: the map breaks",
+      "findings": ["ana_07", "ana_03"],
+      "context": ["det_03"],
+      "triage": {"ana_07": "lead", "ana_03": "supporting"},
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "Boise 0 → 8 is the cleanest illustration. An evocative still of an empty highway in the Mountain West would carry the section if a chart isn't needed here."
+    },
+    "edt_04": {
+      "label": "States at the end of the ladder",
+      "purpose": "evidence",
+      "title": "Where the ladder ends",
+      "findings": ["ana_06", "ana_12"],
+      "context": ["det_05"],
+      "triage": {"ana_06": "lead", "ana_12": "supporting"},
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "Idaho's 9.0 and 8.4 are both load-bearing. The 27 abortion deserts benchmark from ANSIRH grounds this in academic literature."
+    },
+    "edt_05": {
+      "label": "Cities at the end of every column",
+      "purpose": "evidence",
+      "title": "Eleven hours from Bismarck",
+      "findings": ["ana_08", "ana_09"],
+      "context": ["det_07"],
+      "triage": {"ana_09": "lead", "ana_08": "supporting"},
+      "chart_placeholder": "ana_09",
+      "media_placeholder": null,
+      "editorial_notes": "The waiting-period frame (det_07) is what converts driving time into burden — keep it visible, do not footnote."
+    },
+    "edt_06": {
+      "label": "What a single closure does",
+      "purpose": "turn",
+      "title": "What a single closure does",
+      "findings": ["ana_05", "ana_10", "ana_11"],
+      "context": ["det_08", "det_04"],
+      "triage": {"ana_05": "lead", "ana_10": "supporting", "ana_11": "supporting"},
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The Wyoming July-2017 closure is critical context — this is the section where the 'closed' columns become real. Connect HB2 history."
+    },
+    "edt_07": {
+      "label": "A baseline, not a present",
+      "purpose": "close",
+      "title": "A baseline, not a present",
+      "findings": ["ana_05"],
+      "context": ["det_11", "det_06"],
+      "triage": {"ana_05": "supporting"},
+      "chart_placeholder": "ana_13",
+      "media_placeholder": "map",
+      "editorial_notes": "The map is the centerpiece visual — gestation toggle (8/12/16/20) + open/closed toggle so the reader can replay the collapse and the fragility on the same surface. End on tension: the 2017 worst-case is now the 2025 median for whole regions."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "lead",
+    "ana_04": "lead",
+    "ana_05": "lead",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "supporting",
+    "ana_11": "supporting",
+    "ana_12": "supporting",
+    "ana_13": "supporting",
+    "ana_14": "supporting",
+    "ana_15": "color"
+  }
+}

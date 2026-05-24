@@ -1,0 +1,269 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive); each chosen because the dataset's properties (digit ranks, transition matrix, run lengths, substring search) reward those forms; no quota-driven additions",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "Pi's digits are intrinsically quantitative — a 10x10 transition heatmap, per-digit bar/error chart, and a log-x convergence plot are the natural primitives."},
+      "image": {"used": true, "reason": "Three atmospheric stills (hero digit-cluster, Feynman-point row, mainframe printout) provide editorial breaks between dense statistical sections."},
+      "video": {"used": true, "reason": "image2video animates the hero still so the page feels alive at the top without a separate narrative video."},
+      "audio": {"used": true, "reason": "A short ambient marimba bed evokes 'random but musical' — paired with a play button and a clear visual fallback."},
+      "interactive_or_map": {"used": true, "reason": "A 'where in pi?' substring search lookup lets the reader feel the surprise of '0123456789' being absent and '999999' arriving at decimal 762."}
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero still — golden cluster of digits",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Macro overhead shot of a sea of glowing decimal digits 0 through 9, rendered as light-trails flowing across a deep midnight blue void, with one bright golden cluster of six 9s catching the light at the center; cinematic editorial photograph, sharp depth of field, no text labels visible, 16:9 aspect ratio, hero image for a mathematics blog about pi",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed cinematic hero showing pi's million digits as light-trails on a midnight field, with the Feynman-point cluster glowing gold in the middle. Sets up the entire piece visually before any prose.",
+      "rationale": "A still image generates atmosphere and curiosity; the gold cluster is a visual breadcrumb to the Feynman-point reveal in edt_04.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion — animated push-in",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "Slow parallax push-in toward the central golden cluster of six 9s; ambient particles drift gently across the frame; subtle warm flicker on the lit cluster; no camera shake",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "6-second autoplaying-muted-loop animation of the teaser. Adds kinetic energy without losing the still composition. Plays once when scrolled into view; reader sees the gold cluster slowly approach.",
+      "rationale": "We already invested in the hero still; image2video is the highest leverage way to animate it. Using muted autoplay keeps the page accessible.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Hero stat strip — chi-squared p-value",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "p = 0.7874",
+        "label": "Chi-squared test against uniform digits — a fair die would do worse 79% of the time.",
+        "data_source": "ana_02"
+      },
+      "brief": "Three stacked stat callouts at the top of edt_01: '1,000,001 digits', 'p = 0.7874 (uniform)', 'p = 0.6172 (pairwise)'. Large 64-72px display numbers, small descriptive labels.",
+      "rationale": "The two p-values are the spine of the whole argument; presenting them as a hero stat strip lets the rest of the post be the explanation.",
+      "based_on": ["ana_01", "ana_02", "ana_06"]
+    },
+    "des_04": {
+      "label": "Per-digit count chart with error bars",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "lollipop_with_ci",
+        "data_source": "ana_01",
+        "x": "digit",
+        "y": "pct",
+        "error_bars": ["ci_lo", "ci_hi"],
+        "reference_line": {"y": 10.0, "label": "expected 10%"},
+        "highlight": {"max": "digit 5", "min": "digit 6"},
+        "interaction": "hover tooltip with exact count and deviation",
+        "style": {"palette": "warm-gray with one accent gold for digit 9", "no_gridlines": true, "y_zoom": [9.85, 10.15]}
+      },
+      "brief": "Lollipop chart: x = digit 0..9, y = observed percentage with 95% binomial CI bars. Horizontal dashed line at 10%. y-axis zoomed to [9.85%, 10.15%] so the 0.05pp deviations are visible. Digit 6 (lowest) and digit 5 (highest) get small annotations.",
+      "rationale": "Bars without error bars would imply spurious differences; the CIs make visible that every digit is statistically indistinguishable from 10%.",
+      "based_on": ["ana_01"]
+    },
+    "des_05": {
+      "label": "10x10 transition matrix heatmap",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "heatmap",
+        "data_source": "ana_05",
+        "x": "to_digit (columns to_0..to_9)",
+        "y": "from_digit (rows 0..9)",
+        "color": "conditional probability in percent",
+        "color_scale": {"type": "diverging", "domain": [9.74, 10.23], "midpoint": 10.0, "scheme": "BrBG", "midpoint_color": "#f7f7f7"},
+        "highlight": {"diagonal": "thin white outline"},
+        "interaction": "hover tooltip showing P(j|i)% and absolute count",
+        "style": {"square_cells": true, "axis_labels": "0,1,2,...,9", "annotation_above_chart": "94.21 chi^2 / 99 df / p = 0.617"}
+      },
+      "brief": "10x10 cell heatmap. Diverging color centered at exactly 10.00%; deviations of 0.25pp barely shift the hue, which is the whole point. Diagonal cells get a thin outline. Below the chart: small caption noting the chi-squared statistic.",
+      "rationale": "This is the visual centerpiece of the post — a deliberately featureless heatmap that proves featureless-ness statistically.",
+      "based_on": ["ana_05", "ana_06"]
+    },
+    "des_06": {
+      "label": "Self-transition gauge strip",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "small_multiple_dial",
+        "data_source": "ana_04",
+        "panels_per_row": 5,
+        "panel_count": 10,
+        "what_each_panel_shows": "One arc per digit: arc length proportional to self_pct, scale [9.7%, 10.3%]; reference tick at 10%; numerical pct shown beneath",
+        "color": "single accent (deep teal); reference line in light gray",
+        "interaction": "hover shows count and CI",
+        "style": {"axis_simplified": true, "panel_label": "i -> i"}
+      },
+      "brief": "Ten compact arc gauges in a 2x5 grid. Each shows P(i->i) as an arc against a 10% baseline. Inspired by the original TidyTuesday hero figure but reproduced in our color palette.",
+      "rationale": "Honors the dataset submitter's hero figure while integrating it into the blog's visual language. Compact enough to live mid-article without dominating.",
+      "based_on": ["ana_04"]
+    },
+    "des_07": {
+      "label": "Atmospheric still — Feynman-point row",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "feynman_point.png",
+        "tool": "text2image",
+        "prompt": "Cinematic close-up photograph of a single old library page with one row of decimal digits zoomed in; the row contains the sequence 999999 highlighted by a faint warm glow; surrounding rows are blurred bokeh of small printed numbers; matte ink-on-paper texture, soft warm desk lamp; serene, contemplative",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Print-on-paper-style still that visually anchors the Feynman-point story. Provides a moment of breathing room before the bar chart of longest runs.",
+      "rationale": "A photograph of digits-on-paper turns an abstract finding into a tangible artifact. Stronger than a generic 'six 9s' graphic.",
+      "based_on": ["ana_09"]
+    },
+    "des_08": {
+      "label": "Longest-run bar chart with starting positions",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar_with_annotations",
+        "data_source": "ana_08",
+        "x": "longest_run (length of longest streak)",
+        "y": "digit",
+        "annotation_per_bar": "starts at decimal place {start_position:,}",
+        "highlight": {"digit_9": "row highlighted in gold; subtitle: 'Feynman point (decimal 762)'", "digit_3": "row highlighted in teal; subtitle: 'longest overall: 7 in a row'"},
+        "interaction": "hover shows full annotation",
+        "style": {"sort_by": "longest_run desc, then start_position asc", "bar_label_format": "x and start"}
+      },
+      "brief": "Horizontal bar chart with one bar per digit. Bar length = longest streak (5..7). Each bar labeled with its starting decimal position. Digits 9 (Feynman point) and 3 (the lone 7-run) are visually highlighted.",
+      "rationale": "Two facts in one chart — how long each digit's longest run is, and where it lands in the million decimals.",
+      "based_on": ["ana_08", "ana_09"]
+    },
+    "des_09": {
+      "label": "Substring lookup interactive",
+      "type": "interactive",
+      "section": "edt_05",
+      "content": {
+        "interaction_type": "lookup_table_with_search",
+        "initial_state": "A table of famous strings ('42', '666', '999999', '0123456789', '123456789', etc.) showing 'first decimal place' or 'NOT in first 1M (textbook position: 17,387,594,880)'",
+        "trigger": "Reader can also type a 1- to 6-digit string into a text box; backend is a precomputed lookup of all length<=6 first-occurrence positions inlined as JSON",
+        "transition": "Result row appears below the input: 'Found at decimal place X' or 'Not found in first 1,000,000 decimals'",
+        "payoff": "Reader feels the boundary at length 6 directly — most short strings are present; many 6-digit dates aren't.",
+        "data_source": ["ana_10", "ana_11"]
+      },
+      "brief": "Interactive featuring (a) a static table of headline substrings with their first-occurrence positions, (b) a small input box where the reader can type a 1-to-6-digit string and see whether it appears, and where. Implementation note: the Programmer should ship a precomputed lookup of first-occurrences for all length-<=6 strings, but only inline a curated demo set (the famous strings + a small random sample) to keep the page lightweight. For arbitrary inputs, the JS computes position by linear scan of a string of pi's first 100k decimals (small enough to inline as a 100KB string).",
+      "rationale": "The 'birthday in pi' parlor trick is exactly the interaction this dataset was made for. Even a tiny inline pi string makes the experience real.",
+      "based_on": ["ana_10", "ana_11"]
+    },
+    "des_10": {
+      "label": "Coverage by length stat strip",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "tufte_dot_plot",
+        "data_source": "ana_11",
+        "x": "length_k",
+        "y": "coverage_pct",
+        "secondary_series": "expected_pct (small ghost markers)",
+        "annotation": "100% at k=4; 99.99% at k=5; 63.15% at k=6; 9.5% at k=7",
+        "interaction": "hover for distinct/total counts",
+        "style": {"x_log_optional": false, "title": "Fraction of length-k strings present in 1M decimals"}
+      },
+      "brief": "Compact dot plot: four points (k=4..7), each showing observed coverage with a tiny ghost marker for theoretical expected coverage. Highlights how 'birthday in pi' breaks at k=6.",
+      "rationale": "Pairs the substring lookup with the underlying probability so the reader understands why some 6-digit strings are missing.",
+      "based_on": ["ana_11"]
+    },
+    "des_11": {
+      "label": "Convergence to 10% — log-x ten-line chart",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "multi_line_log_x",
+        "data_source": "ana_13",
+        "x": "n (log scale, 10..1,000,000)",
+        "y": "running pct (zoomed [7%, 13%])",
+        "color": "digit",
+        "reference_line": {"y": 10.0},
+        "highlight": "annotate digit 7 (slowest to settle, n=368,515) at end of its line",
+        "interaction": "hover shows running pct at that n; legend toggles individual digits",
+        "style": {"palette": "ColorBrewer Set3 muted", "no_gridlines": true}
+      },
+      "brief": "Ten lines, one per digit. X-axis log-scaled n. Y-axis zoomed to highlight late-stage convergence. Reference line at 10%. Digit 7 is the visible 'slowpoke' that takes longest to settle.",
+      "rationale": "Log-x is the only honest x-axis for this story; with linear x we'd see ten flat lines and no convergence drama.",
+      "based_on": ["ana_13", "ana_14"]
+    },
+    "des_12": {
+      "label": "Atmospheric still — mainframe printout of digits",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "digits_printout.png",
+        "tool": "text2image",
+        "prompt": "Editorial close-up photograph of a 1970s mainframe printer slowly extruding a long tractor-feed paper strip filled with computed decimal digits, paper cascading onto the floor; warm desk lamp light; analog scientific atmosphere; no readable specific numbers, just the texture of densely printed digits",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Closing atmospheric still. Lets the closing prose breathe; provides a counterpoint to NASA-only-needs-15-digits.",
+      "rationale": "Edt_07 is reflective; a photograph of a printout grounds the philosophical close in the physical history of computing pi.",
+      "based_on": []
+    },
+    "des_13": {
+      "label": "Ambient marimba bed",
+      "type": "audio",
+      "section": "edt_06",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "Pi's digits are 'random but musical'; a short ambient marimba bed reinforces the emotional point that the convergence chart makes visually.",
+        "trigger": "Click 'Listen' button beneath the convergence chart",
+        "ui_form": "compact play/pause button inline with the chart; never autoplays",
+        "content": {
+          "filename": "digit_drift.wav",
+          "tool": "text2music",
+          "prompt": "Ten short marimba notes, one per digit 0-9, very gentle and contemplative; no bass, no drums, soft ambient pad underneath; calm minimalist mathematics-museum atmosphere; 10 seconds, no vocals",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "If audio is muted or unsupported, the convergence chart alone tells the story; the play button is purely optional.",
+        "novelty_note": "This is a discreet ambient bed, not a click-to-play tone card or a sonification UI."
+      },
+      "brief": "A 10-second ambient marimba clip available behind a small play button under the convergence chart. Optional, never autoplay, paired with a visual fallback (the chart itself).",
+      "rationale": "Audio is included by default; this is the most restrained form that doesn't distract from the analytical sections.",
+      "based_on": []
+    },
+    "des_14": {
+      "label": "Reference image (TidyTuesday original)",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_pi_self_transitions.png",
+        "tool": "wikimedia_download",
+        "source_url": "tidytuesday submission (local copy)",
+        "prompt": "(reference image — included with attribution to Manasseh Oduor, TidyTuesday community)"
+      },
+      "brief": "Honor the original TidyTuesday hero figure by including it as a small reference panel alongside our re-implementation, with attribution.",
+      "rationale": "Crediting the dataset submitter while showing how our visual language reinterprets the same data is good editorial practice.",
+      "based_on": ["ana_04"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "deep editorial — midnight blue + ivory + restrained gold accent for highlights (Feynman point, digit 5, digit 9). Type set in a serif body with a sans display.",
+    "text_visual_pattern": "visual-first at edt_01 (teaser + stat strip), then alternating: chart, prose, chart, prose; image atmospheric breaks before edt_04 and edt_07; the heatmap (des_05) at edt_03 is the centerpiece.",
+    "centrepiece": "des_05",
+    "anti_sameness_notes": "No card-deck pattern, no map (none would make sense), no quiz interaction (the reveal is statistical, not surprising-fact); the substring lookup is a typing-driven experience rather than a guess-button. Audio is a discreet ambient bed, not a click-to-play tone or chart sonification card.",
+    "typography_notes": "64-72px stat numbers; serif italic for pull quotes; one orange-gold accent reserved for Feynman-point references; chart x/y labels are small caps; full-width hero teaser, but body charts are constrained to a 720px reading column."
+  }
+}

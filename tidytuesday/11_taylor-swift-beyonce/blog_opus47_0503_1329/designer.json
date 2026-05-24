@@ -1,0 +1,273 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Spotify embeds carry the audio dimension since the dataset literally is the songs; generated images are reserved for the two atmospheric beats (opening tension and folklore turn). Charts handle the analytical work. Per project constraint: cap 5 generated assets, prefer external embeds, skip generated audio.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Eight quantitative findings across two corpora and a chart table — every analytical comparison is best read as a chart."
+      },
+      "image": {
+        "used": true,
+        "reason": "Two atmospheric stills are generated for the open and the folklore turn; together they bookend the analytical middle."
+      },
+      "video": {
+        "used": false,
+        "reason": "Disk budget is tight (~2.5 GiB free) and the dataset has no event/process to animate; Spotify embeds carry the time-based dimension instead. Recorded as a deliberate omission, not an oversight."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Six verified Spotify embeds (3 Beyoncé, 3 Taylor) place the listening evidence directly in the prose where each artist is invoked. Generated audio explicitly skipped per project constraint."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "An album-by-album sentiment scrubber for Taylor (folklore turn) and a country-by-country small-multiples view for the chart-position table give the reader two interactives instead of more passive charts."
+      }
+    },
+    "media_blockers": [
+      {
+        "category": "audio",
+        "reason": "Generated audio explicitly skipped — disk budget + Spotify embeds already cover the audio dimension."
+      },
+      {
+        "category": "video",
+        "reason": "Disk budget too tight to comfortably hold a 5-second mp4 alongside two PNGs; would risk ENOSPC mid-pipeline."
+      }
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser — Two corpora, side-by-side",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Two abstract typographic textures side by side on a deep matte black background. Left half: a dense calligraphic swirl of golden-amber lyric fragments arranged in a rhythmic vertical stack, evoking soulful repetition; right half: a softer constellation of pale-blue and silver lyric fragments scattered like stars across a misty winter landscape. A thin glowing vertical line of warm-white light divides the two halves down the centre. Editorial poster aesthetic, cinematic lighting, no readable words, no faces, no logos, no captions. 16:9, ultra-high detail.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed cinematic still — gold/amber dense calligraphic mass on the left, pale blue/silver scattered stars on the right, separated by a thin glowing white seam. Functions as the visual answer to 'what does it mean to compare these two artists?' before any text is read.",
+      "rationale": "Establishes the comparison as a visual texture, not a hierarchy. No people, no logos — the two artists are signalled by colour and rhythm only.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Single Ladies — Spotify embed (the 2009 VMAs link)",
+      "type": "instance",
+      "section": "edt_01",
+      "content": {
+        "instance_ref": "inst_02",
+        "embed_type": "spotify",
+        "embed_url": "https://open.spotify.com/embed/track/5R9a4t5t5O0IsznsrKPVro",
+        "caption": "Single Ladies (Put a Ring on It) — the exact song Kanye argued deserved the 2009 VMA over Taylor."
+      },
+      "brief": "Compact native Spotify iframe embedded under the hook prose. Acts as the listening bridge between the two artists, before the analytical sections begin.",
+      "rationale": "The dataset's cover image is the 2009 VMAs — making the song from that night clickable inside the hook beats writing about it.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Catalog inventory — Beyoncé's longest entries are not songs",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_03",
+        "x": "lines",
+        "y": "entry",
+        "color": "kind",
+        "highlight": {"entry": "Lemonade Film (Script)"},
+        "interaction": "hover tooltip showing line count and kind tag",
+        "style": {"palette": {"film": "#d4af37", "live": "#7a8d99", "remix": "#9b6b9e", "medley": "#5a8a7e", "studio": "#c95f4e"}, "no_gridlines": true, "label_x": "Lines in the dataset"}
+      },
+      "brief": "Horizontal bar chart of Beyoncé's 10 longest entries by line count, coloured by kind (film / live / remix / medley / studio). The Lemonade Film script bar is the longest and is highlighted; only one bar (That's How You Like It) is coloured as a studio track. Makes the dataset asymmetry visible at a glance.",
+      "rationale": "A bar chart is the cleanest way to expose the structural padding of Beyoncé's table — the eye sees that nine of the ten longest entries are not pop songs.",
+      "based_on": ["ana_03"]
+    },
+    "des_04": {
+      "label": "48 vs 12 — within-song repetition",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "lollipop_grouped",
+        "data_source": "ana_04",
+        "x": "repeats",
+        "y": "line",
+        "color": "artist",
+        "highlight": {"top_beyonce_repeat": 48, "top_taylor_repeat": 12},
+        "interaction": "hover tooltip with full song name and exact repeat count",
+        "style": {"palette": {"Beyoncé": "#d4af37", "Taylor Swift": "#7a9bb3"}, "facet": "by_artist", "no_gridlines": true, "label_x": "Times the line repeats inside one song"}
+      },
+      "brief": "Two grouped lollipop columns side by side — Beyoncé on the left (gold lollipops, 8 lines, top at 48), Taylor on the right (cool blue, 8 lines, all clustered at 10–12). Same x-axis scale across both panels so the visual gap is obvious.",
+      "rationale": "Lollipop grouping forces the comparison: both artists have eight high-repeat lines but Beyoncé's column extends to 48 while Taylor's tops out at 12. The same chart shape contains the entire finding.",
+      "based_on": ["ana_04"]
+    },
+    "des_05": {
+      "label": "Stat callout — 1.5x the love-words",
+      "type": "stat_callout",
+      "section": "edt_04",
+      "content": {
+        "value": "1.5x",
+        "label": "Beyoncé's love-word density vs Taylor's (3.50% vs 2.36%)",
+        "data_source": "ana_06"
+      },
+      "brief": "Large 64px stat callout: '1.5x' with the supporting line below. Sits between the prose and the love-words chart.",
+      "rationale": "The headline-flipping number deserves to be displayed at a size that matches its rhetorical weight.",
+      "based_on": ["ana_06"]
+    },
+    "des_06": {
+      "label": "Love-word density bar chart",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "stacked_bar",
+        "data_source": "ana_06",
+        "x": "pct",
+        "y": "artist",
+        "color": "category",
+        "highlight": null,
+        "interaction": "hover tooltip showing absolute count and percentage",
+        "style": {"palette": {"Beyoncé": "#d4af37", "Taylor Swift": "#7a9bb3"}, "no_gridlines": true, "label_x": "Love-words as % of content vocabulary"}
+      },
+      "brief": "Two horizontal bars showing 3.50% (Beyoncé) vs 2.36% (Taylor) of content words that are love-words. Same scale, gold above blue. The visual proximity-but-asymmetry mirrors the finding.",
+      "rationale": "A direct A/B comparison; no trickery. The bar lengths are the entire argument.",
+      "based_on": ["ana_06"]
+    },
+    "des_07": {
+      "label": "Halo — Spotify embed",
+      "type": "instance",
+      "section": "edt_04",
+      "content": {
+        "instance_ref": "inst_01",
+        "embed_type": "spotify",
+        "embed_url": "https://open.spotify.com/embed/track/3ERa3mEeOnrh2Mc47qM6T1",
+        "caption": "Halo — the word Beyoncé sings 383 times across her catalog."
+      },
+      "brief": "Compact Spotify track embed under the love-word chart. Lets the reader hear what 'Beyoncé says love more' actually sounds like, in one of her most recognisable songs.",
+      "rationale": "Embedding the canonical love song after the love-word chart turns a statistic into an experience.",
+      "based_on": ["ana_05", "ana_06"]
+    },
+    "des_08": {
+      "label": "Distinctive vocabulary — diverging word table",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "diverging_bar",
+        "data_source": "ana_15",
+        "x": "log_ratio_proxy",
+        "y": "word",
+        "color": "leaning",
+        "highlight": null,
+        "interaction": "hover shows raw counts in each catalog",
+        "style": {"palette": {"Beyoncé": "#d4af37", "Taylor": "#7a9bb3"}, "centered_on_zero": true, "no_gridlines": true, "label": "Beyoncé-leaning      Taylor-leaning"}
+      },
+      "brief": "16-row diverging bar chart with words on the y-axis. Beyoncé-leaning words (bodied, halo, slay, diva, ladies, upgrade, yo, suga) extend left in gold; Taylor-leaning (starlight, wonderland, getaway, woods, daylight, dancing, york, darling) extend right in blue. The shape itself is the argument: bodies-and-rooms vs landscapes-and-times-of-day.",
+      "rationale": "Diverging bar with words as labels keeps the words readable while making the asymmetry instantly visible.",
+      "based_on": ["ana_15"]
+    },
+    "des_09": {
+      "label": "Folklore turn — atmospheric still",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "folklore_cabin.png",
+        "tool": "text2image",
+        "prompt": "A solitary cabin window glowing pale gold in a snowy forest at dusk, viewed from outside through bare birch trees. A single string of dim warm bulbs traces the eaves. Cold blue-grey light, deep negative space, melancholy and quiet, cinematic editorial photography style, no people, no text, no logos. Mood: a lockdown record being made alone. 16:9.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Cinematic atmospheric still — a lit cabin window in a winter forest at dusk. Sits between the sentiment-line prose and the chart. Establishes the emotional register of folklore before the negative number lands.",
+      "rationale": "The data point is −0.21 on a sentiment line. The image gives the reader the feeling of the album so the number doesn't have to do the work alone.",
+      "based_on": ["ana_13"]
+    },
+    "des_10": {
+      "label": "Sentiment line across 8 albums (interactive)",
+      "type": "interactive",
+      "section": "edt_06",
+      "content": {
+        "interaction_type": "scrubber",
+        "initial_state": "Step line chart showing sentiment_score across the 8 albums in release order, with a horizontal zero baseline. Initially the cursor sits on Speak Now (the peak).",
+        "trigger": "Reader clicks or arrows through albums OR a play button steps the cursor through albums one at a time over ~6s.",
+        "transition": "As cursor moves, a labelled card shows the album name, year, sentiment score, and pos/neg word counts. The line segment behind the cursor stays solid; ahead is faint until reached. When the cursor lands on folklore, the line crosses the zero baseline and the baseline turns coral.",
+        "payoff": "By the time the cursor reaches 2020, the reader has felt every album's score and watched the line cross zero — the −0.21 is no longer abstract.",
+        "data_source": "ana_13"
+      },
+      "brief": "An album-by-album step line chart of sentiment_score with a draggable cursor and a play button. The zero-baseline highlight when folklore is reached makes the turn legible without prose having to spell it out.",
+      "rationale": "A static line chart would hide the temporal experience of 'eight albums of positive scores, then a break'. The scrubber turns the trend into an act of watching the line fall.",
+      "based_on": ["ana_13"]
+    },
+    "des_11": {
+      "label": "Stat callout — Beyoncé's full-catalog sentiment",
+      "type": "stat_callout",
+      "section": "edt_06",
+      "content": {
+        "value": "+1.63",
+        "label": "Beyoncé's full-catalog sentiment score — above every Taylor album except Speak Now, Fearless and Red",
+        "data_source": "ana_14"
+      },
+      "brief": "Stat callout placed after the folklore interactive. Frames the cross-artist comparison without forcing a fourth chart in a row.",
+      "rationale": "A single number does the cross-catalog comparison cleanly and breaks any sense of a chart streak.",
+      "based_on": ["ana_14"]
+    },
+    "des_12": {
+      "label": "Country #1 hit-rate — small multiples",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "small_multiples_bar",
+        "data_source": "ana_10",
+        "x": "artist",
+        "y": "pct_no1",
+        "color": "artist",
+        "highlight": {"countries_taylor_dominates": ["AUS", "CAN", "NZ"], "countries_beyonce_dominates": ["US"]},
+        "interaction": "hover shows raw counts (n_no1 / total albums) per cell",
+        "style": {"palette": {"Beyoncé": "#d4af37", "Taylor Swift": "#7a9bb3"}, "facet": "country", "columns": 5, "facet_width": 110, "facet_spacing": 14, "no_gridlines": true, "label_y": "% of albums that hit #1"}
+      },
+      "brief": "Ten small panels, one per country (US, AUS, CAN, FRA, GER, IRE, JPN, NZ, SWE, UK), arranged in two rows of five. Each panel has two bars (Beyoncé in gold, Taylor in blue) showing % of albums that peaked at #1 in that country. The reader scans across the grid and sees who owns where.",
+      "rationale": "Ten countries × two artists is exactly the kind of categorical-by-categorical comparison small multiples were invented for. Avoids overplotting a single bar chart with 20 bars.",
+      "based_on": ["ana_10"]
+    },
+    "des_13": {
+      "label": "Worldwide sales — paired ranking",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "ranked_bar",
+        "data_source": "ana_07",
+        "x": "sales_M",
+        "y": "title",
+        "color": "artist",
+        "highlight": {"title": "Fearless"},
+        "interaction": "hover shows artist, year, exact sales in millions",
+        "style": {"palette": {"Beyoncé": "#d4af37", "Taylor Swift": "#7a9bb3"}, "no_gridlines": true, "label_x": "Worldwide units (millions)"}
+      },
+      "brief": "Single horizontal bar chart of all 11 worldwide-row albums, sorted by sales descending. Bars coloured gold or blue by artist. The two top bars (Fearless 12.0, Dangerously in Love 11.0) are visibly close; reader sees Beyoncé and Taylor albums interleaved through the ranking, supporting 'per-album, the gap nearly disappears'.",
+      "rationale": "Sorting by sales rather than grouping by artist is the visual move that matches the editorial finding — the rankings interleave, the per-album average is nearly identical.",
+      "based_on": ["ana_07", "ana_12"]
+    },
+    "des_14": {
+      "label": "Per-album avg stat callout",
+      "type": "stat_callout",
+      "section": "edt_08",
+      "content": {
+        "value": "6.90M vs 6.80M",
+        "label": "Beyoncé's vs Taylor's per-album worldwide units — a 100,000-unit gap on average",
+        "data_source": "ana_12"
+      },
+      "brief": "Stat callout above the worldwide-sales chart so the headline lands before the bars.",
+      "rationale": "The whole point of edt_08 is the proximity of these two numbers; show them adjacent in a typographic treatment first.",
+      "based_on": ["ana_12"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial — matte black backgrounds, two accent colours (warm gold for Beyoncé, cool steel-blue for Taylor)",
+    "text_visual_pattern": "text-then-visual; every section opens on prose and reaches a chart, embed, or stat callout below. Two atmospheric image breaks (teaser open and folklore turn) function as chapter dividers.",
+    "centrepiece": "des_10",
+    "anti_sameness_notes": "Avoids the chart-streak pattern by alternating chart / Spotify embed / stat callout / interactive across nine sections. Two generated images only — used as bookends, not decoration. No generated audio (Spotify embeds carry that channel). No video (disk-tight environment).",
+    "typography_notes": "Stat callouts at 64–72px in a serif weight; section titles in a tighter sans-serif; pull quotes in italic Georgia. Gold (#d4af37) and steel-blue (#7a9bb3) are the only chart accents."
+  }
+}

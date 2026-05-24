@@ -1,0 +1,142 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "Across 15 seasons in Europe's top leagues, almost every football manager performs within a hair's breadth of what their squad's quality already predicts — and the few who genuinely lift their teams are rare exceptions, not the rule fans imagine.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — The miracle that wasn't a miracle",
+      "purpose": "hook",
+      "title": "The miracle that wasn't a miracle",
+      "findings": ["ana_12", "ana_03"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_12": "supporting",
+        "ana_03": "lead"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "video",
+      "editorial_notes": "Lead with Leicester (1.07 ppg above expectation), then immediately undercut with the distribution. Do not reorder."
+    },
+    "edt_02": {
+      "label": "Methodology — A model the betting markets respect",
+      "purpose": "context",
+      "title": "A model the betting markets respect",
+      "findings": ["ana_01"],
+      "context": ["det_01", "det_02", "det_08"],
+      "triage": {
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": null,
+      "editorial_notes": "Mention 27,390 fixtures, MAE 7.27 across 1,470 team-seasons, correlation 0.80. Do not skip the betting-market benchmark — it is what licenses the rest of the analysis."
+    },
+    "edt_03": {
+      "label": "The leaderboard — short, brilliant, unfamiliar",
+      "purpose": "evidence",
+      "title": "The leaderboard nobody expects",
+      "findings": ["ana_04"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_04": "lead"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "Top of the chart should highlight Abelardo (#1), Ranieri's Leicester (mid-pack)."
+    },
+    "edt_04": {
+      "label": "Tenure-1 vs tenure-2 — the killer test",
+      "purpose": "turn",
+      "title": "The killer test",
+      "findings": ["ana_08", "ana_09"],
+      "context": ["det_04", "det_07"],
+      "triage": {
+        "ana_08": "lead",
+        "ana_09": "supporting"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "interactive",
+      "editorial_notes": "r = 0.04 is the killer number; 45% vs 37% conditional probabilities back it up. The interactive should let readers select a manager and see their two tenures."
+    },
+    "edt_05": {
+      "label": "Why a single season tells you almost nothing",
+      "purpose": "evidence",
+      "title": "Why a single season tells you almost nothing",
+      "findings": ["ana_18"],
+      "context": ["det_06", "det_07"],
+      "triage": {
+        "ana_18": "lead"
+      },
+      "chart_placeholder": "ana_18",
+      "media_placeholder": "image",
+      "editorial_notes": "461 games of zero must be added. 7.6% retention for a single season. Ferguson at 43% retention. Image should be Ferguson-era atmosphere — touchline, weather, time-passing."
+    },
+    "edt_06": {
+      "label": "Klopp, the textbook",
+      "purpose": "evidence",
+      "title": "Klopp, the textbook",
+      "findings": ["ana_16"],
+      "context": ["det_09"],
+      "triage": {
+        "ana_16": "lead"
+      },
+      "chart_placeholder": "ana_16",
+      "media_placeholder": null,
+      "editorial_notes": "Stair-step trajectory across Mainz → Dortmund → Liverpool: +0.05, +0.18, +0.31 must read in order."
+    },
+    "edt_07": {
+      "label": "Famous names, slimmer margins",
+      "purpose": "evidence",
+      "title": "The famous-name table is not what you think",
+      "findings": ["ana_17"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_17": "supporting"
+      },
+      "chart_placeholder": "ana_17",
+      "media_placeholder": "image",
+      "editorial_notes": "Ancelotti's negative-to-zero margins are the surprise. Visual should let readers browse manager-by-manager."
+    },
+    "edt_08": {
+      "label": "The active board, projected",
+      "purpose": "evidence",
+      "title": "The active board, projected",
+      "findings": ["ana_05", "ana_07"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_05": "lead",
+        "ana_07": "supporting"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Dual story: top-10 leaderboard, then the long left tail of 432 sub-average projections. Interactive lets reader pick a band and see how many managers fall in it."
+    },
+    "edt_09": {
+      "label": "Close — what this does and does not say",
+      "purpose": "close",
+      "title": "What this data does, and does not, say",
+      "findings": [],
+      "context": ["det_05", "det_07"],
+      "triage": {},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Pure editorial close. Manager-severance figure (£90m, 2018-19) and 'post-sacking bounce as regression to the mean' are the two anchors. Do not introduce new statistics."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "cut",
+    "ana_03": "lead",
+    "ana_04": "lead",
+    "ana_05": "lead",
+    "ana_07": "supporting",
+    "ana_08": "lead",
+    "ana_09": "supporting",
+    "ana_12": "supporting",
+    "ana_15": "color",
+    "ana_16": "lead",
+    "ana_17": "supporting",
+    "ana_18": "lead"
+  }
+}

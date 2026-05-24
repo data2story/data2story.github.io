@@ -1,0 +1,1 @@
+{"description":"Cities lacking a 1-hour round-trip at each gestation","columns":["weeks","cities_lacking_1h","pct_cities","scenario"],"rows":[[8,151,20.2,"open"],[12,180,24.0,"open"],[16,255,34.0,"open"],[20,339,45.3,"open"],[8,283,37.8,"closed"],[12,350,46.7,"closed"],[16,419,55.9,"closed"],[20,505,67.4,"closed"]]}

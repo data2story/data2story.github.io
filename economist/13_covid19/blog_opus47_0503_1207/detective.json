@@ -1,0 +1,148 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "The Economist's tourism-flow proxy for early COVID exposure",
+      "content": "On 6 March 2020, The Economist's Graphic Detail published 'Tracking the stealthy killer', arguing that the official COVID-19 case counts in many countries were implausibly low given how many travellers from China those countries had recently received. The piece used Chinese tour-group data through Q3 2019 as a proxy for total tourism flows between China and each country. By regressing logged confirmed cases on logged tourism (in OECD countries only, where surveillance was strongest), the piece produced an expected-cases curve. Countries lying far below the line — chiefly Indonesia, India, Russia and several other middle-income states — were flagged as likely under-reporting. The story landed at a sensitive moment: this was three days before Italy's national lockdown and five days before the WHO declared a pandemic, and it was one of the first English-language pieces to publicly argue that the rest of the world was already further into the outbreak than its case totals admitted.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://github.com/TheEconomist/covid-19-the-economist-global-excess-deaths-model",
+          "title": "The Economist — COVID-19 data and code repository",
+          "facts": [
+            "The Economist published 'Tracking the stealthy killer' in Graphic Detail on 6 March 2020.",
+            "The model regressed log(confirmed cases + 1) on log(mean Chinese tour-group flows) for OECD countries only."
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Chinese tour-group data: the only consistent global tourism proxy in early 2020",
+      "content": "The exposure variable is unusual: it is not flight passenger counts, not tourist nights, not airline seats — it is Q3 2019 Chinese tour-group flows reported by China's Ministry of Culture and Tourism. That ministry tracks group travellers to and from China for the top 30 sender/recipient countries plus continent residuals. The Economist used these because they covered both directions, broke out by destination country, and were the most recent globally consistent figures available — Q3 2019, six months before the analysis. They are an imperfect proxy because not all tourists travel in groups and they pre-date the outbreak itself, but for an early-March 2020 analysis they were the best harmonised cross-country exposure metric. The data are scaled in thousands of group-tourists per quarter; OECD countries like Japan (~3.6m) and South Korea (~2.7m) sit at the top, while many African and Latin American economies sit near zero.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "http://zwgk.mct.gov.cn/auto255/202001/t20200102_850061.html",
+          "title": "Ministry of Culture and Tourism of the People's Republic of China — Q3 2019 outbound/inbound tourism statistics",
+          "facts": [
+            "China's Ministry of Culture and Tourism publishes quarterly outbound and inbound tour-group counts for the top 30 destination/sender countries and continent residuals.",
+            "Q3 2019 was the most recent quarter available when The Economist's piece went to press in early March 2020."
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Johns Hopkins case data: 4 March 2020 snapshot",
+      "content": "Confirmed cases are the John Hopkins University CSSE COVID-19 dashboard reading for 4 March 2020 — three days before publication. On that day the global confirmed total was approximately 95,000, dominated by Hubei province (67,332 cases) with major outbreaks in South Korea (5,621), Italy (3,089) and Iran (2,922). Most of the rest of the world reported only single- or double-digit case counts. The dashboard, run by Lauren Gardner's lab at JHU and described in The Lancet Infectious Diseases, became the de-facto global ledger of COVID-19 cases through 2020-2022. Its early-March snapshot is the snapshot of an outbreak that had spread far beyond Wuhan but was still being detected unevenly: the South Korean and Italian numbers were rising because those countries were testing aggressively, while many other nations had reported only a handful of imported cases despite extensive travel from affected regions.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://doi.org/10.1016/S1473-3099(20)30120-1",
+          "title": "Dong, Du & Gardner (2020) — An interactive web-based dashboard to track COVID-19 in real time, Lancet Infectious Diseases",
+          "facts": [
+            "The Johns Hopkins COVID-19 dashboard was launched 22 January 2020 and provided near-real-time confirmed case counts by country.",
+            "On 4 March 2020 the dashboard reported 67,332 confirmed cases in Hubei, 5,621 in South Korea, 3,089 in Italy and 2,922 in Iran."
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Independent confirmation: COVID was massively under-reported in March 2020",
+      "content": "Subsequent peer-reviewed research validated the Economist's hunch dramatically. A widely cited Pulmonology paper estimated 'fold change' under-reporting factors using case-fatality ratios as of mid-March 2020: Iran ~33.8x, France ~46x, the United States ~53.8x, Italy ~73x and Spain ~161x — meaning Spain's true caseload was on the order of 160 times its reported total. A Science paper estimated that 86% of all infections in China before 23 January 2020 were undocumented. Wuhan antibody surveys later suggested the true infection count there was nearly 10x the official tally. The Economist's piece came out before any of this seroprevalence work was possible, but its core claim — that the tourism-implied caseloads were enormously higher than the reported ones — was correct in direction and roughly right in magnitude.",
+      "category": "related_work",
+      "sources": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7275155/",
+          "title": "Lau et al. (2020) — Evaluating the massive underreporting and undertesting of COVID-19 cases in multiple global epicenters, Pulmonology",
+          "facts": [
+            "Mid-March 2020 fold-change under-reporting estimates: Iran 33.8x, France 46x, USA 53.8x, Italy 73x, Spain 161x.",
+            "The authors used the case-fatality ratio anomaly to back out an implied true infection count."
+          ]
+        },
+        {
+          "url": "https://www.science.org/doi/10.1126/science.aba9757",
+          "title": "Li et al. (2020) — Substantial undocumented infection facilitates the rapid dissemination of novel coronavirus, Science",
+          "facts": [
+            "Modelling of pre-23-January 2020 outbreak in China estimated 86% of infections went undocumented.",
+            "Undocumented carriers were estimated to be the source of about 79% of documented cases."
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Why tour groups predict outbreak size — and why the prediction has limits",
+      "content": "The mechanism the model assumes is direct seeding: people moving between countries carry the virus with them, and the more people, the more seeding events, the more confirmed cases (under symmetric surveillance). Empirically this is consistent with the early outbreak chronology — Italy, South Korea and Iran all had sustained transmission by late February, and all were major Chinese tour-group destinations or sources. But the model has real limits. (1) It uses only OECD countries to fit because OECD surveillance was assumed to be more uniform; non-OECD countries are then evaluated against this OECD-fit line, an extrapolation that may not hold. (2) Q3 2019 tourism is a proxy, not a measurement of who travelled in January-February 2020 specifically. (3) The single-variable model controls for nothing — temperature, healthcare capacity, age structure all matter and are absent. The Economist tested random forests, zero-inflated negative binomials and per-capita variants and reports that results were 'largely similar', but the simple OLS was kept for interpretability.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.thelancet.com/article/S0140-6736(20)30627-9/fulltext",
+          "title": "The Lancet — COVID-19 and Italy: what next?",
+          "facts": [
+            "Italy reported sustained community transmission from late February 2020 onward.",
+            "Italian authorities ordered national-level lockdown measures by 9 March 2020."
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "OECD vs non-OECD: surveillance capacity matters",
+      "content": "The model is fit only on the 34 OECD countries in the dataset, then used to predict expected cases for the remaining ~90 countries. The premise is that OECD members had relatively comparable testing capacity in early March 2020, so an OECD-only fit captures the 'true' tourism-to-cases relationship without being polluted by countries that were simply not testing. Non-OECD residuals then inherit a specific interpretation: a country far below the OECD-fit line is not necessarily less infected, it is more likely to be less detected. Indonesia (population ~270m), India (~1.4bn) and Russia (~144m) are the headline cases — all populous, all with substantial pre-pandemic Chinese tourism, and all reporting case numbers in early March 2020 that were two to three orders of magnitude below what the OECD pattern predicted.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.oecd.org/coronavirus/en/",
+          "title": "OECD — COVID-19 country responses",
+          "facts": [
+            "The OECD comprises 34 high-income member countries (in 2020, before the 2020-2021 accessions).",
+            "OECD members had broadly comparable health-system testing infrastructure in early 2020 relative to non-OECD economies."
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Why this matters: the cost of a missed early signal",
+      "content": "If the Economist's residuals were right, several countries were already weeks ahead of where their official numbers placed them — meaning their public-health responses were calibrated to the wrong outbreak size. Indonesia did not report community transmission until early March 2020 and was reporting fewer than 30 cases when the article ran; by April it was the country with the highest reported COVID-19 deaths in Southeast Asia. Iran's underreported caseload meant that hospitals were overwhelmed before officials acknowledged the scale of the outbreak. The Economist's argument was specifically that residual size could serve as an early-warning index: a country far below its tourism-implied prediction was not safe — it was probably blind. In retrospect this was one of the earliest popular-press arguments that surveillance gaps, not absence of virus, explained the apparent geographic patchiness of the early pandemic.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7149002/",
+          "title": "Djalante et al. (2020) — Review and analysis of current responses to COVID-19 in Indonesia: Period of January to March 2020",
+          "facts": [
+            "Indonesia reported 27 confirmed COVID-19 cases as of 11 March 2020.",
+            "Limited testing capacity meant Indonesia's true case count was almost certainly far higher than the official figure."
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Scope suggestion for analyst — where the story lives",
+      "content": "The most useful analyses for a story will be: (a) the OECD-only regression (slope ~1.13, R-squared ~0.59 per the readme) showing the central tourism-cases relationship; (b) a residuals ranking that highlights the most positive (over-detected vs prediction) and most negative (under-detected vs prediction) countries; (c) a separation of OECD from non-OECD points around the same regression line so the reader can see the asymmetry visually; (d) the implied 'expected' caseload for the worst under-reporters compared to their reported numbers, ideally as a multiplier; (e) a snapshot of the global confirmed case landscape on 4 March 2020 (Hubei dwarfs everything; only South Korea, Italy and Iran are above 2,000).",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_wuhan_road.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/70/Wuhan_Second_Ring_Road_during_2019-nCoV_coronavirus_outbreak.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons",
+      "description": "Wuhan's Second Ring Road during the 2019-nCoV outbreak — empty highways serve as a visual anchor for the moment when tourism between China and the world had effectively stopped, while the virus had not.",
+      "relates_to": ["det_01", "det_02"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_wuhan_community.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/76/Community_that_is_closed_due_to_2019%E2%80%9320_coronavirus_outbreak_in_Wuhan_on_27_February_2020.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons (photographer: Painjet, 27 Feb 2020)",
+      "description": "Wuhan residents buying essentials through a fence gate on 27 February 2020 — a few days before the Economist piece ran. A reminder of the asymmetry the article exposed: while China was still locked down, much of the world was reporting low cases and continuing as before.",
+      "relates_to": ["det_03", "det_07"]
+    }
+  ],
+  "instances": []
+}

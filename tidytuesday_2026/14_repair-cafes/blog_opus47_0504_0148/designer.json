@@ -1,0 +1,386 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Tabular dataset with NLP and time-series; centerpiece is a sewing-vs-circuits split chart, with a workbench-themed image teaser, an image2video parallax, three supporting stills, an interactive guess-first quiz, and a sonification of the success-by-product ranking.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "Many quantitative comparisons (success by product, by category, by brand, by year, by item-age, AI vs YouTube)."},
+      "image": {"used": true, "reason": "Workbench / repair iconography is inherently visual. Four images: one hero teaser plus three supporting stills (vacuum-screws, trousers, circuit-board+chatbot) that anchor the section beats."},
+      "video": {"used": true, "reason": "Image2video on the teaser still adds restrained motion at the top of the page so the workbench feels alive without forcing a reenactment."},
+      "audio": {"used": true, "reason": "Sonification of the by-product success-rate ranking — pitches map to repair success rate so the textile-vs-electronics split is audible. Synced with the section chart."},
+      "interactive_or_map": {"used": true, "reason": "Guess-first quiz on which of two items is more often saved (printer vs trousers). Surprising finding deserves the reveal."}
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_teaser_image": {
+      "label": "Teaser hero — workbench still life",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic editorial photo: a vintage workbench under warm tungsten light, half-disassembled coffee maker on the left with screws and small parts laid out around it, an old sewing machine and a pair of scissors on the right, an open paper repair manual in the middle. Soft top-down lighting, shallow depth of field, tactile, hopeful, restrained color palette of dark wood, cream paper, brass and steel. No people, no text, no logos, no brand markings. 16:9 widescreen, photorealistic, magazine-quality still life.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Wide editorial still life that visually inventories the dataset — coffee maker (the #1 item), sewing machine (vintage success), paper manual (the lost circuit diagrams). Establishes the page's warm-but-honest tone.",
+      "rationale": "A still inventory of the data's protagonists creates curiosity without spoiling any finding. Workbench imagery places the reader in the volunteer's seat.",
+      "based_on": ["ana_03", "ana_19"]
+    },
+    "des_teaser_video": {
+      "label": "Teaser motion (image2video parallax)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "Slow editorial parallax push-in across the workbench. Tiny dust motes drifting in warm tungsten light. The shallow depth of field gradually shifts focus from the disassembled coffee maker on the left to the sewing machine on the right. No camera shake, no humans, no text, gentle movement.",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "6-second loopable parallax over the teaser still. Plays muted at top of page, autoplay-on-scroll-into-view. Falls back to teaser_hero.png if video doesn't load.",
+      "rationale": "Image2video preserves the teaser's composition while adding the slow drift that pure stills lack. Sets pace before the first chart.",
+      "based_on": []
+    },
+    "des_01_split": {
+      "label": "Hook chart — success by product type",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "diverging_bar",
+        "data_source": "ana_04",
+        "x": "yes_pct",
+        "y": "kind_of_product",
+        "color": "yes_pct",
+        "highlight": [
+          {"item": "Knife / knives / scissors", "annotation": "97.5% saved"},
+          {"item": "Trousers / pants", "annotation": "96.0%"},
+          {"item": "Printer", "annotation": "36.8% — the bottom"},
+          {"item": "Electric kettle", "annotation": "39.9%"}
+        ],
+        "interaction": "hover for exact yes/half/no breakdown and total n",
+        "style": {"palette": "warm-to-cold (top = warm green, bottom = cold red)", "no_gridlines": true, "sort": "by yes_pct descending", "annotated_labels": true}
+      },
+      "brief": "Horizontal bars of the top-20 product types, sorted by repair-success percentage. Top three (knives, trousers, garden shears) painted in warm green; bottom three (printer, electric kettle, iron) painted in cool red. Annotated callouts on Knives 97.5% and Printer 36.8% to anchor the hook.",
+      "rationale": "Single chart that shows the entire 'sewing vs circuits' tension at a glance. The diverging palette earns the editorial tension the prose makes.",
+      "based_on": ["ana_04"]
+    },
+    "des_01_image": {
+      "label": "Hook section image — vacuum screws",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "img_vacuum_screws.png",
+        "tool": "text2image",
+        "prompt": "Macro close-up photo: a single human hand holding a small screwdriver attempting to open the back panel of a modern stick vacuum cleaner. Plastic snaps and proprietary screws visible. Dramatic single light source from the side, deep shadows. Editorial documentary style, no text, no logos, no brand markings.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Inset image opposite the hook chart; the visceral 'why some things resist being fixed' image. Place to the right of the chart on desktop; below it on mobile.",
+      "rationale": "Reinforces the chart's tail (printers, kettles) with a tactile image of the wall a fixer hits.",
+      "based_on": ["ana_04"]
+    },
+    "des_02_growth": {
+      "label": "Activity hockey stick",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "area_with_marks",
+        "data_source": "ana_06",
+        "x": "year",
+        "y": "count",
+        "highlight": [
+          {"year": 2020, "annotation": "COVID dip"},
+          {"year": 2025, "annotation": "45,165 logs"},
+          {"year": 2026, "annotation": "partial year (Apr-Aug)"}
+        ],
+        "interaction": "hover shows year + count",
+        "style": {"palette": "single warm gradient", "no_gridlines": false, "subtle_axis": true}
+      },
+      "brief": "Area chart of yearly logged repairs from 2015 to 2026, with the COVID dip annotated and the 2026 bar visually faded to mark it as partial. Stat tag near the chart shows 'from 28 in 2015 to 45,165 in 2025 — a 1,613x increase'.",
+      "rationale": "An area chart conveys both the scale of growth and the COVID interruption simultaneously. Single-color choice avoids overloading the page palette.",
+      "based_on": ["ana_06"]
+    },
+    "des_03_top_products": {
+      "label": "Top items everyone brings",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_03",
+        "x": "count",
+        "y": "kind_of_product",
+        "highlight": [
+          {"item": "Coffee maker", "annotation": "10,770"},
+          {"item": "Vacuum cleaner", "annotation": "10,284"}
+        ],
+        "interaction": "hover for exact count",
+        "style": {"palette": "neutral grey with two highlighted bars", "sort": "descending", "no_gridlines": true}
+      },
+      "brief": "Top-15 most-presented item types as a clean horizontal bar chart with coffee maker and vacuum cleaner painted darker than the rest. Caption underneath flags the NL=50.8% caveat.",
+      "rationale": "A simple bar chart serves this section best — the rankings are the point, no need to dress them up.",
+      "based_on": ["ana_03"]
+    },
+    "des_04_failure": {
+      "label": "Why repairs fail",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar_grouped",
+        "data_source": "ana_09",
+        "x": "count",
+        "y": "reason",
+        "color": "reason_family",
+        "highlight": [
+          {"reason": "Spare parts not available at repair session", "annotation": "the largest single barrier when grouped"},
+          {"reason": "No way to fix the product", "annotation": "8.4%"}
+        ],
+        "interaction": "hover for n and pct of failed",
+        "style": {"palette": "two-tone — parts-related reasons in red, structural in grey", "subtle_grid": true}
+      },
+      "brief": "Horizontal bars of the top 10 failure reasons with the three spare-parts-related bars colored red to visually demonstrate that they sum to the largest barrier. Subtitle: '46% in 2018; still the wall in 2026'. Pull quote from EU Right-to-Repair Directive 2024/1799 inset on the side.",
+      "rationale": "Two-tone color encoding is a form of editorial argument: it makes the reader see the point without re-reading the prose.",
+      "based_on": ["ana_09", "ana_14"]
+    },
+    "des_05_brands": {
+      "label": "Brand-level survival (vacuums)",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "lollipop",
+        "data_source": "ana_16",
+        "x": "success_pct",
+        "y": "brand",
+        "filter": {"product": "Vacuum cleaner", "min_n": 100},
+        "highlight": [
+          {"brand": "Henry", "annotation": "69.2% — top"},
+          {"brand": "Dyson", "annotation": "47.4% — bottom"}
+        ],
+        "interaction": "hover shows n and exact %",
+        "style": {"palette": "single hue with Henry and Dyson points enlarged"},
+        "secondary_chart": {
+          "chart_type": "lollipop",
+          "filter": {"product": "Coffee maker", "min_n": 100},
+          "highlight": [
+            {"brand": "Philips", "annotation": "59.5% — top"},
+            {"brand": "Braun", "annotation": "30.9% — bottom"}
+          ],
+          "label": "Coffee makers"
+        }
+      },
+      "brief": "Two side-by-side lollipop charts (vacuums and coffee makers), each ranking brands with n>=100 by success rate. Henry and Dyson get larger end-circles on the vacuum chart; Philips and Braun on the coffee one. Compact two-column on desktop; stacked on mobile.",
+      "rationale": "Lollipop charts emphasize the gap between top and bottom brands without dragging in noise from middle-rank brands. Two-up layout creates a beat that breaks up the chart streak.",
+      "based_on": ["ana_16"]
+    },
+    "des_06_age": {
+      "label": "Age vs success U-curve",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "line_with_band",
+        "data_source": "ana_18",
+        "x": "age_bucket",
+        "y": "success_pct",
+        "highlight": [
+          {"bucket": "0-1", "annotation": "newest = 67.1%"},
+          {"bucket": "6-10", "annotation": "trough = 55.9%"},
+          {"bucket": "50+", "annotation": "vintage rebound = 63.2%"}
+        ],
+        "interaction": "hover for n and pct",
+        "style": {"palette": "warm gradient", "annotated_axis_label": "Estimated item age (years)"}
+      },
+      "brief": "Single line chart with the U-curve clearly visible. Three annotated points anchor the story (warranty new, midlife trough, vintage rebound). Inset thumbnail of img_trousers.png next to the section header for visual texture.",
+      "rationale": "The U-curve is the section's whole argument. A line chart is unambiguous; the labels reinforce the narrative arc.",
+      "based_on": ["ana_18"]
+    },
+    "des_06_image": {
+      "label": "Vintage section image — trousers/sewing",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "img_trousers.png",
+        "tool": "text2image",
+        "prompt": "Still life on a sewing-machine table: a pair of trousers folded with a measuring tape, scissors, pins, and a small spool of black thread. Soft north-facing window light, painterly, calm. No people, no text, no logos. Editorial magazine photography.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Quiet still-life that anchors the vintage / pre-throwaway era — the textile category's protagonist. Sized as a banner above the U-curve chart on desktop; sits alongside the trouser-test section as well.",
+      "rationale": "An image of repair-as-care, supporting both the U-curve section and the trouser-test section.",
+      "based_on": ["ana_19", "ana_20"]
+    },
+    "des_07_ai": {
+      "label": "AI vs YouTube as repair source",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "dual_line_with_counts",
+        "data_source": "ana_12",
+        "x": "year",
+        "y_left": "youtube_count",
+        "y_right": "ai_count",
+        "highlight": [
+          {"year": 2023, "annotation": "first AI mention: Sept 2023"},
+          {"year": 2025, "annotation": "14 AI mentions"}
+        ],
+        "interaction": "hover shows both counts",
+        "style": {"palette": "youtube=red, ai=green", "show_absolute_counts_not_percentages": true, "annotated_axis_label": "Repair info source mentions"}
+      },
+      "brief": "Two lines on the same chart: YouTube counts on the left axis (large numbers, hundreds), AI counts on the right axis (small numbers, single/double digits). The asymmetry is the visual point. Side panel shows the verbatim 'chat gpt / Chat GPT / CHAT GPT / chatgpt / WWW.OPENai.COM / AI Perplexity / perplexity et manuel' list rendered as a tag cloud.",
+      "rationale": "Dual axis lets the AI line move at all without being crushed; the verbatim cloud beside it carries the linguistic-noise finding from ana_13.",
+      "based_on": ["ana_12", "ana_13"]
+    },
+    "des_07_image": {
+      "label": "Section image — circuit board + chatbot",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "img_circuit_chatbot.png",
+        "tool": "text2image",
+        "prompt": "Overhead photo of an old printed circuit board partially dismantled on a workbench, with a smartphone propped beside it showing a generic chat interface bubble. Hands not visible. Editorial documentary lighting, faded blues and greens, no text on screens, no logos.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Mood image for the AI-enters-the-cafe section. Place to the right of the dual-line chart on desktop.",
+      "rationale": "Visualizes the encounter between old electronics and modern AI assistance — the literal subject of the section.",
+      "based_on": ["ana_12"]
+    },
+    "des_08_quiz": {
+      "label": "Guess first — printer or trousers",
+      "type": "interactive",
+      "section": "edt_08",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Reader sees two large cards side by side, one labeled 'Printer', one labeled 'Trousers'. Prompt: 'Which one is more likely to be saved at a Repair Cafe?' Two big buttons: PRINTER or TROUSERS.",
+        "trigger": "Reader clicks one of the two buttons",
+        "transition": "Both bars expand to show actual success rates (Printer 36.8%, Trousers 96.0%). The card the reader did NOT pick lights up if the reader was wrong.",
+        "payoff": "A line beneath reads: 'A torn trouser leg has a 96% chance of leaving repaired. A printer? 36.8%. The clothing item that has barely changed for 200 years still has the higher fixability.'",
+        "data_source": "ana_04"
+      },
+      "brief": "Two-card guess interface that turns the trouser-test section into a participation moment. Stores the reader's pick in localStorage so a return visit shows the same state.",
+      "rationale": "The 96% vs 36.8% comparison is most powerful when the reader has committed to a wrong guess first. Avoids passing yet another bar chart in a row.",
+      "based_on": ["ana_20", "ana_04"]
+    },
+    "des_09_quotes": {
+      "label": "Quote browser — failures in their own words",
+      "type": "interactive",
+      "section": "edt_09",
+      "content": {
+        "interaction_type": "card_deck",
+        "initial_state": "Stack of about 8 quote cards, each showing a verbatim 'why we couldn't fix it' line in original language with English translation underneath. Each card tags the product type.",
+        "trigger": "Reader clicks 'Next' or swipes to advance through the deck.",
+        "transition": "Cards advance one at a time, with a small counter showing 'Quote 3 of 8'.",
+        "payoff": "Each quote is a tiny ethnographic vignette. Reader can dwell on each rather than skim a list.",
+        "data_source": "ana_23"
+      },
+      "brief": "Lightweight card stack of curated quotes from the failure_reason_open free text. Cards are dark-on-cream with a small product-type tag. Final card includes a 'these are 8 of 65,999 voices' kicker.",
+      "rationale": "A swipeable deck respects each quote individually. Avoids putting them in a wall of bullets where the cigar-smoke amplifier line gets lost.",
+      "based_on": ["ana_23"]
+    },
+    "des_10_co2": {
+      "label": "Cumulative CO2 saved",
+      "type": "chart",
+      "section": "edt_10",
+      "content": {
+        "chart_type": "stacked_area_or_line",
+        "data_source": "ana_22",
+        "x": "year",
+        "y": "co2_tonnes_cumulative",
+        "highlight": [
+          {"year": 2025, "annotation": "2,594 tonnes"},
+          {"year": 2026, "annotation": "2,708 tonnes"}
+        ],
+        "interaction": "hover for cumulative repairs and tonnes",
+        "style": {"palette": "single forest green", "annotated_axis_label": "Cumulative tonnes of CO2 prevented (24 kg/repair)"}
+      },
+      "brief": "Single-color filled area chart of cumulative CO2 saved over time. Annotated stat above: 'About 24 kg CO2 per repair, after Privett (Univ. Surrey, 2020).' Caption notes that 2026 is partial.",
+      "rationale": "Cumulative is the right metric for closing the climate frame; a single color avoids competing with the brighter charts above.",
+      "based_on": ["ana_22"]
+    },
+    "des_11_repairability": {
+      "label": "Repairability score predicts success",
+      "type": "chart",
+      "section": "edt_11",
+      "content": {
+        "chart_type": "scatter_with_size",
+        "data_source": "ana_15",
+        "x": "score",
+        "y": "success_pct",
+        "size": "n",
+        "highlight": [
+          {"score": 1, "annotation": "13.7%"},
+          {"score": 10, "annotation": "85.8%"}
+        ],
+        "interaction": "hover for n and exact %",
+        "style": {"palette": "muted blue", "axis_label_x": "Repairability rating (1=hard, 10=easy)", "axis_label_y": "Repair success rate (%)"}
+      },
+      "brief": "Scatter of repairability score versus success rate, with point size = sample size. The monotonic trend is the visual; the closing line of the article rests on it.",
+      "rationale": "A scatter with size encoding combines the correlation (the spine) with the sample-size weighting in a single readable plot.",
+      "based_on": ["ana_15"]
+    },
+    "des_audio_sonification": {
+      "label": "Sonification: success rate by product (top 20)",
+      "type": "audio",
+      "section": "edt_01",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "The textile-vs-electronics split is most striking when heard as a descending melodic line — high pitches for trousers and knives, low pitches for kettles and printers — so the reader feels the gap rather than only seeing it.",
+        "trigger": "Click 'Hear the gap' button below the hook chart.",
+        "ui_form": "chart-synced sonification — each bar in des_01_split highlights as its tone plays, like a glowing playhead",
+        "content": {
+          "filename": null,
+          "tool": "browser_tone_generator",
+          "prompt": "Generated client-side via WebAudio API: 20 short marimba-like tones, one per ranked product type, mapped from yes_pct (97.5 -> 880Hz, 36.8 -> 220Hz). 250ms per tone, slight overlap, soft attack, no reverb. Pentatonic spacing avoids dissonance.",
+          "model": null,
+          "data_mapping": {"field": "yes_pct", "scale": "pentatonic_C", "range_hz": [220, 880], "duration_ms_per_note": 250}
+        },
+        "fallback": "Visual fallback: same chart still works without audio. Mute toggle persists across sections.",
+        "novelty_note": "Implemented in-browser with WebAudio (no audio file required), so it stays under the asset budget while still earning the channel."
+      },
+      "brief": "WebAudio-based sonification driven by the same data_table that powers des_01_split. As each tone plays, the corresponding bar lights up. No external audio file; entirely client-side.",
+      "rationale": "Avoids generating yet another media asset while still using the audio channel meaningfully and synced with the centerpiece chart.",
+      "based_on": ["ana_04"]
+    },
+    "des_stat_callout_co2": {
+      "label": "Stat callout — 2,707 tonnes saved",
+      "type": "stat_callout",
+      "section": "edt_10",
+      "content": {
+        "value": "2,707 tonnes",
+        "label": "of CO2 saved by 112,776 successful Repair Cafe fixes (24 kg/repair, after Privett)",
+        "data_source": "ana_22"
+      },
+      "brief": "Large 64-72px stat block above the cumulative-CO2 chart.",
+      "rationale": "Headline number deserves to be felt before the chart explains it.",
+      "based_on": ["ana_22"]
+    },
+    "des_stat_callout_split": {
+      "label": "Stat callout — 97.5 vs 36.8",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "97.5%  vs  36.8%",
+        "label": "Knives saved | Printers saved",
+        "data_source": "ana_04"
+      },
+      "brief": "Two-up stat block in the hook section, with a thin vertical divider between the two numbers.",
+      "rationale": "A one-glance illustration of the split that the section title argues.",
+      "based_on": ["ana_04"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm-editorial-on-cream — like a Sunday culture-section longread, restrained color palette of cream, dark wood, brass, single forest-green accent for charts, single warm-red accent for failure callouts",
+    "text_visual_pattern": "visual-first hero, then alternating chart / text / image / chart / interactive / chart pattern; never three charts in a row without an image, quote, stat, or interaction in between",
+    "centrepiece": "des_01_split",
+    "anti_sameness_notes": "Avoid the standard hero-chart-+-three-lollipops layout. Use a guess-first quiz on trousers vs printers, a quote card-deck for the failure_reason_open texts, an in-browser sonification for the hook chart, and an image2video parallax on the workbench teaser. No autoplay sound; mute toggle persists.",
+    "typography_notes": "Body in a comfortable serif (Crimson Pro / EB Garamond). Charts and labels in a clean sans (Inter / IBM Plex Sans). Stat callouts at 64-72px. Quote cards in italic serif. Section dividers as thin warm-tinted rules. Chinese translation page should preserve all of this typographic structure but use a paired CJK serif (Noto Serif SC) for body and Inter for charts."
+  }
+}

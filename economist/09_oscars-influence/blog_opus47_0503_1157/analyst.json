@@ -1,0 +1,2710 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": [
+      "movie-counts.csv"
+    ],
+    "rows": 29046,
+    "columns": 9,
+    "what_one_row_represents": "One film, in one Oscar-eligibility year, with its IMDb 'connections' count and that year's annual_share among all referenced films.",
+    "time_range": "1928-2017 (oscars_year); release_year 1926-2017",
+    "geographic_scope": "Global film catalogue, but heavily Western-biased (per IMDb crowdsourcing). Ceremony field follows the U.S. Academy Awards."
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset shape and Best Picture coverage",
+      "content": "The dataset spans 29,046 rows covering 27,826 unique films with oscars_year 1928-2017. Among those, 89 are Best Picture winners (`result == 'W'`) and a further 449 are Best Picture nominees (`result == 'N'`). The remaining 28,508 rows are films that were never nominated for Best Picture but appear in IMDb's connection network for their release year. The total IMDb 'connections' tallied across the dataset is 388,165.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [
+          9,
+          31
+        ],
+        "output": "rows: 29,046\\ncolumns: 9\\nrelease_year range: 1926 - 2017\\noscars_year range: 1928 - 2017\\nunique movies: 27,826\\nBest Picture winners (W): 89\\nNominees only (N): 449"
+      },
+      "data_table": {
+        "description": "BP-status counts in dataset",
+        "columns": [
+          "status",
+          "n_rows"
+        ],
+        "rows": [
+          [
+            "Best Picture winner",
+            89
+          ],
+          [
+            "Best Picture nominee only",
+            449
+          ],
+          [
+            "Not nominated",
+            28508
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_02": {
+      "label": "The 16-year drought: no Best Picture winner has been the most-referenced film of its year since 2000",
+      "content": "From oscars_year 2001 through 2016 \u2014 16 consecutive years \u2014 no Best Picture winner was the single most-referenced film of its year. The most recent winner to top its own year was Gladiator (2000, 304 references, 6.4% annual share). The longest drought before that was the early-1980s slump (Ordinary People, Chariots of Fire, Gandhi, Terms of Endearment, Amadeus, Out of Africa, Platoon, The Last Emperor, Rain Man \u2014 eight winners between 1980 and 1988 with no #1).",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/era_comparisons.py",
+        "lines": [
+          9,
+          16
+        ],
+        "output": "From 2001-2016, 16 BP winners. None were #1 in their year.\\nMean year_rank: 10.0\\nMedian year_rank: 8.0\\nWorst rank: 25 (Spotlight)\\nBest rank: 2 (The Lord of the Rings: The Return of the King)\\nMean annual_share: 1.97%"
+      },
+      "data_table": {
+        "columns": [
+          "oscars_year",
+          "movie_name",
+          "annual_share_pct",
+          "count",
+          "year_rank"
+        ],
+        "rows": [
+          [
+            1928,
+            "Wings",
+            4.88,
+            52,
+            4
+          ],
+          [
+            1929,
+            "The Broadway Melody",
+            2.21,
+            36,
+            7
+          ],
+          [
+            1930,
+            "All Quiet on the Western Front",
+            9.27,
+            84,
+            1
+          ],
+          [
+            1931,
+            "Cimarron",
+            0.53,
+            14,
+            12
+          ],
+          [
+            1932,
+            "Grand Hotel",
+            4.52,
+            88,
+            5
+          ],
+          [
+            1933,
+            "Cavalcade",
+            0.29,
+            8,
+            37
+          ],
+          [
+            1934,
+            "It Happened One Night",
+            12.78,
+            175,
+            1
+          ],
+          [
+            1935,
+            "Mutiny on the Bounty",
+            6.24,
+            115,
+            2
+          ],
+          [
+            1936,
+            "The Great Ziegfeld",
+            1.99,
+            31,
+            11
+          ],
+          [
+            1937,
+            "The Life of Emile Zola",
+            0.66,
+            14,
+            22
+          ],
+          [
+            1938,
+            "You Can't Take It with You",
+            1.96,
+            33,
+            10
+          ],
+          [
+            1939,
+            "Gone with the Wind",
+            17.65,
+            1154,
+            2
+          ],
+          [
+            1940,
+            "Rebecca",
+            4.27,
+            113,
+            5
+          ],
+          [
+            1941,
+            "How Green Was My Valley",
+            1.8,
+            59,
+            6
+          ],
+          [
+            1942,
+            "Mrs. Miniver",
+            1.94,
+            40,
+            11
+          ],
+          [
+            1943,
+            "Casablanca",
+            48.68,
+            1454,
+            1
+          ],
+          [
+            1944,
+            "Going My Way",
+            2.96,
+            45,
+            8
+          ],
+          [
+            1945,
+            "The Lost Weekend",
+            7.22,
+            92,
+            1
+          ],
+          [
+            1946,
+            "The Best Years of Our Lives",
+            2.05,
+            50,
+            9
+          ],
+          [
+            1947,
+            "Gentleman's Agreement",
+            3.03,
+            34,
+            5
+          ],
+          [
+            1948,
+            "Hamlet",
+            3.62,
+            60,
+            7
+          ],
+          [
+            1949,
+            "All the King's Men",
+            1.4,
+            22,
+            12
+          ],
+          [
+            1950,
+            "All About Eve",
+            9.46,
+            226,
+            3
+          ],
+          [
+            1951,
+            "An American in Paris",
+            3.36,
+            84,
+            8
+          ],
+          [
+            1952,
+            "The Greatest Show on Earth",
+            2.06,
+            39,
+            4
+          ],
+          [
+            1953,
+            "From Here to Eternity",
+            8.07,
+            238,
+            2
+          ],
+          [
+            1954,
+            "On the Waterfront",
+            7.89,
+            272,
+            4
+          ],
+          [
+            1955,
+            "Marty",
+            1.38,
+            41,
+            18
+          ],
+          [
+            1956,
+            "Around the World in 80 Days",
+            1.86,
+            50,
+            11
+          ],
+          [
+            1957,
+            "The Bridge on the River Kwai",
+            6.87,
+            183,
+            1
+          ],
+          [
+            1958,
+            "Gigi",
+            2.76,
+            83,
+            10
+          ],
+          [
+            1959,
+            "Ben-Hur",
+            9.5,
+            278,
+            3
+          ],
+          [
+            1960,
+            "The Apartment",
+            2.72,
+            98,
+            4
+          ],
+          [
+            1961,
+            "West Side Story",
+            14.72,
+            444,
+            1
+          ],
+          [
+            1962,
+            "Lawrence of Arabia",
+            12.06,
+            337,
+            1
+          ],
+          [
+            1963,
+            "Tom Jones",
+            0.71,
+            24,
+            29
+          ],
+          [
+            1964,
+            "My Fair Lady",
+            7.23,
+            343,
+            4
+          ],
+          [
+            1965,
+            "The Sound of Music",
+            23.73,
+            736,
+            1
+          ],
+          [
+            1966,
+            "A Man for All Seasons",
+            1.48,
+            32,
+            14
+          ],
+          [
+            1967,
+            "In the Heat of the Night",
+            2.24,
+            98,
+            10
+          ],
+          [
+            1968,
+            "Oliver!",
+            2.41,
+            131,
+            7
+          ],
+          [
+            1969,
+            "Midnight Cowboy",
+            7.96,
+            253,
+            3
+          ],
+          [
+            1970,
+            "Patton",
+            8.55,
+            241,
+            1
+          ],
+          [
+            1971,
+            "The French Connection",
+            4.51,
+            224,
+            5
+          ],
+          [
+            1972,
+            "The Godfather",
+            33.7,
+            1767,
+            1
+          ],
+          [
+            1973,
+            "The Sting",
+            3.23,
+            149,
+            6
+          ],
+          [
+            1974,
+            "The Godfather: Part II",
+            7.31,
+            340,
+            2
+          ],
+          [
+            1975,
+            "One Flew Over the Cuckoo's Nest",
+            8.24,
+            413,
+            3
+          ],
+          [
+            1976,
+            "Rocky",
+            19.08,
+            943,
+            1
+          ],
+          [
+            1977,
+            "Annie Hall",
+            3.05,
+            274,
+            4
+          ],
+          [
+            1978,
+            "The Deer Hunter",
+            4.42,
+            213,
+            5
+          ],
+          [
+            1979,
+            "Kramer vs. Kramer",
+            2.36,
+            136,
+            7
+          ],
+          [
+            1980,
+            "Ordinary People",
+            1.08,
+            94,
+            16
+          ],
+          [
+            1981,
+            "Chariots of Fire",
+            2.22,
+            137,
+            9
+          ],
+          [
+            1982,
+            "Gandhi",
+            1.5,
+            121,
+            18
+          ],
+          [
+            1983,
+            "Terms of Endearment",
+            2.19,
+            145,
+            8
+          ],
+          [
+            1984,
+            "Amadeus",
+            1.14,
+            108,
+            17
+          ],
+          [
+            1985,
+            "Out of Africa",
+            1.18,
+            78,
+            20
+          ],
+          [
+            1986,
+            "Platoon",
+            2.46,
+            165,
+            7
+          ],
+          [
+            1987,
+            "The Last Emperor",
+            0.52,
+            40,
+            36
+          ],
+          [
+            1988,
+            "Rain Man",
+            6.48,
+            409,
+            2
+          ],
+          [
+            1989,
+            "Driving Miss Daisy",
+            3.01,
+            230,
+            7
+          ],
+          [
+            1990,
+            "Dances with Wolves",
+            3.28,
+            198,
+            7
+          ],
+          [
+            1991,
+            "The Silence of the Lambs",
+            13.29,
+            845,
+            1
+          ],
+          [
+            1992,
+            "Unforgiven",
+            1.84,
+            108,
+            12
+          ],
+          [
+            1993,
+            "Schindler's List",
+            4.5,
+            303,
+            2
+          ],
+          [
+            1994,
+            "Forrest Gump",
+            8.56,
+            619,
+            3
+          ],
+          [
+            1995,
+            "Braveheart",
+            5.85,
+            375,
+            2
+          ],
+          [
+            1996,
+            "The English Patient",
+            1.67,
+            97,
+            13
+          ],
+          [
+            1997,
+            "Titanic",
+            17.17,
+            1128,
+            1
+          ],
+          [
+            1998,
+            "Shakespeare in Love",
+            1.99,
+            111,
+            9
+          ],
+          [
+            1999,
+            "American Beauty",
+            2.25,
+            170,
+            8
+          ],
+          [
+            2000,
+            "Gladiator",
+            6.44,
+            304,
+            1
+          ],
+          [
+            2001,
+            "A Beautiful Mind",
+            2.34,
+            140,
+            6
+          ],
+          [
+            2002,
+            "Chicago",
+            1.81,
+            100,
+            9
+          ],
+          [
+            2003,
+            "The Lord of the Rings: The Return of the King",
+            5.19,
+            296,
+            2
+          ],
+          [
+            2004,
+            "Million Dollar Baby",
+            1.65,
+            93,
+            14
+          ],
+          [
+            2005,
+            "Crash",
+            1.03,
+            55,
+            20
+          ],
+          [
+            2006,
+            "The Departed",
+            2.12,
+            109,
+            7
+          ],
+          [
+            2007,
+            "No Country for Old Men",
+            2.47,
+            118,
+            5
+          ],
+          [
+            2008,
+            "Slumdog Millionaire",
+            2.62,
+            142,
+            6
+          ],
+          [
+            2009,
+            "The Hurt Locker",
+            1.81,
+            105,
+            10
+          ],
+          [
+            2010,
+            "The King's Speech",
+            1.9,
+            107,
+            8
+          ],
+          [
+            2011,
+            "The Artist",
+            1.53,
+            86,
+            8
+          ],
+          [
+            2012,
+            "Argo",
+            1.68,
+            91,
+            11
+          ],
+          [
+            2013,
+            "12 Years a Slave",
+            1.62,
+            76,
+            8
+          ],
+          [
+            2014,
+            "Birdman or (The Unexpected Virtue of Ignorance)",
+            1.8,
+            71,
+            6
+          ],
+          [
+            2015,
+            "Spotlight",
+            0.78,
+            31,
+            25
+          ],
+          [
+            2016,
+            "Moonlight",
+            1.08,
+            37,
+            15
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05",
+        "det_10"
+      ]
+    },
+    "ana_03": {
+      "label": "Decade-by-decade collapse of the average winner's annual share",
+      "content": "Mean annual_share of Best Picture winners peaked in the 1970s at 9.4% \u2014 that decade saw The Godfather, Rocky, and Patton each reach #1 in their year, with The Godfather alone capturing 33.7% of all 1972 references. By the 2010s, mean annual_share has collapsed to 1.5% \u2014 a 6.4x drop. Median year-rank has roughly tripled, from 3.5 in the 1970s to 8.0 in the 2010s. The percentage of decade winners that hit #1 in their own year falls from 30% (1960s, 1970s) to zero in the 2010s.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/winner_trajectory.py",
+        "lines": [
+          21,
+          28
+        ],
+        "output": "1970: mean_share=9.44%, median_rank=3.5, pct_top1=30%\\n2010: mean_share=1.48%, median_rank=8.0, pct_top1=0%"
+      },
+      "data_table": {
+        "columns": [
+          "decade",
+          "n",
+          "mean_share_pct",
+          "median_share_pct",
+          "median_rank",
+          "pct_top1",
+          "pct_top10"
+        ],
+        "rows": [
+          [
+            1920,
+            2,
+            3.54,
+            3.54,
+            5.5,
+            0.0,
+            100.0
+          ],
+          [
+            1930,
+            10,
+            5.59,
+            3.26,
+            7.5,
+            20.0,
+            60.0
+          ],
+          [
+            1940,
+            10,
+            7.7,
+            3.0,
+            6.5,
+            20.0,
+            80.0
+          ],
+          [
+            1950,
+            10,
+            5.32,
+            5.12,
+            4.0,
+            10.0,
+            80.0
+          ],
+          [
+            1960,
+            10,
+            7.52,
+            4.98,
+            4.0,
+            30.0,
+            80.0
+          ],
+          [
+            1970,
+            10,
+            9.44,
+            5.91,
+            3.5,
+            30.0,
+            100.0
+          ],
+          [
+            1980,
+            10,
+            2.18,
+            1.84,
+            12.5,
+            0.0,
+            50.0
+          ],
+          [
+            1990,
+            10,
+            6.04,
+            3.89,
+            5.0,
+            20.0,
+            80.0
+          ],
+          [
+            2000,
+            10,
+            2.75,
+            2.23,
+            6.5,
+            10.0,
+            80.0
+          ],
+          [
+            2010,
+            7,
+            1.48,
+            1.62,
+            8.0,
+            0.0,
+            57.1
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_04": {
+      "label": "BP winners hit #1 in their year only 14 of 89 times \u2014 and only twice since 1991",
+      "content": "Of the 89 Best Picture winners in the dataset, only 14 (15.7%) were also the most-referenced film of their oscars_year. That set: All Quiet on the Western Front (1930), It Happened One Night (1934), Casablanca (1943), The Lost Weekend (1945), The Bridge on the River Kwai (1957), West Side Story (1961), Lawrence of Arabia (1962), The Sound of Music (1965), Patton (1970), The Godfather (1972), Rocky (1976), The Silence of the Lambs (1991), Titanic (1997), and Gladiator (2000). The post-1990 hit rate is 3 in 27 (Silence of the Lambs, Titanic, Gladiator).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/snubs_and_misses.py",
+        "lines": [
+          10,
+          24
+        ],
+        "output": "Years where winner was the #1 film: 14/89"
+      },
+      "data_table": {
+        "columns": [
+          "oscars_year",
+          "winner_name",
+          "winner_share_pct",
+          "winner_count",
+          "top1_name",
+          "top1_share_pct",
+          "top1_count",
+          "winner_is_top1"
+        ],
+        "rows": [
+          [
+            1928,
+            "Wings",
+            4.88,
+            52,
+            "Metropolis",
+            32.74,
+            349,
+            false
+          ],
+          [
+            1929,
+            "The Broadway Melody",
+            2.21,
+            36,
+            "Un Chien Andalou",
+            8.48,
+            138,
+            false
+          ],
+          [
+            1930,
+            "All Quiet on the Western Front",
+            9.27,
+            84,
+            "All Quiet on the Western Front",
+            9.27,
+            84,
+            true
+          ],
+          [
+            1931,
+            "Cimarron",
+            0.53,
+            14,
+            "Frankenstein",
+            38.29,
+            1010,
+            false
+          ],
+          [
+            1932,
+            "Grand Hotel",
+            4.52,
+            88,
+            "Tarzan the Ape Man",
+            12.7,
+            247,
+            false
+          ],
+          [
+            1933,
+            "Cavalcade",
+            0.29,
+            8,
+            "King Kong",
+            37.69,
+            1053,
+            false
+          ],
+          [
+            1934,
+            "It Happened One Night",
+            12.78,
+            175,
+            "It Happened One Night",
+            12.78,
+            175,
+            true
+          ],
+          [
+            1935,
+            "Mutiny on the Bounty",
+            6.24,
+            115,
+            "Bride of Frankenstein",
+            18.73,
+            345,
+            false
+          ],
+          [
+            1936,
+            "The Great Ziegfeld",
+            1.99,
+            31,
+            "Modern Times",
+            6.56,
+            102,
+            false
+          ],
+          [
+            1937,
+            "The Life of Emile Zola",
+            0.66,
+            14,
+            "Snow White and the Seven Dwarfs",
+            39.98,
+            846,
+            false
+          ],
+          [
+            1938,
+            "You Can't Take It with You",
+            1.96,
+            33,
+            "The Adventures of Robin Hood",
+            8.49,
+            143,
+            false
+          ],
+          [
+            1939,
+            "Gone with the Wind",
+            17.65,
+            1154,
+            "The Wizard of Oz",
+            50.34,
+            3291,
+            false
+          ],
+          [
+            1940,
+            "Rebecca",
+            4.27,
+            113,
+            "Pinocchio",
+            18.69,
+            495,
+            false
+          ],
+          [
+            1941,
+            "How Green Was My Valley",
+            1.8,
+            59,
+            "Citizen Kane",
+            31.71,
+            1038,
+            false
+          ],
+          [
+            1942,
+            "Mrs. Miniver",
+            1.94,
+            40,
+            "Bambi",
+            25.22,
+            520,
+            false
+          ],
+          [
+            1943,
+            "Casablanca",
+            48.68,
+            1454,
+            "Casablanca",
+            48.68,
+            1454,
+            true
+          ],
+          [
+            1944,
+            "Going My Way",
+            2.96,
+            45,
+            "Double Indemnity",
+            10.08,
+            153,
+            false
+          ],
+          [
+            1945,
+            "The Lost Weekend",
+            7.22,
+            92,
+            "The Lost Weekend",
+            7.22,
+            92,
+            true
+          ],
+          [
+            1946,
+            "The Best Years of Our Lives",
+            2.05,
+            50,
+            "It's a Wonderful Life",
+            29.72,
+            726,
+            false
+          ],
+          [
+            1947,
+            "Gentleman's Agreement",
+            3.03,
+            34,
+            "Miracle on 34th Street",
+            10.7,
+            120,
+            false
+          ],
+          [
+            1948,
+            "Hamlet",
+            3.62,
+            60,
+            "The Treasure of the Sierra Madre",
+            13.22,
+            219,
+            false
+          ],
+          [
+            1949,
+            "All the King's Men",
+            1.4,
+            22,
+            "White Heat",
+            9.13,
+            143,
+            false
+          ],
+          [
+            1950,
+            "All About Eve",
+            9.46,
+            226,
+            "Cinderella",
+            15.57,
+            372,
+            false
+          ],
+          [
+            1951,
+            "An American in Paris",
+            3.36,
+            84,
+            "A Streetcar Named Desire",
+            12.28,
+            307,
+            false
+          ],
+          [
+            1952,
+            "The Greatest Show on Earth",
+            2.06,
+            39,
+            "Singin' in the Rain",
+            23.74,
+            449,
+            false
+          ],
+          [
+            1953,
+            "From Here to Eternity",
+            8.07,
+            238,
+            "Peter Pan",
+            12.0,
+            354,
+            false
+          ],
+          [
+            1954,
+            "On the Waterfront",
+            7.89,
+            272,
+            "Godzilla",
+            20.11,
+            693,
+            false
+          ],
+          [
+            1955,
+            "Marty",
+            1.38,
+            41,
+            "Lady and the Tramp",
+            10.38,
+            308,
+            false
+          ],
+          [
+            1956,
+            "Around the World in 80 Days",
+            1.86,
+            50,
+            "Invasion of the Body Snatchers",
+            10.12,
+            272,
+            false
+          ],
+          [
+            1957,
+            "The Bridge on the River Kwai",
+            6.87,
+            183,
+            "The Bridge on the River Kwai",
+            6.87,
+            183,
+            true
+          ],
+          [
+            1958,
+            "Gigi",
+            2.76,
+            83,
+            "Vertigo",
+            15.97,
+            480,
+            false
+          ],
+          [
+            1959,
+            "Ben-Hur",
+            9.5,
+            278,
+            "North by Northwest",
+            10.66,
+            312,
+            false
+          ],
+          [
+            1960,
+            "The Apartment",
+            2.72,
+            98,
+            "Psycho",
+            43.42,
+            1563,
+            false
+          ],
+          [
+            1961,
+            "West Side Story",
+            14.72,
+            444,
+            "West Side Story",
+            14.72,
+            444,
+            true
+          ],
+          [
+            1962,
+            "Lawrence of Arabia",
+            12.06,
+            337,
+            "Lawrence of Arabia",
+            12.06,
+            337,
+            true
+          ],
+          [
+            1963,
+            "Tom Jones",
+            0.71,
+            24,
+            "The Birds",
+            11.21,
+            379,
+            false
+          ],
+          [
+            1964,
+            "My Fair Lady",
+            7.23,
+            343,
+            "Mary Poppins",
+            13.37,
+            634,
+            false
+          ],
+          [
+            1965,
+            "The Sound of Music",
+            23.73,
+            736,
+            "The Sound of Music",
+            23.73,
+            736,
+            true
+          ],
+          [
+            1966,
+            "A Man for All Seasons",
+            1.48,
+            32,
+            "Manos: The Hands of Fate",
+            6.48,
+            140,
+            false
+          ],
+          [
+            1967,
+            "In the Heat of the Night",
+            2.24,
+            98,
+            "The Good, the Bad and the Ugly",
+            13.29,
+            582,
+            false
+          ],
+          [
+            1968,
+            "Oliver!",
+            2.41,
+            131,
+            "2001: A Space Odyssey",
+            21.6,
+            1176,
+            false
+          ],
+          [
+            1969,
+            "Midnight Cowboy",
+            7.96,
+            253,
+            "Easy Rider",
+            10.72,
+            341,
+            false
+          ],
+          [
+            1970,
+            "Patton",
+            8.55,
+            241,
+            "Patton",
+            8.55,
+            241,
+            true
+          ],
+          [
+            1971,
+            "The French Connection",
+            4.51,
+            224,
+            "A Clockwork Orange",
+            13.17,
+            654,
+            false
+          ],
+          [
+            1972,
+            "The Godfather",
+            33.7,
+            1767,
+            "The Godfather",
+            33.7,
+            1767,
+            true
+          ],
+          [
+            1973,
+            "The Sting",
+            3.23,
+            149,
+            "The Exorcist",
+            20.66,
+            954,
+            false
+          ],
+          [
+            1974,
+            "The Godfather: Part II",
+            7.31,
+            340,
+            "The Texas Chainsaw Massacre",
+            13.35,
+            621,
+            false
+          ],
+          [
+            1975,
+            "One Flew Over the Cuckoo's Nest",
+            8.24,
+            413,
+            "Jaws",
+            31.31,
+            1570,
+            false
+          ],
+          [
+            1976,
+            "Rocky",
+            19.08,
+            943,
+            "Rocky",
+            19.08,
+            943,
+            true
+          ],
+          [
+            1977,
+            "Annie Hall",
+            3.05,
+            274,
+            "Star Wars: Episode IV - A New Hope",
+            55.18,
+            4965,
+            false
+          ],
+          [
+            1978,
+            "The Deer Hunter",
+            4.42,
+            213,
+            "Halloween",
+            13.9,
+            670,
+            false
+          ],
+          [
+            1979,
+            "Kramer vs. Kramer",
+            2.36,
+            136,
+            "Apocalypse Now",
+            16.67,
+            959,
+            false
+          ],
+          [
+            1980,
+            "Ordinary People",
+            1.08,
+            94,
+            "Star Wars: Episode V - The Empire Strikes Back",
+            20.16,
+            1748,
+            false
+          ],
+          [
+            1981,
+            "Chariots of Fire",
+            2.22,
+            137,
+            "Raiders of the Lost Ark",
+            22.62,
+            1396,
+            false
+          ],
+          [
+            1982,
+            "Gandhi",
+            1.5,
+            121,
+            "E.T. the Extra-Terrestrial",
+            16.48,
+            1331,
+            false
+          ],
+          [
+            1983,
+            "Terms of Endearment",
+            2.19,
+            145,
+            "Star Wars: Episode VI - Return of the Jedi",
+            16.49,
+            1091,
+            false
+          ],
+          [
+            1984,
+            "Amadeus",
+            1.14,
+            108,
+            "The Terminator",
+            14.34,
+            1355,
+            false
+          ],
+          [
+            1985,
+            "Out of Africa",
+            1.18,
+            78,
+            "Back to the Future",
+            17.44,
+            1150,
+            false
+          ],
+          [
+            1986,
+            "Platoon",
+            2.46,
+            165,
+            "Aliens",
+            9.11,
+            611,
+            false
+          ],
+          [
+            1987,
+            "The Last Emperor",
+            0.52,
+            40,
+            "RoboCop",
+            6.68,
+            511,
+            false
+          ],
+          [
+            1988,
+            "Rain Man",
+            6.48,
+            409,
+            "Die Hard",
+            11.42,
+            721,
+            false
+          ],
+          [
+            1989,
+            "Driving Miss Daisy",
+            3.01,
+            230,
+            "Batman",
+            8.71,
+            665,
+            false
+          ],
+          [
+            1990,
+            "Dances with Wolves",
+            3.28,
+            198,
+            "Goodfellas",
+            8.01,
+            484,
+            false
+          ],
+          [
+            1991,
+            "The Silence of the Lambs",
+            13.29,
+            845,
+            "The Silence of the Lambs",
+            13.29,
+            845,
+            true
+          ],
+          [
+            1992,
+            "Unforgiven",
+            1.84,
+            108,
+            "Reservoir Dogs",
+            7.8,
+            457,
+            false
+          ],
+          [
+            1993,
+            "Schindler's List",
+            4.5,
+            303,
+            "Jurassic Park",
+            16.06,
+            1081,
+            false
+          ],
+          [
+            1994,
+            "Forrest Gump",
+            8.56,
+            619,
+            "Pulp Fiction",
+            14.32,
+            1036,
+            false
+          ],
+          [
+            1995,
+            "Braveheart",
+            5.85,
+            375,
+            "Toy Story",
+            7.54,
+            483,
+            false
+          ],
+          [
+            1996,
+            "The English Patient",
+            1.67,
+            97,
+            "Jerry Maguire",
+            8.52,
+            494,
+            false
+          ],
+          [
+            1997,
+            "Titanic",
+            17.17,
+            1128,
+            "Titanic",
+            17.17,
+            1128,
+            true
+          ],
+          [
+            1998,
+            "Shakespeare in Love",
+            1.99,
+            111,
+            "Saving Private Ryan",
+            5.52,
+            308,
+            false
+          ],
+          [
+            1999,
+            "American Beauty",
+            2.25,
+            170,
+            "The Matrix",
+            14.29,
+            1081,
+            false
+          ],
+          [
+            2000,
+            "Gladiator",
+            6.44,
+            304,
+            "Gladiator",
+            6.44,
+            304,
+            true
+          ],
+          [
+            2001,
+            "A Beautiful Mind",
+            2.34,
+            140,
+            "The Lord of the Rings: The Fellowship of the Ring",
+            14.13,
+            845,
+            false
+          ],
+          [
+            2002,
+            "Chicago",
+            1.81,
+            100,
+            "Spider-Man",
+            7.53,
+            416,
+            false
+          ],
+          [
+            2003,
+            "The Lord of the Rings: The Return of the King",
+            5.19,
+            296,
+            "Pirates of the Caribbean: The Curse of the Black Pearl",
+            6.14,
+            350,
+            false
+          ],
+          [
+            2004,
+            "Million Dollar Baby",
+            1.65,
+            93,
+            "Saw",
+            4.09,
+            231,
+            false
+          ],
+          [
+            2005,
+            "Crash",
+            1.03,
+            55,
+            "Star Wars: Episode III - Revenge of the Sith",
+            6.37,
+            339,
+            false
+          ],
+          [
+            2006,
+            "The Departed",
+            2.12,
+            109,
+            "300",
+            4.18,
+            215,
+            false
+          ],
+          [
+            2007,
+            "No Country for Old Men",
+            2.47,
+            118,
+            "Transformers",
+            5.54,
+            264,
+            false
+          ],
+          [
+            2008,
+            "Slumdog Millionaire",
+            2.62,
+            142,
+            "Twilight",
+            9.63,
+            521,
+            false
+          ],
+          [
+            2009,
+            "The Hurt Locker",
+            1.81,
+            105,
+            "Avatar",
+            8.18,
+            474,
+            false
+          ],
+          [
+            2010,
+            "The King's Speech",
+            1.9,
+            107,
+            "Inception",
+            4.53,
+            255,
+            false
+          ],
+          [
+            2011,
+            "The Artist",
+            1.53,
+            86,
+            "Thor",
+            3.34,
+            188,
+            false
+          ],
+          [
+            2012,
+            "Argo",
+            1.68,
+            91,
+            "The Avengers",
+            5.83,
+            315,
+            false
+          ],
+          [
+            2013,
+            "12 Years a Slave",
+            1.62,
+            76,
+            "Frozen",
+            7.1,
+            334,
+            false
+          ],
+          [
+            2014,
+            "Birdman or (The Unexpected Virtue of Ignorance)",
+            1.8,
+            71,
+            "Guardians of the Galaxy",
+            4.09,
+            161,
+            false
+          ],
+          [
+            2015,
+            "Spotlight",
+            0.78,
+            31,
+            "Star Wars: Episode VII - The Force Awakens",
+            8.97,
+            358,
+            false
+          ],
+          [
+            2016,
+            "Moonlight",
+            1.08,
+            37,
+            "Batman v Superman: Dawn of Justice",
+            6.38,
+            218,
+            false
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_05": {
+      "label": "Empire Strikes Back vs Ordinary People: the largest unnominated-film snub on record",
+      "content": "In 1980, the Best Picture winner Ordinary People accumulated 94 IMDb references; The Empire Strikes Back, which was not nominated for Best Picture, accumulated 1,748 \u2014 18.6 times as many. That gap is the largest in the dataset between a Best Picture winner and an unnominated film from the same year. The 1977 Annie Hall vs Star Wars matchup is almost identical (274 vs 4,965, an 18.1x ratio).",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/snubs_and_misses.py",
+        "lines": [
+          27,
+          47
+        ],
+        "output": "1980: Ordinary People (94) vs The Empire Strikes Back (1748) -> 18.6x\\n1977: Annie Hall (274) vs Star Wars (4965) -> 18.1x"
+      },
+      "data_table": {
+        "columns": [
+          "year",
+          "bp_winner",
+          "winner_count",
+          "rival",
+          "rival_count",
+          "rival_x_factor"
+        ],
+        "rows": [
+          [
+            1977,
+            "Annie Hall",
+            274,
+            "Star Wars: Episode IV - A New Hope",
+            4965,
+            18.12
+          ],
+          [
+            1980,
+            "Ordinary People",
+            94,
+            "Star Wars: Episode V - The Empire Strikes Back",
+            1748,
+            18.6
+          ],
+          [
+            1960,
+            "The Apartment",
+            98,
+            "Psycho",
+            1563,
+            15.95
+          ],
+          [
+            1968,
+            "Oliver!",
+            131,
+            "2001: A Space Odyssey",
+            1176,
+            8.98
+          ],
+          [
+            1994,
+            "Forrest Gump",
+            619,
+            "Pulp Fiction",
+            1036,
+            1.67
+          ],
+          [
+            1989,
+            "Driving Miss Daisy",
+            230,
+            "Batman",
+            665,
+            2.89
+          ],
+          [
+            1985,
+            "Out of Africa",
+            78,
+            "Back to the Future",
+            1150,
+            14.74
+          ],
+          [
+            1984,
+            "Amadeus",
+            108,
+            "The Terminator",
+            1355,
+            12.55
+          ],
+          [
+            1993,
+            "Schindler's List",
+            303,
+            "Jurassic Park",
+            1081,
+            3.57
+          ],
+          [
+            2008,
+            "Slumdog Millionaire",
+            142,
+            "The Dark Knight",
+            431,
+            3.04
+          ],
+          [
+            2015,
+            "Spotlight",
+            31,
+            "Star Wars: Episode VII - The Force Awakens",
+            358,
+            11.55
+          ],
+          [
+            2016,
+            "Moonlight",
+            37,
+            "Batman v Superman: Dawn of Justice",
+            218,
+            5.89
+          ]
+        ]
+      },
+      "based_on": [
+        "det_09"
+      ]
+    },
+    "ana_06": {
+      "label": "In 74 of 89 winning years, an unnominated film out-referenced the Best Picture winner",
+      "content": "In 74 out of 89 (83%) of the years that produced a Best Picture winner, at least one film that was never even nominated for Best Picture has accumulated more IMDb references than the actual winner. The 16 exceptions are years like 1942 (Casablanca) and 1972 (The Godfather), where the winner is also the year's anchor cultural text.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/snubs_and_misses.py",
+        "lines": [
+          27,
+          47
+        ],
+        "output": "In how many years did an unnominated film out-reference the BP winner? 74 of 89"
+      },
+      "data_table": {
+        "description": "BP-winner-vs-unnominated outcome",
+        "columns": [
+          "outcome",
+          "n_years"
+        ],
+        "rows": [
+          [
+            "unnominated film won the references race",
+            74
+          ],
+          [
+            "BP winner held its own year",
+            15
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_07": {
+      "label": "The five worst-ranked Best Picture winners by year-rank",
+      "content": "Five Best Picture winners ranked 22nd or worse among the films of their own oscars_year: Cavalcade (1933, rank 37), The Last Emperor (1987, rank 36), Tom Jones (1963, rank 29), Spotlight (2015, rank 25), and The Life of Emile Zola (1937, rank 22). Three of those five are post-1980, even though pre-1980 has more years total \u2014 a pattern consistent with the secular decline.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/winner_trajectory.py",
+        "lines": [
+          44,
+          47
+        ],
+        "output": "Cavalcade 1933 rank 37\\nThe Last Emperor 1987 rank 36\\nTom Jones 1963 rank 29\\nSpotlight 2015 rank 25\\nThe Life of Emile Zola 1937 rank 22"
+      },
+      "data_table": {
+        "description": "Worst-ranked BP winners (top 10 by year_rank)",
+        "columns": [
+          "movie_name",
+          "oscars_year",
+          "count",
+          "year_rank",
+          "annual_share_pct"
+        ],
+        "rows": [
+          [
+            "Cavalcade",
+            1933,
+            8,
+            37,
+            0.29
+          ],
+          [
+            "The Last Emperor",
+            1987,
+            40,
+            36,
+            0.52
+          ],
+          [
+            "Tom Jones",
+            1963,
+            24,
+            29,
+            0.71
+          ],
+          [
+            "Spotlight",
+            2015,
+            31,
+            25,
+            0.78
+          ],
+          [
+            "The Life of Emile Zola",
+            1937,
+            14,
+            22,
+            0.66
+          ],
+          [
+            "Out of Africa",
+            1985,
+            78,
+            20,
+            1.18
+          ],
+          [
+            "Crash",
+            2005,
+            55,
+            20,
+            1.03
+          ],
+          [
+            "Marty",
+            1955,
+            41,
+            18,
+            1.38
+          ],
+          [
+            "Gandhi",
+            1982,
+            121,
+            18,
+            1.5
+          ],
+          [
+            "Amadeus",
+            1984,
+            108,
+            17,
+            1.14
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_08": {
+      "label": "Casablanca's 48.7% \u2014 the largest annual_share of any Best Picture winner ever",
+      "content": "Casablanca (oscars_year 1943) holds the record for the highest annual_share of any Best Picture winner: 48.7% \u2014 meaning Casablanca alone accounts for almost half of all IMDb-tracked references to films from its year. The runner-up that year, Lassie Come Home, has just 4.8% \u2014 Casablanca's 1,454 references dwarf the next-most-referenced 1943 film by an order of magnitude.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/snubs_and_misses.py",
+        "lines": [
+          60,
+          64
+        ],
+        "output": "Casablanca 1454 0.487 W rank 1\\nLassie Come Home 143 0.048 NaN rank 2"
+      },
+      "data_table": {
+        "description": "Top 8 most-referenced 1943 films",
+        "columns": [
+          "movie_name",
+          "count",
+          "annual_share_pct",
+          "result",
+          "year_rank"
+        ],
+        "rows": [
+          [
+            "Casablanca",
+            1454,
+            48.68,
+            "W",
+            1
+          ],
+          [
+            "Lassie Come Home",
+            143,
+            4.79,
+            null,
+            2
+          ],
+          [
+            "Frankenstein Meets the Wolf Man",
+            76,
+            2.54,
+            null,
+            3
+          ],
+          [
+            "For Whom the Bell Tolls",
+            62,
+            2.08,
+            "N",
+            4
+          ],
+          [
+            "Shadow of a Doubt",
+            58,
+            1.94,
+            null,
+            5
+          ],
+          [
+            "I Walked with a Zombie",
+            42,
+            1.41,
+            null,
+            6
+          ],
+          [
+            "Phantom of the Opera",
+            40,
+            1.34,
+            null,
+            7
+          ],
+          [
+            "The Outlaw",
+            40,
+            1.34,
+            null,
+            8
+          ]
+        ]
+      },
+      "based_on": [
+        "det_08"
+      ]
+    },
+    "ana_09": {
+      "label": "The People's Best Pictures: a 16-year list dominated by blockbusters",
+      "content": "If we treat the year's most-referenced film as the 'people's pick', then since 2001 the list looks completely different from the Academy's. It includes The Lord of the Rings: The Fellowship of the Ring (2001), Spider-Man (2002), Saw (2004), Star Wars Episode III (2005), Transformers (2007), Twilight (2008), Avatar (2009), Inception (2010), Thor (2011), The Avengers (2012), Frozen (2013), Guardians of the Galaxy (2014), The Force Awakens (2015), and Batman v Superman (2016). Only three of these 16 'people's picks' were even nominated for Best Picture: Fellowship of the Ring, Avatar, and Inception. Eleven were never nominated at all.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/era_comparisons.py",
+        "lines": [
+          38,
+          47
+        ],
+        "output": "2015: Star Wars: Episode VII - The Force Awakens, 358 refs\\n2016: Batman v Superman: Dawn of Justice, 218 refs\\nOf the 89 'people's picks', BP winner: 14, BP nominee: 23, never nominated: 53"
+      },
+      "data_table": {
+        "description": "Recent (2001-2016) People's Best Pictures vs the Academy's choice",
+        "columns": [
+          "oscars_year",
+          "peoples_pick",
+          "peoples_count",
+          "peoples_share_pct",
+          "peoples_was_BP_status",
+          "academy_winner",
+          "academy_count"
+        ],
+        "rows": [
+          [
+            2001,
+            "The Lord of the Rings: The Fellowship of the Ring",
+            845,
+            14.13,
+            "N",
+            "A Beautiful Mind",
+            140
+          ],
+          [
+            2002,
+            "Spider-Man",
+            416,
+            7.53,
+            "X",
+            "Chicago",
+            100
+          ],
+          [
+            2003,
+            "Pirates of the Caribbean: The Curse of the Black Pearl",
+            350,
+            6.14,
+            "X",
+            "The Lord of the Rings: The Return of the King",
+            296
+          ],
+          [
+            2004,
+            "Saw",
+            231,
+            4.09,
+            "X",
+            "Million Dollar Baby",
+            93
+          ],
+          [
+            2005,
+            "Star Wars: Episode III - Revenge of the Sith",
+            339,
+            6.37,
+            "X",
+            "Crash",
+            55
+          ],
+          [
+            2006,
+            "300",
+            215,
+            4.18,
+            "X",
+            "The Departed",
+            109
+          ],
+          [
+            2007,
+            "Transformers",
+            264,
+            5.54,
+            "X",
+            "No Country for Old Men",
+            118
+          ],
+          [
+            2008,
+            "Twilight",
+            521,
+            9.63,
+            "X",
+            "Slumdog Millionaire",
+            142
+          ],
+          [
+            2009,
+            "Avatar",
+            474,
+            8.18,
+            "N",
+            "The Hurt Locker",
+            105
+          ],
+          [
+            2010,
+            "Inception",
+            255,
+            4.53,
+            "N",
+            "The King's Speech",
+            107
+          ],
+          [
+            2011,
+            "Thor",
+            188,
+            3.34,
+            "X",
+            "The Artist",
+            86
+          ],
+          [
+            2012,
+            "The Avengers",
+            315,
+            5.83,
+            "X",
+            "Argo",
+            91
+          ],
+          [
+            2013,
+            "Frozen",
+            334,
+            7.1,
+            "X",
+            "12 Years a Slave",
+            76
+          ],
+          [
+            2014,
+            "Guardians of the Galaxy",
+            161,
+            4.09,
+            "X",
+            "Birdman",
+            71
+          ],
+          [
+            2015,
+            "Star Wars: Episode VII - The Force Awakens",
+            358,
+            8.97,
+            "X",
+            "Spotlight",
+            31
+          ],
+          [
+            2016,
+            "Batman v Superman: Dawn of Justice",
+            218,
+            6.38,
+            "X",
+            "Moonlight",
+            37
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_10": {
+      "label": "Star Wars 1977 commands 55% of its year's references \u2014 the highest single-year share in the dataset",
+      "content": "Star Wars: Episode IV \u2014 A New Hope holds the dataset record for raw references (4,965) and for highest annual_share by any film (55.2% of all 1977 references). It was nominated for Best Picture and lost to Annie Hall (274 references, 3.0% annual_share); the gap is 18.1x. The Wizard of Oz (1939) is second on the all-time list with 3,291 references and 50.3% annual_share \u2014 and lost Best Picture to Gone with the Wind, which itself has a respectable 1,154 references but came second in its own year.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/snubs_and_misses.py",
+        "lines": [
+          55,
+          59
+        ],
+        "output": "Star Wars: Episode IV - A New Hope 1977 N count=4965 share=0.552\\nThe Wizard of Oz 1939 N count=3291 share=0.503"
+      },
+      "data_table": {
+        "columns": [
+          "movie_name",
+          "release_year",
+          "oscars_year",
+          "result",
+          "count",
+          "annual_share_pct"
+        ],
+        "rows": [
+          [
+            "Star Wars: Episode IV - A New Hope",
+            1977,
+            1977,
+            "N",
+            4965,
+            55.18
+          ],
+          [
+            "The Wizard of Oz",
+            1939,
+            1939,
+            "N",
+            3291,
+            50.34
+          ],
+          [
+            "The Godfather",
+            1972,
+            1972,
+            "W",
+            1767,
+            33.7
+          ],
+          [
+            "Star Wars: Episode V - The Empire Strikes Back",
+            1980,
+            1980,
+            null,
+            1748,
+            20.16
+          ],
+          [
+            "Jaws",
+            1975,
+            1975,
+            "N",
+            1570,
+            31.31
+          ],
+          [
+            "Psycho",
+            1960,
+            1960,
+            null,
+            1563,
+            43.42
+          ],
+          [
+            "Casablanca",
+            1942,
+            1943,
+            "W",
+            1454,
+            48.68
+          ],
+          [
+            "Raiders of the Lost Ark",
+            1981,
+            1981,
+            "N",
+            1396,
+            22.62
+          ],
+          [
+            "The Terminator",
+            1984,
+            1984,
+            null,
+            1355,
+            14.34
+          ],
+          [
+            "E.T. the Extra-Terrestrial",
+            1982,
+            1982,
+            "N",
+            1331,
+            16.48
+          ],
+          [
+            "Ghostbusters",
+            1984,
+            1984,
+            null,
+            1225,
+            12.97
+          ],
+          [
+            "2001: A Space Odyssey",
+            1968,
+            1968,
+            null,
+            1176,
+            21.6
+          ],
+          [
+            "Gone with the Wind",
+            1939,
+            1939,
+            "W",
+            1154,
+            17.65
+          ],
+          [
+            "Back to the Future",
+            1985,
+            1985,
+            null,
+            1150,
+            17.44
+          ],
+          [
+            "Titanic",
+            1997,
+            1997,
+            "W",
+            1128,
+            17.17
+          ],
+          [
+            "The Shining",
+            1980,
+            1980,
+            null,
+            1127,
+            13.0
+          ],
+          [
+            "Star Wars: Episode VI - Return of the Jedi",
+            1983,
+            1983,
+            null,
+            1091,
+            16.49
+          ],
+          [
+            "Jurassic Park",
+            1993,
+            1993,
+            null,
+            1081,
+            16.06
+          ],
+          [
+            "The Matrix",
+            1999,
+            1999,
+            null,
+            1081,
+            14.29
+          ],
+          [
+            "King Kong",
+            1933,
+            1933,
+            null,
+            1053,
+            37.69
+          ]
+        ]
+      },
+      "based_on": [
+        "det_03",
+        "det_09"
+      ]
+    },
+    "ana_11": {
+      "label": "The 1980s collapse: BP winners fell from 9% of top-100 references to 2%",
+      "content": "Looking at the share of all top-100 references that go to films that won Best Picture in their decade: in the 1940s and 1970s this peaked near 9-10%; by the 1980s it crashed to 2.1%, and the 2010s sit at just 1.4% \u2014 a record low. This metric captures footprint: even when winners are not #1 in their year, are the winners as a group still capturing meaningful weight in the cultural memory of their decade? The answer for the post-1980 era is no.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/era_comparisons.py",
+        "lines": [
+          56,
+          58
+        ],
+        "output": "1940 9.58%\\n1970 9.07%\\n1980 2.07%\\n2000 2.71%\\n2010 1.45%"
+      },
+      "data_table": {
+        "columns": [
+          "decade",
+          "total_count",
+          "bp_winner_count",
+          "bp_winner_share_pct"
+        ],
+        "rows": [
+          [
+            1920,
+            2694,
+            88,
+            3.27
+          ],
+          [
+            1930,
+            23387,
+            1716,
+            7.34
+          ],
+          [
+            1940,
+            20551,
+            1969,
+            9.58
+          ],
+          [
+            1950,
+            27426,
+            1494,
+            5.45
+          ],
+          [
+            1960,
+            35801,
+            2496,
+            6.97
+          ],
+          [
+            1970,
+            51824,
+            4700,
+            9.07
+          ],
+          [
+            1980,
+            73876,
+            1527,
+            2.07
+          ],
+          [
+            1990,
+            64150,
+            3954,
+            6.16
+          ],
+          [
+            2000,
+            54012,
+            1462,
+            2.71
+          ],
+          [
+            2010,
+            34444,
+            499,
+            1.45
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_12": {
+      "label": "2015: Spotlight (rank 25) vs The Force Awakens (rank 1) \u2014 the steepest mismatch of the 2010s",
+      "content": "In 2015, Best Picture went to Spotlight, which sits at rank 25 of its year with 31 references and 0.78% annual_share \u2014 the worst rank held by any 21st-century winner. The same year's most-referenced film, Star Wars: The Force Awakens, has 358 references (11.5x more) and 9.0% annual_share. This single year captures the entire thesis: an Academy-celebrated film that the broader culture barely cites, paired with a non-nominated blockbuster that the culture cannot stop referencing.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/era_comparisons.py",
+        "lines": [
+          22,
+          35
+        ],
+        "output": "2015: BP winner = Spotlight 31 refs\\n   Star Wars: Episode VII - The Force Awakens (358 refs)"
+      },
+      "data_table": {
+        "description": "2015 top-3 + BP winner",
+        "columns": [
+          "movie_name",
+          "count",
+          "rank_in_year",
+          "result"
+        ],
+        "rows": [
+          [
+            "Star Wars: Episode VII - The Force Awakens",
+            358,
+            1,
+            null
+          ],
+          [
+            "Fifty Shades of Grey",
+            157,
+            2,
+            null
+          ],
+          [
+            "Avengers: Age of Ultron",
+            133,
+            3,
+            null
+          ],
+          [
+            "Spotlight",
+            31,
+            25,
+            "W"
+          ]
+        ]
+      },
+      "based_on": [
+        "det_07"
+      ]
+    },
+    "ana_13": {
+      "label": "Recent-decade per-year detail: BP winners always lose to a non-nominated blockbuster",
+      "content": "Year-by-year for 2007-2016, the BP winner is consistently dwarfed by at least one non-nominated film. 2007 No Country for Old Men (118) vs Transformers (264, x2.2). 2008 Slumdog Millionaire (142) vs Twilight (521, x3.7). 2011 The Artist (86) vs Thor (188, x2.2). 2012 Argo (91) vs The Avengers (315, x3.5). 2013 12 Years a Slave (76) vs Frozen (334, x4.4). 2014 Birdman (71) vs Guardians of the Galaxy (161, x2.3). 2016 Moonlight (37) vs Batman v Superman (218, x5.9).",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/era_comparisons.py",
+        "lines": [
+          22,
+          35
+        ],
+        "output": "2007: No Country for Old Men 118  Transformers 264\\n2008: Slumdog Millionaire 142  Twilight 521"
+      },
+      "data_table": {
+        "description": "2007-2016: BP winner ref count vs the year's most-referenced film",
+        "columns": [
+          "year",
+          "bp_winner",
+          "bp_count",
+          "top1_name",
+          "top1_count",
+          "top1_x_factor"
+        ],
+        "rows": [
+          [
+            2007,
+            "No Country for Old Men",
+            118,
+            "Transformers",
+            264,
+            2.24
+          ],
+          [
+            2008,
+            "Slumdog Millionaire",
+            142,
+            "Twilight",
+            521,
+            3.67
+          ],
+          [
+            2009,
+            "The Hurt Locker",
+            105,
+            "Avatar",
+            474,
+            4.51
+          ],
+          [
+            2010,
+            "The King's Speech",
+            107,
+            "Inception",
+            255,
+            2.38
+          ],
+          [
+            2011,
+            "The Artist",
+            86,
+            "Thor",
+            188,
+            2.19
+          ],
+          [
+            2012,
+            "Argo",
+            91,
+            "The Avengers",
+            315,
+            3.46
+          ],
+          [
+            2013,
+            "12 Years a Slave",
+            76,
+            "Frozen",
+            334,
+            4.39
+          ],
+          [
+            2014,
+            "Birdman",
+            71,
+            "Guardians of the Galaxy",
+            161,
+            2.27
+          ],
+          [
+            2015,
+            "Spotlight",
+            31,
+            "Star Wars: Episode VII - The Force Awakens",
+            358,
+            11.55
+          ],
+          [
+            2016,
+            "Moonlight",
+            37,
+            "Batman v Superman: Dawn of Justice",
+            218,
+            5.89
+          ]
+        ]
+      },
+      "based_on": []
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "References data is a frozen end-of-2017 IMDb snapshot, so 2017 is partial and films released late in 2017 (e.g. The Shape of Water) are absent \u2014 that is why the analysis stops at oscars_year 2016 for narrative claims."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "IMDb's connection network is heavily Western-biased \u2014 non-Anglophone films are systematically under-counted. The 'recency problem' (older films have had longer to accumulate references) is real but is partly neutralised by the within-year annual_share metric used here."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Crowdsourcing introduces enthusiasm bias: cult films and franchises generate more reference adds than equally influential 'serious' cinema. Some recent connection entries are low-signal (e.g., actors plugging films on chat shows)."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "The dataset retains a few films that were not technically Best Picture-eligible (Metropolis 1927, Steamboat Willie 1929, Un Chien Andalou 1929) for early-year orientation. Their year_rank values still appear in the data."
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "35 years of charting boy bands isn't one genre — it's three or four overlapping waves, and the dataset's visual fields record the turnover frame-by-frame.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — The look you remember is one of four",
+      "purpose": "hook",
+      "title": "The look you remember is one of four",
+      "findings": ["ana_07", "ana_08"],
+      "context": ["det_05", "det_04"],
+      "triage": {"ana_07": "lead", "ana_08": "supporting"},
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "instance",
+      "editorial_notes": "5.1% overall and 14.8% peak must be exact. The instance is inst_01 (NSYNC 'It's Gonna Be Me') — the archetypal frosted-tips video."
+    },
+    "edt_02": {
+      "label": "55 bands, 234 boys, 35 years",
+      "purpose": "context",
+      "title": "55 bands, 234 boys, 35 years",
+      "findings": ["ana_01", "ana_02", "ana_03", "ana_04"],
+      "context": ["det_01", "det_02"],
+      "triage": {"ana_01": "supporting", "ana_02": "supporting", "ana_03": "color", "ana_04": "supporting"},
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "Year chart should highlight 2000 with 9 bands. Keep det_02's 'fuzzy category' caveat in the prose."
+    },
+    "edt_03": {
+      "label": "Bands per era — boom, bust, rebound",
+      "purpose": "context",
+      "title": "Boom, bust, rebound",
+      "findings": ["ana_03", "ana_25"],
+      "context": ["det_04"],
+      "triage": {"ana_03": "supporting", "ana_25": "supporting"},
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "image",
+      "editorial_notes": "Use the era bar chart and consider an image of NKOTB or Boyz II Men to anchor the lineage prose."
+    },
+    "edt_04": {
+      "label": "The unofficial uniform",
+      "purpose": "evidence",
+      "title": "The unofficial uniform",
+      "findings": ["ana_15", "ana_17", "ana_18"],
+      "context": ["det_06"],
+      "triage": {"ana_15": "supporting", "ana_17": "lead", "ana_18": "supporting"},
+      "chart_placeholder": "ana_17",
+      "media_placeholder": "interactive",
+      "editorial_notes": "47.4% is the load-bearing number. Visualize as a treemap or grid showing how 5 combos cover ~57% of all members. Interactive: 'click any 234 squares to see palette.'"
+    },
+    "edt_05": {
+      "label": "The frosted-tip fossil layer",
+      "purpose": "turn",
+      "title": "The frosted-tip fossil layer",
+      "findings": ["ana_07", "ana_08", "ana_09", "ana_10"],
+      "context": ["det_05"],
+      "triage": {"ana_07": "supporting", "ana_08": "lead", "ana_09": "color", "ana_10": "color"},
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "video",
+      "editorial_notes": "Era-by-era line chart of frosted-tip rate. Generated video can show animated 'fossil layer' or hair-style transition across decades. 14.8% is the load-bearing number."
+    },
+    "edt_06": {
+      "label": "Who sang on Top 40 — and how the racial composition flipped",
+      "purpose": "evidence",
+      "title": "Who sang on Top 40",
+      "findings": ["ana_12", "ana_13", "ana_14"],
+      "context": ["det_09"],
+      "triage": {"ana_12": "supporting", "ana_13": "lead", "ana_14": "supporting"},
+      "chart_placeholder": "ana_13",
+      "media_placeholder": null,
+      "editorial_notes": "Era-stacked area or two-line chart for skin-tone share. Pair the U.S. Census benchmark in same paragraph as ana_12. Editorially sensitive — keep prose careful and the data caveat visible."
+    },
+    "edt_07": {
+      "label": "The hidden chart-topper isn't the dance song",
+      "purpose": "turn",
+      "title": "The hidden chart-topper isn't the dance song",
+      "findings": ["ana_05", "ana_24", "ana_23"],
+      "context": [],
+      "triage": {"ana_05": "supporting", "ana_24": "lead", "ana_23": "supporting"},
+      "chart_placeholder": "ana_24",
+      "media_placeholder": "instance",
+      "editorial_notes": "Mini-chart counting #1s by dance speed. The instance here is inst_03 (Boyz II Men 'End of the Road') as the canonical slow-jam #1."
+    },
+    "edt_08": {
+      "label": "Hands free — 84% never touch an instrument",
+      "purpose": "evidence",
+      "title": "Hands free",
+      "findings": ["ana_19", "ana_20", "ana_21"],
+      "context": [],
+      "triage": {"ana_19": "lead", "ana_20": "supporting", "ana_21": "color"},
+      "chart_placeholder": "ana_20",
+      "media_placeholder": null,
+      "editorial_notes": "Era trend chart of 'plays-instrument %'. Highlight the late-2000s spike (Jonas Brothers / 5SOS rebound)."
+    },
+    "edt_09": {
+      "label": "Cast at the population mean",
+      "purpose": "color",
+      "title": "Cast at the population mean",
+      "findings": ["ana_22"],
+      "context": ["det_09"],
+      "triage": {"ana_22": "color"},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "A stat callout, not a chart. Single big number: 69.6 in / 69.1 in median CDC."
+    },
+    "edt_10": {
+      "label": "Browse the field",
+      "purpose": "evidence",
+      "title": "Browse the field",
+      "findings": ["ana_25"],
+      "context": ["det_03", "det_04"],
+      "triage": {"ana_25": "supporting"},
+      "chart_placeholder": null,
+      "media_placeholder": "interactive",
+      "editorial_notes": "Card-deck interactive: 7 lineage clusters, each clickable, each opening to a YouTube embed for the canonical band. Use the verified instances inst_01..inst_07."
+    },
+    "edt_11": {
+      "label": "Close — the look is the data",
+      "purpose": "close",
+      "title": null,
+      "findings": ["ana_07", "ana_13", "ana_17"],
+      "context": [],
+      "triage": {"ana_07": "supporting", "ana_13": "supporting", "ana_17": "supporting"},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Pure prose close — no chart. Restate the three load-bearing numbers (5.1% frosted tips, racial flip, 47.4% uniform) as a closing list."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "cut",
+    "ana_07": "lead",
+    "ana_08": "lead",
+    "ana_09": "color",
+    "ana_10": "color",
+    "ana_11": "cut",
+    "ana_12": "supporting",
+    "ana_13": "lead",
+    "ana_14": "supporting",
+    "ana_15": "supporting",
+    "ana_16": "cut",
+    "ana_17": "lead",
+    "ana_18": "supporting",
+    "ana_19": "lead",
+    "ana_20": "supporting",
+    "ana_21": "color",
+    "ana_22": "color",
+    "ana_23": "supporting",
+    "ana_24": "lead",
+    "ana_25": "supporting"
+  }
+}

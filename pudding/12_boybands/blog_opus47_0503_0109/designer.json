@@ -1,0 +1,396 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Each section's visual emerges from the data shape: era trends become small-multiple line charts, the categorical 'uniform' becomes a 234-square palette grid, the genre lineages become a card-deck browser, and the archetypal frosted-tip moment becomes a real video instance. Channels are chosen because the dataset is multi-modal (charts + reference photos + YouTube videos for every band) — not to satisfy a checklist.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Era trends, distributions, and #1-hit comparisons are exactly what charts handle best — and every section the editor flagged with [CHART:] has a data_table ready in analyst.json."
+      },
+      "image": {
+        "used": true,
+        "reason": "This is a visual-identity dataset: hair, clothing, skin tone, era styling. We use the silhouette teaser (the hook), a lineage-tree illustration (edt_03 anchor), and a uniform flat-lay (the killer-fact image for edt_04). All three are already generated and re-used."
+      },
+      "video": {
+        "used": true,
+        "reason": "Two video forms: image2video on the silhouette teaser (slow parallax + smoke drift) sets the tone before any prose; a generated frosted-tips clip animates the fossil-layer concept for edt_05. Plus seven embedded YouTube music videos (the inst_01..07 pool) are videos in the strict sense."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Every band in the dataset is paired with a music video, so audio is intrinsic. The card-deck browser at edt_10 plays each video's actual soundtrack on click — that IS the audio layer for this blog. No autoplay, mute by default until the reader clicks."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "Two reader-driven interactions: a 234-square uniform palette grid (click any square to see its band/member) and the lineage card-deck browser at edt_10 (click a lineage to see its bands and play one)."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero image — five silhouettes under a stage light",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_silhouettes.png",
+        "tool": "text2image",
+        "prompt": "cinematic dramatic still of five young men standing in a loose row, photographed entirely in silhouette under a single overhead stage light, foggy atmosphere, deep blue background, no faces visible, no text, editorial photography",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed hero: five young men in silhouette under a single stage light, smoky blue background. The silhouette is the point — the reader cannot tell yet which era, which lineage, which boy band. Sets up the core claim that 'boy band' is one word for many looks.",
+      "rationale": "A still image earns the teaser slot here because the reader's job is to see five generic silhouettes and feel that they could belong to any of 35 years. We then animate that still with image2video.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion — slow parallax and smoke drift",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_silhouettes.png",
+        "prompt": "very slow cinematic dolly-in on five silhouetted figures, soft drift of stage smoke, gentle flicker of the overhead key light, no camera shake, ambient haze",
+        "model": "google/veo-3.1-fast",
+        "duration": 5,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Re-uses teaser_silhouettes.png as first frame and adds a 5-second slow push-in plus drifting stage smoke. Plays muted, autoplays once, loops. Sits behind the headline as the first thing the reader sees.",
+      "rationale": "We invested in a strong still; image2video preserves the composition and adds the slow kinetic edge a still cannot. No autoplay sound; visual fallback is the still itself.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Frosted-tip rate by era (line chart with annotated 14.8% spike)",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "line_with_point",
+        "data_source": "ana_08",
+        "x": "era",
+        "y": "yes_pct",
+        "highlight": {"era": "Early 2000s", "value": 14.8},
+        "interaction": "hover any era point to see the count and percentage",
+        "style": {
+          "palette": "single warm gold (#d4a955) for the line, muted gray for non-peak points, no gridlines, large era labels",
+          "y_domain_explicit": [0, 18],
+          "y_zero_anchored": true,
+          "annotation": "callout label '14.8%' attached to the Early 2000s point"
+        }
+      },
+      "brief": "A simple line chart with seven era points. The Early 2000s point is visually dominant: large gold dot + an inline label reading '14.8% of members'. The spike is 8x the surrounding eras and the chart should make that obvious without prose. y-axis is fixed at [0, 18]; era labels along x; no gridlines.",
+      "rationale": "The hook hinges on a single number (14.8%) and its sharp before/after context. A pure line is the cleanest possible reading; bars would imply more about magnitude than the data supports. We pick a single accent color so the spike does the talking.",
+      "based_on": ["ana_08"]
+    },
+    "des_04": {
+      "label": "NSYNC — It's Gonna Be Me (YouTube embed)",
+      "type": "instance",
+      "section": "edt_01",
+      "content": {
+        "instance_ref": "inst_01",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/GQMlWwIXg3M",
+        "caption": "NSYNC, 'It's Gonna Be Me' (2000) — the dataset's archetypal frosted-tips video and one of the eight 2000-2004 members coded yes."
+      },
+      "brief": "Embedded YouTube player for NSYNC 'It's Gonna Be Me'. Sits directly under the line chart so the spike's Early-2000s point has an immediate concrete face attached to it. 16:9, no autoplay, caption below.",
+      "rationale": "The hook needs the abstract 14.8% and a concrete archetype side by side. The instance pool already verified this video; we copy the embed_url verbatim from inst_01.",
+      "based_on": []
+    },
+    "des_05": {
+      "label": "Bands per year (bar chart with 2000 spike)",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_04",
+        "x": "year",
+        "y": "bands",
+        "highlight": {"year": 2000, "value": 9},
+        "interaction": "hover bar to see exact count for that year",
+        "style": {
+          "palette": "muted slate for most bars, single accent (#d4a955 gold) on the 2000 bar",
+          "no_gridlines": true,
+          "year_axis_labels_every_5_years": true,
+          "annotation": "small caption '9 bands' attached to the 2000 bar"
+        }
+      },
+      "brief": "Year-by-year bar chart, 1983-2017. The 2000 bar is highlighted gold and labeled '9 bands'. Every other bar is slate. Quick visual: the genre's chart history is one tall pillar in the middle and a long tail.",
+      "rationale": "The editor's note explicitly asks for the 2000 spike highlighted. A bar chart by year is the most literal way to show that year as taller than every neighbor.",
+      "based_on": ["ana_04"]
+    },
+    "des_06": {
+      "label": "Bands per 5-year era (era bar chart with boom-bust shape)",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_03",
+        "x": "era",
+        "y": "bands",
+        "highlight": {"era": ["1990-94", "1995-99", "2000-04"]},
+        "interaction": "hover bar to see exact count and which lineages contributed",
+        "style": {
+          "palette": "single warm gold (#d4a955) for the three peak eras, muted slate for the others",
+          "no_gridlines": true,
+          "era_labels_rotated_0deg": true
+        }
+      },
+      "brief": "Era-grouped bar chart showing 1, 3, 14, 14, 13, 4, 5, 1 across the eight 5-year buckets. The three peak eras (1990-94, 1995-99, 2000-04) are gold. The boom-bust-rebound shape is immediate.",
+      "rationale": "The era story is a perfect fit for an 8-bar chart — small enough to read at a glance, large enough to show the boom-bust-rebound arc explicitly.",
+      "based_on": ["ana_03"]
+    },
+    "des_07": {
+      "label": "Lineage tree illustration",
+      "type": "asset",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "lineage_tree.png",
+        "tool": "text2image",
+        "prompt": "minimal hand-drawn family-tree diagram on aged off-white parchment, generic male silhouettes inside circle nodes, branches connecting parent groups to child groups, vintage editorial illustration style, no text in frame, monochromatic warm sepia",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Sepia-toned family-tree illustration showing generic silhouettes connected by branching lines. No band names in the image — the text labels are added via HTML overlay or caption. Sits below the era bar chart to anchor the lineage prose.",
+      "rationale": "A generated illustration explains 'family tree' faster than a chart can; the editor specifically called for a lineage image to break a chart streak. Sepia/parchment styling separates this from the rest of the page (chart-heavy, modern) and signals 'historical map'.",
+      "based_on": ["ana_25"]
+    },
+    "des_08": {
+      "label": "Uniform flat-lay reference image",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "uniform_flatlay.png",
+        "tool": "text2image",
+        "prompt": "overhead flat-lay product photography of folded clothing on warm beige linen: stack of white t-shirts on the left, stack of black t-shirts in the middle, stack of navy blue t-shirts on the right, four pairs of folded black dress pants below, one pair of light-wash jeans on the far right, soft natural light, editorial fashion magazine style, no text, no logos",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Catalog-style overhead flat-lay of the 'uniform': three stacks of tops in white, black, navy; folded black dress pants; one pair of jeans as the outlier. Sits above the chart as the visual punchline of edt_04.",
+      "rationale": "The 47.4% black/white/navy uniform is the killer fact of edt_04 and the close. A literal flat-lay of those colors makes the abstract percentage feel like a wardrobe — which is exactly the editor's framing.",
+      "based_on": ["ana_17", "ana_18"]
+    },
+    "des_09": {
+      "label": "Top color combinations (horizontal bar chart, 5 combos to 47.4%)",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_17",
+        "x": "pct",
+        "y": "combo_label",
+        "highlight": {"top_5": true},
+        "interaction": "hover bar to see exact member count",
+        "style": {
+          "palette": "color the bar fill to match the actual top+bottom color combo (e.g. white+black bar uses split fill of white and black)",
+          "no_gridlines": true,
+          "label_with_count_and_pct": true,
+          "y_axis_label_format": "shirt + bottom"
+        }
+      },
+      "brief": "Horizontal bar chart, 8 rows from the data_table. Each bar is split-colored to match its actual shirt+bottom combo (white-shirt+black-pants bar is half white half black). Top 5 bars are bold; the rest fade. The total of the top 5 is 'over half' — caption can call out the 47.4% figure.",
+      "rationale": "The data_table contains 8 combos. Mapping bar fill to actual color makes the chart self-explanatory without a legend — the bar IS the outfit.",
+      "based_on": ["ana_17"]
+    },
+    "des_10": {
+      "label": "234-square uniform grid (interactive)",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "explorable_grid",
+        "initial_state": "A grid of 234 small squares, one per band member. Each square is split top/bottom with the member's actual shirt color and bottom color from the data_table. Black/white/navy squares dominate; outlier colors (red, yellow, light blue) pop against the monochrome majority.",
+        "trigger": "Reader hovers any square",
+        "transition": "Tooltip appears with the member's band name, the shirt color, and the bottom color",
+        "payoff": "The visual density of black/white/navy is immediate; outliers are the exception that proves the uniform.",
+        "data_source": "ana_17"
+      },
+      "brief": "234 small squares laid out in a roughly 18x13 grid. Each square is two-toned: top half = shirt color from analyst.json, bottom half = bottom color. Hover reveals member metadata. The dominant black/white/navy palette is visible from across the room; outliers pop. NOTE: the underlying data_table for ana_17 only carries 8 aggregated combos. Programmer should expand each combo's count into individual squares (e.g. 33 white+black squares, 30 black+navy, etc.) totaling 234.",
+      "rationale": "The 47% statistic only lands when the reader sees the same five colors filling the screen. An interactive grid makes the categorical dataset feel like a stadium photo of the genre.",
+      "based_on": ["ana_17", "ana_18"]
+    },
+    "des_11": {
+      "label": "Frosted-tip era line chart (re-used from edt_01)",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "line_with_point",
+        "data_source": "ana_08",
+        "x": "era",
+        "y": "yes_pct",
+        "highlight": {"era": "Early 2000s", "value": 14.8},
+        "interaction": "hover any era point to see count and percentage",
+        "style": {
+          "palette": "single accent gold (#d4a955) line, muted gray non-peak points, no gridlines",
+          "y_domain_explicit": [0, 18],
+          "y_zero_anchored": true,
+          "annotation": "explicit callout '14.8% Early 2000s'",
+          "secondary_overlay": "thin dashed line for hair-length-short by era from ana_09 — overlay both series with two-color legend"
+        }
+      },
+      "brief": "Same line chart spec as des_03 BUT now overlay a second series: the short-hair-share line from ana_09. Two lines: gold = frosted-tip rate, slate dashed = short-hair share. Both peak in the 1995-2004 window. The reader can now see hair length and frosting moving together as one fashion micro-cycle.",
+      "rationale": "Repeating the same single-line chart at edt_05 wastes the slot. Overlaying ana_09's short-hair line lets the reader see two coupled hair signals — that's the editor's framing of 'haircut decade'.",
+      "based_on": ["ana_08", "ana_09"]
+    },
+    "des_12": {
+      "label": "Frosted-tips clip (text2video)",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "video",
+        "filename": "frosted_tips_clip.mp4",
+        "tool": "text2video",
+        "prompt": "macro close-up of a young man's blonde frosted-tip hairstyle from above, late-1990s pop boy-band styling, dark roots with bleached spiky tips, soft blue stage backlight, slight head turn, cinematic shallow depth of field, no face visible, no text, retro music video aesthetic, 5 seconds",
+        "model": "bytedance/seedance-2.0",
+        "duration": 5,
+        "aspect_ratio": "16:9"
+      },
+      "brief": "Five-second loopable close-up of a frosted-tip hairstyle from above. The bleach-tip texture is the focus. Plays muted, autoplays once when scrolled into view. Sits as the chapter break for the fossil-layer narrative.",
+      "rationale": "edt_05 is about a single visual artifact. A close-up clip of THAT artifact is more direct than a chart can be. Already generated and on disk.",
+      "based_on": ["ana_08"]
+    },
+    "des_13": {
+      "label": "Skin-tone era flip (two-line chart)",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "two_line",
+        "data_source": "ana_13",
+        "x": "era",
+        "y": ["light_pct", "md_or_dark_pct"],
+        "highlight": {"crossover_eras": ["Early 1990s", "Late 1990s", "Early 2000s"]},
+        "interaction": "hover any era point to see both lines' values",
+        "style": {
+          "palette": "two-color: light = warm beige (#d4b896), medium-dark+dark = deep brown (#5d3f2c)",
+          "no_gridlines": true,
+          "explicit_legend": "Light skin / Medium-dark or dark skin",
+          "y_axis_pct": true,
+          "annotations": "label the crossover where the two lines cross around the late 1990s"
+        }
+      },
+      "brief": "Two-line era chart: light-skin share rises from 14% to 100% across 35 years; medium-dark-or-dark share falls from 77% to 0%. Lines cross around the late 1990s. The chart is the 'desegregated and re-segregated' framing made visual.",
+      "rationale": "The editor's prose hinges on the two lines crossing. A two-line chart is the most literal read. The U.S. census benchmark from det_09 is referenced in the prose, not the chart, to keep visual focus on the era flip.",
+      "based_on": ["ana_13"]
+    },
+    "des_14": {
+      "label": "#1 hits by dance speed (small chart)",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "stacked_bar_or_dots",
+        "data_source": "ana_24",
+        "x": "danceSpeed",
+        "y": "n_hits",
+        "highlight": {"slow": 6, "pop": 4},
+        "interaction": "hover any dot to see the band, song, and year",
+        "style": {
+          "palette": "slow = warm rose (#a86f5d), pop = cool teal (#5d8fa8)",
+          "format": "render as 10 individual dots in two columns (slow column has 6 dots, pop column has 4 dots), each dot labeled with the band's first letter or hover-tooltip with full band-song-year",
+          "no_gridlines": true
+        }
+      },
+      "brief": "Two-column dot chart. Left column has 6 rose dots = slow-jam #1s (NKOTB, Color Me Badd, Boyz II Men, SILK, All-4-One, Hi-Five). Right column has 4 teal dots = dance-pop #1s (Blackstreet, Hanson, NSYNC, B2K). Each dot tooltips its band/song/year. The 6 vs 4 visual is the punchline.",
+      "rationale": "Editor explicitly called for a small chart counting #1s by dance speed. A dot-array makes 'six vs four' something the reader can actually count, which beats a stacked bar of 6/4.",
+      "based_on": ["ana_24"]
+    },
+    "des_15": {
+      "label": "Boyz II Men — End of the Road (YouTube embed)",
+      "type": "instance",
+      "section": "edt_07",
+      "content": {
+        "instance_ref": "inst_03",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/zDKO6XYXioc",
+        "caption": "Boyz II Men, 'End of the Road' (1992) — one of the six slow-jam #1s in the dataset, and the canonical 'ballad in a suit' that the prose argues is the genre's real chart-topping mode."
+      },
+      "brief": "Embedded YouTube player for the canonical slow-jam #1. Sits below the dot chart so the abstract 6/4 split has a concrete sound and image attached.",
+      "rationale": "Editor specified inst_03 in editorial_notes; we copy the embed_url verbatim from detective.json.",
+      "based_on": []
+    },
+    "des_16": {
+      "label": "Plays-instrument rate by era (line chart, late-2000s spike)",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "line_with_point",
+        "data_source": "ana_20",
+        "x": "era",
+        "y": "plays_pct",
+        "highlight": {"era": "Late 2000s", "value": 53},
+        "interaction": "hover any era point to see exact percentage",
+        "style": {
+          "palette": "single dark teal (#3d7d80) line, muted gray non-peak points, no gridlines",
+          "y_domain_explicit": [0, 60],
+          "annotation": "callout '53% (Jonas Brothers + 5SOS)' on Late 2000s point"
+        }
+      },
+      "brief": "Line chart of 'plays-instrument' share by era. The Late 2000s point spikes to 53%, then collapses to 0% by 2015-2018. Annotation calls out the spike's source. NOTE: ana_20 doesn't yet have an explicit era data_table; Programmer should derive plays-instrument-by-era from the analyst.json output text or fall back to a stat callout if data_table is insufficient.",
+      "rationale": "The 'hands free' finding is per-era, and the late-2000s rebound is the storytelling moment. WARNING: ana_20's data_table is overall-only — Programmer must check whether the analyst's text mentions per-era values; if not, render as a simpler chart.",
+      "based_on": ["ana_19", "ana_20"]
+    },
+    "des_17": {
+      "label": "Stat callout — average member height vs U.S. median",
+      "type": "stat_callout",
+      "section": "edt_09",
+      "content": {
+        "value": "69.6 in",
+        "label": "average boy band member height — within half an inch of the U.S. adult male median (69.1 in / CDC)",
+        "data_source": "ana_22"
+      },
+      "brief": "Single big stat: 69.6 in at ~64-72px, label below in body type. Centered, generous vertical spacing.",
+      "rationale": "Editor explicitly specified a stat callout for edt_09. The number is the entire point.",
+      "based_on": ["ana_22"]
+    },
+    "des_18": {
+      "label": "Lineage card-deck browser (interactive, audio + video)",
+      "type": "interactive",
+      "section": "edt_10",
+      "content": {
+        "interaction_type": "card_deck",
+        "initial_state": "Seven horizontally-scrollable cards, one per lineage from ana_25. Each card shows the lineage name, the band names that belong to it, and a small count badge (n bands).",
+        "trigger": "Reader clicks any card",
+        "transition": "Card expands inline to reveal a YouTube embed of the lineage's canonical band (mapped from the inst_01..07 pool) — the audio plays only when the reader clicks play on the embedded player.",
+        "payoff": "Browsing the seven lineages makes 'boy band is one word for many micro-genres' tangible — the reader hears 1989 R&B and 2017 K-pop in the same scrolling row.",
+        "data_source": "ana_25",
+        "lineage_to_instance_map": {
+          "New Edition descendants": "inst_04",
+          "Lou Pearlman empire": "inst_01",
+          "Motown / R&B pop": "inst_03",
+          "British / Irish import": "inst_02",
+          "Disney / tween-TV": "inst_05",
+          "Latin / K-pop import": "inst_06",
+          "Reality-TV pop": "inst_07"
+        }
+      },
+      "brief": "Card-deck of 7 lineage cards, scrollable horizontally with snap points. Each card has lineage name, band list, n-bands badge, and a 'play canonical video' button that opens a YouTube embed inline. Each lineage maps to ONE inst_xx YouTube ID from detective.json — Programmer must use the verified embed_urls verbatim. The audio is the YouTube soundtrack when clicked; this is the blog's audio layer.",
+      "rationale": "edt_10 wants a gallery, not a chart. A card-deck is the literal interpretation of 'browse the field'. Mapping each lineage to one verified YouTube embed solves both the audio decision and the instance hard-rule (verbatim embed URLs only). Note: New Kids fits 'New Edition descendants' as the originating template; Backstreet Boys' Quit Playing Games (inst_02) stands in for the British/Irish import wave because the dataset's actual import bands have no instance_ref entries — Programmer should display this card with caption 'No verified video for the British/Irish wave; showing Backstreet Boys as the closest contemporary example' OR drop the card entirely. The Latin / K-pop card uses BTS — the only verified non-English instance.",
+      "based_on": ["ana_25"]
+    },
+    "des_19": {
+      "label": "Closing prose — three load-bearing numbers as inline callouts",
+      "type": "stat_callout",
+      "section": "edt_11",
+      "content": {
+        "value_set": [
+          {"value": "5.1%", "label": "members with frosted tips overall", "data_source": "ana_07"},
+          {"value": "47.4%", "label": "members in black, white, or navy uniform", "data_source": "ana_17"},
+          {"value": "14% → 100%", "label": "light-skin share, Early 1990s → Late 2010s", "data_source": "ana_13"}
+        ]
+      },
+      "brief": "Three small stat lines arranged as a vertical list inside the closing section: each line has the figure (left) and a one-line description (right). No chart — the editor explicitly said pure prose close. This is the closing summary the editor specified.",
+      "rationale": "Editor's editorial_notes for edt_11: 'restate the three load-bearing numbers as a closing list'. Stat-callout treatment is the most literal read.",
+      "based_on": ["ana_07", "ana_13", "ana_17"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm editorial, slightly faded magazine, gold accent on a near-white background",
+    "text_visual_pattern": "visual-first teaser → text + chart alternation; insert lineage illustration + uniform flat-lay + frosted-tips clip + card-deck to break the chart streak",
+    "centrepiece": "des_10 (the 234-square uniform grid)",
+    "anti_sameness_notes": "Avoid the standard chart-stack-then-conclusion pattern. The page has three non-chart breaks (lineage illustration, flat-lay image, frosted-tips clip) and two reader-driven interactions (uniform grid, lineage card-deck). The card-deck doubles as the audio layer — no separate audio card.",
+    "typography_notes": "Headline in bold serif (Playfair or Georgia 700, ~48-56px on desktop). Body in serif (Georgia, 18px, 1.7 line-height). Stat callouts in 64-72px serif weight. Section dividers as thin horizontal rule with extra vertical margin. Pull quotes (if any) italic serif with left rule. Two-color accent palette: warm gold (#d4a955) and slate (#3d4a5c)."
+  }
+}

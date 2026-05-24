@@ -1,0 +1,251 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset_label": "Vocal Register and Singing Voices in Popular Music (Pudding, Aug 2019)"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: The Pudding 'Are Men Singing Higher in Pop Music?' (Aug 2019)",
+      "content": "This dataset accompanies The Pudding's August 2019 essay 'Are Men Singing Higher in Pop Music?' by Matt Daniels. The piece used Pandora's vocal-register score — a 1-to-10 scale produced by the Music Genome Project's musicologists — joined to roughly 60 years of Billboard Hot 100 chart data (1958-2019). The published archive contains four CSVs: songs.csv (one row per Hot 100 song with male vocals, 1958-2019, n=11,944), 2019.csv (the 248 charting songs from 2019 narrowed to 80 male-led tracks, with gender, genre, and a 'spoken' flag for rap/hip-hop), avg.csv (yearly mean register across all charting male-led songs), and avg_top.csv (yearly mean register restricted to top-10 hits). Daniels worked with Estelle Caswell at Vox's Earworm series, whose companion video 'We Measured Pop Music's Falsetto Obsession' aired the same month and reached the Webby Awards.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2019/08/register/",
+          "title": "Are Men Singing Higher in Pop Music? — The Pudding",
+          "facts": [
+            "Article published August 2019 by Matt Daniels at The Pudding",
+            "Vocal register data comes from Pandora on a 1–10 scale",
+            "Chart data is the Billboard Hot 100",
+            "2019 had 248 songs chart, narrowed to 80 with male vocal leads",
+            "2019 average register across all charted male-led songs was 5.95"
+          ]
+        },
+        {
+          "url": "https://laughingsquid.com/measuring-male-falsetto-in-popular-modern-music/",
+          "title": "Measuring Exactly How Much Male Falsetto Has Been Used in Popular Modern Music — Laughing Squid",
+          "facts": [
+            "Estelle Caswell of Vox's Earworm series collaborated with Matt Daniels of The Pudding",
+            "Opera singer Anthony Roth Costanzo demonstrates the difference between vocal register (chest voice) and falsetto (head voice)",
+            "Article describes male falsetto as 'nearly impossible to turn on the radio and not hear'"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "How Pandora's vocal-register score is built",
+      "content": "Pandora's Music Genome Project codes each song along ~450 attributes that human musicologists score after listening for 20-30 minutes. Vocal characteristics include the lead vocalist's gender, timbre, breathiness, gruffness, and whether the voice sits in a high or low register. The 'register' value used in this dataset is one of those attributes — a hand-coded 1-to-10 scale where 1 is a deep chest voice (Daniels cites Barry White-style examples as roughly a 2) and 10 is a near-the-top performance like Ginuwine's 'Pony', which scored a 10/10. The scale collapses head voice and chest voice into a single perceived-pitch axis; it does not directly measure falsetto, which is a vocal mechanism rather than a pitch height. That distinction matters: a song can be high in register without being falsetto, and a falsetto passage can sit in a moderate register if it follows a higher belted passage.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Music_Genome_Project",
+          "title": "Music Genome Project — Wikipedia",
+          "facts": [
+            "Each song is described by ~450 'genes' covering attributes like vocal timbre, register, and gender",
+            "Each song is analyzed by a human musicologist over 20–30 minutes",
+            "Genes for vocals include whether the singer is high or low register, breathy or gruff"
+          ]
+        },
+        {
+          "url": "https://pudding.cool/2019/08/register/",
+          "title": "Are Men Singing Higher in Pop Music? — The Pudding",
+          "facts": [
+            "Pandora register is on a 1–10 scale",
+            "Ginuwine's 'Pony' is cited as a 10/10",
+            "Barry White-style examples cited as a 2"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Falsetto vs. register: why the distinction matters",
+      "content": "Falsetto is a vocal mechanism produced by vibration of the ligamentous edges of the vocal folds, sitting just above the modal (chest) register and overlapping with it by roughly an octave. Male singers historically used falsetto for high notes, while women generally use head voice. The technique was foundational before women sang in choirs and was revived in 20th-century pop by Smokey Robinson, Frankie Valli, the Bee Gees, Prince, and many others. By the late 2010s, critics noted falsetto had become a clear trend among male pop stars including Justin Bieber, The Weeknd, Bruno Mars, Drake, Charlie Puth, Shawn Mendes, Adam Levine, and Sam Smith. In the dataset, however, 'register' is a perceived-height score, so a high register reading captures both high belts and falsetto without separating them.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Falsetto",
+          "title": "Falsetto — Wikipedia",
+          "facts": [
+            "Falsetto is the register just above modal voice, produced by vibration of the ligamentous edges of the vocal folds",
+            "It overlaps the modal register by approximately one octave",
+            "Falsetto was the standard before women sang in choirs",
+            "Modern pop falsetto stars cited include Smokey Robinson, Frankie Valli, the Bee Gees, Prince, Justin Bieber, The Weeknd, Bruno Mars, Drake, Sam Smith"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Headline finding: 2019 top-10 register hit a 60-year high",
+      "content": "Daniels's central claim is that, looking only at top-10 Billboard hits with male vocal leads, 2019 was the highest-register year in the dataset's 60-year window. Four of the five top-10 male-led hits that year sat in high register, including Khalid's 'Talk' (which peaked at #3 on the Hot 100 and ranked #8 on Billboard's 2019 year-end chart). The all-songs average for 2019 was 5.95, lower than the '70s and '80s peaks; the top-10 average tells a different story — the very biggest songs are now sung high, even though the average male-led charting song is not particularly high. The previous register peak in the all-songs series was 1988 (Guns N' Roses, Aerosmith, Poison, hair-metal high belts). Another high earlier era was 1977-78, the Saturday Night Fever years, anchored by the Bee Gees' falsetto-led 'Stayin' Alive' (#1 for four weeks).",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2019/08/register/",
+          "title": "Are Men Singing Higher in Pop Music? — The Pudding",
+          "facts": [
+            "Top-10 male-led register in 2019 is the highest in 60 years",
+            "Four of the five top-10 male-led hits in 2019 were in high register",
+            "1988 was the peak of the all-songs register series",
+            "Khalid's 'Talk' is cited as a 2019 high-register top-10 example"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Talk_(Khalid_song)",
+          "title": "Talk (Khalid song) — Wikipedia",
+          "facts": [
+            "'Talk' peaked at #3 on the Billboard Hot 100",
+            "'Talk' ranked #8 on the Billboard Hot 100 year-end chart for 2019",
+            "Nominated for Record of the Year at the 62nd Grammy Awards"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Stayin'_Alive",
+          "title": "Stayin' Alive — Wikipedia",
+          "facts": [
+            "'Stayin' Alive' was released December 1977 by the Bee Gees",
+            "It hit #1 on the US Billboard Hot 100 the week of 4 February 1978",
+            "It remained at #1 for four consecutive weeks"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Why a reader should care: the radio sound of the 2010s changed",
+      "content": "The dataset matters because it makes audible something most listeners felt but rarely measured: by the late 2010s the dominant texture of a hit pop song with a male voice had shifted from belted chest-voice rock or croon-style baritone toward a softer, higher, often-falsetto delivery. The Vox Earworm video built on Daniels's data argues that male falsetto became 'nearly impossible to turn on the radio and not hear', tying the trend to streaming-era pop, the rise of the bedroom-pop and post-Drake R&B aesthetic, and EDM's preference for high vocal hooks layered over electronic beats. Independent of cause, the rendering of the chart year by year is the cleanest available picture of a stylistic shift that shaped a decade of radio.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.youtube.com/watch?v=qJT2h5uGAC0",
+          "title": "We measured pop music's falsetto obsession — Vox Earworm",
+          "facts": [
+            "Vox Earworm episode released Aug 2019 collaborating with The Pudding",
+            "Argues falsetto is 'nearly impossible to turn on the radio and not hear'",
+            "Features opera singer Anthony Roth Costanzo demonstrating falsetto vs register",
+            "Webby-nominated"
+          ]
+        },
+        {
+          "url": "https://blog.feed.fm/how-edm-grew-up-swallowed-pop-music-whole-trends-in-electronic-music",
+          "title": "How EDM Grew Up & Swallowed Pop Music Whole — Feed.fm",
+          "facts": [
+            "By the late 2010s dance music was the third most popular global genre",
+            "Streaming services and EDM cross-pollination reshaped pop production"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Genre and gender slicing in 2019.csv",
+      "content": "The 2019 slice (2019.csv) keeps only the 80 male-led entries from the year's 248 charting Hot 100 songs after dropping primarily spoken/rapped tracks. Each row carries: register (1-10 integer), gender (male, with one row tagged otherwise in error — the analyst should check), genre (Country, Pop, Rap/Hip hop, Rock/Alternative, R&B/Soul, EDM, etc.), and a 'spoken' flag (1 if dominantly rapped, else null). This means the song-level analyses can ask which genre delivered the highest registers in 2019, whether rap/hip-hop's 'spoken' songs cluster at lower registers, and whether the year's outliers come from a specific lane.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2019/08/register/",
+          "title": "Are Men Singing Higher in Pop Music? — The Pudding",
+          "facts": [
+            "2019 had 248 charting songs, narrowed to 80 with male vocal leads",
+            "Tracks dominated by spoken/rapped vocals were excluded"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Caveat: register is hand-coded, not measured in Hz",
+      "content": "Pandora's register score is the result of a human musicologist judging perceived vocal height; it is not an automatic acoustic measurement of fundamental frequency. That has two consequences for analysis. First, scores between adjacent songs may be correlated by rater rather than by actual pitch (rater drift, era effects, label fatigue). Second, a single integer-valued 1-10 axis cannot distinguish between a baritone belting an A4 and a tenor sliding into falsetto on an A4 — they may both score 7 even though the technique differs. Trends across years are still meaningful because the rating standard is held roughly constant by Pandora's editorial team, but readers should treat each song's register as an ordinal rank, not a precise pitch.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://brooklynrail.org/2014/11/music/feature-creeps/",
+          "title": "Feature Creeps: How Pandora's Music Genome Project Misrepresents the Way We Hear Music — Brooklyn Rail",
+          "facts": [
+            "Pandora's attributes are hand-coded by musicologists rather than computed acoustically",
+            "Scores reflect human listening judgments and can vary between raters"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Benchmarks for context",
+      "content": "Useful external benchmarks the analyst should keep at hand. The 1-10 scale's anchors as Daniels uses them: ~2 = baritone belt or croon (e.g., Barry White), ~5 = mid-range tenor (most baseline pop), ~7 = noticeably high belt, 10 = near-the-ceiling delivery (Ginuwine's 'Pony'). Billboard Hot 100 has been the canonical US singles chart since 1958, so the dataset's first year (1958) is the chart's first year. Saturday Night Fever's release at the end of 1977 produced one of the genre's most famous mass-market falsetto eras, and 'Stayin' Alive' staying at #1 for four weeks in early 1978 is a useful real-world anchor for what a high-register-dominant year sounds like.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://pudding.cool/2019/08/register/",
+          "title": "Are Men Singing Higher in Pop Music? — The Pudding",
+          "facts": [
+            "Pandora 1–10 anchor: Barry White ~ 2; Ginuwine's 'Pony' = 10"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Stayin'_Alive",
+          "title": "Stayin' Alive — Wikipedia",
+          "facts": [
+            "'Stayin' Alive' was #1 on the Billboard Hot 100 for four consecutive weeks starting Feb 4, 1978"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_bee_gees_1977.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Bee_Gees_1977.JPG",
+      "license": "Public domain (PD-US, pre-1978 publication without notice)",
+      "source": "Wikimedia Commons / NBC Television promotional photo",
+      "description": "The Bee Gees in 1977 — the falsetto-led trio whose Saturday Night Fever era produced one of the all-time peaks of high-register male vocals on the Billboard Hot 100.",
+      "relates_to": ["det_04", "det_08"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_khalid_2018.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Khalid_seoul_2018.jpg",
+      "license": "Creative Commons (Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "Khalid in 2018 — his 2019 single 'Talk' is one of the four high-register top-10 hits Daniels singles out as the marker of pop's modern falsetto era.",
+      "relates_to": ["det_04", "det_05"]
+    }
+  ],
+  "instances": [
+    {
+      "id": "inst_01",
+      "type": "spotify",
+      "label": "Pony — Ginuwine (1996)",
+      "embed_url": "https://open.spotify.com/embed/track/6mz1fBdKATx6qP4oP1I65G",
+      "relates_to": ["det_02", "det_08"],
+      "why": "Daniels uses 'Pony' as the dataset's textbook 10/10 — the song the rest of the scale is anchored to.",
+      "verified": true,
+      "verified_title": "Pony"
+    },
+    {
+      "id": "inst_02",
+      "type": "spotify",
+      "label": "Stayin' Alive — Bee Gees (1977)",
+      "embed_url": "https://open.spotify.com/embed/track/4UDmDIqJIbrW0hMBQMFOsM",
+      "relates_to": ["det_04", "det_08"],
+      "why": "The 1977-78 falsetto era's signature #1 hit — the audible benchmark for what a previous high-register peak sounded like.",
+      "verified": true,
+      "verified_title": "Stayin' Alive"
+    },
+    {
+      "id": "inst_03",
+      "type": "spotify",
+      "label": "Talk — Khalid (2019)",
+      "embed_url": "https://open.spotify.com/embed/track/0rTV5WefWd1J3OwIheTzxM",
+      "relates_to": ["det_04", "det_05"],
+      "why": "Daniels names 'Talk' as one of the four high-register top-10 hits driving 2019's all-time top-10 register peak — the modern equivalent of 'Stayin' Alive'.",
+      "verified": true,
+      "verified_title": "Talk"
+    },
+    {
+      "id": "inst_04",
+      "type": "youtube",
+      "label": "We measured pop music's falsetto obsession — Vox Earworm",
+      "embed_url": "https://www.youtube.com/embed/qJT2h5uGAC0",
+      "relates_to": ["det_01", "det_05"],
+      "why": "The Vox Earworm video built on this exact dataset; it pairs the numbers with audio examples and an opera singer's demonstration of register vs falsetto.",
+      "verified": true,
+      "verified_title": "We measured pop music's falsetto obsession"
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+{
+  "meta": {"role": "analyst", "version": "2.0"},
+  "dataset": {
+    "files": ["schedule.csv"],
+    "rows": 1866,
+    "columns": 21,
+    "what_one_row_represents": "A single scheduled session (training or competition) at the Milano Cortina 2026 Winter Olympics, with venue, time, and medal-event status.",
+    "time_range": "2026-02-04 to 2026-02-22 (19 days)",
+    "geographic_scope": "Northern Italy: Milan, Cortina, Bormio, Livigno, Val di Fiemme, Anterselva (13 venues spanning 22,000+ km^2)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Curling and Freestyle Skiing dominate session counts",
+      "content": "Across the 1,866 scheduled sessions, curling (436), freestyle skiing (222), snowboard (192), and ice hockey (173) account for roughly 55% of all bookings on the schedule. Curling alone consumes 23.4% of the program because every team plays every other across mixed-doubles, men's and women's round robins. At the bottom, ski mountaineering — the only debut sport — has just 21 sessions, fewer than 1.2% of the total.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {"file": "code/discipline_analysis.py", "lines": [25, 30], "output": "Curling 436, Freestyle Skiing 222, Snowboard 192, Ice Hockey 173, Bobsleigh 118, Short Track 114, Luge 109, Ski Jumping 87, Speed Skating 78, Alpine 68, Skeleton 63, Cross-Country 59, Figure Skating 48, Nordic Combined 45, Biathlon 33, Ski Mountaineering 21. Total 1866."},
+      "data_table": {
+        "description": "Total scheduled sessions per discipline (training+competition combined)",
+        "columns": ["discipline","sessions"],
+        "rows": [
+          ["Curling",436],["Freestyle Skiing",222],["Snowboard",192],["Ice Hockey",173],
+          ["Bobsleigh",118],["Short Track Speed Skating",114],["Luge",109],["Ski Jumping",87],
+          ["Speed Skating",78],["Alpine Skiing",68],["Skeleton",63],["Cross-Country Skiing",59],
+          ["Figure Skating",48],["Nordic Combined",45],["Biathlon",33],["Ski Mountaineering",21]
+        ]
+      },
+      "based_on": ["det_07","det_02"]
+    },
+    "ana_02": {
+      "label": "344 medal events: where the gold is",
+      "content": "344 sessions in the dataset are flagged is_medal_event=TRUE — the moments where actual medals are decided. Freestyle skiing leads with 45 medal sessions (driven by multiple final runs per event), speed skating is next at 42, followed by cross-country (35), biathlon (33), and snowboard (33). Ice hockey appears last with just 5 medal sessions because hockey, despite being televised heavily, only awards 2 gold medals across men's and women's tournaments. This is the gap between 'medal sessions' (the heat of the moment) and 'medal events' (the count of golds awarded).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {"file": "code/discipline_analysis.py", "lines": [33, 38], "output": "Freestyle 45, Speed Skating 42, Cross-Country 35, Biathlon 33, Snowboard 33, Alpine 30, Short Track 27, Ski Jumping 18, Figure Skating 15, Luge 15, Bobsleigh 11, Nordic Combined 9, Skeleton 9, Ski Mountaineering 9, Curling 8, Ice Hockey 5. Total 344."},
+      "data_table": {
+        "description": "Medal-event sessions per discipline (is_medal_event=TRUE)",
+        "columns": ["discipline","medal_sessions"],
+        "rows": [
+          ["Freestyle Skiing",45],["Speed Skating",42],["Cross-Country Skiing",35],["Biathlon",33],
+          ["Snowboard",33],["Alpine Skiing",30],["Short Track Speed Skating",27],["Ski Jumping",18],
+          ["Figure Skating",15],["Luge",15],["Bobsleigh",11],["Nordic Combined",9],
+          ["Skeleton",9],["Ski Mountaineering",9],["Curling",8],["Ice Hockey",5]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_03": {
+      "label": "Sliding sports have the most training",
+      "content": "Only 6 of the 16 disciplines log any training sessions in the dataset, and they are exactly the high-speed gravity sports plus alpine. Luge sessions are 64% training, bobsleigh 61%, and skeleton 57% — these athletes need repeated runs to memorize each curve of the Cortina Sliding Centre. Nordic combined (40%), ski jumping (34.5%), and alpine skiing (29.4%) round out the list. Ten disciplines (curling, ice hockey, biathlon, etc.) report zero scheduled training sessions in this dataset, presumably because their training is venue-internal and never appears on the public schedule. Overall, 13.2% of all sessions are training and 18.4% are medal events.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {"file": "code/discipline_analysis.py", "lines": [41, 53], "output": "Luge 64.2%, Bobsleigh 61.0%, Skeleton 57.1%, Nordic Combined 40.0%, Ski Jumping 34.5%, Alpine 29.4%, others 0%. Overall training share 13.2%."},
+      "data_table": {
+        "description": "Training share per discipline; only 6 sports record training in the public schedule",
+        "columns": ["discipline","training","competition","training_pct"],
+        "rows": [
+          ["Luge",70,39,64.2],["Bobsleigh",72,46,61.0],["Skeleton",36,27,57.1],
+          ["Nordic Combined",18,27,40.0],["Ski Jumping",30,57,34.5],["Alpine Skiing",20,48,29.4],
+          ["Biathlon",0,33,0.0],["Cross-Country Skiing",0,59,0.0],["Curling",0,436,0.0],
+          ["Figure Skating",0,48,0.0],["Freestyle Skiing",0,222,0.0],["Ice Hockey",0,173,0.0],
+          ["Short Track Speed Skating",0,114,0.0],["Ski Mountaineering",0,21,0.0],
+          ["Snowboard",0,192,0.0],["Speed Skating",0,78,0.0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_04": {
+      "label": "Where the 'easiest' golds were: medals per qualifying nation",
+      "content": "If you measure how easy it was to win a gold by counting how few competing NOCs faced each medal event, speed skating tops the chart with 1.68 medal events per qualifying nation, followed by freestyle skiing (1.29), short-track speed skating (1.23), and snowboard (1.10). Speed skating only drew 25 NOCs but awarded 14 events — there are simply not many countries with the indoor 400m oval infrastructure required. By contrast, alpine skiing and figure skating both finish at 0.375 medals per NOC: alpine because 80 nations qualify athletes who fight for just 30 medal sessions, figure skating because 40 nations chase only 15 finals. Ski mountaineering, the new sport, came in mid-table at 0.69 — only 13 nations were eligible, but they competed for 9 medal sessions across 3 events, making it a relatively concentrated podium.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {"file": "code/discipline_analysis.py", "lines": [55, 71], "output": "Speed Skating 1.680, Freestyle 1.286, Short Track 1.227, Snowboard 1.100, Biathlon 0.825, Ski Jumping 0.818, Ski Mountaineering 0.692, Luge 0.682, Nordic Combined 0.643, Curling 0.571, Cross-Country 0.538, Skeleton 0.450, Bobsleigh 0.440, Ice Hockey 0.417, Alpine 0.375, Figure Skating 0.375"},
+      "data_table": {
+        "description": "Medal events per qualifying NOC by discipline (higher = thinner field per medal)",
+        "columns": ["discipline","noc_count","medal_events","medals_per_noc"],
+        "rows": [
+          ["Speed Skating",25,42,1.680],["Freestyle Skiing",35,45,1.286],["Short Track Speed Skating",22,27,1.227],
+          ["Snowboard",30,33,1.100],["Biathlon",40,33,0.825],["Ski Jumping",22,18,0.818],
+          ["Ski Mountaineering",13,9,0.692],["Luge",22,15,0.682],["Nordic Combined",14,9,0.643],
+          ["Curling",14,8,0.571],["Cross-Country Skiing",65,35,0.538],["Skeleton",20,9,0.450],
+          ["Bobsleigh",25,11,0.440],["Ice Hockey",12,5,0.417],["Alpine Skiing",80,30,0.375],
+          ["Figure Skating",40,15,0.375]
+        ]
+      },
+      "based_on": ["det_02","det_03"]
+    },
+    "ana_05": {
+      "label": "Curling and hockey: the longest sessions",
+      "content": "Average competition session duration ranges from 12.6 minutes (short-track speed skating heats) to 160 minutes (curling matches). Curling sessions average 2 hours 40 minutes and median 3 hours flat. Ice hockey games run 150 minutes on average, figure skating segments 143, alpine skiing slots 103. At the other end, ski mountaineering averages just 19 minutes per session — the sport's signature sprint format is built around explosive 7-9 minute races. Short-track is even shorter at 12.6 minutes per booking because the public schedule lists each discrete heat. The dataset's longest single session is the Men's Single Skating Short Program at 4 hours 14 minutes — a marathon that runs all 24 skaters in a single block.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {"file": "code/discipline_analysis.py", "lines": [73, 84], "output": "Mean minutes per discipline (competition only): Curling 160.3, Hockey 150.0, Figure Skating 142.9, Alpine 103.1, Biathlon 68.6, Skeleton 58.5, XC 57.9, Bobsleigh 56.0, Ski Jump 41.7, Luge 39.9, Speed Skating 37.4, Nordic Combined 34.9, Freestyle 29.1, Snowboard 26.4, Ski Mountaineering 19.3, Short Track 12.6"},
+      "data_table": {
+        "description": "Mean and median session duration in minutes (competition only)",
+        "columns": ["discipline","mean_min","median_min","sessions"],
+        "rows": [
+          ["Curling",160.3,180.0,436],["Ice Hockey",150.0,150.0,173],["Figure Skating",142.9,135.5,48],
+          ["Alpine Skiing",103.1,112.5,48],["Biathlon",68.6,75.0,33],["Skeleton",58.5,54.2,27],
+          ["Cross-Country Skiing",57.9,30.0,59],["Bobsleigh",56.0,56.2,46],["Ski Jumping",41.7,40.0,57],
+          ["Luge",39.9,47.5,39],["Speed Skating",37.4,24.5,78],["Nordic Combined",34.9,30.0,27],
+          ["Freestyle Skiing",29.1,27.0,222],["Snowboard",26.4,25.0,192],
+          ["Ski Mountaineering",19.3,15.0,21],["Short Track Speed Skating",12.6,10.0,114]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_06": {
+      "label": "Daily session count peaks Friday Feb 13",
+      "content": "The schedule starts slow: Feb 4 has only 32 sessions (mostly alpine training and curling round-robins), Feb 5 has 49. Once the opening ceremony lands on Feb 6 the program ramps fast — by Feb 9 there are 124 sessions, and the busiest day of the entire Games is Friday Feb 13 with 138 sessions. The closing weekend slims down: Feb 21 has 56 sessions and Feb 22 (closing day) has just 30. Medal-event count peaks on Wednesday Feb 11 with 26 medal sessions on a single day, with 24-hour stretches on Feb 12-15 each delivering 23-24 medal events.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {"file": "code/calendar_and_time.py", "lines": [15, 31], "output": "Daily totals 32, 49, 76, 97, 115, 124, 106, 119, 118, 138, 134, 130, 126, 120, 115, 97, 84, 56, 30. Daily medal counts 0,0,5,13,18,22,22,26,24,24,24,23,22,21,22,21,23,20,14. Peak total Feb 13 (138). Peak medal Feb 11 (26)."},
+      "data_table": {
+        "description": "Daily event totals and medal counts across the 19-day window",
+        "columns": ["date","day_of_week","total","medal","training","competition"],
+        "rows": [
+          ["2026-02-04","Wednesday",32,0,11,21],["2026-02-05","Thursday",49,0,16,33],
+          ["2026-02-06","Friday",76,5,16,60],["2026-02-07","Saturday",97,13,16,81],
+          ["2026-02-08","Sunday",115,18,21,94],["2026-02-09","Monday",124,22,27,97],
+          ["2026-02-10","Tuesday",106,22,23,83],["2026-02-11","Wednesday",119,26,19,100],
+          ["2026-02-12","Thursday",118,24,16,102],["2026-02-13","Friday",138,24,17,121],
+          ["2026-02-14","Saturday",134,24,13,121],["2026-02-15","Sunday",130,23,8,122],
+          ["2026-02-16","Monday",126,22,5,121],["2026-02-17","Tuesday",120,21,8,112],
+          ["2026-02-18","Wednesday",115,22,11,104],["2026-02-19","Thursday",97,21,11,86],
+          ["2026-02-20","Friday",84,23,6,78],["2026-02-21","Saturday",56,20,2,54],
+          ["2026-02-22","Sunday",30,14,0,30]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_07": {
+      "label": "Friday and Saturday carry the medal weight",
+      "content": "Aggregating across the 19-day program by weekday, Saturday hosts the most medal events (57) and Friday is second (52), confirming the IOC's well-known weekend bias toward marquee finals. Sunday lands third with 55 medal sessions. Among weekdays, Wednesday is highest (48) and Tuesday lowest (43), but the spread is narrow — only a 14-medal range from busiest to slowest weekday. By total events Friday leads (298), reflecting both the medal density and the heavy curling pool play that fills weekday afternoons.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {"file": "code/calendar_and_time.py", "lines": [33, 41], "output": "Mon 250/44, Tue 226/43, Wed 266/48, Thu 264/45, Fri 298/52, Sat 287/57, Sun 275/55"},
+      "data_table": {
+        "description": "Total events and medal events by day of week",
+        "columns": ["day_of_week","total","medal"],
+        "rows": [
+          ["Monday",250,44],["Tuesday",226,43],["Wednesday",266,48],["Thursday",264,45],
+          ["Friday",298,52],["Saturday",287,57],["Sunday",275,55]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_08": {
+      "label": "Two prime-time peaks: 2pm and 7pm local",
+      "content": "Start times concentrate in two clear bands. The 14:00 local slot is the largest single hour with 305 sessions (16% of the entire schedule), driven by curling round-robins, sliding heats, and afternoon snow events. The 19:00 hour is a close second with 289 sessions — mostly evening curling, ice hockey games and short-track speed skating finals. Medal events distribute differently: the 13:00 hour holds the most medal sessions (57), followed by 14:00 (56), then a secondary evening peak at 20:00 (39 medal sessions). No medal events start before 10:00 local time, and only 6 medal sessions begin after 22:00 local.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/calendar_and_time.py", "lines": [43, 53], "output": "Hour 8:18, 9:147, 10:172, 11:166, 12:149, 13:120, 14:305, 15:45, 16:96, 17:57, 18:69, 19:289, 20:104, 21:114, 22:15. Medal hour 13:57 14:56 20:39 11:35 12:29 21:27 16:27 18:21 17:12 15:3 10:2 22:6"},
+      "data_table": {
+        "description": "Sessions per local-time hour, total and medal-event subset",
+        "columns": ["hour","total","medal","non_medal"],
+        "rows": [
+          [8,18,0,18],[9,147,0,147],[10,172,2,170],[11,166,35,131],[12,149,29,120],
+          [13,120,57,63],[14,305,56,249],[15,45,3,42],[16,96,27,69],[17,57,12,45],
+          [18,69,21,48],[19,289,30,259],[20,104,39,65],[21,114,27,87],[22,15,6,9]
+        ]
+      },
+      "based_on": ["det_05","det_09"]
+    },
+    "ana_09": {
+      "label": "Cortina hosts the most sessions; Anterselva is 100% medal",
+      "content": "Cortina d'Ampezzo hosts the largest cluster of sessions (757 across three venues — curling, sliding centre, and Tofane alpine), partly because the curling stadium alone runs 436 round-robin sessions. Milan as a city hosts 399 sessions across four ice arenas, but with the highest medal density (22.1% of all Milan sessions are medal events). The most extreme cluster is the Anterselva Biathlon Arena: 33 sessions, 33 medal events — 100% medal density, because biathlon's training does not appear on the public schedule. Bormio, host to alpine men's events and ski mountaineering, runs 53 sessions of which 24 (45%) are medal events — the highest competition-only density of any single venue.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {"file": "code/venue_and_geography.py", "lines": [27, 50], "output": "Cluster Cortina 757/55, Milan 399/88, Livigno 380/68, Val di Fiemme 181/62, Bormio 53/24, Anterselva 33/33. Medal_pct: Anterselva 100%, Bormio 45.3%, Val di Fiemme 34.3%, Milan 22.1%, Livigno 17.9%, Cortina 7.3%"},
+      "data_table": {
+        "description": "Sessions and medal-events grouped by geographic cluster",
+        "columns": ["cluster","total","medal","medal_pct","venues"],
+        "rows": [
+          ["Cortina",757,55,7.3,3],["Milan",399,88,22.1,4],["Livigno",380,68,17.9,2],
+          ["Val di Fiemme",181,62,34.3,2],["Bormio",53,24,45.3,1],["Anterselva",33,33,100.0,1]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_10": {
+      "label": "Per-venue session ranking",
+      "content": "Cortina Curling Stadium tops the venue list with 436 sessions over 19 days (an average of 23 sessions per day, running near-continuously). Livigno Snow Park is second with 297, followed by Cortina Sliding Centre (290) and Milan Ice Skating Arena (162). The Tofane Alpine Skiing Centre — host of women's downhill — runs only 31 sessions across 12 days, the smallest competition footprint of any active venue. 63 sessions in the dataset have a missing venue (mostly freestyle qualification heats and women's prelim hockey games where the venue had not been finalized at publication).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {"file": "code/venue_and_geography.py", "lines": [27, 33], "output": "Top venues: Cortina Curling 436, Livigno Snow Park 297, Cortina Sliding 290, Milan Ice 162, Predazzo 113, Milan Santagiulia 88, Livigno Aerials 83, Milan Speed Skating 78, Milan Rho 71, Tesero XC 68, Stelvio 53, Anterselva 33, Tofane 31"},
+      "data_table": {
+        "description": "All venues ranked by total session count",
+        "columns": ["venue","total","medal","days"],
+        "rows": [
+          ["Cortina Curling Stadium",436,8,19],["Livigno Snow Park",297,50,19],
+          ["Cortina Sliding Centre",290,35,19],["Milano Ice Skating Arena",162,42,17],
+          ["Predazzo Ski Jumping Stadium",113,18,17],["Milano Santagiulia Hockey",88,4,19],
+          ["Livigno Aerials & Moguls Park",83,18,14],["Milano Speed Skating Stadium",78,42,17],
+          ["Milano Rho Hockey Arena",71,0,16],["Tesero Cross-Country Stadium",68,44,17],
+          ["Stelvio Ski Centre",53,24,16],["Anterselva Biathlon Arena",33,33,16],
+          ["Tofane Alpine Skiing Centre",31,12,12]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_11": {
+      "label": "Medal flow: cluster -> discipline (Sankey source)",
+      "content": "Mapping medal sessions from geographic cluster to discipline yields a clean six-way split. Milan's four arenas host 88 medal sessions (speed skating 42, short track 27, figure skating 15, ice hockey 4). Livigno's two parks deliver 68 medal sessions concentrated in freestyle skiing (35) and snowboard (33). Val di Fiemme contributes 62 sessions across cross-country (35), ski jumping (18), and Nordic combined (9). Cortina hosts 55 medal sessions, dominated by sliding sports — luge 15, alpine 12, bobsleigh 11, skeleton 9, curling 8. Bormio's 24 medal sessions split between alpine men (15) and ski mountaineering's Olympic debut (9). Anterselva is the cleanest single-discipline node: all 33 of its sessions are biathlon medals.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/medal_path.py", "lines": [22, 30], "output": "Anterselva-Biathlon 33; Bormio-Alpine 15, Bormio-Skimo 9; Cortina-Luge 15, Cortina-Alpine 12, Cortina-Bobsleigh 11, Cortina-Skeleton 9, Cortina-Curling 8; Livigno-Freestyle 35, Livigno-Snowboard 33; Milan-Speed Skating 42, Milan-Short Track 27, Milan-Figure 15, Milan-Hockey 4; Unassigned-Freestyle 10, -Alpine 3, -Hockey 1; Val di Fiemme-XC 35, -Ski Jump 18, -Nordic Combined 9. Total 344"},
+      "data_table": {
+        "description": "Medal sessions by cluster->discipline; ready for Sankey diagram",
+        "columns": ["cluster","discipline","medal_count"],
+        "rows": [
+          ["Anterselva","Biathlon",33],
+          ["Bormio","Alpine Skiing",15],["Bormio","Ski Mountaineering",9],
+          ["Cortina","Luge",15],["Cortina","Alpine Skiing",12],["Cortina","Bobsleigh",11],
+          ["Cortina","Skeleton",9],["Cortina","Curling",8],
+          ["Livigno","Freestyle Skiing",35],["Livigno","Snowboard",33],
+          ["Milan","Speed Skating",42],["Milan","Short Track Speed Skating",27],
+          ["Milan","Figure Skating",15],["Milan","Ice Hockey",4],
+          ["Val di Fiemme","Cross-Country Skiing",35],["Val di Fiemme","Ski Jumping",18],
+          ["Val di Fiemme","Nordic Combined",9],
+          ["Unassigned","Freestyle Skiing",10],["Unassigned","Alpine Skiing",3],["Unassigned","Ice Hockey",1]
+        ]
+      },
+      "based_on": ["det_01","det_02"]
+    },
+    "ana_12": {
+      "label": "Closing weekend sprint",
+      "content": "The final two days of the Games — Saturday Feb 21 and Sunday Feb 22 — pack 34 medal events into 86 sessions. Feb 21 alone delivers 20 medal sessions (the highest single-day rate of medal-density at 35.7%), and Feb 22 the closing day awards 14 medals across just 30 sessions (47% medal density). Saturday's haul includes 8 freestyle skiing finals (men's halfpipe, women's slopestyle, etc.), the speed-skating mass starts, and four bobsleigh finals; Sunday closes with curling gold-medal games, the men's hockey final, the men's 50km mass-start cross-country, and ski mountaineering's mixed relay.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {"file": "code/medal_path.py", "lines": [42, 51], "output": "Feb 21: 56 events, 20 medal. Feb 22: 30 events, 14 medal. Final-2-day medals by discipline: Freestyle 8, Speed Skating 5, Bobsleigh 4, XC 4, Curling 4, Biathlon 3, Hockey 2, Short Track 2, Ski Mountaineering 2"},
+      "data_table": {
+        "description": "Medal sessions delivered on the final two days, by discipline",
+        "columns": ["discipline","final2_medals"],
+        "rows": [
+          ["Freestyle Skiing",8],["Speed Skating",5],["Bobsleigh",4],["Cross-Country Skiing",4],
+          ["Curling",4],["Biathlon",3],["Ice Hockey",2],["Short Track Speed Skating",2],["Ski Mountaineering",2]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_13": {
+      "label": "Second half holds 62% of medal events",
+      "content": "Splitting the program at Feb 13, the first nine days (Feb 4-12) generate 836 sessions and 130 medal events (15.6% medal density). The second ten days (Feb 13-22) generate 1,030 sessions and 214 medal events (20.8% medal density). The IOC concentrates finals in the back half — first-week competition is overwhelmingly heats, qualifications, and pool play, while the second half stages the bulk of golds. Numerically, the second half holds 62.2% of all medal events and 55.2% of all sessions.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {"file": "code/medal_path.py", "lines": [33, 39], "output": "First half (Feb 4-12): 836 events, 130 medal. Second half (Feb 13-22): 1030 events, 214 medal. Medal-share first 15.6%, second 20.8%."},
+      "data_table": {
+        "description": "First vs second half of the Games window",
+        "columns": ["half","sessions","medal","medal_pct"],
+        "rows": [
+          ["First half (Feb 4-12)",836,130,15.6],
+          ["Second half (Feb 13-22)",1030,214,20.8]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_14": {
+      "label": "Estimated_start affects only luge",
+      "content": "Just 5 of the 1,866 sessions (0.3%) carry the estimated_start=TRUE flag, and every single one is in luge. Luge's start times depend on weather windows for the iced track, so the IOC marks five of its sessions as provisional. All other 16 disciplines have fully confirmed start times.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {"file": "code/medal_path.py", "lines": [54, 58], "output": "Estimated_start TRUE: 5 (0.3%). All 5 in Luge."},
+      "data_table": null,
+      "based_on": []
+    },
+    "ana_15": {
+      "label": "Mixed-gender events outnumber men-only or women-only",
+      "content": "Across the 1,866 sessions, 957 (51.3%) carry mixed-gender event descriptions (team events, mixed relays, or events where men's and women's heats run in the same session). Men-only events account for 749 sessions (40.1%) and women-only for unmarked but the 'mixed' label dominates because curling round-robins are coded as 'Mixed Doubles' in mixed-doubles play. Among medal events, the mixed bucket holds 169 sessions (49%), men 149 (43%), and the small 'other' bucket (mostly team events) covers 26 (8%).",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {"file": "code/medal_path.py", "lines": [62, 73], "output": "men 749/149, mixed 957/169, other 160/26"},
+      "data_table": {
+        "description": "Sessions by gender label inferred from event_description",
+        "columns": ["gender","total","medal"],
+        "rows": [["Men",749,149],["Mixed",957,169],["Other",160,26]]
+      },
+      "based_on": []
+    },
+    "ana_16": {
+      "label": "Calendar heatmap data: date x hour",
+      "content": "Crossing date with start hour produces a 19x15 heatmap of session activity. The hottest cells are predominantly at 14:00 across the second-week days (Feb 7-18 each have 21-26 sessions starting at 2pm) and 19:00 on the closing weekend (Feb 14-16 each show 23-24 sessions starting at 7pm). The single hottest cell is Feb 7 at 14:00 with 26 sessions starting in that hour — the first Saturday after the opening ceremony.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {"file": "code/calendar_and_time.py", "lines": [55, 64], "output": "Top cells: Feb 7 14:00 (26), Feb 15 19:00 (24), Feb 16 19:00 (24), Feb 8 14:00 (23), Feb 14 19:00 (23), Feb 18 14:00 (23), Feb 14 14:00 (22), Feb 16 14:00 (22)..."},
+      "data_table": {
+        "description": "Top 10 calendar-hour cells (date, hour, session_count)",
+        "columns": ["date","hour","sessions"],
+        "rows": [
+          ["2026-02-07",14,26],["2026-02-15",19,24],["2026-02-16",19,24],["2026-02-08",14,23],
+          ["2026-02-14",19,23],["2026-02-18",14,23],["2026-02-14",14,22],["2026-02-16",14,22],
+          ["2026-02-12",19,21],["2026-02-13",14,21]
+        ]
+      },
+      "based_on": ["det_05","det_09"]
+    }
+  },
+  "caveats": [
+    {"id":"ana_caveat_01","content":"NOC counts in ana_04 are external estimates from qualification rules, not a column in the dataset itself. They are accurate at 1-2 NOC margin per sport for 2026 but should be treated as a benchmark not a measurement."},
+    {"id":"ana_caveat_02","content":"Curling's 436 sessions inflate session-count rankings. When comparing 'medal density' it is more honest to compute medals per session rather than raw counts."},
+    {"id":"ana_caveat_03","content":"63 sessions have a missing venue_name (3.4% of the data); these are mostly freestyle qualification heats and prelim women's hockey games scheduled at TBD locations. They are excluded from per-venue and per-cluster aggregations."},
+    {"id":"ana_caveat_04","content":"Training sessions are only logged for 6 of 16 disciplines. The 0% training share for biathlon, hockey, curling etc. likely means training is venue-internal rather than truly absent — a data limitation, not a real-world fact."}
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive_or_map); each channel chosen and executed in a data-driven way; skipping any channel requires an explicit reason in media_decisions",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "The dataset is a multi-decade quantitative trend on a log scale; charts are the core medium."},
+      "image": {"used": true, "reason": "Two archival reference photos exist (Gordon Moore, Intel 4004); we generate a cinematic teaser and an editorial pencil-line illustration to anchor the human side of the story."},
+      "video": {"used": false, "reason": "Disk space at runtime fell to <500MB, blocking video generation. The teaser is rendered as a still + slow CSS Ken-Burns animation to capture motion without an .mp4."},
+      "audio": {"used": false, "reason": "The dataset is purely tabular silicon counts. There is no embedded music or recorded performance, and sonifying a monotone log-exponential would map to a single rising tone that adds no signal beyond the chart."},
+      "interactive_or_map": {"used": true, "reason": "(1) Master scatter chart with hover tooltips for every chip; (2) guess-first slider for the 1965 Moore prediction. Together these turn the Moore-line claim into something the reader tests rather than reads."}
+    },
+    "media_blockers": [
+      {"category": "video", "reason": "Disk fell below 500MB during the run; image2video and text2video skipped to avoid stalling.", "attempted_command": "image2video on teaser_hero.png", "fallback_des": "des_01 still + CSS Ken-Burns"},
+      {"category": "image", "reason": "A third generated image (modern die_macro.png) failed and disk was at 97%; skipped rather than retried.", "attempted_command": "generate_image.py die_macro", "fallback_des": "typographic chapter break in HTML"}
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser — single silicon wafer in cleanroom",
+      "type": "asset",
+      "section": "teaser",
+      "content": {"asset_type": "image", "filename": "teaser_hero.png", "tool": "text2image", "prompt": "Cinematic macro photograph of a single silicon wafer reflecting blue and gold light in a dark cleanroom...", "model": "openai/gpt-5.4-image-2"},
+      "brief": "Full-bleed cinematic still with subtle CSS Ken-Burns zoom and parallax. Headline 'A pencil line, drawn in 1975' fades in over the lower third on scroll.",
+      "rationale": "Empirical-abstract dataset; the teaser earns engagement by giving the reader a tactile thing to anchor the upcoming numbers to. Still + CSS animation also avoids the failed video path.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Headline stat callout — 2.03 vs 2.00",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {"value": "2.03", "label": "years per doubling — empirical CPU rate, 1971-2019. Moore predicted 2.00.", "data_source": "ana_01"},
+      "brief": "Oversize 96px serif numeral '2.03' with smaller label below; faint '/ 2.00 predicted' marker beside it.",
+      "rationale": "The thesis is one number's near-equality with another. Lead with that.",
+      "based_on": ["ana_01"]
+    },
+    "des_03": {
+      "label": "Master scatter — every chip, log scale, with the Moore line",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "scatter_with_line",
+        "data_source": ["ana_17", "ana_16"],
+        "x": "year",
+        "y": "tc",
+        "color": "family",
+        "y_scale": "log",
+        "highlight": {"chips": ["Intel 4004 (4-bit, 16-pin)", "AMD EPYC Rome"]},
+        "interaction": "hover any point for chip name, year, family, transistor count; faint dashed Moore line overlaid",
+        "style": {"palette": {"CPU": "#5b8def", "GPU": "#e6794d", "RAM": "#5fc28a"}, "background": "transparent", "axis_label_size": 12, "moore_line_color": "rgba(220,220,230,0.55)", "moore_line_dash": [4, 4]}
+      },
+      "brief": "Visual centrepiece. ~720px content width; X 1963-2019, Y log 1 to 200B. All 326 chips as small circles by family. Two highlight markers labelled: Intel 4004 (1971, 2,250) lower-left, AMD EPYC Rome (2019, 32B) upper-right. Moore's 1971-anchored 2-year line drawn faintly behind the points. Hover tooltip {chip, family, year, tc}. Legend top-right.",
+      "rationale": "Headline chart: the prediction line and the cloud of points cohabit the same neighbourhood for 49 years.",
+      "based_on": ["ana_17", "ana_16"]
+    },
+    "des_04": {
+      "label": "Reference photo — Gordon Moore",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {"asset_type": "image", "filename": "ref_gordon_moore.jpg", "tool": "wikimedia_download", "source_url": "https://commons.wikimedia.org/wiki/File:Gordon_Moore.jpg", "license": "Public domain", "model": "n/a"},
+      "brief": "Floats left at ~280px width within the section column. Caption: 'Gordon Moore, around the time of the 1965 Electronics article.'",
+      "rationale": "The 'man and the curve' section needs the man.",
+      "based_on": []
+    },
+    "des_05": {
+      "label": "Reference photo — Intel 4004",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {"asset_type": "image", "filename": "ref_intel_4004.jpg", "tool": "wikimedia_download", "source_url": "https://commons.wikimedia.org/wiki/File:Intel_4004.jpg", "license": "CC BY-SA 3.0 / GFDL", "model": "n/a"},
+      "brief": "Floats right at ~280px width, paired with des_04. Caption: 'Intel 4004, 1971 — 2,300 transistors. The leftmost dot on every Moore's-Law plot.'",
+      "rationale": "Anchor point of the entire CPU dataset.",
+      "based_on": ["ana_15"]
+    },
+    "des_06": {
+      "label": "Three-family race chart — CPU vs GPU vs RAM per-year max",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "multi_line_log",
+        "data_source": "ana_04",
+        "x": "year",
+        "y_fields": ["CPU", "GPU", "RAM"],
+        "y_scale": "log",
+        "interaction": "hover for year + count; per-family doubling-time annotations near line endpoints",
+        "style": {"palette": {"CPU": "#5b8def", "GPU": "#e6794d", "RAM": "#5fc28a"}, "stroke_width": 2.5, "background": "transparent", "axis_label_size": 12}
+      },
+      "brief": "Three roughly parallel lines on a log y axis (1 to 200B). Annotate each line with its doubling time near its endpoint: 'CPU 2.03 yr', 'GPU 1.85 yr', 'RAM 1.56 yr'.",
+      "rationale": "Slopes are the story; small differences on a log scale matter.",
+      "based_on": ["ana_04", "ana_02"]
+    },
+    "des_07": {
+      "label": "Era-split chart: pre-2005 vs post-2005 doubling time",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_06",
+        "x": "era",
+        "y": "doubling_years",
+        "color": "era",
+        "highlight": {"era": "CPU 2005+"},
+        "interaction": "hover for n + CAGR",
+        "style": {"palette": ["#5b8def", "#395a8c", "#e6794d", "#9a3f1c"], "axis_label_size": 12, "reference_line_y": 2.0}
+      },
+      "brief": "Four bars: CPU pre-2005 (2.02), CPU 2005+ (2.51), GPU pre-2005 (1.62), GPU 2005+ (2.53). Reference horizontal line at 2.00 (Moore's prediction). Bars labelled with doubling time + CAGR.",
+      "rationale": "The 2005 break is the key negative finding; bar chart makes the slowdown unmissable.",
+      "based_on": ["ana_06"]
+    },
+    "des_08": {
+      "label": "Hand-drawn pencil line — chapter break image",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {"asset_type": "image", "filename": "moore_pencil_line.png", "tool": "text2image", "prompt": "An abstract editorial illustration: a hand-drawn pencil line on graph paper, climbing diagonally upward...", "model": "openai/gpt-5.4-image-2"},
+      "brief": "Inserted as a chapter break before the 'Where Moore was wrong' turn. ~720px wide, centered, vintage paper feel.",
+      "rationale": "The 'where Moore was wrong' section needs a visual that cues 'forecast' rather than 'data'.",
+      "based_on": ["ana_09"]
+    },
+    "des_09": {
+      "label": "Guess the 1975 prediction — interactive reveal",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "guess_then_reveal",
+        "initial_state": "Horizontal log axis from 1,000 to 200,000 transistors with a draggable marker. Prompt: 'Moore predicted 65,000 components by 1975. Where did real chips actually land?'",
+        "trigger": "Reader drags the marker and clicks 'Reveal'",
+        "transition": "Two markers appear: faded grey at 65,000 (Moore), teal at 5,000 (real 1975 max). Text panel slides in: 'Moore overshot by 13x. He halved the doubling rate the same year, and the new line aged into a law.'",
+        "payoff": "Reader feels the 1965 overshoot before reading the explanation",
+        "data_source": "ana_09"
+      },
+      "brief": "Horizontal slider on a log scale. Reader drags marker, then 'Reveal' button shows Moore's 65K prediction and actual 1975 max (5K) side by side. Vanilla JS + range input + SVG markers; touch-friendly.",
+      "rationale": "The 1965 overshoot lands harder if the reader commits to a guess first.",
+      "based_on": ["ana_09"]
+    },
+    "des_10": {
+      "label": "Residual chart — over-line and under-line CPUs/GPUs",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "scatter_residual",
+        "data_source": "ana_12",
+        "x": "year",
+        "y": "log10_resid",
+        "color": "family",
+        "interaction": "hover for chip name + actual transistor count",
+        "style": {"palette": {"CPU": "#5b8def", "GPU": "#e6794d"}, "axis_label_size": 12, "show_zero_line": true}
+      },
+      "brief": "Scatter of top 5 over- and under-performers per family (~20 points). Y = log10 residual. Zero line emphasised. Itanium 2 family + SPARC64 above; ARM family + Atom below. Each point labelled with chip name.",
+      "rationale": "Explicit residual chart with zero line makes the over/under split visible.",
+      "based_on": ["ana_12"]
+    },
+    "des_11": {
+      "label": "Milestones strip — 7 power-of-ten crossings",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "horizontal_milestone_strip",
+        "data_source": "ana_10",
+        "x": "year",
+        "interaction": "click a milestone for chip name + year",
+        "style": {"palette": "monochrome", "axis_label_size": 12}
+      },
+      "brief": "Horizontal axis 1971-2019 with 8 ticks at the years each power-of-ten was first crossed. Labels alternate sides. Each tick caption: threshold + chip.",
+      "rationale": "Compact rhythm visual between paragraphs; doesn't need a full chart.",
+      "based_on": ["ana_10"]
+    },
+    "des_12": {
+      "label": "Moore line vs actual CPU max — overlay chart",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "line_overlay_log",
+        "data_source": ["ana_16", "ana_04"],
+        "x": "year",
+        "y_fields": ["moore_predicted_tc", "CPU"],
+        "y_scale": "log",
+        "interaction": "hover at any year shows predicted vs actual values and ratio",
+        "style": {"palette": {"moore_predicted_tc": "#cccccc", "CPU": "#5b8def"}, "stroke_dash": {"moore_predicted_tc": [4, 4]}, "stroke_width": 2.5, "axis_label_size": 12}
+      },
+      "brief": "Two overlaid lines: Moore's predicted CPU count (dashed grey, anchored at 1971's 2,300 with 2-year doubling) + actual CPU max per year (solid blue). Annotation at 2019: 'predicted 38.6B / actual 32B / 21% overshoot'.",
+      "rationale": "Closing-loop chart: the reader sees prediction and data on the same axes.",
+      "based_on": ["ana_16", "ana_04"]
+    },
+    "des_13": {
+      "label": "After-the-dataset comparison — 4 stat callouts",
+      "type": "stat_callout",
+      "section": "edt_08",
+      "content": {"value": "2,300 → 32B → 114B → 4T", "label": "Intel 4004 (1971) → AMD EPYC Rome (2019, dataset cutoff) → Apple M1 Ultra (2022) → Cerebras WSE-3 (2024). The dataset ends, the curve does not.", "data_source": "ana_13"},
+      "brief": "Four small callout cards in a row: '2,300 — Intel 4004 (1971)', '32B — AMD EPYC Rome (2019, in dataset)', '114B — Apple M1 Ultra (2022, after)', '4T — Cerebras WSE-3 (2024, after)'. Final two cards faded to signal 'beyond this dataset'.",
+      "rationale": "Stat callouts let the reader exit on the open question without another chart.",
+      "based_on": ["ana_13"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, slightly archival — silver/blue/copper accents on near-black background, serif headlines, system-ui body, subtle paper texture in chapter breaks",
+    "text_visual_pattern": "visual-first at hook (full-bleed teaser + 96px stat callout); alternating prose-then-chart for the body; chapter-break image and interactive turn before the closing overlay chart; stat callouts at exit",
+    "centrepiece": "des_03",
+    "anti_sameness_notes": "No three charts in a row: between des_06 and des_07 the reader gets a chapter-break image (des_08) plus the guess-the-prediction interactive (des_09), then the closing line overlay (des_12) and stat callouts (des_13). Avoids the standard chart-chart-chart cadence.",
+    "typography_notes": "Headline serif at ~64px, section headers at ~32px, body 18px Georgia/serif. Stat numerals 96px in tabular figures. Subtle copper underline accents on key terms. No drop caps."
+  }
+}

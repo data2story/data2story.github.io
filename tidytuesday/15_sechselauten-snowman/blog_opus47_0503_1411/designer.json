@@ -1,0 +1,260 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Mix is dictated by the dataset: a single load-bearing scatter chart, two supporting trend charts, one guess-first interactive that personalizes the central failure of the folk forecast, two real-festival YouTube embeds (instances) so the reader can see what the duration column actually times, plus a generated cinematic teaser with image2video motion. Generated audio skipped because of disk-space constraints and because no element of the analysis is genuinely sonic. Asset cap (5) respected.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The whole story turns on a falsifiable correlation; charts must carry the central evidence (scatter, decadal bars, warming trend)."
+      },
+      "image": {
+        "used": true,
+        "reason": "Festival is photogenic; one cinematic teaser plus one quiet climate-mood image gives the page atmosphere without burying the data."
+      },
+      "video": {
+        "used": true,
+        "reason": "Two real-event YouTube embeds let the reader see an actual Boeoegg burn (the thing the dataset is timing); plus one short image2video clip animates the teaser still without a separate text2video generation."
+      },
+      "audio": {
+        "used": false,
+        "reason": "media_blocker: disk space tight (~6 GiB free; cap 5 assets). The dataset has no real sonic dimension and a sonification of 65 burn durations would be decorative. Documented as deliberate skip per pipeline guidance."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The 'fast burn = hot summer?' folk rule is exactly the kind of reader assumption that benefits from a guess-first interaction before the numbers land."
+      }
+    },
+    "media_blockers": [
+      {
+        "category": "audio",
+        "reason": "Disk-space and asset-cap constraints; dataset is not sonic; sonification would be decorative.",
+        "attempted_command": null,
+        "fallback_des": null
+      }
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero - cinematic Boeoegg pyre still",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_pyre.png",
+        "tool": "text2image",
+        "prompt": "Cinematic wide shot at dusk: tall jute-cloth snowman effigy on a 10-metre wooden pyre, first flames climbing the wood, cool blue sky, alpine silhouette in distance, restrained warm light, editorial documentary style, no text",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-viewport, no prose, no headline. The reader meets the snowman before they meet the data.",
+      "rationale": "The festival is the hook; a single editorial still establishes scale, mood, and the visual subject the duration column refers to.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_pyre.png",
+        "prompt": "Slow cinematic push-in on the snowman effigy; subtle parallax; flames climb the pyre at the base; slow drift of smoke; ambient embers rising; no camera shake; 6 seconds; looped feel",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Replaces the still teaser on capable browsers; the same composition becomes a quietly burning frame the reader pauses on. Autoplay muted, looped, with the teaser_pyre.png as the poster fallback.",
+      "rationale": "We already have a strong still; image2video preserves composition and adds the kinetic edge that lets the dataset's verb (burning) live before any numbers.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Hook chart - shortest vs longest burns lollipop",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "lollipop",
+        "data_source": "ana_03",
+        "x": "duration_min",
+        "y": "year",
+        "color": "category",
+        "highlight": {"year": 2023},
+        "interaction": "hover tooltip showing duration, summer T, record flag",
+        "style": {"palette": "shortest=warm orange, longest=cool slate", "no_gridlines": true, "category_legend": true}
+      },
+      "brief": "Compact horizontal lollipop chart of the five shortest burns and five longest burns, sorted ascending by duration. Year labels left, duration labels right. 2023 (57 min) is highlighted as the lede. Hover surfaces summer T and record flag.",
+      "rationale": "The hook needs a single decisive comparison: tradition's two extremes side by side. A lollipop avoids the chart-streak of more bar charts later and reads instantly.",
+      "based_on": ["ana_03"]
+    },
+    "des_04": {
+      "label": "Real Boeoegg burning - YouTube embed",
+      "type": "instance",
+      "section": "edt_01",
+      "content": {
+        "instance_ref": "inst_01",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/irlSXt8zSTQ",
+        "caption": "An actual Boeoegg pyre lit at Sechselaeuten - the thing the duration column is timing. Source: Geoff Pegler / NewInZurich (verified)."
+      },
+      "brief": "Standard embedded YouTube iframe directly under the lede paragraph; lets the reader see a real burn before the analysis begins.",
+      "rationale": "An instance grounds the abstract minute-counts in physical reality; cheaper than generating a synthetic version and more authentic.",
+      "based_on": []
+    },
+    "des_05": {
+      "label": "Folk-rule scatter - the load-bearing chart",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "scatter",
+        "data_source": "ana_12",
+        "x": "duration_min",
+        "y": "summer_T_C",
+        "color": "record",
+        "highlight": {"point_labels": [1923, 1956, 1974, 2003, 2022, 2023]},
+        "interaction": "hover tooltip with year, duration, summer T, record; year label appears on hover for highlighted years; gentle linear fit overlay",
+        "style": {"palette": "record=warm coral, normal=neutral slate", "no_gridlines": true, "axis_labels": "duration (min) horizontal, summer mean T (deg C) vertical"}
+      },
+      "brief": "65-point scatter, x = burn duration, y = summer mean temperature, color encodes record (>=19 deg C) vs not. A subtle dashed regression line shows the near-flat positive slope. Annotated points: 1923 (60 min, 16.67), 1956 (4 min, 15.07), 1974 (5.12 min, 16.57), 2003 (5.7 min, 21.67), 2022 (38 min, 20.40), 2023 (57 min, 20.07). The unstructured cloud is the visual argument.",
+      "rationale": "Centerpiece of the blog. Scatter is the only chart type that lets the reader see the absence of structure - a bar chart would smuggle order in.",
+      "based_on": ["ana_12", "ana_05"]
+    },
+    "des_06": {
+      "label": "Stat callout - r = 0.194",
+      "type": "stat_callout",
+      "section": "edt_02",
+      "content": {
+        "value": "r = 0.194",
+        "label": "Pearson correlation between burn duration and summer mean temperature, n = 65 (p = 0.121)",
+        "data_source": "ana_05"
+      },
+      "brief": "Large 56px stat directly under the scatter, with a one-line explanation. The number speaks for itself.",
+      "rationale": "Numerically anchors the wrong-direction finding so it reads in one glance; respects the 'numbers must be exact' editorial note.",
+      "based_on": ["ana_05"]
+    },
+    "des_07": {
+      "label": "Guess-first interactive - did fast burns predict hot summers?",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Question: 'Of the 32 fastest burns in the dataset, how many were followed by a record-hot summer (mean >= 19 deg C)?' Three buttons: 8 / 16 / 24. Below: a small grid of 32 light circles representing the fast burns.",
+        "trigger": "Reader clicks one of the three answer buttons.",
+        "transition": "Selected button fades to a soft state; the 32 circles flip - 2 turn warm coral (record summers) and 30 turn neutral. A second row of 33 circles fades in for slow burns; 8 of those flip warm coral. Below the grid, a comparison strip animates: '6.3 % of fast burns were record summers' vs '24.2 % of slow burns were record summers'.",
+        "payoff": "Final card reveal: 'Folk-rule accuracy: 41.5 %. Always saying \"not record\": 84.6 %.' Single closing line: 'The snowman is performing about half as well as silence.'",
+        "data_source": "ana_07"
+      },
+      "brief": "Vanilla JS, no canvas. The 65-circle grid and the percentage strip are pure CSS transitions. Buttons are visible affordances; results stay on screen after reveal so the reader can read both numbers without re-clicking.",
+      "rationale": "The folk rule is exactly the kind of reader assumption that benefits from a guess-first interaction. Charts alone make the reader passive; this makes them complicit in the wrong answer first.",
+      "based_on": ["ana_07", "ana_08"]
+    },
+    "des_08": {
+      "label": "Decadal duration chart",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_11",
+        "x": "decade",
+        "y": "median_duration_min",
+        "color": "single",
+        "highlight": {"decade": "2020s"},
+        "interaction": "hover tooltip showing n_years, mean duration, median duration",
+        "style": {"palette": "single muted blue with 2020s in coral", "no_gridlines": true, "annotation": "label '33.6 min average' over the 2020s bar"}
+      },
+      "brief": "Vertical bar chart of decadal MEDIAN burn duration. The 1920s bar (single point - 60 min) is shown but visually labeled as n=1 to avoid suggesting a stable estimate. The 2020s bar is highlighted with the 33.6-min mean annotated. X axis shows decade labels (1920s through 2020s).",
+      "rationale": "Decadal medians make the noisy series legible; the 2020s spike is the visual surprise here.",
+      "based_on": ["ana_11"]
+    },
+    "des_09": {
+      "label": "Warming trend chart - what the snowman cannot see",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "scatter_with_trend",
+        "data_source": "ana_10",
+        "x": "year",
+        "y": "summer_T_C",
+        "color": "record",
+        "highlight": {"trend_line": true, "threshold_19C": true},
+        "interaction": "hover tooltip with year and summer T",
+        "style": {"palette": "record=warm coral, normal=neutral slate, trend=dashed accent", "no_gridlines": true, "annotation": "horizontal dashed line at y=19 labeled 'record threshold'; small text label '+0.0415 C / yr' on trend line"}
+      },
+      "brief": "67-point year-vs-temperature scatter with a dashed regression line and a horizontal dashed line at 19 deg C. Record summers are warm coral. The chart reads as: 'see how the points climb past the dashed line in the last two decades'.",
+      "rationale": "This is the contrast chart - the climate signal MeteoSwiss says is real, presented immediately after a chart showing the snowman signal that is not.",
+      "based_on": ["ana_10"]
+    },
+    "des_10": {
+      "label": "Decadal record-summer share chart (small)",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_13",
+        "x": "decade",
+        "y": "pct",
+        "color": "single",
+        "highlight": {"decade": "2020s"},
+        "interaction": "hover tooltip showing record_yrs / total_yrs",
+        "style": {"palette": "single coral", "no_gridlines": true, "y_label": "% of summers above 19 deg C"}
+      },
+      "brief": "Compact secondary bar chart - decadal share of record summers. 0% through the 1970s rises to 66.7% in the 2020s. Small enough to sit beside or below the trend chart without dominating.",
+      "rationale": "Reinforces the trend with a different summary statistic; shows acceleration that an OLS slope can hide.",
+      "based_on": ["ana_13"]
+    },
+    "des_11": {
+      "label": "Climate-mood image (quiet swiss summer)",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "swiss_summer.png",
+        "tool": "text2image",
+        "prompt": "Editorial photo: thin patchy snow on a Swiss alpine slope in late spring, valley below filled with green meadows and a small lake reflecting clear sky, retreating snow visible as bare rock, warm afternoon light, no people, no text, melancholy observational mood",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Sits between the trend chart and the closing section; quiet, slightly melancholy, no people. Conveys the lived dimension of warming without polemics.",
+      "rationale": "The trend numbers are abstract; one carefully restrained image lets the reader feel the magnitude (1.86 deg C) before they leave.",
+      "based_on": ["ana_10"]
+    },
+    "des_12": {
+      "label": "Wikimedia Boeoegg burn 2023 reference photo",
+      "type": "instance",
+      "section": "edt_04",
+      "content": {
+        "instance_ref": "det_media_01",
+        "embed_type": "image",
+        "filename": "ref_boegg_burning_2023.jpg",
+        "caption": "The 2023 burn that took 57 minutes. Photo: Paradise Chronicle / Wikimedia Commons, CC BY-SA 4.0."
+      },
+      "brief": "Inline photograph of the actual 2023 pyre that anchors the decadal-spike chart - the slowest burn on record, the year that made the 2020s decade visibly different.",
+      "rationale": "Lets a real photo, not a generated image, do the work for the section about the 2020s anomaly. Pairs with attribution.",
+      "based_on": ["ana_11"]
+    },
+    "des_13": {
+      "label": "Festival explainer - YouTube embed",
+      "type": "instance",
+      "section": "edt_06",
+      "content": {
+        "instance_ref": "inst_02",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/ejRgA4igfQs",
+        "caption": "Three-minute English explainer of Sechselaeuten and the Boeoegg from DW Euromaxx (verified). For non-Swiss readers who want the festival itself before they leave."
+      },
+      "brief": "Standard YouTube embed under the closing prose; gives the reader an exit ramp into the human side of the dataset.",
+      "rationale": "Closing on the cultural dimension instead of summary keeps the open-question framing the editor asked for.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "muted dark editorial - dark cream background, charcoal serif body, warm coral accent for record / highlight, cool slate for normal points",
+    "text_visual_pattern": "visual-first: video teaser then headline then prose-then-chart pattern, broken by the guess-first interactive at edt_03 and the inline image at edt_05",
+    "centrepiece": "des_05 (the failure scatter)",
+    "anti_sameness_notes": "No chart streaks (interactive separates two chart pairs); no audio card; the climate trend chart deliberately echoes the failure scatter's shape so the reader can compare absence-of-pattern vs presence-of-pattern visually; teaser is image2video rather than yet another text2video.",
+    "typography_notes": "Stat callouts at 56px Georgia regular; pull-quote treatment for the '4 times more often' line in edt_03; section dividers as thin coral horizontal rules at 1px; max content width 720 px; body Georgia 18 px / 1.6 line-height; caption font system-ui 14 px"
+  }
+}

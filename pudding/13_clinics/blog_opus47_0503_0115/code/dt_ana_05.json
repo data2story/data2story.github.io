@@ -1,0 +1,1 @@
+{"description":"Open vs closed scenario: pop-weighted drive metrics by gestation","columns":["weeks","open_pop_weighted_h","closed_pop_weighted_h","open_pct_pop_0h","closed_pct_pop_0h"],"rows":[[8,0.25,0.58,88.8,75.2],[12,0.3,0.72,86.4,69.2],[16,0.59,1.28,78.1,59.0],[20,1.02,2.31,66.9,42.7]]}

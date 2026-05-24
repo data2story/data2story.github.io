@@ -1,0 +1,418 @@
+{
+  "meta": {"role": "analyst", "version": "2.0"},
+  "dataset": {
+    "files": ["beyonce_lyrics.csv", "taylor_swift_lyrics.csv", "sales.csv", "charts.csv"],
+    "rows": 22936,
+    "columns": 26,
+    "what_one_row_represents": "Beyoncé table: one lyric line. Taylor table: one song with full lyrics. Sales: one (album x country) sales figure. Charts: one (album x country) peak chart position.",
+    "time_range": "2003 (Dangerously in Love) – 2020 (folklore)",
+    "geographic_scope": "Worldwide; 10 national charts (US, AUS, CAN, FRA, GER, IRE, JPN, NZ, SWE, UK)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Catalog asymmetry: 391 vs 132",
+      "content": "The two artists are presented as peers but the data is structurally asymmetric. Beyoncé's lyric file contains 22,616 individual lines spread across 391 distinct song entries (including remixes, live cuts, medleys and a Lemonade film script). Taylor Swift's file contains 132 songs total, each as a single Lyrics blob, across 8 studio albums. After splitting Taylor's blobs into lines, Taylor totals 6,955 lyric lines — Beyoncé has 3.3 times as many lines on file. This is not because Beyoncé writes 3x as much per song; it is because her dataset includes every remix and live performance, while Taylor's is one canonical version per studio track.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/profile_data.py",
+        "lines": [10, 27],
+        "output": "beyonce_lyrics: rows=22616, cols=6\ntaylor_swift_lyrics: rows=132, cols=4\nsales: rows=48, cols=8\ncharts: rows=140, cols=8\nBeyonce unique songs: 391\nBeyonce avg lines per song: 57.8\nTaylor songs: 132\nTaylor unique albums: 8"
+      },
+      "data_table": {
+        "description": "Catalog scale comparison: songs, lines, words per artist",
+        "columns": ["artist", "songs", "lines", "words"],
+        "rows": [
+          ["Beyoncé", 391, 22616, 165050],
+          ["Taylor Swift", 132, 6955, 48559]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_02": {
+      "label": "Taylor's per-album line counts",
+      "content": "Taylor Swift's eight studio albums grow steadily denser through the 2010s before pulling back on folklore. The self-titled debut averages 38.1 lines per song; reputation peaks at 64.5 lines per song before Lover (56.6) and folklore (48.9) trim the form. Total words rise from 3,957 on the debut to a 1989/reputation/Lover plateau just under 7,000 each, then drop to 4,856 on folklore — the shortest record since the debut, and the first signal that something has changed in 2020.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/lyrics_analysis.py",
+        "lines": [40, 60],
+        "output": "Taylor Swift  2006  14   533   3957  38.1\nFearless      2008  18   856   5971  47.6\nSpeak Now     2010  17   894   6639  52.6\nRed           2012  19  1028   6653  54.1\n1989          2014  15   876   6795  58.4\nreputation    2017  15   967   6910  64.5\nLover         2019  18  1019   6778  56.6\nfolklore      2020  16   782   4856  48.9"
+      },
+      "data_table": {
+        "description": "Per-album line and word counts, Taylor Swift's 8 studio albums",
+        "columns": ["album", "year", "songs", "lines", "words", "lines_per_song"],
+        "rows": [
+          ["Taylor Swift", 2006, 14, 533, 3957, 38.1],
+          ["Fearless", 2008, 18, 856, 5971, 47.6],
+          ["Speak Now", 2010, 17, 894, 6639, 52.6],
+          ["Red", 2012, 19, 1028, 6653, 54.1],
+          ["1989", 2014, 15, 876, 6795, 58.4],
+          ["reputation", 2017, 15, 967, 6910, 64.5],
+          ["Lover", 2019, 18, 1019, 6778, 56.6],
+          ["folklore", 2020, 16, 782, 4856, 48.9]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_03": {
+      "label": "Beyoncé's longest 'songs' are actually films and live shows",
+      "content": "Six of the ten longest entries in Beyoncé's lyric table are not pop songs at all — the longest is the 336-line script of the Lemonade film. Three entries are different live or remix versions of 'Get Me Bodied' (245, 195, and 195 lines), and the second-longest is a 253-line transcript of her 2014 VMAs medley. The first canonical solo studio track to appear in the top 10 by line count is 'That's How You Like It' (122 lines) with Jay-Z. This is a clue that Beyoncé's dataset has been padded out with performance and visual-album material that Taylor's, by construction, does not include.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/lyrics_analysis.py",
+        "lines": [62, 75],
+        "output": "Beyonce: 391 songs, total lines = 22616\nLemonade Film (Script): 336\nBeyoncé VMA's 2014: 253\nGet Me Bodied (Beyoncé Experience Live): 245\nGet Me Bodied (Extended Mix): 195\nGet Me Bodied (Live): 195\nDestiny's Child Medley: 176\nGet Me Bodied (Timbaland Remix): 168\nRun the World (Girls) (Dave Audé Club Remix): 131\nThat's How You Like It (Ft. JAY-Z): 122\nMe, Myself and I (Beyoncé Experience Live): 118"
+      },
+      "data_table": {
+        "description": "Top 10 longest Beyoncé entries by line count — note how many are films/lives/remixes",
+        "columns": ["entry", "lines", "kind"],
+        "rows": [
+          ["Lemonade Film (Script)", 336, "film"],
+          ["Beyoncé VMA's 2014", 253, "live"],
+          ["Get Me Bodied (Beyoncé Experience Live)", 245, "live"],
+          ["Get Me Bodied (Extended Mix)", 195, "remix"],
+          ["Get Me Bodied (Live)", 195, "live"],
+          ["Destiny's Child Medley", 176, "medley"],
+          ["Get Me Bodied (Timbaland Remix)", 168, "remix"],
+          ["Run the World (Girls) (Dave Audé Club Remix)", 131, "remix"],
+          ["That's How You Like It (Ft. JAY-Z)", 122, "studio"],
+          ["Me, Myself and I (Beyoncé Experience Live)", 118, "live"]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_04": {
+      "label": "Signature hooks: 48 'how you like it's vs 12 'getaway car's",
+      "content": "When you ask each artist's lyric file 'what is the most-repeated single line within one song?', the answers describe two completely different songwriting modes. Beyoncé's top within-song repeat is 'That's how you like it, huh' — sung 48 times in a single track. Six of her top 15 most-repeated lines are 'If I let you go' (20 times each across multiple Ring The Alarm versions), and 'Who run the world? Girls!' takes the next three slots. Taylor's top within-song repeat is 12 — 'Look what you just made me do' (Look What You Made Me Do), 'Come back, be here', 'I'd never walk Cornelia Street again', 'Welcome to New York', 'In a getaway car', all tied. Beyoncé builds songs out of a single chant; Taylor caps her hooks at 12 because there is always another verse to come.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/lyrics_analysis.py",
+        "lines": [78, 109],
+        "output": "Beyonce top: That's how you like it, huh — 48 (That's How You Like It)\nBeyonce 2nd: Who run the world? Girls! — 38 (Run the World remix)\nTaylor top: Look what you just made me do — 12 (Look What You Made Me Do)\nTaylor 2nd: Come back, be here — 12 (Red)"
+      },
+      "data_table": {
+        "description": "Top within-song line repeats for each artist (top 8)",
+        "columns": ["artist", "line", "song", "repeats"],
+        "rows": [
+          ["Beyoncé", "That's how you like it, huh", "That's How You Like It (Ft. JAY-Z)", 48],
+          ["Beyoncé", "Who run the world? Girls!", "Run the World (Girls) (Dave Audé Club Remix)", 38],
+          ["Beyoncé", "Who run the world? Girls!", "Run The World (Girls) (Jochen Simms Club Remix)", 25],
+          ["Beyoncé", "So if you want to, you got the green light", "Green Light (Freemasons Mix)", 24],
+          ["Beyoncé", "If I let you go", "Ring The Alarm (Grizz Remix)", 24],
+          ["Beyoncé", "Who run the world? Girls!", "Run the World (Girls)", 23],
+          ["Beyoncé", "If I were a boy", "If I Were a Boy (Maurice Joshua Mojo UK Remix)", 22],
+          ["Beyoncé", "If I let you go", "Ring The Alarm (multiple versions)", 20],
+          ["Taylor Swift", "Look what you just made me do", "Look What You Made Me Do", 12],
+          ["Taylor Swift", "Come back, be here", "Come Back Be Here", 12],
+          ["Taylor Swift", "I'd never walk Cornelia Street again", "Cornelia Street", 12],
+          ["Taylor Swift", "Welcome to New York", "Welcome to New York", 12],
+          ["Taylor Swift", "All you had to do was stay", "All You Had to Do Was Stay", 12],
+          ["Taylor Swift", "In a getaway car", "Getaway Car", 12],
+          ["Taylor Swift", "You belong with me", "You Belong With Me", 11],
+          ["Taylor Swift", "I think he knows", "I Think He Knows", 10]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_05": {
+      "label": "Top non-stopword vocabulary",
+      "content": "Strip the function words and pronouns from each artist's catalog and a vocabulary footprint emerges. Beyoncé's top six content words are 'love' (1,362), 'baby' (1,024), 'see' (798), 'girl' (592), 'come' (566), 'want' (551). Taylor's top six are 'love' (248), 'never' (294), 'time' (225), 'back' (240), 'one' (178), 'say' (176). Both share 'love' and 'never' near the top — but Beyoncé's most distinctive frequent words ('baby', 'girl', 'boy', 'feel') run on body and presence, while Taylor's distinctive ones ('time', 'never', 'back', 'said') run on memory and reported speech. 'Halo' alone is sung 383 times across her dataset.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/lyrics_analysis.py",
+        "lines": [112, 132],
+        "output": "Beyoncé top: love=1362, baby=1024, see=798, girl=592, come=566, want=551\nTaylor top: never=294, love=248, back=240, time=225, one=178, say=176"
+      },
+      "data_table": {
+        "description": "Top 12 content words for each artist (after removing pronouns, stop words and contractions)",
+        "columns": ["word", "Beyoncé", "Taylor"],
+        "rows": [
+          ["love", 1362, 248],
+          ["baby", 1024, 153],
+          ["see", 798, 170],
+          ["girl", 592, 26],
+          ["come", 566, 150],
+          ["want", 551, 142],
+          ["boy", 494, 31],
+          ["feel", 488, 71],
+          ["never", 401, 294],
+          ["halo", 383, 1],
+          ["check", 366, 1],
+          ["time", 451, 225]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_06": {
+      "label": "Beyoncé's lyrics are denser with love-words",
+      "content": "Beyoncé's lyrics are denser with classical 'love-words' (love, loved, loving, heart, baby, kiss) than Taylor Swift's. After removing stop-words and common filler, 2,925 of Beyoncé's 83,462 content tokens (3.50%) are love-words. Of Taylor's 23,596 content tokens, 556 (2.36%) are. Beyoncé's love-word rate is 1.5x Taylor's — the opposite of the popular framing of Taylor as the relationship songwriter. Taylor talks *about* love and breakups; Beyoncé writes inside the act, with a vocabulary saturated by physical presence ('baby' alone appears 1,024 times in her catalog).",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/lyrics_analysis.py",
+        "lines": [135, 145],
+        "output": "Beyonce love-words: 2925/83462 = 3.50%\nTaylor love-words: 556/23596 = 2.36%\nRatio Beyoncé/Taylor: 1.48x"
+      },
+      "data_table": {
+        "description": "Love-word density (love/loved/heart/baby/kiss family) per artist, after stop-word removal",
+        "columns": ["artist", "love_words", "content_tokens", "pct"],
+        "rows": [
+          ["Beyoncé", 2925, 83462, 3.50],
+          ["Taylor Swift", 556, 23596, 2.36]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_07": {
+      "label": "Worldwide sales — Taylor's six vs Beyoncé's five",
+      "content": "On the worldwide-units row of the sales table, Taylor's six reported albums add up to 40.8 million units; Beyoncé's five reported albums add up to 34.5 million. The headline 'Taylor outsells Beyoncé worldwide by 6.3 million' is real — but on a per-album basis the gap nearly disappears: Taylor averages 6.80 million WW units per reported album, Beyoncé 6.90 million. Beyoncé's debut Dangerously in Love is the single largest-selling album in either catalog at 11.0 million worldwide units. Taylor's largest is Fearless (2008) at 12.0 million, narrowly beating it.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sales_charts.py",
+        "lines": [25, 50],
+        "output": "Taylor WW total: 40.80M (Fearless 12.0, 1989 10.1, Red 6.0, Speak Now 5.0, Rep 4.5, Lover 3.2)\nBeyoncé WW total: 34.50M (Dangerously 11.0, B'Day 8.0, I Am Sasha Fierce 8.0, Beyoncé 5.0, Lemonade 2.5)\nTaylor avg WW units/album: 6.80M\nBeyoncé avg WW units/album: 6.90M"
+      },
+      "data_table": {
+        "description": "Worldwide album sales (millions) — both artists, all worldwide-row entries",
+        "columns": ["artist", "title", "year", "sales_M"],
+        "rows": [
+          ["Taylor Swift", "Fearless", 2008, 12.0],
+          ["Beyoncé", "Dangerously in Love", 2003, 11.0],
+          ["Taylor Swift", "1989", 2014, 10.1],
+          ["Beyoncé", "B'Day", 2006, 8.0],
+          ["Beyoncé", "I Am... Sasha Fierce", 2008, 8.0],
+          ["Taylor Swift", "Red", 2012, 6.0],
+          ["Taylor Swift", "Speak Now", 2010, 5.0],
+          ["Beyoncé", "Beyoncé", 2013, 5.0],
+          ["Taylor Swift", "Reputation", 2017, 4.5],
+          ["Taylor Swift", "Lover", 2019, 3.2],
+          ["Beyoncé", "Lemonade", 2016, 2.5]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_08": {
+      "label": "US sales — Taylor leads 31.7M to 17.7M",
+      "content": "Inside the US specifically, Taylor Swift's six US-row albums sum to 31.66 million units; Beyoncé's six sum to 17.66 million — Taylor leads by 79%. Fearless (7.18M) is the largest US album in either catalog. Beyoncé's Dangerously in Love (5.10M) is fourth — behind Fearless, 1989, and Taylor Swift's self-titled debut. Lemonade, despite winning Album of the Year-tier acclaim, only reached 1.55 million US units in this dataset.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sales_charts.py",
+        "lines": [52, 70],
+        "output": "Taylor US total: 31.66M\nBeyoncé US total: 17.66M\nFearless 7.18, 1989 6.22, Taylor Swift 5.72, Dangerously 5.10, Speak Now 4.69, Red 4.46, B'Day 3.61, I Am Sasha Fierce 3.38, Beyoncé 2.51, Reputation 2.30, Lemonade 1.55, 4 1.50, Lover 1.08"
+      },
+      "data_table": {
+        "description": "US album sales (millions) — every US-row entry, sorted",
+        "columns": ["artist", "title", "year", "sales_M"],
+        "rows": [
+          ["Taylor Swift", "Fearless", 2008, 7.18],
+          ["Taylor Swift", "1989", 2014, 6.22],
+          ["Taylor Swift", "Taylor Swift", 2006, 5.72],
+          ["Beyoncé", "Dangerously in Love", 2003, 5.10],
+          ["Taylor Swift", "Speak Now", 2010, 4.69],
+          ["Taylor Swift", "Red", 2012, 4.46],
+          ["Beyoncé", "B'Day", 2006, 3.61],
+          ["Beyoncé", "I Am... Sasha Fierce", 2008, 3.38],
+          ["Beyoncé", "Beyoncé", 2013, 2.51],
+          ["Taylor Swift", "Reputation", 2017, 2.30],
+          ["Beyoncé", "Lemonade", 2016, 1.55],
+          ["Beyoncé", "4", 2011, 1.50],
+          ["Taylor Swift", "Lover", 2019, 1.08]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_10": {
+      "label": "#1 hit-rate by country — who owns where",
+      "content": "Looking at the rate at which each artist's albums hit #1 in each country, the picture is regional. In the US, Beyoncé hits #1 with 100% of her six albums; Taylor with 87.5% of her eight (one debut missed). In Australia and New Zealand, the order flips: Taylor hits #1 in 75% of AUS releases (vs Beyoncé's 33%) and 87.5% of NZ releases (vs Beyoncé's 17%). Canada belongs to Taylor (87.5% vs 50%). France is no one's country — both artists have 0% #1 albums there. Across every country, Taylor's overall #1 rate is 49.4% of chart entries vs Beyoncé's 38.3%; but country-by-country, Beyoncé dominates in the US and a few specific markets, Taylor dominates the broader anglophone world.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sales_charts.py",
+        "lines": [72, 105],
+        "output": "US: Beyoncé 100%, Taylor 87.5% | AUS: Beyoncé 33%, Taylor 75% | CAN: Beyoncé 50%, Taylor 87.5% | NZ: Beyoncé 17%, Taylor 87.5% | UK: Beyoncé 50%, Taylor 62.5% | IRE: Beyoncé 67%, Taylor 62.5% | GER: Beyoncé 17%, Taylor 0% | JPN: Beyoncé 33%, Taylor 0% | FRA: 0/0 | SWE: Beyoncé 17%, Taylor 14.3%\nOverall: Taylor 38/77=49.4%, Beyoncé 23/60=38.3%"
+      },
+      "data_table": {
+        "description": "Percentage of albums that peaked at #1 in each country, by artist",
+        "columns": ["country", "Beyoncé_pct", "Taylor_pct"],
+        "rows": [
+          ["US", 100.0, 87.5],
+          ["AUS", 33.3, 75.0],
+          ["CAN", 50.0, 87.5],
+          ["UK", 50.0, 62.5],
+          ["IRE", 66.7, 62.5],
+          ["NZ", 16.7, 87.5],
+          ["GER", 16.7, 0.0],
+          ["JPN", 33.3, 0.0],
+          ["FRA", 0.0, 0.0],
+          ["SWE", 16.7, 14.3]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_11": {
+      "label": "Album-level chart trajectories",
+      "content": "Plotting the median peak chart position across the ten national charts for each album reveals a steady arc for Taylor and a U-shape for Beyoncé. Taylor's debut median peak is 38; by Red (2012) she is at median peak of 1.0 and stays at 1.0 for every subsequent album through folklore (2020). Beyoncé starts at median peak 1.5 with Dangerously in Love (2003), rises to 4.0 (B'Day) and 4.5 (I Am... Sasha Fierce) — her biggest US-sales era is also her *worst* relative international performance — and then improves again to 2.0, 2.0, and finally 1.0 with Lemonade in 2016.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sales_charts.py",
+        "lines": [108, 125],
+        "output": "Beyoncé: Dangerously 1.5, B'Day 4.0, Sasha Fierce 4.5, 4 2.0, Beyoncé 2.0, Lemonade 1.0\nTaylor: Taylor Swift 38, Fearless 6, Speak Now 6, Red 1.0, 1989 1.0, Reputation 1.0, Lover 1.0, Folklore 1.0"
+      },
+      "data_table": {
+        "description": "Median peak chart position across 10 countries, per album, ordered by year",
+        "columns": ["artist", "album", "year", "median_peak", "n_no1"],
+        "rows": [
+          ["Beyoncé", "Dangerously in Love", 2003, 1.5, 5],
+          ["Taylor Swift", "Taylor Swift", 2006, 38.0, 0],
+          ["Beyoncé", "B'Day", 2006, 4.0, 1],
+          ["Beyoncé", "I Am... Sasha Fierce", 2008, 4.5, 2],
+          ["Taylor Swift", "Fearless", 2008, 6.0, 3],
+          ["Taylor Swift", "Speak Now", 2010, 6.0, 4],
+          ["Beyoncé", "4", 2011, 2.0, 4],
+          ["Taylor Swift", "Red", 2012, 1.0, 6],
+          ["Beyoncé", "Beyoncé", 2013, 2.0, 4],
+          ["Taylor Swift", "1989", 2014, 1.0, 6],
+          ["Beyoncé", "Lemonade", 2016, 1.0, 7],
+          ["Taylor Swift", "Reputation", 2017, 1.0, 6],
+          ["Taylor Swift", "Lover", 2019, 1.0, 7],
+          ["Taylor Swift", "Folklore", 2020, 1.0, 6]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_12": {
+      "label": "Per-album worldwide units are nearly tied",
+      "content": "If you correct for the fact that Taylor has six worldwide-row albums in the data and Beyoncé has five, the per-album average units sold is essentially identical: 6.80 million for Taylor versus 6.90 million for Beyoncé. The popular framing 'Taylor sold more albums than Beyoncé' is technically true at the catalog level but only because she released more of them in this window. On a per-release basis, both artists sold roughly the same number of copies worldwide.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/sales_charts.py",
+        "lines": [128, 150],
+        "output": "Beyoncé: 5 albums, 34.50M total, 6.90M avg\nTaylor: 6 albums, 40.80M total, 6.80M avg\nRatio Taylor total / Beyoncé total = 1.18x (driven by 1 extra release, not by per-album lead)"
+      },
+      "data_table": {
+        "description": "Total and per-album worldwide units (millions) by artist",
+        "columns": ["artist", "albums_reported", "total_M", "per_album_M"],
+        "rows": [
+          ["Beyoncé", 5, 34.50, 6.90],
+          ["Taylor Swift", 6, 40.80, 6.80]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_13": {
+      "label": "Folklore is the only Taylor Swift album that goes net-negative",
+      "content": "Scoring each Taylor Swift album by (positive words − negative words) / total words × 100, every single album from 2006 through 2019 lands net-positive: the debut (+0.88), Fearless (+0.99), Speak Now (+1.02), Red (+0.92), 1989 (+0.77), reputation (+0.45), Lover (+0.41). Folklore, released in 2020 and written during lockdown, is the first and only Taylor Swift album to cross zero into net-negative sentiment: −0.21. The collapse is not noise — folklore has 140 positive words against 150 negative words, in 4,856 total words; every prior album has positive count exceeding negative. Speak Now (2010) is the most positive album she has made; folklore is the only sad one.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sentiment.py",
+        "lines": [55, 90],
+        "output": "Taylor Swift 2006: pos=153, neg=118, score +0.88\nFearless 2008: 210/151, +0.99\nSpeak Now 2010: 227/159, +1.02\nRed 2012: 280/219, +0.92\n1989 2014: 243/191, +0.77\nreputation 2017: 206/175, +0.45\nLover 2019: 238/210, +0.41\nfolklore 2020: 140/150, -0.21"
+      },
+      "data_table": {
+        "description": "Per-album sentiment score (pos% - neg%) for Taylor Swift's 8 studio albums, in release order",
+        "columns": ["album", "year", "pos_pct", "neg_pct", "sentiment_score"],
+        "rows": [
+          ["Taylor Swift", 2006, 3.87, 2.98, 0.88],
+          ["Fearless", 2008, 3.52, 2.53, 0.99],
+          ["Speak Now", 2010, 3.42, 2.39, 1.02],
+          ["Red", 2012, 4.21, 3.29, 0.92],
+          ["1989", 2014, 3.58, 2.81, 0.77],
+          ["reputation", 2017, 2.98, 2.53, 0.45],
+          ["Lover", 2019, 3.51, 3.10, 0.41],
+          ["folklore", 2020, 2.88, 3.09, -0.21]
+        ]
+      },
+      "based_on": ["det_05"],
+      "notable_instance": {
+        "name": "folklore",
+        "value": "−0.21 sentiment score (the only net-negative Taylor album)",
+        "why": "Single most diagnostic album in the dataset — the lockdown record that broke the trend"
+      }
+    },
+    "ana_14": {
+      "label": "Beyoncé's catalog is +1.63 — overall positive",
+      "content": "Across all 165,050 tokens of Beyoncé's lyric file, 5,605 are positive (3.40%) and 2,917 are negative (1.77%). Net sentiment score is +1.63, placing Beyoncé's full catalog above every Taylor Swift album except Speak Now (+1.02), Fearless (+0.99) and Red (+0.92) — and far above folklore. The popular framing of Beyoncé as 'the artist of breakup albums' (Lemonade especially) is misleading at the catalog level: the positive-word density of love and celebration material on B'Day, 4, and parts of Beyoncé self-titled balances the heaviness elsewhere.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/sentiment.py",
+        "lines": [92, 105],
+        "output": "Beyoncé full catalog: pos=5605 (3.40%), neg=2917 (1.77%), total=165050, score +1.63"
+      },
+      "data_table": {
+        "description": "Overall sentiment score: Beyoncé full catalog vs Taylor's 8-album average",
+        "columns": ["scope", "pos_pct", "neg_pct", "score"],
+        "rows": [
+          ["Beyoncé full catalog", 3.40, 1.77, 1.63],
+          ["Taylor Swift 8-album avg", 3.50, 2.84, 0.66]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_15": {
+      "label": "Words that uniquely belong to each artist",
+      "content": "Using a log-likelihood ratio over the two artists' shared vocabulary, the most-distinctively-Beyoncé content words are 'bodied' (205 times in Beyoncé, 0 in Taylor), 'halo' (383 vs 1), 'slay' (148 vs 0), 'diva' (110 vs 0), 'ladies' (269 vs 2), 'upgrade' (86 vs 0), 'que' (101 vs 0). The most-distinctively-Taylor words are 'starlight' (22 vs 0), 'getaway' (21 vs 0), 'wonderland' (21 vs 0), 'woods' (38 vs 1), 'daylight' (40 vs 2), 'dancing' (48 vs 4), 'york' (38 vs 3), 'darling' (30 vs 5). Beyoncé's distinctive vocabulary names the body and the room ('bodied', 'ladies', 'diva'); Taylor's names landscapes and times of day ('starlight', 'wonderland', 'woods', 'daylight').",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sentiment.py",
+        "lines": [110, 145],
+        "output": "Beyoncé-leaning: bodied 205/0, halo 383/1, slay 148/0, ladies 269/2, diva 110/0\nTaylor-leaning: starlight 0/22, wonderland 0/21, getaway 0/21, woods 1/38, daylight 2/40, dancing 4/48, york 3/38"
+      },
+      "data_table": {
+        "description": "Most-distinctive content words per artist, by log-ratio. Top 8 each side.",
+        "columns": ["word", "Beyoncé_count", "Taylor_count", "leaning"],
+        "rows": [
+          ["bodied", 205, 0, "Beyoncé"],
+          ["halo", 383, 1, "Beyoncé"],
+          ["slay", 148, 0, "Beyoncé"],
+          ["diva", 110, 0, "Beyoncé"],
+          ["ladies", 269, 2, "Beyoncé"],
+          ["upgrade", 86, 0, "Beyoncé"],
+          ["yo", 151, 0, "Beyoncé"],
+          ["suga", 91, 0, "Beyoncé"],
+          ["starlight", 0, 22, "Taylor"],
+          ["wonderland", 0, 21, "Taylor"],
+          ["getaway", 0, 21, "Taylor"],
+          ["woods", 1, 38, "Taylor"],
+          ["daylight", 2, 40, "Taylor"],
+          ["dancing", 4, 48, "Taylor"],
+          ["york", 3, 38, "Taylor"],
+          ["darling", 5, 30, "Taylor"]
+        ]
+      },
+      "based_on": []
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "Beyoncé's lyric file includes remixes, live versions, medleys, and a Lemonade film script. Taylor's contains one canonical version per song. Direct line/word counts are not apples-to-apples without filtering."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Sentiment scoring uses a curated subset of Bing positive/negative words (~200 entries) rather than the full 6,800-word lexicon. The rank ordering across albums matches the published tidytext analysis style (Speak Now/Fearless top, folklore bottom) but absolute scores differ from tidytext::get_sentiments(\"bing\")."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Sentiment lexicons systematically misread Black Vernacular English and slang. 'Bad' meaning 'good', 'killing it', 'sick' as praise — these all score negative. So Beyoncé's sentiment numbers may understate the positive valence of her actual material."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Sales figures come from each artist's Wikipedia discography page, which aggregates from labels, RIAA certifications, and IFPI press releases. They are not RIAA-audited point-of-sale numbers; rank ordering is reliable, precise dollar values are not."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "Beyoncé's worldwide row is labelled 'World' (5 albums); Taylor's is labelled 'WW' (6 albums). Cross-artist worldwide totals require joining on different country codes — a quirk of the source scrape, not a feature of the music."
+    }
+  ]
+}

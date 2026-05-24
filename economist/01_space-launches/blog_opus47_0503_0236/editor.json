@@ -1,0 +1,146 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "Sixty years of orbital launches show that by 2018 the space race was no longer a race between superpowers — it was a market, and the leaders of 1985 had been almost entirely displaced by entrants that did not yet exist.",
+  "items": {
+    "edt_01": {
+      "label": "The 1982 / 2018 inversion",
+      "purpose": "hook",
+      "title": null,
+      "findings": ["ana_03", "ana_07", "ana_18"],
+      "context": ["det_07", "det_04"],
+      "triage": {
+        "ana_03": "lead",
+        "ana_07": "supporting",
+        "ana_18": "supporting"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "video",
+      "editorial_notes": "Lead the page. The 108→10 inversion (Soviet 1982 vs. Russia 2018) and the 28/27/17/10 numbers (China/US/SpaceX/Russia in 2018) must be exact and prominent."
+    },
+    "edt_02": {
+      "label": "The long arc, 1957-2018",
+      "purpose": "context",
+      "title": "The long arc",
+      "findings": ["ana_01", "ana_15", "ana_16"],
+      "context": ["det_02", "det_03", "det_04"],
+      "triage": {
+        "ana_01": "supporting",
+        "ana_15": "supporting",
+        "ana_16": "supporting"
+      },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": null,
+      "editorial_notes": "Show the 1967 peak (139), 2004 trough (53), and 1991 turning point. Embed the 95.6% Cold War duopoly figure inline."
+    },
+    "edt_03": {
+      "label": "The bloc handover",
+      "purpose": "evidence",
+      "title": "The bloc handover",
+      "findings": ["ana_02"],
+      "context": ["det_02", "det_04", "det_07"],
+      "triage": {
+        "ana_02": "lead"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The bloc-stacked-area or stream chart is the visual centerpiece of this section. Reader should be able to scrub a year-slider or hover any year to see the 4-bloc breakdown."
+    },
+    "edt_04": {
+      "label": "State retreat, private surge",
+      "purpose": "evidence",
+      "title": "From state to market",
+      "findings": ["ana_04", "ana_05"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_04": "supporting",
+        "ana_05": "lead"
+      },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": null,
+      "editorial_notes": "1984 first private launch and 2000 cross-over need to be visible on the chart. ana_caveat_05 (startups = SpaceX+Rocket Lab) belongs in this section's footer."
+    },
+    "edt_05": {
+      "label": "SpaceX in fast-forward",
+      "purpose": "turn",
+      "title": "SpaceX in fast-forward",
+      "findings": ["ana_08", "ana_09", "ana_19"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_09": "lead",
+        "ana_08": "supporting",
+        "ana_19": "color"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "image",
+      "editorial_notes": "The cumulative SpaceX line (1→68 in 12 years) is the signature visual. Could pair with image (Falcon 9 first stage landing on a drone ship). ana_caveat_05 caveat applies here too."
+    },
+    "edt_06": {
+      "label": "Failure rates",
+      "purpose": "context",
+      "title": "Learning to land",
+      "findings": ["ana_10", "ana_11", "ana_12"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_10": "lead",
+        "ana_11": "supporting",
+        "ana_12": "color"
+      },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": null,
+      "editorial_notes": "53.8% → 3% over six decades is striking. Note the counter-intuitive ordering: private (2.6%) < state (6.6%) < startup (7.1%)."
+    },
+    "edt_07": {
+      "label": "Geography",
+      "purpose": "context",
+      "title": "A geography that has barely moved",
+      "findings": ["ana_14", "ana_13"],
+      "context": ["det_08"],
+      "triage": {
+        "ana_14": "supporting",
+        "ana_13": "color"
+      },
+      "chart_placeholder": "ana_14",
+      "media_placeholder": "map",
+      "editorial_notes": "Optional section. ana_13 launch-site coordinates are externally annotated, not from raw data — caveat ana_caveat_02 must be visible. If map is too brittle, skip the map and use only the bar chart of ana_14."
+    },
+    "edt_08": {
+      "label": "What replaces a duopoly",
+      "purpose": "close",
+      "title": null,
+      "findings": ["ana_07", "ana_18"],
+      "context": ["det_06", "det_07"],
+      "triage": {
+        "ana_07": "lead",
+        "ana_18": "supporting"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": null,
+      "editorial_notes": "End on tension and interpretation, not a summary. The 12-operator 2018 leaderboard is the closing visual."
+    }
+  },
+  "full_triage": {
+    "ana_00": "cut",
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "lead",
+    "ana_04": "supporting",
+    "ana_05": "lead",
+    "ana_06": "color",
+    "ana_07": "lead",
+    "ana_08": "supporting",
+    "ana_09": "lead",
+    "ana_10": "lead",
+    "ana_11": "supporting",
+    "ana_12": "color",
+    "ana_13": "color",
+    "ana_14": "supporting",
+    "ana_15": "supporting",
+    "ana_16": "supporting",
+    "ana_17": "cut",
+    "ana_18": "supporting",
+    "ana_19": "color"
+  }
+}

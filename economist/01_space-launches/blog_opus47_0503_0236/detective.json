@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "JSR Launch Vehicle Database — the source",
+      "content": "The dataset is a tidied subset of Jonathan McDowell's JSR Launch Vehicle Database, an authoritative catalogue of every orbital launch attempt from Sputnik (4 October 1957) through 2018. McDowell, an astrophysicist at the Harvard-Smithsonian Center for Astrophysics, has maintained the database for decades; it underpins much of the world's accounting of orbital activity, including UN registrations and the open-source spacetrack ecosystem. The Economist's Graphic Detail used a 2018-10 snapshot for the article 'The space race is dominated by new contenders' (18 October 2018).",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2018/10/18/the-space-race-is-dominated-by-new-contenders",
+          "title": "The space race is dominated by new contenders — The Economist (Graphic Detail, 2018-10-18)",
+          "facts": [
+            "The Economist published a Graphic Detail on space launches on 18 October 2018",
+            "Article framing: new contenders (private firms and emerging states) now dominate the launch business once owned by superpowers"
+          ]
+        },
+        {
+          "url": "https://planet4589.org/space/lvdb/index.html",
+          "title": "Jonathan McDowell — JSR Launch Vehicle Database",
+          "facts": [
+            "Database tracks every orbital launch attempt and is updated continuously",
+            "Each launch carries a Harvard or COSPAR designation (e.g. 1957-001 for Sputnik 1)"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "The Cold War space race (1957–1991)",
+      "content": "From Sputnik in October 1957 until the dissolution of the Soviet Union at the end of 1991, orbital launch was almost entirely a contest between two states. The USSR launched at a faster cadence than the United States for most of the period, peaking near 100 launches per year in the early 1980s, while the US peaked around 60–70 in the late 1960s. Together the two superpowers accounted for the overwhelming majority of all attempts; commercial launches in the modern sense did not exist. After 1991 the Soviet inventory was inherited largely by Russia (RU) and, for a time, Ukraine, with state agencies such as RVSN and UNKS giving way to Roscosmos.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Space_Race",
+          "title": "Space Race — Wikipedia",
+          "facts": [
+            "Sputnik 1 launched 4 October 1957",
+            "Cold War space competition between USSR and US is conventionally dated 1955–1975",
+            "USSR maintained higher launch cadence than the US through the 1970s and 1980s"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Strategic_Missile_Forces",
+          "title": "Soviet Strategic Rocket Forces (RVSN) — Wikipedia",
+          "facts": [
+            "RVSN (Rakentiye Voiska Strategicheskogo Naznacheniye) operated 1960–1991",
+            "Was Soviet Union's primary launch agency for decades"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "The 1990s lull and commercial slow-down",
+      "content": "After the Soviet collapse, total launches fell sharply: Russian funding for both civilian (Roscosmos) and military space dried up, and the US government cut back on military launches as Cold War procurement wound down. The 1990s and early 2000s were the lowest cadence years since the early 1960s — typically 60–80 launches per year worldwide. Commercial activity did exist (Arianespace, started 1980; Lockheed-Martin and Boeing's Atlas/Delta lines) but failed to replace state demand. Many observers in the early 2000s wrote about a 'space recession.'",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.thespacereview.com/article/2740/1",
+          "title": "The Space Review — post-Cold War launch slump",
+          "facts": [
+            "Global orbital launches dropped from ~120/year peak (1980s) to ~60/year by mid-1990s",
+            "Russian launch industry struggled financially after 1991 dissolution"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "The new contenders: SpaceX, China, and the startup wave",
+      "content": "Three big shifts reshape the 2010s: (1) China (state, but a new contender by global cadence) ramps from a few launches per year in the 1990s to surpassing the United States in some years after 2015. (2) SpaceX, founded 2002 by Elon Musk, conducts its first orbital launch in 2008 (Falcon 1) and grows to over 20 launches in 2018 alone — more than any other single agency that year. The first Falcon 9 first-stage land-back in December 2015 inaugurated reusable orbital launch. (3) A wave of startups (Rocket Lab, Blue Origin, Virgin Orbit, etc.) targets the small-satellite market, driven by cheap CubeSats and university demand. The Economist's 'new contenders' framing maps to all three.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SpaceX",
+          "title": "SpaceX — Wikipedia",
+          "facts": [
+            "SpaceX was founded by Elon Musk in 2002",
+            "Falcon 1 had its first orbital success in 2008",
+            "Falcon 9 first-stage land-back: December 2015",
+            "SpaceX conducted 21 orbital launches in 2018"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Chinese_space_program",
+          "title": "Chinese space program — Wikipedia",
+          "facts": [
+            "China conducted 39 orbital launches in 2018, surpassing the US that year",
+            "Launches grew from a handful in the 1990s to dozens by mid-2010s"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Failure rates and learning curves",
+      "content": "Orbital launch failures were common in the early years — roughly one in three launches failed during 1957–1962 — and dropped sharply as vehicles matured, settling around 5–8% from the 1990s onward. Failures cluster around new vehicle introductions: the maiden flight of any new launcher carries roughly 30–50% risk historically. Reusable boosters introduce a new class of failure (recovery failure) that does not affect the primary mission outcome; the JSR data uses the binary success (O) / failure (F) classification at the orbital-insertion level.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Comparison_of_orbital_launch_systems",
+          "title": "Comparison of orbital launch systems — Wikipedia",
+          "facts": [
+            "Maiden flight failure rate is roughly 30–50% historically",
+            "Mature launchers have ~95–98% success rates"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Why this matters in 2018",
+      "content": "By 2018 the launch market had become a leading indicator for how space power was being redistributed. The number of payloads in orbit was about to explode (Starlink alone would launch its first batch in May 2019, scaling to 60 satellites per launch). National security analysts were debating whether the United States could rely on commercial launch for sensitive payloads, while emerging space agencies (India's ISRO, Israel, Iran, North Korea) were proving that orbital access was no longer the exclusive privilege of the two original superpowers. The Economist's headline reflects this: the 'race' was becoming a market, and the players were no longer who you would have guessed in 1990.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2018/10/18/the-space-race-is-dominated-by-new-contenders",
+          "title": "The space race is dominated by new contenders — The Economist",
+          "facts": [
+            "Article published October 2018 framed launch trends as a redistribution of space power",
+            "Highlighted China's rise and SpaceX's commercial dominance"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Interpretive hook — the great inversion",
+      "content": "If you froze the world in 1985 and asked who would dominate the launch business in 2018, almost no one would have answered 'a private American company and the People's Republic of China.' The Soviet Union was running 90+ launches per year; the US was the only Western challenger; China had launched its first satellite only 15 years earlier and was still launching only a handful. The dataset captures this inversion in a single 60-year arc: the dominant agency of the 1970s–80s (Soviet RVSN, 1,528 launches) had been retired by 1991, and the dominant agency of 2018 (SpaceX) had not yet existed in 1985. This is the strongest narrative tension in the data.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2018/10/18/the-space-race-is-dominated-by-new-contenders",
+          "title": "The space race is dominated by new contenders — The Economist",
+          "facts": [
+            "Article frames the launch market as inverted from Cold War expectation"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Major launch sites and their geography",
+      "content": "Launch sites concentrate in a handful of high-latitude or equatorial locations chosen for safety (downrange ocean) and orbital efficiency (closer to the equator = bigger payload boost from Earth's rotation). Soviet launches went mostly from Baikonur (Kazakhstan, 46°N) and Plesetsk (62°N); American launches from Cape Canaveral (28°N) and Vandenberg (35°N); China from Jiuquan (41°N) and Xichang (28°N); ESA from Kourou, French Guiana (5°N — the most equatorial major spaceport, giving European launchers a payload bonus). The agencies CSV's lat/lng columns let us map every launch provider, though many entries are missing coordinates.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Spaceport",
+          "title": "Spaceport — Wikipedia",
+          "facts": [
+            "Equatorial launch sites give a velocity boost from Earth's rotation",
+            "Baikonur, Plesetsk, Cape Canaveral, Vandenberg, Jiuquan, and Kourou are the main historical orbital launch sites"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Scope suggestion for the analyst",
+      "content": "Worth analyzing deeply: (1) yearly launch totals 1957–2018 — the long arc; (2) per-state-code yearly cadence — Cold War vs. modern; (3) agency_type breakdown over time — the rise of private and startup; (4) top agencies overall and within recent years; (5) failure rate by decade and by vehicle generation; (6) launch site geography from the agencies CSV. Watch for: (a) the 1991 USSR→Russia transition — RVSN's 1,528 launches end here; (b) state_code 'SU' vs 'RU' must be treated together for continuity; (c) the agencies CSV uses '-' as a missing-value sentinel, not NaN; (d) 2018 is incomplete (data through October only).",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [],
+  "instances": []
+}

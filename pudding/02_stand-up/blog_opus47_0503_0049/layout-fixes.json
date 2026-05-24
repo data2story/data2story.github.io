@@ -1,0 +1,5 @@
+[
+  {"type": "data_des_wrong_element", "count": 2, "lines": [496, 555], "note": "Moved data-des from <div class='instance-embed'> wrapper to <iframe>; moved data-des from <figure class='visual-container'> to <img>."},
+  {"type": "missing_image_responsive", "count": 1, "lines": [556], "note": "Added max-width:100%, height:auto, display:block, margin:0 auto to closing arch <img>."},
+  {"type": "nested_chart_missing_data_des", "count": 6, "lines": [402, 421, 475, 487, 510, 524], "note": "Added data-des and data-ana to each .chart-mount div per error rule 2 (nested chart mount must carry data-des in addition to outer container)."}
+]

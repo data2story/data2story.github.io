@@ -1,0 +1,3980 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": [
+      "cpu.csv",
+      "gpu.csv",
+      "ram.csv"
+    ],
+    "rows": 335,
+    "columns": "6 / 8 / 10 (CPU / GPU / RAM)",
+    "what_one_row_represents": "A single integrated circuit (CPU, GPU, or RAM module) released in a given year, with its transistor count, manufacturing process node, designer, and area where available.",
+    "time_range": "1963-2019",
+    "geographic_scope": "Global (chip designers and manufacturers worldwide; data sourced from Wikipedia)",
+    "missing": {
+      "CPU_missing_transistor_count": 6,
+      "CPU_missing_process": 9,
+      "GPU_missing_transistor_count": 0,
+      "GPU_missing_process": 3,
+      "RAM_missing_transistor_count": 1,
+      "RAM_missing_process": 28
+    }
+  },
+  "items": {
+    "ana_01": {
+      "label": "Empirical CPU doubling time = 2.03 years (Moore predicted 2.00)",
+      "content": "Across the entire 49-year CPU record (1971-2019, n=170), a log-linear fit of transistor count against year gives an empirical doubling time of 2.03 years and a compound annual growth rate of 40.7%. Moore's 1975 revision called for a doubling every 2.00 years (41.4% CAGR). The deviation is 0.03 years over half a century — Gordon Moore's pencil-on-graph-paper extrapolation, drawn in 1965 with only five data points, has held to within 1.5% of its predicted slope across nearly fifty years and seven orders of magnitude of transistor counts. This is the central finding of the dataset.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/doubling_time.py",
+        "lines": [
+          25,
+          38
+        ],
+        "output": "CPU: slope_log10/yr=0.1483  doubling=2.03yr  CAGR=40.7%  n=170  range=1971-2019\nGPU: slope_log10/yr=0.1625  doubling=1.85yr  CAGR=45.4%  n=110  range=1982-2019\nRAM: slope_log10/yr=0.1930  doubling=1.56yr  CAGR=56.0%  n=46  range=1963-2018\nMoore's predicted log10/yr slope: 0.1505  (doubling = 2.00 yr, CAGR = 41.4%)"
+      },
+      "data_table": {
+        "description": "Empirical doubling time and CAGR fitted to log10(transistor_count) vs year for each chip family. Reference row gives Moore's 1975 prediction.",
+        "columns": [
+          "family",
+          "n",
+          "year_min",
+          "year_max",
+          "doubling_years",
+          "cagr_pct"
+        ],
+        "rows": [
+          [
+            "CPU",
+            170,
+            1971,
+            2019,
+            2.03,
+            40.7
+          ],
+          [
+            "GPU",
+            110,
+            1982,
+            2019,
+            1.85,
+            45.4
+          ],
+          [
+            "RAM",
+            46,
+            1963,
+            2018,
+            1.56,
+            56.0
+          ],
+          [
+            "Moore (1975 prediction)",
+            null,
+            1971,
+            2019,
+            2.0,
+            41.4
+          ]
+        ]
+      },
+      "based_on": [
+        "det_01",
+        "det_02"
+      ],
+      "notable_instance": {
+        "name": "Intel 4004",
+        "value": "2,300 transistors in 1971 — the anchor point of the entire CPU curve",
+        "why": "The 4004 marks year zero of the dataset's CPU table; everything past it follows a 2.03-year doubling cadence and ends at AMD EPYC Rome with 32 billion in 2019."
+      }
+    },
+    "ana_02": {
+      "label": "Three families, three slopes — RAM doubles fastest at 1.56 years",
+      "content": "The three chip families do not march at the same pace. RAM doubles every 1.56 years (56.0% CAGR, 1963-2018), GPUs every 1.85 years (45.4% CAGR, 1982-2019), and CPUs every 2.03 years (40.7% CAGR, 1971-2019). RAM's faster slope reflects that 'transistor count' for memory is essentially the bit-cell count — capacity scales near-linearly with cells, so doubling capacity directly doubles transistors. CPUs spend their transistor budget on logic complexity, which has historically scaled at exactly the rate Moore drew on his graph. GPUs sit in between, accelerating after 2005 once parallel arithmetic became the default tool for both graphics and machine learning.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/doubling_time.py",
+        "lines": [
+          25,
+          38
+        ],
+        "output": "CPU: doubling=2.03yr  CAGR=40.7%\nGPU: doubling=1.85yr  CAGR=45.4%\nRAM: doubling=1.56yr  CAGR=56.0%"
+      },
+      "data_table": {
+        "description": "Per-family doubling time and CAGR. Same table as ana_01 but framed as a comparison.",
+        "columns": [
+          "family",
+          "n",
+          "year_min",
+          "year_max",
+          "doubling_years",
+          "cagr_pct"
+        ],
+        "rows": [
+          [
+            "CPU",
+            170,
+            1971,
+            2019,
+            2.03,
+            40.7
+          ],
+          [
+            "GPU",
+            110,
+            1982,
+            2019,
+            1.85,
+            45.4
+          ],
+          [
+            "RAM",
+            46,
+            1963,
+            2018,
+            1.56,
+            56.0
+          ]
+        ]
+      },
+      "based_on": [
+        "det_06"
+      ]
+    },
+    "ana_03": {
+      "label": "From 2,250 to 32 billion: a 14-million-fold CPU climb",
+      "content": "The CPU table opens with the Intel 4004 in 1971 carrying 2,250 transistors, the first commercial microprocessor. It closes 48 years later with the AMD EPYC Rome carrying 32 billion — a 14.2-million-fold increase. GPUs over a shorter 37-year window go from the 40,000-transistor NEC µPD7220 GDC (1982) to Nvidia's 21.1-billion-transistor GV100 Volta (2017), a 527,500-fold increase. RAM, which starts at a single one-bit cell in 1963 (literally 1 transistor), reaches a 137-billion-transistor part by 2018 — a 137-billion-fold scale-up driven mostly by capacity, not logic complexity.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/doubling_time.py",
+        "lines": [
+          50,
+          70
+        ],
+        "output": "earliest CPU: 1971 tc=2250\nlatest CPU:   2019 tc=32000000000\nfold CPU min->max: 14,222,222x\nGPU: first 1982->40000  last 2019->10300000000  max=21,100,000,000  fold=527,500x\nRAM: first 1963->6  last 2018->137438953472  max=137,438,953,472  fold=137,438,953,472x"
+      },
+      "data_table": {
+        "description": "Endpoints and fold-change for each chip family across the dataset window.",
+        "columns": [
+          "family",
+          "first_year",
+          "first_tc",
+          "first_chip",
+          "last_year",
+          "last_tc",
+          "last_chip",
+          "fold_change"
+        ],
+        "rows": [
+          [
+            "CPU",
+            1971,
+            2250,
+            "Intel 4004",
+            2019,
+            32000000000,
+            "AMD EPYC Rome",
+            14222222
+          ],
+          [
+            "GPU",
+            1982,
+            40000,
+            "NEC µPD7220 GDC",
+            2019,
+            10300000000,
+            "Navi 10 (max in 2019; GV100 Volta hit 21.1B in 2017)",
+            527500
+          ],
+          [
+            "RAM",
+            1963,
+            6,
+            "Fairchild SRAM cell (6 transistors per 1-bit cell)",
+            2018,
+            137438953472,
+            "1 Tb DRAM",
+            22906492245
+          ]
+        ]
+      },
+      "based_on": [
+        "det_03",
+        "det_07"
+      ],
+      "notable_instance": {
+        "name": "Intel 4004 → AMD EPYC Rome",
+        "value": "2,250 → 32,000,000,000 transistors in 48 years",
+        "why": "Same table, same definition of 'transistor', 14 million times more silicon. The two endpoints alone tell the whole story."
+      }
+    },
+    "ana_04": {
+      "label": "Per-year max transistor count by family — the race chart",
+      "content": "Plotting the maximum transistor count per family per year shows three roughly parallel lines on a log scale, with the families overtaking each other at distinct moments. CPUs lead from 1971 onward; RAM crosses CPUs briefly in the late 1990s and again from 2008 onward as DRAM capacities ramp; GPUs climb the steepest after 2005 and hold the absolute lead in seven different years between 1998 and 2017. By 2019 the top CPU (32B), top GPU (10B in this dataset), and top RAM (137B in 2018) all cluster in the same order of magnitude — a band that did not exist before the late 2010s.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/family_race.py",
+        "lines": [
+          29,
+          41
+        ],
+        "output": "Per-year max table (excerpt):\n2017: CPU 19.2B  GPU 21.1B  RAM 68.7B\n2018: CPU 23.6B  GPU 18.6B  RAM 137.4B\n2019: CPU 32.0B  GPU 10.3B  RAM (no 2019 row)"
+      },
+      "data_table": {
+        "description": "Per-year maximum transistor count for each chip family, 1963-2019. Nulls indicate no chip from that family in that year.",
+        "columns": [
+          "year",
+          "CPU",
+          "GPU",
+          "RAM"
+        ],
+        "rows": [
+          [
+            1963,
+            null,
+            null,
+            6
+          ],
+          [
+            1964,
+            null,
+            null,
+            null
+          ],
+          [
+            1965,
+            null,
+            null,
+            80
+          ],
+          [
+            1966,
+            null,
+            null,
+            96
+          ],
+          [
+            1967,
+            null,
+            null,
+            null
+          ],
+          [
+            1968,
+            null,
+            null,
+            864
+          ],
+          [
+            1969,
+            null,
+            null,
+            1536
+          ],
+          [
+            1970,
+            null,
+            null,
+            3072
+          ],
+          [
+            1971,
+            2250,
+            null,
+            6144
+          ],
+          [
+            1972,
+            3500,
+            null,
+            6144
+          ],
+          [
+            1973,
+            2800,
+            null,
+            8192
+          ],
+          [
+            1974,
+            8000,
+            null,
+            6144
+          ],
+          [
+            1975,
+            5000,
+            null,
+            16384
+          ],
+          [
+            1976,
+            8500,
+            null,
+            24576
+          ],
+          [
+            1977,
+            7000,
+            null,
+            65536
+          ],
+          [
+            1978,
+            29000,
+            null,
+            null
+          ],
+          [
+            1979,
+            68000,
+            null,
+            65536
+          ],
+          [
+            1980,
+            null,
+            null,
+            393216
+          ],
+          [
+            1981,
+            11500,
+            null,
+            294912
+          ],
+          [
+            1982,
+            134000,
+            40000,
+            393216
+          ],
+          [
+            1983,
+            22000,
+            null,
+            null
+          ],
+          [
+            1984,
+            190000,
+            60000,
+            8388608
+          ],
+          [
+            1985,
+            275000,
+            null,
+            null
+          ],
+          [
+            1986,
+            375000,
+            null,
+            null
+          ],
+          [
+            1987,
+            730000,
+            null,
+            16777216
+          ],
+          [
+            1988,
+            250000,
+            100000,
+            null
+          ],
+          [
+            1989,
+            1180235,
+            null,
+            null
+          ],
+          [
+            1990,
+            1200000,
+            null,
+            25165824
+          ],
+          [
+            1991,
+            1350000,
+            null,
+            67108864
+          ],
+          [
+            1992,
+            900000,
+            null,
+            100663296
+          ],
+          [
+            1993,
+            3100000,
+            750000,
+            268435456
+          ],
+          [
+            1994,
+            2500000,
+            1000000,
+            null
+          ],
+          [
+            1995,
+            5500000,
+            1000000,
+            1073741824
+          ],
+          [
+            1996,
+            4300000,
+            2600000,
+            1073741824
+          ],
+          [
+            1997,
+            10000000,
+            3500000,
+            1073741824
+          ],
+          [
+            1998,
+            7500000,
+            10000000,
+            4294967296
+          ],
+          [
+            1999,
+            27400000,
+            43000000,
+            null
+          ],
+          [
+            2000,
+            42000000,
+            51000000,
+            null
+          ],
+          [
+            2001,
+            191000000,
+            60000000,
+            null
+          ],
+          [
+            2002,
+            220000000,
+            107000000,
+            null
+          ],
+          [
+            2003,
+            410000000,
+            135000000,
+            null
+          ],
+          [
+            2004,
+            592000000,
+            222000000,
+            null
+          ],
+          [
+            2005,
+            250000000,
+            321000000,
+            null
+          ],
+          [
+            2006,
+            1700000000,
+            681000000,
+            null
+          ],
+          [
+            2007,
+            789000000,
+            754000000,
+            null
+          ],
+          [
+            2008,
+            1900000000,
+            1400000000,
+            17179869184
+          ],
+          [
+            2009,
+            904000000,
+            2154000000,
+            null
+          ],
+          [
+            2010,
+            2300000000,
+            2640000000,
+            null
+          ],
+          [
+            2011,
+            2600000000,
+            4312711873,
+            null
+          ],
+          [
+            2012,
+            5000000000,
+            7080000000,
+            null
+          ],
+          [
+            2013,
+            5000000000,
+            6300000000,
+            null
+          ],
+          [
+            2014,
+            5560000000,
+            5200000000,
+            null
+          ],
+          [
+            2015,
+            10000000000,
+            8900000000,
+            null
+          ],
+          [
+            2016,
+            8000000000,
+            15300000000,
+            34359738368
+          ],
+          [
+            2017,
+            19200000000,
+            21100000000,
+            68719476736
+          ],
+          [
+            2018,
+            23600000000,
+            18600000000,
+            137438953472
+          ],
+          [
+            2019,
+            32000000000,
+            10300000000,
+            null
+          ]
+        ]
+      },
+      "based_on": [
+        "det_06"
+      ]
+    },
+    "ana_05": {
+      "label": "Top 10 chips of all time — RAM, then a tight CPU/GPU pack",
+      "content": "Sorted by absolute transistor count, the leaderboard is dominated by RAM modules in 2016-2018 (137B, 69B, 34B) — these are 1Tb-class DRAMs whose count is mostly bit cells. The next tier is a tight pack of late-2010s logic chips: AMD EPYC Rome at 32B (2019), GraphCore's GC2 IPU at 23.6B (2018), Nvidia's GV100 Volta GPU at 21.1B (2017), the 32-core AMD Epyc at 19.2B (2017), Nvidia's TU102 Turing at 18.6B (2018), and Qualcomm's Centriq 2400 at 18B (2017). The fact that GPUs and CPUs alternate in this list shows the post-2010 curve is no longer a CPU monopoly — every modern chip class sits in the same order of magnitude.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/family_race.py",
+        "lines": [
+          60,
+          70
+        ],
+        "output": "Top 10 by transistor count:\n2018 RAM 137,438,953,472\n2017 RAM  68,719,476,736\n2016 RAM  34,359,738,368\n2019 CPU  32,000,000,000  AMD EPYC Rome\n2018 CPU  23,600,000,000  GC2 IPU\n2017 GPU  21,100,000,000  GV100 Volta\n2017 CPU  19,200,000,000  32-core AMD Epyc\n2018 GPU  18,600,000,000  TU102 Turing\n2017 CPU  18,000,000,000  Centriq 2400\n2008 RAM  17,179,869,184"
+      },
+      "data_table": {
+        "description": "Top 10 chips by transistor count across all three families.",
+        "columns": [
+          "name",
+          "family",
+          "year",
+          "tc"
+        ],
+        "rows": [
+          [
+            "?",
+            "RAM",
+            2018,
+            137438953472
+          ],
+          [
+            "?",
+            "RAM",
+            2017,
+            68719476736
+          ],
+          [
+            "?",
+            "RAM",
+            2016,
+            34359738368
+          ],
+          [
+            "AMD EPYC Rome",
+            "CPU",
+            2019,
+            32000000000
+          ],
+          [
+            "GC2 IPU",
+            "CPU",
+            2018,
+            23600000000
+          ],
+          [
+            "GV100 Volta",
+            "GPU",
+            2017,
+            21100000000
+          ],
+          [
+            "32-core AMD Epyc",
+            "CPU",
+            2017,
+            19200000000
+          ],
+          [
+            "TU102 Turing",
+            "GPU",
+            2018,
+            18600000000
+          ],
+          [
+            "Centriq 2400",
+            "CPU",
+            2017,
+            18000000000
+          ],
+          [
+            "?",
+            "RAM",
+            2008,
+            17179869184
+          ]
+        ]
+      },
+      "based_on": [
+        "det_07"
+      ]
+    },
+    "ana_06": {
+      "label": "Era split: CPU doubling slowed from 2.02 to 2.51 years after 2005",
+      "content": "Splitting the CPU record at 2005 — the year Dennard scaling collapsed and clock speeds plateaued — exposes a real but quiet slowdown in transistor doubling. Before 2005 (n=78) CPUs doubled every 2.02 years at 40.9% CAGR, almost exactly Moore's predicted rate. After 2005 (n=92) the doubling time stretches to 2.51 years and CAGR drops to 31.8%. GPUs show the same pattern even more starkly: 1.62-year doubling pre-2005 collapses to 2.53 years afterwards. The dataset only records transistor count, not power or performance — so the slowdown that mattered to consumers (clock speeds frozen at 3-4 GHz) is invisible here, but the underlying scaling really did decelerate.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/family_race.py",
+        "lines": [
+          78,
+          95
+        ],
+        "output": "CPU pre-2005: n=78 doubling=2.02yr CAGR=40.9%\nCPU 2005+:    n=92 doubling=2.51yr CAGR=31.8%\nGPU pre-2005: n=40 doubling=1.62yr CAGR=53.2%\nGPU 2005+:    n=70 doubling=2.53yr CAGR=31.5%"
+      },
+      "data_table": {
+        "description": "Doubling time and CAGR before vs after 2005 (Dennard-scaling break) for CPU and GPU.",
+        "columns": [
+          "era",
+          "n",
+          "doubling_years",
+          "cagr_pct"
+        ],
+        "rows": [
+          [
+            "CPU pre-2005",
+            78,
+            2.02,
+            40.9
+          ],
+          [
+            "CPU 2005+",
+            92,
+            2.51,
+            31.8
+          ],
+          [
+            "GPU pre-2005",
+            40,
+            1.62,
+            53.2
+          ],
+          [
+            "GPU 2005+",
+            70,
+            2.53,
+            31.5
+          ]
+        ]
+      },
+      "based_on": [
+        "det_04"
+      ]
+    },
+    "ana_07": {
+      "label": "Process node shrinks 1,429x in 48 years — from 10 µm to 7 nm",
+      "content": "The smallest CPU process node in 1971 was 10,000 nm (10 microns). By 2019 the smallest available was 7 nm — a 1,429-fold reduction in linear feature size. The decay is steady but not perfectly smooth: most of the shrinkage occurs in big steps (10000→3000 nm by 1976, 1500 by 1982, 130 by 2001, 32 by 2010, 7 by 2018). 'Process node' has been a marketing label more than a physical dimension since around the 22 nm generation, but the trend is real: today's chips work at scales fewer than 50 silicon atoms across, and they work because the transistor count grew on top of that shrinking lattice.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/process_node_density.py",
+        "lines": [
+          16,
+          30
+        ],
+        "output": "first year process: 10000 nm   last year process: 7 nm   reduction: 1,429x\n1971 10000 -> 2019 7 nm"
+      },
+      "data_table": {
+        "description": "Smallest CPU process node available in each year (nanometers).",
+        "columns": [
+          "year",
+          "min_process_nm"
+        ],
+        "rows": [
+          [
+            1971,
+            10000
+          ],
+          [
+            1972,
+            10000
+          ],
+          [
+            1973,
+            6000
+          ],
+          [
+            1974,
+            6000
+          ],
+          [
+            1975,
+            8000
+          ],
+          [
+            1976,
+            3000
+          ],
+          [
+            1977,
+            5000
+          ],
+          [
+            1978,
+            3000
+          ],
+          [
+            1979,
+            3000
+          ],
+          [
+            1981,
+            3000
+          ],
+          [
+            1982,
+            1500
+          ],
+          [
+            1983,
+            3000
+          ],
+          [
+            1984,
+            2000
+          ],
+          [
+            1985,
+            1500
+          ],
+          [
+            1986,
+            1200
+          ],
+          [
+            1987,
+            800
+          ],
+          [
+            1988,
+            1500
+          ],
+          [
+            1989,
+            800
+          ],
+          [
+            1990,
+            650
+          ],
+          [
+            1991,
+            800
+          ],
+          [
+            1992,
+            800
+          ],
+          [
+            1993,
+            500
+          ],
+          [
+            1994,
+            600
+          ],
+          [
+            1995,
+            350
+          ],
+          [
+            1996,
+            500
+          ],
+          [
+            1997,
+            200
+          ],
+          [
+            1998,
+            250
+          ],
+          [
+            1999,
+            180
+          ],
+          [
+            2000,
+            180
+          ],
+          [
+            2001,
+            130
+          ],
+          [
+            2002,
+            130
+          ],
+          [
+            2003,
+            130
+          ],
+          [
+            2004,
+            90
+          ],
+          [
+            2005,
+            90
+          ],
+          [
+            2006,
+            65
+          ],
+          [
+            2007,
+            45
+          ],
+          [
+            2008,
+            45
+          ],
+          [
+            2009,
+            45
+          ],
+          [
+            2010,
+            32
+          ],
+          [
+            2011,
+            32
+          ],
+          [
+            2012,
+            22
+          ],
+          [
+            2013,
+            22
+          ],
+          [
+            2014,
+            20
+          ],
+          [
+            2015,
+            14
+          ],
+          [
+            2016,
+            10
+          ],
+          [
+            2017,
+            10
+          ],
+          [
+            2018,
+            7
+          ],
+          [
+            2019,
+            7
+          ]
+        ]
+      },
+      "based_on": [
+        "det_09"
+      ]
+    },
+    "ana_08": {
+      "label": "Density rose 497,000x — but slower than transistor count",
+      "content": "Transistor density (transistors per mm² of die area) for CPUs rose from about 188 per mm² in 1971 to 93 million per mm² by 2018 — a 497,000-fold increase. The empirical density doubling time is 2.47 years, slower than the 2.03-year doubling of total transistor count. The gap between density and total count is closed by chips simply getting bigger: average CPU die area went from ~25 mm² in the 1970s to ~555 mm² in the 2000s-2010s, a 22-fold growth. The dataset's largest chip is 825 mm² — roughly the area of a postage stamp.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/process_node_density.py",
+        "lines": [
+          33,
+          53
+        ],
+        "output": "min density 87.5 in 1973  max density 93,243,243 in 2018  fold change earliest->latest: 497,297x\ndensity log10/yr slope: 0.1220  doubling time: 2.47 yr\narea: early avg 25.4mm² -> middle 147.8 -> recent 555.2 mm²"
+      },
+      "data_table": {
+        "description": "Maximum CPU transistor density (transistors per mm²) per year.",
+        "columns": [
+          "year",
+          "max_density"
+        ],
+        "rows": [
+          [
+            1971,
+            187.5
+          ],
+          [
+            1972,
+            250.0
+          ],
+          [
+            1973,
+            87.5
+          ],
+          [
+            1974,
+            727.3
+          ],
+          [
+            1975,
+            215.6
+          ],
+          [
+            1976,
+            472.2
+          ],
+          [
+            1978,
+            878.8
+          ],
+          [
+            1979,
+            1545.5
+          ],
+          [
+            1981,
+            1916.7
+          ],
+          [
+            1982,
+            2734.7
+          ],
+          [
+            1983,
+            2444.4
+          ],
+          [
+            1984,
+            2235.3
+          ],
+          [
+            1985,
+            2644.2
+          ],
+          [
+            1986,
+            900.0
+          ],
+          [
+            1987,
+            2676.5
+          ],
+          [
+            1988,
+            2950.8
+          ],
+          [
+            1989,
+            6822.2
+          ],
+          [
+            1990,
+            7894.7
+          ],
+          [
+            1991,
+            6338.0
+          ],
+          [
+            1992,
+            60000.0
+          ],
+          [
+            1993,
+            10544.2
+          ],
+          [
+            1994,
+            11467.9
+          ],
+          [
+            1995,
+            50000.0
+          ],
+          [
+            1996,
+            17131.5
+          ],
+          [
+            1997,
+            238095.2
+          ],
+          [
+            1998,
+            66371.7
+          ],
+          [
+            1999,
+            180508.5
+          ],
+          [
+            2000,
+            488372.1
+          ],
+          [
+            2001,
+            658620.7
+          ],
+          [
+            2002,
+            522565.3
+          ],
+          [
+            2003,
+            1096256.7
+          ],
+          [
+            2004,
+            1370370.4
+          ],
+          [
+            2005,
+            1181818.2
+          ],
+          [
+            2006,
+            2852349.0
+          ],
+          [
+            2007,
+            3841121.5
+          ],
+          [
+            2008,
+            3777336.0
+          ],
+          [
+            2009,
+            2612716.8
+          ],
+          [
+            2010,
+            4875000.0
+          ],
+          [
+            2011,
+            5370370.4
+          ],
+          [
+            2012,
+            8750000.0
+          ],
+          [
+            2013,
+            13774104.7
+          ],
+          [
+            2014,
+            23437500.0
+          ],
+          [
+            2015,
+            20979021.0
+          ],
+          [
+            2016,
+            41666666.7
+          ],
+          [
+            2017,
+            57291666.7
+          ],
+          [
+            2018,
+            93243243.2
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_09": {
+      "label": "How close did Moore's 1965 prediction land?",
+      "content": "Moore's 1965 paper said that 'by 1975 economics may dictate squeezing as many as 65,000 components on a single silicon chip'. Looking at the CPUs actually shipping in 1974-1976 in this dataset, the highest count is 8,500 (Zilog Z80, 1976); 1975 itself topped out at 5,000 transistors. Moore's prediction overshot by roughly an order of magnitude — the kind of error any forecaster makes when extrapolating an exponential. He partly self-corrected in 1975 by halving the doubling rate from 12 months to 24, which is the slope that subsequently held for half a century. The 1965 paper was directionally right and quantitatively early; the 1975 revision is the version that aged into a law.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/anomalies_and_milestones.py",
+        "lines": [
+          60,
+          84
+        ],
+        "output": "Moore's 1965 prediction: 65,000 components by 1975\n1975 highest actual: 5,000 (CDP 1801)\n1976 highest actual: 8,500 (Zilog Z80)\nFitted CPU log-line at 1975: 4,795"
+      },
+      "data_table": {
+        "description": "Moore's 1965 prediction (65,000 by 1975) versus all CPU chips actually released 1974-1976.",
+        "columns": [
+          "year",
+          "chip",
+          "transistor_count"
+        ],
+        "rows": [
+          [
+            1974,
+            "Intel 4040",
+            3000
+          ],
+          [
+            1974,
+            "Motorola 6800",
+            4100
+          ],
+          [
+            1974,
+            "Intel 8080",
+            6000
+          ],
+          [
+            1974,
+            "TMS 1000",
+            8000
+          ],
+          [
+            1975,
+            "MOS Technology 6502",
+            4528
+          ],
+          [
+            1975,
+            "Intersil IM6100",
+            4000
+          ],
+          [
+            1975,
+            "CDP 1801",
+            5000
+          ],
+          [
+            1976,
+            "RCA 1802",
+            5000
+          ],
+          [
+            1976,
+            "Zilog Z80",
+            8500
+          ],
+          [
+            1976,
+            "Intel 8085",
+            6500
+          ],
+          [
+            1976,
+            "TMS9900",
+            8000
+          ],
+          [
+            "Moore 1965 prediction",
+            "65,000 components by 1975",
+            65000
+          ]
+        ]
+      },
+      "based_on": [
+        "det_01"
+      ]
+    },
+    "ana_10": {
+      "label": "Order-of-magnitude milestones: from 1K to 10B transistors",
+      "content": "The dataset crosses each power-of-ten milestone roughly every 7 years. The first CPU past 1,000 transistors was the Intel 4004 in 1971; past 10,000 was Intel 8086 in 1978; past 100,000 was Intel 80286 in 1982; past 1 million was Intel i860 in 1989; past 10 million was Hitachi SH-4 in 1997; past 100 million was SPARC64 V in 2001; past 1 billion was the dual-core Itanium 2 in 2006; past 10 billion was the 32-core SPARC M7 in 2015. Seven 10x crossings in 44 years, spaced 4-7 years apart — exactly the rhythm a 2-year doubling produces.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/anomalies_and_milestones.py",
+        "lines": [
+          86,
+          100
+        ],
+        "output": "first to reach        1,000 transistors: 1971 CPU Intel 4004\nfirst to reach       10,000 transistors: 1978 CPU Intel 8086\nfirst to reach      100,000 transistors: 1982 CPU Intel 80286\nfirst to reach    1,000,000 transistors: 1989 CPU Intel i860\nfirst to reach   10,000,000 transistors: 1997 CPU Hitachi SH-4\nfirst to reach  100,000,000 transistors: 2001 CPU SPARC64 V\nfirst to reach 1,000,000,000 transistors: 2006 CPU Dual-core Itanium 2\nfirst to reach 10,000,000,000 transistors: 2015 CPU 32-core SPARC M7"
+      },
+      "data_table": {
+        "description": "First CPU to cross each power-of-ten transistor threshold (CPU-only series).",
+        "columns": [
+          "threshold",
+          "year",
+          "family",
+          "chip",
+          "actual_tc"
+        ],
+        "rows": [
+          [
+            "1,000",
+            1971,
+            "CPU",
+            "Intel 4004 (4-bit, 16-pin)",
+            2250
+          ],
+          [
+            "10,000",
+            1978,
+            "CPU",
+            "Intel 8086 (16-bit, 40-pin)",
+            29000
+          ],
+          [
+            "100,000",
+            1982,
+            "CPU",
+            "Intel 80286",
+            134000
+          ],
+          [
+            "1,000,000",
+            1989,
+            "CPU",
+            "Intel i860 (32/64-bit, 128-bit SIMD)",
+            1000000
+          ],
+          [
+            "10,000,000",
+            1997,
+            "CPU",
+            "Hitachi SH-4 (32-bit)",
+            10000000
+          ],
+          [
+            "100,000,000",
+            2001,
+            "CPU",
+            "SPARC64 V",
+            191000000
+          ],
+          [
+            "1,000,000,000",
+            2006,
+            "CPU",
+            "Dual-core Itanium 2",
+            1700000000
+          ],
+          [
+            "10,000,000,000",
+            2015,
+            "CPU",
+            "32-core SPARC M7",
+            10000000000
+          ]
+        ]
+      },
+      "based_on": [
+        "det_03"
+      ]
+    },
+    "ana_11": {
+      "label": "The biggest single-year jump: Intel 80286 in 1982 (11.65x)",
+      "content": "Year-over-year jumps in the running CPU max are mostly modest, but a few stand out. The Intel 80286 in 1982 vaulted from a previous max of 11,500 to 134,000 transistors — an 11.65x jump in a single year, the largest in the entire CPU record. The Motorola 68020 in 1984 leapt 8.64x, and the dual-core Itanium 2 in 2006 jumped 6.80x as Intel committed to multi-core. These spikes are useful counter-evidence to the idea of perfectly smooth exponential progress: in practice the curve advances in shoves, not glides, and a few well-placed chips do most of the work.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/anomalies_and_milestones.py",
+        "lines": [
+          44,
+          58
+        ],
+        "output": "1982: 11,500 -> 134,000 (11.65x) chip: Intel 80286\n1984: 22,000 -> 190,000 (8.64x) chip: Motorola 68020\n2006: 250M -> 1.7B (6.80x) chip: Dual-core Itanium 2\n1989: 250K -> 1.18M (4.72x) chip: Intel 80486"
+      },
+      "data_table": {
+        "description": "Top 8 single-year jumps in CPU running maximum transistor count.",
+        "columns": [
+          "year",
+          "previous_max",
+          "new_max",
+          "ratio",
+          "chip"
+        ],
+        "rows": [
+          [
+            1982,
+            11500,
+            134000,
+            11.65,
+            "Intel 80286"
+          ],
+          [
+            1984,
+            22000,
+            190000,
+            8.64,
+            "Motorola 68020 (32-bit; 114 pins used)"
+          ],
+          [
+            2006,
+            250000000,
+            1700000000,
+            6.8,
+            "Dual-core Itanium 2"
+          ],
+          [
+            1989,
+            250000,
+            1180235,
+            4.72,
+            "Intel 80486"
+          ],
+          [
+            2001,
+            42000000,
+            191000000,
+            4.55,
+            "SPARC64 V"
+          ],
+          [
+            1978,
+            7000,
+            29000,
+            4.14,
+            "Intel 8086 (16-bit, 40-pin)"
+          ],
+          [
+            1999,
+            7500000,
+            27400000,
+            3.65,
+            "Pentium II Mobile Dixon"
+          ],
+          [
+            1993,
+            900000,
+            3100000,
+            3.44,
+            "Pentium"
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_12": {
+      "label": "Over- and under-performers: who beat the line, who lagged",
+      "content": "Residuals to a per-family log-linear fit reveal two distinct categories of chip. Over-performers — chips that landed higher above the trend than their year predicted — are dominated by Intel's Itanium 2 family (the dual-core Itanium 2 in 2006 sits +0.95 log-units above the line, the largest residual in the CPU record) and SPARC64. Under-performers, sitting below the line, are mostly low-power and embedded designs: ARM 9TDMI (1999, -2.20), ARM 1, ARM 2, ARM Cortex-A9, Intel Atom — chips whose design goals trade transistor count for power efficiency. The same line therefore separates two design philosophies as much as it separates two eras.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/anomalies_and_milestones.py",
+        "lines": [
+          16,
+          38
+        ],
+        "output": "CPU top over-line:\nDual-core Itanium 2  2006  1.7B  +0.95\nItanium 2 9MB cache  2004  592M  +0.79\nItanium 2 Madison    2003  410M  +0.78\n...\nCPU top under-line:\nARM 9TDMI  1999  111K  -2.20\nFreedom U500  2017  250M  -1.51\nARM 6  1991  35K  -1.51\nARM Cortex-A9  2007  26M  -1.01"
+      },
+      "data_table": {
+        "description": "Top 5 over-line and top 5 under-line chips for CPU and GPU, by residual to the per-family log-linear trend.",
+        "columns": [
+          "name",
+          "family",
+          "year",
+          "tc",
+          "log10_resid"
+        ],
+        "rows": [
+          [
+            "Dual-core Itanium 2",
+            "CPU",
+            2006,
+            1700000000,
+            0.951
+          ],
+          [
+            "Itanium 2 with 9 MB cache",
+            "CPU",
+            2004,
+            592000000,
+            0.79
+          ],
+          [
+            "Itanium 2 Madison 6M",
+            "CPU",
+            2003,
+            410000000,
+            0.778
+          ],
+          [
+            "SPARC64 V",
+            "CPU",
+            2001,
+            191000000,
+            0.743
+          ],
+          [
+            "Six-core Xeon 7400",
+            "CPU",
+            2008,
+            1900000000,
+            0.703
+          ],
+          [
+            "GK110 Kepler",
+            "GPU",
+            2012,
+            7080000000,
+            0.61
+          ],
+          [
+            "Cypress RV870",
+            "GPU",
+            2009,
+            2154000000,
+            0.58
+          ],
+          [
+            "G80",
+            "GPU",
+            2006,
+            681000000,
+            0.568
+          ],
+          [
+            "Tahiti",
+            "GPU",
+            2011,
+            4312711873,
+            0.557
+          ],
+          [
+            "GT200 Tesla",
+            "GPU",
+            2008,
+            1400000000,
+            0.556
+          ],
+          [
+            "ARM 9TDMI",
+            "CPU",
+            1999,
+            111000,
+            -2.196
+          ],
+          [
+            "Freedom U500 Base Platform Chip (E51, 4×U54) RISC-V",
+            "CPU",
+            2017,
+            250000000,
+            -1.513
+          ],
+          [
+            "ARM 6",
+            "CPU",
+            1991,
+            35000,
+            -1.51
+          ],
+          [
+            "ARM Cortex-A9",
+            "CPU",
+            2007,
+            26000000,
+            -1.013
+          ],
+          [
+            "Novix NC4016",
+            "CPU",
+            1985,
+            16000,
+            -0.96
+          ],
+          [
+            "Voodoo Rush",
+            "GPU",
+            1997,
+            1000000,
+            -0.803
+          ],
+          [
+            "GP108 Pascal",
+            "GPU",
+            2017,
+            1850000000,
+            -0.786
+          ],
+          [
+            "Polaris 12 \"Lexa\"",
+            "GPU",
+            2017,
+            2200000000,
+            -0.71
+          ],
+          [
+            "TU117 Turing",
+            "GPU",
+            2019,
+            4700000000,
+            -0.706
+          ],
+          [
+            "Voodoo Graphics",
+            "GPU",
+            1996,
+            1000000,
+            -0.641
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_13": {
+      "label": "GPUs held the absolute lead for 11 separate years — most of them recent",
+      "content": "Comparing the per-year maximum transistor count between CPUs and GPUs, GPUs hit the absolute lead in 11 different years between 1998 and 2017. Modern years are increasingly tight: in 2010 the top GPU was 1.15x the top CPU; by 2016 it was 1.91x; in 2018 CPUs took the lead back at 1.27x. Across 2010-2019 the GPU/CPU max ratio hovered between 0.32 and 1.91 — a coexistence rather than a takeover. The CPU stays in front overall (37 of 48 years), but the GPU narrative — that parallel arithmetic eats the world after 2010 — is too clean: in the data, the lead has flipped back and forth.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/anomalies_and_milestones.py",
+        "lines": [
+          102,
+          120
+        ],
+        "output": "Years GPU max > CPU max: 11\nfirst GPU lead year: 1998\nlast GPU lead year:  2017\n2018: CPU 23.6B  GPU 18.6B  ratio 0.79\n2019: CPU 32.0B  GPU 10.3B  ratio 0.32"
+      },
+      "data_table": {
+        "description": "Per-year max CPU vs max GPU transistor count and their ratio, 2010-2019.",
+        "columns": [
+          "year",
+          "CPU_max",
+          "GPU_max",
+          "gpu_to_cpu_ratio"
+        ],
+        "rows": [
+          [
+            2010,
+            2300000000,
+            2640000000,
+            1.15
+          ],
+          [
+            2011,
+            2600000000,
+            4312711873,
+            1.66
+          ],
+          [
+            2012,
+            5000000000,
+            7080000000,
+            1.42
+          ],
+          [
+            2013,
+            5000000000,
+            6300000000,
+            1.26
+          ],
+          [
+            2014,
+            5560000000,
+            5200000000,
+            0.94
+          ],
+          [
+            2015,
+            10000000000,
+            8900000000,
+            0.89
+          ],
+          [
+            2016,
+            8000000000,
+            15300000000,
+            1.91
+          ],
+          [
+            2017,
+            19200000000,
+            21100000000,
+            1.1
+          ],
+          [
+            2018,
+            23600000000,
+            18600000000,
+            0.79
+          ],
+          [
+            2019,
+            32000000000,
+            10300000000,
+            0.32
+          ]
+        ]
+      },
+      "based_on": [
+        "det_06"
+      ]
+    },
+    "ana_14": {
+      "label": "Designer concentration: Intel dominates, but the field opens up post-2010",
+      "content": "Of 176 CPU rows, Intel designed 62 (35%) — by far the largest single contributor — followed by AMD (16, 9%), IBM (12, 7%), and Apple (11, 6%). The decade-by-decade story shows Intel's hegemony then fracture: in the 1970s Intel and Motorola together accounted for 11 of 13 designed CPUs in the dataset; in the 2010s Intel's 21 are joined by 11 from Apple (entering the chip-design business via the A-series and M-series), 10 from IBM, 7 from AMD, and 4 from Fujitsu. The narrative of one-company dominance fits the early decades better than the recent ones.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/process_node_density.py",
+        "lines": [
+          60,
+          80
+        ],
+        "output": "Top designers: Intel 62, AMD 16, IBM 12, Apple 11, Fujitsu 10, Motorola 8\nBy decade:\n  1970: Intel 7  Motorola 4\n  1980: Intel 7  Motorola 2  Fujitsu 1\n  1990: Intel 7  AMD 4  Motorola 2\n  2000: Intel 20  AMD 5  IBM 2  Fujitsu 5\n  2010: Intel 21  Apple 11  IBM 10  AMD 7  Fujitsu 4"
+      },
+      "data_table": {
+        "description": "Number of CPUs in the dataset designed by each top-6 designer, per decade.",
+        "columns": [
+          "decade",
+          "Intel",
+          "AMD",
+          "IBM",
+          "Apple",
+          "Fujitsu",
+          "Motorola"
+        ],
+        "rows": [
+          [
+            1970,
+            7,
+            0,
+            0,
+            0,
+            0,
+            4
+          ],
+          [
+            1980,
+            7,
+            0,
+            0,
+            0,
+            1,
+            2
+          ],
+          [
+            1990,
+            7,
+            4,
+            0,
+            0,
+            0,
+            2
+          ],
+          [
+            2000,
+            20,
+            5,
+            2,
+            0,
+            5,
+            0
+          ],
+          [
+            2010,
+            21,
+            7,
+            10,
+            11,
+            4,
+            0
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_15": {
+      "label": "The Intel 4004's 2,300 transistors versus its descendant",
+      "content": "The Intel 4004 in 1971 packed 2,300 transistors at a 10,000-nm process node, ran at 740 kHz, and was originally built for the Busicom 141-PF calculator. Its direct lineage — Intel x86 and onward, plus the rest of the silicon industry that followed the same ITRS roadmap — produced AMD's EPYC Rome in 2019 with 32 billion transistors at 7 nm: 14 million times more transistors, 1,429 times finer feature size, on chips roughly 70 times larger in area. The 4004 fits inside the EPYC Rome roughly 14 million times over.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/anomalies_and_milestones.py",
+        "lines": [
+          86,
+          100
+        ],
+        "output": "Intel 4004 (1971): 2,300 transistors at 10000 nm, 12 mm² area\nAMD EPYC Rome (2019): 32,000,000,000 transistors at 7 nm\nfold change: 14,222,222x"
+      },
+      "based_on": [
+        "det_03"
+      ]
+    },
+    "ana_16": {
+      "label": "Moore's prediction line vs actual CPU max — a near-perfect overlay",
+      "content": "Drawing Moore's 2-year doubling line through the Intel 4004's 2,300 transistors at 1971 and projecting forward to 2019 gives a predicted ~38.6 billion transistors. The actual CPU max in 2019 is 32 billion (AMD EPYC Rome) — Moore's line overshoots by 21%, well within the dataset's stated 10-20% accuracy. Across the 48-year window, the actual CPU max is almost always within a single order of magnitude of the Moore line, oscillating above (Itanium era, 2003-2008) and below (mid-2010s before EPYC Rome) the prediction.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/dump_chart_data.py",
+        "lines": [
+          73,
+          80
+        ],
+        "output": "Moore line 1971: 2,300\nMoore line 2019: 38,587,596,800\nActual CPU max 2019: 32,000,000,000  diff -17%"
+      },
+      "data_table": {
+        "description": "Moore's 2-year doubling line anchored at Intel 4004 (1971, 2300 transistors), evaluated each year 1971-2019.",
+        "columns": [
+          "year",
+          "moore_predicted_tc"
+        ],
+        "rows": [
+          [
+            1971,
+            2300.0
+          ],
+          [
+            1972,
+            3253.0
+          ],
+          [
+            1973,
+            4600.0
+          ],
+          [
+            1974,
+            6505.0
+          ],
+          [
+            1975,
+            9200.0
+          ],
+          [
+            1976,
+            13011.0
+          ],
+          [
+            1977,
+            18400.0
+          ],
+          [
+            1978,
+            26022.0
+          ],
+          [
+            1979,
+            36800.0
+          ],
+          [
+            1980,
+            52043.0
+          ],
+          [
+            1981,
+            73600.0
+          ],
+          [
+            1982,
+            104086.0
+          ],
+          [
+            1983,
+            147200.0
+          ],
+          [
+            1984,
+            208172.0
+          ],
+          [
+            1985,
+            294400.0
+          ],
+          [
+            1986,
+            416344.0
+          ],
+          [
+            1987,
+            588800.0
+          ],
+          [
+            1988,
+            832689.0
+          ],
+          [
+            1989,
+            1177600.0
+          ],
+          [
+            1990,
+            1665378.0
+          ],
+          [
+            1991,
+            2355200.0
+          ],
+          [
+            1992,
+            3330756.0
+          ],
+          [
+            1993,
+            4710400.0
+          ],
+          [
+            1994,
+            6661512.0
+          ],
+          [
+            1995,
+            9420800.0
+          ],
+          [
+            1996,
+            13323023.0
+          ],
+          [
+            1997,
+            18841600.0
+          ],
+          [
+            1998,
+            26646046.0
+          ],
+          [
+            1999,
+            37683200.0
+          ],
+          [
+            2000,
+            53292093.0
+          ],
+          [
+            2001,
+            75366400.0
+          ],
+          [
+            2002,
+            106584185.0
+          ],
+          [
+            2003,
+            150732800.0
+          ],
+          [
+            2004,
+            213168370.0
+          ],
+          [
+            2005,
+            301465600.0
+          ],
+          [
+            2006,
+            426336740.0
+          ],
+          [
+            2007,
+            602931200.0
+          ],
+          [
+            2008,
+            852673480.0
+          ],
+          [
+            2009,
+            1205862400.0
+          ],
+          [
+            2010,
+            1705346960.0
+          ],
+          [
+            2011,
+            2411724800.0
+          ],
+          [
+            2012,
+            3410693921.0
+          ],
+          [
+            2013,
+            4823449600.0
+          ],
+          [
+            2014,
+            6821387842.0
+          ],
+          [
+            2015,
+            9646899200.0
+          ],
+          [
+            2016,
+            13642775683.0
+          ],
+          [
+            2017,
+            19293798400.0
+          ],
+          [
+            2018,
+            27285551367.0
+          ],
+          [
+            2019,
+            38587596800.0
+          ]
+        ]
+      },
+      "based_on": [
+        "det_01",
+        "det_02"
+      ]
+    },
+    "ana_17": {
+      "label": "All 326 chips on one chart",
+      "content": "Plotting every named chip in the dataset (n=326 with non-null transistor counts and names) on a single log-scale scatter — year on x, transistor count on y, colour by family — produces the canonical Moore's-Law curve. Each row is a discrete data point: a 1971 Intel 4004 at 2,300, a 2019 AMD EPYC Rome at 32 billion, and ~324 chips in between. Hover any point to see the chip's name, year, family, and transistor count. This is the chart Moore drew in 1965 with five points; the dataset has nearly seventy times more.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/dump_chart_data.py",
+        "lines": [
+          40,
+          48
+        ],
+        "output": "scatter_all len=326 (chips with non-null tc and name)"
+      },
+      "data_table": {
+        "description": "Every chip with a non-null transistor count and name. Used as the dataset for the master scatter chart.",
+        "columns": [
+          "name",
+          "family",
+          "year",
+          "tc"
+        ],
+        "rows": [
+          [
+            "—",
+            "RAM",
+            1963,
+            6
+          ],
+          [
+            "—",
+            "RAM",
+            1965,
+            1
+          ],
+          [
+            "?",
+            "RAM",
+            1965,
+            48
+          ],
+          [
+            "SP95",
+            "RAM",
+            1965,
+            80
+          ],
+          [
+            "TMC3162",
+            "RAM",
+            1966,
+            96
+          ],
+          [
+            "?",
+            "RAM",
+            1968,
+            256
+          ],
+          [
+            "?",
+            "RAM",
+            1968,
+            384
+          ],
+          [
+            "?",
+            "RAM",
+            1968,
+            864
+          ],
+          [
+            "1101",
+            "RAM",
+            1969,
+            1536
+          ],
+          [
+            "1102",
+            "RAM",
+            1970,
+            768
+          ],
+          [
+            "1103",
+            "RAM",
+            1970,
+            3072
+          ],
+          [
+            "Intel 4004 (4-bit, 16-pin)",
+            "CPU",
+            1971,
+            2250
+          ],
+          [
+            "μPD403",
+            "RAM",
+            1971,
+            3072
+          ],
+          [
+            "?",
+            "RAM",
+            1971,
+            6144
+          ],
+          [
+            "Intel 8008 (8-bit, 18-pin)",
+            "CPU",
+            1972,
+            3500
+          ],
+          [
+            "2102",
+            "RAM",
+            1972,
+            6144
+          ],
+          [
+            "NEC μCOM-4 (4-bit)",
+            "CPU",
+            1973,
+            2500
+          ],
+          [
+            "Toshiba TLCS-12 (12-bit)",
+            "CPU",
+            1973,
+            2800
+          ],
+          [
+            "?",
+            "RAM",
+            1973,
+            8192
+          ],
+          [
+            "Intel 4040 (4-bit, 16-pin)",
+            "CPU",
+            1974,
+            3000
+          ],
+          [
+            "Motorola 6800 (8-bit, 40-pin)",
+            "CPU",
+            1974,
+            4100
+          ],
+          [
+            "Intel 8080 (8-bit, 40-pin)",
+            "CPU",
+            1974,
+            6000
+          ],
+          [
+            "TMS 1000 (4-bit, 28-pin)",
+            "CPU",
+            1974,
+            8000
+          ],
+          [
+            "5101",
+            "RAM",
+            1974,
+            6144
+          ],
+          [
+            "MOS Technology 6502 (8-bit, 40-pin)",
+            "CPU",
+            1975,
+            4528
+          ],
+          [
+            "Intersil IM6100 (12-bit, 40-pin; clone of PDP-8)",
+            "CPU",
+            1975,
+            4000
+          ],
+          [
+            "CDP 1801 (8-bit, 2-chip; 40-pin)",
+            "CPU",
+            1975,
+            5000
+          ],
+          [
+            "2116",
+            "RAM",
+            1975,
+            16384
+          ],
+          [
+            "RCA 1802 (8-bit, 40-pin)",
+            "CPU",
+            1976,
+            5000
+          ],
+          [
+            "Zilog Z80 (8-bit, 40-pin)",
+            "CPU",
+            1976,
+            8500
+          ],
+          [
+            "Intel 8085 (8-bit, 40-pin)",
+            "CPU",
+            1976,
+            6500
+          ],
+          [
+            "TMS9900 (16-bit)",
+            "CPU",
+            1976,
+            8000
+          ],
+          [
+            "2114",
+            "RAM",
+            1976,
+            24576
+          ],
+          [
+            "Bellmac-8 (8-bit)",
+            "CPU",
+            1977,
+            7000
+          ],
+          [
+            "?",
+            "RAM",
+            1977,
+            24576
+          ],
+          [
+            "?",
+            "RAM",
+            1977,
+            65536
+          ],
+          [
+            "Motorola 6809 (8-bit with some 16-bit features, 40-pin)",
+            "CPU",
+            1978,
+            9000
+          ],
+          [
+            "Intel 8086 (16-bit, 40-pin)",
+            "CPU",
+            1978,
+            29000
+          ],
+          [
+            "Zilog Z8000 (16-bit)",
+            "CPU",
+            1979,
+            17500
+          ],
+          [
+            "Intel 8088 (16-bit, 8-bit data bus)",
+            "CPU",
+            1979,
+            29000
+          ],
+          [
+            "Motorola 68000 (16/32-bit, 32-bit registers, 16-bit  ALU)",
+            "CPU",
+            1979,
+            68000
+          ],
+          [
+            "?",
+            "RAM",
+            1979,
+            65536
+          ],
+          [
+            "?",
+            "RAM",
+            1980,
+            98304
+          ],
+          [
+            "?",
+            "RAM",
+            1980,
+            262144
+          ],
+          [
+            "?",
+            "RAM",
+            1980,
+            262144
+          ],
+          [
+            "?",
+            "RAM",
+            1980,
+            393216
+          ],
+          [
+            "WDC 65C02",
+            "CPU",
+            1981,
+            11500
+          ],
+          [
+            "?",
+            "RAM",
+            1981,
+            294912
+          ],
+          [
+            "Intel 80186",
+            "CPU",
+            1982,
+            55000
+          ],
+          [
+            "Intel 80286",
+            "CPU",
+            1982,
+            134000
+          ],
+          [
+            "µPD7220 GDC",
+            "GPU",
+            1982,
+            40000
+          ],
+          [
+            "?",
+            "RAM",
+            1982,
+            393216
+          ],
+          [
+            "WDC 65C816 (8/16-bit)",
+            "CPU",
+            1983,
+            22000
+          ],
+          [
+            "NEC V20",
+            "CPU",
+            1984,
+            63000
+          ],
+          [
+            "Motorola 68020 (32-bit; 114 pins used)",
+            "CPU",
+            1984,
+            190000
+          ],
+          [
+            "ARTC HD63484",
+            "GPU",
+            1984,
+            60000
+          ],
+          [
+            "?",
+            "RAM",
+            1984,
+            1572864
+          ],
+          [
+            "?",
+            "RAM",
+            1984,
+            8388608
+          ],
+          [
+            "Intel 80386 (32-bit)",
+            "CPU",
+            1985,
+            275000
+          ],
+          [
+            "ARM 1 (32-bit)",
+            "CPU",
+            1985,
+            25000
+          ],
+          [
+            "Novix NC4016",
+            "CPU",
+            1985,
+            16000
+          ],
+          [
+            "SPARC MB86900 (32-bit)",
+            "CPU",
+            1986,
+            110000
+          ],
+          [
+            "NEC V60[30]",
+            "CPU",
+            1986,
+            375000
+          ],
+          [
+            "ARM 2 (32-bit; 84-pin)",
+            "CPU",
+            1986,
+            27000
+          ],
+          [
+            "NEC V70[30]",
+            "CPU",
+            1987,
+            385000
+          ],
+          [
+            "Hitachi Gmicro/200[32]",
+            "CPU",
+            1987,
+            730000
+          ],
+          [
+            "Motorola 68030",
+            "CPU",
+            1987,
+            273000
+          ],
+          [
+            "TI Explorer's 32-bit Lisp machine chip",
+            "CPU",
+            1987,
+            553000
+          ],
+          [
+            "?",
+            "RAM",
+            1987,
+            16777216
+          ],
+          [
+            "DEC WRL MultiTitan",
+            "CPU",
+            1988,
+            180000
+          ],
+          [
+            "Intel i960 (32-bit, 33-bit memory subsystem)",
+            "CPU",
+            1988,
+            250000
+          ],
+          [
+            "YM7101 VDP",
+            "GPU",
+            1988,
+            100000
+          ],
+          [
+            "Intel i960CA",
+            "CPU",
+            1989,
+            600000
+          ],
+          [
+            "Intel i860 (32/64-bit, 128-bit SIMD)",
+            "CPU",
+            1989,
+            1000000
+          ],
+          [
+            "Intel 80486",
+            "CPU",
+            1989,
+            1180235
+          ],
+          [
+            "ARM 3",
+            "CPU",
+            1989,
+            310000
+          ],
+          [
+            "68040",
+            "CPU",
+            1990,
+            1200000
+          ],
+          [
+            "?",
+            "RAM",
+            1990,
+            25165824
+          ],
+          [
+            "R4000 (64-bit)",
+            "CPU",
+            1991,
+            1350000
+          ],
+          [
+            "ARM 6",
+            "CPU",
+            1991,
+            35000
+          ],
+          [
+            "?",
+            "RAM",
+            1991,
+            67108864
+          ],
+          [
+            "Hitachi SH-1 (32-bit)",
+            "CPU",
+            1992,
+            600000
+          ],
+          [
+            "Intel i960CF",
+            "CPU",
+            1992,
+            900000
+          ],
+          [
+            "KM48SL2000",
+            "RAM",
+            1992,
+            16777216
+          ],
+          [
+            "?",
+            "RAM",
+            1992,
+            100663296
+          ],
+          [
+            "Hitachi HARP-1",
+            "CPU",
+            1993,
+            2800000
+          ],
+          [
+            "Pentium",
+            "CPU",
+            1993,
+            3100000
+          ],
+          [
+            "Tom & Jerry",
+            "GPU",
+            1993,
+            750000
+          ],
+          [
+            "?",
+            "RAM",
+            1993,
+            268435456
+          ],
+          [
+            "ARM700",
+            "CPU",
+            1994,
+            578977
+          ],
+          [
+            "68060",
+            "CPU",
+            1994,
+            2500000
+          ],
+          [
+            "VDP1",
+            "GPU",
+            1994,
+            1000000
+          ],
+          [
+            "Sony GPU",
+            "GPU",
+            1994,
+            1000000
+          ],
+          [
+            "SA-110",
+            "CPU",
+            1995,
+            2500000
+          ],
+          [
+            "Pentium Pro",
+            "CPU",
+            1995,
+            5500000
+          ],
+          [
+            "NV1",
+            "GPU",
+            1995,
+            1000000
+          ],
+          [
+            "?",
+            "RAM",
+            1995,
+            1073741824
+          ],
+          [
+            "?",
+            "RAM",
+            1995,
+            1073741824
+          ],
+          [
+            "AMD K5",
+            "CPU",
+            1996,
+            4300000
+          ],
+          [
+            "Reality Coprocessor",
+            "GPU",
+            1996,
+            2600000
+          ],
+          [
+            "PowerVR",
+            "GPU",
+            1996,
+            1200000
+          ],
+          [
+            "Voodoo Graphics",
+            "GPU",
+            1996,
+            1000000
+          ],
+          [
+            "?",
+            "RAM",
+            1996,
+            1073741824
+          ],
+          [
+            "Hitachi SH-4 (32-bit)",
+            "CPU",
+            1997,
+            10000000
+          ],
+          [
+            "Pentium II Klamath (32-bit, 64-bit SIMD)",
+            "CPU",
+            1997,
+            7500000
+          ],
+          [
+            "AMD K6",
+            "CPU",
+            1997,
+            8800000
+          ],
+          [
+            "Voodoo Rush",
+            "GPU",
+            1997,
+            1000000
+          ],
+          [
+            "NV3",
+            "GPU",
+            1997,
+            3500000
+          ],
+          [
+            "?",
+            "RAM",
+            1997,
+            1073741824
+          ],
+          [
+            "?",
+            "RAM",
+            1997,
+            1073741824
+          ],
+          [
+            "Pentium II Deschutes",
+            "CPU",
+            1998,
+            7500000
+          ],
+          [
+            "PowerVR2 CLX2",
+            "GPU",
+            1998,
+            10000000
+          ],
+          [
+            "i740",
+            "GPU",
+            1998,
+            3500000
+          ],
+          [
+            "Voodoo 2",
+            "GPU",
+            1998,
+            4000000
+          ],
+          [
+            "Voodoo Rush",
+            "GPU",
+            1998,
+            4000000
+          ],
+          [
+            "Riva TNT",
+            "GPU",
+            1998,
+            7000000
+          ],
+          [
+            "?",
+            "RAM",
+            1998,
+            4294967296
+          ],
+          [
+            "ARM 9TDMI",
+            "CPU",
+            1999,
+            111000
+          ],
+          [
+            "Pentium III Katmai (32-bit, 128-bit SIMD)",
+            "CPU",
+            1999,
+            9500000
+          ],
+          [
+            "Emotion Engine (64-bit, 128-bit SIMD)",
+            "CPU",
+            1999,
+            13500000
+          ],
+          [
+            "Pentium II Mobile Dixon",
+            "CPU",
+            1999,
+            27400000
+          ],
+          [
+            "AMD K6-III",
+            "CPU",
+            1999,
+            21300000
+          ],
+          [
+            "AMD K7",
+            "CPU",
+            1999,
+            22000000
+          ],
+          [
+            "PowerVR2 PMX1",
+            "GPU",
+            1999,
+            6000000
+          ],
+          [
+            "Rage 128",
+            "GPU",
+            1999,
+            8000000
+          ],
+          [
+            "Voodoo 3",
+            "GPU",
+            1999,
+            8100000
+          ],
+          [
+            "Graphics Synthesizer",
+            "GPU",
+            1999,
+            43000000
+          ],
+          [
+            "NV5",
+            "GPU",
+            1999,
+            15000000
+          ],
+          [
+            "NV10",
+            "GPU",
+            1999,
+            17000000
+          ],
+          [
+            "Gekko",
+            "CPU",
+            2000,
+            21000000
+          ],
+          [
+            "Pentium III Coppermine",
+            "CPU",
+            2000,
+            21000000
+          ],
+          [
+            "Pentium 4 Willamette",
+            "CPU",
+            2000,
+            42000000
+          ],
+          [
+            "Voodoo 4",
+            "GPU",
+            2000,
+            14000000
+          ],
+          [
+            "NV11",
+            "GPU",
+            2000,
+            20000000
+          ],
+          [
+            "NV15",
+            "GPU",
+            2000,
+            25000000
+          ],
+          [
+            "Voodoo 5",
+            "GPU",
+            2000,
+            28000000
+          ],
+          [
+            "R100",
+            "GPU",
+            2000,
+            30000000
+          ],
+          [
+            "Flipper",
+            "GPU",
+            2000,
+            51000000
+          ],
+          [
+            "SPARC64 V",
+            "CPU",
+            2001,
+            191000000
+          ],
+          [
+            "Pentium III Tualatin",
+            "CPU",
+            2001,
+            45000000
+          ],
+          [
+            "PowerVR3 KYRO",
+            "GPU",
+            2001,
+            14000000
+          ],
+          [
+            "PowerVR3 KYRO II",
+            "GPU",
+            2001,
+            15000000
+          ],
+          [
+            "NV2A",
+            "GPU",
+            2001,
+            60000000
+          ],
+          [
+            "NV20",
+            "GPU",
+            2001,
+            57000000
+          ],
+          [
+            "R200",
+            "GPU",
+            2001,
+            60000000
+          ],
+          [
+            "Pentium 4 Northwood",
+            "CPU",
+            2002,
+            55000000
+          ],
+          [
+            "Itanium 2 McKinley",
+            "CPU",
+            2002,
+            220000000
+          ],
+          [
+            "NV25",
+            "GPU",
+            2002,
+            63000000
+          ],
+          [
+            "R300",
+            "GPU",
+            2002,
+            107000000
+          ],
+          [
+            "Barton",
+            "CPU",
+            2003,
+            54300000
+          ],
+          [
+            "AMD K8",
+            "CPU",
+            2003,
+            105900000
+          ],
+          [
+            "Itanium 2 Madison 6M",
+            "CPU",
+            2003,
+            410000000
+          ],
+          [
+            "R360",
+            "GPU",
+            2003,
+            117000000
+          ],
+          [
+            "NV38",
+            "GPU",
+            2003,
+            135000000
+          ],
+          [
+            "Pentium 4 Prescott",
+            "CPU",
+            2004,
+            112000000
+          ],
+          [
+            "SPARC64 V+",
+            "CPU",
+            2004,
+            400000000
+          ],
+          [
+            "Itanium 2 with 9 MB cache",
+            "CPU",
+            2004,
+            592000000
+          ],
+          [
+            "R480",
+            "GPU",
+            2004,
+            160000000
+          ],
+          [
+            "NV40",
+            "GPU",
+            2004,
+            222000000
+          ],
+          [
+            "Pentium 4 Prescott-2M",
+            "CPU",
+            2005,
+            169000000
+          ],
+          [
+            "Pentium D Smithfield",
+            "CPU",
+            2005,
+            228000000
+          ],
+          [
+            "Xenon",
+            "CPU",
+            2005,
+            165000000
+          ],
+          [
+            "Cell",
+            "CPU",
+            2005,
+            250000000
+          ],
+          [
+            "Xenos",
+            "GPU",
+            2005,
+            232000000
+          ],
+          [
+            "RSX Reality Synthesizer",
+            "GPU",
+            2005,
+            300000000
+          ],
+          [
+            "G70",
+            "GPU",
+            2005,
+            303000000
+          ],
+          [
+            "R520",
+            "GPU",
+            2005,
+            321000000
+          ],
+          [
+            "Pentium 4 Cedar Mill",
+            "CPU",
+            2006,
+            184000000
+          ],
+          [
+            "Pentium D Presler",
+            "CPU",
+            2006,
+            362000000
+          ],
+          [
+            "Core 2 Duo Conroe",
+            "CPU",
+            2006,
+            291000000
+          ],
+          [
+            "Dual-core Itanium 2",
+            "CPU",
+            2006,
+            1700000000
+          ],
+          [
+            "R580",
+            "GPU",
+            2006,
+            384000000
+          ],
+          [
+            "G80",
+            "GPU",
+            2006,
+            681000000
+          ],
+          [
+            "SPARC64 VI",
+            "CPU",
+            2007,
+            540000000
+          ],
+          [
+            "Core 2 Duo Allendale",
+            "CPU",
+            2007,
+            169000000
+          ],
+          [
+            "Uniphier",
+            "CPU",
+            2007,
+            250000000
+          ],
+          [
+            "AMD K10 quad-core 2M L3",
+            "CPU",
+            2007,
+            463000000
+          ],
+          [
+            "ARM Cortex-A9",
+            "CPU",
+            2007,
+            26000000
+          ],
+          [
+            "Core 2 Duo Wolfdale",
+            "CPU",
+            2007,
+            411000000
+          ],
+          [
+            "POWER6",
+            "CPU",
+            2007,
+            789000000
+          ],
+          [
+            "G86 Tesla",
+            "GPU",
+            2007,
+            210000000
+          ],
+          [
+            "G84 Tesla",
+            "GPU",
+            2007,
+            289000000
+          ],
+          [
+            "R600",
+            "GPU",
+            2007,
+            700000000
+          ],
+          [
+            "G92",
+            "GPU",
+            2007,
+            754000000
+          ],
+          [
+            "Atom",
+            "CPU",
+            2008,
+            47000000
+          ],
+          [
+            "SPARC64 VII",
+            "CPU",
+            2008,
+            600000000
+          ],
+          [
+            "Core 2 Duo Wolfdale 3M",
+            "CPU",
+            2008,
+            230000000
+          ],
+          [
+            "Core i7 (Quad)",
+            "CPU",
+            2008,
+            731000000
+          ],
+          [
+            "AMD K10 quad-core 6M L3",
+            "CPU",
+            2008,
+            758000000
+          ],
+          [
+            "Six-core Xeon 7400",
+            "CPU",
+            2008,
+            1900000000
+          ],
+          [
+            "G98 Tesla",
+            "GPU",
+            2008,
+            210000000
+          ],
+          [
+            "RV710",
+            "GPU",
+            2008,
+            242000000
+          ],
+          [
+            "G96 Tesla",
+            "GPU",
+            2008,
+            314000000
+          ],
+          [
+            "G94 Tesla",
+            "GPU",
+            2008,
+            505000000
+          ],
+          [
+            "RV730",
+            "GPU",
+            2008,
+            514000000
+          ],
+          [
+            "RV670",
+            "GPU",
+            2008,
+            666000000
+          ],
+          [
+            "RV770",
+            "GPU",
+            2008,
+            956000000
+          ],
+          [
+            "RV790",
+            "GPU",
+            2008,
+            959000000
+          ],
+          [
+            "GT200b Tesla",
+            "GPU",
+            2008,
+            1400000000
+          ],
+          [
+            "GT200 Tesla",
+            "GPU",
+            2008,
+            1400000000
+          ],
+          [
+            "?",
+            "RAM",
+            2008,
+            8589934592
+          ],
+          [
+            "?",
+            "RAM",
+            2008,
+            17179869184
+          ],
+          [
+            "SPARC64 VIIIfx",
+            "CPU",
+            2009,
+            760000000
+          ],
+          [
+            "Six-core Opteron 2400",
+            "CPU",
+            2009,
+            904000000
+          ],
+          [
+            "GT218 Tesla",
+            "GPU",
+            2009,
+            260000000
+          ],
+          [
+            "GT216 Tesla",
+            "GPU",
+            2009,
+            486000000
+          ],
+          [
+            "GT215 Tesla",
+            "GPU",
+            2009,
+            727000000
+          ],
+          [
+            "RV740",
+            "GPU",
+            2009,
+            826000000
+          ],
+          [
+            "Juniper RV840",
+            "GPU",
+            2009,
+            1040000000
+          ],
+          [
+            "Cypress RV870",
+            "GPU",
+            2009,
+            2154000000
+          ],
+          [
+            "16-core SPARC T3",
+            "CPU",
+            2010,
+            1000000000
+          ],
+          [
+            "Six-core Core i7 (Gulftown)",
+            "CPU",
+            2010,
+            1170000000
+          ],
+          [
+            "8-core POWER7 32M L3",
+            "CPU",
+            2010,
+            1200000000
+          ],
+          [
+            "Quad-core z196[66]",
+            "CPU",
+            2010,
+            1400000000
+          ],
+          [
+            "Quad-core Itanium Tukwila",
+            "CPU",
+            2010,
+            2000000000
+          ],
+          [
+            "8-core Xeon Nehalem-EX",
+            "CPU",
+            2010,
+            2300000000
+          ],
+          [
+            "Cedar RV810",
+            "GPU",
+            2010,
+            292000000
+          ],
+          [
+            "Redwood RV830",
+            "GPU",
+            2010,
+            627000000
+          ],
+          [
+            "GF106 Fermi",
+            "GPU",
+            2010,
+            1170000000
+          ],
+          [
+            "Barts RV940",
+            "GPU",
+            2010,
+            1700000000
+          ],
+          [
+            "Cayman RV970",
+            "GPU",
+            2010,
+            2640000000
+          ],
+          [
+            "SPARC64 IXfx",
+            "CPU",
+            2011,
+            1870000000
+          ],
+          [
+            "Quad-core + GPU Core i7",
+            "CPU",
+            2011,
+            1160000000
+          ],
+          [
+            "Six-core Core i7/8-core Xeon E5 (Sandy Bridge-E/EP)",
+            "CPU",
+            2011,
+            2270000000
+          ],
+          [
+            "10-core Xeon Westmere-EX",
+            "CPU",
+            2011,
+            2600000000
+          ],
+          [
+            "GF119 Fermi",
+            "GPU",
+            2011,
+            292000000
+          ],
+          [
+            "Caicos RV910",
+            "GPU",
+            2011,
+            370000000
+          ],
+          [
+            "GF108 Fermi",
+            "GPU",
+            2011,
+            585000000
+          ],
+          [
+            "Turks RV930",
+            "GPU",
+            2011,
+            716000000
+          ],
+          [
+            "GF104 Fermi",
+            "GPU",
+            2011,
+            1950000000
+          ],
+          [
+            "Tahiti",
+            "GPU",
+            2011,
+            4312711873
+          ],
+          [
+            "Atom \"Medfield\"",
+            "CPU",
+            2012,
+            432000000
+          ],
+          [
+            "SPARC64 X",
+            "CPU",
+            2012,
+            2990000000
+          ],
+          [
+            "8-core AMD Bulldozer",
+            "CPU",
+            2012,
+            1200000000
+          ],
+          [
+            "Quad-core + GPU AMD Trinity",
+            "CPU",
+            2012,
+            1303000000
+          ],
+          [
+            "Quad-core + GPU Core i7 Ivy Bridge",
+            "CPU",
+            2012,
+            1400000000
+          ],
+          [
+            "8-core POWER7+ 80 MB L3 cache",
+            "CPU",
+            2012,
+            2100000000
+          ],
+          [
+            "Six-core zEC12",
+            "CPU",
+            2012,
+            2750000000
+          ],
+          [
+            "8-core Itanium Poulson",
+            "CPU",
+            2012,
+            3100000000
+          ],
+          [
+            "61-core Xeon Phi",
+            "CPU",
+            2012,
+            5000000000
+          ],
+          [
+            "GK107 Kepler",
+            "GPU",
+            2012,
+            1270000000
+          ],
+          [
+            "Cape Verde",
+            "GPU",
+            2012,
+            1500000000
+          ],
+          [
+            "GK106 Kepler",
+            "GPU",
+            2012,
+            2540000000
+          ],
+          [
+            "Pitcairn",
+            "GPU",
+            2012,
+            2800000000
+          ],
+          [
+            "GK104 Kepler",
+            "GPU",
+            2012,
+            3540000000
+          ],
+          [
+            "GK110 Kepler",
+            "GPU",
+            2012,
+            7080000000
+          ],
+          [
+            "Apple A7 (dual-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2013,
+            1000000000
+          ],
+          [
+            "Six-core Core i7 Ivy Bridge E",
+            "CPU",
+            2013,
+            1860000000
+          ],
+          [
+            "12-core POWER8",
+            "CPU",
+            2013,
+            4200000000
+          ],
+          [
+            "Xbox One main SoC",
+            "CPU",
+            2013,
+            5000000000
+          ],
+          [
+            "Oland",
+            "GPU",
+            2013,
+            1040000000
+          ],
+          [
+            "Bonaire",
+            "GPU",
+            2013,
+            2080000000
+          ],
+          [
+            "Hawaii",
+            "GPU",
+            2013,
+            6300000000
+          ],
+          [
+            "Quad-core + GPU Core i7 Haswell",
+            "CPU",
+            2014,
+            1400000000
+          ],
+          [
+            "Apple A8 (dual-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2014,
+            2000000000
+          ],
+          [
+            "8-core Core i7 Haswell-E",
+            "CPU",
+            2014,
+            2600000000
+          ],
+          [
+            "Apple A8X (tri-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2014,
+            3000000000
+          ],
+          [
+            "15-core Xeon Ivy Bridge-EX",
+            "CPU",
+            2014,
+            4310000000
+          ],
+          [
+            "18-core Xeon Haswell-E5",
+            "CPU",
+            2014,
+            5560000000
+          ],
+          [
+            "GM107 Maxwell",
+            "GPU",
+            2014,
+            1870000000
+          ],
+          [
+            "GM206 Maxwell",
+            "GPU",
+            2014,
+            2940000000
+          ],
+          [
+            "Tonga",
+            "GPU",
+            2014,
+            5000000000
+          ],
+          [
+            "GM204 Maxwell",
+            "GPU",
+            2014,
+            5200000000
+          ],
+          [
+            "Quad-core + GPU GT2 Core i7 Skylake K",
+            "CPU",
+            2015,
+            1750000000
+          ],
+          [
+            "Dual-core + GPU Iris Core i7 Broadwell-U",
+            "CPU",
+            2015,
+            1900000000
+          ],
+          [
+            "Apple A9 (dual-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2015,
+            2000000000
+          ],
+          [
+            "Apple A9 (dual-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2015,
+            2000000000
+          ],
+          [
+            "Apple A9X (dual-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2015,
+            3000000000
+          ],
+          [
+            "IBM z13",
+            "CPU",
+            2015,
+            3990000000
+          ],
+          [
+            "IBM z13 Storage Controller",
+            "CPU",
+            2015,
+            7100000000
+          ],
+          [
+            "32-core SPARC M7",
+            "CPU",
+            2015,
+            10000000000
+          ],
+          [
+            "GM200 Maxwell",
+            "GPU",
+            2015,
+            8000000000
+          ],
+          [
+            "Fiji",
+            "GPU",
+            2015,
+            8900000000
+          ],
+          [
+            "Qualcomm Snapdragon 835 (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2016,
+            3000000000
+          ],
+          [
+            "10-core Core i7 Broadwell-E",
+            "CPU",
+            2016,
+            3200000000
+          ],
+          [
+            "Apple A10 Fusion (quad-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2016,
+            3300000000
+          ],
+          [
+            "HiSilicon Kirin 960 (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2016,
+            4000000000
+          ],
+          [
+            "22-core Xeon Broadwell-E5",
+            "CPU",
+            2016,
+            7200000000
+          ],
+          [
+            "72-core Xeon Phi",
+            "CPU",
+            2016,
+            8000000000
+          ],
+          [
+            "Polaris 11 \"Baffin\"",
+            "GPU",
+            2016,
+            3000000000
+          ],
+          [
+            "GP106 Pascal",
+            "GPU",
+            2016,
+            4400000000
+          ],
+          [
+            "Polaris 10 \"Ellesmere\"",
+            "GPU",
+            2016,
+            5700000000
+          ],
+          [
+            "GP104 Pascal",
+            "GPU",
+            2016,
+            7200000000
+          ],
+          [
+            "GP100 Pascal",
+            "GPU",
+            2016,
+            15300000000
+          ],
+          [
+            "?",
+            "RAM",
+            2016,
+            34359738368
+          ],
+          [
+            "Qualcomm Snapdragon 845 (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2017,
+            5300000000
+          ],
+          [
+            "Qualcomm Snapdragon 850  (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2017,
+            5300000000
+          ],
+          [
+            "Apple A11 Bionic (hexa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2017,
+            4300000000
+          ],
+          [
+            "Zeppelin SoC Ryzen",
+            "CPU",
+            2017,
+            4800000000
+          ],
+          [
+            "Ryzen 5 1600 Ryzen",
+            "CPU",
+            2017,
+            4800000000
+          ],
+          [
+            "Ryzen 5 1600 X Ryzen",
+            "CPU",
+            2017,
+            4800000000
+          ],
+          [
+            "IBM z14",
+            "CPU",
+            2017,
+            6100000000
+          ],
+          [
+            "HiSilicon Kirin 970 (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2017,
+            5500000000
+          ],
+          [
+            "Xbox One X (Project Scorpio) main SoC",
+            "CPU",
+            2017,
+            7000000000
+          ],
+          [
+            "28-core Xeon Platinum 8180",
+            "CPU",
+            2017,
+            8000000000
+          ],
+          [
+            "POWER9",
+            "CPU",
+            2017,
+            8000000000
+          ],
+          [
+            "IBM z14 Storage Controller",
+            "CPU",
+            2017,
+            9700000000
+          ],
+          [
+            "Freedom U500 Base Platform Chip (E51, 4×U54) RISC-V",
+            "CPU",
+            2017,
+            250000000
+          ],
+          [
+            "SPARC64 XII (12-core)",
+            "CPU",
+            2017,
+            5450000000
+          ],
+          [
+            "Apple A10X Fusion (hexa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2017,
+            4300000000
+          ],
+          [
+            "Centriq 2400",
+            "CPU",
+            2017,
+            18000000000
+          ],
+          [
+            "32-core AMD Epyc",
+            "CPU",
+            2017,
+            19200000000
+          ],
+          [
+            "GP108 Pascal",
+            "GPU",
+            2017,
+            1850000000
+          ],
+          [
+            "Polaris 12 \"Lexa\"",
+            "GPU",
+            2017,
+            2200000000
+          ],
+          [
+            "GP107 Pascal",
+            "GPU",
+            2017,
+            3300000000
+          ],
+          [
+            "GP102 Pascal",
+            "GPU",
+            2017,
+            11800000000
+          ],
+          [
+            "Vega 10",
+            "GPU",
+            2017,
+            12500000000
+          ],
+          [
+            "GV100 Volta",
+            "GPU",
+            2017,
+            21100000000
+          ],
+          [
+            "?",
+            "RAM",
+            2017,
+            68719476736
+          ],
+          [
+            "Qualcomm Snapdragon 8cx / SCX8180 (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2018,
+            8500000000
+          ],
+          [
+            "Apple A12 Bionic (hexa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2018,
+            6900000000
+          ],
+          [
+            "HiSilicon Kirin 980 (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2018,
+            6900000000
+          ],
+          [
+            "HiSilicon Kirin 710 (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2018,
+            5500000000
+          ],
+          [
+            "Apple A12X Bionic (octa-core ARM64 \"mobile SoC\")",
+            "CPU",
+            2018,
+            10000000000
+          ],
+          [
+            "Fujitsu A64FX",
+            "CPU",
+            2018,
+            8786000000
+          ],
+          [
+            "GC2 IPU",
+            "CPU",
+            2018,
+            23600000000
+          ],
+          [
+            "Tegra Xavier SoC",
+            "CPU",
+            2018,
+            9000000000
+          ],
+          [
+            "TU106 Turing",
+            "GPU",
+            2018,
+            10800000000
+          ],
+          [
+            "Vega 20",
+            "GPU",
+            2018,
+            13230000000
+          ],
+          [
+            "TU104 Turing",
+            "GPU",
+            2018,
+            13600000000
+          ],
+          [
+            "TU102 Turing",
+            "GPU",
+            2018,
+            18600000000
+          ],
+          [
+            "?",
+            "RAM",
+            2018,
+            137438953472
+          ],
+          [
+            "AMD EPYC Rome",
+            "CPU",
+            2019,
+            32000000000
+          ],
+          [
+            "TU117 Turing",
+            "GPU",
+            2019,
+            4700000000
+          ],
+          [
+            "TU116 Turing",
+            "GPU",
+            2019,
+            6600000000
+          ],
+          [
+            "Navi 10",
+            "GPU",
+            2019,
+            10300000000
+          ]
+        ]
+      },
+      "based_on": [
+        "det_01"
+      ]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "The data is a curated Wikipedia snapshot through Sep 2019. It is biased toward famous mainstream consumer/server chips and excludes embedded, ASIC, and niche silicon. Many entries have NA values; absolute counts should be treated as accurate to ~10-20% and the slope trusted more than any individual point."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "The dataset cuts off in 2019 and therefore misses the Apple M1 Ultra (114B, 2022), the Cerebras WSE-3 (4 trillion, 2024), and other post-2019 wafer-scale and chiplet milestones. All findings about 'the maximum' are 'within the dataset' rather than 'in the world'."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Process-node labels (e.g. '7 nm') are marketing names since around the 22-nm node and do not correspond exactly to physical gate dimensions."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "RAM 'transistor count' is essentially bit-cell count — this scales near-linearly with capacity and is therefore not directly comparable to the logic-complexity transistor count of CPUs and GPUs."
+    }
+  ]
+}

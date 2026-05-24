@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "topic_note": "Sensitive geopolitical topic. Detective notes here are descriptive (what the data measures, who collected it, what published analyses say) rather than prescriptive about politics. Reference photos were intentionally NOT downloaded — any single still image of settlements, walls, or refugees would carry framing the data itself does not assert. The story stays close to what the three CSVs actually show."
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin of the dataset (Economist 2019 Graphic Detail)",
+      "content": "The three CSVs are the underlying data for The Economist's Graphic Detail piece 'By expanding settlements, Israel faces stark choices about its future' (2 February 2019). They cover 1998-2021 and combine official Israeli statistics, Palestinian official statistics, and an NGO data set: Jewish populations come from Israel's Central Bureau of Statistics, the Jerusalem Institute for Policy Research, and Peace Now (which gets its underlying counts from the same Israeli CBS); Arab populations come from the Palestinian Central Bureau of Statistics for the West Bank and Gaza, and the Jerusalem Institute for East Jerusalem. Numbers from 2019 onward are projections — for the Jewish settler population they are based on Peace Now's tracking of publicly available construction plans and tenders. The slice that lets the data 'become a map' is population.ej.wb.csv, which buckets West Bank settlers by their distance from the 1967 Green Line: 0-2.5 km, 2.5-5 km, 5-15 km, and >15 km, plus East Jerusalem.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2019/02/02/israels-growing-settlements-force-stark-choices-about-its-future",
+          "title": "Israel's growing settlements force stark choices about its future (The Economist, 2019-02-02)",
+          "facts": [
+            "Article published 2019-02-02 in Graphic Detail",
+            "Frames a 'trilemma' between being Jewish, democratic, and controlling all the territory between the river and the sea"
+          ]
+        },
+        {
+          "url": "https://peacenow.org.il/en/population-data-in-israel-and-in-the-west-bank",
+          "title": "New 2018 Population Data for Israelis in the West Bank — Peace Now",
+          "facts": [
+            "Peace Now publishes Israeli CBS data on West Bank settler population annually",
+            "Peace Now flagged that most of the new settlers in 2018 were added to settlements Israel would likely have to evacuate in any peace agreement"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "What the Green Line is and why distance from it matters",
+      "content": "The Green Line is the 1949 armistice line that separated Israel from Jordanian-controlled West Bank and Egyptian-controlled Gaza until the 1967 Six-Day War. Its name comes literally from the green grease pencil used on the armistice map. Since 1967 it has functioned as the de-facto reference border in every serious peace plan: settlements close to the line are inside what negotiators call 'consensus blocs' (Gush Etzion, Ma'ale Adumim, Modi'in Illit, Ariel) that Israel would expect to keep through a land swap; settlements deep beyond it are the ones any two-state agreement would require evacuating. So the 0-2.5 km, 2.5-5 km, 5-15 km, and >15 km buckets in the dataset are not just geometric — each one corresponds to a different political category. Around 75-85% of West Bank settlers live close to the Green Line in major blocs adjacent to Israeli urban areas; the residual that live deep inside the West Bank are the politically hardest to relocate.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Green_Line_(Israel)",
+          "title": "Green Line (Israel) — Wikipedia",
+          "facts": [
+            "The Green Line was set in the 1949 Armistice Agreements after the 1948 Arab-Israeli war",
+            "It was named after the green ink used to draw it on the armistice map",
+            "It separated Israel from the Jordanian-annexed West Bank and Egyptian-occupied Gaza until 1967"
+          ]
+        },
+        {
+          "url": "https://jstreet.org/the-green-line/",
+          "title": "The Green Line — J Street",
+          "facts": [
+            "Roughly 75% of the ~630,000 Israelis living beyond the 1967 lines reside close to the lines (~472,000)",
+            "A 2022 survey suggests up to 85% live within roughly 8% of the West Bank, largely adjacent to Israeli urban areas"
+          ]
+        },
+        {
+          "url": "https://israelpolicyforum.org/west-bank-settlements-explained/",
+          "title": "West Bank Settlements Explained — Israel Policy Forum",
+          "facts": [
+            "Major 'consensus' settlement blocs are Gush Etzion, Ma'ale Adumim, Modi'in Illit, and Ariel",
+            "Roughly three-quarters of West Bank settlers live in a relatively small area adjacent to Israel proper"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Why East Jerusalem sits in its own column",
+      "content": "East Jerusalem is treated separately from the West Bank in this dataset for a reason. Israel formally annexed East Jerusalem in 1980 through the Jerusalem Law and applies Israeli civilian law there; the United Nations Security Council declared the annexation 'null and void' in Resolution 478 and most countries do not recognise it. The result is a population that Israel counts as 'Israeli' but most of the world counts as occupied: in 1967 only a few hundred Jews lived in East Jerusalem; by mid-1993 about 155,000 Jews and 150,000 Palestinians; by recent reporting roughly 209,000 Israeli settlers and 350,000 Palestinians. So when the CSV shows the East Jerusalem Jewish column climbing from ~158,000 in 1998 to ~233,000 in 2021, every one of those people is in territory that international law treats as occupied — which is why The Economist counts them as settlers even though Israel does not.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Israeli_annexation_of_East_Jerusalem",
+          "title": "Israeli annexation of East Jerusalem — Wikipedia",
+          "facts": [
+            "Israel passed the Jerusalem Law in 1980, declaring a unified Jerusalem the capital and effectively annexing East Jerusalem",
+            "UN Security Council Resolution 478 declared the law null and void"
+          ]
+        },
+        {
+          "url": "https://www.btselem.org/jerusalem",
+          "title": "East Jerusalem — B'Tselem",
+          "facts": [
+            "In 1967 only a few hundred Jews lived in East Jerusalem after the 1948 expulsions",
+            "The annexed area is currently home to at least 350,000 Palestinians and around 209,000 Israeli settlers",
+            "Israel has expropriated more than a third of the land annexed to Jerusalem and built 11 neighbourhoods earmarked for Jewish residents only"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "The demographic 'trilemma' framing",
+      "content": "The Economist's 2019 framing rests on a trilemma the data is meant to dramatise: Israel is committed to being (a) Jewish-majority, (b) democratic, and (c) in control of the entire territory between the Jordan river and the Mediterranean. These three goals are mutually compatible only as long as Jews outnumber Arabs in the combined territory; once the populations cross, Israel can pick at most two of the three. The combined CSVs let you watch that crossover happen: by adding Israel + East Jerusalem + West Bank Jews on one side, and Israel + East Jerusalem + West Bank + Gaza Arabs on the other, the projected lines meet around 2018-2021. The piece is not arguing for any particular resolution — it is showing why expanding settlements squeezes the trilemma harder over time.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2019/02/02/israels-growing-settlements-force-stark-choices-about-its-future",
+          "title": "Israel's growing settlements force stark choices about its future (The Economist, 2019-02-02)",
+          "facts": [
+            "'The country cannot remain Jewish and democratic while controlling the entire Holy Land'",
+            "'Between the Mediterranean and the Jordan river, the overall number of Arabs has caught up with that of Jews, and may soon exceed them.'"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Settler totals as published benchmarks",
+      "content": "External published numbers give us a sanity check on the West Bank Jewish column. Peace Now reported the West Bank settler population (excluding East Jerusalem) at around 427,800 in 2018; The Economist's CSV shows 425,599 for the same year — within roughly half a percent. By 2023 Peace Now-derived figures crossed half a million; Statista and PBS picked up the same milestone. The CSV's 2019-2021 numbers are projections from construction tenders, but they sit on the trajectory implied by every external source. So readers can take the trend as real, not as Economist-internal modelling.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://www.statista.com/chart/20001/number-of-israeli-settlers-living-in-the-west-bank-by-year/",
+          "title": "Chart: The Growth Of Israeli Settlements — Statista",
+          "facts": [
+            "Statista cites the Israeli CBS / Peace Now West Bank settler series",
+            "Settler population was reported at 427,800 in 2018"
+          ]
+        },
+        {
+          "url": "https://www.pbs.org/newshour/world/israeli-settler-population-in-west-bank-surpasses-half-a-million",
+          "title": "Israeli settler population in West Bank surpasses half a million — PBS News",
+          "facts": [
+            "West Bank settler population crossed 500,000 by 2023 according to multiple sources"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Settlement blocs vs deep settlements — the political geography",
+      "content": "Inside the West Bank, distance from the Green Line is a proxy for political category. Settlements within a few kilometres of the line — Modi'in Illit, Ma'ale Adumim, the Gush Etzion bloc — are 'consensus' settlements that nearly every Israeli peace plan since Olmert assumes Israel will keep through a one-for-one land swap. Settlements deep in the West Bank (>15 km) are the ones any serious agreement would require evacuating; a Peace Now-aligned analysis estimated about 150,000 settlers would need to be evacuated and resettled. So the 'distance from green line' columns in population.ej.wb.csv are effectively a political map: 0-2.5 km is the part Israel expects to keep, >15 km is the part it would need to dismantle. Watching how each of those buckets has grown since 1998 is therefore a political story disguised as a geometry one.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://israelpolicyforum.org/west-bank-settlements-explained/",
+          "title": "West Bank Settlements Explained — Israel Policy Forum",
+          "facts": [
+            "Major 'consensus' blocs (Gush Etzion, Ma'ale Adumim, Modi'in Illit, Ariel) are typically retained in peace plan maps",
+            "Roughly three-quarters of West Bank settlers live in a small area adjacent to Israel proper"
+          ]
+        },
+        {
+          "url": "https://www.washingtoninstitute.org/policy-analysis/generals-plan-peace",
+          "title": "A General's Plan for Peace — The Washington Institute",
+          "facts": [
+            "Olmert's 2008 'napkin map' would have retained Ma'ale Adumim, Ariel, and Kedumim, evacuating dozens of smaller settlements",
+            "Around 150,000 settlers live outside the zone of likely agreement and would need to be evacuated"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Gaza disengagement as the historical scale reference",
+      "content": "There is exactly one prior real-world data point for evacuating settlers: Israel removed roughly 8,000 settlers from Gaza in 2005, and the operation was politically traumatic. The Economist's framing turns on the fact that the West Bank settler population is now more than fifty times that scale. So when the CSV shows the >15 km bucket alone at ~76,000 in 2021, that is already nearly ten Gaza disengagements just for the deepest, hardest-to-defend settlements — never mind the consensus blocs.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Israeli_settlement_timeline",
+          "title": "Israeli settlement timeline — Wikipedia",
+          "facts": [
+            "Israel evacuated about 8,000 settlers from Gaza during the 2005 disengagement",
+            "By 2018 West Bank settler population was more than fifty times the Gaza evacuation scale"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Caveats the analyst should preserve",
+      "content": "Three caveats need to live in the prose, not in a footnote. First, post-2018 numbers in every column are projections, not census counts; the Jewish settler trajectory is built from Peace Now's reading of construction plans and tenders, the Israeli/Palestinian totals are from official statistical projections. Second, the 'Arab' and 'Jewish' columns are religious/national categorisations carried over from each statistical agency — they aren't fine-grained ethnicity buckets, and East Jerusalem Palestinians who hold Israeli residency permits are not Israeli citizens. Third, Gaza data ends in 2021 and predates the post-2023 destruction — readers familiar with later events should not assume the 2021 line projects forward as a population curve.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2019/02/02/israels-growing-settlements-force-stark-choices-about-its-future",
+          "title": "Israel's growing settlements force stark choices about its future (The Economist, 2019-02-02)",
+          "facts": [
+            "Post-2018 figures in the dataset are projections, not census counts"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_skip_01",
+      "filename": null,
+      "url": null,
+      "license": null,
+      "source": "intentional omission",
+      "description": "No reference photos were downloaded for this run. Single still images of settlements, separation walls, refugees, or armed confrontations all carry political framing that the dataset itself does not assert. The dataset is fundamentally about distance and counts, so the visual treatment is built around an interactive map of distance buckets and chart-driven crossover lines instead.",
+      "relates_to": ["det_01", "det_02", "det_06"]
+    }
+  ],
+  "instances": []
+}

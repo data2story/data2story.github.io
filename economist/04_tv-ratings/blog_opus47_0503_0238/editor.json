@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "TV's 'Golden Age' is real but small — the floor of drama quality rose a third of an IMDb point while the ceiling stayed put, and the bigger story is a 10.5x explosion in the number of shows.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — pick a season from the cloud",
+      "purpose": "hook",
+      "title": "Look at the cloud first",
+      "findings": ["ana_12", "ana_05"],
+      "context": ["det_01", "det_02"],
+      "triage": {
+        "ana_12": "lead",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_12",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The full scatter (2,266 dots) is the centerpiece. Reader-quiz interaction should land BEFORE we explain the answer — it makes the surprise (ceiling didn't move) felt rather than told."
+    },
+    "edt_02": {
+      "label": "The Golden Age is real — but small",
+      "purpose": "evidence",
+      "title": "A quarter of a point",
+      "findings": ["ana_02", "ana_06"],
+      "context": ["det_02", "det_06"],
+      "triage": {
+        "ana_02": "lead",
+        "ana_06": "supporting"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": null,
+      "editorial_notes": "7.88 → 8.17 must be exact. +0.31 era lift must be exact."
+    },
+    "edt_03": {
+      "label": "The ceiling stayed where it was",
+      "purpose": "turn",
+      "title": "The ceiling did not move",
+      "findings": ["ana_04", "ana_05"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_04": "lead",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "1995 vs 2017 numbers (8.96 → 8.90; 7.01 → 7.23; 7.80 → 8.12) must be exact. This is the counterintuitive turn."
+    },
+    "edt_04": {
+      "label": "Peak TV — the volume explosion",
+      "purpose": "evidence",
+      "title": "Ten times as many shows",
+      "findings": ["ana_03"],
+      "context": ["det_03"],
+      "triage": {
+        "ana_03": "lead"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "video",
+      "editorial_notes": "22 → 230, 10.5x. Mention Landgraf's 487 figure as external corroboration. A short generated clip of cascading TV screens or fanning channels would land the volume feeling well."
+    },
+    "edt_05": {
+      "label": "The marquee climbs — Sopranos, Wire, Breaking Bad, Mad Men, GoT",
+      "purpose": "evidence",
+      "title": "What rising actually looks like",
+      "findings": ["ana_09"],
+      "context": ["det_02"],
+      "triage": {
+        "ana_09": "lead"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "instance",
+      "editorial_notes": "Breaking Bad 8.71→9.55 must be exact. GoT S7 dip (9.30) must be exact — that is the foreshadowing of S8. A YouTube embed of Breaking Bad's Ozymandias trailer / official preview would ground the prestige-era story in a real, embeddable artefact."
+    },
+    "edt_06": {
+      "label": "The flame-out — Dexter, NYPD Blue, Bloodline",
+      "purpose": "evidence",
+      "title": "When the climb reverses",
+      "findings": ["ana_08", "ana_10"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_08": "lead",
+        "ana_10": "supporting"
+      },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": null,
+      "editorial_notes": "Dexter 9.15 → 6.95 (Δ -2.20) must be exact. NYPD Blue 8.32 → 4.70 (Δ -3.62) must be exact. The det_04 self-selection caveat must be visible — it is essential context for why collapses are so steep."
+    },
+    "edt_07": {
+      "label": "Genre drift — Horror won the Golden Age",
+      "purpose": "color",
+      "title": "Horror won, Sci-Fi lost",
+      "findings": ["ana_07"],
+      "context": ["det_02"],
+      "triage": {
+        "ana_07": "lead"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": "image",
+      "editorial_notes": "Horror +0.90, Sci-Fi -0.20, Thriller -0.30 must all be exact. A short atmospheric image (e.g. genre-collage or single horror still) would help break the chart density without forcing a video."
+    },
+    "edt_08": {
+      "label": "What 'Golden' actually means — three things at once",
+      "purpose": "turn",
+      "title": "Three things at once",
+      "findings": ["ana_02", "ana_03", "ana_04", "ana_06"],
+      "context": ["det_05", "det_02"],
+      "triage": {
+        "ana_02": "supporting",
+        "ana_03": "supporting",
+        "ana_04": "supporting",
+        "ana_06": "lead"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "Synthesis section. The three big stat callouts (10.5x, +0.31, ceiling 8.96 → 8.90) should be visually loud here. Breaking Bad 9.55 vs Parenthood 9.68 comparison must be exact."
+    },
+    "edt_09": {
+      "label": "Close — back to the cloud",
+      "purpose": "close",
+      "title": "Look at the cloud again",
+      "findings": ["ana_12"],
+      "context": ["det_06", "det_05"],
+      "triage": {
+        "ana_12": "lead"
+      },
+      "chart_placeholder": "ana_12",
+      "media_placeholder": null,
+      "editorial_notes": "Re-show the scatter (or refer back to it). The reader should leave with a different reading than they arrived with."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "lead",
+    "ana_04": "lead",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "color",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "supporting",
+    "ana_11": "cut",
+    "ana_12": "lead"
+  }
+}

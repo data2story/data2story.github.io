@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Ten-Second Laugh — The Architecture of Ali Wong's Baby Cobra</title>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+  <style>
+    /* base_css.css from skills/errors/base_css.css — verbatim */
+    /* No patterns have reached the base CSS threshold yet. */
+
+    :root {
+      --bg: #0d0c0a;
+      --ink: #f3ece1;
+      --muted: #aaa091;
+      --accent: #d97a3a;
+      --accent-light: #e8a777;
+      --rule: #2a2620;
+      --max-w: 720px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent-light); text-decoration: underline; text-underline-offset: 3px; }
+
+    /* Teaser */
+    .teaser {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      overflow: hidden;
+      background: #000;
+    }
+    .teaser video,
+    .teaser img.teaser-fallback {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .teaser-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2.5rem 1.5rem 3rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+      text-align: center;
+      color: var(--ink);
+    }
+    .teaser-eyebrow {
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin: 0 0 0.6rem;
+    }
+    .teaser-title {
+      font-family: Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0 auto;
+      max-width: 720px;
+    }
+
+    /* Article container */
+    main {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 4rem 1.25rem 6rem;
+    }
+
+    .deck {
+      font-size: 1.1rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 3rem;
+      line-height: 1.55;
+    }
+
+    section {
+      margin: 4rem 0;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+    section h2 {
+      font-family: Georgia, serif;
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin: 0 0 1.5rem;
+      color: var(--ink);
+    }
+    section p { margin: 0 0 1.2rem; }
+
+    /* Stat callouts */
+    .stat-callout {
+      display: block;
+      margin: 2rem 0;
+      text-align: center;
+      padding: 1.5rem 0;
+    }
+    .stat-callout .stat-number {
+      display: block;
+      font-family: Georgia, serif;
+      font-size: clamp(3.5rem, 9vw, 5.5rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+    .stat-callout .stat-label {
+      display: block;
+      font-family: system-ui, sans-serif;
+      font-size: 0.95rem;
+      color: var(--muted);
+      max-width: 440px;
+      margin: 0 auto;
+    }
+
+    /* Visual containers */
+    .visual-container {
+      margin: 2.5rem 0;
+      display: block;
+      clear: both;
+    }
+    .chart-container {
+      width: 100%;
+      max-width: 720px;
+      margin: 2.5rem auto;
+      display: block;
+    }
+    .chart-container .chart-mount {
+      width: 100%;
+      min-width: 0;
+      display: block;
+    }
+    .chart-caption {
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.6rem;
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* Image figures */
+    figure.visual-container {
+      margin: 2.5rem auto;
+      padding: 0;
+      max-width: 720px;
+    }
+    figure.visual-container img,
+    figure.visual-container video {
+      width: 100%;
+      height: auto;
+      max-width: 100%;
+      display: block;
+      border-radius: 4px;
+    }
+    figure.visual-container figcaption {
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.7rem;
+      text-align: center;
+      font-style: italic;
+    }
+
+    /* Tree explorer */
+    .tree-container {
+      margin: 2.5rem auto;
+      max-width: 720px;
+      background: #15130e;
+      padding: 1.25rem;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+    }
+    .tree-band {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.55rem 0;
+      cursor: pointer;
+      transition: background 0.2s;
+      border-radius: 4px;
+    }
+    .tree-band:hover { background: #1d1a13; }
+    .tree-label {
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      width: 70px;
+      flex-shrink: 0;
+      letter-spacing: 0.04em;
+    }
+    .tree-segments {
+      display: flex;
+      gap: 3px;
+      flex: 1;
+    }
+    .tree-seg {
+      height: 18px;
+      background: var(--accent);
+      opacity: 0.8;
+      border-radius: 2px;
+      flex: 1;
+      min-width: 4px;
+    }
+    .tree-band[data-level="1"] .tree-seg { opacity: 0.5; }
+    .tree-band[data-level="2"] .tree-seg { opacity: 0.6; }
+    .tree-band[data-level="3"] .tree-seg { opacity: 0.7; }
+    .tree-band[data-level="4"] .tree-seg { opacity: 0.95; }
+    .tree-band[data-level="5"] .tree-seg { opacity: 0.85; }
+    .tree-band[data-level="6"] .tree-seg { opacity: 0.7; }
+    .tree-count {
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--ink);
+      width: 50px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .tree-detail {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+      padding: 0 0 0 80px;
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .tree-band.open + .tree-detail { max-height: 200px; padding-top: 0.4rem; padding-bottom: 0.7rem; }
+    .tree-hint {
+      font-family: system-ui, sans-serif;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.7rem;
+      text-align: center;
+    }
+
+    /* Instance embed */
+    .instance-embed {
+      margin: 2.5rem 0;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+      background: #15130e;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--rule);
+    }
+    .instance-embed iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+      border: 0;
+    }
+    .instance-embed .yt-thumb {
+      display: block;
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #000 center/cover no-repeat;
+      color: #fff;
+      text-decoration: none;
+    }
+    .instance-embed .yt-thumb::after {
+      content: "▶";
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      color: #fff;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+      background: linear-gradient(rgba(0,0,0,0.05), rgba(0,0,0,0.35));
+      transition: background 0.2s ease;
+    }
+    .instance-embed .yt-thumb:hover::after {
+      background: linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.45));
+    }
+    .instance-caption {
+      padding: 0.9rem 1rem;
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* Audio mini-player */
+    .audio-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin: 1.5rem 0 0;
+      padding: 0.6rem 0.9rem;
+      background: #15130e;
+      border: 1px solid var(--rule);
+      border-radius: 99px;
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .audio-mini button {
+      background: var(--accent);
+      color: #1a1006;
+      border: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .audio-mini button:hover { background: var(--accent-light); }
+    .audio-mini[data-playing="true"] button { background: var(--accent-light); }
+
+    /* Chapter table */
+    .chapter-table {
+      width: 100%;
+      max-width: 720px;
+      margin: 1rem auto 0;
+      border-collapse: collapse;
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+    }
+    .chapter-table th, .chapter-table td {
+      padding: 0.55rem 0.7rem;
+      text-align: right;
+      border-bottom: 1px solid var(--rule);
+    }
+    .chapter-table th:first-child, .chapter-table td:first-child { text-align: left; }
+    .chapter-table th { color: var(--muted); font-weight: 500; font-size: 0.8rem; letter-spacing: 0.05em; text-transform: uppercase; }
+    .chapter-table tr.highlight td { color: var(--accent-light); }
+
+    /* References */
+    .references {
+      margin: 4rem 0 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+      font-family: system-ui, sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .references h3 {
+      font-family: Georgia, serif;
+      font-size: 1.1rem;
+      color: var(--ink);
+      font-weight: 600;
+      margin: 0 0 0.8rem;
+    }
+    .references ul { list-style: none; padding: 0; margin: 0; }
+    .references li { margin: 0.4rem 0; }
+
+    /* Vega-Lite tooltip */
+    #vg-tooltip-element {
+      font-family: system-ui, sans-serif !important;
+      font-size: 12px !important;
+    }
+
+    @media (max-width: 600px) {
+      main { padding: 3rem 1rem 4rem; }
+      section h2 { font-size: 1.5rem; }
+      .stat-callout .stat-number { font-size: 3.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Teaser -->
+  <div class="teaser">
+    <video data-des="des_02" autoplay loop muted playsinline poster="assets/teaser_hero.png">
+      <source src="assets/teaser_motion.mp4" type="video/mp4">
+    </video>
+    <img class="teaser-fallback" data-des="des_01" src="assets/teaser_hero.png" alt="Empty stage spotlight" style="display:none;">
+    <div class="teaser-overlay">
+      <p class="teaser-eyebrow">Comedy as architecture</p>
+      <h1 class="teaser-title">One ten-second laugh, and what holds it up</h1>
+    </div>
+  </div>
+
+  <main>
+
+    <p class="deck">In a one-hour stand-up special, the loudest laugh is not the funniest line — it is the line where the most structure converges. Ali Wong's <em>Baby Cobra</em> gives us seconds-by-seconds proof.</p>
+
+    <!-- edt_01 — Hook -->
+    <section data-edt="edt_01" data-det="det_02,det_07">
+      <h2>One ten-second laugh</h2>
+
+      <div class="stat-callout" data-des="des_03" data-ana="ana_02">
+        <span class="stat-number">10s</span>
+        <span class="stat-label">the longest single laugh in the hour — exactly one caption out of 925</span>
+      </div>
+
+      <p data-ana="ana_02">Eleven minutes and forty-eight seconds into Ali Wong's <em>Baby Cobra</em>, the audience laughs for ten seconds. Ten clean seconds. Nothing else in the hour comes close — the next-largest laugh, half a minute later in the show but a full thirty-eight minutes later in the timeline, is 9.5 seconds.</p>
+
+      <p data-ana="ana_03" data-det="det_07">Across the whole 925-line transcript, exactly one caption is tagged with a 10-second laugh. Only four hit eight seconds or more. Only eleven hit seven. Almost two-thirds of the lines — 573 of 925 — get no measurable laugh at all. Stand-up, on this evidence, is not a steady drip of comparable laughs. It is mostly silence, a baseline of small smiles, and a handful of rare detonations.</p>
+
+      <p data-ana="ana_02" data-det="det_02">The line is short: "Colonize the colonizer." It comes inside the marriage chapter, not the pregnancy chapter most people remember from this special. So why does this one sentence — out of 925 — get a uniquely large reaction?</p>
+
+      <div class="chart-container" id="des_04" data-des="des_04" data-ana="ana_03">
+        <div class="chart-mount" id="chart_des_04" data-des="des_04" data-ana="ana_03"></div>
+        <p class="chart-caption">Distribution of laugh durations across all 925 caption lines. The lone bar at "10+" is the climax.</p>
+      </div>
+    </section>
+
+    <!-- edt_02 — Shape of the hour -->
+    <section data-edt="edt_02" data-det="det_05">
+      <h2>The shape of the hour</h2>
+
+      <div class="stat-callout" data-des="des_05" data-ana="ana_01">
+        <span class="stat-number">20.7%</span>
+        <span class="stat-label">of stage time is just the audience laughing — about 12 minutes of an hour</span>
+      </div>
+
+      <p data-ana="ana_01">First, look at the hour as a whole. Of the 58 minutes and 27 seconds the captions cover, 727 seconds — twenty-and-a-bit percent — are pure audience noise. Roughly twelve minutes of an hour-long special are not Wong talking; they are the audience laughing. When the room does laugh, the median reaction is just 1.5 seconds.</p>
+
+      <p data-ana="ana_04">Minute by minute, the laughter profile is jagged but rarely silent. The peak minute is minute 11 — twenty-two seconds of laughter packed into sixty seconds of stage time, because that's the minute that contains the climax line. Other large minutes cluster around recognizable bits: minute 8 (the "trap" metaphor), minute 13 (the racism callback right after the climax), minute 33 (the boss bit), minute 37 (paintball). Minute 59 is silent — that's Wong saying thank you and walking off.</p>
+
+      <div class="chart-container" id="des_06" data-des="des_06" data-ana="ana_04">
+        <div class="chart-mount" id="chart_des_06" data-des="des_06" data-ana="ana_04"></div>
+        <p class="chart-caption">Audience laughter, second by second of stage time, summed into one-minute bins. The vertical rule marks the climax at 11:48.</p>
+      </div>
+    </section>
+
+    <!-- edt_03 — Six-level tree -->
+    <section data-edt="edt_03" data-det="det_03,det_04">
+      <h2>A six-level tree, not a flat list</h2>
+
+      <p data-ana="ana_06" data-det="det_03">Now the architecture. Most stand-up sets are flat — a sequence of bits, like beads on a string. <em>Baby Cobra</em> is a tree. The annotators catalogued one hundred and thirty-one topics arranged across six nesting levels: 10 at the top, 21 at level 2, 43 at level 3, 31 at level 4, 19 at level 5, and 7 at level 6. Levels 4 to 6 are sub-sub-sub-topics that branch off a parent bit which itself is a child of a chapter.</p>
+
+      <div class="tree-container" data-des="des_07" data-ana="ana_06">
+        <div class="tree-band" data-level="1" onclick="this.classList.toggle('open')">
+          <span class="tree-label">Level 1</span>
+          <div class="tree-segments" id="tree-1"></div>
+          <span class="tree-count">10</span>
+        </div>
+        <div class="tree-detail">Top-level chapters: intro, getting older, marriage, paintball, pregnancy, conclusion. Each is a root.</div>
+        <div class="tree-band" data-level="2" onclick="this.classList.toggle('open')">
+          <span class="tree-label">Level 2</span>
+          <div class="tree-segments" id="tree-2"></div>
+          <span class="tree-count">21</span>
+        </div>
+        <div class="tree-detail">Direct children of the chapters: jealousy, settling, fertility, and so on.</div>
+        <div class="tree-band" data-level="3" onclick="this.classList.toggle('open')">
+          <span class="tree-label">Level 3</span>
+          <div class="tree-segments" id="tree-3"></div>
+          <span class="tree-count">43</span>
+        </div>
+        <div class="tree-detail">The broadest level — most of the actual material lives here.</div>
+        <div class="tree-band" data-level="4" onclick="this.classList.toggle('open')">
+          <span class="tree-label">Level 4</span>
+          <div class="tree-segments" id="tree-4"></div>
+          <span class="tree-count">31</span>
+        </div>
+        <div class="tree-detail">Where the climax lives. The 10-second laugh is a level-4 caption.</div>
+        <div class="tree-band" data-level="5" onclick="this.classList.toggle('open')">
+          <span class="tree-label">Level 5</span>
+          <div class="tree-segments" id="tree-5"></div>
+          <span class="tree-count">19</span>
+        </div>
+        <div class="tree-detail">Sub-sub-sub-topics — deep digressions inside digressions.</div>
+        <div class="tree-band" data-level="6" onclick="this.classList.toggle('open')">
+          <span class="tree-label">Level 6</span>
+          <div class="tree-segments" id="tree-6"></div>
+          <span class="tree-count">7</span>
+        </div>
+        <div class="tree-detail">The deepest seven topics — the floor of the tree.</div>
+        <p class="tree-hint">Click a level to read what lives there.</p>
+      </div>
+
+      <p data-ana="ana_07" data-det="det_04">What does the depth buy her? Bigger laughs. Captions at level 1 average 0.57 seconds of laughter; captions at level 4 average 0.90, level 5 averages 0.97. The tallest single laugh in the entire show — the 10-second one — is a level-4 caption. The deeper Wong burrows down a digression, the harder the audience laughs at what she finds. Setup lives at the top of the tree; payoff lives at the bottom.</p>
+
+      <div class="chart-container" id="des_08" data-des="des_08" data-ana="ana_07">
+        <div class="chart-mount" id="chart_des_08" data-des="des_08" data-ana="ana_07"></div>
+        <p class="chart-caption">Average laughter (darker bars) and maximum laughter (lighter bars) for captions at each nesting depth. Level 4 carries the only 10-second laugh.</p>
+      </div>
+    </section>
+
+    <!-- edt_04 — Anatomy of climax -->
+    <section data-edt="edt_04" data-det="det_04">
+      <h2>Anatomy of the climax</h2>
+
+      <p data-ana="ana_09">Zoom in on the ninety seconds either side of 11:48. The climax line is not a one-liner that arrived from nowhere. It is the apex of a staircase the audience is climbing in real time. At 11:24 a 1-second laugh: "when a white dude eats my pussy." At 11:31, three seconds: "I'm absorbing all of that privilege." At 11:41, four seconds: "I could just crush your head at any moment, white man." Then, at 11:48: "Colonize the colonizer." Ten seconds.</p>
+
+      <div class="chart-container" id="des_09" data-des="des_09" data-ana="ana_09">
+        <div class="chart-mount" id="chart_des_09" data-des="des_09" data-ana="ana_09"></div>
+        <p class="chart-caption">Every caption in the 90 seconds around the climax, with its laugh duration. Read it as a staircase rising to the 10-second peak.</p>
+      </div>
+
+      <p data-ana="ana_09">The window from 11:11 to 12:40 — ninety seconds of stage time — produces 39.8 seconds of laughter, twice the show's average density. And the roar doesn't stop with the climax. Twenty-four seconds later, the audience gives another six-second laugh ("...and be racist together"); fifty seconds later, six and a half ("we spend a hundred percent of our time shitting on Korean people"). The climax is the peak of a hill, not a free-standing tower.</p>
+
+      <p data-ana="ana_02">Read the climax line on its own and it is barely a joke. Read it after twenty-four seconds of layered setup — sex, power, colonialism, a white man rendered vulnerable — and it is the punchline of a thesis statement. The structure is most of the comedy.</p>
+
+      <div class="instance-embed">
+        <a data-des="des_10" class="yt-thumb" href="https://www.youtube.com/watch?v=XY9h-0x1Oao" target="_blank" rel="noopener" style="background-image:url('https://i.ytimg.com/vi/XY9h-0x1Oao/hqdefault.jpg')" title="Watch on YouTube: Ali Wong: Baby Cobra — The Pregnant Female Comedian (Netflix Is A Joke)" aria-label="Watch on YouTube: Ali Wong: Baby Cobra — The Pregnant Female Comedian (Netflix Is A Joke)"></a>
+        <p class="instance-caption">An official Netflix-channel clip from Baby Cobra. Wong on stage, seven months pregnant, in the room where the staircase was built. <a href="https://www.youtube.com/watch?v=XY9h-0x1Oao" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Watch on YouTube →</a></p>
+      </div>
+    </section>
+
+    <!-- edt_05 — Callbacks -->
+    <section data-edt="edt_05" data-det="det_03">
+      <h2>Callbacks at thirty-three minutes</h2>
+
+      <p data-ana="ana_08">If depth is the vertical dimension of structure, callbacks are the horizontal one. The topics file records exactly three explicit callbacks across the hour. The shortest reach is twelve minutes and twenty-four seconds — that is, the seed and the payoff are separated by twelve minutes of unrelated material the audience has to hold in their head.</p>
+
+      <p data-ana="ana_08" data-det="det_03">The other two reach further. A "hippies" callback at 49:43 reaches back thirty-three minutes to a peeing-in-the-park bit at 16:35. A "told my mom" callback at 50:57 reaches back forty-six minutes — across nearly the entire special — to a beat about blaming a third-world parent at 4:46. Wong plants seeds in the first ten minutes of the show and harvests them in the last ten. Standard advice in stand-up is that an audience can hold roughly fifteen minutes of context. <em>Baby Cobra</em> asks for forty-six.</p>
+
+      <div class="chart-container" id="des_11" data-des="des_11" data-ana="ana_08">
+        <div class="chart-mount" id="chart_des_11" data-des="des_11" data-ana="ana_08"></div>
+        <p class="chart-caption">Each arc shows one callback: the seed at left, the payoff at right. The mom callback (top arc) reaches back 46 minutes — almost the whole special.</p>
+      </div>
+    </section>
+
+    <!-- edt_06 — Marriage spine -->
+    <section data-edt="edt_06" data-det="det_02">
+      <h2>Marriage is the spine, pregnancy is the punch</h2>
+
+      <p data-ana="ana_10" data-det="det_02"><em>Baby Cobra</em> is famous for the pregnant comedian on stage. But the special is mostly about marriage. The five level-1 chapters are: intro (21 seconds), getting older (six minutes), marriage (thirty minutes and forty seconds — almost half the show), a paintball mini-chapter (ten seconds), pregnancy (nineteen minutes and twenty seconds), and a conclusion. Marriage is the spine.</p>
+
+      <p data-ana="ana_10">But laughter density is highest elsewhere. The paintball chapter is ten seconds long and 85% of that is audience laughter. The pregnancy chapter — visibly Wong's biographical gravitational center, given the seven-month belly — is a slightly quieter laugh per second than marriage. The marriage chapter is the longest and the loudest in cumulative terms (404 seconds of laughter), but the density per second is steady at 22%, almost identical to "getting older". The structure is uneven on purpose.</p>
+
+      <div class="chart-container" id="des_12" data-des="des_12" data-ana="ana_10">
+        <div class="chart-mount" id="chart_des_12" data-des="des_12" data-ana="ana_10"></div>
+        <p class="chart-caption">The full hour, drawn as a single bar. Marriage owns 30:40 of it; pregnancy 19:20; everything else is end-caps.</p>
+        <table class="chapter-table">
+          <thead><tr><th>Chapter</th><th>Span</th><th>Laughter</th><th>Laugh share</th></tr></thead>
+          <tbody>
+            <tr><td>Intro</td><td>21s</td><td>2.0s</td><td>9.5%</td></tr>
+            <tr><td>Getting older</td><td>6:01</td><td>83.8s</td><td>23.2%</td></tr>
+            <tr class="highlight"><td>Marriage</td><td>30:40</td><td>404.0s</td><td>22.0%</td></tr>
+            <tr><td>Paintball</td><td>10s</td><td>8.5s</td><td>85.0%</td></tr>
+            <tr><td>Pregnancy</td><td>19:20</td><td>211.2s</td><td>18.2%</td></tr>
+            <tr><td>Conclusion</td><td>26s</td><td>0s</td><td>0%</td></tr>
+          </tbody>
+        </table>
+        <div class="audio-mini" data-des="des_14" id="ambience-player">
+          <button id="ambience-btn" aria-label="Play ambience">▶</button>
+          <span>Listen — the room (30s of club ambience)</span>
+          <audio id="ambience-audio" preload="metadata" src="assets/club_ambience.wav"></audio>
+        </div>
+      </div>
+    </section>
+
+    <!-- edt_07 — Closing -->
+    <section data-edt="edt_07" data-det="det_04,det_05">
+      <h2>Comedy is architecture</h2>
+
+      <p data-ana="ana_03">The dataset gives us a small lesson about an enormous claim. The funniest single thing in the special — the 10-second peak — is not the wittiest sentence Wong wrote that hour. It is the sentence that sits at the deepest point of a tree, after the longest setup, in the middle of the largest chapter. Comedy at this scale is architecture. The line is the keystone. The arch is the work.</p>
+
+      <p>That's also why scrolling a transcript and reading "Colonize the colonizer" feels flat. The joke isn't the joke. The joke is everything that came before it.</p>
+
+      <p data-ana="ana_09" data-det="det_04">If you re-watch the special with the data overlaid, the staircase becomes visible: the small laughs at 11:24 and 11:31 and 11:41 are not warm-up — they are load-bearing. Each one is a step the audience takes so the next step can be slightly higher. The 10-second peak is not a moment of inspiration. It is the predictable result of structure.</p>
+
+      <figure class="visual-container">
+        <img src="assets/closing_arch.png" data-des="des_13" alt="A stone archway with an illuminated keystone — visual metaphor for the structural support behind the climax" style="max-width: 100%; height: auto; display: block; margin: 0 auto;">
+        <figcaption>The keystone holds because the voussoirs around it do.</figcaption>
+      </figure>
+    </section>
+
+    <div class="references">
+      <h3>Sources</h3>
+      <ul>
+        <li><strong>Data:</strong> The Pudding, "<a href="https://pudding.cool/2018/02/stand-up">The Structure of Stand-Up Comedy</a>" by Russell Samora and Matt Daniels (Feb 2018). CSV files mirrored at <a href="https://github.com/the-pudding/data/tree/master/stand-up">github.com/the-pudding/data</a>.</li>
+        <li><strong>Subject:</strong> <a href="https://www.netflix.com/title/80101493">Ali Wong: Baby Cobra</a> (Netflix, 2016), filmed September 2015 at the Neptune Theater, Seattle.</li>
+        <li><strong>Background:</strong> <a href="https://en.wikipedia.org/wiki/Callback_(comedy)">Callback (comedy)</a> — Wikipedia.</li>
+        <li><strong>Tools:</strong> Vega-Lite v5 for charts; OpenStreetMap tile attribution n/a (no maps).</li>
+      </ul>
+    </div>
+
+  </main>
+
+<script>
+  // Helpers ----------------------------------------------------------------
+  function rowsToValues(columns, rows) {
+    return rows.map(function (row) {
+      var o = {};
+      for (var i = 0; i < columns.length; i++) o[columns[i]] = row[i];
+      return o;
+    });
+  }
+
+  // ana_03: Histogram of laugh durations -----------------------------------
+  var ana03_columns = ["bucket","count"];
+  var ana03_rows = [["0",573],["0.5",41],["1.0",47],["1.5",34],["2.0",42],["2.5",27],["3-3.5",46],["4-4.5",15],["5-5.5",9],["6-6.5",8],["7-7.5",7],["8-9.5",3],["10+",1]];
+  var ana03_values = rowsToValues(ana03_columns, ana03_rows);
+
+  vegaEmbed("#chart_des_04", {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "transparent",
+    "width": "container",
+    "height": 300,
+    "padding": {"top":10,"left":40,"right":20,"bottom":40},
+    "data": {"values": ana03_values},
+    "layer": [
+      {
+        "mark": {"type":"bar","cornerRadiusTopLeft":2,"cornerRadiusTopRight":2},
+        "encoding": {
+          "x": {"field":"bucket","type":"ordinal","sort": ana03_rows.map(function(r){return r[0];}),"axis": {"labelAngle":0,"title":"Laugh duration (seconds)","labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620"}},
+          "y": {"field":"count","type":"quantitative","axis": {"title":"Number of caption lines","grid":false,"labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620"}},
+          "color": {
+            "condition": {"test": "datum.bucket === '10+'", "value": "#d97a3a"},
+            "value": "#5c4d3a"
+          },
+          "tooltip": [
+            {"field":"bucket","title":"Laugh range (s)"},
+            {"field":"count","title":"Caption lines"}
+          ]
+        }
+      },
+      {
+        "data": {"values": [{"bucket":"10+","count":1,"label":"one caption — \"Colonize the colonizer\""}]},
+        "mark": {"type":"text","align":"right","baseline":"bottom","dy":-12,"dx":40,"fontSize":11,"color":"#e8a777","fontStyle":"italic"},
+        "encoding": {
+          "x": {"field":"bucket","type":"ordinal","sort": ana03_rows.map(function(r){return r[0];})},
+          "y": {"field":"count","type":"quantitative"},
+          "text": {"field":"label"}
+        }
+      }
+    ],
+    "config": {"view": {"stroke": null}}
+  }, {"actions": false});
+
+  // ana_04: Laughter by minute ---------------------------------------------
+  var ana04_columns = ["minute","laugh_seconds"];
+  var ana04_rows = [[0,4.0],[1,12.0],[2,17.0],[3,13.5],[4,8.75],[5,15.0],[6,15.5],[7,11.75],[8,21.0],[9,11.75],[10,12.5],[11,21.75],[12,16.5],[13,20.5],[14,15.5],[15,12.5],[16,10.25],[17,15.0],[18,11.5],[19,16.0],[20,5.25],[21,19.5],[22,11.25],[23,13.0],[24,10.0],[25,14.75],[26,13.75],[27,9.5],[28,10.5],[29,9.0],[30,10.75],[31,10.25],[32,7.25],[33,19.5],[34,14.25],[35,13.5],[36,3.75],[37,20.25],[38,4.75],[39,9.75],[40,14.25],[41,13.0],[42,9.0],[43,17.0],[44,6.25],[45,14.5],[46,12.0],[47,6.75],[48,8.0],[49,16.0],[50,12.0],[51,9.75],[52,9.75],[53,14.25],[54,6.25],[55,10.0],[56,13.0],[57,7.0],[58,15.5],[59,0.0]];
+  var ana04_values = rowsToValues(ana04_columns, ana04_rows);
+
+  vegaEmbed("#chart_des_06", {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "transparent",
+    "width": "container",
+    "height": 280,
+    "padding": {"top":10,"left":40,"right":20,"bottom":40},
+    "data": {"values": ana04_values},
+    "layer": [
+      {
+        "mark": {"type":"area","interpolate":"monotone","color":"#d97a3a","opacity":0.75,"line":{"color":"#e8a777","strokeWidth":1.5}},
+        "encoding": {
+          "x": {"field":"minute","type":"quantitative","axis": {"title":"Minute of the special","labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620","grid":false},"scale": {"domain": [0,59]}},
+          "y": {"field":"laugh_seconds","type":"quantitative","axis": {"title":"Seconds of laughter","grid":false,"labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620"}},
+          "tooltip": [
+            {"field":"minute","title":"Minute"},
+            {"field":"laugh_seconds","title":"Laughter (s)"}
+          ]
+        }
+      },
+      {
+        "data": {"values": [{"minute":11,"label":"climax line at 11:48"}]},
+        "mark": {"type":"rule","color":"#f3ece1","strokeDash":[3,3],"opacity":0.7},
+        "encoding": {
+          "x": {"field":"minute","type":"quantitative"}
+        }
+      },
+      {
+        "data": {"values": [{"minute":11,"y":24,"label":"climax line at 11:48"}]},
+        "mark": {"type":"text","align":"left","baseline":"middle","dx":6,"fontSize":11,"color":"#f3ece1","fontStyle":"italic"},
+        "encoding": {
+          "x": {"field":"minute","type":"quantitative"},
+          "y": {"field":"y","type":"quantitative"},
+          "text": {"field":"label"}
+        }
+      }
+    ],
+    "config": {"view": {"stroke": null}}
+  }, {"actions": false});
+
+  // ana_06: Tree segments (decorative bars per level) ----------------------
+  var levelCounts = [10,21,43,31,19,7];
+  for (var lvl = 1; lvl <= 6; lvl++) {
+    var seg = document.getElementById("tree-" + lvl);
+    if (!seg) continue;
+    var n = levelCounts[lvl-1];
+    seg.innerHTML = "";
+    for (var i = 0; i < n; i++) {
+      var s = document.createElement("div");
+      s.className = "tree-seg";
+      seg.appendChild(s);
+    }
+  }
+
+  // ana_07: Depth × laughter -----------------------------------------------
+  var ana07_rows = [
+    {"level":"Level 1","metric":"avg","value":0.57,"order":1},
+    {"level":"Level 1","metric":"max","value":8.5,"order":1},
+    {"level":"Level 2","metric":"avg","value":0.52,"order":2},
+    {"level":"Level 2","metric":"max","value":7.0,"order":2},
+    {"level":"Level 3","metric":"avg","value":0.71,"order":3},
+    {"level":"Level 3","metric":"max","value":7.5,"order":3},
+    {"level":"Level 4","metric":"avg","value":0.90,"order":4},
+    {"level":"Level 4","metric":"max","value":10.0,"order":4},
+    {"level":"Level 5","metric":"avg","value":0.97,"order":5},
+    {"level":"Level 5","metric":"max","value":9.5,"order":5},
+    {"level":"Level 6","metric":"avg","value":0.87,"order":6},
+    {"level":"Level 6","metric":"max","value":7.5,"order":6}
+  ];
+
+  vegaEmbed("#chart_des_08", {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "transparent",
+    "width": "container",
+    "height": 320,
+    "padding": {"top":10,"left":40,"right":20,"bottom":50},
+    "data": {"values": ana07_rows},
+    "mark": {"type":"bar"},
+    "encoding": {
+      "x": {"field":"level","type":"nominal","sort":["Level 1","Level 2","Level 3","Level 4","Level 5","Level 6"],"axis": {"labelAngle":0,"title":"Topic nesting depth","labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620"}},
+      "y": {"field":"value","type":"quantitative","axis": {"title":"Laughter (seconds per caption)","grid":false,"labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620"}},
+      "xOffset": {"field":"metric","sort":["avg","max"]},
+      "color": {
+        "field":"metric","type":"nominal",
+        "scale": {"domain":["avg","max"],"range":["#d97a3a","#5c4d3a"]},
+        "legend": {"title":"","orient":"top","labelColor":"#aaa091","values":["avg","max"]}
+      },
+      "tooltip": [
+        {"field":"level","title":"Depth"},
+        {"field":"metric","title":"Metric"},
+        {"field":"value","title":"Seconds","format":".2f"}
+      ]
+    },
+    "config": {"view": {"stroke": null}}
+  }, {"actions": false});
+
+  // ana_09: Climax staircase -----------------------------------------------
+  var ana09_rows = [
+    {"time":"11:11","laugh":0.5,"caption":"and disturbing documentaries.","pos":1},
+    {"time":"11:14","laugh":0.25,"caption":"They introduce you to cool stuff like that","pos":2},
+    {"time":"11:16","laugh":0.0,"caption":"and it's very, you know, it's hot hookin' up with a white dude.","pos":3},
+    {"time":"11:20","laugh":0.0,"caption":"I mean, nothing makes me feel more powerful","pos":4},
+    {"time":"11:24","laugh":1.0,"caption":"than when a white dude eats my pussy. Oh, my God.","pos":5},
+    {"time":"11:27","laugh":1.0,"caption":"I just feel like I'm absorbing all of that privilege","pos":6},
+    {"time":"11:31","laugh":3.0,"caption":"and all of that entitlement…","pos":7},
+    {"time":"11:34","laugh":1.5,"caption":"…through the money hole and just…","pos":8},
+    {"time":"11:38","laugh":0.0,"caption":"And then also, he's so vulnerable down there.","pos":9},
+    {"time":"11:41","laugh":4.0,"caption":"\"I could just crush your head at any moment, white man!\"","pos":10},
+    {"time":"11:44","laugh":0.0,"caption":"I could just kill you right now! Crush those brains!","pos":11},
+    {"time":"11:48","laugh":10.0,"caption":"\"Colonize the colonizer!\"","pos":12},
+    {"time":"12:01","laugh":0.0,"caption":"But I think that for marriage,","pos":13},
+    {"time":"12:08","laugh":0.0,"caption":"The advantage is that you get to go home…","pos":14},
+    {"time":"12:12","laugh":6.0,"caption":"\"…and be racist together.\"","pos":15},
+    {"time":"12:34","laugh":6.5,"caption":"\"…shitting on Korean people.\"","pos":16}
+  ];
+
+  vegaEmbed("#chart_des_09", {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "transparent",
+    "width": "container",
+    "height": 360,
+    "padding": {"top":20,"left":40,"right":40,"bottom":50},
+    "data": {"values": ana09_rows},
+    "layer": [
+      {
+        "mark": {"type":"bar","cornerRadiusTopLeft":2,"cornerRadiusTopRight":2,"width":18},
+        "encoding": {
+          "x": {"field":"pos","type":"ordinal","axis": {"title":"Stage time","labelExpr":"datum.value === 1 ? '11:11' : datum.value === 5 ? '11:24' : datum.value === 7 ? '11:31' : datum.value === 10 ? '11:41' : datum.value === 12 ? '11:48' : datum.value === 15 ? '12:12' : datum.value === 16 ? '12:34' : ''","labelAngle":0,"labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620"}},
+          "y": {"field":"laugh","type":"quantitative","axis": {"title":"Laughter (seconds)","grid":false,"labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620"},"scale":{"domain":[0,11]}},
+          "color": {
+            "condition": {"test": "datum.pos === 12","value": "#d97a3a"},
+            "value": "#5c4d3a"
+          },
+          "tooltip": [
+            {"field":"time","title":"Time"},
+            {"field":"laugh","title":"Laugh (s)"},
+            {"field":"caption","title":"Line"}
+          ]
+        }
+      },
+      {
+        "transform": [{"filter": "datum.laugh >= 4"}],
+        "mark": {"type":"text","align":"center","baseline":"bottom","dy":-6,"fontSize":10.5,"color":"#e8a777","fontStyle":"italic"},
+        "encoding": {
+          "x": {"field":"pos","type":"ordinal"},
+          "y": {"field":"laugh","type":"quantitative"},
+          "text": {"field":"caption"}
+        }
+      }
+    ],
+    "config": {"view": {"stroke": null}}
+  }, {"actions": false});
+
+  // ana_08: Callback arcs -------------------------------------------------
+  // We draw arcs as a custom layered chart: the timeline rule + arc paths.
+  var ana08_rows = [
+    {"id":"arc1","seed":4.77,"callback":50.95,"reach":46.2,"label":"\"told my mom\" → blaming a third-world parent","y":0},
+    {"id":"arc2","seed":16.58,"callback":49.72,"reach":33.1,"label":"\"hippies\" → peeing in the park","y":0},
+    {"id":"arc3","seed":44.40,"callback":56.80,"reach":12.4,"label":"\"wet\" → pregnancy callback","y":0}
+  ];
+  // Build dense arc points
+  function arcPoints(seed, cbk, height, n) {
+    var pts = [];
+    for (var i = 0; i <= n; i++) {
+      var t = i/n;
+      var x = seed + t*(cbk-seed);
+      var y = 4*height*t*(1-t); // parabola peak = height at t=0.5
+      pts.push({"x":x,"y":y});
+    }
+    return pts;
+  }
+  var arcAll = [];
+  ana08_rows.forEach(function(r,idx){
+    var heights = [9, 6, 3]; // arcs ranked by reach
+    var pts = arcPoints(r.seed, r.callback, heights[idx], 60);
+    pts.forEach(function(p){ p.id = r.id; p.label = r.label; arcAll.push(p); });
+  });
+  var arcMarkers = [];
+  ana08_rows.forEach(function(r){
+    arcMarkers.push({"x":r.seed,"y":0,"kind":"seed","label":"seed " + (r.seed|0) + " min"});
+    arcMarkers.push({"x":r.callback,"y":0,"kind":"callback","label":"callback " + (r.callback|0) + " min"});
+  });
+
+  vegaEmbed("#chart_des_11", {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "transparent",
+    "width": "container",
+    "height": 260,
+    "padding": {"top":40,"left":40,"right":40,"bottom":50},
+    "layer": [
+      {
+        "data": {"values": arcAll},
+        "mark": {"type":"line","interpolate":"monotone","strokeWidth":2,"opacity":0.85},
+        "encoding": {
+          "x": {"field":"x","type":"quantitative","axis": {"title":"Minute of the show","values":[0,10,20,30,40,50,60],"labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620","grid":false},"scale": {"domain": [0,60]}},
+          "y": {"field":"y","type":"quantitative","axis": null,"scale": {"domain":[0,10]}},
+          "color": {"field":"id","type":"nominal","scale": {"domain":["arc1","arc2","arc3"],"range":["#d97a3a","#a96a3d","#7a5439"]},"legend": null},
+          "detail": {"field":"id"},
+          "tooltip": [{"field":"label","title":"Callback"}]
+        }
+      },
+      {
+        "data": {"values": arcMarkers},
+        "mark": {"type":"point","filled":true,"size":50},
+        "encoding": {
+          "x": {"field":"x","type":"quantitative"},
+          "y": {"field":"y","type":"quantitative"},
+          "color": {
+            "condition": {"test": "datum.kind === 'seed'","value": "#aaa091"},
+            "value": "#e8a777"
+          },
+          "tooltip": [{"field":"label","title":""}]
+        }
+      },
+      {
+        "data": {"values": [
+          {"x":4.77,"y":9.7,"label":"46 min"},
+          {"x":16.58,"y":6.7,"label":"33 min"},
+          {"x":44.40,"y":3.5,"label":"12 min"}
+        ]},
+        "mark": {"type":"text","fontSize":11,"color":"#e8a777","fontStyle":"italic","align":"left","dx":4},
+        "encoding": {
+          "x": {"field":"x","type":"quantitative"},
+          "y": {"field":"y","type":"quantitative"},
+          "text": {"field":"label"}
+        }
+      }
+    ],
+    "config": {"view": {"stroke": null}}
+  }, {"actions": false});
+
+  // ana_10: Chapter map ----------------------------------------------------
+  var ana10_rows = [
+    {"chapter":"Intro","span":21,"order":1},
+    {"chapter":"Getting older","span":361,"order":2},
+    {"chapter":"Marriage","span":1840,"order":3},
+    {"chapter":"Paintball","span":10,"order":4},
+    {"chapter":"Pregnancy","span":1160,"order":5},
+    {"chapter":"Conclusion","span":26,"order":6}
+  ];
+
+  vegaEmbed("#chart_des_12", {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "background": "transparent",
+    "width": "container",
+    "height": 70,
+    "padding": {"top":10,"left":40,"right":40,"bottom":30},
+    "data": {"values": ana10_rows},
+    "mark": {"type":"bar","stroke":"#0d0c0a","strokeWidth":1.5},
+    "encoding": {
+      "x": {
+        "aggregate":"sum","field":"span","type":"quantitative",
+        "axis": {"title":"Stage time","values":[0,600,1200,1800,2400,3000,3600],"labelExpr":"datum.value === 0 ? '0:00' : datum.value === 600 ? '10:00' : datum.value === 1200 ? '20:00' : datum.value === 1800 ? '30:00' : datum.value === 2400 ? '40:00' : datum.value === 3000 ? '50:00' : '60:00'","labelColor":"#aaa091","titleColor":"#aaa091","domainColor":"#2a2620","tickColor":"#2a2620","grid":false},
+        "stack":"zero"
+      },
+      "y": null,
+      "color": {
+        "field":"chapter","type":"nominal",
+        "scale": {"domain":["Intro","Getting older","Marriage","Paintball","Pregnancy","Conclusion"],"range":["#3b332a","#7a5439","#d97a3a","#e8a777","#a96a3d","#3b332a"]},
+        "legend": {"title":"Chapter","orient":"bottom","labelColor":"#aaa091","columns":3,"symbolType":"square"}
+      },
+      "order": {"field":"order","type":"quantitative"},
+      "tooltip": [
+        {"field":"chapter","title":"Chapter"},
+        {"field":"span","title":"Span (s)"}
+      ]
+    },
+    "config": {"view": {"stroke": null}}
+  }, {"actions": false});
+
+  // Audio mini-player ------------------------------------------------------
+  (function () {
+    var btn = document.getElementById("ambience-btn");
+    var audio = document.getElementById("ambience-audio");
+    var wrap = document.getElementById("ambience-player");
+    if (!btn || !audio) return;
+    btn.addEventListener("click", function () {
+      if (audio.paused) {
+        audio.play().catch(function(){});
+        btn.textContent = "❚❚";
+        wrap.setAttribute("data-playing", "true");
+      } else {
+        audio.pause();
+        btn.textContent = "▶";
+        wrap.setAttribute("data-playing", "false");
+      }
+    });
+    audio.addEventListener("ended", function () {
+      btn.textContent = "▶";
+      wrap.setAttribute("data-playing", "false");
+    });
+  })();
+</script>
+
+</body>
+</html>

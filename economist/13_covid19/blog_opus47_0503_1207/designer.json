@@ -1,0 +1,225 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "data-driven mix: the spine of the blog is one quietly dramatic regression line, so the visual language is editorial-analytic. The teaser is a cinematic still that animates on scroll; the centrepiece is an interactive log-log scatter where the reader can hover countries and see residuals; secondary charts pace the piece. Audio is skipped because nothing in the dataset has a sonic dimension — sonifying a country residual table would be decorative, not informative.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "The dataset is fundamentally about a regression line and country residuals — charts are the most direct way to show what the model 'sees'."},
+      "image": {"used": true, "reason": "Two atmospheric stills (the dim map-with-vials and the empty airport) anchor the emotional tone of an early-pandemic moment that the analytic charts cannot evoke."},
+      "video": {"used": true, "reason": "We animate the teaser still with image2video to give the reader an immediate cinematic entry; we do not generate a second action video because the story is contemplative, not kinetic."},
+      "audio": {"used": false, "reason": "Tour-flow / case data has no sonic dimension. Sonifying a country-residual table would be tone-card decoration, not insight; embedding a real recording would be tonally wrong for an analytical piece. Skipping audio is the data-driven choice here."},
+      "interactive_or_map": {"used": true, "reason": "The reveal section depends on the reader *seeing* residuals. An interactive scatter where they hover the country labels and reveal Russia/Indonesia outliers is far stronger than a static chart, and it doubles as a quiz-first interaction (highlight your guess for the most under-detected country)."}
+    },
+    "media_blockers": [
+      {
+        "category": "image",
+        "reason": "Default text2image model (openai/gpt-5.4-image-2) returned a 502/non-JSON response on the first attempt; succeeded on retry with google/gemini-3.1-flash-image-preview.",
+        "attempted_command": "python3 .../openrouter-text2image/scripts/generate_image.py --prompt '...' --download assets/teaser_hero.png",
+        "fallback_des": "des_02 (teaser still produced via gemini-3.1-flash-image-preview)"
+      }
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — animated map-on-desk still",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "Slow, almost imperceptible parallax push-in. The single beam of light barely flickers across the map. Tiny dust motes drift through the warm light. No camera shake. Quiet, contemplative, ominous.",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first",
+        "fallback_image": "teaser_hero.png"
+      },
+      "brief": "Full-bleed cinematic teaser. The reader lands on a slow, almost-still video of a world map on a dark desk lit by a single beam of warm tungsten light. The motion is subtle — drifting dust motes, a barely-perceptible push-in — so the reader can read it for as long as they like without it feeling kinetic. Plays muted, autoplays once when scrolled into view, loops. Falls back to teaser_hero.png if video unavailable.",
+      "rationale": "An image2video keeps the strong composition of the still while letting the page breathe. The dataset has no event to enact and no process to show — quiet motion is the right register.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser still (fallback / poster)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "An overhead, dimly-lit cinematic still of a world map laid flat on a dark wooden desk. A silver compass rests at one corner. Small empty glass vials and a folded surgical mask sit across countries in Asia and Europe. A beam of warm tungsten light falls diagonally across the map, leaving most of it in shadow. Editorial documentary photography, shallow depth of field, muted earth tones, no labels, no text, mood quietly ominous.",
+        "model": "google/gemini-3.1-flash-image-preview"
+      },
+      "brief": "Static fallback for the teaser video; also used as the poster frame.",
+      "rationale": "Always provide a still fallback for embedded video.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Hook chart — Top 15 reported case counts on 4 March 2020",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "bar_horizontal",
+        "data_source": "ana_01",
+        "x": "cases",
+        "y": "country",
+        "highlight": {"country": "China"},
+        "interaction": "hover tooltip with exact count and global %; sort descending; log scale on x to keep all 15 bars readable while preserving China's dominance",
+        "style": {"palette": "single accent on China + Hubei, all others muted neutral; no gridlines except a faint x-axis; large y-axis labels", "axis_x": "log scale", "show_values_at_end_of_bars": true}
+      },
+      "brief": "Horizontal bar chart of the 15 largest case-count countries on 4 March 2020. China dwarfs everything; the second-tier (South Korea, Italy, Iran) sits two orders of magnitude below; Japan/France/Germany/Spain/US sit a further order of magnitude below that. Use a log x-axis so all 15 bars are visible, with raw values appended at bar ends. Highlight China in the accent colour to make the ~84% concentration obvious.",
+      "rationale": "Linear bars would make all but China invisible; the editor's hook depends on the reader seeing both the China dominance and the long tail of small numbers below it. Log scale + value labels do both.",
+      "based_on": ["ana_01"]
+    },
+    "des_04": {
+      "label": "Hook image — empty airport (atmospheric still)",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "empty_airport.png",
+        "tool": "text2image",
+        "prompt": "An empty international airport departures terminal, photographed from a wide low angle. Rows of empty seats, a closed shop shutter behind, soft cool fluorescent light overhead, the silhouette of a single masked traveller pulling a suitcase in the far distance. The departure board glows faintly but its content is illegible. Cinematic photojournalism, muted blues and steel-grey, slight grain, no readable text, evocative of a world quietly emptying out.",
+        "model": "google/gemini-3.1-flash-image-preview"
+      },
+      "brief": "Atmospheric still of an empty airport, sized at content width with rounded corners. Sits between the hook prose and the global-cases chart, giving the reader a moment of mood before the analysis begins.",
+      "rationale": "The hook is about a moment in time as much as it is about a number. A photo of an empty airport carries the early-March 2020 feeling that no chart can.",
+      "based_on": ["det_01"]
+    },
+    "des_05": {
+      "label": "Tourism flows — top 15 destinations bar",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "bar_horizontal",
+        "data_source": "ana_03",
+        "x": "mean_tour",
+        "y": "country",
+        "highlight": {"oecd": true},
+        "interaction": "hover tooltip with exact tour-flow count and OECD/non-OECD label; sort descending",
+        "style": {"palette": "two-tone — accent for OECD bars, neutral for non-OECD; no gridlines; thousands separators on x-axis"}
+      },
+      "brief": "Horizontal bar chart of the top 15 Chinese tour-group destinations in Q3 2019. Thailand at the top with ~1.55m, Japan at ~1.25m, then Taiwan, Vietnam, Singapore. OECD bars (Japan, South Korea, USA, France, Germany, Australia, Italy) coloured differently from non-OECD. Reader sees instantly that the largest exposures are non-OECD destinations.",
+      "rationale": "Clear ranked comparison; the OECD/non-OECD split foreshadows the model's choice of fitting only on OECD countries.",
+      "based_on": ["ana_03"]
+    },
+    "des_06": {
+      "label": "OECD-only fit — small explanatory chart with the line",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "scatter_with_fitline",
+        "data_source": ["ana_07", "ana_02"],
+        "x": "mean_tour",
+        "y": "cases",
+        "color": "oecd",
+        "highlight": {"oecd": true},
+        "interaction": "hover tooltip showing country, mean_tour, cases, OECD flag",
+        "style": {"x_scale": "log", "y_scale": "symlog", "x_domain": [1, 2000000], "y_domain": [0, 10000], "no_gridlines": true, "fit_line_color": "accent", "oecd_marker": "filled accent circle", "non_oecd_marker": "muted-grey small circle, lower opacity"},
+        "annotations": [
+          {"text": "OECD-only fit\nlog(cases+1) = -8.44 + 1.13 × log(tourism)\nR² = 0.59, p < 1e-7", "position": "top-left"}
+        ]
+      },
+      "brief": "Log-log scatter showing all 124 countries with the OECD-only OLS fit overlaid. Use the regression-line table (ana_02) to draw the line. OECD countries in accent colour, non-OECD in faded grey. A small annotation block in the top-left corner gives the equation and R-squared. This is the explanatory chart, not the headline scatter — it is meant to be read once, then anchor the more elaborate version below.",
+      "rationale": "The model is the spine; the reader needs to see the line, not just be told the coefficients. Using both ana_07 (scatter rows) and ana_02 (regression-line table) lets us draw points and line in one chart without re-deriving.",
+      "based_on": ["ana_02", "ana_07"]
+    },
+    "des_07": {
+      "label": "Centrepiece — interactive country residual scatter",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "annotated_log_log_scatter",
+        "initial_state": "Full log-log scatter of all 124 countries with OECD points in one colour, non-OECD in another, the OLS fit line overlaid. A small set of country labels visible by default: Russia, Indonesia, Thailand, Vietnam, Iran, Italy, South Korea, China.",
+        "trigger": "Hover any point to see country name, mean tourism flow, reported cases, predicted cases, residual (×). Click a country to lock its tooltip and highlight its residual segment as a vertical line connecting the point to the regression line.",
+        "transition": "On hover/click, the point grows; a vertical line is drawn from the point to the fit line, labelled with the residual size in × (e.g. '170× below').",
+        "payoff": "Reader can compare residual sizes visually. Russia's vertical drop is roughly 170×, Indonesia's 165×; Iran's vertical rise is roughly 230×. The relative magnitude of these residuals against the line is the entire claim.",
+        "data_source": ["ana_07", "ana_02"]
+      },
+      "brief": "The centrepiece interactive. A Vega-Lite scatter (or vanilla SVG) with a fit line, OECD vs non-OECD colour split, and on-hover residual lines that drop or rise from the point to the line. Pre-labelled outliers: Russia, Indonesia, Myanmar, Thailand, Vietnam, Philippines (below); Iran, Italy, South Korea (above). All other points labelled on hover only. Smooth tooltips, no autoplay.",
+      "rationale": "The Editor's lead finding is the residual structure. A passive table cannot communicate residual size; a static scatter undersells it; an interactive scatter where hovering a country *draws the gap* makes the claim visible.",
+      "based_on": ["ana_04", "ana_05", "ana_07"]
+    },
+    "des_08": {
+      "label": "Above the line — Iran/Italy/Korea over-detected bar",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "lollipop",
+        "data_source": "ana_05",
+        "x": "residual_log",
+        "y": "country",
+        "highlight": {"country": "Iran"},
+        "interaction": "hover tooltip showing reported_cases, predicted_cases, residual_log",
+        "style": {"orientation": "horizontal", "stem_neutral": true, "head_accent_warm": true, "x_axis_label": "Residual (log-units above OECD-fit prediction)"}
+      },
+      "brief": "Horizontal lollipop chart of the 15 most over-detected countries. Iran sits far ahead at +5.46 log-units; Italy and South Korea cluster just below 3. The countries below 2 (Norway, Iceland, Spain, Austria, Belgium, etc.) form a long tail. Iran highlighted in warm accent.",
+      "rationale": "Lollipop reads cleanly for a 'how far ahead' chart and avoids visual sameness with the bar charts above it.",
+      "based_on": ["ana_05"]
+    },
+    "des_09": {
+      "label": "OECD vs non-OECD residual distribution",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "histogram_overlay",
+        "data_source": ["ana_07", "ana_06"],
+        "x": "residual_log",
+        "y": "count",
+        "color": "oecd",
+        "interaction": "hover bin tooltip; legend toggle to show one group at a time",
+        "style": {"binwidth": 0.5, "axis_x_zero_line": true, "annotations": [{"text": "OECD median ≈ 0", "x": 0, "y": "top"}, {"text": "Non-OECD median ≈ -0.73", "x": -0.73, "y": "top"}]}
+      },
+      "brief": "Two overlapping histograms of residual_log: OECD (n=34) centred near zero, non-OECD (n=90) shifted left. Vertical reference lines at each group's median; the visible offset is the entire group-level claim. Not a bar chart — different shape from the others on the page.",
+      "rationale": "After three bar/lollipop charts the page needs a different visual mode; an overlapping histogram makes the systematic offset obvious without re-stating numbers.",
+      "based_on": ["ana_06", "ana_07"]
+    },
+    "des_10": {
+      "label": "Multiplier stat callout strip",
+      "type": "stat_callout",
+      "section": "edt_07",
+      "content": {
+        "stat_strip": [
+          {"value": "172×", "label": "Russia: predicted vs reported", "data_source": "ana_08"},
+          {"value": "165×", "label": "Indonesia: predicted vs reported", "data_source": "ana_08"},
+          {"value": "110×", "label": "Myanmar: predicted vs reported", "data_source": "ana_08"},
+          {"value": "69×", "label": "Philippines: predicted vs reported", "data_source": "ana_08"},
+          {"value": "54×", "label": "Vietnam: predicted vs reported", "data_source": "ana_08"},
+          {"value": "51×", "label": "Thailand: predicted vs reported", "data_source": "ana_08"}
+        ]
+      },
+      "brief": "A horizontal strip of six big-number callouts, each showing the model's implied multiplier for one under-detector. 56–72px numerals, small uppercase label below. On wide screens the six sit in a single row; on narrow screens they wrap to a 2x3 grid. Backgrounds are softly tinted in the same accent palette as the page.",
+      "rationale": "The multiplier section's punch comes from a sequence of vivid numbers, not another chart. A stat strip lets the page punctuate before the closing chart.",
+      "based_on": ["ana_08"]
+    },
+    "des_11": {
+      "label": "Multiplier comparison bar — model implied vs subsequent peer-reviewed",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_08",
+        "x": "multiplier",
+        "y": "country",
+        "highlight": {},
+        "interaction": "hover tooltip showing reported, predicted, multiplier",
+        "style": {"orientation": "horizontal", "log_x": true, "annotations": [{"text": "Subsequent peer-reviewed estimates: Iran 34×, Italy 73×, Spain 161× (Lau et al. 2020)", "position": "below-axis"}], "no_gridlines": true}
+      },
+      "brief": "Horizontal bar of the 12 worst under-detectors with model-implied multipliers on log-x. Below the chart, a small annotation cites the Pulmonology paper's later (independent) multipliers for comparison; this is not a second chart series, just a contextual caption that makes the point that the residual story was confirmed.",
+      "rationale": "Closes the loop on the analytic argument. The earlier interactive scatter shows residuals as visual gaps; this chart converts those residuals into the headline ratios that the editor's prose calls out.",
+      "based_on": ["ana_08", "ana_07"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, restrained — closer to a long-form Economist Graphic Detail than to a flashy data viz",
+    "text_visual_pattern": "text-then-chart, with two atmospheric image breaks (teaser_motion video and empty_airport image) early on; closing is mostly prose",
+    "centrepiece": "des_07",
+    "anti_sameness_notes": "Avoids the 'audio + bar + bar + bar' rhythm. Mixes bar / lollipop / histogram / interactive scatter / stat strip so no two adjacent visuals share the same shape. No autoplay audio, no decorative tone-card. The interactive scatter (des_07) is unique to this dataset's residual structure.",
+    "typography_notes": "Body in Georgia 18px / 1.6 line-height. Section titles in semi-bold sans-serif. Stat callouts at 56-72px with small caps labels. Pull-quote-style emphasis for the 172× / 165× / 110× line. Subtle horizontal rules between sections."
+  }
+}

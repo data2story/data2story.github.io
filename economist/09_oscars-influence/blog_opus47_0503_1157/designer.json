@@ -1,0 +1,302 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Five-channel media plan driven by the dataset: a cinematic teaser still (already animated as a parallax video) and one chapter-break image grow the editorial mood; an interactive year scrubber for the People's Best Pictures replaces a passive chart so the reader feels the parallel canon; charts carry the analytical spine; an atmospheric film-score bed sits next to the canon section as opt-in audio rather than a generic tone card.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The dataset is fundamentally quantitative — annual_share trends across decades, year-by-year rank gaps, and a 16-year drought all need numeric visuals. We use a small-multiple line + dot for decade trajectories, a horizontal divergent bar for the snubs, and a tightly-styled small heatmap or year ladder for the 2015 hook."
+      },
+      "image": {
+        "used": true,
+        "reason": "An empty-cinema chapter-break image and an archival film-canister still anchor the emotional argument that the Oscars and the culture have drifted apart, without forcing fabricated movie stills."
+      },
+      "video": {
+        "used": true,
+        "reason": "We animate the teaser still with image2video so the opening frame breathes — slow parallax push-in, drifting dust motes — instead of a frozen poster. No fabricated film-clip generation, which would invent shots."
+      },
+      "audio": {
+        "used": true,
+        "reason": "A short generated cinematic piano bed sits beside the canon section (edt_06) as an opt-in listening cue. It is presented as a small section-integrated mini-player, never autoplayed, with mute/visual fallback. This avoids the generic click-to-play tone card pattern."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The People's Best Pictures (edt_05) becomes an interactive year scrubber: drag through 2001-2016 to see the Academy pick on the left and the year's most-referenced film on the right, with the gap visualised. This is more memorable than another bar chart."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero still (existing)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "(generated in earlier stage; preserved verbatim)",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Cinematic still of the teaser already on disk. Used as the static fallback poster for the animated teaser video on slow connections and for browsers that block autoplay.",
+      "rationale": "Keeps the strong opening composition the reader expects from the 'one image, no headline' teaser format.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Animated teaser (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "poster": "teaser_hero.png",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "very slow cinematic parallax push-in toward the centre of the frame, gentle drift of golden dust motes through the spotlight, faint flicker of warm light, no camera shake, no people entering, no text",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Full-bleed teaser video at the very top of the page, before the headline. Autoplays muted, loops, with poster fallback. The parallax push and dust motes give the still a hushed cinematic mood without inventing film content.",
+      "rationale": "Tells the reader 'this is about cinema' with motion, without fabricating film clips. Image2video preserves the carefully-composed teaser still.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "2015 hook ladder — Spotlight at rank 25",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "horizontal_bar_with_highlight",
+        "data_source": "ana_12",
+        "x": "count",
+        "y": "movie_name",
+        "color": "result",
+        "highlight": {"movie_name": "Spotlight"},
+        "interaction": "hover tooltip with exact reference count and rank",
+        "style": {"palette": "muted dark on cream", "no_gridlines": true, "winner_accent": "#c9a14b"}
+      },
+      "brief": "A short horizontal bar chart showing the four films from ana_12.data_table: The Force Awakens (358) | Fifty Shades of Grey (157) | Avengers: Age of Ultron (133) | Spotlight (31, rank 25). Spotlight bar is rendered in a muted Academy-gold accent and visually labelled 'Best Picture winner — rank 25 of 2015'. The other bars are slate grey. Bars share a consistent baseline so the visual length-gap is obvious. Tooltip shows the count and rank.",
+      "rationale": "Reduces the entire thesis to four bars the reader sees in one glance. Highlighting the winner in gold instead of red avoids an editorial sneer.",
+      "based_on": ["ana_12"]
+    },
+    "des_04": {
+      "label": "Decade trajectory — winners' annual share collapsing",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "dual_line",
+        "data_source": ["ana_03", "ana_11"],
+        "x": "decade",
+        "y_primary": "mean_share_pct",
+        "y_secondary": "bp_winner_share_pct",
+        "highlight": [
+          {"decade": 1970, "label": "1970s peak: 9.4%"},
+          {"decade": 2010, "label": "2010s: 1.5%"}
+        ],
+        "interaction": "hover tooltip with decade-level numbers",
+        "style": {
+          "palette": "single accent line with subtle area fill; decade gridlines only at peaks/lows",
+          "no_zero_baseline_fudge": true
+        }
+      },
+      "brief": "One primary line tracks ana_03.mean_share_pct from 1920s to 2010s. A second, lighter line shows ana_11.bp_winner_share_pct in the same plot — both fall together in the 1980s and again after 2000. Annotations call out the 1970s peak and the 2010s nadir. X axis = decade (categorical), Y axis = percentage. No grid clutter; soft horizontal rule at 0%.",
+      "rationale": "Two stacked metrics share the same shape — putting them in one chart is more honest than two separate decade charts and keeps the reader's eye on the same x-axis.",
+      "based_on": ["ana_03", "ana_11"]
+    },
+    "des_05": {
+      "label": "1970s peak stat callout",
+      "type": "stat_callout",
+      "section": "edt_03",
+      "content": {
+        "value": "9.4%",
+        "label": "the average 1970s Best Picture winner's share of its year's references",
+        "data_source": "ana_03"
+      },
+      "brief": "Large 64px serif numeral '9.4%' centred above the decade-trajectory chart, label below in smaller sans serif. Sets up the '1.5%' callout that comes after the chart.",
+      "rationale": "The shock of the decade collapse is easier to feel as two big numbers bracketing the chart.",
+      "based_on": ["ana_03"]
+    },
+    "des_06": {
+      "label": "2010s nadir stat callout",
+      "type": "stat_callout",
+      "section": "edt_03",
+      "content": {
+        "value": "1.5%",
+        "label": "the average 2010s Best Picture winner's share of its year's references — a 6.4x drop",
+        "data_source": "ana_03"
+      },
+      "brief": "Large 64px serif numeral '1.5%' shown directly after the chart.",
+      "rationale": "Closes the section's argument with the matching number to the opening callout.",
+      "based_on": ["ana_03"]
+    },
+    "des_07": {
+      "label": "Empty-cinema chapter-break image (snubs)",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "empty_house.png",
+        "tool": "text2image",
+        "prompt": "cinematic still: a vast empty grand cinema auditorium, plush red velvet seats stretching into deep shadow, a single spotlight pooling on an empty Oscar-statue podium centre stage, dust motes drifting through the beam, no people, no text, no logos, deep blacks and warm amber, melancholy and theatrical, 35mm photograph aesthetic, shallow depth of field",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed image acting as a chapter break opening edt_04. The empty house and lit podium reads as 'the prize is given, but the audience went elsewhere' — a visual analogue to the snub argument without depicting any specific film.",
+      "rationale": "Atmosphere image rather than a fabricated film still; complements the snub bar chart that follows.",
+      "based_on": []
+    },
+    "des_08": {
+      "label": "Snub gap chart — biggest x-factors between winner and unnominated rival",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar_pair",
+        "data_source": "ana_05",
+        "x_left": "winner_count",
+        "x_right": "rival_count",
+        "y": "year",
+        "row_labels": ["bp_winner", "rival"],
+        "highlight": {"year": 1980},
+        "interaction": "hover any pair to highlight both bars and show the x-factor in a tooltip",
+        "style": {
+          "palette": "winner = warm Academy-gold tint, rival = neutral slate",
+          "x_axis": "log scale to keep both 30 and 4965 readable on the same row"
+        }
+      },
+      "brief": "Twelve mini back-to-back rows from ana_05.data_table — each row shows the BP winner's reference count on the left and the unnominated rival's count on the right, sorted by ratio so 1980 (Ordinary People vs The Empire Strikes Back, 18.6x) sits at the top. The 1980 row is rendered slightly larger and labelled 'the largest snub of the dataset'. Each row gets the year, the two film names, and the multiplier.",
+      "rationale": "Putting winner and rival on the same row makes the asymmetry physical. Sorting by the multiplier (rather than by year) puts the most evocative pair first.",
+      "based_on": ["ana_05"]
+    },
+    "des_09": {
+      "label": "Frequency-of-snub stat callout",
+      "type": "stat_callout",
+      "section": "edt_04",
+      "content": {
+        "value": "74 of 89",
+        "label": "Best Picture years in which an unnominated film accumulated more references than the winner",
+        "data_source": "ana_06"
+      },
+      "brief": "Stat callout rendered as '74 of 89' (≈83%) below the snub chart, signalling that 1980 is not an outlier but the rule.",
+      "rationale": "The single number generalises the chart from a curated dozen rows to the whole 89-year dataset.",
+      "based_on": ["ana_06"]
+    },
+    "des_10": {
+      "label": "People's Best Pictures — interactive year scrubber",
+      "type": "interactive",
+      "section": "edt_05",
+      "content": {
+        "interaction_type": "year_scrubber",
+        "initial_state": "Reader sees a ladder of years 2001-2016 with two columns side by side: ACADEMY PICK (left, gold accent) and PEOPLE'S PICK (right, slate). Year 2015 is pre-selected with Spotlight (31 refs) on the left and The Force Awakens (358 refs) on the right.",
+        "trigger": "Reader drags a horizontal range slider OR clicks a year in the year-strip; both pick the same row",
+        "transition": "The two cards fade-and-swap to the new year's pair: film name, reference count, year_rank, and a small inline bar showing the ratio. A tiny status row underneath reads 'Academy pick was the year's #N most-referenced film'.",
+        "payoff": "After scrubbing through 2001-2016, the reader has felt that in 13 of 16 years the People's Pick was a film that was never even nominated.",
+        "data_source": "ana_09",
+        "secondary_data_source": "ana_02"
+      },
+      "brief": "A two-column comparison driven by ana_09.data_table for the People's Pick column and ana_02.data_table (filtered to 2001-2016) for the Academy column. The year strip uses subtle bullets — current year highlighted, 'Academy nominated' marker (small star) shown only for the three nomination years (2001 Fellowship, 2009 Avatar, 2010 Inception). Includes Prev / Next buttons for keyboard accessibility.",
+      "rationale": "Sixteen years is too many for a static side-by-side and a chart would over-quantify what is fundamentally a list comparison. Scrubbing makes the parallel canon land.",
+      "based_on": ["ana_09", "ana_02"]
+    },
+    "des_11": {
+      "label": "Canon archive image (peaks the Academy got right)",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "canon_archive.png",
+        "tool": "text2image",
+        "prompt": "cinematic still: a single antique film canister set on a worn wooden desk in pale lamplight, a stack of old yellowed cinema reference books behind it, ribbons of celluloid film unspooling onto the surface, subtle warm amber-and-ivory palette, painterly noir lighting, no text, no logos, no people, evocative of cultural memory and movie history, 35mm photograph, shallow depth of field",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Atmosphere image opening the canon section. Suggests reverence for cinema's reference network without depicting specific titles.",
+      "rationale": "Pairs the visual mood with the section about Casablanca, The Godfather, and Star Wars 1977 without inventing fake stills of those films.",
+      "based_on": []
+    },
+    "des_12": {
+      "label": "Canon top-share chart — annual_share leaders",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_10",
+        "x": "annual_share_pct",
+        "y": "movie_name",
+        "color": "result",
+        "highlight": [
+          {"movie_name": "Star Wars: Episode IV - A New Hope"},
+          {"movie_name": "Casablanca"}
+        ],
+        "interaction": "hover for raw count + oscars_year + Best Picture status",
+        "style": {
+          "palette": "winner = warm gold (#c9a14b), nominee = soft cream, unnominated = slate",
+          "n_rows": 12,
+          "no_gridlines": true
+        }
+      },
+      "brief": "Top 12 rows from ana_10.data_table sorted by annual_share_pct. Each row is colour-coded by Best Picture status (winner / nominee / unnominated). Star Wars 1977 (55.2%, unnominated) and Casablanca 1943 (48.7%, winner) are emphasised.",
+      "rationale": "Lets the reader see in one chart that the all-time anchor texts are a mix of winners and snubs — the 'Academy got it right' moments and the 'Academy missed it big' moments share the same axis.",
+      "based_on": ["ana_10"]
+    },
+    "des_13": {
+      "label": "Casablanca dominance stat callout",
+      "type": "stat_callout",
+      "section": "edt_06",
+      "content": {
+        "value": "48.7%",
+        "label": "of every IMDb reference to a 1943 film points back to Casablanca",
+        "data_source": "ana_08"
+      },
+      "brief": "Large 64px callout placed before the canon chart so the reader carries the number into the chart.",
+      "rationale": "The Casablanca number is the most quoted in the editor.md and deserves a separate visual moment.",
+      "based_on": ["ana_08"]
+    },
+    "des_14": {
+      "label": "Cinematic atmosphere bed (generated audio)",
+      "type": "audio",
+      "section": "edt_06",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "The canon section is about cinema's emotional memory — a slow, opt-in piano-and-strings bed lets the reader sit in that mood while reading the Casablanca / Godfather / Star Wars '77 paragraph. It is paired with the canon_archive.png so the visual fallback is intact.",
+        "trigger": "Click 'Listen while you read' button next to the canon image; never autoplay",
+        "ui_form": "section-integrated mini-player tucked under the canon image caption — small play/pause toggle, volume rule, and an inline 'mute' control. Not a full audio card.",
+        "content": {
+          "filename": "cinema_bed.wav",
+          "tool": "text2music",
+          "prompt": "slow cinematic piano and warm strings, melancholy contemplative film score, instrumental, no vocals, sparse, vintage",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "If audio is muted, blocked, or the file fails to load, the image and section text remain fully readable. The play button shows a 'audio unavailable' state if the file is missing.",
+        "novelty_note": "Not the standard 'click-to-play tone card'. Audio is anchored to a chapter break image and presented as ambient reading mood, not a standalone artefact."
+      },
+      "brief": "A 30-60s instrumental piano-and-strings bed presented as an opt-in listening cue beneath the canon image. Plays via standard <audio controls>; preload=metadata so it does not slow first paint.",
+      "rationale": "Audio earns its slot by deepening the canon section's mood. We avoid sonifying the chart data because the dataset is more about reference network position than ordered values; an atmospheric bed fits the editorial tone better.",
+      "based_on": []
+    },
+    "des_15": {
+      "label": "Closing thesis stat callout",
+      "type": "stat_callout",
+      "section": "edt_07",
+      "content": {
+        "value": "0",
+        "label": "Best Picture winners (2001-2016) that were the most-referenced film of their year",
+        "data_source": "ana_02"
+      },
+      "brief": "Final stat callout closing the page: a giant '0' with the 16-year drought as the label.",
+      "rationale": "Ends on a single number — the cleanest possible compression of the thesis.",
+      "based_on": ["ana_02"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial cinema — deep blacks, warm amber accents, generous serif body, restrained sans labels",
+    "text_visual_pattern": "alternating: prose → chart or stat → prose → atmosphere image → interactive — never two charts in a row without a non-chart element between them",
+    "centrepiece": "des_10",
+    "anti_sameness_notes": "No bar-chart streaks; the People's Pictures section is interactive instead of another chart; audio is opt-in beside an image rather than a standalone tone card; teaser is animated parallax of the existing still rather than a fresh video; no fabricated film stills are generated.",
+    "typography_notes": "Headline in a heavy serif (Playfair / Georgia). Body in Georgia at 18-19px. Stat callouts at 64-72px serif numerals with the label in 14px sans uppercase. Section dividers are thin gold rules under the 'Best Picture' accent."
+  }
+}
+

@@ -1,0 +1,732 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["repairs.csv", "repairs_text.csv"],
+    "rows": 178749,
+    "columns": 22,
+    "what_one_row_represents": "One repair attempt logged by a volunteer at a Repair Cafe — what the item was, who made it, what was wrong, and whether it was fixed.",
+    "time_range": "2015-04-04 to 2026-08-07",
+    "geographic_scope": "25 countries; Netherlands dominates (50.8% of rows), followed by GB (21.1%), FR (11.0%), CA (4.3%), AU (4.0%)."
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset profile",
+      "content": "The dataset covers 178,749 repair attempts logged across 447 Repair Cafe branches in 25 countries between April 2015 and August 2026. Volunteers categorized items into 14 broad categories and 1,951 distinct kind_of_product values, manufactured by 8,600 distinct (volunteer-spelled) brands. The two CSVs are joinable on repair_id: repairs.csv carries the structured fields (date, country, product, brand, repaired status, repairability score) and repairs_text.csv carries the free-text fields (defect_found, problem_description, repair_method, failure_reasons, failure_reason_open, repair_info_source, suggestions).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [14, 26],
+        "output": "Rows in repairs.csv: 178749\nRows in repairs_text.csv: 178749\nDate range: 2015-04-04 to 2026-08-07\nCountries: 25\nCafes (branches): 447\nUnique kind_of_product: 1951\nUnique brand: 8600\nUnique category: 14"
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_02": {
+      "label": "Repair outcome: 63% fully fixed, 76% at least partly fixed",
+      "content": "Across all 178,749 logged attempts, volunteers fully repaired the item 63.1% of the time (112,776 cases), partly repaired 12.8% (22,859), and could not repair 24.1% (43,112). Two rows lack a repaired flag and one Dutch row was tagged 'ja' (Dutch for 'yes') and is normalized into 'yes'. The combined yes-or-half success rate is 75.9%. This is slightly under the 65% headline statistic the foundation reported in 2018 for fully-successful repairs, suggesting Repair Cafes have, if anything, become slightly more successful over time as volunteer experience accumulates.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [29, 38],
+        "output": "yes 112776\nno 43112\nhalf 22859\nyes pct: 63.09\nhalf pct: 12.79\nno pct: 24.12\nyes+half pct: 75.88"
+      },
+      "data_table": {
+        "description": "Repair outcome distribution (n=178,749).",
+        "columns": ["outcome", "count", "pct"],
+        "rows": [
+          ["repaired", 112776, 63.1],
+          ["partly repaired", 22859, 12.8],
+          ["not repaired", 43112, 24.1]
+        ]
+      },
+      "based_on": ["det_02", "det_06"]
+    },
+    "ana_03": {
+      "label": "Top 15 most-repaired product types",
+      "content": "Coffee makers (10,770) and vacuum cleaners (10,284) are the two items most often dragged in for repair, each comprising about 6% of all attempts. They are followed by trousers/pants (6,769), bicycles (4,887), and sewing machines (4,614). The top 15 product types are dominated by household electric appliances and basic textiles. The list confirms — and freshens with 2026 numbers — the foundation's 2018 finding that coffee machines, vacuums, and lamps were the three most common visitors.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [41, 43],
+        "output": "Coffee maker 10770\nVacuum cleaner 10284\nTrousers / pants 6769\nBicycle / Bike 4887\nSewing machine 4614\nClock 3439\nLamp / Lighting 3060\nKnife / knives / scissors 2915\nRadio 2765\nToaster 2683\nLaptop 2486\nTable lamp 2460\nElectric kettle / Electric jug 2389\nCoat / Jacket 2232\nPruning shears / Garden shears / Secateurs 2167"
+      },
+      "data_table": {
+        "description": "Top 15 product types by number of repair attempts.",
+        "columns": ["kind_of_product", "count"],
+        "rows": [
+          ["Coffee maker", 10770],
+          ["Vacuum cleaner", 10284],
+          ["Trousers / pants", 6769],
+          ["Bicycle / Bike", 4887],
+          ["Sewing machine", 4614],
+          ["Clock", 3439],
+          ["Lamp / Lighting", 3060],
+          ["Knife / knives / scissors", 2915],
+          ["Radio", 2765],
+          ["Toaster", 2683],
+          ["Laptop", 2486],
+          ["Table lamp", 2460],
+          ["Electric kettle / Electric jug", 2389],
+          ["Coat / Jacket", 2232],
+          ["Pruning shears / Garden shears / Secateurs", 2167]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_04": {
+      "label": "Success rate by product type — knives and trousers thrive, kettles and printers don't",
+      "content": "Repair success varies wildly by item. The clear winners are non-electric, mechanical items: knives/scissors are repaired 97.5% of the time (mostly sharpening), trousers/pants 96.0%, garden shears 95.4%, coats/jackets 89.7%, and bicycles 84.1%. The clear losers are electronics with sealed components or cheap consumer-grade builds: electric kettles succeed only 39.9% (50.9% are unfixable), printers 36.8% (42.2% unfixable), irons 49.4%, food processors 49.1%, laptops 49.7%, toasters 51.1%, and coffee makers 50.6%. The data tells a story: the more electronic the item, the less likely it can be saved.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [46, 53],
+        "output": "Trousers / pants 96.0%\nKnife / knives / scissors 97.5%\nPruning shears 95.4%\nClothing / garment 92.8%\nCoat / Jacket 89.7%\nBicycle / Bike 84.1%\nTable lamp 73.8%\nSewing machine 70.0%\nFloor lamp 70.5%\nLamp / Lighting 68.8%\nClock 62.8%\nVacuum cleaner 61.0%\nRadio 54.7%\nToaster 51.1%\nCoffee maker 50.6%\nLaptop 49.7%\nFood processor 49.1%\nIron 49.4%\nPrinter 36.8%\nElectric kettle 39.9%"
+      },
+      "data_table": {
+        "description": "Top 20 product types — share repaired (yes), partly (half), not (no).",
+        "columns": ["kind_of_product", "yes_pct", "half_pct", "no_pct", "n"],
+        "rows": [
+          ["Knife / knives / scissors", 97.5, 0.7, 1.8, 2915],
+          ["Trousers / pants", 96.0, 1.7, 2.3, 6769],
+          ["Pruning shears", 95.4, 1.7, 2.9, 2167],
+          ["Clothing / garment", 92.8, 4.4, 2.8, 1424],
+          ["Coat / Jacket", 89.7, 5.2, 5.1, 2232],
+          ["Bicycle / Bike", 84.1, 8.5, 7.4, 4887],
+          ["Table lamp", 73.8, 13.1, 13.1, 2460],
+          ["Floor lamp", 70.5, 14.0, 15.5, 1672],
+          ["Sewing machine", 70.0, 13.1, 16.9, 4614],
+          ["Lamp / Lighting", 68.8, 15.5, 15.8, 3060],
+          ["Clock", 62.8, 16.5, 20.7, 3439],
+          ["Vacuum cleaner", 61.0, 14.0, 25.1, 10284],
+          ["Radio", 54.7, 14.3, 31.0, 2765],
+          ["Toaster", 51.1, 9.5, 39.4, 2683],
+          ["Coffee maker", 50.6, 16.0, 33.4, 10770],
+          ["Laptop", 49.7, 27.9, 22.4, 2486],
+          ["Food processor", 49.1, 15.3, 35.6, 1451],
+          ["Iron", 49.4, 12.8, 37.9, 1756],
+          ["Electric kettle", 39.9, 9.2, 50.9, 2389],
+          ["Printer", 36.8, 21.0, 42.2, 1793]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_05": {
+      "label": "Country distribution: Netherlands dominates",
+      "content": "The Netherlands accounts for 50.8% of all logged repairs (90,839 of 178,749) — unsurprising since the movement was founded there in 2009. Great Britain follows with 21.1% (37,692), France with 11.0% (19,724), Canada 4.3%, Australia 4.0%. Together the top five countries account for 91.2% of all rows. Twenty other countries split the remaining 8.8%, with several (IE, IT, FI, NZ) having only a few hundred rows each. The Dutch over-representation is a major caveat for any global claim — Dutch coffee culture (the Senseo) almost certainly biases the 'most-repaired item' rankings.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [56, 63],
+        "output": "NL 90839\nGB 37692\nFR 19724\nCA 7642\nAU 7079\nDE 4509\nUS 3585\nBE 1975\nES 1711\nIL 1559\n...\nNL share: 50.82%\nTop 5 share: 91.18%"
+      },
+      "data_table": {
+        "description": "Repairs logged by country (top 15).",
+        "columns": ["country", "count", "pct"],
+        "rows": [
+          ["NL", 90839, 50.8],
+          ["GB", 37692, 21.1],
+          ["FR", 19724, 11.0],
+          ["CA", 7642, 4.3],
+          ["AU", 7079, 4.0],
+          ["DE", 4509, 2.5],
+          ["US", 3585, 2.0],
+          ["BE", 1975, 1.1],
+          ["ES", 1711, 1.0],
+          ["IL", 1559, 0.9],
+          ["AT", 1248, 0.7],
+          ["NZ", 437, 0.2],
+          ["IE", 242, 0.1],
+          ["IT", 139, 0.08],
+          ["FI", 107, 0.06]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_06": {
+      "label": "Yearly volume: 1,600x growth from 2015 to 2025",
+      "content": "Logged repairs grew from 28 in 2015 (the dashboard's first year) to 45,165 in 2025 — a 1,613x increase. Growth was steady through 2019 (15,491 logs), dropped to 6,686 in 2020 and 5,813 in 2021 (COVID closed cafes physically), then rebounded in 2022 (15,096) and accelerated to 29,406 (2023), 39,981 (2024), and 45,165 (2025). The 2026 figure of 7,346 reflects only the first eight months. The reach of the Repair Cafe movement, in other words, is a hockey stick — the data underestimates the early years because the dashboard didn't exist yet.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [66, 71],
+        "output": "2015 28\n2016 139\n2017 4080\n2018 9518\n2019 15491\n2020 6686\n2021 5813\n2022 15096\n2023 29406\n2024 39981\n2025 45165\n2026 7346"
+      },
+      "data_table": {
+        "description": "Repairs logged per year, 2015-2026 (2026 partial).",
+        "columns": ["year", "count"],
+        "rows": [
+          [2015, 28],
+          [2016, 139],
+          [2017, 4080],
+          [2018, 9518],
+          [2019, 15491],
+          [2020, 6686],
+          [2021, 5813],
+          [2022, 15096],
+          [2023, 29406],
+          [2024, 39981],
+          [2025, 45165],
+          [2026, 7346]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_07": {
+      "label": "Repairability score distribution (1-10)",
+      "content": "Volunteers rate each item on a 1 (difficult) to 10 (easy) repairability scale. The mean rating is 6.66 and the median 7. The distribution is bimodal-ish, peaking at 10 (22,424 items rated 'trivially easy'), 8 (21,766), and 7 (15,217), with a smaller secondary peak at 1 (8,557 items rated 'impossible'). Only 188 items got a 0 (a small data-entry quirk). The mode-of-bimodality reflects how Repair Cafe attempts split: most items either prove very fixable once a fixer looks at them, or are immediately recognized as not worth the time. Repairability is missing for 53,885 rows (30.1%) — typically when an attempt failed before a rating could be assigned.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [74, 81],
+        "output": "n: 124864\nmean: 6.66\nmedian: 7.0\n0.0 188\n1.0 8557\n2.0 4820\n3.0 6527\n4.0 6601\n5.0 13950\n6.0 10271\n7.0 15217\n8.0 21766\n9.0 14543\n10.0 22424"
+      },
+      "data_table": {
+        "description": "Counts at each repairability score, 0-10.",
+        "columns": ["score", "count"],
+        "rows": [
+          [0, 188],
+          [1, 8557],
+          [2, 4820],
+          [3, 6527],
+          [4, 6601],
+          [5, 13950],
+          [6, 10271],
+          [7, 15217],
+          [8, 21766],
+          [9, 14543],
+          [10, 22424]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_08": {
+      "label": "Category-level repair odds: textile thrives, electronics struggle",
+      "content": "Aggregating to the 14 high-level categories, textile leads on repair success at 92.3% (24,412 rows), followed by tools non-electric (90.0%) and jewelry (82.9%). At the bottom, display-and-sound equipment is repaired only 45.8% of the time (20,415 rows) and computer-equipment-and-phones 46.4% (9,488 rows). Household appliances electric, the largest category at 70,983 rows, sits at 55.3% — almost exactly mid-pack. The cleanest split in the data is electric vs non-electric: electric items succeed roughly half the time, non-electric items roughly nine times in ten.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [84, 89],
+        "output": "Textile 92.3 n=24412\nTools non-electric 90.0 n=4178\nJewelry 82.9 n=2852\nBicycles 81.7 n=6252\nHousehold non-electric 81.4 n=5593\nFurniture 74.8 n=2120\nToys non-electric 74.0 n=2015\nClocks 61.6 n=7016\nOther 67.3 n=10435\nHousehold electric 55.3 n=70983\nToys electric 55.2 n=2645\nTools electric 54.0 n=10340\nComputer 46.4 n=9488\nDisplay/sound 45.8 n=20415"
+      },
+      "data_table": {
+        "description": "All 14 categories, ranked by success rate (yes %).",
+        "columns": ["category", "yes_pct", "half_pct", "no_pct", "n"],
+        "rows": [
+          ["Textile", 92.3, 3.8, 4.0, 24412],
+          ["Tools non-electric", 90.0, 4.5, 5.5, 4178],
+          ["Jewelry", 82.9, 7.5, 9.5, 2852],
+          ["Bicycles", 81.7, 9.2, 9.1, 6252],
+          ["Household appliances non-electric", 81.4, 7.0, 11.7, 5593],
+          ["Furniture", 74.8, 15.6, 9.6, 2120],
+          ["Toys non-electric", 74.0, 10.5, 15.5, 2015],
+          ["Other", 67.3, 12.7, 19.9, 10435],
+          ["Clocks / alarm clocks", 61.6, 14.8, 23.6, 7016],
+          ["Household appliances electric", 55.3, 13.8, 30.9, 70983],
+          ["Toys electric", 55.2, 16.0, 28.8, 2645],
+          ["Tools electric", 54.0, 14.3, 31.7, 10340],
+          ["Computer equipment / phones", 46.4, 24.1, 29.5, 9488],
+          ["Display and sound equipment", 45.8, 18.1, 36.1, 20415]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_09": {
+      "label": "Top failure reasons: it's the parts, stupid",
+      "content": "Across the 65,999 failed-or-half-repaired records, volunteers selected from a checkbox list of failure reason tags. The most common tag is 'No way to fix the product' (5,544 cases, 8.4% of failures), followed by 'Spare parts not available at repair session' (4,694; 7.1%), 'Unidentified failure' (3,662; 5.5%), 'Too worn out' (3,341; 5.1%), and 'No way to open the product' (2,305; 3.5%). Spare-parts problems collectively (parts not available at session, not on market, or too expensive) account for 9,042 tags — the single largest barrier when grouped. This data confirms the foundation's earlier 2018 finding that parts availability is the dominant blocker and supports the EU Right-to-Repair argument that manufacturers must make spares accessible.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [21, 31],
+        "output": "Total failed/half rows: 65999\n5544 (8.4%) No way to fix the product\n4694 (7.1%) Spare parts not available at repair session\n3662 (5.5%) Unidentified failure\n3341 (5.1%) Too worn out\n2305 (3.5%) No way to open the product\n2178 (3.3%) Spare parts not available on the market\n2170 (3.3%) Spare parts too expensive\n1215 (1.8%) Too time consuming\n863 (1.3%) Lack of equipment at repair location\n565 (0.9%) Repair information not available"
+      },
+      "data_table": {
+        "description": "Top 10 failure reason tags, with share of all failed/half rows (n=65,999).",
+        "columns": ["reason", "count", "pct_of_failed"],
+        "rows": [
+          ["No way to fix the product", 5544, 8.4],
+          ["Spare parts not available at repair session", 4694, 7.1],
+          ["Unidentified failure", 3662, 5.5],
+          ["Too worn out", 3341, 5.1],
+          ["No way to open the product", 2305, 3.5],
+          ["Spare parts not available on the market", 2178, 3.3],
+          ["Spare parts too expensive", 2170, 3.3],
+          ["Too time consuming", 1215, 1.8],
+          ["Lack of equipment at repair location", 863, 1.3],
+          ["Repair information not available", 565, 0.9]
+        ]
+      },
+      "based_on": ["det_04", "det_06"]
+    },
+    "ana_10": {
+      "label": "What broke? Top verbatim defect phrases — multilingual chorus",
+      "content": "The free-text defect_found field is multilingual (Dutch dominates because of NL volume, with French and German runners-up alongside English). The single most common phrase is 'doet het niet' (Dutch for 'doesn't work', 3,686 occurrences), followed by 'doet het niet meer' (2,415), 'not working' (2,360), and 'blunt' (1,817 — almost certainly knives and scissors). Other recurring phrases include 'lekt' (leaks, 670), 'werkt niet' (doesn't work, 1,176), 'ne fonctionne plus' (no longer works, 623), and 'kortsluiting' (short circuit, 368). Across languages and forms, the same six diagnoses recur: it doesn't work, it stopped working, it leaks, it's blunt, it's torn, it's broken.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [33, 41],
+        "output": "doet het niet 3686\ndoet het niet meer 2415\nnot working 2360\nblunt 1817\ndoet niets meer 1220\nwerkt niet 1176\ndoet niets 1149\ndoesn't work 1080\nonbekend 1045\nte lang 861\nbot 694\nlekt 670\nwerkt niet meer 632\nne fonctionne plus 623\ndoet het niet meer. 569\nne fonctionne pas 559\nbroken 559\nne s'allume plus 476\ndoet niks 440\nne marche pas 424"
+      },
+      "data_table": {
+        "description": "Top 15 raw defect phrases (lower-cased) across all languages.",
+        "columns": ["phrase", "count", "language"],
+        "rows": [
+          ["doet het niet", 3686, "NL"],
+          ["doet het niet meer", 2415, "NL"],
+          ["not working", 2360, "EN"],
+          ["blunt", 1817, "EN"],
+          ["doet niets meer", 1220, "NL"],
+          ["werkt niet", 1176, "NL"],
+          ["doet niets", 1149, "NL"],
+          ["doesn't work", 1080, "EN"],
+          ["onbekend (unknown)", 1045, "NL"],
+          ["te lang (too long)", 861, "NL"],
+          ["bot (blunt)", 694, "NL"],
+          ["lekt (leaks)", 670, "NL"],
+          ["werkt niet meer (no longer works)", 632, "NL"],
+          ["ne fonctionne plus", 623, "FR"],
+          ["broken", 559, "EN"]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_11": {
+      "label": "Defect themes: 'no power' is the universal complaint",
+      "content": "Pattern-matching across the 147,897 non-NA defect descriptions in five languages, the most prevalent theme is 'broken/cracked/damaged' (9,914 hits, 6.7%) followed closely by 'no power / does not turn on' (8,959; 6.1%). Other large themes are loose/wobbly (5,579; 3.8%), sewing/zipper/seam textile defects (5,125; 3.5%), cable/cord/plug issues (4,838; 3.3%), leaks (3,451; 2.3%), battery/charging (4,197; 2.8%), and 'won't spin / motor' (2,429; 1.6%). When taken together, electrical-power-related themes (no power + cable + battery + overheats + motor) account for 21,088 cases. This supports the broader interpretation that electric items dominate failures because their failure modes are concentrated in invisible internal electronics.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [44, 70],
+        "output": "8959 (6.06%) no power / does not turn on\n9914 (6.70%) broken / cracked / damaged\n3451 (2.33%) leaking / dripping\n1924 (1.30%) noise / loud / strange sound\n5579 (3.77%) loose / wobbly / wiggle\n4197 (2.84%) battery / charging\n665 (0.45%) overheats / smoking / burning\n387 (0.26%) dirty / clogged / blocked\n2429 (1.64%) won't spin / won't turn / motor\n1166 (0.79%) screen / display issue\n4838 (3.27%) cable / cord / plug\n5125 (3.47%) sewing/zipper/seam (textile)\n948 (0.64%) sharpening (knives)\n277 (0.19%) clock / time / hands\nTotal non-NA defect_found rows: 147897"
+      },
+      "data_table": {
+        "description": "Defect themes via multilingual keyword matching across 147,897 defect descriptions.",
+        "columns": ["theme", "count", "pct"],
+        "rows": [
+          ["broken / cracked / damaged", 9914, 6.7],
+          ["no power / does not turn on", 8959, 6.1],
+          ["loose / wobbly", 5579, 3.8],
+          ["sewing / zipper / seam", 5125, 3.5],
+          ["cable / cord / plug", 4838, 3.3],
+          ["battery / charging", 4197, 2.8],
+          ["leaking / dripping", 3451, 2.3],
+          ["motor / won't spin", 2429, 1.6],
+          ["noise / loud / strange sound", 1924, 1.3],
+          ["screen / display", 1166, 0.8],
+          ["sharpening (knives)", 948, 0.6],
+          ["overheats / smoking / burning", 665, 0.5],
+          ["dirty / clogged / blocked", 387, 0.3],
+          ["clock / time / hands", 277, 0.2]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_12": {
+      "label": "GenAI vs YouTube as repair information sources",
+      "content": "Volunteers can record where they got repair information. YouTube has been the dominant external source since 2017, but its share has plateaued: 0.3% in 2017, 0.5% in 2023, 0.4% in 2026 (early). Generative AI is a brand-new entrant — zero mentions before 2023 — but is rising fast on a relative basis: 2 mentions in 2023, 8 in 2024, 14 in 2025, and 2 in the partial 2026 sample. The earliest unambiguous AI mention is 9 September 2023 ('chat gpt' for an unspecified item). Examples of how volunteers logged it include 'chat gpt', 'WWW.OPENai.COM', 'chatgpt', 'AI Perplexity', 'perplexity et manuel', and even an OpenAI conversation share URL. While AI mentions remain a tiny fraction of total rows (26 cumulatively versus 843 YouTube mentions), the trajectory in this dataset is the first traceable evidence in volunteer repair logs of a new tool entering the fixer's toolkit.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [73, 121],
+        "output": "Total rows: 178815\nRows with AI mention: 26\nRows with YouTube mention: 843\nyear   n   used  yt  ai  yt_pct  ai_pct\n2017 4080 209 13 0 0.32 0.00\n2018 9518 465 19 0 0.20 0.00\n2019 15491 654 46 0 0.30 0.00\n2020 6686 285 20 0 0.30 0.00\n2021 5813 316 27 0 0.46 0.00\n2022 15096 705 63 0 0.42 0.00\n2023 29406 1368 159 2 0.54 0.0068\n2024 39999 1908 234 8 0.59 0.020\n2025 45168 2003 231 14 0.51 0.031\n2026 7391 336 31 2 0.42 0.027"
+      },
+      "data_table": {
+        "description": "By-year share of rows mentioning YouTube vs Generative AI in repair_info_source/url, 2017-2026.",
+        "columns": ["year", "n", "youtube_count", "youtube_pct", "ai_count", "ai_pct"],
+        "rows": [
+          [2017, 4080, 13, 0.32, 0, 0.0],
+          [2018, 9518, 19, 0.20, 0, 0.0],
+          [2019, 15491, 46, 0.30, 0, 0.0],
+          [2020, 6686, 20, 0.30, 0, 0.0],
+          [2021, 5813, 27, 0.46, 0, 0.0],
+          [2022, 15096, 63, 0.42, 0, 0.0],
+          [2023, 29406, 159, 0.54, 2, 0.007],
+          [2024, 39999, 234, 0.59, 8, 0.020],
+          [2025, 45168, 231, 0.51, 14, 0.031],
+          [2026, 7391, 31, 0.42, 2, 0.027]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_13": {
+      "label": "Verbatim AI mentions: how volunteers describe the new tool",
+      "content": "The 26 AI-tagged rows show how volunteers actually wrote about the tool. The variation is striking: 'chat gpt', 'Chat GPT', 'CHAT GPT', 'chatgpt', 'Chat gpt', and 'ChatGPT' all coexist (volunteers are not given a controlled vocabulary). Other forms include 'WWW.OPENai.COM', 'AI Perplexity', 'perplexity et manuel' (using AI alongside the manufacturer manual), and one row that pasted an actual OpenAI conversation share URL. This linguistic noise is itself a data point: AI is so new that volunteers have no agreed-upon name for it, while YouTube is named consistently across thousands of rows.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [123, 134],
+        "output": "Earliest AI mention: 2023-09-09\nLatest AI mention: 2026-02-22\nSamples: chat gpt | Datasheet internet et chatgpt | WWW.OPENai.COM | chatgpt | chat GPT | Chat GPT | AI Perplexity | perplexity et manuel | CHAT GPT | Chat gpt | https://chat.openai.com/share/ce40bacb-..."
+      },
+      "data_table": {
+        "description": "Sample verbatim AI-source values from the dataset.",
+        "columns": ["verbatim_value", "kind_of_product"],
+        "rows": [
+          ["chat gpt", "various"],
+          ["Chat GPT", "various"],
+          ["CHAT GPT", "various"],
+          ["chatgpt", "various"],
+          ["WWW.OPENai.COM", "various"],
+          ["AI Perplexity", "various"],
+          ["perplexity et manuel", "various"],
+          ["Datasheet internet et chatgpt", "various"],
+          ["https://chat.openai.com/share/ce40bacb-...", "various"]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_14": {
+      "label": "Where the parts run out: electric tools and household electrics top the spare-parts blocker",
+      "content": "Restricting to records flagged with a spare-parts failure tag, electric tools have the highest spare-parts blocker rate at 8.3% of all attempts (and 18.0% of all failed attempts in that category). Household appliances electric is second at 7.4% of attempts (16.5% of failed). Display and sound equipment is third at 6.3% / 11.7%. Textile, by contrast, has spare-parts blockers in only 0.5% of attempts — needles and thread are universally available. The pattern aligns with EU Right-to-Repair concerns: it is consumer electronics, not clothing or hand tools, where manufacturers' control of spare parts most directly translates into items being thrown away.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [136, 152],
+        "output": "Tools electric 18.02 / 8.29\nHousehold appliances electric 16.52 / 7.39\nDisplay and sound equipment 11.69 / 6.34\nToys electric 11.81 / 5.29\nClocks 11.89 / 4.56\nComputer equipment / phones 7.68 / 4.12\nOther 9.86 / 3.22\nToys non-electric 11.64 / 3.03\nJewelry 11.89 / 2.03\nBicycles 9.93 / 1.82\nHousehold non-electric 9.40 / 1.75\nFurniture 6.36 / 1.60\nTools non-electric 10.26 / 1.03\nTextile 6.97 / 0.54"
+      },
+      "data_table": {
+        "description": "Share of repair attempts blocked by 'spare parts unavailable / too expensive' by category.",
+        "columns": ["category", "spare_parts_blocker_pct_of_total"],
+        "rows": [
+          ["Tools electric", 8.29],
+          ["Household appliances electric", 7.39],
+          ["Display and sound equipment", 6.34],
+          ["Toys electric", 5.29],
+          ["Clocks / alarm clocks", 4.56],
+          ["Computer equipment / phones", 4.12],
+          ["Other", 3.22],
+          ["Toys non-electric", 3.03],
+          ["Jewelry", 2.03],
+          ["Bicycles", 1.82],
+          ["Household appliances non-electric", 1.75],
+          ["Furniture", 1.60],
+          ["Tools non-electric", 1.03],
+          ["Textile", 0.54]
+        ]
+      },
+      "based_on": ["det_04", "det_06"]
+    },
+    "ana_15": {
+      "label": "Repairability score is a strong predictor of success",
+      "content": "There is a clear monotonic relationship between volunteer repairability rating and outcome. Items rated 1 ('difficult') are repaired only 13.7% of the time. The success rate climbs almost linearly to 56.9% at score 5, then 78.4% at 8, 84.9% at 9, and 85.8% at 10. The fact that even score-10 items fail 14% of the time tells you something else — sometimes a fixable item is not actually fixed because the volunteer ran out of time, lacked a part on the day, or the visitor never came back to collect the result. The score itself is a useful, internally-consistent signal of design quality.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [154, 161],
+        "output": "0.0 42.55 188\n1.0 13.70 8564\n2.0 34.69 4823\n3.0 48.03 6532\n4.0 55.32 6605\n5.0 56.88 13965\n6.0 61.56 10273\n7.0 70.39 15229\n8.0 78.39 21770\n9.0 84.86 14544\n10.0 85.81 22433"
+      },
+      "data_table": {
+        "description": "Success rate at each repairability score (1-10).",
+        "columns": ["score", "success_pct", "n"],
+        "rows": [
+          [1, 13.7, 8564],
+          [2, 34.7, 4823],
+          [3, 48.0, 6532],
+          [4, 55.3, 6605],
+          [5, 56.9, 13965],
+          [6, 61.6, 10273],
+          [7, 70.4, 15229],
+          [8, 78.4, 21770],
+          [9, 84.9, 14544],
+          [10, 85.8, 22433]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_16": {
+      "label": "Brand of vacuum/coffee-maker matters: Dyson at the bottom",
+      "content": "Holding product type constant, brand-level success rates vary by 22 percentage points. For vacuum cleaners (n>=100 brand subset), Henry leads at 69.2% success, with Miele 66.0%, Siemens 65.4%, Philips 64.8%, AEG 63.1%. Dyson sits at the bottom at 47.4% (n=1,202) — a brand widely associated with premium price and proprietary design. For coffee makers, Philips (the Senseo manufacturer) leads at 59.5% (n=3,343), followed by Saeco 57.1% and De'Longhi 55.5%. Bosch coffee makers are the worst at 39.0% and Braun the worst overall at 30.9%. Sample sizes here are large enough that the cross-brand spread is unlikely to be noise — though all branding analysis is volunteer-spelled and Dyson units may also skew newer (and harder to open).",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [163, 175],
+        "output": "Vacuum: Henry 69.17, Miele 65.99, Siemens 65.35, Philips 64.80, AEG 63.05, Hoover 62.57, Rowenta 61.94, Nilfisk 61.38, Vax 60.12, Bosch 59.74, Shark 55.13, Electrolux 51.81, Dyson 47.42 (n=1202)\nCoffee maker: Philips 59.47, Saeco 57.14, De'Longhi 55.53, Jura 54.26, Nescafé 51.55, Dolce gusto 49.30, Krups 47.80, Siemens 46.18, Nespresso 44.14, Douwe Egberts 41.05, Melitta 40.00, Bosch 39.02, Braun 30.91"
+      },
+      "data_table": {
+        "description": "Brand-level repair success rates for vacuum cleaners and coffee makers (brands with n>=100).",
+        "columns": ["product", "brand", "n", "success_pct"],
+        "rows": [
+          ["Vacuum cleaner", "Henry", 133, 69.2],
+          ["Vacuum cleaner", "Miele", 1973, 66.0],
+          ["Vacuum cleaner", "Siemens", 228, 65.4],
+          ["Vacuum cleaner", "Philips", 1253, 64.8],
+          ["Vacuum cleaner", "AEG", 590, 63.1],
+          ["Vacuum cleaner", "Hoover", 179, 62.6],
+          ["Vacuum cleaner", "Rowenta", 289, 61.9],
+          ["Vacuum cleaner", "Nilfisk", 189, 61.4],
+          ["Vacuum cleaner", "Vax", 168, 60.1],
+          ["Vacuum cleaner", "Bosch", 683, 59.7],
+          ["Vacuum cleaner", "Shark", 156, 55.1],
+          ["Vacuum cleaner", "Electrolux", 249, 51.8],
+          ["Vacuum cleaner", "Dyson", 1202, 47.4],
+          ["Coffee maker", "Philips", 3343, 59.5],
+          ["Coffee maker", "Saeco", 182, 57.1],
+          ["Coffee maker", "De'Longhi", 850, 55.5],
+          ["Coffee maker", "Jura", 129, 54.3],
+          ["Coffee maker", "Nescafé", 194, 51.5],
+          ["Coffee maker", "Dolce gusto", 215, 49.3],
+          ["Coffee maker", "Krups", 864, 47.8],
+          ["Coffee maker", "Siemens", 301, 46.2],
+          ["Coffee maker", "Nespresso", 981, 44.1],
+          ["Coffee maker", "Douwe Egberts", 190, 41.1],
+          ["Coffee maker", "Melitta", 160, 40.0],
+          ["Coffee maker", "Bosch", 123, 39.0],
+          ["Coffee maker", "Braun", 110, 30.9]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_17": {
+      "label": "Country-level success rate: Italy and Israel ahead, France behind",
+      "content": "Restricting to countries with at least 100 logged rows, Italy leads on full-success rate at 79.1% (n=139), followed by Israel 77.6% (n=1,559), Finland 76.6% (n=107), Ireland 75.6%, New Zealand 73.2%, US 70.9%. The Netherlands — where the movement was born and which hosts more than half the data — sits mid-pack at 62.3%. France brings up the rear at 55.6%, with Spain at 55.7% just ahead. The gap between top and bottom is 23 percentage points. Some of the difference reflects product mix (countries with more textile-heavy submissions look more successful) and some likely reflects how cafes log half-repairs versus full repairs locally.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_text_nlp.py",
+        "lines": [177, 189],
+        "output": "IT 79.14 (n=139)\nIL 77.61 (n=1559)\nFI 76.64 (n=107)\nIE 75.62 (n=242)\nNZ 73.23 (n=437)\nUS 70.93 (n=3585)\nCA 68.95 (n=7658)\nAU 68.71 (n=7079)\nGB 65.45 (n=37700)\nDE 64.83 (n=4509)\nNL 62.26 (n=90881)\nBE 60.96 (n=1975)\nAT 59.94 (n=1248)\nES 55.70 (n=1711)\nFR 55.62 (n=19724)"
+      },
+      "data_table": {
+        "description": "Repair success rate by country (n>=100).",
+        "columns": ["country", "n", "success_pct", "success_or_partial_pct"],
+        "rows": [
+          ["IT", 139, 79.1, 86.3],
+          ["IL", 1559, 77.6, 84.4],
+          ["FI", 107, 76.6, 89.7],
+          ["IE", 242, 75.6, 98.8],
+          ["NZ", 437, 73.2, 82.2],
+          ["US", 3585, 70.9, 87.0],
+          ["CA", 7658, 69.0, 81.2],
+          ["AU", 7079, 68.7, 79.4],
+          ["GB", 37700, 65.5, 79.5],
+          ["DE", 4509, 64.8, 75.9],
+          ["NL", 90881, 62.3, 73.6],
+          ["BE", 1975, 61.0, 76.2],
+          ["AT", 1248, 59.9, 72.1],
+          ["ES", 1711, 55.7, 69.4],
+          ["FR", 19724, 55.6, 73.4]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_18": {
+      "label": "Item-age vs success: a U-shape, with old items doing surprisingly well",
+      "content": "Plotting success rate against estimated item age reveals a U-shape. New items (0-1 years old) succeed 67.1% of the time — often simple defects under warranty issue. Then success drops to a trough around 6-10 years (55.9%) and 11-15 years (56.6%) — items with worn motors, dead capacitors, no spare parts. Then it rises again: 21-30 years 61.1%, 31-50 years 62.0%, 50+ years 63.2%. The vintage rebound makes physical sense: old items (sewing machines, clocks, radios) were built before planned obsolescence took hold, with replaceable parts and accessible internals. The dataset has 14,112 items aged 20+ years, dominated by sewing machines (1,212), clocks (553), vacuum cleaners (483), radios (471), and turntables (356).",
+      "type": "correlation",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_age_and_quotes.py",
+        "lines": [16, 33],
+        "output": "Median age: 8\nMean age: 13.28\n0-1 67.14 (n=4689)\n2-3 57.67 (n=9150)\n4-5 56.72 (n=9918)\n6-10 55.95 (n=14287)\n11-15 56.61 (n=7149)\n16-20 59.91 (n=5001)\n21-30 61.12 (n=6286)\n31-50 62.02 (n=4086)\n50+ 63.21 (n=2354)"
+      },
+      "data_table": {
+        "description": "Success rate by estimated item age bucket.",
+        "columns": ["age_bucket", "n", "success_pct"],
+        "rows": [
+          ["0-1", 4689, 67.1],
+          ["2-3", 9150, 57.7],
+          ["4-5", 9918, 56.7],
+          ["6-10", 14287, 55.9],
+          ["11-15", 7149, 56.6],
+          ["16-20", 5001, 59.9],
+          ["21-30", 6286, 61.1],
+          ["31-50", 4086, 62.0],
+          ["50+", 2354, 63.2]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_19": {
+      "label": "Vintage items: 14,112 objects aged 20+ brought back from the dead",
+      "content": "Items aged 20 years or older — meaning they were built in or before the early 2000s — were brought to Repair Cafes 14,112 times, and 61.6% were successfully repaired. The categories that anchor this vintage flow are sewing machines (1,212 cases), clocks (553), vacuum cleaners (483), radios (471), turntables/record players (356), table lamps (340), and bicycles (331). These are the icons of pre-throwaway design: items that were expensive enough to be worth fixing, simple enough to be opened, and built with parts that are still findable. Vintage textile and lighting items in particular have very high success rates.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_age_and_quotes.py",
+        "lines": [36, 44],
+        "output": "Number of items aged 20+ years: 14112\nSuccess rate: 61.58%\nTop 15 vintage product types:\nSewing machine 1212\nClock 553\nVacuum cleaner 483\nRadio 471\nTurntable / record player 356\nTable lamp 340\nBicycle / Bike 331\nLamp / Lighting 307\nFloor lamp 273\nCoffee maker 272\nStereoset / music centre 199\nMixer / Blender 194\nToaster 174\nAmplifier 171\nRadio / tape recorder 162"
+      },
+      "data_table": {
+        "description": "Top 15 product types brought in at age 20+.",
+        "columns": ["kind_of_product", "count"],
+        "rows": [
+          ["Sewing machine", 1212],
+          ["Clock", 553],
+          ["Vacuum cleaner", 483],
+          ["Radio", 471],
+          ["Turntable / record player", 356],
+          ["Table lamp", 340],
+          ["Bicycle / Bike", 331],
+          ["Lamp / Lighting", 307],
+          ["Floor lamp", 273],
+          ["Coffee maker", 272],
+          ["Stereoset / music centre", 199],
+          ["Mixer / Blender", 194],
+          ["Toaster", 174],
+          ["Amplifier", 171],
+          ["Radio / tape recorder", 162]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_20": {
+      "label": "Trousers — the textile success champion (96.0%)",
+      "content": "Trousers and pants account for 6,769 logged repairs, the third largest item category, and they are repaired 96.0% of the time. The dominant defect is 'te lang' (Dutch: too long, 615 cases) — i.e., people bring in trousers to be hemmed, not because they are broken. Other top defects are 'korter maken' (make shorter, 195), 'pijpen te lang' (legs too long, 99), 'too long' (87), 'is te lang' (71), 'scheur' (tear, 64), 'naad los' (loose seam, 61), 'rits kapot' (broken zipper, 53), 'torn' (41), and 'zoom los' (loose hem, 39). The data exposes something subtle: a large share of 'repair' work at Repair Cafes is in fact alteration — adapting clothing to fit a body, not fixing a fault. This category alone is responsible for the textile category's very high success rate.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_age_and_quotes.py",
+        "lines": [47, 55],
+        "output": "Trousers n: 6774\nTrousers success: 96.00%\nTop 15 trouser defects:\nte lang 615\nkorter maken 195\npijpen te lang 99\ntoo long 87\nis te lang 71\nscheur 64\nnaad los 61\nrits kapot 53\ntorn 41\nzoom los 39\ninkorten 35\nslijtage 34\nrits defect 33\nte wijd 29\nonbekend 28"
+      },
+      "data_table": {
+        "description": "Top 15 trouser defect phrases (multilingual).",
+        "columns": ["defect_phrase", "translation", "count"],
+        "rows": [
+          ["te lang", "too long", 615],
+          ["korter maken", "make shorter", 195],
+          ["pijpen te lang", "legs too long", 99],
+          ["too long", "(EN)", 87],
+          ["is te lang", "is too long", 71],
+          ["scheur", "tear", 64],
+          ["naad los", "loose seam", 61],
+          ["rits kapot", "broken zipper", 53],
+          ["torn", "(EN)", 41],
+          ["zoom los", "loose hem", 39],
+          ["inkorten", "shorten", 35],
+          ["slijtage", "wear", 34],
+          ["rits defect", "defective zipper", 33],
+          ["te wijd", "too wide", 29],
+          ["onbekend", "unknown", 28]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_21": {
+      "label": "Vacuum cleaner — the most-fought battle (10,284 attempts, 61% saved)",
+      "content": "The vacuum cleaner is one of the two most-presented items (10,284 attempts) and ends up repaired in 61.0% of cases. For the 4,021 failed attempts, the largest blocker is 'No way to fix the product' (301 cases, 7.5%), followed closely by 'Spare parts not available at repair session' (292; 7.3%), 'Spare parts too expensive' (240; 6.0%), 'Too worn out' (239; 5.9%), and 'Unidentified failure' (156; 3.9%). 'No way to open the product' was tagged in 153 cases — modern vacuums increasingly use plastic clips and proprietary screws that resist amateur disassembly. Vacuum repair, in short, is a fight against parts availability and design accessibility.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_age_and_quotes.py",
+        "lines": [58, 71],
+        "output": "Vacuum cleaner n: 10293\nSuccess: 60.97%\n301 (7.49%) No way to fix the product\n292 (7.27%) Spare parts not available at repair session\n240 (5.97%) Spare parts too expensive\n239 (5.95%) Too worn out\n156 (3.88%) Unidentified failure\n153 (3.81%) No way to open the product\n87 (2.17%) Spare parts not available on the market\n45 (1.12%) Too time consuming\n20 (0.50%) Lack of equipment at repair location\n14 (0.35%) Repair information not available"
+      },
+      "data_table": {
+        "description": "Top failure reasons for vacuum cleaners (n_failed=4,021).",
+        "columns": ["reason", "count", "pct_of_failed"],
+        "rows": [
+          ["No way to fix the product", 301, 7.5],
+          ["Spare parts not available at repair session", 292, 7.3],
+          ["Spare parts too expensive", 240, 6.0],
+          ["Too worn out", 239, 5.9],
+          ["Unidentified failure", 156, 3.9],
+          ["No way to open the product", 153, 3.8],
+          ["Spare parts not available on the market", 87, 2.2],
+          ["Too time consuming", 45, 1.1],
+          ["Lack of equipment at repair location", 20, 0.5],
+          ["Repair information not available", 14, 0.3]
+        ]
+      },
+      "based_on": ["det_04", "det_05"]
+    },
+    "ana_22": {
+      "label": "Cumulative CO2 saved: 2,707 tonnes from this dataset alone",
+      "content": "Applying the Repair Cafe Foundation's 24-kg-CO2-per-successful-repair benchmark from det_03, the 112,776 successful repairs in this dataset prevented an estimated 2,707 tonnes of CO2 emissions from manufacturing replacements. The cumulative trajectory mirrors the activity volume: 1 tonne by 2015, 213 tonnes by 2018, 547 tonnes by 2020, 1,287 tonnes by 2023, 2,594 tonnes by 2025, 2,708 tonnes by August 2026. This is one community sample — the foundation's network-wide estimate is far larger.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_age_and_quotes.py",
+        "lines": [74, 87],
+        "output": "Total successful repairs: 112814\nEstimated CO2 saved: 2707536 kg = 2707.5 tonnes\n2015 25 / 25 / 0.6\n2018 6230 / 8862 / 213\n2020 4184 / 22806 / 547\n2023 17776 / 53609 / 1287\n2025 29566 / 108060 / 2593\n2026 4754 / 112814 / 2708"
+      },
+      "data_table": {
+        "description": "Cumulative successful repairs and CO2 saved (24 kg/repair) by year.",
+        "columns": ["year", "yes", "cumulative_yes", "co2_tonnes_cumulative"],
+        "rows": [
+          [2015, 25, 25, 0.6],
+          [2016, 102, 127, 3.0],
+          [2017, 2505, 2632, 63.2],
+          [2018, 6230, 8862, 212.7],
+          [2019, 9760, 18622, 446.9],
+          [2020, 4184, 22806, 547.3],
+          [2021, 3716, 26522, 636.5],
+          [2022, 9311, 35833, 860.0],
+          [2023, 17776, 53609, 1286.6],
+          [2024, 24885, 78494, 1883.9],
+          [2025, 29566, 108060, 2593.4],
+          [2026, 4754, 112814, 2707.5]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_23": {
+      "label": "Verbatim 'we couldn't fix it' quotes — the human-language texture",
+      "content": "The free-text failure_reason_open field captures, in volunteers' own words, the tiny tragedies that show up when a thing cannot be fixed. A sample includes: 'product is van inferieure kwaliteit, slecht te repareren' (Coffee maker — 'product is of inferior quality, badly repairable'), 'Vital Component Failure. Not available to purchase.' (Printer), 'Het apparaat is te oud om nog te repareren' (Laptop — 'the device is too old to be repaired'), 'Onderdeel is niet te vervangen' (Display monitor — 'part cannot be replaced'), 'electronicafout op de print (geen schema)' (Video player — 'electronics fault on the board, no circuit diagram'), 'Schema nodig, niet te vinden' (Radio — 'circuit diagram needed, cannot be found'), 'versterker heeft computer die alles checkt, maar wil niet starten, ook vol sigarenrook' (Amplifier — 'amp has a computer that checks everything but won't start, also full of cigar smoke'). These quotes show the dataset's ethnographic value: each row is a small story about a specific object meeting a specific obstacle.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_age_and_quotes.py",
+        "lines": [89, 105],
+        "output": "[Coffee maker] product is van inferieure kwaliteit, slecht te repareren\n[Printer] Vital Component Failure. Not available to purchase.\n[Laptop] Het apparaat is te oud om nog te repareren\n[Display / Monitor] Onderdeel is niet te vervangen\n[Video player / recorder] electronicafout op de print (geen schema)\n[Radio] Schema nodig, niet te vinden\n[Amplifier] versterker heeft computer die alles checkt, maar wil niet starten, ook vol sigarenrook"
+      },
+      "data_table": {
+        "description": "Curated verbatim 'why we couldn't fix it' quotes.",
+        "columns": ["product", "quote_original", "translation"],
+        "rows": [
+          ["Coffee maker", "product is van inferieure kwaliteit, slecht te repareren", "product is of inferior quality, badly repairable"],
+          ["Printer", "Vital Component Failure. Not available to purchase.", "(English)"],
+          ["Laptop", "Het apparaat is te oud om nog te repareren", "the device is too old to be repaired"],
+          ["Display / Monitor", "Onderdeel is niet te vervangen", "the part cannot be replaced"],
+          ["Video player", "electronicafout op de print (geen schema)", "electronics fault on the board, no circuit diagram"],
+          ["Radio", "Schema nodig, niet te vinden", "circuit diagram needed, cannot be found"],
+          ["Amplifier", "versterker heeft computer die alles checkt, maar wil niet starten, ook vol sigarenrook", "amp has a computer that checks everything but won't start, also full of cigar smoke"],
+          ["Television", "Ohne Stromlaufplan keine Rep. moeglich", "without a circuit diagram, no repair possible"]
+        ]
+      },
+      "based_on": []
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "Netherlands rows account for 50.8% of the dataset (90,839 of 178,749). 'Most-repaired item' rankings reflect Dutch consumer culture (Senseo coffee makers, Henry vacuums) more than a global average."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Free-text fields are multilingual (Dutch, French, German, English). Phrase counts in any single language under-represent the same defect concept reported in another language; theme-level counts are more comparable."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Brand strings are volunteer-written: 'Chat GPT' / 'chatgpt' / 'CHAT GPT' all coexist; brand name spelling varies. AI-mention counts depend on whether volunteers wrote any of the search terms above."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Repairability score is missing for 30.1% of rows, often because the volunteer never finished assessing. Country/category averages of repairability are therefore biased toward items that got far enough into the process to be rated."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "2026 covers only Apr-Aug at most; 2026 yearly numbers are partial and should not be compared directly to full years."
+    },
+    {
+      "id": "ana_caveat_06",
+      "content": "The 24-kg-CO2-per-repair figure is a single research estimate (Steve Privett, University of Surrey, master's thesis). Real-world CO2 savings vary by product type."
+    }
+  ]
+}

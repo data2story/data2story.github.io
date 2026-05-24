@@ -1,0 +1,171 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: The Economist's 'TV's golden age is real' (24 Nov 2018)",
+      "content": "This dataset was assembled by The Economist's Graphic Detail team for an article titled 'TV's golden age is real,' published on 24 November 2018. The piece used IMDb user ratings for every American TV drama series available on IMDb from 1990 to 2018 to ask whether the cultural intuition about a 'Golden Age of TV' is supported by audience scoring. The published chart was a scatter of season-by-season average IMDb ratings against premiere date, with the premise that if quality has truly risen since the late 1990s the dot cloud should drift upward over time. The CSV provided is exactly the data that drove that scatter plot. Each row is one season of one drama, with seven fields: titleId (IMDb tt-id), seasonNumber, title, the season's premiere date, av_rating (the season's average rating on IMDb), share (what fraction of total votes that season received), and a comma-separated genre tag. The data file ships with a README that names IMDb, OMDb (for region/airing dates), and The Economist's own scripting as the three sources.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2018/11/24/tvs-golden-age-is-real",
+          "title": "TV's golden age is real — The Economist (Graphic Detail)",
+          "facts": [
+            "Original Economist Graphic Detail piece published 24 November 2018",
+            "Used IMDb user ratings to test whether TV drama quality has risen since the late 1990s",
+            "Published a scatter chart of season ratings vs. premiere date for American TV dramas"
+          ]
+        },
+        {
+          "url": "https://www.imdb.com/interfaces/",
+          "title": "IMDb non-commercial data interfaces",
+          "facts": [
+            "Bulk IMDb ratings and metadata are downloaded from imdb.com/interfaces"
+          ]
+        },
+        {
+          "url": "http://www.omdbapi.com/",
+          "title": "OMDb API",
+          "facts": [
+            "OMDb provides region and airing-date metadata used to filter to American dramas"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "What 'Golden Age' means in TV criticism (1999 → ~2023)",
+      "content": "When critics talk about a contemporary 'Golden Age' of television they mean a roughly 25-year stretch beginning with HBO's The Sopranos in January 1999 and running through the prestige-drama explosion of the 2000s and 2010s. Wikipedia's reference article dates the period 2000–2023; The Sopranos is the canonical opening shot. The era is defined by cinematic production budgets, serialized rather than episodic storytelling, and morally ambiguous anti-hero leads — Tony Soprano, Don Draper, Walter White, Stringer Bell. Production values on shows like Mad Men, Breaking Bad, and Band of Brothers came to rival theatrical film, and HBO's blueprint was copied first by AMC (Mad Men 2007, Breaking Bad 2008) and then aggressively by Netflix (House of Cards 2013) and the rest of the streamers. Crucially for this dataset, almost the entire 'Golden Age' falls inside the 1990–2018 window the IMDb data covers — so if it really happened, it should be visible in the ratings.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Golden_Age_of_Television_(2000s%E2%80%932023)",
+          "title": "Golden Age of Television (2000s–2023) — Wikipedia",
+          "facts": [
+            "Contemporary Golden Age dated approximately 2000–2023",
+            "Begins with The Sopranos (HBO, premiered January 1999)",
+            "Defined by cinematic production values, serialized storytelling, and morally ambiguous protagonists",
+            "Key milestones: The Sopranos 1999, The Wire 2002, Breaking Bad 2008, Game of Thrones 2011"
+          ]
+        },
+        {
+          "url": "https://www.imdb.com/title/tt0141842/",
+          "title": "The Sopranos (1999–2007) on IMDb",
+          "facts": [
+            "The Sopranos premiered on HBO on January 10, 1999",
+            "Pilot episode 'The Sopranos' has an IMDb rating of 8.4",
+            "Season 1 average rating ~9.07"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Peak TV: explosion of scripted series 2002 → 2018",
+      "content": "Parallel to the rise in quality is a separate but related story: the sheer *number* of original scripted series exploded. FX boss John Landgraf, who has tracked the count for two decades, recorded 182 scripted series in 2002, 343 by 2013, 487 by 2017, then 559 in 2021 and a peak of 600 in 2022. Within the dataset window (through 2018), the count roughly tripled. Landgraf's coinage 'Peak TV' captured the worry that quality could not keep pace with quantity — by 2018 he was already calling it a 'Gilded Age' rather than a Golden one. This matters for the data because the scatter must be denser at the right (more shows = more dots) without being meaningfully *higher* if Landgraf was right. If the dot cloud rises *and* gets denser, both the Golden Age and the Peak TV theses are supported.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://variety.com/2024/tv/news/peak-tv-tally-original-scripted-series-aired-2023-1235902886/",
+          "title": "The End of Peak TV: 516 Original Scripted Series Aired in 2023 — Variety",
+          "facts": [
+            "182 original scripted series in 2002",
+            "343 in 2013",
+            "Peak of 600 in 2022, declined to 516 in 2023",
+            "John Landgraf of FX has tracked this count since the early 2000s"
+          ]
+        },
+        {
+          "url": "https://www.indiewire.com/2018/08/peak-tv-update-fx-john-landgraf-scripted-1201990829/",
+          "title": "Peak TV Update — IndieWire 2018",
+          "facts": [
+            "Landgraf in 2018: 'the Golden Age of Television has become the Gilded Age of Television'",
+            "319 scripted series counted in the first half of 2018, +5% YoY"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "IMDb rating bias: self-selection, fan-survivorship, recency",
+      "content": "Before treating IMDb scores as 'TV quality' it is worth knowing how those scores are made. IMDb ratings are aggregated 1–10 votes from a self-selected pool of registered users, which produces three structural biases: (1) self-selection — viewers who feel strongly are over-represented and middling opinions disappear; (2) fan survivorship — people who watch a season to the end and then rate it tend to be fans, which inflates television scores relative to films; (3) early-rating skew — the first wave of voters is the most enthusiastic, so brand-new seasons land higher and drift down later. Average drama ratings on IMDb cluster around 8 out of 10 — far above the theoretical midpoint of 5.5 — for exactly this reason. The infamous Game of Thrones final-season collapse (the series finale fell to 4.0/10, the lowest score in any of the show's eight seasons) is the same mechanism running in reverse: angry viewers self-select to vote down. None of this kills the dataset as a tool for spotting trends; it just means absolute levels say more about who shows up to vote than about objective quality, while differences between seasons and shows are still meaningful.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.theringer.com/2019/06/12/tv/imdb-rating-system-problems-chernobyl",
+          "title": "The Problem With IMDb's Rating System — The Ringer",
+          "facts": [
+            "IMDb ratings are aggregated user votes from a self-selected, unverified pool",
+            "Voters who feel strongly (positive or negative) are over-represented"
+          ]
+        },
+        {
+          "url": "https://help.imdb.com/article/imdb/track-movies-tv/why-do-the-user-ratings-on-many-movies-and-tv-shows-seem-to-decrease-over-time/G4SK7DG5EA35B4GF",
+          "title": "Why do user ratings often decrease over time? — IMDb Help",
+          "facts": [
+            "Initial ratings are heavily skewed toward the high end because early voters are usually fans",
+            "Ratings drift down as casual viewers eventually weigh in"
+          ]
+        },
+        {
+          "url": "https://collider.com/game-of-thrones-lowest-rated-episodes-imdb/",
+          "title": "Game of Thrones lowest-rated episodes — Collider",
+          "facts": [
+            "Game of Thrones series finale 'The Iron Throne' rated 4.0/10",
+            "Before season 8 no Game of Thrones episode had scored below 8.0/10"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Why this matters: TV is the dominant cultural form of the streaming era",
+      "content": "Asking whether TV drama is genuinely getting better is not a niche aesthetic question. By 2018, when this dataset was assembled, the average American household watched several hours of scripted television daily, streaming services were displacing theatrical film as the cultural centerpiece, and HBO/Netflix originals were displacing Hollywood films at the Emmys and in critic year-end lists. If the perceived 'Golden Age' is real — if quality really has risen — that is a story about how an entire art form re-organized itself around the long-form serialized drama in less than two decades. If it is illusory — if we have just been telling ourselves a flattering story while watching a few hits and ignoring the floor — that matters too, because policymakers, advertisers, and an entire cultural-criticism industry have built their narratives on the assumption that the Golden Age is settled fact.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://fortune.com/2024/02/12/is-peak-tv-over-golden-age-prestige-streaming-john-landgraf/",
+          "title": "What is peak television, and is it over? — Fortune",
+          "facts": [
+            "By the late 2010s scripted TV had become the dominant cultural form, displacing theatrical film",
+            "Streamers and prestige cable channels reshaped both production and viewing habits"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Interpretive hook: rising floor vs. rising ceiling",
+      "content": "There is a subtle distinction worth holding on to before looking at the numbers. A 'Golden Age' could mean two very different things in the data: either the *ceiling* has risen (the very best shows in 2015 are better than the very best shows in 1995) or the *floor* has risen (mediocre 2015 dramas are better than mediocre 1995 dramas, while the top stays similar). Most cultural critics talk as though both are true. But IMDb's structural ceiling sits around 9.5 — Breaking Bad's final seasons, Band of Brothers, Chernobyl all bunch up there. So if there is room to move it is mainly the *floor* that can rise. Watch for that distinction: a clear upward drift in the *median* season rating is stronger evidence than an upward drift in the *maximum*, because the max is capped by IMDb's voting culture itself."
+      ,
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Golden_Age_of_Television_(2000s%E2%80%932023)",
+          "title": "Golden Age of Television — Wikipedia",
+          "facts": [
+            "Critics describe both rising production budgets (ceiling) and broader quality across cable and streaming (floor)"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Scope suggestion for the analyst",
+      "content": "Concrete things worth measuring: (1) median av_rating per premiere year, smoothed — this is the cleanest test of the Golden Age hypothesis; (2) top decile vs. bottom decile of av_rating per year — separates 'rising ceiling' from 'rising floor'; (3) count of seasons per year — visualises Peak TV; (4) which shows produce the biggest within-show jumps and drops (Game of Thrones falling off a cliff in season 8 is the prototype); (5) which genres rise fastest — does the Golden Age belong to drama-only, or also crime/sci-fi/fantasy? (6) the relationship between 'share' (votes) and av_rating — do the most-voted seasons rate higher, lower, or unrelated? Do not over-interpret absolute scores; absolute IMDb means cluster near 8 because of self-selection. Differences between years and within shows are far more informative than levels.",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [],
+  "instances": [
+    {
+      "id": "inst_01",
+      "type": "youtube",
+      "label": "Game of Thrones | Season 8 | Official Trailer (HBO)",
+      "embed_url": "https://www.youtube.com/embed/rlR4PJn8b8I",
+      "source_url": "https://www.youtube.com/watch?v=rlR4PJn8b8I",
+      "license": "Standard YouTube embed (HBO official channel)",
+      "relates_to": ["det_02", "det_04"],
+      "why": "GoT season 8 is the canonical streaming-era flame-out — IMDb finale rated 4.0/10. The official HBO trailer for that season is the embeddable artefact that anchors the prestige-era turn the dataset just barely foreshadows.",
+      "verified": true,
+      "verified_title": "Game of Thrones | Season 8 | Official Trailer (HBO) — GameofThrones"
+    }
+  ]
+}

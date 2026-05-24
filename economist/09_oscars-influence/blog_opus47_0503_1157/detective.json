@@ -1,0 +1,187 @@
+{
+  "meta": {"role": "detective", "version": "2.0"},
+  "items": {
+    "det_01": {
+      "label": "Origin: Economist Graphic Detail, March 2 2019",
+      "content": "The dataset accompanies The Economist's Graphic Detail piece 'The Oscars' influence has waned' (March 2 2019). The chart published with the article ranked the top 100 most-referenced films per release year from 1927 through 2016, colour-coding Best Picture winners and nominees. The story's editorial argument was that recent Best Picture winners have generated far fewer downstream references than mid-century winners — i.e. the Academy's choices increasingly fail to track the films that actually shape pop culture. The dataset (`movie-counts.csv`, 29,046 rows) was built and published by The Economist's data team to back this claim.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2019/03/02/the-oscars-influence-has-waned",
+          "title": "The Oscars' influence has waned (Graphic Detail, The Economist, 2019-03-02)",
+          "facts": [
+            "Published 2 March 2019 in The Economist's Graphic Detail column",
+            "Visualises top 100 referenced films per year, 1927-2016, with Best Picture winners/nominees highlighted"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "What an IMDb 'movie connection' actually counts",
+      "content": "Each row's `count` field aggregates IMDb 'movie connections' — crowdsourced records of one title referencing another. IMDb requires that a connection be a deliberate authorial gesture: a quoted line, a visual nod (a poster, T-shirt, on-screen still), a musical parody (the Psycho strings), a reused camera technique, a homage, an actual clip, or a spoof. Generic mentions ('this is like a Bond movie') do not qualify; a 'Casino Royale' poster on a character's wall does. This means each `count` is closer to a curated cultural-footprint score than to raw mentions, but it inherits crowdsourcing biases — popular fan favourites accrue references faster than esoteric titles, and any film a contributor never noticed simply does not exist in the network.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://help.imdb.com/article/imdb/discover-watch/in-the-connections-section-what-does-references-mean/GBV6XXCKNDUVAFTT",
+          "title": "IMDb Help: What does 'references' mean in the connections section?",
+          "facts": [
+            "A connection is accepted only when it is obvious filmmakers had the other title in mind",
+            "Plot similarity alone is not a connection; a poster, T-shirt, or specific cast reference is"
+          ]
+        },
+        {
+          "url": "https://help.imdb.com/article/contribution/titles/movie-connections/GNUNL9W2FTZDGF4Y",
+          "title": "IMDb Help: Title Connections",
+          "facts": [
+            "Connection types include 'referenced in', 'spoofed in', 'featured in', 'edited from', 'remake of'"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Bioglio & Pensa 2018: the network-science precedent",
+      "content": "The Economist's chart was inspired by a 2018 paper by Livio Bioglio and Ruggero G. Pensa at the University of Turin: 'Identification of key films and personalities in the history of cinema from a Western perspective' (Applied Network Science). They built a directed citation network from the same IMDb connection dataset (after stripping non-film references), covering ~47,000 international films, and computed influence scores by combining four centrality measures (in-degree, closeness, harmonic, PageRank). Their top influential film is The Wizard of Oz (1939), followed by Star Wars (1977) and Psycho (1960) — the same three titles that anchor the top of the Economist's per-year chart. The authors flagged the same caveats: the dataset is heavily Western-biased, and they made no attempt to correct for the 'recency problem' (older films have had more time to be referenced).",
+      "category": "related_work",
+      "sources": [
+        {
+          "url": "https://appliednetsci.springeropen.com/articles/10.1007/s41109-018-0105-0",
+          "title": "Bioglio & Pensa, 'Identification of key films and personalities…', Applied Network Science (2018)",
+          "facts": [
+            "Network built from ~47,000 international films and ~400,000 actors/actresses",
+            "Influence score blends in-degree, closeness, harmonic and PageRank centralities",
+            "Top three most influential films: The Wizard of Oz (1939), Star Wars (1977), Psycho (1960)",
+            "Authors note IMDb data is biased toward Western cinema"
+          ]
+        },
+        {
+          "url": "https://www.biomedcentral.com/about/press-centre/science-press-releases/30-11-18",
+          "title": "BioMedCentral press release: 'The Wizard of Oz most influential film…'",
+          "facts": [
+            "Press release from 30 November 2018",
+            "Five men credited for The Wizard of Oz are all in the top eight directors by influence"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "How Best Picture is defined; the early 'Wings' wrinkle",
+      "content": "The Best Picture Oscar (originally 'Outstanding Picture') was awarded for the first time at the 1st Academy Awards on 16 May 1929, with Wings (1927) winning. For its first six ceremonies the Academy accepted films that spanned two calendar years (August → July), so Wings was released in 1927 but was eligible — and is recorded in the dataset — under `oscars_year = 1928`. Best Picture is the only category awarded to a film as a whole (rather than a person), and its eligibility window is the 'Los Angeles theatrical release year' that the dataset's `oscars_year` column attempts to reconstruct. The dataset keeps a few non-eligible films (the foreign Metropolis, the animated Steamboat Willie) as orientation points for early years.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/1st_Academy_Awards",
+          "title": "1st Academy Awards — Wikipedia",
+          "facts": [
+            "Held on 16 May 1929 at the Hollywood Roosevelt Hotel",
+            "Wings won 'Outstanding Picture'; Sunrise won the now-defunct 'Unique and Artistic Picture'"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Wings_(1927_film)",
+          "title": "Wings (1927 film) — Wikipedia",
+          "facts": [
+            "Wings is a silent war film released in 1927",
+            "Only silent film to win Best Picture for many decades"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Why this is interesting now: the Oscars vs. blockbusters gap",
+      "content": "The Economist's claim landed at a moment when commentators across film media were arguing that the Academy's choices were drifting away from the films audiences actually watched. By the late 2010s, Oscar telecast ratings had fallen below 30 million viewers (down from a 1998 peak of 57.2 million for Titanic's year). Of the thirteen Best Picture winners between 2011 and 2024, only one — Oppenheimer — crossed $100 million domestic. Best Picture winners increasingly resemble small-to-mid-budget specialty releases, while the films that everyone references (Star Wars, Marvel, Pixar) are mostly absent from the nomination slate. The dataset gives a quantitative angle on this drift: are Best Picture winners still picking up the cultural slipstream that Casablanca, The Godfather and Annie Hall did?",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://movieweb.com/the-oscars-changed-lost-viewership/",
+          "title": "How the Oscars Lost Cultural Relevance — MovieWeb",
+          "facts": [
+            "Oscar viewership fell below 30M by the mid-2010s",
+            "1998 ceremony peaked at 57.2M viewers (Titanic year)"
+          ]
+        },
+        {
+          "url": "https://www.worldofreel.com/blog/2026/3/17/oscar-ratings-fall-9-to-last-year-with-178m-viewers",
+          "title": "Oscar Ratings Sink 9% to 17.8M Viewers — World of Reel",
+          "facts": [
+            "Of the last thirteen Best Picture winners, only Oppenheimer crossed $100M domestic"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Caveat: the recency problem",
+      "content": "Older films have had more decades to accumulate references, so a raw cross-year comparison is not fair. The Economist's chart sidesteps this by ranking *within* each year — annual_share normalises a film's references against the total references to all films released that same year, showing how dominant a single title was in its own cohort. Bioglio & Pensa explicitly chose not to correct for recency, and their results still surface 1939 and 1977 at the top, suggesting the dominance of certain films is not purely an artefact of age.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://appliednetsci.springeropen.com/articles/10.1007/s41109-018-0105-0",
+          "title": "Bioglio & Pensa, 'Identification of key films…', Applied Network Science (2018)",
+          "facts": [
+            "Authors state they did not control for the recency problem"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Caveat: crowdsourced, Western-biased, frozen 2017",
+      "content": "Three structural limits matter: (1) the data is crowdsourced — anyone can add a connection, so popular and English-language films dominate; (2) IMDb is heavily skewed toward European/North American cinema, so a Bollywood reference economy is invisible; (3) the file is a frozen snapshot from late 2017, meaning many references from 2017 onward are missing and films released late in 2017 (e.g. The Shape of Water) are absent. This is why the dataset stops at oscars_year 2016. Many recent 'reference' entries are also low-signal: actors plugging films on chat shows count the same as a quoted line in another movie.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2019/03/02/the-oscars-influence-has-waned",
+          "title": "The Economist methodology note (README)",
+          "facts": [
+            "Source list `movie-links.list.gz` is a frozen end-of-2017 dataset",
+            "Best Picture winner The Shape of Water was released 22 December 2017 and is absent",
+            "Non-Western films are under-represented"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Anchor case: Casablanca, the lingua franca of references",
+      "content": "Casablanca (1942) is the canonical example of how a Best Picture winner becomes a reference engine. Its IMDb connections page is one of the longest on the site (cited at ~887 entries). Its quoted lines ('Here's looking at you, kid', 'Of all the gin joints…') were officially added to the Oxford Dictionary of 20th Century Quotations in 1999. Direct descendents include The Cheap Detective (1978), Play It Again Sam (1972), and the title of The Usual Suspects (1995). The Economist's column-opening anecdote — Niles in Frasier paraphrasing Rick Blaine — is exactly the type of micro-quote that IMDb crowdsourcers register as a single +1 to Casablanca's count.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Casablanca_(film)",
+          "title": "Casablanca (film) — Wikipedia",
+          "facts": [
+            "Selected for the U.S. National Film Registry's inaugural class in 1989",
+            "Quoted lines added to Oxford Dictionary of 20th Century Quotations in 1999"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Anchor case: Star Wars 1977 — top of the dataset",
+      "content": "Star Wars: Episode IV — A New Hope (1977) is the single most-referenced film in the dataset (4,965 references; rank 1 overall, with 55.2% of all 1977 references). It opened on $11M, grossed $307M domestic in its first run (nearly 3x the year's #2), reset Hollywood's economics around franchise filmmaking, and now sits at the centre of a citation network so dense that filmmakers who say it shaped them include James Cameron, Christopher Nolan and Taika Waititi. It was nominated for Best Picture but lost to Annie Hall, which has 357 references in this dataset. That gap — winner vs. eventual cultural anchor — is the Economist's argument compressed into a single 1977 row.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.boxofficepro.com/celebrating-the-star-wars-franchise-impact-as-the-empire-strikes-back-turns-40/",
+          "title": "Boxoffice Pro: Celebrating the Star Wars Franchise's Box Office Impact",
+          "facts": [
+            "Star Wars (1977) grossed $307.3M domestic in first run",
+            "Nearly tripled 1977's #2 (Smokey and the Bandit, $126.7M)"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Academy_Award_for_Best_Picture",
+          "title": "Academy Award for Best Picture — Wikipedia",
+          "facts": [
+            "Annie Hall won Best Picture at the 50th Academy Awards (1977 films)"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Scope suggestion for the Analyst",
+      "content": "The most analytically rich angles in this dataset: (1) the trajectory of Best Picture winners' annual_share over time — does it actually shrink decade by decade?; (2) winner vs. nominee vs. unnominated comparison within each year — does the eventual #1 film tend to be a nominee or a non-nominee?; (3) Best Picture winners that ranked outside the top 10 of their own year (the obvious 'misses'); (4) the near-misses — films that beat the Best Picture winner in references that year but were never nominated; (5) decade-level summaries of how often the BP winner was also the most-referenced film of its year. Watch out for: oscars_year vs. release_year mismatches in the early years, the recency tail (years near 2016 are under-counted), and a handful of non-eligible orienting films (Metropolis 1927, Steamboat Willie 1929) intentionally kept in the data.",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [],
+  "instances": []
+}

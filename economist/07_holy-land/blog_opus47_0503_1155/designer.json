@@ -1,0 +1,284 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "The dataset is fundamentally cartographic — distance from a line, three regions, a slow crossover. So the visual language is map-like and editorial: a pencil-line teaser, a schematic radial map of distance buckets that doubles as the centerpiece, and chart-driven crossover animation. We deliberately avoid photographs of any specific real-world political event; the topic is sensitive and a single photo would assert framing the data does not.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Three structural quantitative findings are line/bar comparable: the crossover, the settler-by-distance distribution, and the Gaza-units rescaling."
+      },
+      "image": {
+        "used": true,
+        "reason": "Two atmospheric editorial illustrations carry the teaser and the chapter break before 'ninety-two Gazas' — both abstract, both intentionally non-photographic, neither depicts a specific political event."
+      },
+      "video": {
+        "used": true,
+        "reason": "image2video gives the teaser a slow parallax push-in so the page opens with restrained motion rather than a static still. This is one of the highest-payoff uses of image2video."
+      },
+      "audio": {
+        "used": true,
+        "reason": "A small data sonification synced with the four distance rings: the reader presses play and hears each bucket as a tone whose pitch encodes the 1998-to-2021 growth multiple. Sonification is exactly the kind of audio that earns its slot — it is bound to the data and only valuable while watching the chart update."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "Two interactives. (1) A guess-first quiz on edt_01: the reader picks the year they think Arabs first outnumbered Jews, then sees the line they drew the guess on. (2) A schematic radial map on edt_03: four concentric rings around a stylised Green Line with East Jerusalem floating outside; readers can toggle between 1998 and 2021 to watch the rings thicken. Both are vanilla JS, no third-party tile layers (the political map of Israel/Palestine on Leaflet is itself contested — we draw an abstract diagram instead of depending on OpenStreetMap's political boundaries)."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero image — green pencil line on map",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser.png",
+        "tool": "text2image",
+        "prompt": "Abstract editorial illustration: a thin pale-green pencil line runs horizontally across the centre of a softly textured topographic paper map; the line is hand-drawn, slightly wavy, faded in places. Around the line, faint contour lines and tiny architectural footprints cluster more densely on one side. Muted earth tones, soft natural diffuse light, like an atlas plate. No people, flags, text, symbols.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "A still illustration of a pale green pencil line on a paper map, with little settlement footprints clustering more on one side. No politics in the frame, just the geometry the data is built on. Used as the first frame of the teaser video.",
+      "rationale": "The Green Line is literally named for the green pencil. An illustrated, abstract pencil-line opening signals from the first second that this is a story about geometry and distance, not about flags.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser video — slow push-in (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser.png",
+        "prompt": "Very slow, restrained parallax push-in on the green pencil line. Almost imperceptible drift of paper texture and ambient dust motes. The line itself does not move. No camera shake.",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "A 6-second muted, looping video of the teaser still with the slowest possible parallax push-in. The page opens with motion that doesn't ask for attention.",
+      "rationale": "We invested in a strong still; image2video preserves the composition while adding the kinetic edge a static teaser lacks.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Crossover quiz — when did Arabs outnumber Jews?",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "reader_quiz_then_chart",
+        "initial_state": "Reader sees the prompt 'In what year do you think Arabs first outnumbered Jews between the river and the sea?' with a horizontal year slider from 1998 to 2025 and a 'Reveal' button.",
+        "trigger": "Reader drags the slider to a year and clicks Reveal.",
+        "transition": "A vertical reference line at the reader's chosen year appears on a two-line chart of Jews vs Arabs (ana_04). A second vertical line at 2018 appears in a brand colour with a small label '2018: gap = 433'. The reader's line is annotated 'You said: YYYY'.",
+        "payoff": "The reader sees how close (or far) their intuition was, and the actual crossover year is shown in context with the data.",
+        "data_source": "ana_04"
+      },
+      "brief": "A guess-first interactive on the hook section. Slider goes 1998-2025, default 2010. After Reveal, the line chart fades in with the user's year line + the 2018 actual line, with a tooltip showing the 433-person gap.",
+      "rationale": "The 2018 crossover is the single most surprising data point in the file. A guess-first interaction transforms it from a number on a chart into something the reader has staked an opinion on.",
+      "based_on": ["ana_03", "ana_04"]
+    },
+    "des_04": {
+      "label": "Crossover line chart (Jews vs Arabs, 1998-2021)",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_04",
+        "x": "year",
+        "y": "count",
+        "color": "group",
+        "highlight": {"year": 2018, "label": "Crossover, 2018"},
+        "interaction": "Hover tooltip showing exact value for both lines at that year. Vertical rule at 2018 with a callout label 'gap = 433'.",
+        "style": {
+          "palette": ["#5b8bb3", "#c9682a"],
+          "no_gridlines": true,
+          "y_format": "M (millions)",
+          "x_zero": false,
+          "y_zero": false
+        }
+      },
+      "brief": "Two-line chart, 1998-2021. Jewish total vs Arab total, river to sea. A vertical rule highlights 2018. The crossover label sits next to the rule. Tooltip shows both values at the hovered year.",
+      "rationale": "This is the page's defining chart — it shows the entire claim of edt_01 in one frame.",
+      "based_on": ["ana_04"]
+    },
+    "des_05": {
+      "label": "Settler growth chart, West Bank vs Israel proper vs East Jerusalem",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "indexed_line",
+        "data_source": ["ana_05", "ana_10"],
+        "x": "year",
+        "y": "indexed_value",
+        "color": "region",
+        "highlight": {"region": "West Bank", "endpoint_label": "x3.06"},
+        "interaction": "Hover shows raw count and indexed multiple. Three lines: West Bank (settler population), Israel proper (Jews), East Jerusalem (Jews). Indexed to 100 in 1998 so the relative growth rate is visible.",
+        "style": {
+          "palette": {"West Bank": "#c9682a", "Israel proper": "#7b8794", "East Jerusalem": "#5b8bb3"},
+          "no_gridlines": true,
+          "endpoint_labels": true
+        }
+      },
+      "brief": "Three-line chart indexed to 1998 = 100. West Bank line ends at ~306, Israel proper at ~141, East Jerusalem at ~147. The West Bank line is the standout, drawn in the accent colour, with an endpoint label '3.06x'.",
+      "rationale": "Indexing reveals the differential growth instantly. Without it, the West Bank line looks small in absolute terms because the Israel-proper line dwarfs everything.",
+      "based_on": ["ana_05", "ana_10"]
+    },
+    "des_06": {
+      "label": "Concentric distance map — the centerpiece",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "schematic_radial_map_with_year_toggle",
+        "initial_state": "An abstract schematic SVG diagram: a vertical pale-green dashed line down the left side labelled 'Green Line, 1949'. To the right of the line, four concentric arc bands at distances 0-2.5 km, 2.5-5 km, 5-15 km, >15 km. Each band has a width proportional to its distance range and a colour intensity proportional to its 2021 population. A separate disc to the upper-left of the green line, floating, labelled 'East Jerusalem, annexed 1980'. A year toggle at the bottom: 1998 | 2021. Default = 2021.",
+        "trigger": "Click '1998' or '2021' to switch year. The bands smoothly redraw with their year-specific population intensities. East Jerusalem disc scales accordingly.",
+        "transition": "Numbers and intensities animate over ~600ms. Each band shows its bucket's count for the selected year as a label inside the ring.",
+        "payoff": "The reader watches the rings thicken between 1998 and 2021. The bulk of the change is in the inner two rings, exactly as the data says.",
+        "data_source": "ana_07"
+      },
+      "brief": "A pure-SVG, no-tile-layer schematic diagram of the West Bank as four concentric distance bands around the Green Line, plus a separate disc for East Jerusalem. Year toggle 1998/2021. Each band is labelled with its bucket name, distance range, and population. Click bands for a small detail tooltip.",
+      "rationale": "A real Leaflet political map of Israel/Palestine would itself be contested and would distract from the data. A schematic radial diagram says exactly what the dataset says — distance from a line — without drawing a single internationally-disputed border ourselves.",
+      "based_on": ["ana_07", "ana_08"]
+    },
+    "des_07": {
+      "label": "Stat callout — 62.8% within 5 km",
+      "type": "stat_callout",
+      "section": "edt_03",
+      "content": {
+        "value": "62.8%",
+        "label": "of West Bank settlers live within 5 km of the Green Line — inside the strip Israel expects to keep.",
+        "data_source": "ana_07"
+      },
+      "brief": "Large 64-72px stat: '62.8%'. Below it the supporting line.",
+      "rationale": "The 62.8% is the structural finding of the section; it deserves to be a headline number, not just a sentence.",
+      "based_on": ["ana_07"]
+    },
+    "des_08": {
+      "label": "Growth-by-bucket bar chart with sonification",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_08",
+        "x": "multiple",
+        "y": "bucket",
+        "color": "multiple",
+        "highlight": {"bucket": "0-2.5km", "label": "5.22x"},
+        "interaction": "Each bar is hoverable for 1998 and 2021 raw values. A 'Play distribution' button below the chart triggers the sonification (des_09) — bars highlight in sequence as their tones play.",
+        "style": {
+          "palette": "single_warm_to_cool",
+          "bar_height": 28,
+          "no_gridlines": true,
+          "value_labels_on_bars": true
+        }
+      },
+      "brief": "Horizontal bar chart of growth multiples by distance bucket: 0-2.5 km at 5.22x is the longest bar; East Jerusalem at 1.47x is the shortest. Colour intensity encodes magnitude. A play button under the chart is wired to the sonification audio item.",
+      "rationale": "A bar chart makes the 5.22x finding land instantly. Pairing it with the sonification gives auditory reinforcement to the visual shape.",
+      "based_on": ["ana_08"]
+    },
+    "des_09": {
+      "label": "Sonification — bucket growth as ascending tones",
+      "type": "audio",
+      "section": "edt_04",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "The dataset has a small ranked sequence (five distance buckets, growth multiples from 1.47x to 5.22x). Hearing them as ascending tones reinforces the visual ranking and makes the 0-2.5 km spike audibly obvious.",
+        "trigger": "Click 'Play distribution' below the bar chart in edt_04.",
+        "ui_form": "chart-synced sonification — each bar in des_08 briefly highlights as its tone plays",
+        "content": {
+          "implementation": "Web Audio API, no audio file needed. OscillatorNode + GainNode. Each bucket's growth multiple maps to a pitch in a pentatonic C major scale (C4, D4, E4, G4, A4 for 1.47, 2.13, 2.48, 2.85, 5.22 — the highest multiple gets the highest tone). Each tone 350ms with a 50ms attack, 100ms gap.",
+          "data_mapping": {"field": "multiple", "scale": "pentatonic_C", "range_hz": [261.63, 880]}
+        },
+        "fallback": "If Web Audio API unavailable, the play button is hidden. The chart alone communicates the ranking.",
+        "novelty_note": "Not the standard 'click-to-play tone card'. The play button lives under the bar chart and the bars highlight in sync — the sound only adds meaning while the eye is on the chart."
+      },
+      "brief": "A 5-tone sonification of the five distance-bucket growth multiples, mapped to a pentatonic C scale, played in order from East Jerusalem to 0-2.5 km (smallest to largest multiple). Bars in des_08 visually pulse in time with each tone.",
+      "rationale": "Audio earns its slot here because the data is exactly the right shape for sonification: a small ranked sequence the eye reads slowly.",
+      "based_on": ["ana_08"]
+    },
+    "des_10": {
+      "label": "East Jerusalem stat callout (47% growth)",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": {
+        "value": "+47.4%",
+        "label": "growth in the Jewish population of East Jerusalem, 1998-2021. The city was annexed by Israel in 1980; the UN Security Council called the annexation null and void.",
+        "data_source": "ana_06"
+      },
+      "brief": "Large stat with the legal-status caveat embedded in the supporting line. Keep the caveat compact but present.",
+      "rationale": "The legal context of East Jerusalem is essential — making it part of the stat block keeps it from being lost in surrounding prose.",
+      "based_on": ["ana_06"]
+    },
+    "des_11": {
+      "label": "Gaza scale image (chapter break before edt_06)",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "scale.png",
+        "tool": "text2image",
+        "prompt": "Abstract editorial graphic: aerial overhead view of small white house-shaped silhouettes spread across an arid hilltop landscape, scattered like grains of sand. Pale beige and warm sand-coloured ground, hint of olive-green vegetation. No people, flags, symbols, text, words, maps, labels. Quiet editorial illustration.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Atmospheric editorial illustration of small house-shaped silhouettes scattered across a sandy hilltop. Used as a chapter break before the 'ninety-two Gazas' section to give physical scale to the abstract numbers.",
+      "rationale": "We deliberately avoided photographs of any real evacuation, demolition, or settlement. The illustration says 'a lot of small homes' without saying anything about whose, where, or why.",
+      "based_on": []
+    },
+    "des_12": {
+      "label": "Gaza-units bar chart",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "stacked_unit_dots",
+        "data_source": "ana_13",
+        "x": "gaza_units",
+        "y": "population",
+        "color": "category",
+        "highlight": {"category": "All settlers beyond Green Line", "label": "92.5x"},
+        "interaction": "Each row is a population (West Bank settlers, East Jerusalem, total beyond Green Line, deepest 15+ km). The bar is rendered as a series of small dot-icons, each icon representing one '8,000-settler Gaza disengagement'. Hover any row for the absolute count.",
+        "style": {
+          "icon": "small filled circle",
+          "icon_color": "#c9682a",
+          "row_label_left": true,
+          "no_gridlines": true
+        }
+      },
+      "brief": "Each row is a population stat. The visual unit isn't a numeric scale — it is one '2005 Gaza' (8,000 settlers) per dot. Total beyond the Green Line is shown as 92 dots arranged in a long row. The deepest-15-km bucket is shown as 9-10 dots.",
+      "rationale": "92.5x is too abstract as a bare number. Drawing it as 92 dots makes the scale physical without depicting any specific event.",
+      "based_on": ["ana_13"]
+    },
+    "des_13": {
+      "label": "Closing chart — Jewish share of total falling",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "area",
+        "data_source": "ana_02",
+        "x": "year",
+        "y": "jewish_share_pct",
+        "highlight": {"year": 2018, "value": 50.0},
+        "interaction": "Hover shows exact percentage. A horizontal reference line at 50%, intersected at 2018.",
+        "style": {
+          "palette": ["#5b8bb3"],
+          "no_gridlines": true,
+          "y_domain": [45, 55],
+          "y_zero": false
+        }
+      },
+      "brief": "Single area chart of Jewish share of (Jews + Arabs) river-to-sea, 1998-2021. Y axis explicitly bounded 45-55% so the slow descent reads clearly. Reference line at 50% with the 2018 intersection labelled.",
+      "rationale": "Closes the loop — the lead chart shows the absolute crossover; this one shows the crossover as a share, anchored at 50%.",
+      "based_on": ["ana_02"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "muted editorial, cartographic, restrained",
+    "text_visual_pattern": "text-then-visual, with two interactive moments (guess-first quiz at the top, schematic radial map at the centre) and one audio moment (sonification under the bucket bar chart)",
+    "centrepiece": "des_06",
+    "anti_sameness_notes": "No photographs of any specific real-world political subject. No Leaflet basemap that would itself contest borders. Two custom SVG diagrams (the schematic radial map and the Gaza-units dot chart) carry visual weight that would otherwise be filled by stock imagery. Audio is sonification synced to a chart, not the standard click-to-play tone card.",
+    "typography_notes": "Stat callouts at 64-72px. Section titles in a slightly heavier serif than the body. The crossover annotation '433' should be set in the brand accent colour. All chart axis labels in system-ui."
+  }
+}

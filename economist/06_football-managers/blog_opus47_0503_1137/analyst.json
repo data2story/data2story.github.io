@@ -1,0 +1,376 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": [
+      "manager_table_df.csv",
+      "manager_ratings_df.csv",
+      "manager_all_tenures_performance_df.csv",
+      "manager_sequence_overperformance_df.csv",
+      "team_season_performance_df.csv",
+      "expected_points_df.csv"
+    ],
+    "rows": 27390,
+    "columns": 30,
+    "what_one_row_represents": "The largest file (expected_points_df.csv) has one row per league fixture in Europe's big-five leagues. The manager-tenure files have one row per manager-club tenure. The team-season file has one row per team-season pair.",
+    "time_range": "August 2004 – May 2019 (15 seasons)",
+    "geographic_scope": "Europe's big-five leagues: England, Spain, Germany, Italy, France"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Coverage: 5 leagues, 15 seasons, 27,390 fixtures",
+      "content": "The dataset covers 27,390 individual league fixtures from Europe's big-five leagues — England, Spain, Italy, France, and Germany — across 15 seasons from August 2004 through May 2019. Forecast model errors averaged 7.27 points per team-season (median 5.99); the league-by-league mean absolute error ranges from a tight 7.01 in France to 7.50 in England. The Pearson correlation between expected and actual points-per-game across all 1,470 team-seasons is 0.796, confirming the FIFA-rating-based forecast tracks reality closely.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_team_forecast.py",
+        "lines": [12, 30],
+        "output": "Total team-seasons: 1470\nMean absolute error per season: 7.27 points\nMedian absolute error per season: 5.99\nBy league: England=7.50, France=7.01, Germany=7.37, Italy=7.45, Spain=7.05\nPearson r (expected vs actual): 0.796"
+      },
+      "data_table": {
+        "description": "Team-seasons per league plus mean absolute error per season",
+        "columns": ["league", "team_seasons", "mae_points"],
+        "rows": [
+          ["England", 300, 7.50],
+          ["France", 300, 7.01],
+          ["Germany", 270, 7.37],
+          ["Italy", 300, 7.45],
+          ["Spain", 300, 7.05]
+        ]
+      },
+      "based_on": ["det_01", "det_08"]
+    },
+    "ana_02": {
+      "label": "Manager population: 598 distinct managers, 1,220 tenures",
+      "content": "The data includes 1,220 manager-tenure rows across 598 distinct managers and 192 distinct clubs. Of these, 502 tenures lasted at least one full season (38+ league games). The currently-employed manager-board at end-2018 contained 596 names — most of whom appear in the data with only a single, short tenure.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_manager_distribution.py",
+        "lines": [13, 18],
+        "output": "Total manager-tenure rows: 1220\nDistinct managers: 598\nDistinct teams: 192\nCurrently-employed managers (manager_ratings_df): 596"
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_03": {
+      "label": "The headline distribution: most managers cluster around zero",
+      "content": "Across 502 manager-tenures of at least one full season, the average manager added 0.04 points per game above what FIFA-based player ratings predicted — a margin so close to zero it is statistically indistinguishable from luck for any single tenure. The standard deviation is 0.18 points-per-game; the 5th-95th percentile range runs only from -0.24 to +0.34. About 45% of all tenures fall within ±0.10 ppg of expectation. Just 16% of managers cleared +0.20 ppg over a full-season-or-more sample, and only a handful exceeded +0.40. This is the spine of the story: the typical manager is a rounding error.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_manager_distribution.py",
+        "lines": [22, 47],
+        "output": "Tenures with >=38 games: 502\nMean ppg-above-expectation: 0.0430\nMedian ppg-above-expectation: 0.0373\nStd: 0.1756\n5th pct: -0.2381\n95th pct: 0.3384\nMin/Max: -0.6593 / 0.5740\nTenures with > +0.20 ppg-above-expectation: 80 (15.9%)\nTenures with > +0.10 ppg-above-expectation: 183 (36.5%)\nTenures within +/-0.10 ppg of expectation: 224 (44.6%)"
+      },
+      "data_table": {
+        "description": "Histogram of points-per-game above expectation across all 502 tenures with 38+ games (bin width 0.10)",
+        "columns": ["bin_left", "bin_right", "count"],
+        "rows": [
+          [-0.70, -0.60, 1],
+          [-0.60, -0.50, 1],
+          [-0.50, -0.40, 3],
+          [-0.40, -0.30, 7],
+          [-0.30, -0.20, 28],
+          [-0.20, -0.10, 55],
+          [-0.10, 0.00, 102],
+          [0.00, 0.10, 122],
+          [0.10, 0.20, 103],
+          [0.20, 0.30, 43],
+          [0.30, 0.40, 24],
+          [0.40, 0.50, 9],
+          [0.50, 0.60, 4]
+        ]
+      },
+      "based_on": ["det_03", "det_04"]
+    },
+    "ana_04": {
+      "label": "The exceptions: top 12 over-performing tenures",
+      "content": "The top of the leaderboard is dominated by single-season improbabilities rather than household names. Abelardo's 42-game stint at Deportivo Alavés tops the list at +0.57 points-per-game above expectation; Ralph Hasenhüttl's RB Leipzig tenure (+0.55) and Luciano Spalletti's two stretches at Udinese (+0.54) and Roma (+0.52) follow. Claudio Ranieri's miracle Leicester title campaign appears mid-table at +0.47 — a reminder that even the most famous over-achievement of the decade was, on this metric, of similar magnitude to a dozen lesser-known runs. Below the very top, the curve flattens fast: by tenure 12 you are at +0.41, only 0.05 ppg below the leader.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_manager_distribution.py",
+        "lines": [49, 63],
+        "output": "TOP 12 (>=38 games):\nAbelardo / Deportivo Alaves / 42 games / 1.643 ppg / exp 1.069 / +0.574\nRalph Hasenhuttl / RB Leipzig / 68 / 1.765 / 1.212 / +0.553\nLuciano Spalletti / Udinese / 38 / 1.632 / 1.096 / +0.535\nLuciano Spalletti / Roma / 57 / 2.333 / 1.817 / +0.517\nRalf Rangnick / Schalke 04 / 44 / 2.000 / 1.507 / +0.493\nClaudio Ranieri / Leicester / 63 / 1.619 / 1.149 / +0.470\nGian Piero Gasperini / Atalanta / 95 / 1.684 / 1.224 / +0.460\nFelix Magath / Wolfsburg / 68 / 1.809 / 1.352 / +0.457\nSascha Lewandowski / Leverkusen / 40 / 1.975 / 1.528 / +0.447\nAntonio Conte / Juventus / 38 / 2.211 / 1.769 / +0.441\nMaurizio Sarri / Napoli / 114 / 2.272 / 1.850 / +0.422\nAntonio Tapia / Malaga / 38 / 1.447 / 1.035 / +0.412"
+      },
+      "data_table": {
+        "description": "Top 12 manager-tenures by points-per-game above expectation, plus bottom 6, all with 38+ games",
+        "columns": ["manager", "team", "games", "ppg", "expected_ppg", "above"],
+        "rows": [
+          ["Abelardo", "Deportivo Alavés", 42, 1.64, 1.07, 0.574],
+          ["Ralph Hasenhüttl", "RB Leipzig", 68, 1.76, 1.21, 0.553],
+          ["Luciano Spalletti", "Udinese", 38, 1.63, 1.10, 0.535],
+          ["Luciano Spalletti", "Roma", 57, 2.33, 1.82, 0.517],
+          ["Ralf Rangnick", "Schalke 04", 44, 2.00, 1.51, 0.493],
+          ["Claudio Ranieri", "Leicester", 63, 1.62, 1.15, 0.470],
+          ["Gian Piero Gasperini", "Atalanta", 95, 1.68, 1.22, 0.460],
+          ["Felix Magath", "Wolfsburg", 68, 1.81, 1.35, 0.457],
+          ["Sascha Lewandowski", "Leverkusen", 40, 1.97, 1.53, 0.447],
+          ["Antonio Conte", "Juventus", 38, 2.21, 1.77, 0.441],
+          ["Maurizio Sarri", "Napoli", 114, 2.27, 1.85, 0.422],
+          ["Antonio Tapia", "Málaga", 38, 1.45, 1.03, 0.412]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_05": {
+      "label": "The active board: top 10 currently-employed managers",
+      "content": "After applying the regression-to-the-mean shrinkage that best predicts future results, the top 10 active managers in late 2018 cluster within a 1.2-point range of each other. Lucien Favre tops the list at +3.76 projected points added per season above an average coach with the same squad, followed by Rudi Garcia (+3.40), Diego Simeone (+3.27), and Maurizio Sarri (+3.04). Jürgen Klopp lands sixth at +2.85 — backed by 466 prior career matches that anchor the projection. Every name in the top 10 has built their reputation on at least 100 prior career matches, and most on more than 250.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_predictive_table.py",
+        "lines": [10, 14],
+        "output": "Lucien Favre / Dortmund / 321 prev matches / 77.4 prev career adj pts / 3.76 proj per season\nRudi Garcia / Marseille / 407 / 77.7 / 3.40\nDiego Simeone / Atletico Madrid / 285 / 64.2 / 3.27\nMaurizio Sarri / Chelsea / 172 / 50.7 / 3.04\nMarcelino / Valencia / 296 / 56.9 / 2.85\nJurgen Klopp / Liverpool / 466 / 69.5 / 2.85\nThomas Tuchel / Paris SG / 255 / 52.5 / 2.79\nRalph Hasenhuttl / Southampton / 107 / 40.2 / 2.69\nLuciano Spalletti / Inter / 306 / 53.0 / 2.62\nRene Girard / NaN / 243 / 47.3 / 2.55"
+      },
+      "data_table": {
+        "description": "Top 10 active managers by projected points-added per season (after shrinkage)",
+        "columns": ["manager", "current_team", "prev_career_matches", "projection_per_season"],
+        "rows": [
+          ["Lucien Favre", "Dortmund", 321, 3.76],
+          ["Rudi Garcia", "Marseille", 407, 3.40],
+          ["Diego Simeone", "Atlético Madrid", 285, 3.27],
+          ["Maurizio Sarri", "Chelsea", 172, 3.04],
+          ["Marcelino", "Valencia", 296, 2.85],
+          ["Jürgen Klopp", "Liverpool", 466, 2.85],
+          ["Thomas Tuchel", "Paris SG", 255, 2.79],
+          ["Ralph Hasenhüttl", "Southampton", 107, 2.69],
+          ["Luciano Spalletti", "Inter", 306, 2.62],
+          ["René Girard", "(unattached)", 243, 2.55]
+        ]
+      },
+      "based_on": ["det_06", "det_09"]
+    },
+    "ana_07": {
+      "label": "Most active managers project as below-average",
+      "content": "Of the 596 currently-employed-or-recently-employed managers in the database, 432 (72.5%) have a negative projection — meaning the model expects them to win fewer points per season than a hypothetical league-average coach with the same squad. Just 44 managers (7.4%) project as adding more than one point per season; 74 (12.4%) clear half a point. Half the population sits within ±0.5 points-per-season of league-average, which over a 38-game campaign is one decisive corner kick away from indistinguishable. The mean projection is -0.25, the median -0.36 — a heavily left-skewed distribution where most coaches do not earn their wage.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_predictive_table.py",
+        "lines": [27, 41],
+        "output": "N currently-employed managers: 596\nMean projection: -0.249\nMedian projection: -0.359\nStd: 0.844\nRange: [-2.795, 3.762]\nTop 10% projection threshold: 0.732\n# with > 1.0 ppg added: 44 (7.4%)\n# with > 0.5 ppg added: 74 (12.4%)\n# negative (sub-average): 432 (72.5%)\n# within +/-0.5 ppg added: 298 (50.0%)"
+      },
+      "data_table": {
+        "description": "Counts and percentages of managers in each projection band (n=596)",
+        "columns": ["band", "count", "pct"],
+        "rows": [
+          ["≤ -1.0", 184, 30.9],
+          ["-1.0 to -0.5", 124, 20.8],
+          ["-0.5 to 0", 124, 20.8],
+          ["0 to +0.5", 100, 16.8],
+          ["+0.5 to +1.0", 30, 5.0],
+          ["> +1.0", 34, 5.7]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_08": {
+      "label": "The killer test: past overperformance barely predicts future",
+      "content": "Among 222 managers with at least two distinct tenures, the correlation between first-tenure and second-tenure points-per-game above expectation is just r = 0.04 (p = 0.54) — statistically indistinguishable from no relationship at all. The conditional probability that a manager who overperformed in tenure one will overperform again in tenure two is only 45%, barely better than the 36.6% rate observed for managers who underperformed in tenure one. The data refuses to grant managers a stable 'level of skill' that travels with them.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_sequence_test.py",
+        "lines": [13, 26],
+        "output": "Managers with at least 2 tenures: 222\n  tenure1 > 0 (overperformed): 129 (58.1%)\n  tenure2 > 0 (overperformed): 92 (41.4%)\nP(over in t2 | over in t1): 0.450  (n=129)\nP(over in t2 | under in t1): 0.366  (n=93)\nPearson r (tenure1 vs tenure2 ppg-above): 0.041 (p=0.544)"
+      },
+      "data_table": {
+        "description": "Tenure-1 vs tenure-2 points-per-game above expectation, all managers with two or more tenures (n=222 pairs)",
+        "columns": ["manager", "tenure1_above", "tenure2_above"],
+        "rows": [
+          ["Ronald Koeman", -1.055, 0.382],
+          ["Jos Luhukay", -0.671, 0.072],
+          ["Mick McCarthy", -0.623, -0.004],
+          ["Massimo Oddo", -0.608, -0.147],
+          ["Andrea Stramaccioni", -0.519, -0.165],
+          ["André Villas-Boas", -0.516, 0.107],
+          ["Jupp Heynckes", -0.481, 0.283],
+          ["Stefano Pioli", -0.457, 0.144],
+          ["Antonio Conte", 0.441, 0.384],
+          ["Ralf Rangnick", 0.493, 0.158],
+          ["Davide Ballardini", 0.529, 0.279],
+          ["Luciano Spalletti", 0.535, 0.032]
+        ]
+      },
+      "based_on": ["det_04", "det_07"]
+    },
+    "ana_09": {
+      "label": "Quartile collapse: every group of managers regresses to roughly zero",
+      "content": "Split the 222 multi-tenure managers into quartiles by their first-tenure points-per-game above expectation, then look at how the same managers performed in their next tenure. Every quartile, including the very top one, collapses back toward zero. The bottom-quartile managers (who started at a mean of about -0.4 ppg below expectation) ended their second tenure at -0.04 ppg; the top-quartile managers (who started at about +0.3) ended at -0.001. The pattern is regression to the mean in its purest visible form: the apparent 'good' and 'bad' coaches of round one converge in round two.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_sequence_test.py",
+        "lines": [29, 35],
+        "output": "Q1 (worst) -> tenure2 mean = -0.044  (n=56, std=0.290)\nQ2 -> -0.091  (n=55, std=0.223)\nQ3 -> -0.081  (n=55, std=0.280)\nQ4 (best) -> -0.002  (n=56, std=0.262)"
+      },
+      "data_table": {
+        "description": "Mean tenure-2 ppg-above-expectation, grouped by tenure-1 quartile",
+        "columns": ["quartile", "tenure2_mean_above", "count"],
+        "rows": [
+          ["Q1 (worst)", -0.044, 56],
+          ["Q2", -0.091, 55],
+          ["Q3", -0.081, 55],
+          ["Q4 (best)", -0.002, 56]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_15": {
+      "label": "Sir Alex Ferguson: the canonical outlier",
+      "content": "Across his 342 league games at Manchester United covered by this dataset (1986-2013, restricted to data-available seasons), Sir Alex Ferguson averaged 2.25 points per game versus an expected 2.09 — a margin of +0.159 ppg above expectation. Over a 38-game season that is roughly six extra league points; over a quarter-century career it accumulates relentlessly. Ferguson's tenure of 342 games and steady positive margin is exactly the kind of profile the shrinkage formula rewards: even with 461 games of zero performance added, his record retains roughly 43% of its weight.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_klopp_ferguson_traces.py",
+        "lines": [14, 21],
+        "output": "Sir Alex Ferguson / manchester-united / 1986-11-06 to 2013-06-30 / 342 games / 769 actual / 714.5 expected / 2.249 ppg / 2.089 expected / +0.159 above"
+      },
+      "data_table": {
+        "description": "Ferguson at Manchester United — actual vs expected",
+        "columns": ["metric", "value"],
+        "rows": [
+          ["Games", 342],
+          ["Actual points", 769],
+          ["Expected points", 714.5],
+          ["Actual ppg", 2.25],
+          ["Expected ppg", 2.09],
+          ["Above expectation", 0.159]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_16": {
+      "label": "Klopp's three-club arc: the textbook over-performer",
+      "content": "Jürgen Klopp's career across three clubs reads like a textbook over-performance trajectory. At Mainz (2001-08, 102 games covered) he edged 0.05 ppg above expectation. At Borussia Dortmund (2008-15, 238 games) he leapt to +0.17 ppg — the spine of the original Economist piece's third chart. At Liverpool (from October 2015, 126 games covered) he rose again to +0.31 ppg. The line goes only one way, and crucially each step is built on enough games (>100) to make luck-based explanations implausible.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_klopp_ferguson_traces.py",
+        "lines": [23, 30],
+        "output": "Klopp / Mainz 05 / 2001-2008 / 102 games / 1.127 ppg / 1.081 expected / +0.047\nKlopp / Borussia Dortmund / 2008-2015 / 238 / 1.912 / 1.737 / +0.175\nKlopp / Liverpool / 2015-2019 / 126 / 2.008 / 1.698 / +0.310"
+      },
+      "data_table": {
+        "description": "Klopp's three tenures: actual vs expected ppg",
+        "columns": ["club", "years", "games", "ppg_actual", "ppg_expected", "above"],
+        "rows": [
+          ["Mainz 05", "2001–2008", 102, 1.13, 1.08, 0.047],
+          ["Borussia Dortmund", "2008–2015", 238, 1.91, 1.74, 0.175],
+          ["Liverpool", "2015–2019", 126, 2.01, 1.70, 0.310]
+        ]
+      },
+      "based_on": ["det_09"]
+    },
+    "ana_17": {
+      "label": "Famous-name tenure profiles for comparison",
+      "content": "A grid of well-known managers shows how varied their measured impact actually is. Pep Guardiola's three clubs all post positive margins, but only modestly: +0.11 at Barcelona, +0.08 at Bayern, +0.28 at Manchester City. Diego Simeone is consistently elite (+0.26 at Atlético over 267 games). Conte's Juventus stints are spectacular (+0.44, +0.38). Pochettino climbed from -0.02 at Espanyol to +0.30 at Tottenham. Carlo Ancelotti is the surprise: across his AC Milan, Chelsea, PSG, Real Madrid and Bayern tenures, his averages range from -0.27 to +0.03 — a man with five Champions League trophies on his CV looks, in this metric, like a roughly average coach paired with elite squads.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/06_klopp_ferguson_traces.py",
+        "lines": [33, 50],
+        "output": "Guardiola / Barcelona / 152 games / 2.454 / 2.344 / +0.110\nGuardiola / Bayern Munich / 102 / 2.520 / 2.441 / +0.078\nGuardiola / Man City / 96 / 2.344 / 2.065 / +0.279\nSimeone / Atletico Madrid / 267 / 2.097 / 1.839 / +0.259\nConte / Juventus / 38 / 2.211 / 1.769 / +0.441\nConte / Juventus / 60 / 2.517 / 2.133 / +0.384\nConte / Chelsea / 76 / 2.145 / 2.040 / +0.105\nAncelotti / AC Milan / 190 / 1.968 / 2.233 / -0.265\nAncelotti / Chelsea / 76 / 2.066 / 2.160 / -0.094\nAncelotti / PSG / 57 / 2.140 / 2.126 / +0.014\nAncelotti / Real Madrid / 76 / 2.355 / 2.327 / +0.029\nAncelotti / Bayern Munich / 40 / 2.375 / 2.436 / -0.061\nPochettino / Espanyol / 146 / 1.233 / 1.252 / -0.019\nPochettino / Southampton / 54 / 1.389 / 1.118 / +0.271\nPochettino / Tottenham / 172 / 1.988 / 1.687 / +0.302\nMourinho / not in subset, omitted"
+      },
+      "data_table": {
+        "description": "Famous managers' tenure-by-tenure impact (selected stints, ≥38 games)",
+        "columns": ["manager", "club", "games", "ppg", "expected", "above"],
+        "rows": [
+          ["Pep Guardiola", "Barcelona", 152, 2.45, 2.34, 0.110],
+          ["Pep Guardiola", "Bayern Munich", 102, 2.52, 2.44, 0.078],
+          ["Pep Guardiola", "Manchester City", 96, 2.34, 2.07, 0.279],
+          ["Diego Simeone", "Atlético Madrid", 267, 2.10, 1.84, 0.259],
+          ["Antonio Conte", "Juventus (s1)", 38, 2.21, 1.77, 0.441],
+          ["Antonio Conte", "Juventus (s2)", 60, 2.52, 2.13, 0.384],
+          ["Antonio Conte", "Chelsea", 76, 2.15, 2.04, 0.105],
+          ["Carlo Ancelotti", "AC Milan", 190, 1.97, 2.23, -0.265],
+          ["Carlo Ancelotti", "Chelsea", 76, 2.07, 2.16, -0.094],
+          ["Carlo Ancelotti", "PSG", 57, 2.14, 2.13, 0.014],
+          ["Carlo Ancelotti", "Real Madrid", 76, 2.36, 2.33, 0.029],
+          ["Carlo Ancelotti", "Bayern", 40, 2.38, 2.44, -0.061],
+          ["Mauricio Pochettino", "Espanyol", 146, 1.23, 1.25, -0.019],
+          ["Mauricio Pochettino", "Southampton", 54, 1.39, 1.12, 0.271],
+          ["Mauricio Pochettino", "Tottenham", 172, 1.99, 1.69, 0.302],
+          ["Massimiliano Allegri", "Cagliari", 71, 1.31, 1.11, 0.200],
+          ["Massimiliano Allegri", "AC Milan", 116, 1.90, 1.98, -0.082],
+          ["Massimiliano Allegri", "Juventus", 171, 2.44, 2.27, 0.171],
+          ["Thomas Tuchel", "Mainz 05", 170, 1.41, 1.14, 0.265],
+          ["Thomas Tuchel", "B. Dortmund", 68, 2.09, 1.93, 0.154]
+        ]
+      },
+      "based_on": ["det_06", "det_09"]
+    },
+    "ana_18": {
+      "label": "Shrinkage in numbers: 461 games of zero must be added",
+      "content": "The Economist's optimisation found that 461 games of league-average performance must be added to any manager's track record to produce the best out-of-sample forecast of his next job. This is a brutal multiplier on early-career evidence. A coach with a single 38-game season retains only 7.6% of his record after shrinkage — meaning even an apparently incandescent debut campaign carries almost no signal. A three-season tenure (114 games) retains 19.8%. Ten seasons (380 games) retains 45.2%. Sir Alex Ferguson's data-covered tenure of 342 games retains 42.6%. Effectively, managers must work two decades before the model lets them speak for themselves.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_klopp_ferguson_traces.py",
+        "lines": [55, 65],
+        "output": "1 season (38 games): carry = 38/(38+461) = 0.076\nHalf a season (19): 19/480 = 0.040\n3 seasons (114): 114/575 = 0.198\n10 seasons (380): 380/841 = 0.452\nFerguson tenure (342): 342/803 = 0.426\n20 seasons (760): 760/1221 = 0.622"
+      },
+      "data_table": {
+        "description": "Career carry-over fraction at various tenure lengths under 461-game shrinkage",
+        "columns": ["tenure_label", "games", "carry_pct"],
+        "rows": [
+          ["Half-season", 19, 4.0],
+          ["1 season", 38, 7.6],
+          ["3 seasons", 114, 19.8],
+          ["5 seasons", 190, 29.2],
+          ["Ferguson (data window)", 342, 42.6],
+          ["10 seasons", 380, 45.2],
+          ["20 seasons", 760, 62.2]
+        ]
+      },
+      "based_on": ["det_07", "det_06"]
+    },
+    "ana_12": {
+      "label": "Most over-performing team-seasons (Leicester 2016 leads)",
+      "content": "Leicester City's 2015-16 Premier League title-winning season is the most extreme team-season in the entire dataset, beating its FIFA-rating-based forecast by +1.07 points per game — across 38 games, that is roughly 41 extra league points. RB Leipzig's 2017 Bundesliga campaign is second (+0.92), Liverpool 2019 third (+0.87 ppg). On the underperforming side, Monaco 2019 was the biggest collapse (-0.91 ppg), followed by Chelsea's post-title 2016 season (-0.83). The presence of Dortmund 2015 in the bottom five is sobering: that was Klopp's farewell campaign, and even his Dortmund missed expectations badly that one season.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_team_forecast.py",
+        "lines": [30, 42],
+        "output": "TOP team-seasons:\nEngland 2016 Leicester / 81 actual / 40.2 expected / +1.074\nGermany 2017 RB Leipzig / 67 / 35.7 / +0.922\nEngland 2019 Liverpool / 54 / 36.7 / +0.867\nGermany 2019 Dortmund / 42 / 27.7 / +0.841\nFrance 2012 Montpellier / 82 / 50.8 / +0.822\nBOTTOM team-seasons:\nFrance 2019 Monaco / 13 / 29.4 / -0.913\nEngland 2016 Chelsea / 50 / 81.4 / -0.826\nEngland 2016 Aston Villa / 17 / 43.2 / -0.691\nGermany 2015 Dortmund / 46 / 69.3 / -0.685"
+      },
+      "data_table": {
+        "description": "Most extreme team-seasons (top 8 over, bottom 5 under)",
+        "columns": ["league", "season", "team", "actual_pts", "expected_pts", "above_per_game"],
+        "rows": [
+          ["England", 2016, "Leicester", 81, 40.2, 1.074],
+          ["Germany", 2017, "RB Leipzig", 67, 35.7, 0.922],
+          ["England", 2019, "Liverpool", 54, 36.7, 0.867],
+          ["Germany", 2019, "Dortmund", 42, 27.7, 0.841],
+          ["France", 2012, "Montpellier", 82, 50.8, 0.822],
+          ["France", 2017, "Monaco", 95, 64.3, 0.809],
+          ["Italy", 2017, "Atalanta", 72, 44.2, 0.733],
+          ["France", 2010, "Montpellier", 69, 42.9, 0.688],
+          ["France", 2019, "Monaco", 13, 29.4, -0.913],
+          ["England", 2016, "Chelsea", 50, 81.4, -0.826],
+          ["England", 2016, "Aston Villa", 17, 43.2, -0.691],
+          ["Germany", 2015, "Dortmund", 46, 69.3, -0.685],
+          ["Italy", 2005, "Roma", 45, 70.7, -0.676]
+        ]
+      },
+      "based_on": []
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "FIFA player ratings are themselves a noisy estimate of player skill, blending objective stats and ~9,000 subjective scout assessments. The forecast inherits that noise, which is one reason a roughly 7-point-per-team-per-season error band is unavoidable."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Survivorship bias: managers who fail badly are sacked quickly, so very long tenures necessarily belong to coaches who were already over-performing. This biases the sample of long careers upward."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "The model attributes residual variance after squad quality entirely to the manager. Other factors (injuries, refereeing luck, off-field instability, owner interference) are folded into the same residual."
+    }
+  ]
+}

@@ -1,0 +1,360 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["population.jews.csv", "population.arabs.csv", "population.ej.wb.csv"],
+    "rows": 24,
+    "columns": 13,
+    "what_one_row_represents": "A single year of population counts (1998-2021) for one of three slicings: total Jewish population by region; total Arab population by region; West Bank Jewish settler counts by distance from the 1967 Green Line.",
+    "time_range": "1998-2021 (annual; 2019-2021 are projections)",
+    "geographic_scope": "Israel, the West Bank (sliced by 0-2.5 km / 2.5-5 km / 5-15 km / >15 km from the Green Line), East Jerusalem, and Gaza"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset profile",
+      "content": "The Economist's data set covers 1998-2021 in three CSV files: 24 annual rows of Jewish population by region (Israel, West Bank, East Jerusalem), 24 annual rows of Arab population by region (Israel, West Bank, East Jerusalem, Gaza), and 6 snapshot rows (1998, 2003, 2008, 2013, 2018, 2021) of West Bank Jewish settlers bucketed by distance from the Green Line. There are no missing values in any of the three files. The header for East Jerusalem is misspelled in the third file ('East.Jersualem'), which we correct on load.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [19, 30],
+        "output": "FILES:\n  population.jews.csv: (24, 4) rows=24 cols=['year', 'Israel', 'West.Bank', 'East.Jerusalem']\n  population.arabs.csv: (24, 5) rows=24 cols=['year', 'West.Bank', 'East.Jerusalem', 'Gaza', 'Israel']\n  population.ej.wb.csv: (6, 6) rows=6 cols=['year', 'East.Jerusalem', '0-2.5km', '2.5-5km', '5-15km', '>15km']\nYEAR RANGE: 1998-2021\nNULLS jews: 0\nNULLS arabs: 0\nNULLS ej_wb: 0"
+      },
+      "data_table": {
+        "description": "Per-file profile",
+        "columns": ["file", "rows", "columns", "year_min", "year_max", "nulls"],
+        "rows": [
+          ["population.jews.csv", 24, 4, 1998, 2021, 0],
+          ["population.arabs.csv", 24, 5, 1998, 2021, 0],
+          ["population.ej.wb.csv", 6, 6, 1998, 2021, 0]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_02": {
+      "label": "Total Jewish vs Arab population, river to sea, 1998-2021",
+      "content": "Adding Israel + East Jerusalem + West Bank Jewish populations on one side, and Israel + East Jerusalem + West Bank + Gaza Arab populations on the other, gives the totals for the territory between the Mediterranean and the Jordan. In 1998 the Jewish total led by 852,725 (54.9% Jewish, 45.1% Arab). The gap shrank every year. By 2017 the gap was only 33,890 — closer than the population of any large neighbourhood. The Jewish share of the combined population fell from 54.9% in 1998 to 49.5% in 2021.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [33, 44],
+        "output": "1998     4785100      3932375         54.890894       45.109106  852725\n...\n2017     6554500      6520610         50.129597       49.870403   33890\n2018     6669138      6669571         49.998377       50.001623    -433\n2021     7025099      7159493         49.526268       50.473732 -134394"
+      },
+      "data_table": {
+        "description": "Annual Jewish vs Arab totals between river and sea",
+        "columns": ["year", "jews_total", "arabs_total", "jewish_share_pct"],
+        "rows": [
+          [1998, 4785100, 3932375, 54.89],
+          [1999, 4872800, 4060439, 54.55],
+          [2000, 4955400, 4196130, 54.15],
+          [2001, 5025000, 4323105, 53.75],
+          [2002, 5094200, 4445442, 53.40],
+          [2003, 5165400, 4571152, 53.05],
+          [2004, 5237600, 4700837, 52.70],
+          [2005, 5313800, 4834499, 52.36],
+          [2006, 5393400, 4972977, 52.03],
+          [2007, 5478200, 5115196, 51.71],
+          [2008, 5608900, 5269539, 51.56],
+          [2009, 5701900, 5406921, 51.33],
+          [2010, 5802400, 5545561, 51.13],
+          [2011, 5898400, 5683602, 50.93],
+          [2012, 5999600, 5822484, 50.75],
+          [2013, 6104500, 5959971, 50.60],
+          [2014, 6219200, 6098416, 50.49],
+          [2015, 6334500, 6237256, 50.39],
+          [2016, 6446100, 6378231, 50.26],
+          [2017, 6554500, 6520610, 50.13],
+          [2018, 6669138, 6669571, 50.00],
+          [2019, 6785781, 6830093, 49.84],
+          [2020, 6904464, 6993326, 49.68],
+          [2021, 7025099, 7159493, 49.53]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_03": {
+      "label": "The crossover year (Arabs first equal/exceed Jews): 2018",
+      "content": "On the data — and treating 2019-2021 as projections — the Arab total first exceeds the Jewish total in 2018, with 6,669,571 Arabs and 6,669,138 Jews: a gap of just 433 people between the river and the sea. By 2021 the gap had widened to 134,394 in the Arab column's favour. The 2018 line is so narrow that any reasonable error bar would put the actual crossover anywhere from 2017 to 2019. The point is not that one community is replacing another — both are growing — but that the territory The Economist's framing depends on (the entire Holy Land) no longer has a Jewish majority.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [46, 65],
+        "output": "First year Arabs >= Jews: 2018\n  Jews:  6,669,138\n  Arabs: 6,669,571\n  Gap:   -433\n1998: Jews 4,785,100 (54.9%) vs Arabs 3,932,375 (45.1%)\n2021: Jews 7,025,099 (49.5%) vs Arabs 7,159,493 (50.5%)\nJewish-share change 1998->2021: +5.4 pp (decline)"
+      },
+      "data_table": {
+        "description": "The 2018 crossover row, with anchors for 1998 and 2021",
+        "columns": ["year", "jews_total", "arabs_total", "gap_jews_minus_arabs"],
+        "rows": [
+          [1998, 4785100, 3932375, 852725],
+          [2017, 6554500, 6520610, 33890],
+          [2018, 6669138, 6669571, -433],
+          [2021, 7025099, 7159493, -134394]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_04": {
+      "label": "Long-form table for the crossover line chart",
+      "content": "The same totals reshaped into a long-form table that chart libraries can plot directly: one row per (year, group) pair with a single count column. This is the data table the Designer's main two-line chart should bind to.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [67, 79],
+        "output": "year group   count\n1998  Jews 4785100\n1998 Arabs 3932375\n... (48 rows)\n2021  Jews 7025099\n2021 Arabs 7159493"
+      },
+      "data_table": {
+        "description": "Long-form Jews vs Arabs by year, river to sea",
+        "columns": ["year", "group", "count"],
+        "rows": [
+          [1998, "Jews", 4785100], [1998, "Arabs", 3932375],
+          [1999, "Jews", 4872800], [1999, "Arabs", 4060439],
+          [2000, "Jews", 4955400], [2000, "Arabs", 4196130],
+          [2001, "Jews", 5025000], [2001, "Arabs", 4323105],
+          [2002, "Jews", 5094200], [2002, "Arabs", 4445442],
+          [2003, "Jews", 5165400], [2003, "Arabs", 4571152],
+          [2004, "Jews", 5237600], [2004, "Arabs", 4700837],
+          [2005, "Jews", 5313800], [2005, "Arabs", 4834499],
+          [2006, "Jews", 5393400], [2006, "Arabs", 4972977],
+          [2007, "Jews", 5478200], [2007, "Arabs", 5115196],
+          [2008, "Jews", 5608900], [2008, "Arabs", 5269539],
+          [2009, "Jews", 5701900], [2009, "Arabs", 5406921],
+          [2010, "Jews", 5802400], [2010, "Arabs", 5545561],
+          [2011, "Jews", 5898400], [2011, "Arabs", 5683602],
+          [2012, "Jews", 5999600], [2012, "Arabs", 5822484],
+          [2013, "Jews", 6104500], [2013, "Arabs", 5959971],
+          [2014, "Jews", 6219200], [2014, "Arabs", 6098416],
+          [2015, "Jews", 6334500], [2015, "Arabs", 6237256],
+          [2016, "Jews", 6446100], [2016, "Arabs", 6378231],
+          [2017, "Jews", 6554500], [2017, "Arabs", 6520610],
+          [2018, "Jews", 6669138], [2018, "Arabs", 6669571],
+          [2019, "Jews", 6785781], [2019, "Arabs", 6830093],
+          [2020, "Jews", 6904464], [2020, "Arabs", 6993326],
+          [2021, "Jews", 7025099], [2021, "Arabs", 7159493]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_05": {
+      "label": "West Bank settler population grew 3.06x from 1998 to 2021",
+      "content": "The Jewish settler population of the West Bank (excluding East Jerusalem) rose from 165,540 in 1998 to 506,558 in 2021 — 341,018 added settlers, a 3.06x multiple. Roughly half of that growth happened in the second half of the window: between 2010 and 2021 the West Bank settler count rose by 195,568 alone. The 2021 figure is a Peace Now-based projection from construction tenders, but it is in line with externally published estimates that crossed the half-million mark by 2023 (det_05).",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/settlement_growth.py",
+        "lines": [12, 26],
+        "output": "West Bank Jewish population 1998: 165,540\nWest Bank Jewish population 2021: 506,558\nGrowth: 341,018 settlers added; 3.06x multiple"
+      },
+      "data_table": {
+        "description": "Annual West Bank Jewish settler population (excludes East Jerusalem)",
+        "columns": ["year", "west_bank_jews", "east_jerusalem_jews"],
+        "rows": [
+          [1998, 165540, 158155], [1999, 174405, 161111], [2000, 191125, 164123],
+          [2001, 201674, 167191], [2002, 212218, 170316], [2003, 221898, 173500],
+          [2004, 233471, 182314], [2005, 247230, 182385], [2006, 261537, 182456],
+          [2007, 276045, 182527], [2008, 296081, 186696], [2009, 297386, 187085],
+          [2010, 310990, 187475], [2011, 325452, 189833], [2012, 341418, 193539],
+          [2013, 355983, 197318], [2014, 369977, 201170], [2015, 385264, 204680],
+          [2016, 398534, 207640], [2017, 412668, 214290], [2018, 425599, 218851],
+          [2019, 459264, 223509], [2020, 493978, 228266], [2021, 506558, 233124]
+        ]
+      },
+      "based_on": ["det_01", "det_05"]
+    },
+    "ana_06": {
+      "label": "East Jerusalem Jewish population grew 47% (1998-2021)",
+      "content": "The Jewish population of East Jerusalem — the territory annexed in 1980 but treated as occupied under international law (det_03) — climbed from 158,155 in 1998 to 233,124 in 2021, a 47.4% increase. East Jerusalem alone holds 31.5% of all Jews living beyond the Green Line in 2021, more than any single distance bucket inside the West Bank.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/settlement_growth.py",
+        "lines": [29, 33],
+        "output": "East Jerusalem Jewish population 1998: 158,155\nEast Jerusalem Jewish population 2021: 233,124\nGrowth: 74,969 (47.4%)"
+      },
+      "data_table": {
+        "description": "East Jerusalem Jewish population, 1998 vs 2021",
+        "columns": ["year", "east_jerusalem_jews"],
+        "rows": [[1998, 158155], [2021, 233124]]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_07": {
+      "label": "Settler population by distance from the Green Line, 2021",
+      "content": "In 2021, of the 739,682 Jews living beyond the 1967 Green Line, 31.5% were in East Jerusalem, 24.3% within 2.5 km of the line, 18.8% in the 2.5-5 km band, 15.2% between 5 and 15 km, and 10.2% deeper than 15 km. Looking at the West Bank only (506,558 settlers, excluding East Jerusalem), 62.8% live within 5 km of the Green Line — the 'consensus bloc' territory most peace plans assume Israel would keep through a land swap (det_06) — while 14.9% live deeper than 15 km, exactly the population that any two-state agreement would require evacuating.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/settlement_growth.py",
+        "lines": [35, 65],
+        "output": "2021 share by bucket:\n  East.Jerusalem    233,124 ( 31.5%)\n  0-2.5km           179,545 ( 24.3%)\n  2.5-5km           138,740 ( 18.8%)\n  5-15km            112,546 ( 15.2%)\n  >15km              75,727 ( 10.2%)\nWithin 5 km:      318,285 (62.8%) — 'consensus' bloc territory\nDeeper than 15 km:    75,727 (14.9%) — would require evacuation"
+      },
+      "data_table": {
+        "description": "Settler population by distance from the Green Line, 2021 (with 1998 baseline)",
+        "columns": ["bucket", "year_1998", "year_2021", "share_2021_pct", "share_wb_only_2021_pct"],
+        "rows": [
+          ["East.Jerusalem", 158155, 233124, 31.5, null],
+          ["0-2.5km", 34418, 179545, 24.3, 35.4],
+          ["2.5-5km", 55992, 138740, 18.8, 27.4],
+          ["5-15km", 39515, 112546, 15.2, 22.2],
+          [">15km", 35615, 75727, 10.2, 14.9]
+        ]
+      },
+      "based_on": ["det_02", "det_06"]
+    },
+    "ana_08": {
+      "label": "Closest-to-line settlements grew fastest (5.2x in 1998-2021)",
+      "content": "Among the West Bank distance buckets, the 0-2.5 km band — the strip immediately over the Green Line — grew the most explosively, from 34,418 settlers in 1998 to 179,545 in 2021, a 5.22x multiple. The 5-15 km band grew 2.85x, the 2.5-5 km band 2.48x, and the >15 km band the slowest at 2.13x. The fastest growth happened where evacuation is least likely; the slowest where it would politically be most needed. East Jerusalem grew the slowest of all (1.47x), partly because much of its 1998 base population was already large.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/settlement_growth.py",
+        "lines": [67, 75],
+        "output": "Growth multiples 1998 -> 2021 by bucket:\n  East.Jerusalem   1998=158,155  2021=233,124  x1.47  (+74,969)\n  0-2.5km          1998= 34,418  2021=179,545  x5.22  (+145,127)\n  2.5-5km          1998= 55,992  2021=138,740  x2.48  (+82,748)\n  5-15km           1998= 39,515  2021=112,546  x2.85  (+73,031)\n  >15km            1998= 35,615  2021= 75,727  x2.13  (+40,112)"
+      },
+      "data_table": {
+        "description": "Growth multiples by distance bucket, 1998 vs 2021",
+        "columns": ["bucket", "year_1998", "year_2021", "multiple", "absolute_added"],
+        "rows": [
+          ["East.Jerusalem", 158155, 233124, 1.47, 74969],
+          ["0-2.5km", 34418, 179545, 5.22, 145127],
+          ["2.5-5km", 55992, 138740, 2.48, 82748],
+          ["5-15km", 39515, 112546, 2.85, 73031],
+          [">15km", 35615, 75727, 2.13, 40112]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_09": {
+      "label": "Two-thirds of West Bank settler growth happened within 5 km of the line",
+      "content": "Of the 341,018 settlers added to the West Bank between 1998 and 2021 (excluding East Jerusalem), 66.8% were added within 5 km of the Green Line — that is, in the part Israel has historically expected to keep through a land swap. Another 21.4% were added in the 5-15 km band, and 11.8% deeper than 15 km. The growth that gets the most political attention — the deepest, hardest-to-evacuate settlements — accounts for the smallest share of the increase. The bulk of the expansion is on land that nearly every serious peace plan has assumed Israel would retain.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/settlement_growth.py",
+        "lines": [77, 86],
+        "output": "Total West Bank settler gain (excl. East Jerusalem) 1998-2021: 341,018\n  within 5 km of Green Line:  +227,875  (66.8% of growth)\n  5-15 km from Green Line:    + 73,031  (21.4% of growth)\n  deeper than 15 km:          + 40,112  (11.8% of growth)"
+      },
+      "data_table": {
+        "description": "Share of West Bank settler growth (1998-2021) by distance bucket",
+        "columns": ["bucket", "added_settlers", "share_of_growth_pct"],
+        "rows": [
+          ["within 5 km", 227875, 66.8],
+          ["5-15 km", 73031, 21.4],
+          ["deeper than 15 km", 40112, 11.8]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_10": {
+      "label": "West Bank settlers grew ~2.2x as fast as Israel proper",
+      "content": "Between 1998 and 2021, the Jewish population of Israel proper grew 1.41x, East Jerusalem grew 1.47x, and the West Bank settler count grew 3.06x. The settler growth rate was 2.17x as fast as inside Israel itself. This isn't natural increase alone — Israel has never recorded a Jewish total fertility rate above the West Bank settler rate by anything close to 2x. The differential is driven by ongoing settlement construction, internal migration, and the heavily haredi makeup of large settlements like Modi'in Illit and Beitar Illit.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/group_comparisons.py",
+        "lines": [12, 22],
+        "output": "Israel proper Jews 1998: 4,461,405 -> 2021: 6,285,417 (x1.41)\nWest Bank settlers 1998: 165,540 -> 2021: 506,558 (x3.06)\nEast Jerusalem Jews 1998: 158,155 -> 2021: 233,124 (x1.47)\n\nWest Bank settler growth was 2.17x as fast as Israel proper"
+      },
+      "data_table": {
+        "description": "1998-2021 growth multiples for the three Jewish-population columns",
+        "columns": ["region", "year_1998", "year_2021", "multiple"],
+        "rows": [
+          ["Israel proper", 4461405, 6285417, 1.41],
+          ["East Jerusalem", 158155, 233124, 1.47],
+          ["West Bank", 165540, 506558, 3.06]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_11": {
+      "label": "Share of all Jews living beyond the Green Line: 6.8% to 10.5%",
+      "content": "In 1998, 6.8% of all Jews living between the river and the sea lived beyond the Green Line — that is, in the West Bank or East Jerusalem. By 2021 that share had risen to 10.5%, a 3.8 percentage-point increase over 23 years. In absolute numbers, the population beyond the Green Line more than doubled, from 323,695 to 739,682. One in ten Jews now lives in territory that international law treats as occupied.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/group_comparisons.py",
+        "lines": [24, 47],
+        "output": "1998:  beyond=323695, total=4785100, pct=6.76\n2021:  beyond=739682, total=7025099, pct=10.53\n+3.76 pp"
+      },
+      "data_table": {
+        "description": "Share of total Jews living beyond the Green Line, 1998-2021",
+        "columns": ["year", "beyond_line", "total_jews", "pct_beyond"],
+        "rows": [
+          [1998, 323695, 4785100, 6.76],
+          [2003, 395398, 5165400, 7.65],
+          [2008, 482777, 5608900, 8.61],
+          [2013, 553301, 6104500, 9.06],
+          [2018, 644450, 6669138, 9.66],
+          [2021, 739682, 7025099, 10.53]
+        ]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_12": {
+      "label": "Arab population growth by region, 1998-2021",
+      "content": "All four Arab populations grew over the period, but at different rates. Gaza grew the fastest, from ~1.01M to ~2.08M (2.05x). Israeli Arabs grew 1.81x, East Jerusalem Palestinians 1.82x, and West Bank Palestinians 1.69x. By 2021 the West Bank held 37.9% of the total Arab population between the river and the sea, Gaza 29.0%, Israeli Arabs 27.9%, and East Jerusalem 5.2%. The 'Holy Land' Arab total reached 7.16 million in 2021 — a number larger than the entire Jewish population of any single year in the dataset.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/group_comparisons.py",
+        "lines": [49, 64],
+        "output": "Israel          1,105,400    1,995,711  x1.81\nWest.Bank       1,608,585    2,714,013  x1.69\nEast.Jerusalem    204,419      372,620  x1.82\nGaza            1,013,971    2,077,149  x2.05\n\n2021 share: WB 37.9%, Gaza 29.0%, Israel 27.9%, EJ 5.2%"
+      },
+      "data_table": {
+        "description": "Arab population by region, 1998 vs 2021, with 2021 share",
+        "columns": ["region", "year_1998", "year_2021", "multiple", "share_2021_pct"],
+        "rows": [
+          ["Israel", 1105400, 1995711, 1.81, 27.9],
+          ["West Bank", 1608585, 2714013, 1.69, 37.9],
+          ["East Jerusalem", 204419, 372620, 1.82, 5.2],
+          ["Gaza", 1013971, 2077149, 2.05, 29.0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_13": {
+      "label": "The settler population is now ~92x the 2005 Gaza disengagement",
+      "content": "When Israel removed its settlers from Gaza in 2005, the operation was a national trauma — and it involved roughly 8,000 people (det_07). By 2021 there were 506,558 settlers in the West Bank (63.3 Gaza-disengagements' worth), 233,124 Jews in East Jerusalem (29.1 Gaza-disengagements), and 739,682 Jews living beyond the Green Line in total — 92.5 times the 2005 evacuation. Even just the 'deepest' bucket — settlers more than 15 km from the line, the population most peace plans would require to leave — stood at 75,727 in 2021. That alone is 9.5 Gazas.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/group_comparisons.py",
+        "lines": [66, 75],
+        "output": "Gaza disengagement (2005): 8,000 settlers\nWest Bank settlers (2021): 506,558 = 63.3x Gaza scale\nEast Jerusalem settlers (2021): 233,124 = 29.1x Gaza scale\nTotal beyond Green Line (2021): 739,682 = 92.5x Gaza scale"
+      },
+      "data_table": {
+        "description": "2021 settler counts in 'Gaza disengagement' units (1 Gaza = 8,000 settlers)",
+        "columns": ["population", "count", "gaza_units"],
+        "rows": [
+          ["West Bank settlers", 506558, 63.3],
+          ["East Jerusalem Jews", 233124, 29.1],
+          ["All settlers beyond Green Line", 739682, 92.5],
+          ["Just >15 km from line", 75727, 9.5]
+        ]
+      },
+      "based_on": ["det_07"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "2019-2021 figures in every column are projections, not census counts. Jewish settler projections are built from Peace Now's reading of construction plans and tenders; Israel's CBS produces medium-variant projections for the Israeli total; the Palestinian CBS publishes projections for the West Bank and Gaza. Treat 2018 as the last year of observed counts."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "The 'Arab' and 'Jewish' columns are religious/national categorisations carried over from each statistical agency. East Jerusalem Palestinians who hold Israeli residency permits are not counted as Israeli citizens, and Israeli Arabs are not part of any 'settler' figure here."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Gaza data ends in 2021 and predates the post-2023 destruction. The 2021 line should not be read as a forward population curve through later years."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Distance buckets in population.ej.wb.csv are based on Peace Now's calculation of each individual settlement's distance from the 1949 armistice line. The boundaries (2.5 km, 5 km, 15 km) are the original publication's choice, not an analytical optimum."
+    }
+  ]
+}

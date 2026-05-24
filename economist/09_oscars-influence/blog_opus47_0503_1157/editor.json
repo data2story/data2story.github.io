@@ -1,0 +1,98 @@
+{
+  "meta": {"role": "editor", "version": "2.0"},
+  "core_claim": "For 16 consecutive years (2001-2016), no Best Picture winner has been the most-referenced film of its own year — the Academy and the culture have stopped agreeing on what counts.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — One year that contains the whole story (Spotlight 2015)",
+      "purpose": "hook",
+      "title": "Best Picture, Forgotten Picture",
+      "findings": ["ana_12", "ana_02"],
+      "context": ["det_05", "det_01"],
+      "triage": {"ana_12": "lead", "ana_02": "lead"},
+      "chart_placeholder": "ana_13",
+      "media_placeholder": "image",
+      "editorial_notes": "Open with the 358 vs 31 contrast (Force Awakens vs Spotlight). The 16-year drought (2001-2016) line is load-bearing — it must appear in this section."
+    },
+    "edt_02": {
+      "label": "How we are measuring the culture (methodology + Casablanca anchor)",
+      "purpose": "context",
+      "title": "What an IMDb 'connection' is",
+      "findings": ["ana_01"],
+      "context": ["det_02", "det_06", "det_03"],
+      "triage": {"ana_01": "supporting"},
+      "chart_placeholder": "ana_03",
+      "media_placeholder": null,
+      "editorial_notes": "Explain crowdsourced movie-connections; flag recency problem; gesture to Bioglio/Pensa precedent. Casablanca's 48.7% gets a teaser mention here, full treatment in edt_06."
+    },
+    "edt_03": {
+      "label": "Decade-by-decade collapse",
+      "purpose": "evidence",
+      "title": "From 9% to 1.5%",
+      "findings": ["ana_03", "ana_11"],
+      "context": [],
+      "triage": {"ana_03": "supporting", "ana_11": "supporting"},
+      "chart_placeholder": "ana_03",
+      "media_placeholder": null,
+      "editorial_notes": "The decade chart is the analytical centrepiece. 9.4% (1970s) and 1.5% (2010s) are exact numbers."
+    },
+    "edt_04": {
+      "label": "Snubs that dwarf the prize (Empire Strikes Back vs Ordinary People)",
+      "purpose": "evidence",
+      "title": "The 18.6x snub",
+      "findings": ["ana_05", "ana_06"],
+      "context": ["det_09"],
+      "triage": {"ana_05": "supporting", "ana_06": "supporting"},
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "video",
+      "editorial_notes": "Empire Strikes Back vs Ordinary People is the headline pair. 1980 ratio = 18.6x. 74 of 89 years (83%) is the cumulative line."
+    },
+    "edt_05": {
+      "label": "The People's Best Pictures — the parallel canon",
+      "purpose": "turn",
+      "title": "The People's Best Pictures",
+      "findings": ["ana_09"],
+      "context": ["det_05"],
+      "triage": {"ana_09": "supporting"},
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Use the parallel-list framing. Reader should be able to scrub year-by-year and see the Academy pick vs the references pick."
+    },
+    "edt_06": {
+      "label": "Peaks the Academy got right (Casablanca, Godfather, Rocky)",
+      "purpose": "evidence",
+      "title": "When prize and culture aligned",
+      "findings": ["ana_08", "ana_04", "ana_10"],
+      "context": ["det_08", "det_03", "det_09"],
+      "triage": {"ana_08": "supporting", "ana_04": "supporting", "ana_10": "color"},
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "instance",
+      "editorial_notes": "Don't make this a victory lap — the function is to show what the alignment used to look like. Star Wars 1977 (4,965 references) is the all-time #1; mention it lost Best Picture to Annie Hall."
+    },
+    "edt_07": {
+      "label": "Close — A different kind of Best Picture",
+      "purpose": "close",
+      "title": null,
+      "findings": ["ana_02", "ana_11"],
+      "context": [],
+      "triage": {"ana_02": "supporting", "ana_11": "color"},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "End on the implication, not a summary. Avoid 'in conclusion'-style wrap-ups."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "cut",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "color",
+    "ana_11": "supporting",
+    "ana_12": "lead",
+    "ana_13": "supporting"
+  }
+}

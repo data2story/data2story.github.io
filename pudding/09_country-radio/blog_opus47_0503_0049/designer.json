@@ -1,0 +1,283 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Five-channel default driven by an audio-first dataset: this is a story about what songs you can and cannot hear next to each other, so the music itself is evidence rather than decoration. Charts carry the per-station/per-daypart numbers. Images set the mood (empty studio, tomatoes/lettuce metaphor, overnight DJ booth, empty Opry stage). One animated still (teaser_motion.mp4) acts as the kinetic teaser. Audio is real Spotify embeds of the artists who do and don't get played back-to-back. Interactivity is centered on a guess-first reader experience: pick a station, see how often it plays women back-to-back vs the chance baseline.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Per-station rankings, per-daypart distributions, and per-bucket compositions are the spine of the data and only resolve as charts."
+      },
+      "image": {
+        "used": true,
+        "reason": "Three editorial images: lonely microphone (teaser), tomatoes-and-lettuce salad metaphor (Hill's quote), and an empty Opry-style stage (closing). Each carries a moment the data alone cannot: solitude, the metaphor, the stakes."
+      },
+      "video": {
+        "used": true,
+        "reason": "image2video animation of the teaser still — the silent studio with drifting dust gives the reader the kinetic, almost-haunted feel of a country station overnight."
+      },
+      "audio": {
+        "used": true,
+        "reason": "This dataset is literally about which songs can play next to which other songs. We embed real Spotify tracks of the women whose songs do (and don't) get back-to-backed: Mickey Guyton (the absent), Lainey Wilson (the bottleneck), Carrie Underwood (the gold safe pair). The audio IS the argument."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "A guess-first reader quiz where the reader picks a station and sees its observed b2b rate vs the chance baseline. A second interactive lets the reader toggle dayparts on the b2b stack."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser — animated lonely studio",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "Slow steady parallax push-in toward the lit microphone, gentle drift of dust particles in the warm spotlight beam, soft flicker of the overhead light, no camera shake, the silhouette in the back stays still and indistinct, atmospheric and quiet",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first",
+        "fallback_image": "assets/teaser_hero.png"
+      },
+      "brief": "Full-bleed silent video at the very top of the page (no headline yet). A single condenser microphone illuminated by warm overhead light in a deserted country radio studio; a faint female silhouette barely visible in the back. Loops muted with autoplay. Functions as the visual anchor for the entire piece — the silence between songs.",
+      "rationale": "The piece argues that the most important thing about country radio's treatment of women is the *space* you can hear between their songs. A still image of an empty studio nearly works; adding the slow push-in and drifting dust gives that silence a temporal weight a JPEG cannot. We use image2video rather than text2video to preserve the strong studio composition.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Headline asymmetry chart — 0.51% vs 65.01%",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_01",
+        "x": "b2b_pct",
+        "y": "category",
+        "highlight": {"category": "Women only"},
+        "interaction": "hover tooltip with exact count and percentage",
+        "style": {"palette": "muted: women=#c7385a, men=#3a4a5c, mixed=#888", "no_gridlines": true, "x_axis_label": "Back-to-back share of all plays (%)"}
+      },
+      "brief": "A simple two-bar (plus mixed) horizontal comparison showing women's b2b at 0.51% next to men's at 65.01% — the bars rendered at the same scale, no truncation, so the visual gap matches the numerical gap. The women's bar is barely a sliver. The men's bar dominates. Hover reveals counts (928 vs 118,861).",
+      "rationale": "The asymmetry is so extreme that the clearest visual is just two bars on the same axis. A grouped bar with airplay vs b2b would muddy the punchline. Keep it brutal.",
+      "based_on": ["ana_01"]
+    },
+    "des_03": {
+      "label": "Headline stat callout — 128x",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "128×",
+        "label": "the men-to-women back-to-back ratio in 2022 country radio",
+        "data_source": "ana_01"
+      },
+      "brief": "Large 84px stat: 128× with the smaller label below. Acts as the visual punchline of the headline section before the chart.",
+      "rationale": "One number that captures the entire piece. Can run inline or as a chapter break.",
+      "based_on": ["ana_01"]
+    },
+    "des_04": {
+      "label": "Hill quote pull quote — tomatoes vs lettuce",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "tomato_lettuce.png",
+        "tool": "text2image",
+        "prompt": "Editorial still-life photograph: a wooden salad bowl tipped on its side on a dark surface, spilling out crisp green lettuce leaves crowding the frame, with a single small red tomato isolated at the edge — visually outnumbered.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "An editorial photograph of a tipped salad bowl: a flood of lettuce, one tomato isolated at the edge. Sits next to the verbatim Keith Hill quote in edt_01. The image makes Hill's metaphor visible without restating it.",
+      "rationale": "Hill's quote is the pivotal hook of the piece. Putting it next to the literal salad gives the metaphor weight and prevents the reader from reading past it as a colorful aside.",
+      "based_on": []
+    },
+    "des_05": {
+      "label": "Permutation chart — observed vs chance baseline",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "scatter_with_reference_line",
+        "data_source": "ana_04",
+        "x": "expected_b2b_pct_at_chance",
+        "y": "women_b2b_pct",
+        "color": "pval_simulation",
+        "label": "station",
+        "reference_line": "y=x (chance baseline)",
+        "highlight": {"station": "WUBE-FM"},
+        "interaction": "hover tooltip with station, observed rate, expected-at-chance rate, and p-value",
+        "style": {"palette": "viridis on p-value, station labels for outliers", "no_gridlines": true, "x_axis_label": "Chance baseline: women's airplay share squared (%)", "y_axis_label": "Observed women's b2b rate (%)"}
+      },
+      "brief": "Scatter plot — one point per station — with x = (women's airplay share)^2 (the chance baseline) and y = observed women's b2b rate. A diagonal y=x dashed line marks chance. All 29 points fall below the diagonal. Color encodes the simulation p-value (darker = more impossible). WUBE-FM is annotated on the bottom-left as the most extreme. Hover gives the full numbers per station.",
+      "rationale": "The simplest and most rigorous way to show 'every station is below chance' is a direct visual: the diagonal is chance, every dot is below it. The color scale layers in the formal p-value evidence without making the reader read the table.",
+      "based_on": ["ana_04"]
+    },
+    "des_06": {
+      "label": "Interactive guess-first quiz — pick a station",
+      "type": "interactive",
+      "section": "edt_02",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Reader sees: 'Pick a country station from this list. How many of its 2022 plays were two women in a row, do you think?' A dropdown of all 29 stations.",
+        "trigger": "Reader selects a station from the dropdown, then types or selects a guess (0%, 0.5%, 1%, 2%, 5%, 10%, 20%) before clicking 'Reveal'",
+        "transition": "On reveal: the reader's guess is shown as a marker; the actual rate appears as a second marker; the chance baseline appears as a dashed line; a one-line explainer says 'Observed: X%. Expected at chance: Y%. Stations programmers got: 18 of 29 had p=0.'",
+        "payoff": "The reader internalizes that even their pessimistic guess was usually higher than reality.",
+        "data_source": "ana_04"
+      },
+      "brief": "A small inline quiz. Single-station dropdown + guess slider/buttons. After reveal, shows the observed value, the chance baseline, and the simulated p-value for that station, with a brief one-liner. Reuses the data_table from ana_04. Resettable to try another station.",
+      "rationale": "The 'reverse the role' counterfactual and the simulation evidence are the most technical claims in the piece. A guess-first interaction lets the reader anchor their intuition before seeing the gap, which makes the gap memorable.",
+      "based_on": ["ana_04"]
+    },
+    "des_07": {
+      "label": "Daypart stack — women's b2b cluster in OVN+EVE",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "stacked_bar",
+        "data_source": "ana_06",
+        "x": "daypart",
+        "y": "b2b_count",
+        "color": "daypart_period (graveyard vs prime)",
+        "highlight": {"daypart": ["OVN", "EVE"]},
+        "interaction": "hover tooltip with count, percentage of women's b2bs, and a comparison to the men's b2b distribution",
+        "style": {"palette": "graveyard=#3a4a5c, prime=#c7385a, accent on graveyard cluster", "no_gridlines": true, "y_axis_label": "Women's back-to-back plays in 2022 sample"}
+      },
+      "brief": "A horizontal stacked bar showing the 928 women's b2bs split into OVN/AMD/MID/PMD/EVE buckets. OVN and EVE are colored in 'graveyard' navy; AMD/MID/PMD are colored in 'prime' rose. The visual makes the 63% concentration in low-listenership slots impossible to miss.",
+      "rationale": "Five-bar grouped chart would equalize the visual weight; a single stacked bar makes the OVN+EVE quarantine obvious.",
+      "based_on": ["ana_06"]
+    },
+    "des_08": {
+      "label": "Graveyard shift atmospheric image",
+      "type": "asset",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "graveyard_shift.png",
+        "tool": "text2image",
+        "prompt": "Atmospheric photograph of an empty country radio studio at 3 a.m., 'ON AIR' sign glowing red, blue clock at 3:14, soft fluorescent glow, no people present.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "An empty 3 a.m. country studio with a red ON AIR sign, a blue clock at 3:14, no human present. Sits next to the daypart chart in edt_03 to make 'overnight' a felt time, not a category.",
+      "rationale": "A daypart chart is informative but cold. Pairing it with the literal time of day where most women's b2bs land gives the section a temperature.",
+      "based_on": []
+    },
+    "des_09": {
+      "label": "Mickey Guyton — Black Like Me (Spotify embed)",
+      "type": "instance",
+      "section": "edt_04",
+      "content": {
+        "instance_ref": "inst_01",
+        "embed_type": "spotify",
+        "embed_url": "https://open.spotify.com/embed/track/239xopha4cJfbAfhX76FEQ",
+        "caption": "Mickey Guyton — 'Black Like Me' (2020). Grammy-nominated. Did not appear in The Pudding's 29-station 2022 sample. The 0.03% airplay number for Black women is the shape of this song's absence."
+      },
+      "brief": "A Spotify track embed of Mickey Guyton's 'Black Like Me' inside edt_04, with the caption above. The reader can press play and hear what country radio chose not to. The Spotify embed iframe carries the platform's native player chrome — no need to restyle into a tone card.",
+      "rationale": "The argument of edt_04 is that statistics about race in country radio are statistics about specific named artists. The audio embed makes the absence audible, which charts cannot.",
+      "based_on": []
+    },
+    "des_10": {
+      "label": "POC women roster — list of 5",
+      "type": "stat_callout",
+      "section": "edt_04",
+      "content": {
+        "value": "5 women, 27 plays, 0 back-to-back",
+        "label": "the entire 2022 footprint of women of color across 29 country stations",
+        "data_source": "ana_10"
+      },
+      "brief": "A compact callout block listing the 5 POC women artists in The Pudding's 2022 sample with their exact play counts: Tiera Kennedy 13, Runaway June 11, Estefan/Houston/Lynn 1 each. Below: '21 of 29 stations played zero.' Reads as a roster, not a chart.",
+      "rationale": "When a number is small enough to enumerate, listing the names is more honest than aggregating into a percentage. This is the moment to break visual format for moral weight.",
+      "based_on": ["ana_10"]
+    },
+    "des_11": {
+      "label": "Three-women bottleneck chart",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "side_by_side_horizontal_bar",
+        "data_source": "ana_09",
+        "facets": ["women_artists", "men_artists"],
+        "x_value": "plays",
+        "y": "rank",
+        "highlight": {"top3": true},
+        "interaction": "hover tooltip with artist name and exact play count",
+        "style": {"palette": "women=#c7385a top3 / #d6a0ad rest, men=#3a4a5c top3 / #8893a4 rest", "no_gridlines": true, "annotation": "top-3 share: women 52.2% vs men 20.3%"}
+      },
+      "brief": "Two side-by-side small-multiple horizontal bars showing the top 10 'current' women artists vs top 10 'current' men artists by play count. The top three of each facet are colored in saturated tone, the rest are muted. An annotation under each facet states the top-3 concentration. The reader sees instantly that the women's chart is dominated by three names while the men's is a flat distribution of dozens.",
+      "rationale": "A side-by-side reveals the bottleneck better than overlay or single-axis chart — the visual asymmetry between 'three tall bars and a steep drop' (women) and 'flat plateau' (men) is the whole point.",
+      "based_on": ["ana_09"]
+    },
+    "des_12": {
+      "label": "Lainey Wilson — Things A Man Oughta Know (Spotify embed)",
+      "type": "instance",
+      "section": "edt_05",
+      "content": {
+        "instance_ref": "inst_02",
+        "embed_type": "spotify",
+        "embed_url": "https://open.spotify.com/embed/track/3S0sk6DSTgesXsUSAEHNr5",
+        "caption": "Lainey Wilson — 'Things A Man Oughta Know' (2021). One of three artists who collected 52% of all current-women's airplay in 2022."
+      },
+      "brief": "Inline Spotify embed of Lainey Wilson's breakthrough single, placed at the end of edt_05's bottleneck argument. The reader hears the sound of the 12% slot. Caption explains why this specific song sits in the bottleneck.",
+      "rationale": "The argument is that women's path through country radio in 2022 is not a roster but a bottleneck — and Wilson is one of three artists holding it open. Embedding her track makes that abstract bottleneck audible.",
+      "based_on": ["ana_09"]
+    },
+    "des_13": {
+      "label": "All-29-stations ranked bar — observed b2b vs chance",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "ranked_horizontal_bar_with_reference",
+        "data_source": "ana_02",
+        "x": "women_b2b_pct",
+        "y": "station",
+        "secondary": "expected_b2b_pct_at_chance (as bar overlay marker)",
+        "highlight": {"min_station": "WUBE-FM", "max_station": "KKGO-FM"},
+        "interaction": "hover tooltip with city, owner, women's airplay share, observed b2b rate, expected rate at chance",
+        "style": {"palette": "observed=#c7385a, chance reference=#888 dashed marker, no gridlines", "x_axis_label": "Back-to-back women's plays (% of all plays)"}
+      },
+      "brief": "Ranked horizontal bar of all 29 stations by observed women's b2b rate. Each station also shows a small dashed marker at its chance-baseline value (share squared) — the reader sees that every observed bar comes in under the chance marker. WUBE-FM at the bottom (0.032%) and KKGO-FM at the top (1.27%) are annotated. Cincinnati's WSM-FM single-day 53/0 record is called out via tooltip note. This is the section's centerpiece.",
+      "rationale": "Showing the full 29-station ladder is the only honest way to communicate that the floor is not one bad station, it is the floor of the format. The chance-baseline marker on each bar is the visual proof of the simulation result.",
+      "based_on": ["ana_02"]
+    },
+    "des_14": {
+      "label": "Empty Opry stage closing image",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "empty_stage.png",
+        "tool": "text2image",
+        "prompt": "Black-and-white documentary photograph of an empty country music stage at the Grand Ole Opry: a single guitar resting on a vintage microphone stand under a single overhead spotlight, an empty wooden stage.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Sepia-toned wide shot of an empty stage with a guitar and microphone. Sits at the top of edt_07 (the closing section) and visually echoes the teaser's empty studio — bookends the piece.",
+      "rationale": "The piece opens on absence (an empty studio) and closes on stakes (an empty stage). Pairing the two makes the closing land without requiring a 'what we can do' paragraph.",
+      "based_on": []
+    },
+    "des_15": {
+      "label": "Carrie Underwood — Before He Cheats (closing Spotify embed)",
+      "type": "instance",
+      "section": "edt_07",
+      "content": {
+        "instance_ref": "inst_03",
+        "embed_type": "spotify",
+        "embed_url": "https://open.spotify.com/embed/track/0ZUo4YjG4saFnEJhdWp9Bt",
+        "caption": "Carrie Underwood — 'Before He Cheats' (2005). The canonical 'Gold' women's track — one of the few country songs by a woman that programmers will play next to another song by a woman in 2022. The exception that explains the rule."
+      },
+      "brief": "Final Spotify embed placed at the close of edt_07. The reader, having read the entire piece, plays a song that — in The Pudding's framing — is what a back-to-back women's pair sounds like in 2022 country radio: an established hit from 17 years ago. The audio is the answer to the question the piece asks.",
+      "rationale": "The closing section is about what the rule costs. Ending with an actual song that DOES get back-to-backed grounds the cost in something the reader hears, not something they read.",
+      "based_on": ["ana_08"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial — warm-amber teaser into deep slate body, with rose accents only for women-specific data",
+    "text_visual_pattern": "visual-first hooks (teaser video, then chart) followed by mixed text/visual in evidence sections, with audio embeds anchoring the human-stakes sections (edt_04, edt_05, edt_07)",
+    "centrepiece": "des_13",
+    "anti_sameness_notes": "No standard chart-after-chart rhythm. The piece alternates: kinetic teaser → headline asymmetry chart + photo → permutation scatter + interactive quiz → daypart stacked bar + photo → audio embed + roster callout → bottleneck chart + audio embed → final ranked-bar centerpiece → photo + final audio embed. The audio embeds are deliberately not unified into a single 'playlist' card — each one belongs to its argument. Charts use a tightly disciplined two-color palette (rose for women's data, slate for men's) so they read as a single conceptual family without using the same chart shape twice.",
+    "typography_notes": "Headline serif (Georgia or similar) for body and pull quotes; system-ui sans for chart labels and stat callouts. Stat callouts large (84px). Section heads small caps. Hill's quote sits inside a tinted block (warm cream on the dark background) so it reads as a found document, not an editorial pull quote. Generous vertical rhythm (2.5-3rem between sections) to let the audio embeds breathe."
+  }
+}
