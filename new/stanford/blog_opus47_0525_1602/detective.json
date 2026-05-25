@@ -1,0 +1,143 @@
+{
+  "meta": { "role": "detective", "version": "2.0" },
+  "items": {
+    "det_01": {
+      "label": "What the dataset is and how it was built",
+      "content": "This dataset traces the Stanford-to-Silicon-Valley founder pipeline: every company or organization on Wikidata that was 'founded by' (property P112) someone who was 'educated at' (P69) Stanford University (Q41506). It was assembled on 2026-05-24 from the free Wikidata SPARQL endpoint and contains 545 founder-to-company links, 394 distinct Stanford-alumni founders, and 149 industries. The chain is literally company -[founded by P112]-> founder -[educated at P69]-> Stanford. It is a reproducible Wikidata snapshot, not an official register, so it captures what Wikidata's volunteer editors have recorded rather than a complete ledger of every Stanford-founded firm.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.wikidata.org",
+          "title": "Wikidata SPARQL endpoint",
+          "facts": [
+            "Companies linked to founders via founded-by property P112",
+            "Founders linked to Stanford via educated-at property P69 (Stanford University Q41506)",
+            "Free endpoint, no API key, queried 2026-05-24; 545 links, 394 founders, 149 industries"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Frederick Terman engineered the pipeline",
+      "content": "The Stanford-to-Valley pipeline was not an accident; it was deliberately engineered by one man. Frederick Terman, Stanford's dean of engineering (1944-1958) and later provost (1955-1965), is widely called the 'father of Silicon Valley.' Before WWII he worried that Stanford's best engineering graduates had to leave the West Coast to find work, so he set out to build an industry around the university. In 1951 he spearheaded the creation of Stanford Industrial Park (now Stanford Research Park), the first university-owned industrial park in the world, leasing Stanford land to high-tech firms he called Stanford's 'secret weapon.' Varian Associates signed the first lease, followed by Terman's own former students Bill Hewlett and Dave Packard. The flywheel of alumni founding companies next door to their alma mater started with Terman's design.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Frederick_Terman",
+          "title": "Frederick Terman — Wikipedia",
+          "facts": [
+            "Terman was Stanford dean of engineering 1944-1958 and provost 1955-1965",
+            "In 1951 he spearheaded creation of Stanford Industrial Park, the first university-owned industrial park in the world",
+            "Varian Associates signed the first lease, followed by Terman's former students Hewlett and Packard"
+          ]
+        },
+        {
+          "url": "https://www.electronicdesign.com/technologies/communications/article/21795613/fred-terman-the-father-of-silicon-valley-raises-an-industry",
+          "title": "Fred Terman: The Father Of Silicon Valley Raises An Industry",
+          "facts": [
+            "Terman is credited, with William Shockley, as a father of Silicon Valley",
+            "He called the industrial-park leases Stanford's 'secret weapon'"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "The HP garage and the founding myth (1939)",
+      "content": "The dataset's oldest tech company, Hewlett-Packard, anchors the most famous origin story in business: the garage at 367 Addison Avenue in Palo Alto where Bill Hewlett and Dave Packard — both Terman's Stanford students — founded HP in 1939, building electronic test equipment on $538 of capital. California named the garage 'the birthplace of Silicon Valley' and made it a Historical Landmark in 1989; HP bought the house for $1.7 million in 2000 to preserve it. The garage is now a near-religious symbol of the lone-founder myth. But the myth obscures the real engine: HP existed because Terman steered his students toward staying, and the garage was the first node of a deliberately built network, not a bolt of lightning. The dataset shows the same year, 1939, as the start of the lineage.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/HP_Garage",
+          "title": "HP Garage — Wikipedia",
+          "facts": [
+            "HP was founded in the garage at 367 Addison Avenue, Palo Alto, in 1939 by Bill Hewlett and David Packard",
+            "California named the garage 'the birthplace of Silicon Valley' and made it a Historical Landmark in 1989",
+            "HP bought the house for $1.7 million in 2000 to preserve it"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "The alumni-founder flywheel and the PayPal Mafia",
+      "content": "The most striking pattern in the data — a handful of founders attached to many companies — reflects a real social machine: Silicon Valley's founder-investor flywheel. Its sharpest expression is the 'PayPal Mafia,' former PayPal people, many Stanford-affiliated, who went on to found or fund LinkedIn, Palantir, SpaceX, YouTube, Yelp, Affirm and more, and who finance one another through funds like Founders Fund. Peter Thiel co-founded Confinity (which became PayPal) and then Palantir, Founders Fund, Clarium and Mithril; Elon Musk founded X.com (also PayPal's other half) and then SpaceX, Tesla, Neuralink, the Boring Company and more. This is why the dataset's most prolific 'founders' each anchor a constellation of companies — success in one venture funds and credentials the next, and Stanford's network keeps the loop tight.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/PayPal_Mafia",
+          "title": "PayPal Mafia — Wikipedia",
+          "facts": [
+            "Former PayPal people founded LinkedIn, Palantir, SpaceX, YouTube, Yelp, Affirm and others",
+            "Many members attended Stanford University; they finance one another through funds like Founders Fund",
+            "Elon Musk co-founded X.com and Peter Thiel co-founded Confinity, which merged into PayPal"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Nearly $3 trillion in alumni economic impact",
+      "content": "The stakes behind this dataset are enormous. A Stanford study (funded by Sequoia Capital, led by Charles Eesley and William Miller) estimated that companies formed by Stanford entrepreneurs generate roughly $2.7 trillion in annual world revenues and have created 5.4 million jobs since the 1930s, founding some 39,900 companies — which, gathered into one country, would be the world's 10th largest economy. California alone hosts an estimated 18,000 Stanford-alumni firms with about $1.27 trillion in annual sales. Crucially, the impact runs far beyond tech: it includes Tesla, Charles Schwab, Gap, Nike, Netflix and Trader Joe's. Our 545-link Wikidata snapshot is a tiny, named, verifiable slice of that 39,900-company universe — useful precisely because every link is traceable.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://engineering.stanford.edu/news/study-reports-stanford-alumni-create-nearly-3-trillion-economic-impact",
+          "title": "Study Reports Stanford Alumni Create Nearly $3 Trillion in Economic Impact — Stanford Engineering",
+          "facts": [
+            "Companies formed by Stanford entrepreneurs generate roughly $2.7 trillion in annual world revenues",
+            "Stanford alumni and faculty have created 39,900 companies since the 1930s and 5.4 million jobs",
+            "If gathered into one nation those companies would be the world's 10th largest economy"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/List_of_companies_founded_by_Stanford_University_alumni",
+          "title": "List of companies founded by Stanford University alumni — Wikipedia",
+          "facts": [
+            "Stanford-alumni companies span beyond tech: Tesla, Charles Schwab, Gap, Nike, Netflix, Trader Joe's"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "The lineage: HP to Sun to Google to the SpaceX era",
+      "content": "The data lays out a clean generational lineage of Stanford-founded firms. The first generation is hardware and instruments: Hewlett-Packard (1939), then Litton, Varian-adjacent firms, and later Silicon Graphics, Sun Microsystems (Bechtolsheim, McNealy, Khosla — Sun literally stood for 'Stanford University Network'), Cisco (Bosack and Lerner), Logitech and Intuit. The second generation is the internet era, crowned by Google (Page and Brin, a Stanford CS research project that became Alphabet). The third is the present 'hard tech' and platform era: Palantir and Founders Fund (Thiel, Lonsdale), and the SpaceX/Tesla/Neuralink cluster (Musk). Each generation seeded the next with capital, talent and credibility — the same names recur as founders and as funders.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/List_of_companies_founded_by_Stanford_University_alumni",
+          "title": "List of companies founded by Stanford University alumni — Wikipedia",
+          "facts": [
+            "Stanford-alumni firms include HP, Sun Microsystems, Cisco, Silicon Graphics, Logitech, Intuit, Google, Palantir",
+            "Sun Microsystems' name came from 'Stanford University Network'; Google began as a Stanford research project"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Caveats baked into the Wikidata method",
+      "content": "Three honesty caveats follow directly from how the data was built, and they must stay visible. First, the tech flag undercounts: 323 of 545 links have no industry recorded on Wikidata at all, so the 104 'tech' rows are a floor, not a census. Second, 'founded by' is broad — it captures not just companies but foundations, PACs, schools and research institutes; Elon Musk's 15 'foundings' include America PAC, the America Party and a school, so a raw founder ranking mixes ventures with civic and personal projects. Third, 'educated at Stanford' (P69) is loose: it does not distinguish a PhD from a brief enrollment, and Musk is famously listed even though he left a Stanford PhD program almost immediately. Finally, because co-founders each get their own row, a company like Sun Microsystems appears multiple times; you must de-duplicate on company_id for a true unique-company count.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.wikidata.org",
+          "title": "Wikidata data model and dataset README",
+          "facts": [
+            "323 of 545 links have no industry recorded; the 104 tech rows are a floor not a census",
+            "'Founded by' P112 includes foundations, PACs, schools and research institutes, not only companies",
+            "'Educated at' P69 does not distinguish degree-holders from brief enrollees; co-founders each get a row"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_stanford.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Stanford_Oval_May_2011_panorama.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "Wikimedia Commons (artist: King of Hearts)",
+      "description": "Panorama of the Stanford Oval and sandstone arcades — the physical engine of the founder pipeline.",
+      "relates_to": ["det_01", "det_02"]
+    }
+  ],
+  "instances": []
+}

@@ -1,0 +1,294 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Rich-media run defaulting to all five channels. The visual spine is REAL Wikimedia media: 18 founder portraits in a ranked-deck bar (edt_02) and 18 company logos in a founding-era timeline (edt_03), each credited per item and in Sources. AI media sets the origin atmosphere: one cinematic hero (Stanford arcade -> valley -> lit garage), animated into a teaser video, plus a closing ambient bed. Charts carry the quantitative load; a guess-first quiz makes the founder ranking land; an interactive logo timeline lets readers scrub eras. Media is chosen from the data, not a quota.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": { "used": true, "reason": "Founder ranking (power-law of foundings), founding-era trend, HQ geography, and the tech-flag undercount are all decisive quantitative comparisons drawn from analyst data_tables." },
+      "image": { "used": true, "reason": "Primary imagery is 18 REAL founder portraits + 18 REAL company logos from Wikimedia (credited per item). One AI hero image (sandstone arcade framing a valley with a single lit garage) literally pictures the origin thesis and serves as the teaser poster." },
+      "video": { "used": true, "reason": "A 6s image2video clip (veo-3.1-fast) animates the hero with a slow golden-hour push-in toward the lit garage and valley — motion conveys 'this quiet place became the engine' better than a still. Succeeded on first attempt." },
+      "audio": { "used": true, "reason": "A generated ambient bed (Lyria) plays as a reader-controlled outro in the closing chapter — a garage-dawn-to-humming-valley mood. Non-autoplay with a caption fallback." },
+      "interactive_or_map": { "used": true, "reason": "A guess-first quiz on 'who founded the most?' maximizes the surprise of Musk's 15; an interactive era-scrubber timeline of real company logos lets readers explore the lineage. Geography is shown as a ranked bar (city names, not coordinates) rather than a fake map." }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser — animated origin hero (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser.mp4",
+        "tool": "image2video",
+        "source_image": "assets/hero.png",
+        "frame_role": "first",
+        "prompt": "Very slow cinematic push-in toward the distant valley and the lit garage, gentle golden-hour light flicker, faint drift of dust motes and warm haze, subtle parallax, no camera shake, no text",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "poster": "hero.png"
+      },
+      "brief": "Full-viewport teaser. Looping muted clip: golden-hour sandstone university arcade in the foreground, a single lit one-car garage at the edge, the valley stretching to hills beyond. Headline overlaid at the bottom over a dark scrim. Poster fallback is hero.png.",
+      "rationale": "The whole thesis — a quiet campus and a garage that became an engine — is in one moving image before a word is read.",
+      "based_on": ["ana_10"]
+    },
+    "des_02": {
+      "label": "Hero still (poster + no-JS fallback)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic golden-hour wide shot of the origin of Silicon Valley: warm sandstone Romanesque arcades and red-tile roofs of a California university campus in the foreground, framing a distant hazy valley of low tech buildings and palm trees stretching to golden hills, a single weathered one-car garage at the edge with soft light spilling from its open door, volumetric late-afternoon light, no text, no logos, no people.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Teaser video poster and mobile/no-JS fallback. Sandstone arcade, distant valley, one lit garage — the origin made visible.",
+      "rationale": "A strong still is needed as the video poster and the fallback.",
+      "based_on": ["ana_10"]
+    },
+    "des_03": {
+      "label": "Guess-first quiz — who founded the most?",
+      "type": "interactive",
+      "section": "edt_02",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Prompt: 'One person on this list founded the most companies and organizations. How many?' with four choices: 5, 8, 11, 15.",
+        "trigger": "Reader clicks a choice.",
+        "transition": "Choices lock; the correct option (15) highlights; a reveal panel fades in naming Elon Musk and the top of the ranking.",
+        "payoff": "Reveal: Elon Musk, 15 — ahead of Peter Thiel (10) and Page & Brin (8 each). Then the ranked portrait deck appears below.",
+        "data_source": "ana_02"
+      },
+      "brief": "Four-button guess-first quiz placed before the ranking chart. Most readers under-guess, which makes the 15 land. Reveal panel cites exact figures from ana_02 and leads into the portrait deck.",
+      "rationale": "The concentration on a few founders is the surprising spine; letting the reader commit to a guess beats opening with a static chart.",
+      "based_on": ["ana_02"]
+    },
+    "des_04": {
+      "label": "Most-prolific founders — ranked portrait bar",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar_with_portraits",
+        "data_source": "ana_02",
+        "x": "count",
+        "y": "founder",
+        "highlight": { "founder": "Elon Musk" },
+        "interaction": "hover tooltip with exact count; each row carries the founder's real portrait thumbnail beside the bar",
+        "style": { "palette": "cardinal-on-sandstone", "no_gridlines": true, "sort": "descending", "highlight_color": "#8C1515" }
+      },
+      "brief": "VISUAL CENTERPIECE. A custom HTML/CSS ranked bar (NOT plain Vega) of the top 15 founders by number of foundings. Each row: a circular REAL Wikimedia portrait thumbnail (p_*.jpg) on the left, the founder name, a horizontal bar whose width is proportional to count (Musk 15 longest), and the count. Musk's row highlighted in Stanford cardinal. 15 of 15 rows have a real portrait (all top 15 founders have one except none missing in this set). Tiny 'photo: Wikimedia' credit affordance; full per-portrait credit in Sources. Implement as flex rows with bar widths = count/15*100%.",
+      "rationale": "Faces make the flywheel human and memorable; a ranked bar with real portraits is far stronger than an anonymous Vega bar and avoids a chart-streak.",
+      "based_on": ["ana_02"]
+    },
+    "des_05": {
+      "label": "Co-founder clusters stat callout",
+      "type": "stat_callout",
+      "section": "edt_02",
+      "content": { "value": "509", "label": "unique companies and organizations — from 545 links, because OpenAI, PayPal, Sun, Palantir and Founders Fund were each founded by clusters of Stanford people", "data_source": "ana_03" },
+      "brief": "Stat callout under the deck: 509 unique entities from 545 links; the marquee firms had multiple Stanford co-founders.",
+      "rationale": "Reinforces that the biggest firms were team efforts, not lone geniuses — the flywheel in miniature.",
+      "based_on": ["ana_03"]
+    },
+    "des_06": {
+      "label": "The lineage — interactive logo timeline",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "era_scrubber_timeline",
+        "initial_state": "A horizontal timeline from 1939 to 2016 with four era bands (Instruments & hardware, PC & workstation wave, Internet era, Hard-tech & platform era). Each landmark company sits at its founding year as a node showing its REAL Wikimedia logo on a light tile, the year, and the name.",
+        "trigger": "Reader clicks an era band (or All) to filter; on mobile it becomes a responsive numbered-card stack ordered by year.",
+        "transition": "Nodes outside the selected era dim/collapse; selected era's logos stay vivid.",
+        "payoff": "The reader scrubs from the 1939 HP garage through Sun/Cisco/SGI, to Google/PayPal, to SpaceX/Palantir/OpenAI/Neuralink — seeing the same university seed each era.",
+        "data_source": "ana_10"
+      },
+      "brief": "Interactive lineage timeline built from ana_10's 18 landmark rows (year, company, era). Each node uses a REAL logo (logo_*.png) on a white rounded tile, with year + name below. Four era filter chips + All. Layout: responsive numbered-card stack/grid ordered by year (do NOT use a fixed-width absolute timeline inside the 720px column). 18 of 18 nodes have a real logo. Each logo tile carries a tiny credit; full credits in Sources.",
+      "rationale": "A timeline of real logos turns the abstract 'lineage' claim into something you can scrub and recognize, and breaks the chart rhythm with browsable imagery.",
+      "based_on": ["ana_10"]
+    },
+    "des_07": {
+      "label": "Founding boom — era/decade trend chart",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "column",
+        "data_source": "ana_05",
+        "x": "decade",
+        "y": "count",
+        "highlight": { "decade": "2000s" },
+        "interaction": "hover tooltip with count per decade",
+        "style": { "palette": "cardinal", "no_gridlines": true }
+      },
+      "brief": "Vertical column chart of unique entities founded per decade (1910s-2020s) from ana_05, peak 2000s (120) highlighted. Shows the pipeline accelerating, not cooling, as the Valley matured.",
+      "rationale": "Decade counts are a clean time series; a column chart reads instantly and supports the '56% since 2000' claim.",
+      "based_on": ["ana_05", "ana_04"]
+    },
+    "des_08": {
+      "label": "Where they are — HQ geography bar",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_08",
+        "x": "count",
+        "y": "city",
+        "highlight": { "city": "San Francisco" },
+        "interaction": "hover tooltip with count",
+        "style": { "palette": "cardinal-teal", "no_gridlines": true, "sort": "descending" }
+      },
+      "brief": "Horizontal bar of the top 12 HQ cities from ana_08. San Francisco (51) highlighted; Mountain View (19), Palo Alto (17), then the Valley towns and the NYC/DC tail. Caption notes 40% of geolocated entities are in the Bay Area.",
+      "rationale": "The data is city names, best read as a ranked bar; a literal map would scatter dots without adding insight.",
+      "based_on": ["ana_08"]
+    },
+    "des_09": {
+      "label": "Stanford campus image (the engine)",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_stanford.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Stanford_Oval_May_2011_panorama.jpg",
+        "license": "CC BY-SA 3.0",
+        "artist": "King of Hearts",
+        "credit": "Wikimedia Commons"
+      },
+      "brief": "Real photo of the Stanford Oval / sandstone arcades placed in the 'corridor' section as the physical anchor of the pipeline. Credited in caption + Sources.",
+      "rationale": "Grounds the geography section in the actual campus the founders stayed near — a real image, not a generated one.",
+      "based_on": ["ana_08"]
+    },
+    "des_10": {
+      "label": "The undercount — honesty stacked bar",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "stacked_bar_single",
+        "data_source": "ana_07",
+        "x": "count",
+        "color": "bucket",
+        "highlight": { "bucket": "No industry recorded (unknowable)" },
+        "interaction": "hover tooltip with count and % of 545",
+        "style": { "palette": "amber-warning", "no_gridlines": true }
+      },
+      "brief": "A single horizontal 100%-stacked bar of all 545 links split into three segments from ana_07: Flagged tech (104), Non-tech with an industry (118), and No industry recorded (323, highlighted). The point: 59% of the bar is grey unknown, so the tech count is a floor. Tooltip shows count + % of 545.",
+      "rationale": "One stacked bar makes the 'most of this is missing' caveat visceral — the grey segment dominates, which is the whole argument.",
+      "based_on": ["ana_07"]
+    },
+    "des_11": {
+      "label": "Musk's 15 — broad-definition stat callout",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": { "value": "3 of 15", "label": "of Elon Musk's headline 'foundings' are not companies at all — America PAC, the America Party, and a school. 'Founded by' on Wikidata is broad.", "data_source": "ana_09" },
+      "brief": "Stat callout in the integrity section spotlighting the definitional trap behind the founder ranking.",
+      "rationale": "Concretizes the 'founded by is broad' caveat with the exact, checkable Musk example.",
+      "based_on": ["ana_09"]
+    },
+    "des_12": {
+      "label": "Specified-industries bar",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_06",
+        "x": "count",
+        "y": "industry",
+        "highlight": { "industry": "Financial services" },
+        "interaction": "hover tooltip with count",
+        "style": { "palette": "cardinal", "no_gridlines": true, "sort": "descending" }
+      },
+      "brief": "Horizontal bar of the top specified industries from ana_06 (Financial services 18, Software 13, Retail 9, Computer hardware 8, AI 7, ... Data analytics 4). Caption stresses these describe barely half the list because 323 entities have no industry at all.",
+      "rationale": "Shows the Valley stack among the named industries while the caption keeps the undercount honest.",
+      "based_on": ["ana_06"]
+    },
+    "des_13": {
+      "label": "Closing ambient bed (generated)",
+      "type": "audio",
+      "section": "edt_06",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "A warm ambient bed turns the closing reflection into a contemplative outro — a garage-dawn rising into a humming valley — rather than a dry summary.",
+        "trigger": "Click a play button in the closing section (never autoplay).",
+        "ui_form": "section-integrated mini-player: a slim play/pause control inside the closing chapter with a one-line caption.",
+        "content": {
+          "filename": "ambient.mp3",
+          "tool": "text2music",
+          "prompt": "Warm optimistic ambient tech soundscape evoking a California garage-startup dawn turning into a humming valley of innovation: soft analog synth pads, gentle arpeggiated bells rising like sunrise, a slow hopeful build suggesting a flywheel gaining momentum, no vocals, around 30 seconds.",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "If audio is muted or unsupported, the closing prose stands alone; the button shows a caption describing the bed.",
+        "novelty_note": "Not a tone card and not a sonification gimmick — a restrained reader-controlled bed scoped to the final chapter."
+      },
+      "brief": "Reader-controlled ~30s ambient bed in the closing section. Slim mini-player, non-autoplay, caption fallback.",
+      "rationale": "Audio earns its slot as atmosphere for the close; a sonification of the founder ranking would duplicate the deck's job.",
+      "based_on": []
+    },
+    "des_14": {
+      "label": "Real-media attribution table",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "p_elon_musk.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Elon_Musk_(54816836217)_(cropped_2)_(b).jpg",
+        "license": "CC BY-SA 4.0",
+        "artist": "Gage Skidmore",
+        "credit": "Wikimedia Commons",
+        "all_portraits": [
+          {"name": "Elon Musk", "file": "p_elon_musk.jpg", "url": "https://commons.wikimedia.org/wiki/File:Elon_Musk_(54816836217)_(cropped_2)_(b).jpg", "license": "CC BY-SA 4.0", "artist": "Gage Skidmore"},
+          {"name": "Peter Thiel", "file": "p_peter_thiel.jpg", "url": "https://commons.wikimedia.org/wiki/File:Peter_Thiel_by_Gage_Skidmore.jpg", "license": "CC BY-SA 3.0", "artist": "Gage Skidmore"},
+          {"name": "Larry Page", "file": "p_larry_page.jpg", "url": "https://commons.wikimedia.org/wiki/File:Larry_Page_in_the_European_Parliament,_17.06.2009.jpg", "license": "CC BY-SA 4.0", "artist": "Marcin Mycielski / European Parliament"},
+          {"name": "Sergey Brin", "file": "p_sergey_brin.jpg", "url": "https://commons.wikimedia.org/wiki/File:Sergey_Brin_Ted_2010_(cropped).jpg", "license": "CC BY 2.0", "artist": "Steve Jurvetson"},
+          {"name": "Jeff Skoll", "file": "p_jeff_skoll.jpg", "url": "https://commons.wikimedia.org/wiki/File:Jeff_Skoll_2013_(5576999744).jpg", "license": "CC BY 2.0", "artist": "Skoll World Forum"},
+          {"name": "Mukesh Ambani", "file": "p_mukesh_ambani.jpg", "url": "https://commons.wikimedia.org/wiki/File:Mukesh_Ambani.jpg", "license": "CC BY-SA 2.0", "artist": "World Economic Forum"},
+          {"name": "Herbert Hoover", "file": "p_herbert_hoover.jpg", "url": "https://commons.wikimedia.org/wiki/File:President_Hoover_portrait.jpg", "license": "Public domain", "artist": "Underwood & Underwood"},
+          {"name": "William Hewlett", "file": "p_william_redington_hewlett.jpg", "url": "https://commons.wikimedia.org/wiki/File:William_Hewlett_1993.jpg", "license": "CC BY-SA 3.0", "artist": "Alanhtripp"},
+          {"name": "Joe Lonsdale", "file": "p_joe_lonsdale.jpg", "url": "https://commons.wikimedia.org/wiki/File:Joe_Lonsdale.jpg", "license": "CC BY 2.0", "artist": "TechCrunch"},
+          {"name": "David Packard", "file": "p_david_packard.jpg", "url": "https://commons.wikimedia.org/wiki/File:David-Packard-DepSecDef.jpg", "license": "Public domain", "artist": "US DoD"},
+          {"name": "Sam Altman", "file": "p_sam_altman.jpg", "url": "https://commons.wikimedia.org/wiki/File:Sam_Altman_speaking_at_TED_(cropped).jpg", "license": "CC BY 2.0", "artist": "Steve Jurvetson"},
+          {"name": "Aaron Swartz", "file": "p_aaron_swartz.jpg", "url": "https://commons.wikimedia.org/wiki/File:Aaron_Swartz_2_at_Boston_Wikipedia_Meetup,_2009-08-18.jpg", "license": "CC BY-SA 2.0", "artist": "Sage Ross"},
+          {"name": "Dado Banatao", "file": "p_dado_banatao.jpg", "url": "https://commons.wikimedia.org/wiki/File:Dado_Banatao_2021_stamp_of_Philippines.jpg", "license": "Public domain", "artist": "Philippine Postal Corp"},
+          {"name": "Reed Hastings", "file": "p_reed_hastings.jpg", "url": "https://commons.wikimedia.org/wiki/File:Reed_Hastings,_Web_2.0_Conference.jpg", "license": "CC BY 2.0", "artist": "James Duncan Davidson"},
+          {"name": "Vinod Khosla", "file": "p_vinod_khosla.jpg", "url": "https://commons.wikimedia.org/wiki/File:Vinod_Khosla,_Web_2.0_Conference.jpg", "license": "CC BY 2.0", "artist": "James Duncan Davidson"},
+          {"name": "Andy Bechtolsheim", "file": "p_andy_bechtolsheim.jpg", "url": "https://commons.wikimedia.org/wiki/File:Andreas_bechtolsheim.jpg", "license": "CC BY-SA 3.0", "artist": "Norbert Stuhrmann"},
+          {"name": "Reid Hoffman", "file": "p_reid_hoffman.jpg", "url": "https://commons.wikimedia.org/wiki/File:2022_Reid_Hoffman_(cropped).jpg", "license": "CC BY 2.0", "artist": "US Secretary of Defense"},
+          {"name": "Phil Knight", "file": "p_phil_knight.jpg", "url": "https://commons.wikimedia.org/wiki/File:Philknightfootball.jpg", "license": "CC BY-SA 2.0", "artist": "Neon Tommy"}
+        ],
+        "all_logos": [
+          {"name": "Hewlett-Packard", "file": "logo_hewlett_packard.png", "url": "https://commons.wikimedia.org/wiki/File:HP_logo_2012.svg", "license": "Public domain"},
+          {"name": "Litton Industries", "file": "logo_litton_industries.png", "url": "https://commons.wikimedia.org/wiki/File:Litton_logo.svg", "license": "Public domain"},
+          {"name": "Logitech", "file": "logo_logitech.png", "url": "https://commons.wikimedia.org/wiki/File:Logitech_logo.svg", "license": "Public domain"},
+          {"name": "Silicon Graphics", "file": "logo_silicon_graphics.png", "url": "https://commons.wikimedia.org/wiki/File:SGI_wordmark.svg", "license": "Public domain"},
+          {"name": "Sun Microsystems", "file": "logo_sun_microsystems.png", "url": "https://commons.wikimedia.org/wiki/File:Sun-Logo.svg", "license": "Public domain"},
+          {"name": "Intuit", "file": "logo_intuit.png", "url": "https://commons.wikimedia.org/wiki/File:Intuit_logo_2022.svg", "license": "Public domain"},
+          {"name": "Cisco", "file": "logo_cisco.png", "url": "https://commons.wikimedia.org/wiki/File:Cisco_logo.svg", "license": "Public domain"},
+          {"name": "Nvidia", "file": "logo_nvidia.png", "url": "https://commons.wikimedia.org/wiki/File:NVIDIA_logo.svg", "license": "Apache License 2.0"},
+          {"name": "Yahoo", "file": "logo_yahoo.png", "url": "https://commons.wikimedia.org/wiki/File:Yahoo!_(2019).svg", "license": "Public domain"},
+          {"name": "Google", "file": "logo_google.png", "url": "https://commons.wikimedia.org/wiki/File:Google_2015_logo.svg", "license": "Public domain"},
+          {"name": "PayPal", "file": "logo_paypal.png", "url": "https://commons.wikimedia.org/wiki/File:Paypal.svg", "license": "Public domain"},
+          {"name": "LinkedIn", "file": "logo_linkedin.png", "url": "https://commons.wikimedia.org/wiki/File:LinkedIn_Logo.svg", "license": "Public domain"},
+          {"name": "SpaceX", "file": "logo_spacex.png", "url": "https://commons.wikimedia.org/wiki/File:SpaceX_logo_black.svg", "license": "Public domain"},
+          {"name": "Palantir Technologies", "file": "logo_palantir_technologies.png", "url": "https://commons.wikimedia.org/wiki/File:Palantir_Technologies_logo.svg", "license": "Public domain"},
+          {"name": "Coursera", "file": "logo_coursera.png", "url": "https://commons.wikimedia.org/wiki/File:Coursera-Logo_600x600.svg", "license": "Public domain"},
+          {"name": "Robinhood", "file": "logo_robinhood.png", "url": "https://commons.wikimedia.org/wiki/File:Robinhood_Logotype_green.png", "license": "Public domain"},
+          {"name": "OpenAI", "file": "logo_openai.png", "url": "https://commons.wikimedia.org/wiki/File:OpenAI_logo_2025.svg", "license": "Public domain"},
+          {"name": "Neuralink", "file": "logo_neuralink.png", "url": "https://commons.wikimedia.org/wiki/File:Neuralink_logo.svg", "license": "Public domain"}
+        ]
+      },
+      "brief": "Not a standalone image — carries the per-item attribution for the 18 portraits and 18 lineage logos used. The Programmer renders these credits in a compact Sources/Credits block and in References. Every real portrait and logo is credited to Wikimedia with artist + license + file link.",
+      "rationale": "Attribution requirement: every real image used must be credited.",
+      "based_on": ["ana_02", "ana_10"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm editorial — Stanford cardinal (#8C1515) and sandstone/cream on near-black, golden-hour accents; a 'campus-at-dusk turning into a humming valley' mood",
+    "text_visual_pattern": "visual-first teaser, then text -> quiz -> portrait deck -> logo timeline -> charts, alternating so no three charts run in a row",
+    "centrepiece": "des_04",
+    "anti_sameness_notes": "Centerpiece is a ranked REAL-portrait bar (not a Vega bar); the lineage is a real-logo era-scrubber timeline; the integrity turn uses a single grey-dominated stacked bar; teaser is an animated AI origin hero; audio is a scoped closing bed. Cardinal/sandstone palette distinguishes it from the forbes gold-on-navy and ukschool decks.",
+    "typography_notes": "Large cardinal stat callouts (56-64px); system-ui for labels/UI; Georgia serif for body; section kickers in letterspaced uppercase. Portrait thumbnails circular; logo tiles on light cream rounded rectangles."
+  }
+}

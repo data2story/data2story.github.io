@@ -1,0 +1,84 @@
+{
+  "meta": { "role": "editor", "version": "2.0" },
+  "core_claim": "One university quietly engineered Silicon Valley — and Wikidata's 545 founder links let you watch the flywheel turn from a 1939 garage to OpenAI, while honestly showing where the data is thin.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — One garage, one university, half a century",
+      "purpose": "hook",
+      "title": null,
+      "findings": ["ana_02", "ana_10"],
+      "context": ["det_02", "det_03"],
+      "triage": { "ana_02": "lead", "ana_10": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": "video",
+      "editorial_notes": "Musk 15 / Thiel 10 / Page-Brin 8 must be exact. HP 1939 garage anchor."
+    },
+    "edt_02": {
+      "label": "The flywheel — a few founders, again and again",
+      "purpose": "evidence",
+      "title": "The flywheel",
+      "findings": ["ana_02", "ana_03"],
+      "context": ["det_04"],
+      "triage": { "ana_02": "lead", "ana_03": "supporting" },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Centerpiece: ranked founder bar with real portraits. OpenAI 4, Sun/PayPal/Palantir/Founders Fund 3 exact."
+    },
+    "edt_03": {
+      "label": "The lineage — 1939 to OpenAI",
+      "purpose": "evidence",
+      "title": "The lineage",
+      "findings": ["ana_10", "ana_04"],
+      "context": ["det_06", "det_03"],
+      "triage": { "ana_10": "lead", "ana_04": "supporting" },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Timeline with real company logos. 56% since 2000."
+    },
+    "edt_04": {
+      "label": "The map — a corridor, not a country",
+      "purpose": "context",
+      "title": "One corridor",
+      "findings": ["ana_08"],
+      "context": ["det_02"],
+      "triage": { "ana_08": "supporting" },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "image",
+      "editorial_notes": "SF 51, Mountain View 19, Palo Alto 17 exact. 40% Bay Area."
+    },
+    "edt_05": {
+      "label": "The turn — what the data won't tell you",
+      "purpose": "turn",
+      "title": "The seams",
+      "findings": ["ana_07", "ana_06", "ana_09"],
+      "context": ["det_07"],
+      "triage": { "ana_07": "lead", "ana_06": "supporting", "ana_09": "supporting" },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": null,
+      "editorial_notes": "LOAD-BEARING integrity section. 323/545 (59.3%) no industry. Musk's PAC/party/school. ~67 non-companies. Do not soften."
+    },
+    "edt_06": {
+      "label": "Close — trust the pattern, not the tally",
+      "purpose": "close",
+      "title": "The bigger machine",
+      "findings": ["ana_01"],
+      "context": ["det_05", "det_01"],
+      "triage": { "ana_01": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": "audio",
+      "editorial_notes": "$2.7 trillion / 39,900 companies / world's 10th largest economy. End on the machine, not a summary."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "color",
+    "ana_06": "supporting",
+    "ana_07": "lead",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "lead"
+  }
+}

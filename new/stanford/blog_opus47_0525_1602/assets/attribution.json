@@ -1,0 +1,326 @@
+{
+  "founders": [
+    {
+      "name": "Elon Musk",
+      "file": "p_elon_musk.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Gage Skidmore",
+      "url": "https://commons.wikimedia.org/wiki/File:Elon_Musk_(54816836217)_(cropped_2)_(b).jpg",
+      "qid": "Q317521"
+    },
+    {
+      "name": "Peter Thiel",
+      "file": "p_peter_thiel.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Gage Skidmore",
+      "url": "https://commons.wikimedia.org/wiki/File:Peter_Thiel_by_Gage_Skidmore.jpg",
+      "qid": "Q705525"
+    },
+    {
+      "name": "Larry Page",
+      "file": "p_larry_page.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Marcin Mycielski, European Parliament (Stansfield)",
+      "url": "https://commons.wikimedia.org/wiki/File:Larry_Page_in_the_European_Parliament,_17.06.2009.jpg",
+      "qid": "Q4934"
+    },
+    {
+      "name": "Sergey Brin",
+      "file": "p_sergey_brin.jpg",
+      "license": "CC BY 2.0",
+      "artist": "Steve Jurvetson",
+      "url": "https://commons.wikimedia.org/wiki/File:Sergey_Brin_Ted_2010_(cropped).jpg",
+      "qid": "Q92764"
+    },
+    {
+      "name": "Jeff Skoll",
+      "file": "p_jeff_skoll.jpg",
+      "license": "CC BY 2.0",
+      "artist": "Skoll World Forum",
+      "url": "https://commons.wikimedia.org/wiki/File:Jeff_Skoll_2013_(5576999744).jpg",
+      "qid": "Q710924"
+    },
+    {
+      "name": "Mukesh Ambani",
+      "file": "p_mukesh_ambani.jpg",
+      "license": "CC BY-SA 2.0",
+      "artist": "World Economic Forum from Cologny, Switzerland",
+      "url": "https://commons.wikimedia.org/wiki/File:Mukesh_Ambani.jpg",
+      "qid": "Q298547"
+    },
+    {
+      "name": "Herbert Hoover",
+      "file": "p_herbert_hoover.jpg",
+      "license": "Public domain",
+      "artist": "Underwood &amp; Underwood",
+      "url": "https://commons.wikimedia.org/wiki/File:President_Hoover_portrait.jpg",
+      "qid": "Q35236"
+    },
+    {
+      "name": "William Redington Hewlett",
+      "file": "p_william_redington_hewlett.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Copyright held by English Wikipedia User:Alanhtripp. Transferred from Wikipedia.org English Wikipedia to Commons. by User:Scm83x. Uploaded to commons by User:Ims",
+      "url": "https://commons.wikimedia.org/wiki/File:William_Hewlett_1993.jpg",
+      "qid": "Q380467"
+    },
+    {
+      "name": "Joe Lonsdale",
+      "file": "p_joe_lonsdale.jpg",
+      "license": "CC BY 2.0",
+      "artist": "TechCrunch",
+      "url": "https://commons.wikimedia.org/wiki/File:Joe_Lonsdale.jpg",
+      "qid": "Q6210988"
+    },
+    {
+      "name": "David Packard",
+      "file": "p_david_packard.jpg",
+      "license": "Public domain",
+      "artist": "Department of Defense Historical Office Public Affairs",
+      "url": "https://commons.wikimedia.org/wiki/File:David-Packard-DepSecDef.jpg",
+      "qid": "Q380484"
+    },
+    {
+      "name": "Sam Altman",
+      "file": "p_sam_altman.jpg",
+      "license": "CC BY 2.0",
+      "artist": "Steve Jurvetson",
+      "url": "https://commons.wikimedia.org/wiki/File:Sam_Altman_speaking_at_TED_(cropped).jpg",
+      "qid": "Q7407093"
+    },
+    {
+      "name": "Aaron Swartz",
+      "file": "p_aaron_swartz.jpg",
+      "license": "CC BY-SA 2.0",
+      "artist": "Sage Ross",
+      "url": "https://commons.wikimedia.org/wiki/File:Aaron_Swartz_2_at_Boston_Wikipedia_Meetup,_2009-08-18.jpg",
+      "qid": "Q302817"
+    },
+    {
+      "name": "Dado Banatao",
+      "file": "p_dado_banatao.jpg",
+      "license": "Public domain",
+      "artist": "Philippine Postal Corporation",
+      "url": "https://commons.wikimedia.org/wiki/File:Dado_Banatao_2021_stamp_of_Philippines.jpg",
+      "qid": "Q5208098"
+    },
+    {
+      "name": "Reed Hastings",
+      "file": "p_reed_hastings.jpg",
+      "license": "CC BY 2.0",
+      "artist": "",
+      "url": "https://commons.wikimedia.org/wiki/File:Reed_Hastings,_Web_2.0_Conference.jpg",
+      "qid": "Q7306657"
+    },
+    {
+      "name": "Vinod Khosla",
+      "file": "p_vinod_khosla.jpg",
+      "license": "CC BY 2.0",
+      "artist": "James Duncan Davidson from For higher resulutions contact duncan@x180.net.",
+      "url": "https://commons.wikimedia.org/wiki/File:Vinod_Khosla,_Web_2.0_Conference.jpg",
+      "qid": "Q738005"
+    },
+    {
+      "name": "Andy Bechtolsheim",
+      "file": "p_andy_bechtolsheim.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Norbert Stuhrmann",
+      "url": "https://commons.wikimedia.org/wiki/File:Andreas_bechtolsheim.jpg",
+      "qid": "Q65344"
+    },
+    {
+      "name": "Reid Hoffman",
+      "file": "p_reid_hoffman.jpg",
+      "license": "CC BY 2.0",
+      "artist": "U.S. Secretary of Defense",
+      "url": "https://commons.wikimedia.org/wiki/File:2022_Reid_Hoffman_(cropped).jpg",
+      "qid": "Q211098"
+    },
+    {
+      "name": "Phil Knight",
+      "file": "p_phil_knight.jpg",
+      "license": "CC BY-SA 2.0",
+      "artist": "Neon Tommy",
+      "url": "https://commons.wikimedia.org/wiki/File:Philknightfootball.jpg",
+      "qid": "Q557305"
+    }
+  ],
+  "companies": [
+    {
+      "name": "Hewlett-Packard",
+      "file": "logo_hewlett_packard.png",
+      "license": "Public domain",
+      "artist": "HP Inc.",
+      "url": "https://commons.wikimedia.org/wiki/File:HP_logo_2012.svg",
+      "qid": "Q80978"
+    },
+    {
+      "name": "Litton Industries",
+      "file": "logo_litton_industries.png",
+      "license": "Public domain",
+      "artist": "Litton Industries",
+      "url": "https://commons.wikimedia.org/wiki/File:Litton_logo.svg",
+      "qid": "Q2058311"
+    },
+    {
+      "name": "Logitech",
+      "file": "logo_logitech.png",
+      "license": "Public domain",
+      "artist": "Logitech",
+      "url": "https://commons.wikimedia.org/wiki/File:Logitech_logo.svg",
+      "qid": "Q223127"
+    },
+    {
+      "name": "Silicon Graphics",
+      "file": "logo_silicon_graphics.png",
+      "license": "Public domain",
+      "artist": "\u2122/\u00aeSilicon Graphics",
+      "url": "https://commons.wikimedia.org/wiki/File:SGI_wordmark.svg",
+      "qid": "Q623459"
+    },
+    {
+      "name": "Sun Microsystems",
+      "file": "logo_sun_microsystems.png",
+      "license": "Public domain",
+      "artist": "Sun Microsystems",
+      "url": "https://commons.wikimedia.org/wiki/File:Sun-Logo.svg",
+      "qid": "Q14647"
+    },
+    {
+      "name": "Intuit",
+      "file": "logo_intuit.png",
+      "license": "Public domain",
+      "artist": "Intuit Inc.",
+      "url": "https://commons.wikimedia.org/wiki/File:Intuit_logo_2022.svg",
+      "qid": "Q1318848"
+    },
+    {
+      "name": "Cisco",
+      "file": "logo_cisco.png",
+      "license": "Public domain",
+      "artist": "Cisco",
+      "url": "https://commons.wikimedia.org/wiki/File:Cisco_logo.svg",
+      "qid": "Q173395"
+    },
+    {
+      "name": "Nvidia",
+      "file": "logo_nvidia.png",
+      "license": "Apache License 2.0",
+      "artist": "Nvidia",
+      "url": "https://commons.wikimedia.org/wiki/File:NVIDIA_logo.svg",
+      "qid": "Q182477"
+    },
+    {
+      "name": "Yahoo",
+      "file": "logo_yahoo.png",
+      "license": "Public domain",
+      "artist": "Verizon Media - Pentagram",
+      "url": "https://commons.wikimedia.org/wiki/File:Yahoo!_(2019).svg",
+      "qid": "Q37093"
+    },
+    {
+      "name": "Google",
+      "file": "logo_google.png",
+      "license": "Public domain",
+      "artist": "Google LLC",
+      "url": "https://commons.wikimedia.org/wiki/File:Google_2015_logo.svg",
+      "qid": "Q95"
+    },
+    {
+      "name": "PayPal",
+      "file": "logo_paypal.png",
+      "license": "Public domain",
+      "artist": "unbekanntPaypal",
+      "url": "https://commons.wikimedia.org/wiki/File:Paypal.svg",
+      "qid": "Q483959"
+    },
+    {
+      "name": "LinkedIn",
+      "file": "logo_linkedin.png",
+      "license": "Public domain",
+      "artist": "LinkedIn",
+      "url": "https://commons.wikimedia.org/wiki/File:LinkedIn_Logo.svg",
+      "qid": "Q213660"
+    },
+    {
+      "name": "SpaceX",
+      "file": "logo_spacex.png",
+      "license": "Public domain",
+      "artist": "SpaceX",
+      "url": "https://commons.wikimedia.org/wiki/File:SpaceX_logo_black.svg",
+      "qid": "Q193701"
+    },
+    {
+      "name": "Palantir Technologies",
+      "file": "logo_palantir_technologies.png",
+      "license": "Public domain",
+      "artist": "Palantir Technologies.\n\nThe original uploader was KarimKoueider at English Wikipedia.",
+      "url": "https://commons.wikimedia.org/wiki/File:Palantir_Technologies_logo.svg",
+      "qid": "Q2047336"
+    },
+    {
+      "name": "Coursera",
+      "file": "logo_coursera.png",
+      "license": "Public domain",
+      "artist": "Lawrie Sisley Talansky",
+      "url": "https://commons.wikimedia.org/wiki/File:Coursera-Logo_600x600.svg",
+      "qid": "Q499962"
+    },
+    {
+      "name": "Robinhood",
+      "file": "logo_robinhood.png",
+      "license": "Public domain",
+      "artist": "Robinhood",
+      "url": "https://commons.wikimedia.org/wiki/File:Robinhood_Logotype_green.png",
+      "qid": "Q18155123"
+    },
+    {
+      "name": "OpenAI",
+      "file": "logo_openai.png",
+      "license": "Public domain",
+      "artist": "OpenAI",
+      "url": "https://commons.wikimedia.org/wiki/File:OpenAI_logo_2025.svg",
+      "qid": "Q21708200"
+    },
+    {
+      "name": "Neuralink",
+      "file": "logo_neuralink.png",
+      "license": "Public domain",
+      "artist": "Neuralink Corp; converted to SVG by Saucy",
+      "url": "https://commons.wikimedia.org/wiki/File:Neuralink_logo.svg",
+      "qid": "Q29043471"
+    },
+    {
+      "name": "Netflix, Inc.",
+      "file": "logo_netflix_inc.png",
+      "license": "Public domain",
+      "artist": "Netflix",
+      "url": "https://commons.wikimedia.org/wiki/File:Netflix_2014_logo.svg",
+      "qid": "Q116452644"
+    },
+    {
+      "name": "Nike",
+      "file": "logo_nike.png",
+      "license": "Public domain",
+      "artist": "Carolyn Davidson, Nike",
+      "url": "https://commons.wikimedia.org/wiki/File:Logo_NIKE.svg",
+      "qid": "Q483915"
+    },
+    {
+      "name": "Charles Schwab Corporation",
+      "file": "logo_charles_schwab_corporation.png",
+      "license": "Public domain",
+      "artist": "Charles Schwab &amp; Co., Inc",
+      "url": "https://commons.wikimedia.org/wiki/File:Charles_Schwab_Corporation_logo.svg",
+      "qid": "Q1066028"
+    },
+    {
+      "name": "Trader Joe's",
+      "file": "logo_trader_joes.png",
+      "license": "Public domain",
+      "artist": "Trader Joe's",
+      "url": "https://commons.wikimedia.org/wiki/File:Trader_Joes_Logo.svg",
+      "qid": "Q688825"
+    }
+  ]
+}

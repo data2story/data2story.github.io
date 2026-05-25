@@ -1,0 +1,168 @@
+{
+  "meta": { "role": "analyst", "version": "2.0" },
+  "dataset": {
+    "files": ["stanford_founders.csv", "founders_ranked.csv", "industry_breakdown.csv", "tech_companies.csv"],
+    "rows": 545,
+    "columns": 8,
+    "what_one_row_represents": "One founder-to-company link: a Stanford-educated person (P69) credited with founding (P112) a company or organization on Wikidata",
+    "time_range": "1913-2026 (founding years where recorded)",
+    "geographic_scope": "Global, but heavily Bay Area / California"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset shape: 545 links, 394 founders, 509 unique entities",
+      "content": "The dataset is an edge list of 545 founder-to-company links connecting 394 distinct Stanford-educated founders to 509 distinct companies or organizations (the link count exceeds the entity count because co-founders each get their own row). A founding year is recorded for 470 of 545 links, spanning 1913 to 2026. Headquarters is recorded for 366 links, and an industry for only 222 — already a signal of how sparse Wikidata's coverage is. Just 104 links carry the is_tech flag.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [16, 28], "output": "total rows: 545\ndistinct founders: 394\ndistinct companies (by company_id): 509\nrows with founded_year: 470; range 1913-2026\nrows with headquarters: 366\nrows with industry: 222\nrows flagged is_tech True: 104" },
+      "data_table": {
+        "description": "Top-level dataset counts",
+        "columns": ["metric", "value"],
+        "rows": [["Founder to company links", 545], ["Distinct founders", 394], ["Unique companies/orgs", 509], ["Industries", 149], ["Tech-flagged links", 104]]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_02": {
+      "label": "Most prolific founders: Musk 15, Thiel 10, Page/Brin 8",
+      "content": "A handful of founders anchor a wildly disproportionate share of the list. Elon Musk tops it with 15 foundings, followed by Peter Thiel with 10, and the Google pair Larry Page and Sergey Brin with 8 each. Then Jeff Skoll and Mukesh Ambani (7), Herbert Hoover and William Hewlett (6), Joe Lonsdale (5), and David Packard and Sam Altman (4). The top 15 founders alone account for many dozens of the 545 links. This long-tail-of-founders shape is the fingerprint of the Silicon Valley founder-investor flywheel.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [31, 41], "output": "Elon Musk: 15\nPeter Thiel: 10\nLarry Page: 8\nSergey Brin: 8\nJeff Skoll: 7\nMukesh Ambani: 7\nHerbert Hoover: 6\nWilliam Redington Hewlett: 6\nJoe Lonsdale: 5\nDavid Packard: 4\nSam Altman: 4\nAaron Swartz: 3\nAlain Rossmann: 3\nBrian Acton: 3\nDado Banatao: 3" },
+      "data_table": {
+        "description": "Top 15 founders by number of companies/orgs founded (raw P112 count)",
+        "columns": ["founder", "count"],
+        "rows": [["Elon Musk", 15], ["Peter Thiel", 10], ["Larry Page", 8], ["Sergey Brin", 8], ["Jeff Skoll", 7], ["Mukesh Ambani", 7], ["Herbert Hoover", 6], ["William Hewlett", 6], ["Joe Lonsdale", 5], ["David Packard", 4], ["Sam Altman", 4], ["Aaron Swartz", 3], ["Alain Rossmann", 3], ["Brian Acton", 3], ["Dado Banatao", 3]]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_03": {
+      "label": "509 unique entities; co-founders create 36 duplicate rows",
+      "content": "Because every co-founder gets their own row, the 545 links collapse to 509 unique companies/orgs once you de-duplicate on company_id — 36 duplicate rows. The entities with the most Stanford co-founders are exactly the marquee names: OpenAI appears 4 times, and Sun Microsystems, Founders Fund, PayPal and Palantir each appear 3 times. This is itself evidence of the flywheel — the most consequential companies were founded by clusters of Stanford people, not lone geniuses.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze.py", "lines": [44, 56], "output": "raw links: 545\nunique companies/orgs (de-duped on company_id): 509\nduplicate rows from co-founders: 36\ncompanies appearing >=3x:\n  OpenAI: 4\n  Sun Microsystems: 3\n  Founders Fund: 3\n  PayPal: 3\n  Palantir Technologies: 3" },
+      "data_table": {
+        "description": "Companies with the most Stanford co-founders in the data",
+        "columns": ["company", "stanford_cofounders"],
+        "rows": [["OpenAI", 4], ["Sun Microsystems", 3], ["Founders Fund", 3], ["PayPal", 3], ["Palantir Technologies", 3]]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_04": {
+      "label": "Founding eras: a steepening curve toward the present",
+      "content": "Sorting the 435 unique entities that have a founding year into eras shows an accelerating curve. Just 14 predate 1950 and 28 came in the 1950s-60s; the 1970s-80s produced 75, the 1990s another 73, the 2000s a peak of 120, and the 2010s-20s 123 more. Roughly 56% of all dated Stanford-founded entities here were created since 2000. The pipeline did not slow as the Valley matured — it sped up.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [59, 73], "output": "Pre-1950: 14\n1950s-60s: 28\n1970s-80s: 75\n1990s: 73\n2000s: 120\n2010s-20s: 123\ncompanies with year: 435" },
+      "data_table": {
+        "description": "Unique entities by founding era (de-duped on company_id)",
+        "columns": ["era", "count"],
+        "rows": [["Pre-1950", 14], ["1950s-60s", 28], ["1970s-80s", 75], ["1990s", 73], ["2000s", 120], ["2010s-20s", 123]]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_05": {
+      "label": "By decade: the founding boom peaks in the 2000s",
+      "content": "At decade resolution the curve is even clearer: 3 entities in the 1910s, single digits through the 1940s, then 10 (1950s), 18 (1960s), 25 (1970s), 50 (1980s), 73 (1990s), a peak of 120 in the 2000s, 99 in the 2010s, and 26 already in the 2020s. The 1980s personal-computer wave (Sun, Cisco, SGI, Logitech, Intuit) and the 2000s internet/social wave are both visible as step-changes.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [76, 82], "output": "1910s: 3\n1920s: 2\n1930s: 6\n1940s: 3\n1950s: 10\n1960s: 18\n1970s: 25\n1980s: 50\n1990s: 73\n2000s: 120\n2010s: 99\n2020s: 26" },
+      "data_table": {
+        "description": "Unique entities founded per decade",
+        "columns": ["decade", "count"],
+        "rows": [["1910s", 3], ["1920s", 2], ["1930s", 6], ["1940s", 3], ["1950s", 10], ["1960s", 18], ["1970s", 25], ["1980s", 50], ["1990s", 73], ["2000s", 120], ["2010s", 99], ["2020s", 26]]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_06": {
+      "label": "Industry breakdown: 52% unspecified; software/finance/AI lead",
+      "content": "The industry field is the dataset's biggest blind spot and biggest tell. Of 620 industry tags, 323 (52.1%) are '(unspecified)' — more than half of all entities have no industry on Wikidata at all. Among the specified ones, financial services leads (18), then software (13), retail (9), computer hardware (8), artificial intelligence (7), and a tight cluster of information technology, Internet (6 each), semiconductors, software development, e-commerce and telecom (5 each). Software, hardware, AI, internet and semiconductors — the textbook Valley stack — dominate the named industries, but only because they are named at all.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [85, 96], "output": "total industry rows: 620; (unspecified): 323 (52.1%)\nfinancial services: 18\nsoftware industry: 13\nretail: 9\ncomputer hardware industry: 8\nartificial intelligence: 7\ninformation technology: 6\nInternet: 6\nsemiconductor industry: 5\nsoftware development: 5\ne-commerce: 5\ntelecommunications: 5" },
+      "data_table": {
+        "description": "Top specified industries (excludes the 323 unspecified)",
+        "columns": ["industry", "count"],
+        "rows": [["Financial services", 18], ["Software", 13], ["Retail", 9], ["Computer hardware", 8], ["Artificial intelligence", 7], ["Information technology", 6], ["Internet", 6], ["Semiconductors", 5], ["Software development", 5], ["E-commerce", 5], ["Telecommunications", 5], ["Film", 4], ["Data analytics software", 4]]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_07": {
+      "label": "The tech flag undercounts: 59% of links have no industry at all",
+      "content": "Only 104 of 545 links (19.1%) are flagged is_tech True; the other 441 (80.9%) are False. But that is deeply misleading: 323 of those 441 (59.3% of the whole dataset) are False simply because Wikidata records no industry for them at all, not because they are non-tech. Only 118 links are non-tech with an actual industry recorded. The honest reading is that 104 tech firms is a floor, and the true tech share is unknowable from this field alone — the famous names like Google and SpaceX sit in the unflagged majority.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [99, 108], "output": "is_tech True: 104 (19.1%)\nis_tech False: 441 (80.9%)\n  of which no industry on Wikidata: 323 (59.3%)\n  is_tech False WITH an industry recorded: 118" },
+      "data_table": {
+        "description": "Tech flag breakdown showing the undercount",
+        "columns": ["bucket", "count"],
+        "rows": [["Flagged tech (floor)", 104], ["Non-tech with an industry", 118], ["No industry recorded (unknowable)", 323]]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_08": {
+      "label": "Geography: Palo Alto-to-SF corridor dominates",
+      "content": "Where headquarters is recorded (338 of 509 unique entities), the Bay Area gravity is unmistakable. San Francisco is the single most common HQ city with 51 companies, followed by the classic Valley towns: Mountain View (19), Palo Alto (17), Menlo Park (10), Sunnyvale and San Jose (8 each), Redwood City (5). Grouping the cities, 51 are in San Francisco proper (15%) and 84 more elsewhere in the Bay Area (25%) — so 40% of all geolocated Stanford-founded entities sit in the Bay Area, with the rest (60%) scattered across the US and the world. New York City (11) and Washington, D.C. (9) lead the non-Bay tail.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [111, 132], "output": "San Francisco: 51\nMountain View: 19\nPalo Alto: 17\nNew York City: 11\nMenlo Park: 10\nWashington, D.C.: 9\nSunnyvale: 8\nSan Jose: 8\nLos Angeles: 8\nAustin: 6\nSeattle: 5\nRedwood City: 5\n--- grouped ---\nSan Francisco: 51 (15%)\nRest of Bay Area: 84 (25%)\nElsewhere (US + intl): 203 (60%)" },
+      "data_table": {
+        "description": "Top HQ cities for unique Stanford-founded entities",
+        "columns": ["city", "count"],
+        "rows": [["San Francisco", 51], ["Mountain View", 19], ["Palo Alto", 17], ["New York City", 11], ["Menlo Park", 10], ["Washington, D.C.", 9], ["Sunnyvale", 8], ["San Jose", 8], ["Los Angeles", 8], ["Austin", 6], ["Seattle", 5], ["Redwood City", 5]]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_09": {
+      "label": "'Founded by' is broad — Musk's 15 mix ventures, a PAC and a school",
+      "content": "The headline founder ranking hides a definitional trap. Of Elon Musk's 15 'foundings,' several are not companies at all: America PAC, the America Party (a political party), and Astra Nova School (a school) sit alongside SpaceX, Neuralink, PayPal, X.com and the Boring Company. Across all 509 unique entities, roughly 67 carry the markers of non-companies (PAC, party, school, foundation, fund, prize, institute, commission), leaving roughly 442 that look like actual companies. The 'founder' ranking therefore measures civic-and-personal-empire breadth as much as company-building.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze.py", "lines": [135, 165], "output": "Elon Musk's 15 foundings:\n  America PAC\n  America Party\n  Astra Nova School\n  Neuralink\n  OpenAI\n  PayPal\n  SpaceX\n  SpaceXAI\n  Texas Institute of Technology & Science\n  The Boring Company\n  Thud\n  X Corp.\n  X Holdings Corp\n  X.com\n  Zip2\n\nof 509 unique entities, ~67 look like non-companies; ~442 look like actual companies" },
+      "data_table": {
+        "description": "Company vs non-company split of unique entities (heuristic)",
+        "columns": ["kind", "count"],
+        "rows": [["Looks like a company", 442], ["Non-company (PAC/foundation/school/fund/prize/institute)", 67]]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_10": {
+      "label": "The lineage timeline: HP 1939 to Neuralink 2016",
+      "content": "Threading the marquee names by founding year produces the textbook Silicon Valley spine, all from Stanford alumni: Hewlett-Packard (1939), Litton Industries (1953), then the 1980s hardware wave of Logitech and Silicon Graphics (1981), Sun Microsystems (1982), Intuit (1983) and Cisco (1984); Nvidia (1993) and Yahoo (1994); Google (1998) and PayPal (1998); LinkedIn and SpaceX (2002), Palantir (2003); then Coursera (2012), Robinhood (2013), OpenAI (2015) and Neuralink (2016). Each cluster maps onto a technology era, and the same founders reappear as the next era's funders.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [168, 188], "output": "1939  Hewlett-Packard\n1953  Litton Industries\n1981  Logitech\n1981  Silicon Graphics\n1982  Sun Microsystems\n1983  Intuit\n1984  Cisco\n1993  Nvidia\n1994  Yahoo\n1998  Google\n1998  PayPal\n2002  LinkedIn\n2002  SpaceX\n2003  Palantir Technologies\n2012  Coursera\n2013  Robinhood\n2015  OpenAI\n2016  Neuralink" },
+      "data_table": {
+        "description": "Landmark Stanford-founded companies on a timeline (year, company, era)",
+        "columns": ["year", "company", "era"],
+        "rows": [
+          [1939, "Hewlett-Packard", "Instruments & hardware"],
+          [1953, "Litton Industries", "Instruments & hardware"],
+          [1981, "Logitech", "PC & workstation wave"],
+          [1981, "Silicon Graphics", "PC & workstation wave"],
+          [1982, "Sun Microsystems", "PC & workstation wave"],
+          [1983, "Intuit", "PC & workstation wave"],
+          [1984, "Cisco", "PC & workstation wave"],
+          [1993, "Nvidia", "PC & workstation wave"],
+          [1994, "Yahoo", "Internet era"],
+          [1998, "Google", "Internet era"],
+          [1998, "PayPal", "Internet era"],
+          [2002, "LinkedIn", "Internet era"],
+          [2002, "SpaceX", "Hard-tech & platform era"],
+          [2003, "Palantir Technologies", "Hard-tech & platform era"],
+          [2012, "Coursera", "Hard-tech & platform era"],
+          [2013, "Robinhood", "Hard-tech & platform era"],
+          [2015, "OpenAI", "Hard-tech & platform era"],
+          [2016, "Neuralink", "Hard-tech & platform era"]
+        ]
+      },
+      "based_on": ["det_03", "det_06"]
+    }
+  },
+  "caveats": [
+    { "id": "ana_caveat_01", "content": "The is_tech flag is a keyword match on Wikidata's industry field; 59.3% of links have no industry at all, so 104 tech links is a floor, not a count." },
+    { "id": "ana_caveat_02", "content": "'Founded by' (P112) includes foundations, PACs, schools and research institutes, so founder rankings mix companies with civic and personal projects." },
+    { "id": "ana_caveat_03", "content": "'Educated at Stanford' (P69) does not distinguish degree-holders from brief enrollees; Elon Musk is listed despite leaving a Stanford PhD program almost immediately." },
+    { "id": "ana_caveat_04", "content": "Co-founders each get a row; de-duplicate on company_id (545 links to 509 unique entities) for a true company count." }
+  ]
+}

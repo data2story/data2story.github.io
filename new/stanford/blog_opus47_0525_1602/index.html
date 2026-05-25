@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Machine That Built Silicon Valley — Stanford's Founder Pipeline by the Numbers</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style>
+  :root{
+    --bg:#0c0a09; --bg2:#1a1614; --ink:#efe9e2; --muted:#9a9088;
+    --card:#8C1515; --card2:#b5413f; --gold:#d9a441; --gold2:#f0c870;
+    --cream:#f5efe4; --line:#2c2622;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;overflow-x:hidden}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif; font-size:19px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:Georgia,serif;line-height:1.18;font-weight:700}
+  p{margin:0 0 1.25em}
+  a{color:var(--gold2)}
+  .kicker{font-family:system-ui,-apple-system,sans-serif;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--gold);font-weight:700;margin:0 0 .6em}
+  section{padding:3.4rem 0;border-top:1px solid var(--line);animation:secfade .8s ease both}
+  section h2{font-size:1.95rem;margin:.1em 0 .9em;color:#fff}
+  @keyframes secfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  /* ---- Teaser ---- */
+  .teaser{position:relative;width:100vw;margin:0 0 0 calc(50% - 50vw);max-width:none;
+    height:100vh;min-height:560px;overflow:hidden;border:none}
+  .teaser video,.teaser img.poster{position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block}
+  .teaser .scrim{position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 32%,rgba(12,10,9,.05) 0%,rgba(12,10,9,.5) 55%,rgba(12,10,9,.97) 100%)}
+  .teaser .titlebox{position:absolute;left:0;right:0;bottom:9vh;text-align:center;padding:0 24px}
+  .teaser h1{font-size:clamp(2.1rem,6vw,4.2rem);color:#fff;margin:0 0 .35em;
+    text-shadow:0 2px 36px rgba(0,0,0,.75);line-height:1.06}
+  .teaser h1 .acc{color:var(--gold2)}
+  .teaser .sub{font-size:clamp(1rem,2.4vw,1.3rem);color:#f0ece6;max-width:660px;
+    margin:0 auto;text-shadow:0 1px 18px rgba(0,0,0,.8);font-family:system-ui,sans-serif}
+  .scroll-cue{position:absolute;bottom:2.4vh;left:50%;transform:translateX(-50%);
+    color:#efe7da;font-family:system-ui,sans-serif;font-size:.7rem;letter-spacing:.2em;opacity:.85}
+  /* ---- visuals ---- */
+  .visual-container,figure.visual-container{margin:2.4rem 0;display:block;clear:both;max-width:100%}
+  figure{margin:2.4rem 0}
+  figcaption{font-family:system-ui,sans-serif;font-size:.78rem;color:var(--muted);
+    text-align:center;margin-top:.7em;line-height:1.5}
+  figcaption a{color:var(--gold)}
+  .chart-container{margin:2.4rem auto;max-width:720px;width:100%;background:var(--bg2);
+    border:1px solid var(--line);border-radius:12px;padding:1.3rem 1.1rem .8rem}
+  .chart-mount{width:100%;min-width:0;display:block}
+  .chart-title{font-family:system-ui,sans-serif;font-size:.95rem;color:#fff;font-weight:700;margin:0 0 .2em}
+  .chart-note{font-family:system-ui,sans-serif;font-size:.76rem;color:var(--muted);
+    margin-top:.5em;line-height:1.5}
+  /* ---- stat callout ---- */
+  .stat-callout{margin:2.6rem 0;text-align:center;display:block;
+    background:linear-gradient(180deg,var(--bg2),#120e0c);border:1px solid var(--line);
+    border-radius:14px;padding:2.2rem 1.5rem}
+  .stat-number{display:block;font-size:62px;line-height:1;color:var(--gold2);font-weight:700;
+    font-family:system-ui,sans-serif}
+  .stat-label{display:block;font-family:system-ui,sans-serif;font-size:1rem;
+    color:var(--muted);margin-top:.7em;max-width:560px;margin-left:auto;margin-right:auto}
+  /* ---- quiz ---- */
+  .interactive-container{margin:2.6rem 0;display:block;clear:both}
+  .quiz{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:1.6rem 1.4rem}
+  .quiz-prompt{font-family:system-ui,sans-serif;font-size:1.08rem;color:#fff;
+    margin-bottom:1.1rem;line-height:1.45}
+  .quiz-opts{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .qopt{background:#120e0c;border:1px solid var(--line);border-radius:10px;padding:1rem .6rem;
+    cursor:pointer;text-align:center;font-family:system-ui,sans-serif;font-size:1.3rem;color:var(--ink);
+    font-weight:700;transition:transform .2s ease,border-color .2s ease,background .2s ease}
+  .qopt:hover{transform:translateY(-3px);border-color:var(--gold)}
+  .qopt.correct{border-color:var(--gold);background:rgba(217,164,65,.18);color:var(--gold2)}
+  .qopt.wrong{opacity:.4}
+  .quiz-verdict{margin-top:1.3rem;background:#120e0c;border:1px solid var(--line);
+    border-left:3px solid var(--gold);border-radius:8px;padding:1.1rem 1.2rem;
+    font-size:1rem;display:none}
+  .quiz-verdict.show{display:block;animation:fade .5s ease}
+  .quiz-verdict b{color:var(--gold2)}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  /* ---- portrait ranked deck ---- */
+  .deck{margin:2.4rem 0;display:flex;flex-direction:column;gap:10px}
+  .frow{display:flex;align-items:center;gap:14px}
+  .frow .pic{flex:0 0 auto;width:52px;height:52px;border-radius:50%;overflow:hidden;
+    border:2px solid var(--line);background:#221c19}
+  .frow .pic img{width:100%;height:100%;object-fit:cover;display:block}
+  .frow .barwrap{flex:1;min-width:0}
+  .frow .nm{font-family:system-ui,sans-serif;font-size:.9rem;color:#fff;margin-bottom:3px}
+  .frow .bar{height:20px;border-radius:5px;background:linear-gradient(90deg,var(--card),var(--card2));
+    min-width:6px;display:flex;align-items:center;justify-content:flex-end;
+    transition:width 1.1s cubic-bezier(.2,.7,.2,1)}
+  .frow.lead .bar{background:linear-gradient(90deg,var(--gold),var(--gold2))}
+  .frow .ct{font-family:system-ui,sans-serif;font-size:.78rem;font-weight:700;color:#fff;
+    padding:0 7px}
+  .frow.lead .ct{color:#2a1c00}
+  .deck-foot,.tl-foot{font-family:system-ui,sans-serif;font-size:.74rem;color:var(--muted);
+    margin-top:1.1rem;line-height:1.55}
+  .deck-foot a,.tl-foot a{color:var(--gold)}
+  /* ---- logo timeline ---- */
+  .tl-filters{display:flex;flex-wrap:wrap;gap:8px;margin:.2rem 0 1.4rem;justify-content:center}
+  .chip{font-family:system-ui,sans-serif;font-size:.78rem;border:1px solid var(--line);
+    background:var(--bg2);color:var(--muted);border-radius:20px;padding:.35em .9em;cursor:pointer;
+    transition:all .18s ease}
+  .chip:hover{border-color:var(--gold);color:var(--gold2)}
+  .chip.active{background:var(--gold);border-color:var(--gold);color:#2a1c00;font-weight:700}
+  .tl{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+  .tnode{background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .25s ease,border-color .25s ease,opacity .3s ease}
+  .tnode:hover{transform:translateY(-4px);border-color:var(--gold)}
+  .tnode.hide{display:none}
+  .tnode .tile{height:80px;display:flex;align-items:center;justify-content:center;padding:.7rem;
+    background:var(--cream)}
+  .tnode .tile img{max-width:100%;max-height:54px;object-fit:contain}
+  .tnode .body{padding:.6rem .7rem .8rem;display:flex;flex-direction:column;gap:.12rem}
+  .tnode .yr{font-family:system-ui,sans-serif;font-weight:800;font-size:1.05rem;color:var(--gold2)}
+  .tnode .cn{font-family:system-ui,sans-serif;font-size:.82rem;color:#fff}
+  .tnode .er{font-family:system-ui,sans-serif;font-size:.62rem;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--muted)}
+  /* ---- audio ---- */
+  .audio-container{margin:2.6rem 0;display:block;background:var(--bg2);
+    border:1px solid var(--line);border-radius:12px;padding:1.2rem 1.3rem}
+  .audio-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  .audio-btn{background:var(--gold);color:#2a1c00;border:none;border-radius:50%;
+    width:52px;height:52px;font-size:1.2rem;cursor:pointer;flex:0 0 auto;min-width:44px}
+  .audio-btn:hover{background:var(--gold2)}
+  .audio-meta{font-family:system-ui,sans-serif}
+  .audio-meta .at{font-weight:700;color:#fff;font-size:.98rem}
+  .audio-meta .ac{color:var(--muted);font-size:.82rem}
+  /* ---- pull quote ---- */
+  .pull{font-size:1.5rem;line-height:1.42;color:var(--gold2);font-style:italic;
+    border-left:3px solid var(--card);padding-left:1.1rem;margin:2.2rem 0}
+  /* ---- references ---- */
+  .refs{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--muted)}
+  .refs h2{font-family:system-ui,sans-serif;font-size:1.1rem;letter-spacing:.04em;color:#fff}
+  .refs ul{padding-left:1.2em;margin:.4em 0}
+  .refs a{color:var(--gold)}
+  .credit-grid{display:grid;grid-template-columns:1fr 1fr;gap:.2em 1.4em;margin:.6em 0 0;
+    font-size:.78rem}
+  @media(max-width:560px){.quiz-opts{grid-template-columns:repeat(2,1fr)}.credit-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ============ TEASER ============ -->
+<figure class="teaser" data-des="des_01">
+  <video autoplay loop muted playsinline poster="assets/hero.png" data-des="des_01">
+    <source src="assets/teaser.mp4" type="video/mp4">
+  </video>
+  <img class="poster" src="assets/hero.png" alt="Golden-hour view of a sandstone university arcade framing a California valley, with a single lit one-car garage at the edge" data-des="des_02" style="display:none">
+  <div class="scrim"></div>
+  <div class="titlebox">
+    <h1>The Machine That<br><span class="acc">Built the Valley</span></h1>
+    <p class="sub">One university, 545 founder links, and a flywheel that ran from a 1939 garage to OpenAI — read honestly, seams and all.</p>
+  </div>
+  <div class="scroll-cue">SCROLL &#9662;</div>
+</figure>
+
+<div class="wrap">
+
+<!-- ============ edt_01 ============ -->
+<section data-edt="edt_01" data-det="det_02,det_03">
+  <div class="kicker">Stanford &rarr; Silicon Valley &middot; Wikidata</div>
+  <h2>One garage, one university, half a century</h2>
+
+  <p data-ana="ana_02">Four names sit at the top of a list of 394: Elon Musk founded 15 companies and organizations, Peter Thiel 10, and Google's Larry Page and Sergey Brin 8 apiece. They have one thing in common &mdash; all four were educated at Stanford.</p>
+
+  <p data-det="det_02,det_03">That is not a coincidence; it is a design. The Stanford-to-Silicon-Valley pipeline was engineered by one man, Frederick Terman, the engineering dean who in 1951 built the world's first university-owned industrial park so his graduates would build companies next door instead of leaving California. His first tenants were two of his own students, Bill Hewlett and Dave Packard, whose 1939 garage at 367 Addison Avenue is now a state landmark called "the birthplace of Silicon Valley."</p>
+
+  <p>This is the story of that machine, told through 545 links on Wikidata &mdash; and told honestly, because the data is as revealing in what it omits as in what it records.</p>
+</section>
+
+<!-- ============ edt_02 ============ -->
+<section data-edt="edt_02" data-det="det_04">
+  <div class="kicker">The flywheel</div>
+  <h2>A few founders, again and again</h2>
+
+  <p data-ana="ana_02">Guess first: who has founded the most companies and organizations on this list? The answer is the spine of the whole pipeline.</p>
+
+  <div class="interactive-container" data-des="des_03" data-ana="ana_02">
+    <div class="quiz">
+      <div class="quiz-prompt">One Stanford alumnus founded the most companies and organizations in the dataset. How many?</div>
+      <div class="quiz-opts" id="quizOpts">
+        <div class="qopt" data-v="5">5</div>
+        <div class="qopt" data-v="8">8</div>
+        <div class="qopt" data-v="11">11</div>
+        <div class="qopt" data-v="15">15</div>
+      </div>
+      <div class="quiz-verdict" id="quizVerdict">
+        <b>15 &mdash; Elon Musk.</b> He's ahead of Peter Thiel (10) and the Google pair Larry Page and Sergey Brin (8 each). A handful of people anchor a wildly disproportionate share of all 545 links &mdash; the fingerprint of the Silicon Valley founder-investor flywheel.
+      </div>
+    </div>
+  </div>
+
+  <p data-ana="ana_02">Elon Musk leads with 15, Peter Thiel with 10, Page and Brin with 8 each, then Jeff Skoll and Mukesh Ambani at 7, Herbert Hoover and William Hewlett at 6. A few people anchor a wildly disproportionate share of 545 links.</p>
+
+  <div class="visual-container" data-des="des_04" data-ana="ana_02">
+    <div class="chart-title" style="font-family:system-ui,sans-serif;font-size:.95rem;color:#fff;font-weight:700;margin:0 0 .8rem">Most prolific founders, by companies &amp; organizations founded</div>
+    <div class="deck" id="founderDeck"></div>
+    <div class="deck-foot">Bars are proportional to the raw count of "founded" links (Wikidata P112). Portraits are real photographs from Wikimedia Commons, credited in full below. "Founded" is a broad relation &mdash; see <em>The seams</em>.</div>
+  </div>
+
+  <p data-ana="ana_03,det_04">This is the Silicon Valley flywheel made visible. The companies with the most Stanford co-founders are exactly the ones you would name &mdash; OpenAI appears four times, Sun Microsystems, PayPal, Palantir and Founders Fund three times each. Success in one venture funds and credentials the next; the "PayPal Mafia" that built LinkedIn, Palantir, SpaceX and YouTube is the loop running at full speed.</p>
+
+  <div class="stat-callout" data-des="des_05" data-ana="ana_03">
+    <span class="stat-number">509</span>
+    <span class="stat-label">unique companies and organizations &mdash; from 545 links, because OpenAI, PayPal, Sun, Palantir and Founders Fund were each founded by clusters of Stanford people</span>
+  </div>
+</section>
+
+<!-- ============ edt_03 ============ -->
+<section data-edt="edt_03" data-det="det_06,det_03">
+  <div class="kicker">The lineage</div>
+  <h2>1939 to OpenAI</h2>
+
+  <p data-ana="ana_10">String the marquee names along a timeline and the textbook Valley appears, every node a Stanford alumnus: Hewlett-Packard in 1939, then the 1980s workstation wave &mdash; Logitech and Silicon Graphics (1981), Sun Microsystems (1982), Intuit (1983), Cisco (1984) &mdash; Nvidia and Yahoo in the early nineties, Google and PayPal in 1998, LinkedIn and SpaceX in 2002, Palantir in 2003, and on to Coursera, Robinhood, OpenAI and Neuralink.</p>
+
+  <div class="interactive-container" data-des="des_06" data-ana="ana_10">
+    <div class="tl-filters" id="tlFilters"></div>
+    <div class="tl" id="lineage"></div>
+    <div class="tl-foot">Each company sits at its founding year; filter by era. Logos are real marks from Wikimedia Commons, credited in full below.</div>
+  </div>
+
+  <p data-ana="ana_04">The pipeline never cooled. Only 14 of these entities predate 1950; the 2000s produced 120 and the 2010s-20s another 123. Roughly 56% of everything Stanford alumni founded here was created since the year 2000 &mdash; the machine sped up as the Valley matured.</p>
+
+  <div class="chart-container" data-des="des_07" data-ana="ana_05">
+    <div class="chart-title">Stanford-founded entities, by decade</div>
+    <div id="des_07" class="chart-mount"></div>
+    <div class="chart-note">Unique entities (de-duplicated on company), by founding decade. The 2000s peak (120) is highlighted. Source: Wikidata, founding-year field.</div>
+  </div>
+</section>
+
+<!-- ============ edt_04 ============ -->
+<section data-edt="edt_04" data-det="det_02">
+  <div class="kicker">One corridor</div>
+  <h2>A corridor, not a country</h2>
+
+  <p data-ana="ana_08">For all its global reach, the pipeline is physically tiny. Where a headquarters is recorded, San Francisco is the single most common home (51 companies), trailed by the classic Valley towns &mdash; Mountain View (19), Palo Alto (17), Menlo Park (10), Sunnyvale and San Jose (8 each). Two in five geolocated companies sit inside the Bay Area; the rest scatter across New York, Washington and the world.</p>
+
+  <div class="chart-container" data-des="des_08" data-ana="ana_08">
+    <div class="chart-title">Where the companies are headquartered (top cities)</div>
+    <div id="des_08" class="chart-mount"></div>
+    <div class="chart-note">Top HQ cities among the 338 unique entities with a location recorded; 40% of those sit in the Bay Area. San Francisco highlighted. Source: Wikidata, headquarters field.</div>
+  </div>
+
+  <p data-ana="ana_08" data-det="det_02">That clustering is Terman's industrial park still echoing seventy years on: the founders stayed within a short drive of the campus that taught them, and the corridor from Palo Alto to San Francisco became the densest startup ground on Earth.</p>
+
+  <figure class="visual-container" data-des="des_09">
+    <img src="assets/ref_stanford.jpg" alt="Panorama of the Stanford Oval and sandstone arcades" style="max-width:100%;height:auto;display:block;margin:0 auto;border-radius:10px">
+    <figcaption>The Stanford Oval and its sandstone arcades &mdash; the physical engine of the pipeline. Photo: <a href="https://commons.wikimedia.org/wiki/File:Stanford_Oval_May_2011_panorama.jpg">King of Hearts, Wikimedia Commons</a> (CC BY-SA 3.0).</figcaption>
+  </figure>
+</section>
+
+<!-- ============ edt_05 ============ -->
+<section data-edt="edt_05" data-det="det_07">
+  <div class="kicker">The seams</div>
+  <h2>What the data won't tell you</h2>
+
+  <p data-ana="ana_07">Now the honesty. It is tempting to read this as a clean census of tech, but only 104 of 545 links are flagged as tech at all. The reason is not that the rest are non-tech &mdash; it is that 323 links, 59% of the entire dataset, have no industry recorded on Wikidata whatsoever. Google and SpaceX sit in that unflagged majority. The tech count is a floor, and the true share is unknowable from this field.</p>
+
+  <div class="chart-container" data-des="des_10" data-ana="ana_07">
+    <div class="chart-title">Every founder&rarr;company link, by what Wikidata records</div>
+    <div id="des_10" class="chart-mount"></div>
+    <div class="chart-note">All 545 links. The grey segment &mdash; 323 links, 59% &mdash; has no industry recorded at all, so the tech flag can only ever be a floor. Hover for counts. Source: Wikidata, industry field + is_tech keyword flag.</div>
+  </div>
+
+  <p data-ana="ana_06">Where industries are named, they read like a Valley syllabus &mdash; financial services (18), software (13), AI (7), internet and IT (6 each), semiconductors (5) &mdash; but they describe barely half the list, because the other half is simply blank.</p>
+
+  <div class="chart-container" data-des="des_12" data-ana="ana_06">
+    <div class="chart-title">Top specified industries</div>
+    <div id="des_12" class="chart-mount"></div>
+    <div class="chart-note">Only the named industries; 323 entities carry no industry at all and are excluded here. Source: Wikidata, industry field.</div>
+  </div>
+
+  <p data-ana="ana_09" data-det="det_07">And "founded" is looser than it sounds. Of Musk's headline 15, three are not companies: America PAC, the America Party, and a school called Astra Nova. Across all 509 entities, roughly 67 are foundations, PACs, schools or funds rather than firms. "Educated at Stanford" is loose too &mdash; Musk is counted though he left a Stanford PhD almost immediately. The ranking measures empire-building as much as company-building.</p>
+
+  <div class="stat-callout" data-des="des_11" data-ana="ana_09">
+    <span class="stat-number">3 of 15</span>
+    <span class="stat-label">of Elon Musk's headline "foundings" are not companies at all &mdash; America PAC, the America Party, and a school. "Founded by" on Wikidata is broad.</span>
+  </div>
+</section>
+
+<!-- ============ edt_06 ============ -->
+<section data-edt="edt_06" data-det="det_05,det_01">
+  <div class="kicker">The bigger machine</div>
+  <h2>Trust the pattern, not the tally</h2>
+
+  <p data-det="det_05">Zoom out and the stakes dwarf any single number. A Stanford study estimated that companies formed by its entrepreneurs generate about $2.7 trillion in annual revenue and 5.4 million jobs &mdash; some 39,900 companies that, gathered into one country, would be the world's tenth largest economy, from Tesla and Nike to Netflix and Trader Joe's.</p>
+
+  <p data-ana="ana_01" data-det="det_01">Our 545 links are a tiny, named, traceable slice of that universe &mdash; every edge a person, a company and a year you can check on Wikidata. That is the point: not that this is the whole map, but that you can follow every line on it back to its source.</p>
+
+  <div class="pull">A university built a machine, the machine built founders, and the founders built each other &mdash; again, and again, and again.</div>
+
+  <div class="audio-container" data-des="des_13">
+    <div class="audio-row">
+      <button class="audio-btn" id="audioBtn" aria-label="Play ambient soundscape" data-des="des_13">&#9654;</button>
+      <div class="audio-meta">
+        <div class="at">From a garage to a humming valley &mdash; ambient outro</div>
+        <div class="ac">Generated soundscape (Google Lyria). Click to play; never autoplays. If muted, the prose stands alone.</div>
+      </div>
+    </div>
+    <audio id="audioEl" preload="none" src="assets/ambient.mp3" data-des="des_13"></audio>
+  </div>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section class="refs" data-edt="edt_06" data-des="des_14">
+  <h2>References &amp; credits</h2>
+  <ul>
+    <li><strong>Data source:</strong> <a href="https://www.wikidata.org">Wikidata</a> SPARQL endpoint, queried 2026-05-24. Chain: company &mdash;[founded by P112]&rarr; founder &mdash;[educated at P69]&rarr; Stanford University (Q41506). 545 links, 394 founders, 509 unique entities, 149 industries.</li>
+    <li><strong>Context:</strong> <a href="https://en.wikipedia.org/wiki/Frederick_Terman">Frederick Terman (Wikipedia)</a>; <a href="https://en.wikipedia.org/wiki/HP_Garage">HP Garage (Wikipedia)</a>; <a href="https://en.wikipedia.org/wiki/PayPal_Mafia">PayPal Mafia (Wikipedia)</a>; <a href="https://engineering.stanford.edu/news/study-reports-stanford-alumni-create-nearly-3-trillion-economic-impact">Stanford alumni $2.7 trillion economic-impact study</a>.</li>
+    <li><strong>Caveats (carried in the piece):</strong> the is_tech flag undercounts (323/545 links have no industry on Wikidata); "founded by" includes PACs, parties, foundations and schools; "educated at Stanford" does not distinguish degrees from brief enrollment; co-founders each get a row (545 links &rarr; 509 unique entities).</li>
+    <li><strong>Founder portraits (Wikimedia Commons, used with credit):</strong></li>
+  </ul>
+  <div class="credit-grid" id="creditPortraits"></div>
+  <ul>
+    <li><strong>Company logos (Wikimedia Commons, used with credit):</strong></li>
+  </ul>
+  <div class="credit-grid" id="creditLogos"></div>
+  <ul>
+    <li><strong>Generated media:</strong> hero image (OpenAI gpt-5.4-image-2), teaser clip (Google Veo 3.1 Fast, image-to-video from the hero), ambient bed (Google Lyria) &mdash; all via OpenRouter.</li>
+    <li><strong>Tools:</strong> Vega-Lite 5 (charts); analysis in Python. All chart values come from the analyst data tables.</li>
+  </ul>
+</section>
+
+</div><!-- /wrap -->
+
+<script>
+/* ===== Teaser fallback ===== */
+(function(){
+  var v=document.querySelector('.teaser video');
+  if(v){ v.addEventListener('error',function(){ var p=document.querySelector('.teaser img.poster'); if(p) p.style.display='block'; }); }
+})();
+
+/* ===== Quiz ===== */
+(function(){
+  var opts=document.querySelectorAll('#quizOpts .qopt'), done=false;
+  opts.forEach(function(o){
+    o.addEventListener('click',function(){
+      if(done) return; done=true;
+      opts.forEach(function(x){
+        if(x.getAttribute('data-v')==='15') x.classList.add('correct');
+        else x.classList.add('wrong');
+      });
+      document.getElementById('quizVerdict').classList.add('show');
+    });
+  });
+})();
+
+/* ===== Audio ===== */
+(function(){
+  var btn=document.getElementById('audioBtn'), el=document.getElementById('audioEl');
+  if(!btn||!el) return;
+  btn.addEventListener('click',function(){
+    if(el.paused){ el.play(); btn.innerHTML='&#10074;&#10074;'; }
+    else { el.pause(); btn.innerHTML='&#9654;'; }
+  });
+  el.addEventListener('ended',function(){ btn.innerHTML='&#9654;'; });
+})();
+
+/* ===== Founder ranked portrait deck (data from ana_02) ===== */
+var FOUNDERS=[
+  {n:"Elon Musk",c:15,f:"p_elon_musk.jpg"},
+  {n:"Peter Thiel",c:10,f:"p_peter_thiel.jpg"},
+  {n:"Larry Page",c:8,f:"p_larry_page.jpg"},
+  {n:"Sergey Brin",c:8,f:"p_sergey_brin.jpg"},
+  {n:"Jeff Skoll",c:7,f:"p_jeff_skoll.jpg"},
+  {n:"Mukesh Ambani",c:7,f:"p_mukesh_ambani.jpg"},
+  {n:"Herbert Hoover",c:6,f:"p_herbert_hoover.jpg"},
+  {n:"William Hewlett",c:6,f:"p_william_redington_hewlett.jpg"},
+  {n:"Joe Lonsdale",c:5,f:"p_joe_lonsdale.jpg"},
+  {n:"David Packard",c:4,f:"p_david_packard.jpg"},
+  {n:"Sam Altman",c:4,f:"p_sam_altman.jpg"},
+  {n:"Aaron Swartz",c:3,f:"p_aaron_swartz.jpg"},
+  {n:"Dado Banatao",c:3,f:"p_dado_banatao.jpg"}
+];
+(function(){
+  var deck=document.getElementById('founderDeck'); if(!deck) return;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  var max=15, html='';
+  for(var i=0;i<FOUNDERS.length;i++){
+    var d=FOUNDERS[i], w=(d.c/max*100).toFixed(1), lead=(i===0?' lead':'');
+    html+='<div class="frow'+lead+'">'+
+      '<div class="pic"><img src="assets/'+d.f+'" alt="'+esc(d.n)+'" loading="lazy"></div>'+
+      '<div class="barwrap"><div class="nm">'+esc(d.n)+'</div>'+
+      '<div class="bar" style="width:6px" data-w="'+w+'"><span class="ct">'+d.c+'</span></div></div></div>';
+  }
+  deck.innerHTML=html;
+  // animate bar widths in on view
+  var bars=deck.querySelectorAll('.bar');
+  function fill(){ bars.forEach(function(b){ b.style.width=b.getAttribute('data-w')+'%'; }); }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ fill(); io.disconnect(); } }); },{threshold:0.2});
+    io.observe(deck);
+  } else { fill(); }
+})();
+
+/* ===== Lineage logo timeline (data from ana_10) ===== */
+var LINEAGE=[
+  {y:1939,n:"Hewlett-Packard",e:"Instruments & hardware",f:"logo_hewlett_packard.png"},
+  {y:1953,n:"Litton Industries",e:"Instruments & hardware",f:"logo_litton_industries.png"},
+  {y:1981,n:"Logitech",e:"PC & workstation wave",f:"logo_logitech.png"},
+  {y:1981,n:"Silicon Graphics",e:"PC & workstation wave",f:"logo_silicon_graphics.png"},
+  {y:1982,n:"Sun Microsystems",e:"PC & workstation wave",f:"logo_sun_microsystems.png"},
+  {y:1983,n:"Intuit",e:"PC & workstation wave",f:"logo_intuit.png"},
+  {y:1984,n:"Cisco",e:"PC & workstation wave",f:"logo_cisco.png"},
+  {y:1993,n:"Nvidia",e:"PC & workstation wave",f:"logo_nvidia.png"},
+  {y:1994,n:"Yahoo",e:"Internet era",f:"logo_yahoo.png"},
+  {y:1998,n:"Google",e:"Internet era",f:"logo_google.png"},
+  {y:1998,n:"PayPal",e:"Internet era",f:"logo_paypal.png"},
+  {y:2002,n:"LinkedIn",e:"Internet era",f:"logo_linkedin.png"},
+  {y:2002,n:"SpaceX",e:"Hard-tech & platform era",f:"logo_spacex.png"},
+  {y:2003,n:"Palantir Technologies",e:"Hard-tech & platform era",f:"logo_palantir_technologies.png"},
+  {y:2012,n:"Coursera",e:"Hard-tech & platform era",f:"logo_coursera.png"},
+  {y:2013,n:"Robinhood",e:"Hard-tech & platform era",f:"logo_robinhood.png"},
+  {y:2015,n:"OpenAI",e:"Hard-tech & platform era",f:"logo_openai.png"},
+  {y:2016,n:"Neuralink",e:"Hard-tech & platform era",f:"logo_neuralink.png"}
+];
+(function(){
+  var tl=document.getElementById('lineage'), filt=document.getElementById('tlFilters'); if(!tl) return;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  var eras=["All","Instruments & hardware","PC & workstation wave","Internet era","Hard-tech & platform era"];
+  var html='';
+  for(var i=0;i<LINEAGE.length;i++){
+    var d=LINEAGE[i];
+    html+='<div class="tnode" data-era="'+esc(d.e)+'">'+
+      '<div class="tile"><img src="assets/'+d.f+'" alt="'+esc(d.n)+' logo" loading="lazy"></div>'+
+      '<div class="body"><span class="yr">'+d.y+'</span><span class="cn">'+esc(d.n)+'</span>'+
+      '<span class="er">'+esc(d.e)+'</span></div></div>';
+  }
+  tl.innerHTML=html;
+  var fh='';
+  for(var j=0;j<eras.length;j++){ fh+='<span class="chip'+(j===0?' active':'')+'" data-f="'+esc(eras[j])+'">'+esc(eras[j])+'</span>'; }
+  filt.innerHTML=fh;
+  var chips=filt.querySelectorAll('.chip'), nodes=tl.querySelectorAll('.tnode');
+  filt.addEventListener('click',function(ev){
+    var chip=ev.target.closest('.chip'); if(!chip) return;
+    chips.forEach(function(x){x.classList.remove('active');}); chip.classList.add('active');
+    var f=chip.getAttribute('data-f');
+    nodes.forEach(function(node){
+      var show=(f==='All')||(node.getAttribute('data-era')===f);
+      node.classList.toggle('hide',!show);
+    });
+  });
+})();
+
+/* ===== Credits (data from des_14 attribution) ===== */
+var CRED_P=[
+  ["Elon Musk","https://commons.wikimedia.org/wiki/File:Elon_Musk_(54816836217)_(cropped_2)_(b).jpg","CC BY-SA 4.0, Gage Skidmore"],
+  ["Peter Thiel","https://commons.wikimedia.org/wiki/File:Peter_Thiel_by_Gage_Skidmore.jpg","CC BY-SA 3.0, Gage Skidmore"],
+  ["Larry Page","https://commons.wikimedia.org/wiki/File:Larry_Page_in_the_European_Parliament,_17.06.2009.jpg","CC BY-SA 4.0, European Parliament"],
+  ["Sergey Brin","https://commons.wikimedia.org/wiki/File:Sergey_Brin_Ted_2010_(cropped).jpg","CC BY 2.0, Steve Jurvetson"],
+  ["Jeff Skoll","https://commons.wikimedia.org/wiki/File:Jeff_Skoll_2013_(5576999744).jpg","CC BY 2.0, Skoll World Forum"],
+  ["Mukesh Ambani","https://commons.wikimedia.org/wiki/File:Mukesh_Ambani.jpg","CC BY-SA 2.0, World Economic Forum"],
+  ["Herbert Hoover","https://commons.wikimedia.org/wiki/File:President_Hoover_portrait.jpg","Public domain"],
+  ["William Hewlett","https://commons.wikimedia.org/wiki/File:William_Hewlett_1993.jpg","CC BY-SA 3.0"],
+  ["Joe Lonsdale","https://commons.wikimedia.org/wiki/File:Joe_Lonsdale.jpg","CC BY 2.0, TechCrunch"],
+  ["David Packard","https://commons.wikimedia.org/wiki/File:David-Packard-DepSecDef.jpg","Public domain, US DoD"],
+  ["Sam Altman","https://commons.wikimedia.org/wiki/File:Sam_Altman_speaking_at_TED_(cropped).jpg","CC BY 2.0, Steve Jurvetson"],
+  ["Aaron Swartz","https://commons.wikimedia.org/wiki/File:Aaron_Swartz_2_at_Boston_Wikipedia_Meetup,_2009-08-18.jpg","CC BY-SA 2.0, Sage Ross"],
+  ["Dado Banatao","https://commons.wikimedia.org/wiki/File:Dado_Banatao_2021_stamp_of_Philippines.jpg","Public domain"]
+];
+var CRED_L=[
+  ["Hewlett-Packard","https://commons.wikimedia.org/wiki/File:HP_logo_2012.svg","PD"],
+  ["Litton Industries","https://commons.wikimedia.org/wiki/File:Litton_logo.svg","PD"],
+  ["Logitech","https://commons.wikimedia.org/wiki/File:Logitech_logo.svg","PD"],
+  ["Silicon Graphics","https://commons.wikimedia.org/wiki/File:SGI_wordmark.svg","PD"],
+  ["Sun Microsystems","https://commons.wikimedia.org/wiki/File:Sun-Logo.svg","PD"],
+  ["Intuit","https://commons.wikimedia.org/wiki/File:Intuit_logo_2022.svg","PD"],
+  ["Cisco","https://commons.wikimedia.org/wiki/File:Cisco_logo.svg","PD"],
+  ["Nvidia","https://commons.wikimedia.org/wiki/File:NVIDIA_logo.svg","Apache 2.0"],
+  ["Yahoo","https://commons.wikimedia.org/wiki/File:Yahoo!_(2019).svg","PD"],
+  ["Google","https://commons.wikimedia.org/wiki/File:Google_2015_logo.svg","PD"],
+  ["PayPal","https://commons.wikimedia.org/wiki/File:Paypal.svg","PD"],
+  ["LinkedIn","https://commons.wikimedia.org/wiki/File:LinkedIn_Logo.svg","PD"],
+  ["SpaceX","https://commons.wikimedia.org/wiki/File:SpaceX_logo_black.svg","PD"],
+  ["Palantir","https://commons.wikimedia.org/wiki/File:Palantir_Technologies_logo.svg","PD"],
+  ["Coursera","https://commons.wikimedia.org/wiki/File:Coursera-Logo_600x600.svg","PD"],
+  ["Robinhood","https://commons.wikimedia.org/wiki/File:Robinhood_Logotype_green.png","PD"],
+  ["OpenAI","https://commons.wikimedia.org/wiki/File:OpenAI_logo_2025.svg","PD"],
+  ["Neuralink","https://commons.wikimedia.org/wiki/File:Neuralink_logo.svg","PD"]
+];
+(function(){
+  function row(a){ return '<span><a href="'+a[1]+'">'+a[0]+'</a> &mdash; '+a[2]+'</span>'; }
+  var cp=document.getElementById('creditPortraits'); if(cp) cp.innerHTML=CRED_P.map(row).join('');
+  var cl=document.getElementById('creditLogos'); if(cl) cl.innerHTML=CRED_L.map(row).join('');
+})();
+
+/* ===== Vega-Lite charts ===== */
+var VEGA_CFG={
+  background:null, view:{stroke:null},
+  axis:{labelColor:'#b6ada3',titleColor:'#d4cabe',gridColor:'#241f1b',domainColor:'#3a322c',
+        labelFont:'system-ui',titleFont:'system-ui',labelFontSize:11,titleFontSize:12},
+  legend:{labelColor:'#b6ada3',titleColor:'#d4cabe',labelFont:'system-ui'},
+  font:'system-ui'
+};
+function embed(id,spec){
+  spec.background=null; spec.config=VEGA_CFG; spec.width='container';
+  vegaEmbed('#'+id,spec,{actions:false,renderer:'svg'}).catch(function(e){console.error(id,e);});
+}
+
+/* des_07 — founding by decade (ana_05) */
+embed('des_07',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"decade":"1910s","count":3},{"decade":"1920s","count":2},{"decade":"1930s","count":6},
+    {"decade":"1940s","count":3},{"decade":"1950s","count":10},{"decade":"1960s","count":18},
+    {"decade":"1970s","count":25},{"decade":"1980s","count":50},{"decade":"1990s","count":73},
+    {"decade":"2000s","count":120},{"decade":"2010s","count":99},{"decade":"2020s","count":26}
+  ]},
+  "height":260,
+  "mark":{"type":"bar","cornerRadiusEnd":3,"width":{"band":0.8}},
+  "encoding":{
+    "x":{"field":"decade","type":"ordinal","title":null,"axis":{"labelAngle":0}},
+    "y":{"field":"count","type":"quantitative","title":"Entities founded"},
+    "color":{"condition":{"test":"datum.decade==='2000s'","value":"#d9a441"},"value":"#8C1515"},
+    "tooltip":[{"field":"decade","title":"Decade"},{"field":"count","title":"Entities"}]
+  }
+});
+
+/* des_08 — HQ geography (ana_08) */
+embed('des_08',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"city":"San Francisco","count":51},{"city":"Mountain View","count":19},
+    {"city":"Palo Alto","count":17},{"city":"New York City","count":11},
+    {"city":"Menlo Park","count":10},{"city":"Washington, D.C.","count":9},
+    {"city":"Sunnyvale","count":8},{"city":"San Jose","count":8},
+    {"city":"Los Angeles","count":8},{"city":"Austin","count":6},
+    {"city":"Seattle","count":5},{"city":"Redwood City","count":5}
+  ]},
+  "height":330,
+  "mark":{"type":"bar","cornerRadiusEnd":3,"height":{"band":0.74}},
+  "encoding":{
+    "y":{"field":"city","type":"nominal","sort":"-x","title":null,"axis":{"labelLimit":160}},
+    "x":{"field":"count","type":"quantitative","title":"Companies headquartered here"},
+    "color":{"condition":{"test":"datum.city==='San Francisco'","value":"#d9a441"},"value":"#8C1515"},
+    "tooltip":[{"field":"city","title":"City"},{"field":"count","title":"Companies"}]
+  }
+});
+
+/* des_10 — the undercount stacked bar (ana_07) */
+embed('des_10',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"bucket":"Flagged tech (floor)","count":104,"o":1},
+    {"bucket":"Non-tech, industry recorded","count":118,"o":2},
+    {"bucket":"No industry recorded (unknowable)","count":323,"o":3}
+  ]},
+  "height":120,
+  "mark":{"type":"bar","cornerRadius":2},
+  "encoding":{
+    "x":{"field":"count","type":"quantitative","stack":"normalize","title":"Share of all 545 founder→company links","axis":{"format":"%"}},
+    "color":{"field":"bucket","type":"nominal","sort":["Flagged tech (floor)","Non-tech, industry recorded","No industry recorded (unknowable)"],
+      "scale":{"range":["#8C1515","#b5413f","#4a423b"]},"legend":{"orient":"bottom","title":null,"labelLimit":260}},
+    "order":{"field":"o","type":"quantitative"},
+    "tooltip":[{"field":"bucket","title":"Bucket"},{"field":"count","title":"Links"}]
+  }
+});
+
+/* des_12 — specified industries (ana_06) */
+embed('des_12',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"industry":"Financial services","count":18},{"industry":"Software","count":13},
+    {"industry":"Retail","count":9},{"industry":"Computer hardware","count":8},
+    {"industry":"Artificial intelligence","count":7},{"industry":"Information technology","count":6},
+    {"industry":"Internet","count":6},{"industry":"Semiconductors","count":5},
+    {"industry":"Software development","count":5},{"industry":"E-commerce","count":5},
+    {"industry":"Telecommunications","count":5},{"industry":"Film","count":4},
+    {"industry":"Data analytics software","count":4}
+  ]},
+  "height":340,
+  "mark":{"type":"bar","cornerRadiusEnd":3,"height":{"band":0.74}},
+  "encoding":{
+    "y":{"field":"industry","type":"nominal","sort":"-x","title":null,"axis":{"labelLimit":180}},
+    "x":{"field":"count","type":"quantitative","title":"Entities"},
+    "color":{"condition":{"test":"datum.industry==='Financial services'","value":"#d9a441"},"value":"#8C1515"},
+    "tooltip":[{"field":"industry","title":"Industry"},{"field":"count","title":"Entities"}]
+  }
+});
+</script>
+</body>
+</html>
