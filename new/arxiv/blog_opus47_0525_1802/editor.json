@@ -1,0 +1,176 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "arXiv was built in 1991 as a physics preprint server, but the post-ChatGPT AI boom has turned it into a computer-science archive — CS is now 42.5% of everything posted and crossed 50% of all submissions in a single month (May 2025).",
+  "items": {
+    "edt_01": {
+      "label": "Hook — a physics server that isn't physics anymore",
+      "purpose": "hook",
+      "title": "A physics server that isn't physics anymore",
+      "findings": [
+        "ana_16",
+        "ana_20",
+        "ana_18"
+      ],
+      "context": [
+        "det_05",
+        "det_01"
+      ],
+      "triage": {
+        "ana_16": "lead",
+        "ana_20": "supporting",
+        "ana_18": "supporting"
+      },
+      "chart_placeholder": "ana_16",
+      "media_placeholder": "interactive",
+      "editorial_notes": "50.8% (May 2025) and 33.8% (Jan 2022) must be exact — the single-month majority is the entire hook. Interactive should let the reader guess CS's current share before revealing it, driven by ana_16's monthly series."
+    },
+    "edt_02": {
+      "label": "The origin it left behind",
+      "purpose": "context",
+      "title": "From two papers to three million",
+      "findings": [
+        "ana_01"
+      ],
+      "context": [
+        "det_01",
+        "det_09"
+      ],
+      "triage": {
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "image",
+      "editorial_notes": "ana_01 chart may run the full history (full-history file is NOT truncated at 2025-10). Image = founder portrait det_media_02 (Paul Ginsparg). Keep this short — it is backdrop, not the lead."
+    },
+    "edt_03": {
+      "label": "The four categories that ate arXiv",
+      "purpose": "evidence",
+      "title": "The four categories that ate arXiv",
+      "findings": [
+        "ana_10",
+        "ana_11"
+      ],
+      "context": [
+        "det_05",
+        "det_06"
+      ],
+      "triage": {
+        "ana_10": "supporting",
+        "ana_11": "supporting"
+      },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "image",
+      "editorial_notes": "Top-4 = 25.3%; cs.LG = 134,903 (largest single category). Optional image det_media_03 (Geoffrey Hinton) to put a face on the AI boom — Designer's call. Do NOT sum mirrored category pairs in the ranking chart (ana_23)."
+    },
+    "edt_04": {
+      "label": "Not growth — a takeover",
+      "purpose": "turn",
+      "title": "Not growth — a takeover",
+      "findings": [
+        "ana_15",
+        "ana_14"
+      ],
+      "context": [
+        "det_05"
+      ],
+      "triage": {
+        "ana_15": "supporting",
+        "ana_14": "supporting"
+      },
+      "chart_placeholder": "ana_15",
+      "media_placeholder": "interactive",
+      "editorial_notes": "This is the conceptual turn: other fields grew ~20% but LOST share because CS grew 1.85x. CS rose 36.7%->46.7%; physics fell 34.9%->28.9%. Group-level shares are the clean unit. Interactive could let readers compare a CS category vs a flat physics one over time. All charts here end at 2025-09."
+    },
+    "edt_05": {
+      "label": "How fast it happened",
+      "purpose": "evidence",
+      "title": "How fast it happened",
+      "findings": [
+        "ana_12",
+        "ana_03"
+      ],
+      "context": [
+        "det_05",
+        "det_04"
+      ],
+      "triage": {
+        "ana_12": "supporting",
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": "ana_12",
+      "media_placeholder": "interactive",
+      "editorial_notes": "cs.AI 2.87x, cs.CL 2.65x. May 2023 = first 20k month, ~6 months after ChatGPT. ana_12 chart ends at 2025-09; ana_03 (full-history peaks) may run to tail. Interactive option: scrub a category's monthly curve to feel the bend post-2022."
+    },
+    "edt_06": {
+      "label": "Demand kept pace — and then some",
+      "purpose": "evidence",
+      "title": "Readers came too",
+      "findings": [
+        "ana_05",
+        "ana_06"
+      ],
+      "context": [
+        "det_09"
+      ],
+      "triage": {
+        "ana_05": "supporting",
+        "ana_06": "color"
+      },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": null,
+      "editorial_notes": "MUST show or omit the 2024 gap (downloads file jumps 2023-11 -> 2025-01); never imply a 2024 collapse. r=0.94. downloads/submission 299->569->1889. No non-text media needed — a clean dual-axis trend chart carries it."
+    },
+    "edt_07": {
+      "label": "Still climbing — and the limits of the data",
+      "purpose": "close",
+      "title": "Still climbing",
+      "findings": [
+        "ana_22",
+        "ana_08",
+        "ana_24"
+      ],
+      "context": [
+        "det_08",
+        "det_11",
+        "det_12"
+      ],
+      "triage": {
+        "ana_22": "supporting",
+        "ana_08": "supporting",
+        "ana_24": "supporting"
+      },
+      "chart_placeholder": "ana_22",
+      "media_placeholder": "interactive",
+      "editorial_notes": "CS +21.7% YoY through last complete month — no slowdown visible. The 2025-10 ~95% drop is a truncation artifact, NOT a crash; this must be stated in prose. End on the open question (can arXiv stay the venue for AI), not a summary. ana_22 chart ends at 2025-09; never plot the partial 2025-10 for category/archive data."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "cut",
+    "ana_03": "supporting",
+    "ana_04": "cut",
+    "ana_05": "supporting",
+    "ana_06": "color",
+    "ana_07": "cut",
+    "ana_08": "supporting",
+    "ana_09": "cut",
+    "ana_10": "supporting",
+    "ana_11": "supporting",
+    "ana_12": "supporting",
+    "ana_13": "cut",
+    "ana_14": "supporting",
+    "ana_15": "supporting",
+    "ana_16": "lead",
+    "ana_17": "cut",
+    "ana_18": "supporting",
+    "ana_19": "cut",
+    "ana_20": "supporting",
+    "ana_21": "cut",
+    "ana_22": "supporting",
+    "ana_23": "cut",
+    "ana_24": "supporting"
+  }
+}

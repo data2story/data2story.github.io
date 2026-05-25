@@ -1,0 +1,58 @@
+[
+  {
+    "qid": "Q1931745",
+    "label": "Q1931745",
+    "prop": "P18",
+    "kind": "photo",
+    "commons_file": "Paul Ginsparg in 2025 2.jpg",
+    "local_path": "../../../project/arxiv/blog_opus47_0525_1802/assets/q1931745__photo.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "Cmichel67",
+    "credit": "Own work",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Paul_Ginsparg_in_2025_2.jpg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Paul_Ginsparg_in_2025_2.jpg/1280px-Paul_Ginsparg_in_2025_2.jpg",
+    "status": "ok"
+  },
+  {
+    "qid": "Q118398",
+    "label": "Q118398",
+    "prop": "P154",
+    "kind": "logo",
+    "commons_file": "ArXiv web.svg",
+    "local_path": "../../../project/arxiv/blog_opus47_0525_1802/assets/q118398__logo.png",
+    "license": "Public domain",
+    "artist": "arXiv is owned and operated by Cornell University, a private not-for-profit educational institution",
+    "credit": "Own work using: https://www.arXiv.org",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:ArXiv_web.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/ArXiv_web.svg/1280px-ArXiv_web.svg.png",
+    "status": "ok"
+  },
+  {
+    "qid": "Q118398",
+    "label": "Q118398",
+    "prop": "P18",
+    "kind": "photo",
+    "commons_file": "ArXiv-org screenshot 20140706.png",
+    "local_path": "../../../project/arxiv/blog_opus47_0525_1802/assets/q118398__photo.png",
+    "license": "Public domain",
+    "artist": "Screenshot by Lakrits",
+    "credit": "https://arxiv.org/",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:ArXiv-org_screenshot_20140706.png",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ArXiv-org_screenshot_20140706.png/1280px-ArXiv-org_screenshot_20140706.png",
+    "status": "ok"
+  },
+  {
+    "qid": "Q92894",
+    "label": "Q92894",
+    "prop": "P18",
+    "kind": "photo",
+    "commons_file": "Geoffrey E. Hinton, 2024 Nobel Prize Laureate in Physics (3x4 cropped).jpg",
+    "local_path": "../../../project/arxiv/blog_opus47_0525_1802/assets/q92894__photo.jpg",
+    "license": "CC BY-SA 4.0",
+    "artist": "Arthur Petron",
+    "credit": "Own work",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Geoffrey_E._Hinton,_2024_Nobel_Prize_Laureate_in_Physics_(3x4_cropped).jpg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/66/Geoffrey_E._Hinton%2C_2024_Nobel_Prize_Laureate_in_Physics_%283x4_cropped%29.jpg",
+    "status": "ok"
+  }
+]

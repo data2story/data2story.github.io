@@ -1,0 +1,379 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive_or_map); each channel chosen and executed in a data-driven way; skipping any channel requires an explicit reason in media_decisions",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "This is an analytical time-series + ranking dataset; precise charts (CS monthly share line, full-history growth area, ranked category bar, group-composition stacked area, downloads dual-axis, CS YoY line) are the structural backbone of the story. Charts are spaced so no 3+ static charts sit in a row — interactives, an image, and a stat callout break the rhythm."
+      },
+      "image": {
+        "used": true,
+        "reason": "Two images. One REAL Wikimedia portrait of founder Paul Ginsparg (det_media_02) grounds the origin section in a real person; one REAL Wikimedia portrait of Geoffrey Hinton (det_media_03) puts a human face on the AI boom that drove the cs.LG/cs.AI explosion. Plus one GENERATED atmospheric teaser evoking 'physics archive -> AI takeover' with no text or fake logos."
+      },
+      "video": {
+        "used": true,
+        "reason": "The single generated teaser still is animated with image2video (subtle parallax push-in, pulsing neural nodes) so the central 'analog archive dissolving into digital AI' metaphor feels alive at the top of the page. No fabricated event re-enactment — the dataset has no single filmable incident, so we animate the strongest still rather than invent a scene."
+      },
+      "audio": {
+        "used": true,
+        "reason": "The CS-share-over-time series (ana_16, 45 months) is a natural sonification: one tone per month, pitch mapped to CS %, synced to the line chart so the reader hears the climb to the 50.8% May-2025 peak as the marker sweeps. A generated marimba bed is provided as the timbre; the Programmer may also drive Web-Audio oscillators per the mapping spec. Paired with the visible chart as fallback, click-to-play, never autoplay."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "No geographic dimension (arXiv is global, no lat/lng) so a map would be fabricated. Instead the page leans hard on interactives: a guess-the-CS-share reveal as the hook centerpiece, an explorable CS-vs-physics category-growth comparator, a monthly-curve scrubber, and a YoY 'is it slowing?' reveal. These carry the surprise and exploration the analytical data rewards."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser: archive-to-AI hero (generated, animated)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser.mp4",
+        "poster": "teaser.png",
+        "tool": "image2video",
+        "source_image": "assets/teaser.png",
+        "prompt": "Slow cinematic parallax push-in moving forward through the archive corridor. The dusty paper shelves on the left stay still while the blue neural-network nodes on the right gently pulse and twinkle, faint data particles drift through the shaft of light. Subtle dust motes float. No camera shake, no text appearing, smooth and atmospheric.",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Full-bleed hero at the very top of the page, above the headline. A dim physics archive corridor — towering shelves of yellowed paper preprints and a chalkboard on the left — dissolves on the right into a luminous blue-white neural-network lattice with drifting data streams. Plays muted, autoplay-once-when-in-view and loops gently; falls back to the teaser.png still if video is unsupported. No text or logos baked in so the headline can be overlaid in HTML. Sets the entire thesis (a paper-era physics server becoming a digital AI archive) before a single word.",
+      "rationale": "Video chosen over a static image because the whole story is a transformation; image2video preserves the strong generated composition while adding the motion that makes the dissolve feel like change rather than a frozen metaphor. Generated rather than real because no real photo shows this conceptual shift.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Guess the CS share (hook reveal)",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "guess_first_reveal",
+        "initial_state": "A large prompt: 'In a single month of 2025, what share of EVERYTHING posted to arXiv — a server built for physics — was computer science?' Below it a draggable slider from 0% to 100% (default 25%) over a faint, unlabeled version of the CS-share line chart. A big live percentage readout tracks the slider.",
+        "trigger": "Reader drags the slider to commit a guess, then clicks 'Reveal'.",
+        "transition": "The faint line chart animates in fully: CS share by month 2022-01 to 2025-09 (ana_16). A horizontal marker drops at the reader's guess; the true May-2025 peak of 50.8% lights up with a callout, and Jan-2022's 33.8% is marked as the start. The gap between guess and reality is annotated ('You said X% — it actually crossed half').",
+        "payoff": "Reader feels the surprise of a physics server going majority-CS, then sees the full monthly climb that proves it is a durable trend, not a fluke month. This is the page centerpiece and directly seeds edt_01's lead claim.",
+        "data_source": "ana_16"
+      },
+      "brief": "Centerpiece interactive. Reader guesses CS's peak monthly share before seeing the data, commits with a slider, then the ana_16 monthly line (cs_share_pct vs month) reveals with the 50.8% May-2025 peak highlighted and 33.8% Jan-2022 start marked. Must use the exact figures 50.8% and 33.8% — no rounding. The revealed chart doubles as edt_01's hero chart so we do not need a separate static CS-share chart in this section.",
+      "rationale": "The finding (a physics archive going majority-CS) is genuinely surprising, so a guess-first reveal maximizes the shock far better than a passive chart. The editor explicitly flagged this interactive for the hook.",
+      "based_on": [
+        "ana_16"
+      ]
+    },
+    "des_03": {
+      "label": "CS now outproduces the next three fields (stat callout)",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "2.65x",
+        "label": "The CS archive is 2.65x larger than #2 mathematics — and bigger than the next three fields combined (667,050 submissions, 42.5% of all arXiv, 2022-2025).",
+        "data_source": "ana_20"
+      },
+      "brief": "Large 72px stat callout placed right after the guess-the-share reveal, before the prose continues. Reinforces the hook's scale claim with one number. Sub-label names the 42.5% / 667,050 supporting figures verbatim.",
+      "rationale": "The 2.65x ratio is load-bearing per the editor and reads better as a headline number than buried in prose; it also bridges from the interactive into the section text without adding another chart.",
+      "based_on": [
+        "ana_20",
+        "ana_18"
+      ]
+    },
+    "des_04": {
+      "label": "From 2 papers to 3 million: full-history growth area",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "area",
+        "data_source": "ana_01",
+        "x": "year",
+        "y": "submissions",
+        "highlight": {
+          "first_point": "1991 (306, partial — started with 2 papers in July)",
+          "milestone_annotations": [
+            "2014: 1M cumulative",
+            "2022: 2M cumulative",
+            "2025: 284,486 submissions"
+          ]
+        },
+        "interaction": "hover tooltip showing year and exact annual submissions; subtle annotation pins for the 1M/2M cumulative crossings",
+        "style": {
+          "palette": "single warm-to-neutral fill",
+          "no_gridlines": true,
+          "axis": "linear y, full 1991-2025 x",
+          "note": "full-history file is NOT truncated; this chart MAY run the full range. Do NOT log-scale — the near-monotonic climb is the point."
+        }
+      },
+      "brief": "Filled area chart of annual submissions 1991-2025 (ana_01 year vs submissions). Annotate July 1991 = 2 papers at the origin and 2025 = 284,486 at the tail; pin the 1M (2014) and 2M (2022) cumulative milestones. This is backdrop, kept clean and single-color so it does not compete with the hook chart. Caption notes a single 2025 month now exceeds arXiv's entire first four years.",
+      "rationale": "A static area chart is right here: one decisive, non-exploratory shape — the three-decade climb — that sets up 'but what did it grow INTO'. Paired immediately with the Ginsparg portrait so it is not a chart-on-chart.",
+      "based_on": [
+        "ana_01"
+      ]
+    },
+    "des_05": {
+      "label": "Paul Ginsparg, the founder (real photo)",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "q1931745__photo.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Paul_Ginsparg_in_2025_2.jpg",
+        "prompt": "REAL Wikimedia photo — do not generate. Portrait of Paul Ginsparg (2025), the physicist who launched arXiv in 1991.",
+        "model": "wikimedia",
+        "credit": "Paul Ginsparg, 2025 — photo by Cmichel67, CC BY-SA 4.0, via Wikimedia Commons"
+      },
+      "brief": "Place the real Ginsparg portrait beside the origin prose, with a visible credit line (Cmichel67, CC BY-SA 4.0). Caption ties the man to the act: a physicist who in 1991 replaced mailed paper preprints with shell scripts on a NeXT machine, expecting ~100 papers a year. Use the REAL downloaded image — do NOT generate a fake portrait.",
+      "rationale": "A real human face grounds the 'designed for the opposite of a popular field' twist. Editor flagged det_media_02 for this slot; using the authentic Wikimedia photo is more credible and honest than an AI portrait.",
+      "based_on": [
+        "ana_01"
+      ]
+    },
+    "des_06": {
+      "label": "The four categories that ate arXiv: ranked bar",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_10",
+        "x": "submissions",
+        "y": "category",
+        "color": "is_cs (the four AI cs.* categories in one accent color, all others muted grey)",
+        "highlight": {
+          "bars": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CV",
+            "cs.CL"
+          ],
+          "annotation": "First non-CS category quant-ph at #5 sits below half of cs.CV"
+        },
+        "interaction": "hover tooltip with exact submissions and pct_of_total; optional toggle to show top-10 vs top-20",
+        "style": {
+          "sorted": "descending by submissions",
+          "no_gridlines": true,
+          "note": "Plot categories AS-IS from ana_10's top-20 rows — do NOT sum mirrored pairs (cs.SY/eess.SY appear separately and that is fine for a category ranking; do not merge). Window is 2022-01..2025-09, already complete."
+        }
+      },
+      "brief": "Horizontal ranked bar of the top-20 categories (ana_10: category vs submissions, color by whether it is one of the big-4 AI categories). The four cs.* AI categories glow in the accent color and visibly dominate the top; everything else is muted. Annotate cs.LG = 134,903 (single largest) and that the first non-CS category (quant-ph, #5) is under half of cs.CV. Top-4 = 25.3% callout in the caption.",
+      "rationale": "A ranked bar is the canonical, decisive way to show top-heavy concentration; coloring only the AI four makes the takeover legible at a glance without exploration.",
+      "based_on": [
+        "ana_10",
+        "ana_11"
+      ]
+    },
+    "des_07": {
+      "label": "Geoffrey Hinton, a face for the AI boom (real photo)",
+      "type": "asset",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "q92894__photo.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Geoffrey_E._Hinton,_2024_Nobel_Prize_Laureate_in_Physics_(3x4_cropped).jpg",
+        "prompt": "REAL Wikimedia photo — do not generate. Portrait of Geoffrey Hinton, deep-learning pioneer and 2024 Nobel laureate in Physics.",
+        "model": "wikimedia",
+        "credit": "Geoffrey E. Hinton, 2024 — photo by Arthur Petron, CC BY-SA 4.0, via Wikimedia Commons"
+      },
+      "brief": "Small inset portrait next to the prose about the transformer/ChatGPT gold rush, with credit line. Caption notes the irony flagged by det: the deep-learning surge filling arXiv's CS categories earned a Nobel in Physics — the field arXiv was built for. Use the REAL downloaded image; do NOT generate.",
+      "rationale": "Breaks the bar-chart-into-stacked-area run with a human image and adds a memorable face to the otherwise abstract 'AI boom' cause. Editor offered det_media_03 as Designer's call — taken, because it deepens the physics-to-AI irony.",
+      "based_on": []
+    },
+    "des_08": {
+      "label": "Not growth, a takeover: group composition stacked area",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "stacked_area_100pct",
+        "data_source": "ana_15",
+        "x": "period (2022 vs trailing-12mo) — render as a two-anchor slope/share comparison, or a normalized stacked band",
+        "y": "share_recent_pct / share_2022_pct",
+        "color": "group (cs highlighted, physics and math muted, others dim)",
+        "highlight": {
+          "group": "cs (36.7% -> 46.7%, +9.9pp)",
+          "annotations": [
+            "physics 34.9% -> 28.9%",
+            "math 17.7% -> 14.6%",
+            "note: physics & math each still GREW ~20% in volume — they lost SHARE, not size"
+          ]
+        },
+        "interaction": "hover shows each group's share in both periods, its pp change, and its absolute growth multiple (growth_x) so the 'everyone grew but CS ate the share' point is explicit",
+        "style": {
+          "palette": "cs accent vs muted earth tones",
+          "no_gridlines": true,
+          "note": "Use group-level shares (ana_15) — the clean unit per editor; do NOT sum categories. All data ends 2025-09."
+        }
+      },
+      "brief": "100%-stacked composition comparing 2022 to the trailing 12 months (ana_15: group, share_2022_pct, share_recent_pct, growth_x). CS's band widens from 36.7% to 46.7% while physics and math bands narrow — but the tooltip must surface growth_x (cs 1.85x, physics 1.21x, math 1.20x) to drive home that the others still grew. This is the conceptual turn and the second-most-important chart.",
+      "rationale": "A normalized composition is the only honest way to show 'lost share while still growing'; the editor named ana_15 the key composition visual.",
+      "based_on": [
+        "ana_15",
+        "ana_14"
+      ]
+    },
+    "des_09": {
+      "label": "CS vs physics growth comparator (explorable)",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "category_compare",
+        "initial_state": "Two side-by-side growth-multiple bars preloaded: a fast CS category (cs.ET, 3.29x) vs a flat founding-physics one (physics.acc-ph, 0.94x — it shrank). A dropdown lets the reader pick any category from ana_14's list for each side.",
+        "trigger": "Reader selects a category in either dropdown.",
+        "transition": "The two bars (and a small 2022 -> trailing-12mo sparkline pair) re-render to the chosen categories' growth_x, with the AI ones rendered in the accent color and physics/IT ones in grey.",
+        "payoff": "Reader discovers for themselves that every fast-growing category is CS and the flat/shrinking ones are the classical physics fields arXiv was built for — making 'takeover, not tide' something they prove rather than read.",
+        "data_source": "ana_14"
+      },
+      "brief": "Explorable two-up comparator over ana_14 (category, annual_2022, trailing_12mo, growth_x). Defaults to cs.ET 3.29x vs physics.acc-ph 0.94x; dropdowns let readers pit any two categories. Color-codes CS accent vs non-CS grey. Sits right after the composition chart to let the reader interrogate the turn instead of reading a third chart in a row.",
+      "rationale": "The editor suggested letting readers compare a CS category against a flat physics one; an interactive comparator turns the leaderboard finding into discovery and breaks the chart streak.",
+      "based_on": [
+        "ana_14"
+      ]
+    },
+    "des_10": {
+      "label": "Watch the curve bend: AI-category monthly scrubber",
+      "type": "interactive",
+      "section": "edt_05",
+      "content": {
+        "interaction_type": "timeline_scrubber",
+        "initial_state": "A monthly line chart of the big-4 AI categories' submission counts over 2022-01..2025-09, with a draggable time scrubber parked at Nov 2022 (ChatGPT launch), which is marked with a labelled vertical line.",
+        "trigger": "Reader drags the scrubber across the timeline.",
+        "transition": "A readout panel updates each category's monthly value at the scrubber position and its multiple-since-Jan-2022; the post-Nov-2022 segment of each line is emphasized to show the bend. cs.CL (451 -> 2,208, 4.9x) and cs.AI (908 -> 4,248, 4.7x) are the headline traces.",
+        "payoff": "By dragging, the reader feels the curves bend upward after ChatGPT rather than drifting — the steepness IS the story.",
+        "data_source": "ana_12"
+      },
+      "brief": "Scrubber-driven multi-line chart. Primary trace data is the big-4 summary (ana_12: category, annual_2022, trailing_12mo, growth_x) with the documented monthly endpoints (cs.CL 451->2208, cs.AI 908->4248) called out; if the Programmer needs the full monthly series, note that ana_12's underlying file is submissions_by_category.csv 2022-01..2025-09 and it must END at 2025-09 (never plot partial 2025-10). ChatGPT launch (Nov 2022) and first 20k all-fields month (May 2023, from ana_03) marked as reference lines.",
+      "rationale": "Editor suggested scrubbing a category's curve to feel the post-2022 bend; a scrubber makes acceleration tactile and keeps edt_05 from being yet another static line.",
+      "based_on": [
+        "ana_12",
+        "ana_03"
+      ]
+    },
+    "des_11": {
+      "label": "CS-share sonification (synced to the climb)",
+      "type": "audio",
+      "section": "edt_05",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "Hearing CS's share rise month by month as ascending pitch makes the climb to a majority audible — the May-2025 peak lands as the highest note, and the seasonal conference-deadline spikes become little leaps the eye can miss but the ear catches.",
+        "trigger": "Click 'Play the climb' on the CS-share line chart (the one revealed in des_02 / reused here as a small synced line). Never autoplay.",
+        "ui_form": "chart-synced sonification — a marker sweeps left-to-right across the monthly CS-share line; each month plays one tone and the current month + % is highlighted as it sounds.",
+        "content": {
+          "filename": "cs_share_sonification.mp3",
+          "tool": "text2music",
+          "prompt": "A short solo marimba sonification sequence, 45 notes played one at a time at a steady pace, pitch rising gradually from low to high register to represent a climbing time-series value, occasional higher accent notes for peaks, clean and dry with minimal reverb, pentatonic and contemplative, no drums, no vocals, no bass, sparse and data-like",
+          "model": "openrouter-text2music",
+          "data_mapping": {
+            "field": "cs_share_pct",
+            "source": "ana_16",
+            "sequence": "monthly, 2022-01 (33.8%) -> 2025-09 (47.1%), 45 notes",
+            "mapping": "pitch = CS share %; lowest tone = 33.8% (~C3/130Hz), highest = 50.8% peak May-2025 (~C5/523Hz), linear within a C pentatonic scale",
+            "tempo": "~6 notes/sec (one tone per month, ~150ms each); total ~7s",
+            "legend": "on-chart caption: 'low note = low CS share, high note = high CS share; the highest note is May 2025, when CS crossed half'"
+          },
+          "note_for_programmer": "Two valid implementations: (A) play the generated marimba .mp3 as a timbre bed while the marker sweeps; OR (B) drive Web-Audio oscillators/marimba samples live, one note per month, pitch from cs_share_pct via the mapping above — preferred because it stays perfectly value-bound. The .mp3 is the fallback/ambience if Web-Audio is unavailable."
+        },
+        "fallback": "If audio is muted or unsupported, the synced line chart alone communicates the climb; the play button shows a tooltip and the marker can still be scrubbed silently.",
+        "novelty_note": "Not a generic click-to-play tone card — the sound is bound to a visible sweeping marker on the actual CS-share line, and only meaningful while watching the chart update. Pitch encodes the exact metric, not decoration."
+      },
+      "brief": "Sonification of ana_16's 45-month CS-share series: one marimba tone per month, pitch = CS %, synced to a marker sweeping the line chart, peaking audibly at May 2025's 50.8%. Generated marimba .mp3 (cs_share_sonification.mp3) provides timbre; Programmer may instead drive live Web-Audio per the mapping. Visual fallback is the chart itself.",
+      "rationale": "The CS-share-over-time series is the most natural sonification in the dataset and the section about 'how fast it happened' is exactly where hearing the slope adds meaning. Editor and brief both pointed here.",
+      "based_on": [
+        "ana_16"
+      ]
+    },
+    "des_12": {
+      "label": "Readers came too: submissions vs downloads dual-axis",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "dual_axis_line",
+        "data_source": "ana_05",
+        "x": "year",
+        "y_left": "downloads (ana_05: year, downloads)",
+        "y_right": "submissions (ana_01: year, submissions, for the same years) — OR annotate the r=0.94 correlation and reads-per-submission instead",
+        "highlight": {
+          "annotation": "r = 0.94 supply-demand lockstep; reads/paper 299 (2000) -> 569 (2010) -> 1,889 (2020)",
+          "gap": "EXPLICITLY break the downloads line between 2023 and 2025 — 2024 is missing from source data (13-month gap)"
+        },
+        "interaction": "hover tooltip with year and exact downloads; a small annotation band over the 2024 gap labelled 'no data (source gap), not a decline'",
+        "style": {
+          "palette": "two restrained line colors",
+          "no_gridlines": true,
+          "note": "CRITICAL: render the 2024 gap as a visible break in the line, never interpolate across it — must not imply a 2024 collapse. ana_05 rows skip 2024 by design."
+        }
+      },
+      "brief": "Dual-line trend: annual downloads (ana_05) against annual submissions (ana_01) on twin axes, 1994-2025, showing the near-lockstep climb to ~410M downloads/yr. The 2024 gap in downloads MUST be drawn as an explicit break with a 'no data, not a dip' label. Caption carries r=0.94 and the rising reads-per-paper (299->569->1,889). A clean dual-axis chart carries this section alone — no extra media (editor set media_placeholder null here).",
+      "rationale": "Editor said a clean dual-axis trend chart carries edt_06 with no non-text media; the only design risk is the 2024 gap, which the spec forces to be shown honestly.",
+      "based_on": [
+        "ana_05",
+        "ana_06"
+      ]
+    },
+    "des_13": {
+      "label": "Is the wave cresting? CS YoY reveal",
+      "type": "interactive",
+      "section": "edt_07",
+      "content": {
+        "interaction_type": "guess_then_reveal",
+        "initial_state": "Prompt: 'By late 2025 — after the AI-slop crackdown — is CS finally slowing down?' Two big buttons: 'Slowing' / 'Still climbing'. Behind them, a faded CS monthly line (ana_22, 2025 complete months).",
+        "trigger": "Reader clicks a button.",
+        "transition": "The CS monthly line for 2025 (ana_22) animates in and the +21.7% YoY figure (Jan-Sep 2024 vs Jan-Sep 2025) lands as a large readout. A greyed, clearly-labelled '2025-10: partial extraction, not real data' note shows the ~95% truncation cliff so readers understand why the chart stops at September.",
+        "payoff": "Most readers expect a slowdown; the reveal shows +21.7% and no visible deceleration, then honestly flags the data's edge — landing the closing 'the answer lies just past what we can see' note.",
+        "data_source": "ana_22"
+      },
+      "brief": "Closing guess-then-reveal over ana_22 (cs monthly 2025-01..2025-09, plus the +21.7% YoY headline). Reader predicts slowdown/no-slowdown, then sees CS still accelerating. CRITICAL: chart ENDS at 2025-09; the 2025-10 ~95% drop is a truncation artifact and must be shown only as an explicitly-labelled greyed cutoff marker, never plotted as a real decline (per ana_08/ana_21 and editor). Ends the page on the open question, not a summary.",
+      "rationale": "A second, lighter guess-reveal bookends the hook's guess interaction and turns the 'no slowdown yet' close into reader-tested surprise; it also forces the truncation caveat to be visible rather than footnoted.",
+      "based_on": [
+        "ana_22",
+        "ana_08"
+      ]
+    },
+    "des_14": {
+      "label": "Into 2026: monthly submissions, the record month",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_24",
+        "x": "month",
+        "y": "submissions",
+        "highlight": {
+          "month": "2026-03",
+          "note": "first 30,000 month (all-time high)"
+        },
+        "annotations": [
+          {
+            "month": "2026-05",
+            "label": "partial month (in progress)"
+          }
+        ],
+        "interaction": "hover tooltip with exact month and count",
+        "style": {
+          "accent_line": true,
+          "no_gridlines": true,
+          "end_at": "2026-05",
+          "partial_point_dashed": "2026-05"
+        }
+      },
+      "brief": "A monthly line chart of total arXiv submissions from 2023-01 through 2026-05, extending the story six months past the category data. The March 2026 point (30,045) is highlighted as the all-time monthly record; the final May 2026 point is drawn dashed/faded and labelled 'partial month' so the in-progress dip is not read as a decline. This sits beside the existing ana_22 close visual.",
+      "rationale": "The closing section argues the climb has not crested; the full-history monthly series is the only data that reaches 2026, and a simple monthly line makes the new record month and the continued upward trend immediately legible.",
+      "based_on": [
+        "ana_24"
+      ]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, data-forward — deep charcoal/near-black background with a single electric-blue 'AI' accent and muted earth tones for the legacy physics fields, evoking the teaser's analog-to-digital dissolve",
+    "text_visual_pattern": "visual-first: full-bleed animated teaser, then a guess-first interactive hook, then alternating prose + chart/interactive blocks. Charts and interactives are interleaved so the reader never hits three static charts in a row — the rhythm goes interactive(hook) -> stat -> area chart + real photo -> ranked bar + real photo -> composition chart -> compare interactive -> scrubber interactive + sonification -> dual-axis chart -> closing reveal.",
+    "centrepiece": "des_02",
+    "anti_sameness_notes": "Centerpiece is an interactive guess-the-share reveal, not a chart — the page leads with reader participation. Audio is a chart-synced sonification bound to a sweeping marker, never a standalone tone card. Two REAL Wikimedia portraits (Ginsparg, Hinton) instead of AI-generated faces, per house preference for real crests/photos. Only one generated image, animated rather than left static. Charts deliberately vary type (100%-stacked composition, ranked bar, dual-axis-with-visible-gap, area) so no two adjacent charts share a shape.",
+    "typography_notes": "Large 72px stat callouts (2.65x, 50.8%); exact figures 50.8% / 33.8% / 42.5% / 2.65x must render verbatim, never rounded. Use a clean grotesk for numbers and a readable serif for pull quotes. Section dividers as thin blue rules echoing the neural-lattice accent. Every real photo carries a visible CC BY-SA credit line; the data caveats (2024 download gap, 2025-10 truncation) appear as inline annotations on their charts, not footnotes."
+  }
+}

@@ -1,0 +1,311 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "arXiv: born 1991 as a physics email server",
+      "content": "arXiv began on August 14, 1991, when physicist Paul Ginsparg, newly arrived at Los Alamos National Laboratory (LANL) in New Mexico, set up an automated email/FTP server (originally xxx.lanl.gov) so high-energy theoretical physicists could circulate preprints without waiting on slow journal review. Ginsparg built the prototype with simple csh scripts on his NeXT machine and expected maybe 100 submissions a year from a small community; it took 400 in its first six months. The server moved with Ginsparg to Cornell University in 2001, where it is operated today by Cornell Tech and the Cornell University Library. The four CSV files in this dataset are the public-facing statistics of that same system, three decades on. This origin matters for reading the data: the monthly submissions series (get_monthly_submissions.csv) literally starts in 1991-07 with a count of 2 papers, capturing the entire lifespan of the platform.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/ArXiv",
+          "title": "arXiv - Wikipedia",
+          "facts": [
+            "Founded August 14, 1991 by Paul Ginsparg",
+            "Originally hosted at Los Alamos National Laboratory",
+            "Moved to Cornell University in 2001"
+          ]
+        },
+        {
+          "url": "https://www.firstprinciples.org/article/the-arxivist-paul-ginsparg-on-the-founding-and-future-of-the-world-s-physics-repository",
+          "title": "What is arXiv? Its Founding and Future from Paul Ginsparg",
+          "facts": [
+            "Prototype built with csh scripts on a NeXT machine as an email server",
+            "Designed for ~100 submissions/year but received 400 in first six months"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "What arXiv is (and isn't): moderated, not peer-reviewed",
+      "content": "arXiv is a preprint repository, not a journal. Papers are posted after moderation but are NOT peer-reviewed in the journal sense — there is no acceptance/rejection by referees on scientific merit, only a check that a submission is plausibly scholarly and in-scope for its category. This is the defining distinction from traditional publishing: arXiv trades the slow gatekeeping of peer review for speed and openness, letting research circulate in days instead of the months-to-years of journal pipelines. It now spans physics, mathematics, astronomy, computer science, quantitative biology, statistics, electrical engineering, quantitative finance, and economics. The submission counts in this dataset therefore measure research OUTPUT and circulation velocity, not vetted/published findings — an important caveat for the analyst.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/ArXiv",
+          "title": "arXiv - Wikipedia",
+          "facts": [
+            "arXiv is not peer reviewed; papers are approved for posting after moderation",
+            "Covers mathematics, physics, astronomy, electrical engineering, computer science, quantitative biology, statistics, mathematical finance, and economics"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "The endorsement & moderation system",
+      "content": "To keep junk out while staying open, arXiv runs two gates. (1) Endorsement, introduced in 2004: a first-time submitter to a category needs either an institutional email plus prior arXiv authorship in that domain, or a personal endorsement from an established arXiv author in that category; historically most academic-affiliated newcomers were auto-endorsed. (2) Moderation: volunteer subject-matter experts (all with terminal degrees) screen submissions for scope and basic scholarly validity. Historically moderators rejected roughly 4% of submissions. This human-in-the-loop screening is why arXiv counts are not pure self-publication — there is a filter, and the filter's behavior (e.g. tightening rules) can bend the submission curve. The analyst should know that visible dips or rule-driven changes near the end of the series may reflect moderation policy, not researcher behavior.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/ArXiv",
+          "title": "arXiv - Wikipedia",
+          "facts": [
+            "Endorsement system introduced in 2004 requiring established authors to approve new submissions in certain categories",
+            "New authors from recognized academic institutions generally receive automatic endorsement"
+          ]
+        },
+        {
+          "url": "https://www.science.org/content/article/arxiv-preprint-server-clamps-down-ai-slop",
+          "title": "ArXiv preprint server clamps down on AI slop | Science",
+          "facts": [
+            "Volunteer moderators are subject-matter experts with terminal degrees",
+            "Moderators historically rejected on average about 4% of submissions"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Growth milestones: 0 to 2M+ papers, ~24k/month",
+      "content": "arXiv's cumulative output traces an accelerating curve: 500,000 articles by October 3, 2008; 1 million by the end of 2014; 2 million by the end of 2021; and a submission rate of about 24,000 new articles per month as of late 2024. In raw annual terms, 2023 saw roughly 208,493 new submissions. These are the external benchmarks against which the analyst's monthly series can be sanity-checked: get_monthly_submissions.csv should show the count crossing into the 20,000s during 2023-2024. The downloads file (get_monthly_downloads.csv) tells a parallel demand story, reaching tens of millions of downloads per month by the 2020s — readership has scaled alongside submission.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/ArXiv",
+          "title": "arXiv - Wikipedia",
+          "facts": [
+            "500,000 articles reached October 3, 2008",
+            "1 million articles by end of 2014",
+            "2 million articles by end of 2021",
+            "About 24,000 articles per month as of November 2024"
+          ]
+        },
+        {
+          "url": "https://blog.arxiv.org/2024/11/04/arxiv-sets-new-record-for-monthly-submissions-again/",
+          "title": "arXiv sets new record for monthly submissions (again)! – arXiv blog",
+          "facts": [
+            "October 2024 had 24,226 new submissions, beating July 2024's 21,794",
+            "First time arXiv broke 20,000 in a month was May 2023",
+            "208,493 new submissions in 2023"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "The AI boom: why CS categories exploded post-2022",
+      "content": "The single biggest interpretive hook for this dataset. The Transformer architecture was introduced in the June 2017 arXiv preprint 'Attention Is All You Need' (arXiv:1706.03762) — itself posted to arXiv before NeurIPS 2017. That architecture became the backbone of large language models, and ChatGPT's public launch in November 2022 detonated a research gold rush. In arXiv's stats this shows up as explosive growth in computer-science categories — cs.LG (Machine Learning), cs.CV (Computer Vision), and cs.CL (Computation and Language, i.e. NLP/LLMs) — which together accounted for over 6,000 new submissions in a single month (October 2024). cs.AI rides the same wave. So when the analyst finds the grp_cs categories (cs.AI, cs.LG, cs.CL, cs.CV) bending sharply upward across 2022-2025 in submissions_by_category.csv, the cause is the transformer/LLM/ChatGPT era. AI is now the gravitational center of arXiv's growth.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://arxiv.org/abs/1706.03762",
+          "title": "Attention Is All You Need (arXiv:1706.03762)",
+          "facts": [
+            "Transformer architecture introduced in June 2017 arXiv preprint",
+            "Presented at NeurIPS 2017",
+            "Became the backbone of modern large language models leading to ChatGPT"
+          ]
+        },
+        {
+          "url": "https://blog.arxiv.org/2024/11/04/arxiv-sets-new-record-for-monthly-submissions-again/",
+          "title": "arXiv sets new record for monthly submissions (again)! – arXiv blog",
+          "facts": [
+            "Top CS categories Oct 2024 were cs.LG, cs.CV, and cs.CL",
+            "Those three together accounted for over 6,000 new submissions in October 2024"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "AI-first publishing culture: arXiv as the field's town square",
+      "content": "Machine-learning research developed a distinctive 'arXiv-first' culture: results are posted to arXiv the moment they're ready — often before, or instead of, formal conference/journal publication — because the field moves too fast for traditional timelines. Citing an arXiv preprint is normal practice in CS in a way it never was in, say, biology. The 'Attention Is All You Need' title even spawned a self-replicating meme: at least 717 arXiv preprints from 2009-2025 carry 'All You Need' in their title, growing exponentially after 2017. This culture amplifies the submission counts: arXiv is not a sidecar to CS/AI publishing, it IS the primary venue of record for much of the field, which is part of why CS submissions dwarf other groups in the recent data.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://arxiv.org/pdf/2512.19700",
+          "title": "'All You Need' is Not All You Need for a Paper Title: On the Origins of a Scientific Meme",
+          "facts": [
+            "717 arXiv preprints contained 'All You Need' in their titles from 2009-2025",
+            "These show exponential growth following the original 2017 paper"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "The COVID-19 preprint surge (2020)",
+      "content": "An earlier, smaller anomaly to be aware of: the pandemic drove a documented spike in preprints. On arXiv, the quantitative-biology (q-bio) category saw 2,790 preprints in 2020 — 50% above the prior year — with 864 of them containing pandemic-related terms versus just 39 in the entire preceding decade. COVID preprints peaked in April 2020, when they made up nearly 60% of that month's q-bio submissions. The surge was far larger on the biomedical sister servers bioRxiv and medRxiv. Note that submissions_by_category.csv in this dataset only starts at 2022-01, so the 2020 q-bio peak predates the per-category window — but get_monthly_submissions.csv (full history) may show a 2020 inflection. Flag any early-2020 wobble in the full-history series as plausibly COVID-driven rather than secular trend.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://baas.aas.org/pub/2025i020",
+          "title": "The effect of the COVID-19 pandemic on arXiv pre-prints in maths, physics, computer science, and quantitative biology",
+          "facts": [
+            "q-bio had 2,790 preprints in 2020, 50% above prior year",
+            "864 q-bio 2020 preprints had pandemic terms vs 39 in the prior decade",
+            "COVID preprints peaked April 2020 at nearly 60% of that month's q-bio preprints"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "The AI-slop crisis & 2025 moderation crackdown",
+      "content": "A controversy directly relevant to the tail end of this dataset (which runs to 2025-10). Despite fears after ChatGPT, arXiv saw no spike in problematic submissions through 2024 — but in early 2025 'AI slop' (LLM-generated filler papers, especially review/survey articles) rose exponentially, starting in computer science and spreading. Moderator rejection rates climbed from the historical ~4% to about 10-12%. arXiv now receives 'hundreds of review articles every month.' In October 2025, arXiv announced it would no longer accept review or position papers in computer science unless they had already passed journal/conference peer review. This is a crucial caveat: any flattening, dip, or composition shift in cs.* categories in the final months of submissions_by_category.csv could reflect this October-2025 policy change, not a genuine decline in research. (Note also: the very last month in each per-category file, 2025-10, shows tiny counts like 13-76 — almost certainly a partial/incomplete data month, NOT a crash. The analyst should treat 2025-10 as truncated.)",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.science.org/content/article/arxiv-preprint-server-clamps-down-ai-slop",
+          "title": "ArXiv preprint server clamps down on AI slop | Science",
+          "facts": [
+            "No change in problematic submissions through 2024; AI slop rose exponentially starting early 2025",
+            "Rejection rates rose from ~4% to about 10-12%",
+            "arXiv now receives hundreds of review articles every month",
+            "October 2025: arXiv stopped accepting CS reviews/position papers unless already peer-reviewed"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Why arXiv matters: open science & access",
+      "content": "arXiv's significance is that it democratized access to cutting-edge research. By letting anyone read the latest work for free, immediately, it became one of the precipitating forces behind the open-access movement in scholarly publishing. Ginsparg won a MacArthur 'genius' Fellowship in 2002 and the Einstein Foundation Berlin Award in 2021 for creating it. The platform runs on a modest budget (about $826,000/year in the 2013-2017 era) funded by Cornell, the Simons Foundation, and member-institution fees of roughly $1,000-$4,400/year — a striking contrast to the multi-billion-dollar commercial journal industry it disrupts. In March 2026 arXiv announced it will become an independent nonprofit on July 1, 2026. For a general reader, the stakes are: this is the infrastructure on which modern physics, math, and AI research is actually shared.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/ArXiv",
+          "title": "arXiv - Wikipedia",
+          "facts": [
+            "Annual budget ~$826,000 (2013-2017), funded by Cornell Library, Simons Foundation, member fees of $1,000-$4,400/year",
+            "Announced becoming an independent nonprofit on July 1, 2026"
+          ]
+        },
+        {
+          "url": "https://news.cornell.edu/stories/2021/11/arxiv-founder-ginsparg-wins-einstein-foundation-berlin-award",
+          "title": "arXiv founder Ginsparg wins Einstein Foundation Berlin Award | Cornell Chronicle",
+          "facts": [
+            "Ginsparg won the Einstein Foundation Berlin Award in 2021",
+            "Ginsparg awarded a MacArthur Fellowship in 2002 for establishing arXiv"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Scope suggestions & data caveats for the analyst",
+      "content": "Recommended focus areas grounded in the research: (1) The CS/AI explosion is the headline story — track grp_cs categories (cs.LG, cs.AI, cs.CL, cs.CV) over 2022-2025 against the rest; expect them to dominate growth (det_05). (2) Use the full-history get_monthly_submissions.csv to show the 1991-2025 arc (2 papers in 1991-07 to ~24k/month), then zoom into the per-category window for the AI boom. (3) Watch for confounds: the final month 2025-10 has implausibly small counts (e.g. 13-76) and is almost certainly an incomplete/partial month — do NOT read it as a collapse (det_08). (4) The October 2025 CS moderation crackdown could distort the very tail of cs.* (det_08). (5) Downloads (get_monthly_downloads.csv) start 1994 with 1994-01 = 0; early near-zero months are real but trivial. (6) Submissions vs downloads = supply vs demand — comparing the two curves is a strong analytical angle. (7) The 'historical_delta' column in get_monthly_submissions reflects retroactive recategorization/corrections and is mostly small noise; don't over-interpret it.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://blog.arxiv.org/2024/11/04/arxiv-sets-new-record-for-monthly-submissions-again/",
+          "title": "arXiv sets new record for monthly submissions (again)! – arXiv blog",
+          "facts": [
+            "First month over 20,000 submissions was May 2023; Oct 2024 reached 24,226"
+          ]
+        },
+        {
+          "url": "https://www.science.org/content/article/arxiv-preprint-server-clamps-down-ai-slop",
+          "title": "ArXiv preprint server clamps down on AI slop | Science",
+          "facts": [
+            "October 2025 CS review/position-paper restriction could affect late-2025 CS counts"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "2026 endorsement overhaul: an institutional email is no longer enough",
+      "content": "On January 21, 2026, arXiv changed who is allowed to submit. An institutional email address — for years the de facto key to the archive — is no longer sufficient to endorse a first-time submitter to a category. New authors must now either pair an institutional email with prior authorship on a paper already accepted in that endorsement domain, or obtain a personal endorsement from an established arXiv author in the field. arXiv said the change was forced by \"an unsustainable increase in the number of non-scientific submissions, increasing the rejection rate and requiring excessive moderation and staff effort.\" Authors already endorsed in a category keep their status, and staff explicitly cannot waive the requirement. The same tightening was piloted on the Mathematics section in December 2025 before rolling out across all categories.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://blog.arxiv.org/2026/01/21/attention-authors-updated-endorsement-policy/",
+          "title": "Attention Authors: updated endorsement policy — arXiv blog",
+          "facts": [
+            "Effective January 21, 2026, institutional email addresses alone no longer qualify new authors for endorsement",
+            "New authors need either institutional email plus prior authorship in the endorsement domain, or a personal endorsement from an established arXiv author",
+            "arXiv cited 'an unsustainable increase in the number of non-scientific submissions, increasing the rejection rate and requiring excessive moderation and staff effort'",
+            "Previously endorsed authors retain their status; staff cannot waive the requirement"
+          ]
+        },
+        {
+          "url": "https://blog.arxiv.org/2025/12/10/updated-endorsement-policy-for-arxiv-mathematics/",
+          "title": "Updated endorsement policy for arXiv Mathematics — arXiv blog",
+          "facts": [
+            "The endorsement update was first rolled out to the arXiv Mathematics section in December 2025"
+          ]
+        }
+      ]
+    },
+    "det_12": {
+      "label": "A one-year ban for AI slop",
+      "content": "The endorsement change came on top of a harder line on AI-generated content. Following the October 2025 decision to stop accepting computer-science review articles and position papers unless they had already passed journal or conference peer review, arXiv set an explicit penalty: where there is incontrovertible evidence that authors did not check the output of an LLM, the submitter faces a one-year ban from arXiv, after which subsequent submissions must first be accepted at a reputable peer-reviewed venue. Moderators reported rejection rates climbing from a historical ~4% to roughly 10–12%, with review papers showing a far higher share of LLM-generated text than ordinary papers.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.404media.co/new-arxiv-rules-ai-generated-papers-ban/",
+          "title": "ArXiv to Ban Researchers for a Year if They Submit AI Slop — 404 Media",
+          "facts": [
+            "Incontrovertible evidence that authors did not check LLM output carries a one-year ban from arXiv",
+            "After the ban, subsequent submissions must first be accepted at a reputable peer-reviewed venue"
+          ]
+        },
+        {
+          "url": "https://www.science.org/content/article/arxiv-preprint-server-clamps-down-ai-slop",
+          "title": "arXiv preprint server clamps down on AI slop — Science",
+          "facts": [
+            "Rejection rates climbed from roughly 4% to 10–12%",
+            "CS review articles and position papers must already have passed peer review to be accepted"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "q118398__logo.png",
+      "url": "https://commons.wikimedia.org/wiki/File:ArXiv_web.svg",
+      "license": "Public domain",
+      "source": "Wikimedia Commons",
+      "description": "The official arXiv.org wordmark logo (white text on arXiv's signature dark red). Real, public-domain brand asset — use as the canonical logo throughout the blog.",
+      "relates_to": [
+        "det_01",
+        "det_02",
+        "det_09"
+      ]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "q1931745__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Paul_Ginsparg.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons",
+      "description": "Portrait of Paul Ginsparg, the physicist who founded arXiv in 1991, photographed seated among boxes of papers in front of a physics chalkboard — a fitting image of the man who replaced paper preprints with a server.",
+      "relates_to": [
+        "det_01",
+        "det_09"
+      ]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "q92894__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Geoffrey_E._Hinton,_2024_Nobel_Prize_Laureate_in_Physics_(3x4_cropped).jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons",
+      "description": "Geoffrey Hinton, deep-learning pioneer and 2024 Nobel laureate in Physics. Included as an optional human face for the AI/deep-learning revolution (det_05) that drives the cs.LG/cs.AI submission explosion. Not central to arXiv's own story — use only if the blog wants to put a face to the AI boom.",
+      "relates_to": [
+        "det_05",
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_note",
+      "filename": null,
+      "url": null,
+      "license": "n/a",
+      "source": "n/a",
+      "description": "Media-scope note: arXiv is a technical/statistical dataset, so reference media was kept deliberately minimal and specific. The high-value real assets are the public-domain arXiv logo and the founder portrait; everything else (charts, growth curves) is the Designer's job to generate from the data, not stock to fetch. No generic 'science' stock imagery was downloaded. The arXiv-org 2014 screenshot available on Commons was skipped as too dated/low-value.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    }
+  ],
+  "instances": []
+}

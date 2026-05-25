@@ -1,0 +1,2166 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": [
+      "get_monthly_submissions.csv",
+      "get_monthly_downloads.csv",
+      "submissions_by_category.csv",
+      "submissions_by_archive.csv"
+    ],
+    "rows": 8803,
+    "columns": 11,
+    "what_one_row_represents": "Depends on file: (1) get_monthly_submissions = one calendar month of total arXiv submissions across all fields, 1991-07 to 2026-05, with a historical_delta correction column; (2) get_monthly_downloads = one calendar month of total full-text downloads, 1994-01 to 2026-04; (3) submissions_by_category = one (arXiv subject-category, month) cell, 155 categories x 46 months (2022-01 to 2025-10); (4) submissions_by_archive = one (archive, month) cell, 20 archives x 46 months.",
+    "time_range": "1991-07 to 2026-05 (full-history submissions); 1994-01 to 2026-04 (downloads); 2022-01 to 2025-10 (per-category & per-archive)",
+    "geographic_scope": "Global (arXiv is a worldwide preprint repository; no geographic dimension in the data)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "From 2 papers/month to 3 million: the 1991-2025 arc",
+      "content": "arXiv's full-history submission series captures the entire lifespan of the platform, from 2 papers in its first month (July 1991) to a mature output of roughly 24,000-27,000 papers per month in 2024-2025. Annual submissions climbed almost monotonically every single year: 306 in the partial 1991, 3,263 in the first full year (1992), 30,601 by 2000, 70,131 by 2010, 178,329 by 2020, and 284,486 in 2025. Cumulatively, arXiv crossed 500,000 papers in October 2008, 1 million in December 2014, 2 million in January 2022, and 2.5 million in June 2024; the running total stands at about 3.05 million through 2026-05. These crossings line up almost exactly with the externally documented milestones in det_04, confirming the series is the real arXiv corpus.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          37,
+          60
+        ],
+        "output": "1992: 3263 ... 2010: 70131 ... 2020: 178329 ... 2024: 244031 ... 2025: 284486\n  cumulative 500,000 crossed at 2008-10 (cum=505,611)\n  cumulative 1,000,000 crossed at 2014-12 (cum=1,001,018)\n  cumulative 2,000,000 crossed at 2022-01 (cum=2,013,094)\n  cumulative 2,500,000 crossed at 2024-06 (cum=2,512,661)\nTotal cumulative submissions through 2026-05: 3,052,066"
+      },
+      "data_table": {
+        "description": "Total arXiv submissions per calendar year, 1991-2025 (1991 partial; 2026 excluded as incomplete)",
+        "columns": [
+          "year",
+          "submissions"
+        ],
+        "rows": [
+          [
+            1991,
+            306
+          ],
+          [
+            1992,
+            3263
+          ],
+          [
+            1993,
+            6743
+          ],
+          [
+            1994,
+            10097
+          ],
+          [
+            1995,
+            13014
+          ],
+          [
+            1996,
+            15866
+          ],
+          [
+            1997,
+            19624
+          ],
+          [
+            1998,
+            24172
+          ],
+          [
+            1999,
+            27704
+          ],
+          [
+            2000,
+            30601
+          ],
+          [
+            2001,
+            33214
+          ],
+          [
+            2002,
+            36121
+          ],
+          [
+            2003,
+            39414
+          ],
+          [
+            2004,
+            43727
+          ],
+          [
+            2005,
+            46855
+          ],
+          [
+            2006,
+            50227
+          ],
+          [
+            2007,
+            55638
+          ],
+          [
+            2008,
+            58915
+          ],
+          [
+            2009,
+            64047
+          ],
+          [
+            2010,
+            70131
+          ],
+          [
+            2011,
+            76578
+          ],
+          [
+            2012,
+            84603
+          ],
+          [
+            2013,
+            92641
+          ],
+          [
+            2014,
+            97517
+          ],
+          [
+            2015,
+            105280
+          ],
+          [
+            2016,
+            113380
+          ],
+          [
+            2017,
+            123523
+          ],
+          [
+            2018,
+            140616
+          ],
+          [
+            2019,
+            155866
+          ],
+          [
+            2020,
+            178329
+          ],
+          [
+            2021,
+            181630
+          ],
+          [
+            2022,
+            185692
+          ],
+          [
+            2023,
+            208493
+          ],
+          [
+            2024,
+            244031
+          ],
+          [
+            2025,
+            284486
+          ]
+        ]
+      },
+      "based_on": [
+        "det_01",
+        "det_04"
+      ],
+      "notable_instance": {
+        "name": "July 1991",
+        "value": "2 submissions in the first month",
+        "why": "The single starkest contrast point: arXiv's opening month held 2 papers; a single month in 2025 now holds ~25,000 — a five-orders-of-magnitude rise that anchors the whole growth story."
+      }
+    },
+    "ana_02": {
+      "label": "Compound growth: 14.5% CAGR over 33 years",
+      "content": "Measured on complete calendar years, annual submissions grew from 3,263 in 1992 to 284,486 in 2025 — an 87-fold increase representing a compound annual growth rate (CAGR) of 14.5% sustained over 33 years. Growth has decelerated in relative terms but accelerated in absolute terms: the 2010-2025 CAGR is 9.8%, yet that lower percentage is applied to a far larger base, so arXiv added roughly 40,000 papers in 2025 alone versus a few thousand per year in the 1990s. The compounding is the headline: a research archive growing double digits annually for three decades is exceptional infrastructure longevity.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          62,
+          80
+        ],
+        "output": "1992 annual=3263, 2025 annual=284486, years=33\nCAGR 1992-2025: 14.50%\n2010 annual=70131, 2025 annual=284486, CAGR 2010-2025: 9.79%"
+      },
+      "data_table": {
+        "description": "Decade-snapshot annual submissions used for CAGR",
+        "columns": [
+          "year",
+          "submissions"
+        ],
+        "rows": [
+          [
+            1992,
+            3263
+          ],
+          [
+            2000,
+            30601
+          ],
+          [
+            2010,
+            70131
+          ],
+          [
+            2020,
+            178329
+          ],
+          [
+            2024,
+            244031
+          ],
+          [
+            2025,
+            284486
+          ]
+        ]
+      },
+      "based_on": [
+        "det_01",
+        "det_04"
+      ]
+    },
+    "ana_03": {
+      "label": "Breaking 20,000/month: the 2023 inflection",
+      "content": "arXiv first exceeded 20,000 submissions in a single month in May 2023 (20,092) — matching the documented record in det_04 to the month. From there the monthly rate kept setting records: October 2024 hit 24,226 (also matching the arXiv blog), and the full-history series shows the biggest months are all clustered in 2025 (e.g. 2025-09 at 26,646 and 2025-12 at 25,075). The mid-2023 break above 20k is the clearest single-point marker of the AI-era surge in the all-fields series, arriving roughly six months after ChatGPT's November 2022 launch.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          82,
+          90
+        ],
+        "output": "First month >= 20,000 submissions: 2023-05 = 20092\nPeak single months (top 8, excl 2026):\n  2025-09: 26646\n  2025-12: 25075\n  2025-05: 24878\n  2025-03: 24391\n  2024-10: 24226"
+      },
+      "data_table": {
+        "description": "Highest single-month submission counts (full-history file, 2026 excluded)",
+        "columns": [
+          "month",
+          "submissions"
+        ],
+        "rows": [
+          [
+            "2025-09",
+            26646
+          ],
+          [
+            "2025-12",
+            25075
+          ],
+          [
+            "2025-05",
+            24878
+          ],
+          [
+            "2025-03",
+            24391
+          ],
+          [
+            "2024-10",
+            24226
+          ],
+          [
+            "2025-06",
+            24129
+          ],
+          [
+            "2025-07",
+            23787
+          ]
+        ]
+      },
+      "based_on": [
+        "det_04",
+        "det_05"
+      ]
+    },
+    "ana_04": {
+      "label": "COVID-19 left only a modest bump in arXiv totals",
+      "content": "Contrary to the dramatic pandemic-preprint surge on biomedical servers, arXiv's all-fields monthly average rose only modestly from 12,989 (2019) to 14,861 (2020), a +14.4% year-over-year change that is well within arXiv's normal double-digit annual growth. There is a visible step up in mid-2020 (June 2020 reached 17,000, the highest month to that point), consistent with researchers working from home, but no explosive spike. This confirms det_07's note: the big COVID preprint surge was concentrated in q-bio (which predates the per-category window) and on bioRxiv/medRxiv, not in arXiv's headline numbers.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          92,
+          102
+        ],
+        "output": "2019 monthly avg: 12989; 2020 monthly avg: 14861; YoY: +14.4%\n  2020-04: 15025\n  2020-05: 14719\n  2020-06: 17000\n  2020-07: 16208"
+      },
+      "data_table": {
+        "description": "Monthly submissions, late-2019 to mid-2020 (COVID window)",
+        "columns": [
+          "month",
+          "submissions"
+        ],
+        "rows": [
+          [
+            "2019-10",
+            14675
+          ],
+          [
+            "2019-11",
+            13302
+          ],
+          [
+            "2019-12",
+            13517
+          ],
+          [
+            "2020-01",
+            12010
+          ],
+          [
+            "2020-02",
+            12932
+          ],
+          [
+            "2020-03",
+            14415
+          ],
+          [
+            "2020-04",
+            15025
+          ],
+          [
+            "2020-05",
+            14719
+          ],
+          [
+            "2020-06",
+            17000
+          ],
+          [
+            "2020-07",
+            16208
+          ],
+          [
+            "2020-08",
+            13781
+          ]
+        ]
+      },
+      "based_on": [
+        "det_07"
+      ]
+    },
+    "ana_05": {
+      "label": "Readership scaled to ~410M downloads/year",
+      "content": "Demand grew alongside supply. Annual full-text downloads rose from 128,204 in 1994 to 9.1 million in 2000, 39.9 million in 2010, 136.3 million in 2015, 334.6 million in 2020, and 410.1 million in 2025 — a roughly 3,000-fold increase over three decades. Recent monthly downloads average about 34 million, and the single busiest month on record is November 2023 with 54.75 million. IMPORTANT DATA-QUALITY CAVEAT: the downloads file has a 13-month gap — it jumps straight from 2023-11 to 2025-01, so all of December 2023 and the entire 2024 calendar year are missing. Any annual download chart must either show the gap or omit 2024 rather than imply a collapse.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          104,
+          125
+        ],
+        "output": "Download series gaps (months missing): [('2023-11', '2025-01', 13)]\n  1994: 128,204 ... 2010: 39,902,092 ... 2020: 334,592,562 ... 2025: 410,073,300\nMean monthly downloads 2025: 34,172,775\nPeak month: 2023-11 = 54,750,448"
+      },
+      "data_table": {
+        "description": "Total downloads per year, 1994-2025 (2024 absent in source data; 2023 has 11 of 12 months; 2026 excluded)",
+        "columns": [
+          "year",
+          "downloads"
+        ],
+        "rows": [
+          [
+            1994,
+            128204
+          ],
+          [
+            1995,
+            920377
+          ],
+          [
+            1996,
+            2654474
+          ],
+          [
+            1997,
+            3216951
+          ],
+          [
+            1998,
+            5027107
+          ],
+          [
+            1999,
+            6558795
+          ],
+          [
+            2000,
+            9120562
+          ],
+          [
+            2001,
+            11566682
+          ],
+          [
+            2002,
+            15844833
+          ],
+          [
+            2003,
+            20980581
+          ],
+          [
+            2004,
+            24913578
+          ],
+          [
+            2005,
+            24954620
+          ],
+          [
+            2006,
+            22127255
+          ],
+          [
+            2007,
+            25669451
+          ],
+          [
+            2008,
+            33648957
+          ],
+          [
+            2009,
+            33772472
+          ],
+          [
+            2010,
+            39902092
+          ],
+          [
+            2011,
+            49739970
+          ],
+          [
+            2012,
+            63819397
+          ],
+          [
+            2013,
+            66813104
+          ],
+          [
+            2014,
+            91153540
+          ],
+          [
+            2015,
+            136330412
+          ],
+          [
+            2016,
+            163107939
+          ],
+          [
+            2017,
+            187640949
+          ],
+          [
+            2018,
+            228443675
+          ],
+          [
+            2019,
+            292313457
+          ],
+          [
+            2020,
+            334592562
+          ],
+          [
+            2021,
+            378623663
+          ],
+          [
+            2022,
+            367888123
+          ],
+          [
+            2023,
+            488201731
+          ],
+          [
+            2025,
+            410073300
+          ]
+        ]
+      },
+      "based_on": [
+        "det_04",
+        "det_09"
+      ]
+    },
+    "ana_06": {
+      "label": "Supply and demand move together (r=0.94)",
+      "content": "Monthly submissions and monthly downloads are tightly correlated across the 375 overlapping months: Pearson r = 0.936 (log-log r = 0.943). But downloads have grown faster than submissions, so reads-per-submission climbed steadily — from about 299 downloads per new paper in 2000, to 569 in 2010, to 1,889 in 2020. In other words, each new paper now commands far more attention than papers did two decades ago, reflecting both a larger global readership and the compounding value of the back-catalogue (old papers keep being downloaded). Supply and demand scale together, but demand scales harder.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          127,
+          145
+        ],
+        "output": "Overlapping months: 375 (1994-01..2026-04)\nPearson corr(submissions, downloads): 0.936\nLog-log corr: 0.943\n  2000: avg downloads/submission = 298.5\n  2010: avg downloads/submission = 569.1\n  2020: avg downloads/submission = 1889.3"
+      },
+      "data_table": {
+        "description": "Average downloads per submission, by year (selected)",
+        "columns": [
+          "year",
+          "downloads_per_submission"
+        ],
+        "rows": [
+          [
+            2000,
+            298.5
+          ],
+          [
+            2010,
+            569.1
+          ],
+          [
+            2020,
+            1889.3
+          ]
+        ]
+      },
+      "based_on": [
+        "det_10"
+      ]
+    },
+    "ana_07": {
+      "label": "Seasonality: October peaks, January troughs",
+      "content": "Submissions follow a stable month-of-year rhythm. Detrending each year by its own mean (2015-2024), October is consistently the busiest month at a seasonal index of 1.120 (12% above the annual average), with November (1.067), May (1.041) and March (1.039) also strong. January is the clear trough at 0.867 (13% below average), followed by February (0.902) and August (0.932). The pattern tracks the academic and conference calendar — pre-deadline pushes in spring and autumn, holiday lulls in late December/January and a summer dip in August. This is why arXiv's record-setting single months (October 2024, October 2025) fall in October.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          147,
+          162
+        ],
+        "output": "Jan: 0.867 ... May: 1.041 ... Aug: 0.932 ... Oct: 1.120 ... Nov: 1.067\nHighest: Oct (1.120); Lowest: Jan (0.867)"
+      },
+      "data_table": {
+        "description": "Month-of-year seasonal index, 1.0 = average month (2015-2024, trend-removed)",
+        "columns": [
+          "month",
+          "index"
+        ],
+        "rows": [
+          [
+            "Jan",
+            0.867
+          ],
+          [
+            "Feb",
+            0.902
+          ],
+          [
+            "Mar",
+            1.039
+          ],
+          [
+            "Apr",
+            0.955
+          ],
+          [
+            "May",
+            1.041
+          ],
+          [
+            "Jun",
+            1.024
+          ],
+          [
+            "Jul",
+            1.008
+          ],
+          [
+            "Aug",
+            0.932
+          ],
+          [
+            "Sep",
+            1.019
+          ],
+          [
+            "Oct",
+            1.12
+          ],
+          [
+            "Nov",
+            1.067
+          ],
+          [
+            "Dec",
+            1.028
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_08": {
+      "label": "ANOMALY: 2025-10 is truncated only in the per-category files",
+      "content": "A critical data-quality distinction. The per-category and per-archive files both end at 2025-10 with implausibly tiny counts — the per-archive total for 2025-10 is just 2,175, a 95% drop from September's 47,714 — confirming 2025-10 is a partial/incomplete data month in those two files and MUST be excluded from all trend, growth and ranking claims (use 2025-09 as the last complete month). However, the full-history submissions file is NOT truncated there: it reports 27,692 for 2025-10 (actually higher than September's 26,646) and continues all the way to 2026-05. So '2025-10 is partial' is true for the category/archive breakdowns but false for the headline totals series — the two must be read differently.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          164,
+          175
+        ],
+        "output": "2025-09 full-history submissions: 26646\n2025-10 full-history submissions: 27692\nper-archive 2025-10 sum: 2175\nper-archive 2025-09 sum: 47714"
+      },
+      "based_on": [
+        "det_08",
+        "det_10"
+      ]
+    },
+    "ana_09": {
+      "label": "historical_delta is negligible noise",
+      "content": "The historical_delta column in the full-history file reflects retroactive recategorization/corrections and is, as det_10 warned, tiny noise. It ranges from -105 to 0, averages -5.8, and only 0.2% of months have an absolute delta above 50; its median magnitude is essentially 0% of the month's submissions. It should not be plotted or interpreted as a signal.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile_and_history.py",
+        "lines": [
+          177,
+          183
+        ],
+        "output": "historical_delta: min=-105, max=0, mean=-5.80, abs-mean=5.80\nshare of months with |delta|>50: 0.2%\n|delta| as % of submissions (median): 0.000%"
+      },
+      "based_on": [
+        "det_10"
+      ]
+    },
+    "ana_10": {
+      "label": "cs.LG is the single biggest category on arXiv",
+      "content": "Across the 2022-01 to 2025-09 window (1.57 million submissions over 155 categories), the four AI categories own the top of the table: cs.LG (Machine Learning) is #1 with 134,903 submissions (8.6% of everything), followed by cs.AI (101,916, 6.5%), cs.CV (Computer Vision, 100,238, 6.4%) and cs.CL (NLP/LLMs, 61,144, 3.9%). The first non-CS category is quant-ph at #5 (47,902, 3.0%), less than half of cs.CV. The long tail is steep: the smallest categories have only a few hundred submissions (cs.GL has just 56). This ranking is the structural fingerprint of the transformer/LLM era described in det_05.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_category_boom.py",
+        "lines": [
+          25,
+          40
+        ],
+        "output": "cs.LG: 134,903 (8.6%)\ncs.AI: 101,916 (6.5%)\ncs.CV: 100,238 (6.4%)\ncs.CL: 61,144 (3.9%)\nquant-ph: 47,902 (3.0%)\nhep-ph: 28,912 (1.8%)\ncs.RO: 28,366 (1.8%)\n... cs.GL: 56"
+      },
+      "data_table": {
+        "description": "Top 20 categories by cumulative submissions, 2022-01..2025-09",
+        "columns": [
+          "category",
+          "submissions",
+          "pct_of_total"
+        ],
+        "rows": [
+          [
+            "cs.LG",
+            134903,
+            8.6
+          ],
+          [
+            "cs.AI",
+            101916,
+            6.5
+          ],
+          [
+            "cs.CV",
+            100238,
+            6.4
+          ],
+          [
+            "cs.CL",
+            61144,
+            3.9
+          ],
+          [
+            "quant-ph",
+            47902,
+            3.0
+          ],
+          [
+            "hep-ph",
+            28912,
+            1.8
+          ],
+          [
+            "cs.RO",
+            28366,
+            1.8
+          ],
+          [
+            "hep-th",
+            28025,
+            1.8
+          ],
+          [
+            "cond-mat.mtrl-sci",
+            27639,
+            1.8
+          ],
+          [
+            "gr-qc",
+            24850,
+            1.6
+          ],
+          [
+            "astro-ph.GA",
+            22620,
+            1.4
+          ],
+          [
+            "math.OC",
+            21985,
+            1.4
+          ],
+          [
+            "cs.CR",
+            21907,
+            1.4
+          ],
+          [
+            "cs.SY",
+            21134,
+            1.3
+          ],
+          [
+            "eess.SY",
+            21121,
+            1.3
+          ],
+          [
+            "stat.ML",
+            20841,
+            1.3
+          ],
+          [
+            "math.CO",
+            20581,
+            1.3
+          ],
+          [
+            "cond-mat.mes-hall",
+            20529,
+            1.3
+          ],
+          [
+            "math.AP",
+            20345,
+            1.3
+          ],
+          [
+            "eess.SP",
+            20158,
+            1.3
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05",
+        "det_06"
+      ],
+      "notable_instance": {
+        "name": "cs.LG (Machine Learning)",
+        "value": "134,903 submissions, 8.6% of all arXiv output",
+        "why": "A single subfield out of 155 categories accounts for nearly 1 in 11 papers — the clearest one-number proof that machine learning is arXiv's center of gravity."
+      }
+    },
+    "ana_11": {
+      "label": "Concentration: top 10 of 155 categories = 37% of output",
+      "content": "Submissions are heavily concentrated. The top 10 categories (out of 155) account for 37.2% of all submissions; the top 20 reach 50.6% (so half of all arXiv output comes from ~13% of its categories), and the top 50 cover 77.2%. The four AI categories alone (cs.LG, cs.AI, cs.CV, cs.CL) make up 25.3% — over a quarter of everything posted in the window. This is a classic heavy-tailed distribution where a handful of fast-moving fields dominate a very long tail of small specialties.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_category_boom.py",
+        "lines": [
+          42,
+          52
+        ],
+        "output": "Top 10 of 155 categories account for 37.2% of all submissions\nTop 4 account for 25.3%\n  top 1: 8.6% ... top 20: 50.6% cumulative\n  top 50: 77.2% cumulative"
+      },
+      "data_table": {
+        "description": "Cumulative share of total submissions held by the top-N categories",
+        "columns": [
+          "top_n",
+          "cumulative_pct"
+        ],
+        "rows": [
+          [
+            1,
+            8.6
+          ],
+          [
+            3,
+            21.5
+          ],
+          [
+            4,
+            25.3
+          ],
+          [
+            5,
+            28.4
+          ],
+          [
+            10,
+            37.2
+          ],
+          [
+            20,
+            50.6
+          ],
+          [
+            50,
+            77.2
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_12": {
+      "label": "The big-4 AI categories' explosive growth 2022-2025",
+      "content": "Within the per-category window the AI surge is stark. Comparing 2022 annual volume to the trailing 12 months ending 2025-09: cs.AI grew 2.87x (14,707 to 42,138), cs.CL 2.65x (8,930 to 23,652), cs.CV 1.76x (19,541 to 34,383), and cs.LG 1.58x (28,561 to 45,251, off an already huge base). Month-on-month the steepest riser is cs.CL, which went from 451 submissions in January 2022 to 2,208 in September 2025 (4.9x), and cs.AI from 908 to 4,248 (4.7x). These are the categories det_05 predicted would bend sharply upward, and they do — cs.AI and cs.CL roughly tripled their annual output in under four years.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_category_boom.py",
+        "lines": [
+          54,
+          70
+        ],
+        "output": "cs.LG: 2022 annual=28,561, last-12mo=45,251, growth x1.58; Jan2022=1871 -> Sep2025=4203 (x2.25)\ncs.CV: 2022 annual=19,541, last-12mo=34,383, growth x1.76\ncs.CL: 2022 annual=8,930, last-12mo=23,652, growth x2.65; Jan2022=451 -> Sep2025=2208 (x4.90)\ncs.AI: 2022 annual=14,707, last-12mo=42,138, growth x2.87; Jan2022=908 -> Sep2025=4248 (x4.68)"
+      },
+      "data_table": {
+        "description": "Big-4 AI categories: 2022 annual vs trailing-12mo (2024-10..2025-09) and growth multiple",
+        "columns": [
+          "category",
+          "annual_2022",
+          "trailing_12mo",
+          "growth_x"
+        ],
+        "rows": [
+          [
+            "cs.AI",
+            14707,
+            42138,
+            2.87
+          ],
+          [
+            "cs.CL",
+            8930,
+            23652,
+            2.65
+          ],
+          [
+            "cs.CV",
+            19541,
+            34383,
+            1.76
+          ],
+          [
+            "cs.LG",
+            28561,
+            45251,
+            1.58
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05",
+        "det_06"
+      ]
+    },
+    "ana_13": {
+      "label": "October 2024 benchmark month confirms det_05",
+      "content": "October 2024 — the record month flagged in det_05 — breaks down exactly as documented: cs.LG led with 4,829, then cs.AI 3,753, cs.CV 2,784 and cs.CL 2,626. The three categories det_05 named (cs.LG + cs.CV + cs.CL) sum to 10,239 that month, matching the 'over 6,000' framing once cs.AI is added in. Peak single months for the big-4 land in late 2024 to mid-2025 (cs.AI and cs.CL both peak in May 2025 at 4,494 and 2,822), confirming the surge was still intensifying right up to the data's complete tail.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_category_boom.py",
+        "lines": [
+          72,
+          84
+        ],
+        "output": "Top categories in Oct 2024:\n  cs.LG: 4829\n  cs.AI: 3753\n  cs.CV: 2784\n  cs.CL: 2626\ncs.LG+cs.CV+cs.CL Oct 2024 sum: 10239\nPeak: cs.AI 2025-05 = 4494; cs.CL 2025-05 = 2822"
+      },
+      "data_table": {
+        "description": "Top 6 categories in October 2024",
+        "columns": [
+          "category",
+          "submissions"
+        ],
+        "rows": [
+          [
+            "cs.LG",
+            4829
+          ],
+          [
+            "cs.AI",
+            3753
+          ],
+          [
+            "cs.CV",
+            2784
+          ],
+          [
+            "cs.CL",
+            2626
+          ],
+          [
+            "quant-ph",
+            1299
+          ],
+          [
+            "cs.RO",
+            946
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_14": {
+      "label": "Fastest-growing vs flat categories: CS sweeps the top",
+      "content": "Ranking categories by growth (trailing-12mo vs 2022 annual, filtered to >=300 baseline), the entire top of the leaderboard is computer science: cs.ET (Emerging Tech) 3.29x, cs.AI 2.87x, cs.CL 2.65x, cs.HC (Human-Computer Interaction) 2.60x, cs.SE (Software Engineering) 2.33x, cs.CY 2.20x — even cs.RO (Robotics) nearly doubled at 1.96x. At the opposite end sit mature physics and information-theory fields that are essentially flat: physics.acc-ph actually shrank (-6%), and math.GN, nlin.PS, physics.space-ph, hep-ex, hep-ph and cs.IT/math.IT all grew under +10% in nearly four years. The contrast is dramatic: AI subfields tripling while classical physics holds steady.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_category_boom.py",
+        "lines": [
+          86,
+          108
+        ],
+        "output": "cs.ET: 472 -> 1555 (x3.29)\ncs.AI: 14707 -> 42138 (x2.87)\ncs.CL: 8930 -> 23652 (x2.65)\ncs.HC: 2493 -> 6486 (x2.60)\n...\nphysics.acc-ph: 575 -> 540 (x0.94, -6%)\nmath.GN: 367 -> 358 (x0.98, -2%)\nhep-ph: 7651 -> 8232 (x1.08, +8%)"
+      },
+      "data_table": {
+        "description": "Fastest-growing (top) and flattest/declining (bottom) categories, baseline>=300, growth multiple trailing-12mo vs 2022",
+        "columns": [
+          "category",
+          "annual_2022",
+          "trailing_12mo",
+          "growth_x"
+        ],
+        "rows": [
+          [
+            "cs.ET",
+            472,
+            1555,
+            3.29
+          ],
+          [
+            "cs.AI",
+            14707,
+            42138,
+            2.87
+          ],
+          [
+            "cs.CL",
+            8930,
+            23652,
+            2.65
+          ],
+          [
+            "cs.HC",
+            2493,
+            6486,
+            2.6
+          ],
+          [
+            "cs.CE",
+            701,
+            1743,
+            2.49
+          ],
+          [
+            "cs.SE",
+            1988,
+            4633,
+            2.33
+          ],
+          [
+            "cs.CY",
+            2209,
+            4856,
+            2.2
+          ],
+          [
+            "cs.AR",
+            782,
+            1592,
+            2.04
+          ],
+          [
+            "cs.MA",
+            1035,
+            2080,
+            2.01
+          ],
+          [
+            "cs.RO",
+            5182,
+            10175,
+            1.96
+          ],
+          [
+            "cs.IR",
+            2121,
+            4103,
+            1.93
+          ],
+          [
+            "cs.CV",
+            19541,
+            34383,
+            1.76
+          ],
+          [
+            "physics.acc-ph",
+            575,
+            540,
+            0.94
+          ],
+          [
+            "math.GN",
+            367,
+            358,
+            0.98
+          ],
+          [
+            "nlin.PS",
+            534,
+            522,
+            0.98
+          ],
+          [
+            "physics.space-ph",
+            609,
+            609,
+            1.0
+          ],
+          [
+            "physics.ins-det",
+            1724,
+            1740,
+            1.01
+          ],
+          [
+            "hep-ex",
+            3286,
+            3364,
+            1.02
+          ],
+          [
+            "nucl-ex",
+            1364,
+            1401,
+            1.03
+          ],
+          [
+            "cs.IT",
+            3545,
+            3656,
+            1.03
+          ],
+          [
+            "hep-ph",
+            7651,
+            8232,
+            1.08
+          ],
+          [
+            "cond-mat.quant-gas",
+            1423,
+            1534,
+            1.08
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_15": {
+      "label": "Group composition shift: CS to ~47% of arXiv",
+      "content": "At the group level, computer science has pulled away from physics as arXiv's largest field. Comparing the first 12 months (2022) to the trailing 12 months (2024-10..2025-09): CS rose from 36.7% to 46.7% of all submissions (+9.9 percentage points, growing 1.85x in volume), while physics fell from 34.9% to 28.9% (-6.0pp) and math from 17.7% to 14.6% (-3.2pp) despite both still growing ~20% in absolute terms. Every non-CS group lost share simply because CS grew so much faster. The smaller groups (econ, q-fin, q-bio) grew a respectable ~50-60% but from tiny bases (each well under 1% of total). The story is not that other fields shrank — it's that CS ate the growth.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_category_boom.py",
+        "lines": [
+          110,
+          130
+        ],
+        "output": "cs: 36.7% -> 46.7% (+9.9pp); vol 127087 -> 235040 (x1.85)\nphysics: 34.9% -> 28.9% (-6.0pp); vol 120873 -> 145792 (x1.21)\nmath: 17.7% -> 14.6% (-3.2pp); vol 61315 -> 73331 (x1.20)\neess: 4.7% -> 4.3%; stat: 3.8% -> 3.3%; q-bio: 1.0% -> 1.1%; q-fin/econ ~0.6%"
+      },
+      "data_table": {
+        "description": "Group share of total submissions: first 12mo (2022) vs trailing 12mo, plus volume growth multiple",
+        "columns": [
+          "group",
+          "share_2022_pct",
+          "share_recent_pct",
+          "delta_pp",
+          "growth_x"
+        ],
+        "rows": [
+          [
+            "cs",
+            36.7,
+            46.7,
+            9.9,
+            1.85
+          ],
+          [
+            "physics",
+            34.9,
+            28.9,
+            -6.0,
+            1.21
+          ],
+          [
+            "math",
+            17.7,
+            14.6,
+            -3.2,
+            1.2
+          ],
+          [
+            "eess",
+            4.7,
+            4.3,
+            -0.5,
+            1.31
+          ],
+          [
+            "stat",
+            3.8,
+            3.3,
+            -0.5,
+            1.27
+          ],
+          [
+            "q-bio",
+            1.0,
+            1.1,
+            0.0,
+            1.51
+          ],
+          [
+            "q-fin",
+            0.6,
+            0.6,
+            0.0,
+            1.51
+          ],
+          [
+            "econ",
+            0.5,
+            0.6,
+            0.1,
+            1.6
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05",
+        "det_06"
+      ]
+    },
+    "ana_16": {
+      "label": "CS share climbed from 34% to nearly 51% per month",
+      "content": "Tracked monthly, CS's share of all arXiv submissions rose from 33.8% in January 2022 to 47.1% in September 2025, peaking at 50.8% in May 2025 — the first time computer science accounted for over half of everything posted to arXiv in a month. The climb is steady but seasonal (CS spikes in conference-deadline months), crossing 40% durably in 2024 and brushing 50% in 2025. This monthly series is the cleanest visualization of CS's takeover and the AI-boom thesis from det_05.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_category_boom.py",
+        "lines": [
+          132,
+          142
+        ],
+        "output": "2022-01: 33.8% ... 2024-01: 39.8% ... 2024-07: 44.6% ... 2025-01: 42.6% ... 2025-09: 47.1%\nCS share min=33.8% max=50.8%"
+      },
+      "data_table": {
+        "description": "CS group share of monthly submissions, 2022-01 to 2025-09 (% of all submissions that month)",
+        "columns": [
+          "month",
+          "cs_share_pct"
+        ],
+        "rows": [
+          [
+            "2022-01",
+            33.8
+          ],
+          [
+            "2022-02",
+            36.2
+          ],
+          [
+            "2022-03",
+            37.0
+          ],
+          [
+            "2022-04",
+            37.3
+          ],
+          [
+            "2022-05",
+            38.5
+          ],
+          [
+            "2022-06",
+            37.2
+          ],
+          [
+            "2022-07",
+            36.4
+          ],
+          [
+            "2022-08",
+            34.5
+          ],
+          [
+            "2022-09",
+            35.6
+          ],
+          [
+            "2022-10",
+            40.9
+          ],
+          [
+            "2022-11",
+            37.4
+          ],
+          [
+            "2022-12",
+            34.5
+          ],
+          [
+            "2023-01",
+            33.9
+          ],
+          [
+            "2023-02",
+            39.1
+          ],
+          [
+            "2023-03",
+            39.9
+          ],
+          [
+            "2023-04",
+            39.7
+          ],
+          [
+            "2023-05",
+            44.3
+          ],
+          [
+            "2023-06",
+            41.1
+          ],
+          [
+            "2023-07",
+            38.0
+          ],
+          [
+            "2023-08",
+            41.0
+          ],
+          [
+            "2023-09",
+            40.3
+          ],
+          [
+            "2023-10",
+            43.2
+          ],
+          [
+            "2023-11",
+            40.9
+          ],
+          [
+            "2023-12",
+            40.9
+          ],
+          [
+            "2024-01",
+            39.8
+          ],
+          [
+            "2024-02",
+            46.2
+          ],
+          [
+            "2024-03",
+            45.7
+          ],
+          [
+            "2024-04",
+            44.7
+          ],
+          [
+            "2024-05",
+            44.5
+          ],
+          [
+            "2024-06",
+            46.9
+          ],
+          [
+            "2024-07",
+            44.6
+          ],
+          [
+            "2024-08",
+            43.2
+          ],
+          [
+            "2024-09",
+            43.9
+          ],
+          [
+            "2024-10",
+            47.3
+          ],
+          [
+            "2024-11",
+            43.3
+          ],
+          [
+            "2024-12",
+            44.2
+          ],
+          [
+            "2025-01",
+            42.6
+          ],
+          [
+            "2025-02",
+            49.4
+          ],
+          [
+            "2025-03",
+            46.9
+          ],
+          [
+            "2025-04",
+            45.4
+          ],
+          [
+            "2025-05",
+            50.8
+          ],
+          [
+            "2025-06",
+            49.0
+          ],
+          [
+            "2025-07",
+            44.4
+          ],
+          [
+            "2025-08",
+            48.0
+          ],
+          [
+            "2025-09",
+            47.1
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05",
+        "det_06"
+      ]
+    },
+    "ana_17": {
+      "label": "The #1 category within each of the 8 groups",
+      "content": "Each group has its own leading category, and the leaders themselves reflect the AI tilt. In CS it is cs.LG (134,903); in physics quant-ph (47,902); in math math.OC, Optimization (21,985); in stat it is stat.ML, Machine Learning Statistics (20,841) — i.e. the most ML-adjacent statistics subfield leads its own group. eess is led by eess.SY (Systems, 21,121), q-bio by q-bio.QM (Quantitative Methods, 4,344), and econ.GN and q-fin.EC both top their small groups at 3,499 each (they are the same cross-listed papers). Even outside the CS archive, the within-group leaders skew toward computational/quantitative methods.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_category_boom.py",
+        "lines": [
+          144,
+          152
+        ],
+        "output": "cs: #1 cs.LG (134,903)\neess: #1 eess.SY (21,121)\nmath: #1 math.OC (21,985)\nphysics: #1 quant-ph (47,902)\nq-bio: #1 q-bio.QM (4,344)\nstat: #1 stat.ML (20,841)\necon: #1 econ.GN (3,499); q-fin: #1 q-fin.EC (3,499)"
+      },
+      "data_table": {
+        "description": "Leading category within each of the 8 groups, by cumulative submissions",
+        "columns": [
+          "group",
+          "top_category",
+          "submissions"
+        ],
+        "rows": [
+          [
+            "cs",
+            "cs.LG",
+            134903
+          ],
+          [
+            "physics",
+            "quant-ph",
+            47902
+          ],
+          [
+            "math",
+            "math.OC",
+            21985
+          ],
+          [
+            "eess",
+            "eess.SY",
+            21121
+          ],
+          [
+            "stat",
+            "stat.ML",
+            20841
+          ],
+          [
+            "q-bio",
+            "q-bio.QM",
+            4344
+          ],
+          [
+            "econ",
+            "econ.GN",
+            3499
+          ],
+          [
+            "q-fin",
+            "q-fin.EC",
+            3499
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_18": {
+      "label": "Archive ranking: cs dwarfs all 19 others",
+      "content": "At the archive level (20 archives), computer science is overwhelmingly the largest, with 667,050 submissions — 42.5% of the 1.57M total. Math is a distant second at 251,434 (16.0%), then cond-mat (108,328, 6.9%), physics (102,202, 6.5%) and astro-ph (96,520, 6.1%). The bottom of the table holds specialized physics archives like hep-lat (4,303), nucl-ex (4,975) and nlin (8,223). The cs archive alone is larger than the bottom 16 archives combined.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_archive_and_anomalies.py",
+        "lines": [
+          18,
+          28
+        ],
+        "output": "cs: 667,050 (42.5%)\nmath: 251,434 (16.0%)\ncond-mat: 108,328 (6.9%)\nphysics: 102,202 (6.5%)\nastro-ph: 96,520 (6.1%)\n... hep-lat: 4,303 (0.3%)"
+      },
+      "data_table": {
+        "description": "All 20 archives by cumulative submissions, 2022-01..2025-09",
+        "columns": [
+          "archive",
+          "submissions",
+          "pct_of_total"
+        ],
+        "rows": [
+          [
+            "cs",
+            667050,
+            42.5
+          ],
+          [
+            "math",
+            251434,
+            16.0
+          ],
+          [
+            "cond-mat",
+            108328,
+            6.9
+          ],
+          [
+            "physics",
+            102202,
+            6.5
+          ],
+          [
+            "astro-ph",
+            96520,
+            6.1
+          ],
+          [
+            "eess",
+            70577,
+            4.5
+          ],
+          [
+            "stat",
+            54122,
+            3.4
+          ],
+          [
+            "quant-ph",
+            47902,
+            3.0
+          ],
+          [
+            "hep-ph",
+            28912,
+            1.8
+          ],
+          [
+            "hep-th",
+            28025,
+            1.8
+          ],
+          [
+            "gr-qc",
+            24850,
+            1.6
+          ],
+          [
+            "math-ph",
+            17577,
+            1.1
+          ],
+          [
+            "q-bio",
+            16533,
+            1.1
+          ],
+          [
+            "hep-ex",
+            11729,
+            0.7
+          ],
+          [
+            "q-fin",
+            9983,
+            0.6
+          ],
+          [
+            "nucl-th",
+            9542,
+            0.6
+          ],
+          [
+            "nlin",
+            8223,
+            0.5
+          ],
+          [
+            "econ",
+            8165,
+            0.5
+          ],
+          [
+            "nucl-ex",
+            4975,
+            0.3
+          ],
+          [
+            "hep-lat",
+            4303,
+            0.3
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_19": {
+      "label": "Archive growth: cs +85%, hep-ex/nucl-ex flat",
+      "content": "Ranking the 20 archives by growth (trailing-12mo vs 2022), cs leads decisively at +85% (1.85x), followed by the small applied groups econ (+60%), q-bio (+51%) and q-fin (+51%), and quant-ph (+40%). The slowest-growing are the classical experimental-physics archives: hep-ex (+2%), nucl-ex (+3%), hep-ph (+8%) and hep-th (+12%). The pattern reinforces the group-level story: computational and AI-adjacent fields are surging while established high-energy/nuclear physics is roughly flat.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_archive_and_anomalies.py",
+        "lines": [
+          30,
+          40
+        ],
+        "output": "cs: 127087 -> 235040 (x1.85, +85%)\necon: x1.60; q-bio: x1.51; q-fin: x1.51; quant-ph: x1.40\n...\nhep-ph: x1.08 (+8%); nucl-ex: x1.03 (+3%); hep-ex: x1.02 (+2%)"
+      },
+      "data_table": {
+        "description": "All 20 archives: growth multiple, trailing-12mo vs 2022 annual",
+        "columns": [
+          "archive",
+          "annual_2022",
+          "trailing_12mo",
+          "growth_x"
+        ],
+        "rows": [
+          [
+            "cs",
+            127087,
+            235040,
+            1.85
+          ],
+          [
+            "econ",
+            1742,
+            2793,
+            1.6
+          ],
+          [
+            "q-bio",
+            3566,
+            5400,
+            1.51
+          ],
+          [
+            "q-fin",
+            2157,
+            3253,
+            1.51
+          ],
+          [
+            "quant-ph",
+            10847,
+            15169,
+            1.4
+          ],
+          [
+            "eess",
+            16351,
+            21481,
+            1.31
+          ],
+          [
+            "stat",
+            13014,
+            16590,
+            1.27
+          ],
+          [
+            "physics",
+            24670,
+            30262,
+            1.23
+          ],
+          [
+            "math-ph",
+            4217,
+            5143,
+            1.22
+          ],
+          [
+            "astro-ph",
+            23621,
+            28717,
+            1.22
+          ],
+          [
+            "nucl-th",
+            2329,
+            2801,
+            1.2
+          ],
+          [
+            "cond-mat",
+            26469,
+            31726,
+            1.2
+          ],
+          [
+            "math",
+            61315,
+            73331,
+            1.2
+          ],
+          [
+            "gr-qc",
+            6084,
+            7276,
+            1.2
+          ],
+          [
+            "nlin",
+            2044,
+            2394,
+            1.17
+          ],
+          [
+            "hep-lat",
+            1144,
+            1299,
+            1.14
+          ],
+          [
+            "hep-th",
+            7147,
+            8008,
+            1.12
+          ],
+          [
+            "hep-ph",
+            7651,
+            8232,
+            1.08
+          ],
+          [
+            "nucl-ex",
+            1364,
+            1401,
+            1.03
+          ],
+          [
+            "hep-ex",
+            3286,
+            3364,
+            1.02
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_20": {
+      "label": "cs archive is 2.65x larger than #2 math",
+      "content": "The dominance of computer science is best summarized by one ratio: the cs archive (667,050 submissions, 42.5% of the total) is 2.65 times larger than the second-place math archive (251,434). No other field comes close — CS now produces more papers than the next three archives (math, cond-mat, physics) combined. This single figure captures how thoroughly the AI era has reshaped arXiv's composition.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_archive_and_anomalies.py",
+        "lines": [
+          42,
+          46
+        ],
+        "output": "cs archive: 667,050 = 42.5% of all submissions\ncs vs #2 (math): 2.65x larger"
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_21": {
+      "label": "ANOMALY: 95% one-month cliff confirms 2025-10 is partial",
+      "content": "Inspecting Sep vs Oct 2025 archive-by-archive makes the truncation unambiguous: every single archive drops ~95% from September to October 2025 (cs 22,458 to 1,083; math 6,929 to 347; astro-ph 3,041 to 124). The total falls from 47,714 to 2,175, a 95% drop. A uniform 95% collapse across all 20 archives in one month is not a research event — it is a data-extraction cutoff. This is the concrete evidence that 2025-10 must be excluded from the per-category and per-archive trend analyses (det_08).",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_archive_and_anomalies.py",
+        "lines": [
+          48,
+          60
+        ],
+        "output": "cs: 22458 -> 1083 (95.2% drop)\nmath: 6929 -> 347\nastro-ph: 3041 -> 124\nTotal 2025-09 = 47714, total 2025-10 = 2175 (95% lower)"
+      },
+      "data_table": {
+        "description": "Top archives, Sep 2025 vs partial Oct 2025, showing uniform ~95% truncation drop",
+        "columns": [
+          "archive",
+          "sep_2025",
+          "oct_2025",
+          "drop_pct"
+        ],
+        "rows": [
+          [
+            "cs",
+            22458,
+            1083,
+            95.2
+          ],
+          [
+            "math",
+            6929,
+            347,
+            95.0
+          ],
+          [
+            "astro-ph",
+            3041,
+            124,
+            95.9
+          ],
+          [
+            "cond-mat",
+            2871,
+            111,
+            96.1
+          ],
+          [
+            "physics",
+            2791,
+            108,
+            96.1
+          ],
+          [
+            "eess",
+            2013,
+            96,
+            95.2
+          ],
+          [
+            "stat",
+            1461,
+            76,
+            94.8
+          ],
+          [
+            "quant-ph",
+            1432,
+            58,
+            95.9
+          ]
+        ]
+      },
+      "based_on": [
+        "det_08",
+        "det_10"
+      ]
+    },
+    "ana_22": {
+      "label": "CS still accelerating in 2025 (no AI-slop slowdown visible)",
+      "content": "Despite the October-2025 moderation crackdown on CS review/position papers (det_08), the cs archive shows no slowdown through the complete data (2025-09): comparing Jan-Sep 2024 (147,686) to Jan-Sep 2025 (179,725) gives +21.7% year-over-year, well above arXiv's overall growth rate. Monthly cs counts in 2025 stay strong (e.g. May 22,344, September 22,458). Because the per-category files end at the partial 2025-10, the data cannot yet show whether the October-2025 policy bent the curve — the crackdown's effect, if any, lies just beyond the usable data window. Any apparent late-tail dip is the truncation (ana_21), not the policy.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_archive_and_anomalies.py",
+        "lines": [
+          62,
+          76
+        ],
+        "output": "cs 2025 monthly: 2025-05: 23344; 2025-09: 22458\ncs Jan-Sep 2024 = 147,686; Jan-Sep 2025 = 179,725; YoY +21.7%"
+      },
+      "data_table": {
+        "description": "cs archive monthly submissions, 2025 complete months (2025-10 excluded as partial)",
+        "columns": [
+          "month",
+          "submissions"
+        ],
+        "rows": [
+          [
+            "2025-01",
+            15409
+          ],
+          [
+            "2025-02",
+            19530
+          ],
+          [
+            "2025-03",
+            20794
+          ],
+          [
+            "2025-04",
+            18003
+          ],
+          [
+            "2025-05",
+            23344
+          ],
+          [
+            "2025-06",
+            21892
+          ],
+          [
+            "2025-07",
+            19407
+          ],
+          [
+            "2025-08",
+            18888
+          ],
+          [
+            "2025-09",
+            22458
+          ]
+        ]
+      },
+      "based_on": [
+        "det_08"
+      ]
+    },
+    "ana_23": {
+      "label": "Mirrored cross-listings inflate apparent category counts",
+      "content": "Several arXiv categories are cross-listing mirrors of each other and carry near-identical counts, which the Editor should not double-count: cs.IT and math.IT are identical (13,671 each — Information Theory is jointly owned by CS and math), cs.SY and eess.SY are effectively the same (21,134 vs 21,121, Systems & Control), and q-fin.EC and econ.GN are identical (3,499 each, the General Economics / Economics cross-list). By contrast stat.ML (20,841) and cs.LG (134,903) are related ML categories but are NOT mirrors. This is a structural quirk of arXiv's taxonomy rather than a data error, but it means category-level totals overlap and group totals are the cleaner unit for composition claims.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/03_archive_and_anomalies.py",
+        "lines": [
+          78,
+          88
+        ],
+        "output": "cs.IT=13,671  vs  math.IT=13,671\ncs.SY=21,134  vs  eess.SY=21,121\nq-fin.EC=3,499  vs  econ.GN=3,499\nstat.ML=20,841  vs  cs.LG=134,903"
+      },
+      "data_table": {
+        "description": "Mirrored cross-listed category pairs and their near-identical cumulative counts",
+        "columns": [
+          "category_a",
+          "count_a",
+          "category_b",
+          "count_b"
+        ],
+        "rows": [
+          [
+            "cs.IT",
+            13671,
+            "math.IT",
+            13671
+          ],
+          [
+            "cs.SY",
+            21134,
+            "eess.SY",
+            21121
+          ],
+          [
+            "q-fin.EC",
+            3499,
+            "econ.GN",
+            3499
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_24": {
+      "label": "Into 2026: arXiv's first 30,000-submission month",
+      "content": "The full-history monthly file runs to May 2026, six months past where the per-category data stops, and it shows no slowdown. arXiv took in 30,045 submissions in March 2026 — its first month ever above 30,000 and an all-time monthly record. Across the like-for-like January–May window, total submissions rose 16.0% year-over-year (111,854 in 2025 to 129,722 in 2026). The AI wave that this story traces has not crested into 2026; if anything the monthly record was set in 2026. (May 2026 is a month still in progress as of the 2026-05-25 snapshot, so its 23,904 count is partial and should not be read as a dip.)",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_into_2026.py",
+        "lines": [
+          12,
+          35
+        ],
+        "output": "all-time monthly record: 2026-03 30045\n2026 months: 2026-01 23286, 2026-02 24290, 2026-03 30045, 2026-04 28197, 2026-05 23904\nJan-May total: 2025=111854 2026=129722 YoY=16.0%"
+      },
+      "data_table": {
+        "description": "Total monthly arXiv submissions (all archives), 2023-01 to 2026-05. 2026-05 is a partial, in-progress month.",
+        "columns": [
+          "month",
+          "submissions"
+        ],
+        "rows": [
+          [
+            "2023-01",
+            13870
+          ],
+          [
+            "2023-02",
+            14863
+          ],
+          [
+            "2023-03",
+            18249
+          ],
+          [
+            "2023-04",
+            15010
+          ],
+          [
+            "2023-05",
+            20092
+          ],
+          [
+            "2023-06",
+            17848
+          ],
+          [
+            "2023-07",
+            16897
+          ],
+          [
+            "2023-08",
+            16912
+          ],
+          [
+            "2023-09",
+            17453
+          ],
+          [
+            "2023-10",
+            20710
+          ],
+          [
+            "2023-11",
+            18841
+          ],
+          [
+            "2023-12",
+            17748
+          ],
+          [
+            "2024-01",
+            18085
+          ],
+          [
+            "2024-02",
+            19481
+          ],
+          [
+            "2024-03",
+            20332
+          ],
+          [
+            "2024-04",
+            19761
+          ],
+          [
+            "2024-05",
+            21076
+          ],
+          [
+            "2024-06",
+            20099
+          ],
+          [
+            "2024-07",
+            21794
+          ],
+          [
+            "2024-08",
+            17451
+          ],
+          [
+            "2024-09",
+            20569
+          ],
+          [
+            "2024-10",
+            24226
+          ],
+          [
+            "2024-11",
+            19951
+          ],
+          [
+            "2024-12",
+            21206
+          ],
+          [
+            "2025-01",
+            19407
+          ],
+          [
+            "2025-02",
+            21321
+          ],
+          [
+            "2025-03",
+            24391
+          ],
+          [
+            "2025-04",
+            21857
+          ],
+          [
+            "2025-05",
+            24878
+          ],
+          [
+            "2025-06",
+            24129
+          ],
+          [
+            "2025-07",
+            23787
+          ],
+          [
+            "2025-08",
+            21825
+          ],
+          [
+            "2025-09",
+            26646
+          ],
+          [
+            "2025-10",
+            27692
+          ],
+          [
+            "2025-11",
+            23478
+          ],
+          [
+            "2025-12",
+            25075
+          ],
+          [
+            "2026-01",
+            23286
+          ],
+          [
+            "2026-02",
+            24290
+          ],
+          [
+            "2026-03",
+            30045
+          ],
+          [
+            "2026-04",
+            28197
+          ],
+          [
+            "2026-05",
+            23904
+          ]
+        ]
+      },
+      "based_on": [
+        "det_08"
+      ]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "TWO DIFFERENT 2025-10 behaviors. In the per-category and per-archive files, 2025-10 is a partial/incomplete extraction month (~95% below September across every archive; total 2,175 vs 47,714) and is EXCLUDED from all growth/trend/ranking claims here (last complete month = 2025-09). In the full-history get_monthly_submissions.csv, 2025-10 is complete and normal (27,692) and the series continues to 2026-05. Do not conflate the two."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "The downloads file (get_monthly_downloads.csv) has a 13-month gap: it jumps from 2023-11 straight to 2025-01, so December 2023 and ALL of 2024 are missing. Annual download charts must show or omit this gap rather than imply a 2024 collapse. 2023 also has only 11 of 12 months. The full-history submissions file has NO such gap."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Submission counts measure research OUTPUT / circulation, not peer-reviewed publication (arXiv is a moderated preprint server, not a journal; det_02). The endorsement and moderation systems (det_03) and the early-2025 AI-slop crackdown / Oct-2025 CS review-paper restriction (det_08) can bend the curve via policy rather than researcher behavior."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "historical_delta is retroactive recategorization noise (min -105, max 0, mean -5.8, |delta|>50 in only 0.2% of months); do not plot or interpret it as signal (det_10)."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "Several categories are cross-listing mirrors with near-identical counts (cs.IT=math.IT; cs.SY=eess.SY; q-fin.EC=econ.GN). Summing categories double-counts these; group-level totals are the cleaner unit for composition/share claims. The 2026 partial year is excluded from all annual claims."
+    },
+    {
+      "id": "ana_caveat_06",
+      "content": "The full-history submissions file extends to 2026-05, but May 2026 is an in-progress month as of the 2026-05-25 snapshot; its count (23,904) is partial and must not be read as a decline. The all-time record month is 2026-03 (30,045)."
+    }
+  ]
+}

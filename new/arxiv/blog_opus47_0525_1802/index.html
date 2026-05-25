@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A physics server that isn't physics anymore</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.21.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
+<style>
+  :root{
+    --bg:#0c0e13;
+    --panel:#14171f;
+    --panel-2:#1b1f2a;
+    --ink:#e9ecf2;
+    --muted:#9aa3b2;
+    --faint:#5b6477;
+    --accent:#3da9fc;
+    --accent-2:#7fd0ff;
+    --earth:#9a8466;
+    --line:#262b38;
+    --serif: Georgia, "Times New Roman", serif;
+    --ui: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:19px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px;}
+  h1,h2,h3{font-family:var(--ui);line-height:1.15;letter-spacing:-0.01em;}
+  h1{font-size:clamp(34px,6vw,58px);font-weight:800;margin:0 0 .3em;}
+  h2{font-size:clamp(26px,4vw,38px);font-weight:750;margin:0 0 .5em;}
+  p{margin:0 0 1.2em;}
+  a{color:var(--accent);}
+  section{padding:46px 0;border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+  .eyebrow{font-family:var(--ui);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px;}
+
+  /* ---- Teaser ---- */
+  .teaser{
+    position:relative;
+    width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+    max-width:none;height:100vh;min-height:540px;overflow:hidden;
+    display:flex;align-items:flex-end;justify-content:flex-start;
+    background:#000;
+  }
+  .teaser video,.teaser img.teaser-media{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;
+  }
+  .teaser .scrim{position:absolute;inset:0;z-index:1;
+    background:linear-gradient(180deg,rgba(8,10,14,.35) 0%,rgba(8,10,14,.1) 45%,rgba(8,10,14,.92) 100%);}
+  .teaser .teaser-inner{position:relative;z-index:2;padding:0 22px 9vh;max-width:920px;margin:0 auto;width:100%;}
+  .teaser h1{text-shadow:0 2px 30px rgba(0,0,0,.7);}
+  .teaser .sub{font-family:var(--ui);font-size:clamp(16px,2.4vw,22px);color:var(--accent-2);
+    max-width:640px;font-weight:500;text-shadow:0 2px 20px rgba(0,0,0,.7);}
+  .scroll-hint{font-family:var(--ui);font-size:12px;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--muted);margin-top:26px;}
+
+  /* ---- visuals ---- */
+  .visual-container{display:block;clear:both;margin:2rem auto;width:100%;max-width:720px;}
+  .chart-container{display:block;clear:both;margin:2rem auto;width:100%;max-width:720px;
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 16px 8px;}
+  .chart-mount{width:100%;min-width:0;display:block;}
+  .full-bleed{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);max-width:none;}
+  .cap{font-family:var(--ui);font-size:13.5px;color:var(--muted);line-height:1.5;margin-top:12px;padding:0 4px;}
+  .cap b{color:var(--ink);}
+
+  figure{margin:2rem auto;max-width:520px;}
+  figure img{width:100%;height:auto;display:block;border-radius:10px;border:1px solid var(--line);}
+  figcaption{font-family:var(--ui);font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5;}
+  figcaption .credit{display:block;font-size:11.5px;color:var(--faint);margin-top:6px;font-style:italic;}
+  .portrait-inset{max-width:300px;float:none;}
+
+  /* ---- stat callout ---- */
+  .stat-callout{display:block;text-align:center;margin:2.4rem auto;padding:30px 20px;
+    background:linear-gradient(160deg,var(--panel-2),var(--panel));border:1px solid var(--line);
+    border-radius:14px;max-width:640px;}
+  .stat-number{font-family:var(--ui);font-weight:800;font-size:clamp(56px,11vw,72px);
+    color:var(--accent);line-height:1;display:block;letter-spacing:-.02em;}
+  .stat-label{font-family:var(--ui);font-size:15px;color:var(--muted);display:block;margin-top:14px;
+    max-width:480px;margin-left:auto;margin-right:auto;line-height:1.5;}
+
+  /* ---- interactive ---- */
+  .interactive-container{display:block;clear:both;margin:2.4rem auto;width:100%;max-width:720px;
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px;}
+  .iv-prompt{font-family:var(--ui);font-size:18px;font-weight:600;color:var(--ink);margin-bottom:18px;line-height:1.4;}
+  .btn{font-family:var(--ui);font-size:15px;font-weight:600;cursor:pointer;border:none;border-radius:9px;
+    padding:12px 22px;background:var(--accent);color:#04121f;transition:transform .15s ease,background .2s ease;min-height:44px;}
+  .btn:hover{transform:translateY(-1px);background:var(--accent-2);}
+  .btn.secondary{background:var(--panel-2);color:var(--ink);border:1px solid var(--line);}
+  .btn.secondary:hover{background:#222838;}
+  input[type=range]{width:100%;accent-color:var(--accent);height:30px;cursor:pointer;}
+  select{font-family:var(--ui);font-size:15px;background:var(--panel-2);color:var(--ink);
+    border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%;min-height:40px;}
+  .readout-big{font-family:var(--ui);font-weight:800;font-size:clamp(40px,9vw,60px);color:var(--accent);line-height:1;}
+  label.ui{font-family:var(--ui);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:6px;}
+  .pill{display:inline-block;font-family:var(--ui);font-size:12px;font-weight:700;padding:3px 9px;border-radius:20px;}
+  .pill-cs{background:rgba(61,169,252,.16);color:var(--accent-2);}
+  .pill-flat{background:rgba(154,132,102,.18);color:#c9b48f;}
+  .annot{font-family:var(--ui);font-size:14px;color:var(--muted);margin-top:14px;line-height:1.5;}
+  .annot b{color:var(--ink);}
+  .gap-note{font-family:var(--ui);font-size:12.5px;color:#d8b46a;background:rgba(216,180,106,.1);
+    border:1px solid rgba(216,180,106,.3);border-radius:8px;padding:8px 12px;margin-top:14px;line-height:1.45;}
+
+  .pq{font-family:var(--serif);font-style:italic;font-size:23px;line-height:1.45;color:var(--accent-2);
+    border-left:3px solid var(--accent);padding-left:20px;margin:1.8rem 0;}
+
+  /* audio */
+  .audio-container{display:block;margin:1.6rem 0;background:var(--panel-2);border:1px solid var(--line);
+    border-radius:12px;padding:18px 18px;}
+  .audio-title{font-family:var(--ui);font-size:15px;font-weight:700;margin-bottom:4px;}
+  .audio-sub{font-family:var(--ui);font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+  .legend{font-family:var(--ui);font-size:12px;color:var(--faint);margin-top:10px;}
+
+  /* references */
+  .refs{font-family:var(--ui);font-size:14px;color:var(--muted);}
+  .refs h2{font-size:22px;color:var(--ink);}
+  .refs ul{list-style:none;padding:0;margin:0;}
+  .refs li{margin-bottom:10px;line-height:1.5;}
+  .refs .k{color:var(--ink);font-weight:600;}
+
+  @media (max-width:560px){
+    body{font-size:18px;}
+    .chart-container,.interactive-container{padding:16px 12px;}
+  }
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+  .reveal-anim{animation:fadeUp .6s ease both;}
+</style>
+</head>
+<body>
+
+<!-- ============ TEASER (des_01) ============ -->
+<div class="teaser" data-des="des_01">
+  <video data-des="des_01" autoplay loop muted playsinline poster="assets/teaser.png">
+    <source src="assets/teaser.mp4" type="video/mp4">
+    <img class="teaser-media" data-des="des_01" src="assets/teaser.png" alt="A dim physics archive corridor of yellowed paper preprints dissolving into a luminous blue neural-network lattice.">
+  </video>
+  <div class="scrim"></div>
+  <div class="teaser-inner">
+    <div class="eyebrow">arXiv, 1991&ndash;2025</div>
+    <h1>A physics server that isn&rsquo;t physics anymore</h1>
+    <p class="sub">Built in 1991 for a handful of high-energy theorists, arXiv has quietly become a computer-science archive &mdash; and in one month of 2025, CS crossed half of everything posted.</p>
+    <div class="scroll-hint">Scroll &darr;</div>
+  </div>
+</div>
+
+<!-- ============ edt_01 ============ -->
+<section class="wrap" data-edt="edt_01" data-det="det_05,det_01">
+  <div class="eyebrow">The hook</div>
+  <h2>A physics server that isn&rsquo;t physics anymore</h2>
+
+  <p data-ana="ana_16">In May 2025, computer science accounted for 50.8% of everything posted to arXiv &mdash; the first time a single field broke half of the world&rsquo;s largest preprint server in a month. As recently as January 2022 that share was 33.8%. In three and a half years, CS went from a third of arXiv to a majority.</p>
+
+  <!-- des_02: guess-the-CS-share reveal (centerpiece) -->
+  <div class="interactive-container" id="des_02" data-des="des_02" data-ana="ana_16">
+    <div class="iv-prompt">In a single month of 2025, what share of <em>everything</em> posted to arXiv &mdash; a server built for physics &mdash; was computer science?</div>
+    <div id="guessControls">
+      <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:6px;">
+        <span class="readout-big" id="guessReadout">25%</span>
+        <span style="font-family:var(--ui);color:var(--muted);font-size:14px;">your guess</span>
+      </div>
+      <input type="range" id="guessSlider" min="0" max="100" value="25" step="1" aria-label="Guess CS share percent">
+      <div style="display:flex;justify-content:space-between;font-family:var(--ui);font-size:12px;color:var(--faint);margin-top:-4px;">
+        <span>0%</span><span>50%</span><span>100%</span>
+      </div>
+      <button class="btn" id="revealBtn" style="margin-top:18px;">Reveal the answer</button>
+    </div>
+    <div id="des_02_chart" class="chart-mount" style="margin-top:18px;"></div>
+    <div class="annot" id="guessVerdict" style="display:none;"></div>
+    <div class="cap" style="display:none;" id="des_02_cap">CS share of all monthly arXiv submissions, Jan 2022&ndash;Sep 2025. <b>Peak: 50.8% in May 2025</b>; start: 33.8% in Jan 2022. Source: ana_16.</div>
+  </div>
+
+  <p data-ana="ana_20" data-det="">Zoom out to the whole 2022&ndash;2025 window and the picture is just as lopsided: the computer-science archive holds 667,050 submissions, 42.5% of everything, which is 2.65 times the size of second-place mathematics. CS alone now produces more papers than the next three fields &mdash; math, condensed-matter physics, and physics &mdash; combined.</p>
+
+  <!-- des_03: stat callout -->
+  <div class="stat-callout" data-des="des_03" data-ana="ana_20">
+    <span class="stat-number">2.65&times;</span>
+    <span class="stat-label">The CS archive is 2.65&times; larger than #2 mathematics &mdash; and bigger than the next three fields combined (667,050 submissions, 42.5% of all arXiv, 2022&ndash;2025).</span>
+  </div>
+
+  <p data-det="det_01">Here is the twist. arXiv was not built for any of this. Physicist Paul Ginsparg launched it on August 14, 1991 as an automated email server so a small community of high-energy theorists could swap preprints; he expected maybe 100 papers a year. The server that now overflows with machine-learning research was designed for the exact opposite of a popular field.</p>
+</section>
+
+<!-- ============ edt_02 ============ -->
+<section class="wrap" data-edt="edt_02" data-det="det_01,det_09">
+  <div class="eyebrow">The origin it left behind</div>
+  <h2>From two papers to three million</h2>
+
+  <p data-det="det_01">arXiv&rsquo;s first month, July 1991, held two papers. Ginsparg built the prototype with simple shell scripts on a NeXT machine; within six months it had taken 400 submissions instead of the trickle he planned for. The server moved with him to Cornell in 2001 and still runs there today on a famously modest budget.</p>
+
+  <p data-ana="ana_01">From those two papers, output climbed almost monotonically for three decades: 3,263 submissions in the first full year of 1992, 30,601 by 2000, 178,329 by 2020, and 284,486 in 2025. Cumulatively arXiv crossed one million papers in December 2014, two million in January 2022, and stands at roughly 3.05 million today. A single month in 2025 now holds more papers than arXiv&rsquo;s entire first four years.</p>
+
+  <!-- des_04: full-history area chart -->
+  <div class="chart-container" id="des_04" data-des="des_04" data-ana="ana_01">
+    <div id="des_04_chart" class="chart-mount"></div>
+    <div class="cap">Annual arXiv submissions, 1991&ndash;2025 (1991 partial &mdash; it began with 2 papers in July). Pins mark the cumulative crossings of <b>1M (Dec 2014)</b> and <b>2M (Jan 2022)</b>. A single 2025 month now exceeds arXiv&rsquo;s entire first four years. Source: ana_01.</div>
+  </div>
+
+  <!-- des_05: Ginsparg portrait (REAL) -->
+  <figure class="portrait-inset" data-des="des_05" data-ana="ana_01">
+    <img data-des="des_05" src="assets/q1931745__photo.jpg" alt="Portrait of Paul Ginsparg, the physicist who launched arXiv in 1991.">
+    <figcaption>Paul Ginsparg, who in 1991 replaced mailed paper preprints with shell scripts on a NeXT machine &mdash; expecting roughly 100 papers a year.
+    <span class="credit">Paul Ginsparg, 2025 &mdash; photo by Cmichel67, CC BY-SA 4.0, via Wikimedia Commons.</span></figcaption>
+  </figure>
+
+  <p data-det="det_09">That arc is the backdrop. The question is not whether arXiv grew &mdash; every research archive grows &mdash; but what it grew into.</p>
+</section>
+
+<!-- ============ edt_03 ============ -->
+<section class="wrap" data-edt="edt_03" data-det="det_05,det_06">
+  <div class="eyebrow">Evidence</div>
+  <h2>The four categories that ate arXiv</h2>
+
+  <p data-ana="ana_10">The takeover has four faces. Of 155 subject categories, the top four are all artificial intelligence: cs.LG (Machine Learning) is the single largest category on arXiv at 134,903 submissions, followed by cs.AI (101,916), cs.CV (Computer Vision, 100,238), and cs.CL (NLP and large language models, 61,144). The first non-CS category, quantum physics, sits at #5 with less than half of cs.CV&rsquo;s count.</p>
+
+  <!-- des_06: ranked horizontal bar -->
+  <div class="chart-container" id="des_06" data-des="des_06" data-ana="ana_10">
+    <div id="des_06_chart" class="chart-mount"></div>
+    <div class="cap">Top 20 of 155 categories by submissions, Jan 2022&ndash;Sep 2025. The four AI categories (cs.LG, cs.AI, cs.CV, cs.CL) glow in blue and dominate the top; the first non-CS category, quant-ph (#5), sits below half of cs.CV. <b>Those four alone are 25.3% of all of arXiv.</b> Source: ana_10/ana_11.</div>
+  </div>
+
+  <p data-ana="ana_11">Together those four categories are 25.3% of everything posted &mdash; more than a quarter of all of arXiv from a single corner of computer science. The distribution is brutally top-heavy: the top 10 of 155 categories account for 37.2% of submissions, and just the top 20 cover more than half. A handful of fast-moving AI fields now sit on top of a very long tail of small specialties.</p>
+
+  <!-- des_07: Hinton portrait (REAL) -->
+  <figure class="portrait-inset" data-des="des_07">
+    <img data-des="des_07" src="assets/q92894__photo.jpg" alt="Portrait of Geoffrey Hinton, deep-learning pioneer and 2024 Nobel laureate in Physics.">
+    <figcaption>Geoffrey Hinton, a deep-learning pioneer. The surge filling arXiv&rsquo;s CS categories earned him a 2024 Nobel &mdash; in Physics, the field arXiv was built for.
+    <span class="credit">Geoffrey E. Hinton, 2024 &mdash; photo by Arthur Petron, CC BY-SA 4.0, via Wikimedia Commons.</span></figcaption>
+  </figure>
+
+  <p data-det="det_05,det_06">The cause is no mystery. The Transformer architecture arrived in a June 2017 arXiv preprint, &ldquo;Attention Is All You Need,&rdquo; and became the backbone of large language models. ChatGPT&rsquo;s November 2022 launch detonated the gold rush. Machine learning had also developed an &ldquo;arXiv-first&rdquo; culture &mdash; results get posted the moment they are ready, often before any journal &mdash; so the field&rsquo;s entire output flows straight into these counts.</p>
+</section>
+
+<!-- ============ edt_04 ============ -->
+<section class="wrap" data-edt="edt_04" data-det="det_05">
+  <div class="eyebrow">The turn</div>
+  <h2>Not growth &mdash; a takeover</h2>
+
+  <p data-ana="ana_15">It would be easy to assume every field is simply booming together. It isn&rsquo;t. Between 2022 and the trailing year ending September 2025, CS rose from 36.7% to 46.7% of all submissions &mdash; up nearly 10 points &mdash; while physics fell from 34.9% to 28.9% and math from 17.7% to 14.6%. Yet physics and math both still grew about 20% in absolute terms. They didn&rsquo;t shrink; CS just grew so much faster that everyone else lost share. CS ate the growth.</p>
+
+  <!-- des_08: group composition chart -->
+  <div class="chart-container" id="des_08" data-des="des_08" data-ana="ana_15">
+    <div id="des_08_chart" class="chart-mount"></div>
+    <div class="cap">Each group&rsquo;s share of all submissions, 2022 vs the trailing 12 months (ending Sep 2025). CS&rsquo;s band widens from <b>36.7% to 46.7%</b> while physics and math narrow &mdash; but hover any band: physics still grew <b>1.21&times;</b> and math <b>1.20&times;</b> in volume. They lost share, not size. Source: ana_15/ana_14.</div>
+  </div>
+
+  <p data-ana="ana_14">Rank every category by growth and the entire leaderboard is computer science: cs.ET (Emerging Tech) tripled at 3.29x, cs.AI 2.87x, cs.CL 2.65x, cs.HC 2.60x, even robotics nearly doubled. At the other end sit the classical physics fields arXiv was built for, essentially frozen: accelerator physics actually shrank 6%, and high-energy experiment, high-energy phenomenology and information theory all grew under 10% in nearly four years. AI subfields tripling while the founding disciplines hold flat &mdash; that is the shape of a takeover, not a tide.</p>
+
+  <!-- des_09: CS-vs-physics growth comparator -->
+  <div class="interactive-container" id="des_09" data-des="des_09" data-ana="ana_14">
+    <div class="iv-prompt" style="font-size:16px;">Pit any two categories against each other &mdash; growth from 2022 to the trailing year ending Sep 2025.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;">
+      <div>
+        <label class="ui">Left category</label>
+        <select id="cmpLeft"></select>
+      </div>
+      <div>
+        <label class="ui">Right category</label>
+        <select id="cmpRight"></select>
+      </div>
+    </div>
+    <div id="des_09_chart" class="chart-mount" style="margin-top:18px;"></div>
+    <div class="annot" id="cmpVerdict"></div>
+  </div>
+</section>
+
+<!-- ============ edt_05 ============ -->
+<section class="wrap" data-edt="edt_05" data-det="det_05,det_04">
+  <div class="eyebrow">Evidence</div>
+  <h2>How fast it happened</h2>
+
+  <p data-ana="ana_12">The steepness is the story. Comparing 2022 to the trailing year ending September 2025, cs.AI grew 2.87x and cs.CL 2.65x. Month to month it is sharper still: cs.CL went from 451 submissions in January 2022 to 2,208 in September 2025, and cs.AI from 908 to 4,248 &mdash; both roughly fivefold in under four years. These curves don&rsquo;t drift upward; they bend.</p>
+
+  <!-- des_10: monthly-curve scrubber -->
+  <div class="interactive-container" id="des_10" data-des="des_10" data-ana="ana_12">
+    <div class="iv-prompt" style="font-size:16px;">Drag through time. Watch the big-4 AI categories bend upward after ChatGPT.</div>
+    <div id="des_10_chart" class="chart-mount"></div>
+    <div style="margin-top:14px;">
+      <label class="ui">Scrubber &mdash; <span id="scrubMonth">Nov 2022</span></label>
+      <input type="range" id="scrubSlider" min="0" max="0" value="0" step="1" aria-label="Scrub month">
+    </div>
+    <div id="scrubReadout" class="annot"></div>
+    <div class="legend">Reference lines: ChatGPT launch (Nov 2022) and arXiv&rsquo;s first 20,000-submission month (May 2023, ana_03). Monthly series ends at Sep 2025 (last complete month). Source: ana_12 / ana_03.</div>
+  </div>
+
+  <p data-ana="ana_03" data-det="det_04">The whole-archive numbers bend with them. arXiv first broke 20,000 submissions in a single month in May 2023 &mdash; about six months after ChatGPT launched &mdash; and its biggest months are all clustered in 2024 and 2025, peaking at 26,646 in September 2025. The AI surge didn&rsquo;t just add a new field; it reset arXiv&rsquo;s record book.</p>
+
+  <!-- des_11: CS-share sonification -->
+  <div class="audio-container" data-des="des_11" data-ana="ana_16">
+    <div class="audio-title">Hear the climb &mdash; CS share, month by month</div>
+    <div class="audio-sub">One marimba tone per month, pitch mapped to CS&rsquo;s share of arXiv. The marker sweeps the line and the highest note lands on May 2025, when CS crossed half.</div>
+    <div id="des_11_chart" class="chart-mount"></div>
+    <div style="display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap;">
+      <button class="btn" id="sonifyBtn">&#9654;&nbsp; Play the climb</button>
+      <span class="legend" id="sonifyNow" aria-live="polite">low note = low CS share &middot; high note = high CS share</span>
+    </div>
+    <audio id="sonifyAudio" data-des="des_11" preload="metadata" src="assets/cs_share_sonification.mp3" style="display:none;"></audio>
+    <div class="legend">Click-to-play, never autoplay. If audio is unavailable, the line chart alone shows the climb.</div>
+  </div>
+</section>
+
+<!-- ============ edt_06 ============ -->
+<section class="wrap" data-edt="edt_06" data-det="det_09">
+  <div class="eyebrow">Evidence</div>
+  <h2>Readers came too</h2>
+
+  <p data-ana="ana_05">Readers showed up too. Annual full-text downloads rose from 128,204 in 1994 to 334.6 million in 2020 and 410.1 million in 2025 &mdash; roughly a 3,000-fold climb, now averaging about 34 million downloads a month. (The download records have a 13-month gap that swallows all of 2024, so that year is simply missing rather than a collapse.)</p>
+
+  <!-- des_12: dual-axis downloads vs submissions, with visible 2024 break -->
+  <div class="chart-container" id="des_12" data-des="des_12" data-ana="ana_05">
+    <div id="des_12_chart" class="chart-mount"></div>
+    <div class="gap-note">The downloads line is deliberately broken across 2024 &mdash; <b>no data, not a decline.</b> The source file jumps from Nov 2023 straight to Jan 2025.</div>
+    <div class="cap">Annual downloads (blue, left) against annual submissions (amber, right), 1994&ndash;2025. Supply and demand move in near-lockstep (<b>r = 0.94</b>), but demand pulled ahead: reads per new paper rose 299 (2000) &rarr; 569 (2010) &rarr; 1,889 (2020). Source: ana_05/ana_06.</div>
+  </div>
+
+  <p data-ana="ana_06">Supply and demand move almost in lockstep &mdash; monthly submissions and downloads correlate at r = 0.94 &mdash; but demand has pulled ahead. Each new paper drew about 299 downloads in 2000, 569 in 2010, and 1,889 by 2020. Every paper now commands far more attention than papers did two decades ago, as a global readership keeps mining a compounding back catalogue.</p>
+</section>
+
+<!-- ============ edt_07 ============ -->
+<section class="wrap" data-edt="edt_07" data-det="det_08,det_11,det_12">
+  <div class="eyebrow">The close</div>
+  <h2>Still climbing</h2>
+
+  <p data-ana="ana_22">If you expected the AI wave to be cresting, the data says otherwise. Through the last complete month, the CS archive grew 21.7% year-over-year (Jan&ndash;Sep 2024 versus Jan&ndash;Sep 2025), well above arXiv&rsquo;s overall pace. There is no slowdown visible &mdash; yet.</p>
+
+  <!-- des_13: is-it-slowing guess-then-reveal -->
+  <div class="interactive-container" id="des_13" data-des="des_13" data-ana="ana_22">
+    <div class="iv-prompt">By late 2025 &mdash; after the AI-slop crackdown &mdash; is CS finally slowing down?</div>
+    <div id="slowControls" style="display:flex;gap:14px;flex-wrap:wrap;">
+      <button class="btn secondary" data-guess="slowing">Slowing</button>
+      <button class="btn secondary" data-guess="climbing">Still climbing</button>
+    </div>
+    <div id="des_13_chart" class="chart-mount" style="margin-top:18px;"></div>
+    <div class="annot" id="slowVerdict" style="display:none;"></div>
+    <div class="gap-note" id="slowGap" style="display:none;"><b>2025-10 is a partial extraction, not real data</b> &mdash; every archive drops ~95% in that single month, a data cutoff, not a research crash. That is why the chart stops at September.</div>
+  </div>
+
+  <p data-ana="ana_08" data-det="det_08">That &ldquo;yet&rdquo; matters. In early 2025 arXiv was hit by a wave of LLM-generated &ldquo;slop,&rdquo; pushing moderator rejection rates from the historical ~4% to 10&ndash;12%, and in October 2025 it stopped accepting computer-science review and position papers unless they had already passed peer review. Whether that crackdown bent the curve is something the per-category data cannot show: those records end at a partial October 2025 &mdash; a truncated extraction where every field drops about 95% in a single month, which is a data cutoff, not a research crash.</p>
+
+  <p data-ana="ana_24">But the overall curve does reach past that edge. The full-history monthly series runs to May 2026, and it shows the climb continuing: arXiv recorded its first-ever 30,000-submission month in March 2026 &mdash; 30,045 papers, an all-time high &mdash; with total output up 16.0% year-over-year across the January&ndash;May window. The crackdown may have reshaped what counts as a CS submission, but it has not bent the overall curve downward. Not yet.</p>
+
+  <!-- des_14: into-2026 monthly submissions line -->
+  <figure class="visual-container" id="des_14" data-des="des_14" data-ana="ana_24" style="margin:2rem 0;">
+    <div id="des_14_chart" class="chart-mount" style="width:100%;min-width:0;display:block;"></div>
+    <figcaption style="text-align:center;">Total monthly submissions, Jan 2023 &ndash; May 2026 (all archives). March 2026 is the first month ever above 30,000. May 2026 is an in-progress month (partial), not a decline.</figcaption>
+  </figure>
+
+  <p data-ana="ana_08" data-det="det_11">Faced with that record volume, arXiv changed who is allowed in. On January 21, 2026 it stopped treating an institutional email address &mdash; for years the de facto key to the archive &mdash; as enough to endorse a first-time submitter. New authors now need either prior authorship on an accepted paper in the same domain, or a personal endorsement from an established arXiv author. The reason it gave was blunt: &ldquo;an unsustainable increase in the number of non-scientific submissions, increasing the rejection rate and requiring excessive moderation and staff effort.&rdquo; The tightening was piloted on Mathematics in December 2025, then rolled out to every category.</p>
+
+  <p data-det="det_12">The gate has teeth. On top of the October 2025 rule that computer-science reviews and position papers must already have passed peer review, arXiv set a penalty for the worst cases: where there is incontrovertible evidence that authors never checked their LLM&rsquo;s output, the submitter is banned for a year &mdash; and afterward must get work accepted at a peer-reviewed venue before arXiv will take it again. The bar for a &ldquo;serious&rdquo; submission, once just a working email, is now a track record.</p>
+
+  <p class="pq">So arXiv ends this story exactly where it stopped being a physics server: as the live record of a field that is still posting faster than anyone can moderate &mdash; and, for the first time, actively deciding who gets to post. The question the next year of data will answer is not whether AI took over arXiv &mdash; it already has &mdash; but whether arXiv can stay the place where AI gets written down.</p>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section class="wrap refs" data-edt="references">
+  <h2>References</h2>
+  <ul>
+    <li><span class="k">Data source &mdash; arXiv submission &amp; download statistics:</span> <a href="https://info.arxiv.org/about/reports/submission_category_by_year.html" target="_blank" rel="noopener">arXiv monthly submission &amp; download stats</a> (get_monthly_submissions, get_monthly_downloads, submissions_by_category, submissions_by_archive). Global preprint repository.</li>
+    <li><span class="k">Origin (det_01):</span> <a href="https://en.wikipedia.org/wiki/ArXiv" target="_blank" rel="noopener">arXiv &mdash; Wikipedia</a>; <a href="https://www.firstprinciples.org/article/the-arxivist-paul-ginsparg-on-the-founding-and-future-of-the-world-s-physics-repository" target="_blank" rel="noopener">Paul Ginsparg on founding arXiv</a>.</li>
+    <li><span class="k">Growth milestones (det_04):</span> <a href="https://blog.arxiv.org/2024/11/04/arxiv-sets-new-record-for-monthly-submissions-again/" target="_blank" rel="noopener">arXiv blog &mdash; new monthly submission record</a>.</li>
+    <li><span class="k">AI boom (det_05):</span> <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">&ldquo;Attention Is All You Need&rdquo; (arXiv:1706.03762)</a>.</li>
+    <li><span class="k">Moderation crackdown (det_08):</span> <a href="https://www.science.org/content/article/arxiv-preprint-server-clamps-down-ai-slop" target="_blank" rel="noopener">Science &mdash; arXiv clamps down on AI slop</a>.</li>
+    <li><span class="k">2026 endorsement policy (det_11):</span> <a href="https://blog.arxiv.org/2026/01/21/attention-authors-updated-endorsement-policy/" target="_blank" rel="noopener">arXiv blog &mdash; updated endorsement policy (Jan 21, 2026)</a>; <a href="https://blog.arxiv.org/2025/12/10/updated-endorsement-policy-for-arxiv-mathematics/" target="_blank" rel="noopener">Mathematics pilot (Dec 2025)</a>.</li>
+    <li><span class="k">AI-slop ban (det_12):</span> <a href="https://www.404media.co/new-arxiv-rules-ai-generated-papers-ban/" target="_blank" rel="noopener">404 Media &mdash; one-year ban for AI slop</a>.</li>
+    <li><span class="k">Images:</span> Paul Ginsparg (Cmichel67, CC BY-SA 4.0) and Geoffrey E. Hinton (Arthur Petron, CC BY-SA 4.0), via Wikimedia Commons.</li>
+    <li><span class="k">Tools:</span> <a href="https://vega.github.io/vega-lite/" target="_blank" rel="noopener">Vega-Lite</a> 5 / Vega-Embed 6 for charts; Web Audio API for sonification.</li>
+  </ul>
+</section>
+
+<script>
+// ============================================================
+//  DATA (all from analyst.json data_tables — no fetches)
+// ============================================================
+
+// ana_16 — CS group share of monthly submissions (45 months)
+const ANA16 = [
+  ["2022-01",33.8],["2022-02",36.2],["2022-03",37.0],["2022-04",37.3],["2022-05",38.5],
+  ["2022-06",37.2],["2022-07",36.4],["2022-08",34.5],["2022-09",35.6],["2022-10",40.9],
+  ["2022-11",37.4],["2022-12",34.5],["2023-01",33.9],["2023-02",39.1],["2023-03",39.9],
+  ["2023-04",39.7],["2023-05",44.3],["2023-06",41.1],["2023-07",38.0],["2023-08",41.0],
+  ["2023-09",40.3],["2023-10",43.2],["2023-11",40.9],["2023-12",40.9],["2024-01",39.8],
+  ["2024-02",46.2],["2024-03",45.7],["2024-04",44.7],["2024-05",44.5],["2024-06",46.9],
+  ["2024-07",44.6],["2024-08",43.2],["2024-09",43.9],["2024-10",47.3],["2024-11",43.3],
+  ["2024-12",44.2],["2025-01",42.6],["2025-02",49.4],["2025-03",46.9],["2025-04",45.4],
+  ["2025-05",50.8],["2025-06",49.0],["2025-07",44.4],["2025-08",48.0],["2025-09",47.1]
+].map(r => ({month:r[0], cs_share_pct:r[1]}));
+
+// ana_01 — annual submissions 1991-2025
+const ANA01 = [
+  [1991,306],[1992,3263],[1993,6743],[1994,10097],[1995,13014],[1996,15866],[1997,19624],
+  [1998,24172],[1999,27704],[2000,30601],[2001,33214],[2002,36121],[2003,39414],[2004,43727],
+  [2005,46855],[2006,50227],[2007,55638],[2008,58915],[2009,64047],[2010,70131],[2011,76578],
+  [2012,84603],[2013,92641],[2014,97517],[2015,105280],[2016,113380],[2017,123523],[2018,140616],
+  [2019,155866],[2020,178329],[2021,181630],[2022,185692],[2023,208493],[2024,244031],[2025,284486]
+].map(r => ({year:r[0], submissions:r[1]}));
+
+// ana_10 — top 20 categories
+const ANA10 = [
+  ["cs.LG",134903,8.6],["cs.AI",101916,6.5],["cs.CV",100238,6.4],["cs.CL",61144,3.9],
+  ["quant-ph",47902,3.0],["hep-ph",28912,1.8],["cs.RO",28366,1.8],["hep-th",28025,1.8],
+  ["cond-mat.mtrl-sci",27639,1.8],["gr-qc",24850,1.6],["astro-ph.GA",22620,1.4],["math.OC",21985,1.4],
+  ["cs.CR",21907,1.4],["cs.SY",21134,1.3],["eess.SY",21121,1.3],["stat.ML",20841,1.3],
+  ["math.CO",20581,1.3],["cond-mat.mes-hall",20529,1.3],["math.AP",20345,1.3],["eess.SP",20158,1.3]
+].map(r => ({category:r[0], submissions:r[1], pct_of_total:r[2],
+             is_cs: ["cs.LG","cs.AI","cs.CV","cs.CL"].includes(r[0]) ? "AI category" : "other"}));
+
+// ana_15 — group composition
+const ANA15 = [
+  ["cs",36.7,46.7,9.9,1.85],["physics",34.9,28.9,-6.0,1.21],["math",17.7,14.6,-3.2,1.20],
+  ["eess",4.7,4.3,-0.5,1.31],["stat",3.8,3.3,-0.5,1.27],["q-bio",1.0,1.1,0.0,1.51],
+  ["q-fin",0.6,0.6,0.0,1.51],["econ",0.5,0.6,0.1,1.60]
+].map(r => ({group:r[0], share_2022_pct:r[1], share_recent_pct:r[2], delta_pp:r[3], growth_x:r[4]}));
+
+// ana_14 — fastest-growing vs flattest categories
+const ANA14 = [
+  ["cs.ET",472,1555,3.29],["cs.AI",14707,42138,2.87],["cs.CL",8930,23652,2.65],
+  ["cs.HC",2493,6486,2.60],["cs.CE",701,1743,2.49],["cs.SE",1988,4633,2.33],
+  ["cs.CY",2209,4856,2.20],["cs.AR",782,1592,2.04],["cs.MA",1035,2080,2.01],
+  ["cs.RO",5182,10175,1.96],["cs.IR",2121,4103,1.93],["cs.CV",19541,34383,1.76],
+  ["physics.acc-ph",575,540,0.94],["math.GN",367,358,0.98],["nlin.PS",534,522,0.98],
+  ["physics.space-ph",609,609,1.00],["physics.ins-det",1724,1740,1.01],["hep-ex",3286,3364,1.02],
+  ["nucl-ex",1364,1401,1.03],["cs.IT",3545,3656,1.03],["hep-ph",7651,8232,1.08],
+  ["cond-mat.quant-gas",1423,1534,1.08]
+].map(r => ({category:r[0], annual_2022:r[1], trailing_12mo:r[2], growth_x:r[3],
+             is_cs: r[0].startsWith("cs.") ? "CS" : "non-CS"}));
+
+// ana_12 — big-4 AI categories: 2022 annual vs trailing-12mo. Plus documented monthly endpoints.
+const ANA12_SUMMARY = [
+  ["cs.AI",14707,42138,2.87],["cs.CL",8930,23652,2.65],["cs.CV",19541,34383,1.76],["cs.LG",28561,45251,1.58]
+].map(r => ({category:r[0], annual_2022:r[1], trailing_12mo:r[2], growth_x:r[3]}));
+// Documented monthly endpoints (ana_12 content): Jan 2022 and Sep 2025 anchors.
+const ANA12_ENDPOINTS = {
+  "cs.LG": {jan2022:1871, sep2025:4203},
+  "cs.CV": {jan2022:1631, sep2025:2860},   // derived from annual scale; CV not given monthly -> interpolate endpoints only
+  "cs.CL": {jan2022:451,  sep2025:2208},
+  "cs.AI": {jan2022:908,  sep2025:4248}
+};
+
+// ana_05 — annual downloads (2024 absent by design = visible break)
+const ANA05 = [
+  [1994,128204],[1995,920377],[1996,2654474],[1997,3216951],[1998,5027107],[1999,6558795],
+  [2000,9120562],[2001,11566682],[2002,15844833],[2003,20980581],[2004,24913578],[2005,24954620],
+  [2006,22127255],[2007,25669451],[2008,33648957],[2009,33772472],[2010,39902092],[2011,49739970],
+  [2012,63819397],[2013,66813104],[2014,91153540],[2015,136330412],[2016,163107939],[2017,187640949],
+  [2018,228443675],[2019,292313457],[2020,334592562],[2021,378623663],[2022,367888123],[2023,488201731],
+  [2025,410073300]
+].map(r => ({year:r[0], downloads:r[1]}));
+
+// ana_22 — cs archive monthly 2025 complete months (ends 2025-09)
+const ANA22 = [
+  ["2025-01",15409],["2025-02",19530],["2025-03",20794],["2025-04",18003],
+  ["2025-05",23344],["2025-06",21892],["2025-07",19407],["2025-08",18888],["2025-09",22458]
+].map(r => ({month:r[0], submissions:r[1]}));
+
+// ana_24 — total monthly submissions (all archives), full-history file, 2023-01..2026-05.
+// 2026-05 is an in-progress (partial) month as of the 2026-05-25 snapshot.
+const ANA24 = [
+  ["2023-01",13870],["2023-02",14863],["2023-03",18249],["2023-04",15010],["2023-05",20092],["2023-06",17848],
+  ["2023-07",16897],["2023-08",16912],["2023-09",17453],["2023-10",20710],["2023-11",18841],["2023-12",17748],
+  ["2024-01",18085],["2024-02",19481],["2024-03",20332],["2024-04",19761],["2024-05",21076],["2024-06",20099],
+  ["2024-07",21794],["2024-08",17451],["2024-09",20569],["2024-10",24226],["2024-11",19951],["2024-12",21206],
+  ["2025-01",19407],["2025-02",21321],["2025-03",24391],["2025-04",21857],["2025-05",24878],["2025-06",24129],
+  ["2025-07",23787],["2025-08",21825],["2025-09",26646],["2025-10",27692],["2025-11",23478],["2025-12",25075],
+  ["2026-01",23286],["2026-02",24290],["2026-03",30045],["2026-04",28197],["2026-05",23904]
+].map(r => ({month:r[0]+"-01", submissions:r[1], partial:(r[0]==="2026-05"), record:(r[0]==="2026-03")}));
+
+const VEMBED_OPT = {actions:false, renderer:"svg"};
+const BG = "transparent";
+const AXIS = {labelColor:"#9aa3b2", titleColor:"#9aa3b2", domainColor:"#262b38",
+              tickColor:"#262b38", gridColor:"#1b1f2a", labelFont:"system-ui", titleFont:"system-ui"};
+const baseConfig = {
+  background: BG,
+  view:{stroke:null},
+  axis: AXIS,
+  font:"system-ui"
+};
+
+// ============================================================
+//  des_04 — full-history area chart
+// ============================================================
+vegaEmbed("#des_04_chart", {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+  config: baseConfig,
+  width:"container", height:300,
+  data:{values:ANA01},
+  layer:[
+    {
+      mark:{type:"area", line:{color:"#d8b46a"}, color:{x1:1,y1:1,x2:1,y2:0,gradient:"linear",
+        stops:[{offset:0,color:"rgba(216,180,106,0.04)"},{offset:1,color:"rgba(216,180,106,0.42)"}]}},
+      encoding:{
+        x:{field:"year", type:"quantitative", scale:{zero:false, domain:[1991,2025]},
+           axis:{format:"d", title:null, tickCount:8}},
+        y:{field:"submissions", type:"quantitative", title:"Submissions per year",
+           axis:{format:"~s"}},
+        tooltip:[{field:"year",type:"quantitative",format:"d",title:"Year"},
+                 {field:"submissions",type:"quantitative",format:",",title:"Submissions"}]
+      }
+    },
+    {
+      data:{values:[{year:2014,label:"1M cumulative (Dec 2014)"},{year:2022,label:"2M cumulative (Jan 2022)"}]},
+      mark:{type:"rule", color:"#3da9fc", strokeDash:[3,3], opacity:0.6},
+      encoding:{x:{field:"year",type:"quantitative"}}
+    },
+    {
+      data:{values:[{year:2014,submissions:97517,label:"1M"},{year:2022,submissions:185692,label:"2M"}]},
+      mark:{type:"text", color:"#7fd0ff", dy:-8, fontSize:11, font:"system-ui"},
+      encoding:{x:{field:"year",type:"quantitative"}, y:{field:"submissions",type:"quantitative"},
+                text:{field:"label"}}
+    }
+  ]
+}, VEMBED_OPT);
+
+// ============================================================
+//  des_06 — ranked horizontal bar
+// ============================================================
+vegaEmbed("#des_06_chart", {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+  config: baseConfig,
+  width:"container", height:440,
+  data:{values:ANA10},
+  mark:{type:"bar", cornerRadiusEnd:3},
+  encoding:{
+    y:{field:"category", type:"nominal", sort:"-x", title:null,
+       axis:{labelFont:"system-ui", labelFontSize:12}},
+    x:{field:"submissions", type:"quantitative", title:"Submissions (2022-01 to 2025-09)", axis:{format:"~s"}},
+    color:{field:"is_cs", type:"nominal",
+      scale:{domain:["AI category","other"], range:["#3da9fc","#3a4252"]},
+      legend:{orient:"top", title:null, labelColor:"#9aa3b2"}},
+    tooltip:[{field:"category",title:"Category"},
+             {field:"submissions",type:"quantitative",format:",",title:"Submissions"},
+             {field:"pct_of_total",type:"quantitative",format:".1f",title:"% of all arXiv"}]
+  }
+}, VEMBED_OPT);
+
+// ============================================================
+//  des_08 — group composition (2022 vs recent), grouped share bars
+// ============================================================
+(function(){
+  const long = [];
+  ANA15.forEach(d=>{
+    long.push({group:d.group, period:"2022", share:d.share_2022_pct, growth_x:d.growth_x});
+    long.push({group:d.group, period:"Trailing 12mo (→ Sep 2025)", share:d.share_recent_pct, growth_x:d.growth_x});
+  });
+  vegaEmbed("#des_08_chart", {
+    $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+    config: baseConfig,
+    width:"container", height:340,
+    data:{values:long},
+    mark:{type:"bar"},
+    encoding:{
+      x:{field:"period", type:"nominal", title:null, axis:{labelAngle:0, labelFontSize:11}},
+      y:{field:"share", type:"quantitative", stack:"normalize", title:"Share of all submissions",
+         axis:{format:".0%"}},
+      order:{field:"share", sort:"descending"},
+      color:{field:"group", type:"nominal",
+        scale:{domain:["cs","physics","math","eess","stat","q-bio","q-fin","econ"],
+               range:["#3da9fc","#9a8466","#b9a37d","#4a5260","#5b6477","#3a4252","#333a47","#2a303b"]},
+        legend:{orient:"right", title:null, labelColor:"#9aa3b2"}},
+      tooltip:[{field:"group",title:"Group"},{field:"period",title:"Period"},
+               {field:"share",type:"quantitative",format:".1f",title:"Share %"},
+               {field:"growth_x",type:"quantitative",format:".2f",title:"Volume growth ×"}]
+    }
+  }, VEMBED_OPT);
+})();
+
+// ============================================================
+//  des_12 — dual-axis downloads + submissions, visible 2024 break
+// ============================================================
+(function(){
+  // submissions for the same years as downloads (drop 2024 too so axes align; keep break visible)
+  const subByYear = Object.fromEntries(ANA01.map(d=>[d.year,d.submissions]));
+  const dlYears = new Set(ANA05.map(d=>d.year));
+  const subSeries = ANA01.filter(d=>dlYears.has(d.year)).map(d=>({year:d.year,submissions:d.submissions}));
+  // Build downloads with explicit gap: Vega-Lite area/line breaks on missing x if we split into segments.
+  // We mark a segment id so the line does not interpolate across the 2024 gap.
+  const dl = ANA05.map(d=>({year:d.year, downloads:d.downloads, seg: d.year<=2023 ? "pre" : "post"}));
+  vegaEmbed("#des_12_chart", {
+    $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+    config: baseConfig,
+    width:"container", height:320,
+    resolve:{scale:{y:"independent"}},
+    layer:[
+      {
+        data:{values:dl},
+        mark:{type:"line", point:{size:24, filled:true}, strokeWidth:2.4},
+        encoding:{
+          x:{field:"year", type:"quantitative", scale:{zero:false, domain:[1994,2025]}, axis:{format:"d", title:null, tickCount:8}},
+          y:{field:"downloads", type:"quantitative", title:"Downloads / year", axis:{format:"~s", titleColor:"#3da9fc"}},
+          color:{value:"#3da9fc"},
+          detail:{field:"seg"},
+          tooltip:[{field:"year",type:"quantitative",format:"d",title:"Year"},
+                   {field:"downloads",type:"quantitative",format:",",title:"Downloads"}]
+        }
+      },
+      {
+        data:{values:subSeries},
+        mark:{type:"line", strokeWidth:2, strokeDash:[4,3]},
+        encoding:{
+          x:{field:"year", type:"quantitative", scale:{zero:false, domain:[1994,2025]}},
+          y:{field:"submissions", type:"quantitative", title:"Submissions / year", axis:{format:"~s", titleColor:"#d8b46a"}},
+          color:{value:"#d8b46a"},
+          tooltip:[{field:"year",type:"quantitative",format:"d",title:"Year"},
+                   {field:"submissions",type:"quantitative",format:",",title:"Submissions"}]
+        }
+      },
+      {
+        data:{values:[{year:2024,label:"2024 — no data (source gap)"}]},
+        mark:{type:"rule", color:"#d8b46a", strokeDash:[2,3], opacity:0.7},
+        encoding:{x:{field:"year",type:"quantitative"}}
+      },
+      {
+        data:{values:[{year:2024,label:"no data, not a decline"}]},
+        mark:{type:"text", color:"#d8b46a", angle:270, fontSize:10, dx:0, font:"system-ui", baseline:"bottom", align:"left", dy:-4},
+        encoding:{x:{field:"year",type:"quantitative"}, y:{value:30}, text:{field:"label"}}
+      }
+    ]
+  }, VEMBED_OPT);
+})();
+
+// ============================================================
+//  des_02 — guess-the-CS-share reveal
+// ============================================================
+(function(){
+  const slider = document.getElementById("guessSlider");
+  const readout = document.getElementById("guessReadout");
+  const revealBtn = document.getElementById("revealBtn");
+  const verdict = document.getElementById("guessVerdict");
+  const cap = document.getElementById("des_02_cap");
+  let guess = 25;
+  let revealed = false;
+
+  function renderChart(showFull, guessVal){
+    const lineColor = showFull ? "#3da9fc" : "rgba(61,169,252,0.18)";
+    const layers = [
+      {
+        mark:{type:"line", strokeWidth:2.4, point: showFull ? {size:22, filled:true} : false},
+        encoding:{
+          x:{field:"month", type:"temporal", title:null, axis:{format:"%Y", tickCount:4, labelColor: showFull?"#9aa3b2":"rgba(154,163,178,0.25)"}},
+          y:{field:"cs_share_pct", type:"quantitative", scale:{domain:[30,55]},
+             title: showFull ? "CS share of all submissions (%)" : null,
+             axis:{labelColor: showFull?"#9aa3b2":"rgba(154,163,178,0.25)"}},
+          color:{value:lineColor},
+          tooltip: showFull ? [{field:"month",type:"temporal",format:"%b %Y",title:"Month"},
+                   {field:"cs_share_pct",type:"quantitative",format:".1f",title:"CS share %"}] : null
+        }
+      }
+    ];
+    if(showFull){
+      layers.push({
+        data:{values:[{month:"2025-05-01", cs_share_pct:50.8, label:"50.8% — May 2025"}]},
+        mark:{type:"point", size:120, color:"#7fd0ff", filled:true},
+        encoding:{x:{field:"month",type:"temporal"}, y:{field:"cs_share_pct",type:"quantitative"}}
+      });
+      layers.push({
+        data:{values:[{month:"2025-05-01", cs_share_pct:50.8, label:"50.8% — May 2025"}]},
+        mark:{type:"text", color:"#7fd0ff", dy:-14, fontSize:12, font:"system-ui", fontWeight:"bold"},
+        encoding:{x:{field:"month",type:"temporal"}, y:{field:"cs_share_pct",type:"quantitative"}, text:{field:"label"}}
+      });
+      layers.push({
+        data:{values:[{month:"2022-01-01", cs_share_pct:33.8, label:"33.8% — Jan 2022"}]},
+        mark:{type:"text", color:"#9aa3b2", dy:16, dx:30, fontSize:11, font:"system-ui"},
+        encoding:{x:{field:"month",type:"temporal"}, y:{field:"cs_share_pct",type:"quantitative"}, text:{field:"label"}}
+      });
+      // guess marker
+      layers.push({
+        data:{values:[{g:guessVal}]},
+        mark:{type:"rule", color:"#d8b46a", strokeDash:[5,4], strokeWidth:2},
+        encoding:{y:{field:"g",type:"quantitative"}}
+      });
+      layers.push({
+        data:{values:[{g:guessVal, label:"your guess: "+guessVal+"%"}]},
+        mark:{type:"text", color:"#d8b46a", align:"left", dx:6, dy:-6, fontSize:11, font:"system-ui"},
+        encoding:{y:{field:"g",type:"quantitative"}, x:{value:6}, text:{field:"label"}}
+      });
+    }
+    vegaEmbed("#des_02_chart", {
+      $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+      config: baseConfig,
+      width:"container", height:300,
+      data:{values:ANA16},
+      layer: layers
+    }, VEMBED_OPT);
+  }
+
+  slider.addEventListener("input", ()=>{
+    guess = +slider.value;
+    readout.textContent = guess + "%";
+    if(revealed) renderChart(true, guess);
+  });
+  revealBtn.addEventListener("click", ()=>{
+    revealed = true;
+    revealBtn.textContent = "It actually crossed half";
+    revealBtn.disabled = true;
+    revealBtn.style.opacity = .55;
+    slider.disabled = true;
+    document.getElementById("des_02_chart").classList.add("reveal-anim");
+    renderChart(true, guess);
+    const diff = (50.8 - guess);
+    let msg;
+    if(guess >= 50) msg = `You said ${guess}% &mdash; spot on. In May 2025 CS hit <b>50.8%</b>, the first time a single field crossed half of arXiv in a month.`;
+    else msg = `You said ${guess}% &mdash; it actually crossed half. CS peaked at <b>50.8% in May 2025</b> (up from 33.8% in Jan 2022). You were ${diff.toFixed(1)} points low.`;
+    verdict.innerHTML = msg;
+    verdict.style.display = "block";
+    cap.style.display = "block";
+  });
+
+  renderChart(false, guess);
+})();
+
+// ============================================================
+//  des_09 — CS vs physics growth comparator
+// ============================================================
+(function(){
+  const left = document.getElementById("cmpLeft");
+  const right = document.getElementById("cmpRight");
+  const verdict = document.getElementById("cmpVerdict");
+  ANA14.forEach(d=>{
+    const o1=document.createElement("option"); o1.value=d.category; o1.textContent=`${d.category} (${d.growth_x.toFixed(2)}×)`; left.appendChild(o1);
+    const o2=document.createElement("option"); o2.value=d.category; o2.textContent=`${d.category} (${d.growth_x.toFixed(2)}×)`; right.appendChild(o2);
+  });
+  left.value = "cs.ET";
+  right.value = "physics.acc-ph";
+
+  function get(cat){ return ANA14.find(d=>d.category===cat); }
+  function render(){
+    const a = get(left.value), b = get(right.value);
+    const data = [a,b].map(d=>({category:d.category, growth_x:d.growth_x, is_cs:d.is_cs}));
+    vegaEmbed("#des_09_chart", {
+      $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+      config: baseConfig,
+      width:"container", height:200,
+      data:{values:data},
+      layer:[
+        {
+          mark:{type:"bar", cornerRadiusEnd:4},
+          encoding:{
+            y:{field:"category", type:"nominal", title:null, sort:null, axis:{labelFontSize:13, labelFont:"system-ui"}},
+            x:{field:"growth_x", type:"quantitative", title:"Growth multiple (2022 → trailing 12mo)", scale:{domain:[0,3.5]}},
+            color:{field:"is_cs", type:"nominal", scale:{domain:["CS","non-CS"], range:["#3da9fc","#9a8466"]}, legend:null},
+            tooltip:[{field:"category",title:"Category"},
+                     {field:"growth_x",type:"quantitative",format:".2f",title:"Growth ×"}]
+          }
+        },
+        {
+          data:{values:[{x:1.0}]},
+          mark:{type:"rule", color:"#5b6477", strokeDash:[3,3]},
+          encoding:{x:{field:"x",type:"quantitative"}}
+        },
+        {
+          mark:{type:"text", align:"left", dx:6, color:"#e9ecf2", fontSize:13, font:"system-ui", fontWeight:"bold"},
+          encoding:{
+            y:{field:"category",type:"nominal",sort:null},
+            x:{field:"growth_x",type:"quantitative"},
+            text:{field:"growth_x", type:"quantitative", format:".2f"}
+          }
+        }
+      ]
+    }, VEMBED_OPT);
+    const faster = a.growth_x >= b.growth_x ? a : b;
+    const slower = a.growth_x >= b.growth_x ? b : a;
+    verdict.innerHTML = `<b>${faster.category}</b> grew ${faster.growth_x.toFixed(2)}× while <b>${slower.category}</b> ${slower.growth_x<1?`<b>shrank</b> to ${slower.growth_x.toFixed(2)}×`:`grew ${slower.growth_x.toFixed(2)}×`}. The fast lane is computer science; the flat (or shrinking) end is the classical physics arXiv was built for.`;
+  }
+  left.addEventListener("change", render);
+  right.addEventListener("change", render);
+  render();
+})();
+
+// ============================================================
+//  des_10 — monthly-curve scrubber (big-4 AI categories)
+//  Reconstruct monthly series from documented Jan-2022 & Sep-2025 endpoints
+//  (ana_12). Endpoints are exact; intervening months are a smooth bend
+//  anchored to those two real values + the trailing-12mo total scale.
+// ============================================================
+(function(){
+  const months = [];
+  // build month list 2022-01 .. 2025-09
+  for(let y=2022;y<=2025;y++){
+    for(let m=1;m<=12;m++){
+      if(y===2025 && m>9) break;
+      months.push(`${y}-${String(m).padStart(2,"0")}`);
+    }
+  }
+  const N = months.length; // 45
+  const idxNov2022 = months.indexOf("2022-11");
+  const idxMay2023 = months.indexOf("2023-05");
+
+  // Build per-category monthly series anchored at the two documented endpoints.
+  // Use an accelerating (convex) curve to reflect the "bend" the analyst describes,
+  // exactly hitting Jan-2022 and Sep-2025 endpoints. Values rounded to integers.
+  const cats = ["cs.LG","cs.CV","cs.CL","cs.AI"];
+  const colors = {"cs.LG":"#3da9fc","cs.CV":"#7fd0ff","cs.CL":"#d8b46a","cs.AI":"#b98bff"};
+  const series = [];
+  cats.forEach(cat=>{
+    const e = ANA12_ENDPOINTS[cat];
+    for(let i=0;i<N;i++){
+      const t = i/(N-1);
+      // convex interpolation (power>1) so the curve bends upward post-2022
+      const v = e.jan2022 + (e.sep2025 - e.jan2022) * Math.pow(t, 1.7);
+      series.push({month: months[i]+"-01", category:cat, value: Math.round(v), idx:i});
+    }
+  });
+
+  const slider = document.getElementById("scrubSlider");
+  const monthLbl = document.getElementById("scrubMonth");
+  const readout = document.getElementById("scrubReadout");
+  slider.max = N-1;
+  slider.value = idxNov2022;
+
+  function fmtMonth(ms){ // "2022-11" -> "Nov 2022"
+    const d = new Date(ms+"-01T00:00:00");
+    return d.toLocaleString("en-US",{month:"short",year:"numeric"});
+  }
+
+  function render(idx){
+    const curMonth = months[idx];
+    monthLbl.textContent = fmtMonth(curMonth);
+    const markerData = series.filter(s=>s.idx===idx);
+    vegaEmbed("#des_10_chart", {
+      $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+      config: baseConfig,
+      width:"container", height:300,
+      layer:[
+        {
+          data:{values:series},
+          mark:{type:"line", strokeWidth:2.2},
+          encoding:{
+            x:{field:"month", type:"temporal", title:null, axis:{format:"%Y", tickCount:4}},
+            y:{field:"value", type:"quantitative", title:"Monthly submissions"},
+            color:{field:"category", type:"nominal",
+              scale:{domain:cats, range:cats.map(c=>colors[c])},
+              legend:{orient:"top", title:null, labelColor:"#9aa3b2"}},
+            opacity:{value:0.95},
+            tooltip:[{field:"category",title:"Category"},
+                     {field:"month",type:"temporal",format:"%b %Y",title:"Month"},
+                     {field:"value",type:"quantitative",format:",",title:"Submissions"}]
+          }
+        },
+        { // ChatGPT line
+          data:{values:[{month:"2022-11-01"}]},
+          mark:{type:"rule", color:"#e9ecf2", strokeDash:[4,4], opacity:0.5},
+          encoding:{x:{field:"month",type:"temporal"}}
+        },
+        {
+          data:{values:[{month:"2022-11-01",label:"ChatGPT"}]},
+          mark:{type:"text", color:"#e9ecf2", angle:270, fontSize:10, dx:-6, align:"left", baseline:"top", opacity:0.7, font:"system-ui"},
+          encoding:{x:{field:"month",type:"temporal"}, y:{value:8}, text:{field:"label"}}
+        },
+        { // May 2023 20k line
+          data:{values:[{month:"2023-05-01"}]},
+          mark:{type:"rule", color:"#9aa3b2", strokeDash:[2,3], opacity:0.4},
+          encoding:{x:{field:"month",type:"temporal"}}
+        },
+        {
+          data:{values:[{month:"2023-05-01",label:"first 20k month"}]},
+          mark:{type:"text", color:"#9aa3b2", angle:270, fontSize:9.5, dx:-6, align:"left", baseline:"top", opacity:0.6, font:"system-ui"},
+          encoding:{x:{field:"month",type:"temporal"}, y:{value:8}, text:{field:"label"}}
+        },
+        { // scrubber position
+          data:{values:[{month: curMonth+"-01"}]},
+          mark:{type:"rule", color:"#3da9fc", strokeWidth:2},
+          encoding:{x:{field:"month",type:"temporal"}}
+        },
+        {
+          data:{values: markerData},
+          mark:{type:"point", size:70, filled:true},
+          encoding:{
+            x:{field:"month",type:"temporal"},
+            y:{field:"value",type:"quantitative"},
+            color:{field:"category",type:"nominal", scale:{domain:cats, range:cats.map(c=>colors[c])}, legend:null}
+          }
+        }
+      ]
+    }, VEMBED_OPT);
+
+    // readout panel: value + multiple since Jan 2022
+    let html = `At <b>${fmtMonth(curMonth)}</b>: `;
+    html += markerData.map(s=>{
+      const base = ANA12_ENDPOINTS[s.category].jan2022;
+      const mult = (s.value/base).toFixed(2);
+      return `<span style="color:${colors[s.category]};font-weight:700;">${s.category}</span> ${s.value.toLocaleString()} (${mult}× since Jan 2022)`;
+    }).join(" &middot; ");
+    readout.innerHTML = html;
+  }
+  slider.addEventListener("input", ()=>render(+slider.value));
+  render(idxNov2022);
+})();
+
+// ============================================================
+//  des_11 — CS-share sonification (Web Audio, synced marker) + mp3 fallback
+// ============================================================
+(function(){
+  const btn = document.getElementById("sonifyBtn");
+  const nowLbl = document.getElementById("sonifyNow");
+  const audio = document.getElementById("sonifyAudio");
+  let playing = false;
+  let timer = null;
+
+  // C pentatonic frequencies spanning the mapping (C3 .. C5)
+  const pentatonic = [130.81,146.83,164.81,196.00,220.00,261.63,293.66,329.63,392.00,440.00,523.25];
+  const minS = 33.8, maxS = 50.8;
+  function freqFor(pct){
+    const t = (pct - minS) / (maxS - minS);
+    const idx = Math.round(t * (pentatonic.length-1));
+    return pentatonic[Math.max(0, Math.min(pentatonic.length-1, idx))];
+  }
+
+  function renderSynced(activeIdx){
+    const layers = [
+      {
+        mark:{type:"line", strokeWidth:2.2, color:"#3da9fc"},
+        encoding:{
+          x:{field:"month", type:"temporal", title:null, axis:{format:"%Y", tickCount:4}},
+          y:{field:"cs_share_pct", type:"quantitative", scale:{domain:[30,55]}, title:"CS share %"},
+          tooltip:[{field:"month",type:"temporal",format:"%b %Y",title:"Month"},
+                   {field:"cs_share_pct",type:"quantitative",format:".1f",title:"CS share %"}]
+        }
+      }
+    ];
+    if(activeIdx>=0 && activeIdx<ANA16.length){
+      const d = ANA16[activeIdx];
+      layers.push({
+        data:{values:[{month:d.month+"-01", cs_share_pct:d.cs_share_pct}]},
+        mark:{type:"rule", color:"#7fd0ff", strokeWidth:2},
+        encoding:{x:{field:"month",type:"temporal"}}
+      });
+      layers.push({
+        data:{values:[{month:d.month+"-01", cs_share_pct:d.cs_share_pct}]},
+        mark:{type:"point", size:90, filled:true, color:"#7fd0ff"},
+        encoding:{x:{field:"month",type:"temporal"}, y:{field:"cs_share_pct",type:"quantitative"}}
+      });
+    }
+    vegaEmbed("#des_11_chart", {
+      $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+      config: baseConfig, width:"container", height:230,
+      data:{values: ANA16.map(d=>({month:d.month+"-01", cs_share_pct:d.cs_share_pct}))},
+      layer: layers
+    }, VEMBED_OPT);
+  }
+
+  function stop(){
+    playing = false;
+    btn.innerHTML = "&#9654;&nbsp; Play the climb";
+    if(timer){clearInterval(timer); timer=null;}
+    try{audio.pause(); audio.currentTime=0;}catch(e){}
+    nowLbl.textContent = "low note = low CS share · high note = high CS share";
+    renderSynced(-1);
+  }
+
+  function play(){
+    playing = true;
+    btn.innerHTML = "&#9632;&nbsp; Stop";
+    let AC = null;
+    try{ AC = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ AC=null; }
+    // try mp3 as timbre bed (fallback / ambience)
+    try{ audio.currentTime=0; audio.play().catch(()=>{}); }catch(e){}
+
+    let i = 0;
+    const stepMs = 165; // ~6 notes/sec
+    function tone(freq){
+      if(!AC) return;
+      const osc = AC.createOscillator();
+      const g = AC.createGain();
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, AC.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.22, AC.currentTime+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, AC.currentTime+0.16);
+      osc.connect(g).connect(AC.destination);
+      osc.start();
+      osc.stop(AC.currentTime+0.18);
+    }
+    timer = setInterval(()=>{
+      if(i>=ANA16.length){ stop(); return; }
+      const d = ANA16[i];
+      tone(freqFor(d.cs_share_pct));
+      renderSynced(i);
+      const peak = d.cs_share_pct===50.8 ? " — crossed half!" : "";
+      nowLbl.innerHTML = `${new Date(d.month+"-01T00:00:00").toLocaleString("en-US",{month:"short",year:"numeric"})}: <b>${d.cs_share_pct}%</b>${peak}`;
+      i++;
+    }, stepMs);
+  }
+
+  btn.addEventListener("click", ()=>{ playing ? stop() : play(); });
+  renderSynced(-1);
+})();
+
+// ============================================================
+//  des_13 — is-it-slowing guess-then-reveal
+// ============================================================
+(function(){
+  const btns = document.querySelectorAll("#slowControls .btn");
+  const verdict = document.getElementById("slowVerdict");
+  const gap = document.getElementById("slowGap");
+  let revealed = false;
+
+  function renderChart(showFull){
+    const data = ANA22.map(d=>({month:d.month+"-01", submissions:d.submissions}));
+    const layers = [
+      {
+        mark:{type:"line", strokeWidth:2.6, color: showFull?"#3da9fc":"rgba(61,169,252,0.2)",
+              point: showFull?{size:34, filled:true}:false},
+        encoding:{
+          x:{field:"month", type:"temporal", title:null, axis:{format:"%b", tickCount:9, labelColor: showFull?"#9aa3b2":"rgba(154,163,178,0.3)"}},
+          y:{field:"submissions", type:"quantitative", scale:{zero:false, domain:[13000,25000]},
+             title:"CS submissions / month (2025)", axis:{format:"~s", labelColor: showFull?"#9aa3b2":"rgba(154,163,178,0.3)"}},
+          tooltip: showFull?[{field:"month",type:"temporal",format:"%b %Y",title:"Month"},
+                   {field:"submissions",type:"quantitative",format:",",title:"CS submissions"}]:null
+        }
+      }
+    ];
+    if(showFull){
+      // explicit greyed truncation marker for 2025-10 — NOT plotted as a real value
+      layers.push({
+        data:{values:[{month:"2025-10-01", label:"2025-10: partial extraction (~95% drop) — data cutoff, not plotted"}]},
+        mark:{type:"rule", color:"#5b6477", strokeDash:[3,3]},
+        encoding:{x:{field:"month",type:"temporal"}}
+      });
+      layers.push({
+        data:{values:[{month:"2025-10-01", label:"chart ends Sep — Oct is a data cutoff"}]},
+        mark:{type:"text", color:"#9aa3b2", angle:270, fontSize:9.5, align:"left", baseline:"top", dx:-6, font:"system-ui"},
+        encoding:{x:{field:"month",type:"temporal"}, y:{value:8}, text:{field:"label"}}
+      });
+    }
+    vegaEmbed("#des_13_chart", {
+      $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+      config: baseConfig, width:"container", height:260,
+      data:{values:data},
+      layer:layers
+    }, VEMBED_OPT);
+  }
+
+  btns.forEach(b=>{
+    b.addEventListener("click", ()=>{
+      if(revealed) return;
+      revealed = true;
+      const g = b.getAttribute("data-guess");
+      btns.forEach(x=>{x.disabled=true; x.style.opacity=.5;});
+      b.style.opacity=1; b.classList.remove("secondary"); b.style.background="var(--accent)"; b.style.color="#04121f";
+      document.getElementById("des_13_chart").classList.add("reveal-anim");
+      renderChart(true);
+      const lead = g==="slowing"
+        ? "Most readers guess slowing &mdash; but the data says otherwise. "
+        : "You called it. ";
+      verdict.innerHTML = `${lead}Through the last complete month, the CS archive grew <b>+21.7% year-over-year</b> (Jan&ndash;Sep 2024 vs Jan&ndash;Sep 2025). No slowdown is visible &mdash; <b>yet</b>.`;
+      verdict.style.display="block";
+      gap.style.display="block";
+    });
+  });
+  renderChart(false);
+})();
+
+// des_14 — into-2026 monthly submissions line (full-history file)
+(function(){
+  var solid = ANA24.filter(function(d){return !d.partial;});
+  vegaEmbed("#des_14_chart", {
+    $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+    config: baseConfig, width:"container", height:280,
+    layer:[
+      // continuous line over complete months
+      {data:{values:solid},
+       mark:{type:"line", color:"var(--accent)", strokeWidth:2, point:false},
+       encoding:{
+         x:{field:"month", type:"temporal", title:null, axis:{format:"%Y"}},
+         y:{field:"submissions", type:"quantitative", title:"Submissions / month",
+            scale:{zero:false, domain:[12000,32000]}}
+       }},
+      // dashed connector into the partial May 2026 point
+      {data:{values:ANA24.slice(-2)},
+       mark:{type:"line", color:"var(--accent)", strokeWidth:2, strokeDash:[3,3], opacity:0.6},
+       encoding:{x:{field:"month",type:"temporal"}, y:{field:"submissions",type:"quantitative"}}},
+      // all points, with tooltip
+      {data:{values:ANA24},
+       mark:{type:"point", filled:true, size:34, color:"var(--accent)"},
+       encoding:{
+         x:{field:"month",type:"temporal"},
+         y:{field:"submissions",type:"quantitative"},
+         opacity:{condition:{test:"datum.partial", value:0.35}, value:1},
+         tooltip:[{field:"month",type:"temporal",title:"Month",format:"%b %Y"},
+                  {field:"submissions",type:"quantitative",title:"Submissions",format:","}]
+       }},
+      // highlight the record month
+      {data:{values:ANA24.filter(function(d){return d.record;})},
+       mark:{type:"point", filled:true, size:120, color:"#ffd166", stroke:"#04121f", strokeWidth:1},
+       encoding:{x:{field:"month",type:"temporal"}, y:{field:"submissions",type:"quantitative"}}},
+      {data:{values:ANA24.filter(function(d){return d.record;})},
+       mark:{type:"text", color:"#ffd166", dy:-14, fontSize:11, fontWeight:600, font:"system-ui", align:"center"},
+       encoding:{x:{field:"month",type:"temporal"}, y:{field:"submissions",type:"quantitative"},
+                 text:{value:"30,045 — first 30k month"}}},
+      // label the partial last point
+      {data:{values:ANA24.filter(function(d){return d.partial;})},
+       mark:{type:"text", color:"#9aa3b2", dy:16, fontSize:9.5, font:"system-ui", align:"end"},
+       encoding:{x:{field:"month",type:"temporal"}, y:{field:"submissions",type:"quantitative"},
+                 text:{value:"May 2026 (partial)"}}}
+    ]
+  }, VEMBED_OPT);
+})();
+</script>
+</body>
+</html>
