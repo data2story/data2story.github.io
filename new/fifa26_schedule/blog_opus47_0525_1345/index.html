@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Tournament, Sixteen Climates — The 2026 World Cup Weather Map</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.21.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
+<style>
+  :root{
+    --bg:#fbf7f0; --ink:#241c14; --muted:#6b5d4d; --line:#e6dccb;
+    --accent:#e0531a; --accent2:#1f7a8c; --card:#fffdf8;
+    --hot:#b10026; --warm:#fd8d3c; --cool:#2c7fb8;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:Georgia,"Times New Roman",serif; line-height:1.7;
+    font-size:18px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px; margin:0 auto; padding:0 20px;}
+  h1,h2,h3,.ui,.label,figcaption,.legend,.stat-label,button,.tag,.credit{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;}
+  h1{font-size:2.6rem; line-height:1.12; margin:0 0 .4em; letter-spacing:-.01em; font-weight:800;}
+  h2{font-size:1.7rem; margin:2.6em 0 .5em; letter-spacing:-.01em; font-weight:700;}
+  p{margin:0 0 1.1em;}
+  a{color:var(--accent);}
+  .sub{font-size:1.2rem; color:var(--muted); margin-bottom:2em; font-family:system-ui,sans-serif;}
+  .kicker{font-family:system-ui,sans-serif; text-transform:uppercase; letter-spacing:.16em; font-size:.72rem; color:var(--accent); font-weight:700;}
+
+  /* hero */
+  .hero{position:relative; width:100vw; margin-left:calc(50% - 50vw); height:88vh; min-height:520px; overflow:hidden; background:#1a0e06;}
+  .hero video,.hero img.poster{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+  .hero .scrim{position:absolute; inset:0; background:linear-gradient(180deg,rgba(20,10,4,.15) 0%,rgba(20,10,4,.1) 45%,rgba(20,10,4,.82) 100%);}
+  .hero .htext{position:absolute; left:0; right:0; bottom:0; padding:0 24px 7vh; text-align:center;}
+  .hero .htext h1{color:#fff; text-shadow:0 2px 24px rgba(0,0,0,.55); font-size:clamp(2.1rem,6vw,4rem);}
+  .hero .htext .sub{color:#f4e6d6; max-width:660px; margin:0 auto;}
+
+  section{padding-top:.5rem;}
+  figure{margin:2rem 0;}
+  figure img{display:block; width:100%; height:auto; border-radius:8px;}
+  figcaption{font-size:.82rem; color:var(--muted); margin-top:.5rem; line-height:1.45;}
+  .credit{font-size:.72rem; color:#9a8b78;}
+
+  .fullbleed{width:100vw; margin-left:calc(50% - 50vw); max-width:none;}
+  .fullbleed img{border-radius:0; width:100%;}
+
+  /* containers */
+  .visual-container,.chart-container,.interactive-container,.video-container,.audio-container,.map-container{
+    display:block; clear:both; margin:2rem auto; width:100%; max-width:720px; min-width:0;
+  }
+  .chart-container{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 14px;}
+  .chart-container > div[id^="chart_"]{width:100%; min-width:0; display:block;}
+  .interactive-container > div[id^="chart_"]{width:100%; min-width:0; display:block;}
+  .chart-title{font-family:system-ui,sans-serif; font-weight:700; font-size:.98rem; margin:0 0 .2rem;}
+  .chart-note{font-family:system-ui,sans-serif; font-size:.78rem; color:var(--muted); margin:0 0 .6rem;}
+
+  /* MAP centerpiece */
+  .map-outer{width:100vw; margin-left:calc(50% - 50vw); max-width:none; background:#f1ece2; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:1.5rem 0 2rem;}
+  #des_02{height:540px; width:100%; max-width:1040px; margin:0 auto; border-radius:0;}
+  @media(max-width:600px){#des_02{height:440px;}}
+  .map-head{max-width:1040px; margin:0 auto 1rem; padding:0 20px;}
+  .map-legend{font-family:system-ui,sans-serif; font-size:.78rem; color:var(--muted); display:flex; gap:18px; flex-wrap:wrap; align-items:center; max-width:1040px; margin:.8rem auto 0; padding:0 20px;}
+  .ramp{display:inline-block; width:160px; height:12px; border-radius:6px; background:linear-gradient(90deg,#2c7fb8,#41b6c4,#fecc5c,#fd8d3c,#e31a1c,#b10026); vertical-align:middle;}
+  .leaflet-popup-content{font-family:system-ui,sans-serif; font-size:13px; line-height:1.45; margin:10px 12px;}
+  .pop-title{font-weight:700; font-size:14px;}
+  .pop-sub{color:#6b5d4d; margin-bottom:6px;}
+  .pop-img{width:100%; height:96px; object-fit:cover; border-radius:6px; margin:6px 0;}
+  .pop-stats{display:grid; grid-template-columns:1fr 1fr; gap:2px 10px;}
+  .pop-stats b{font-weight:700;}
+  .pop-noimg{width:100%; height:60px; border-radius:6px; background:repeating-linear-gradient(45deg,#e8e0d2,#e8e0d2 8px,#ded4c2 8px,#ded4c2 16px); display:flex; align-items:center; justify-content:center; color:#8a7c68; font-size:11px; margin:6px 0;}
+
+  /* stats */
+  .statgrid{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:2rem 0;}
+  .stat-callout{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px 14px; text-align:center; display:block;}
+  .stat-number{display:block; font-family:system-ui,sans-serif; font-weight:800; font-size:2.4rem; line-height:1; color:var(--accent); letter-spacing:-.02em;}
+  .stat-label{display:block; font-size:.8rem; color:var(--muted); margin-top:.5rem; line-height:1.35;}
+  @media(max-width:560px){.statgrid{grid-template-columns:1fr; gap:10px;} .stat-number{font-size:2.1rem;}}
+
+  /* gallery */
+  .gallery{display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:12px; margin:2rem 0;}
+  .gcard{background:var(--card); border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .gcard img{width:100%; height:120px; object-fit:cover; display:block;}
+  .gcard .gbody{padding:8px 10px 10px;}
+  .gcard .gname{font-family:system-ui,sans-serif; font-weight:700; font-size:.82rem;}
+  .gcard .gcity{font-size:.74rem; color:var(--muted);}
+  .gcard .gstat{font-family:system-ui,sans-serif; font-size:.74rem; color:var(--accent); margin-top:3px;}
+  .gcard .gnoimg{height:120px; background:repeating-linear-gradient(45deg,#efe7d9,#efe7d9 10px,#e4dac8 10px,#e4dac8 20px); display:flex; align-items:center; justify-content:center; color:#8a7c68; font-family:system-ui,sans-serif; font-size:.72rem; text-align:center; padding:0 8px;}
+
+  /* buttons */
+  button.play{font-family:system-ui,sans-serif; cursor:pointer; border:1px solid var(--accent); background:transparent; color:var(--accent); border-radius:999px; padding:8px 16px; font-size:.85rem; font-weight:600; min-height:40px;}
+  button.play:hover{background:var(--accent); color:#fff;}
+  .audio-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:.6rem;}
+  .legend-mini{font-family:system-ui,sans-serif; font-size:.76rem; color:var(--muted);}
+
+  /* caveat panel */
+  .caveat{background:#fff4ec; border:1px solid #f3cdb6; border-left:5px solid var(--accent); border-radius:10px; padding:16px 18px; margin:2rem 0; font-size:.92rem;}
+  .caveat .ct{font-family:system-ui,sans-serif; font-weight:800; text-transform:uppercase; letter-spacing:.1em; font-size:.72rem; color:var(--accent); display:block; margin-bottom:.4rem;}
+
+  /* tribe filter */
+  .tribe-legend{display:flex; gap:8px; flex-wrap:wrap; margin:.6rem 0;}
+  .tribe-chip{font-family:system-ui,sans-serif; font-size:.76rem; cursor:pointer; border:1px solid var(--line); border-radius:999px; padding:5px 12px; background:#fff; user-select:none;}
+  .tribe-chip.off{opacity:.35;}
+  .dot{display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:5px; vertical-align:middle;}
+
+  footer{border-top:1px solid var(--line); margin-top:4rem; padding:2rem 0 4rem; font-family:system-ui,sans-serif; font-size:.82rem; color:var(--muted);}
+  footer h3{font-size:1rem; margin:0 0 .6rem;}
+  footer ul{padding-left:1.1rem; margin:.4rem 0 1.2rem;}
+  footer li{margin-bottom:.35rem;}
+
+  .fade{opacity:0; transform:translateY(14px); animation:fin .8s ease forwards;}
+  @keyframes fin{to{opacity:1; transform:none;}}
+  @media(max-width:600px){h1{font-size:2rem;} body{font-size:17px;}}
+</style>
+</head>
+<body>
+
+<!-- ======================= TEASER / HERO (des_01) ======================= -->
+<div class="hero" data-des="des_01">
+  <video autoplay loop muted playsinline poster="assets/hero_heat.png" data-des="des_01">
+    <source src="assets/heat_shimmer.mp4" type="video/mp4">
+  </video>
+  <img class="poster" src="assets/hero_heat.png" alt="A packed open-air stadium baking under a blazing midday sun with visible heat haze" style="display:none">
+  <div class="scrim"></div>
+  <div class="htext">
+    <div class="kicker" style="color:#ffd9a8">FIFA World Cup 2026 · Location &amp; Weather</div>
+    <h1>One Tournament,<br>Sixteen Climates</h1>
+    <p class="sub">The first World Cup spread across a continent hands teams not just opponents, but weather — from a 38°C furnace to a 21°C evening.</p>
+  </div>
+</div>
+
+<main class="wrap">
+
+<!-- ======================= edt_01 ======================= -->
+<section data-edt="edt_01" data-det="det_01,det_04" class="fade">
+  <h2>One Tournament, Sixteen Climates</h2>
+
+  <p data-ana="ana_04">The 2026 World Cup will not be played under one sky. Rank its 16 stadiums by how hot the air actually feels in the tournament window and the spread is staggering: 38.6°C in Houston, 38.3°C in Dallas, down to a mild 21.5°C in Vancouver. That is a 17.1°C gulf between the hottest and coolest venue — inside the same tournament, sometimes on the same day.</p>
+
+  <p data-ana="ana_12" data-det="det_04">At one extreme a team sweats through a Houston afternoon that feels like 38.6°C; at the other it plays a Vancouver evening cooler than a London spring. Miami is wet on 88% of days; Santa Clara saw rain on 0% of the days we sampled. Mexico City kicks the whole thing off at 2,200 metres of altitude. The “where” of this World Cup is also the “how hard.”</p>
+
+  <p>This is a story about location and weather — about a draw that hands teams not just opponents, but climates. Explore the map below to see it.</p>
+</section>
+</main>
+
+<!-- MAP centerpiece (des_02) - full bleed -->
+<section class="map-outer" data-edt="edt_01" data-det="det_01,det_04">
+  <div class="map-head wrap" style="max-width:1040px">
+    <div class="kicker">The centerpiece · click any venue</div>
+    <h2 style="margin-top:.2em" data-des="des_02" data-ana="ana_09">The 2026 World Cup Weather Map</h2>
+  </div>
+  <div id="des_02" class="map-container" data-des="des_02" data-ana="ana_09" style="max-width:1040px"></div>
+  <div class="map-legend">
+    <span data-des="des_02" data-ana="ana_04"><span class="ramp"></span>&nbsp; feels-like high: 21°C → 38°C</span>
+    <span data-des="des_02" data-ana="ana_02">&#9711; marker size = number of matches</span>
+    <span class="credit" data-det="det_09">Climate: Open-Meteo (CC BY 4.0), 2021–2024 average for 11 Jun–19 Jul · Photos: Wikimedia Commons</span>
+  </div>
+</section>
+
+<main class="wrap">
+
+<!-- feels-like ranking chart + sonification (des_03 / des_08 / des_09) -->
+<div class="chart-container" id="des_03" data-des="des_03" data-ana="ana_04">
+  <p class="chart-title">How hot it really feels — all 16 venues</p>
+  <p class="chart-note">Average apparent (“feels-like”) high, 11 Jun–19 Jul, 2021–2024. Spread top to bottom: 17.1°C.</p>
+  <div id="chart_feels"></div>
+  <div class="audio-row" data-des="des_08">
+    <button class="play" id="sonifyBtn" onclick="playSonification()">&#9654;&nbsp; Play the heat ranking</button>
+    <span class="legend-mini">Sonification: higher pitch = hotter venue. Each tone highlights its bar.</span>
+  </div>
+  <div class="audio-row" data-des="des_09" style="margin-top:.4rem">
+    <button class="play" id="ambBtn" onclick="toggleAmbience()" style="border-color:var(--muted); color:var(--muted)">&#9834;&nbsp; Ambient heat bed: off</button>
+    <span class="legend-mini">Optional atmosphere — the page works fully in silence.</span>
+    <audio id="ambAudio" data-des="des_09" preload="none" loop src="assets/heat_ambience.mp3"></audio>
+  </div>
+</div>
+
+<!-- ======================= edt_02 ======================= -->
+<section data-edt="edt_02" data-det="det_01,det_02" class="fade">
+  <h2>The First Continental World Cup</h2>
+
+  <p data-det="det_01,det_02">For the first time, a World Cup spans three countries and 16 cities: 11 in the United States, 3 in Mexico, 2 in Canada. It is also the first 48-team, 104-match edition, stretched over 39 days from 11 June to 19 July. To tame the travel, FIFA split the hosts into Western, Central and Eastern regional clusters — but the clusters still cover four time zones and thousands of kilometres.</p>
+
+  <p data-ana="ana_03">The load is lopsided. The United States hosts 78 of the 104 matches across its 11 venues; Canada and Mexico get 13 each. Three-quarters of the tournament unfolds in the country with the widest internal climate range of all.</p>
+
+  <p data-ana="ana_02">Even within that, some cities carry far more football than others. Dallas leads with 9 matches, followed by Los Angeles, New York/New Jersey and Atlanta at 8 apiece. Mexico's three venues sit at the bottom of the table, 4 to 5 matches each.</p>
+
+  <div class="chart-container" id="des_04" data-des="des_04" data-ana="ana_02,ana_03">
+    <p class="chart-title">Matches per venue, colored by host nation</p>
+    <p class="chart-note">United States 78 · Mexico 13 · Canada 13</p>
+    <div id="chart_matches"></div>
+  </div>
+
+  <figure data-des="des_05" data-ana="ana_02">
+    <img src="assets/dallas__photo.jpg" alt="AT&amp;T Stadium in Arlington, Texas, host of the most 2026 World Cup matches">
+    <figcaption><strong>AT&amp;T Stadium, Arlington</strong> — 9 matches, the busiest venue and a dry-hot, climate-controlled bowl. <span class="credit">Photo: bobbyh_80, Wikimedia Commons, CC BY 2.0.</span></figcaption>
+  </figure>
+</section>
+
+<!-- ======================= edt_03 ======================= -->
+<section data-edt="edt_03" data-det="det_04,det_05,det_06" class="fade">
+  <h2>The Heat Is the Headline</h2>
+
+  <p data-ana="ana_04" data-det="det_04">Heat is the headline. FIFPRO, the global players' union, has flagged six venues — Atlanta, Dallas, Houston, Kansas City, Miami and Monterrey — as posing an “extremely high risk” of heat-stress injury. The climate record agrees: those are clustered at the top of the feels-like ranking, between 33.9°C and 38.6°C.</p>
+
+  <p data-ana="ana_05">And that is where a lot of football is scheduled. Weight each venue's matches by its feels-like high and Dallas tops the heat-exposure index (9 matches at 38.3°C), trailed by Atlanta, Houston and Miami. In raw counts, 35 of 104 matches (33.7%) fall at venues whose typical feels-like high is 34°C or more, and 41 matches (39.4%) land at the six venues FIFPRO singled out. Roughly four in ten World Cup matches are booked into the danger band.</p>
+
+  <div class="statgrid">
+    <div class="stat-callout" data-des="des_07" data-ana="ana_12"><span class="stat-number">38.6°C</span><span class="stat-label">feels-like high in Houston — the hottest venue</span></div>
+    <div class="stat-callout" data-des="des_07" data-ana="ana_05"><span class="stat-number">39.4%</span><span class="stat-label">of matches at FIFPRO “extremely high risk” venues</span></div>
+    <div class="stat-callout" data-des="des_07" data-ana="ana_04"><span class="stat-number">17.1°C</span><span class="stat-label">gap between the hottest and coolest venue</span></div>
+  </div>
+
+  <div class="chart-container" id="des_06" data-des="des_06" data-ana="ana_05">
+    <p class="chart-title">Where the most football meets the most heat</p>
+    <p class="chart-note">Heat-exposure index = matches × feels-like high. Bars colored by feels-like temperature.</p>
+    <div id="chart_exposure"></div>
+  </div>
+
+  <p data-ana="ana_11">Why does Houston (33.5°C air) feel hotter than Dallas (34.9°C air)? Humidity. The feels-like penalty is biggest where the air is wettest — Miami adds +5.9°C, Houston +5.1°C — while dry Santa Clara actually feels half a degree cooler than its thermometer reads. Across the venues, humidity and the feels-like penalty move together (r = 0.49). It is not just heat; it is heat the body cannot sweat away.</p>
+
+  <p data-det="det_05,det_06">This is not hypothetical. At the 2025 Club World Cup, the same-summer dress rehearsal, temperatures hit 104°F in Charlotte and players described the conditions as brutal. FIFPRO wants matches postponed at a 28°C WBGT; FIFA does not act until 32°C — a gap a panel of experts called “impossible to justify.” FIFA's answer so far is mandatory three-minute hydration breaks each half.</p>
+</section>
+
+<!-- ======================= edt_04 ======================= -->
+<section data-edt="edt_04" data-det="det_07,det_08" class="fade">
+  <h2>Brutal, Dry-Hot, Warm, Mild</h2>
+
+  <p data-ana="ana_08">Plot every venue by feels-like heat against humidity and the 16 sort into four tribes. Three are brutal — hot and humid at once: Houston, Miami and Atlanta. Two are dry-hot — fierce thermometers but drier air, where roofs and evaporation help: Dallas and Monterrey. Six are merely warm, and five are genuinely mild — Mexico City, Toronto, Vancouver, Seattle and Santa Clara, all at or below a 27°C feels-like.</p>
+
+  <div class="interactive-container" id="des_10" data-des="des_10" data-ana="ana_08">
+    <p class="chart-title" style="margin-bottom:.2rem">Four climate tribes — tap a tribe to isolate it</p>
+    <p class="chart-note">x = humidity, y = feels-like high, bubble size = matches.</p>
+    <div class="tribe-legend" id="tribeLegend">
+      <span class="tribe-chip" data-tribe="brutal"><span class="dot" style="background:#b10026"></span>Brutal (hot+humid)</span>
+      <span class="tribe-chip" data-tribe="dry-hot"><span class="dot" style="background:#fd8d3c"></span>Dry-hot</span>
+      <span class="tribe-chip" data-tribe="warm"><span class="dot" style="background:#fec44f"></span>Warm</span>
+      <span class="tribe-chip" data-tribe="mild"><span class="dot" style="background:#2c7fb8"></span>Mild</span>
+    </div>
+    <div id="chart_scatter"></div>
+  </div>
+
+  <p data-det="det_07">Fairness demands a caveat. The hottest venues are not all equally exposed. Dallas (AT&amp;T), Houston (NRG) and Atlanta (Mercedes-Benz) have full climate control, and FIFA says roofed stadiums will host daytime matches. But BC Place's roof will be open for every 2026 game because FIFA wants natural light on the grass, and the final venue, MetLife, has no roof at all. The climate numbers are the hazard; the roof is the mitigation — and the two do not always line up.</p>
+
+  <p data-det="det_08">The other lever is the clock. FIFPRO points to Major League Soccer, where Miami simply does not kick off at midday and hasn't for years. Broadcast windows pull the other way, toward early-afternoon European prime time. That collision — TV money against the thermometer — is where the schedule meets the weather.</p>
+
+  <figure class="fullbleed" data-des="des_11" data-ana="ana_08" style="margin:2.5rem 0">
+    <img src="assets/contrast_hotcool.png" alt="A diptych contrasting a sweltering sun-baked stadium with a cool misty one">
+    <div class="wrap"><figcaption>The gulf, made visible: a brutal sun-baked bowl beside a cool, misty one. <span class="credit">Illustrative AI image (OpenRouter, gpt-5.4-image-2) — not a real venue.</span></figcaption></div>
+  </figure>
+</section>
+
+<!-- ======================= edt_05 ======================= -->
+<section data-edt="edt_05" data-det="det_03" class="fade">
+  <h2>Rain, Altitude and the Cool Corners</h2>
+
+  <p data-ana="ana_06">Heat is not the only weather that bites. Miami is wet on 88% of days in the window, with Mexico's altitude cities close behind (Guadalajara 73%, Mexico City 72%) thanks to the North American summer monsoon. At the other pole, California is parched: Santa Clara recorded rain on 0% of sampled days, Inglewood just 1%. Even famously drizzly Seattle is dry in midsummer at 13%. Wet venues trade heat stress for lightning delays.</p>
+
+  <div class="chart-container" id="des_12" data-des="des_12" data-ana="ana_06">
+    <p class="chart-title">How often it rains in the tournament window</p>
+    <p class="chart-note">Share of days with rain, 2021–2024 average. Miami 88% → Santa Clara 0%.</p>
+    <div id="chart_rain"></div>
+  </div>
+
+  <p data-ana="ana_07" data-det="det_03">Then there is the thin air. Mexico City's Estadio Azteca sits at 2,200 metres — more than a kilometre above any other venue and high enough to sap aerobic capacity and bend the flight of the ball. It is also why Mexico City stays mild despite its low latitude: altitude, not breeze, is its air conditioner. The tournament opens there on 11 June and ends at sea-level MetLife on 19 July, the geographic bookends of a continental sprawl.</p>
+
+  <div class="chart-container" id="des_13" data-des="des_13" data-ana="ana_07">
+    <p class="chart-title">Venue elevation — Mexico City towers over the field</p>
+    <p class="chart-note">Metres above sea level. Every other venue sits below 330&nbsp;m.</p>
+    <div id="chart_alt"></div>
+  </div>
+
+  <h3 style="font-family:system-ui,sans-serif; font-size:1.05rem; margin-top:2.2rem">The 16 venues</h3>
+  <div class="gallery" id="des_14" data-des="des_14" data-ana="ana_09"></div>
+  <p class="credit">Stadium photos via Wikimedia Commons under their respective CC licenses (see References). Kansas City / Arrowhead Stadium has no public-domain photo and is shown as a climate placeholder, never a fabricated image.</p>
+</section>
+
+<!-- ======================= edt_06 ======================= -->
+<section data-edt="edt_06" data-det="det_05,det_09" class="fade">
+  <h2>The Schedule Meets the Sky</h2>
+
+  <p data-ana="ana_10">The 39-day calendar opens softly with two matches on 11 June, swells to six on the busiest group-stage day, then narrows to a single match in the late knockout rounds. On those dense early days, the most stadiums run at once — multiplying the number of pitches baking under a peak afternoon sun on the same date.</p>
+
+  <div class="chart-container" id="des_15" data-des="des_15" data-ana="ana_10">
+    <p class="chart-title">Matches per day across the 39-day window</p>
+    <p class="chart-note">Opener 11 Jun (2) → group-stage peak 24 Jun (6) → final 19 Jul (1).</p>
+    <div id="chart_timeline"></div>
+  </div>
+
+  <p data-ana="ana_05" data-det="det_05">So the location-and-weather story is really one question with two halves: where the matches are, and how hard the sky pushes back. Four in ten of them sit in the heat band that worried the doctors. The fixes exist — roofs, evening kickoffs, postponement thresholds — but every one of them is a choice still being argued over.</p>
+
+  <p data-det="det_09">One honest caveat runs under all of it: these are typical-climate numbers, averaged over 2021–2024, not a 2026 forecast. They are the loaded dice, not the roll. But when a third of the matches sit on the hot face of the die, you do not need a forecast to see the gamble.</p>
+
+  <div class="caveat" data-des="des_16" data-ana="ana_12" data-det="det_09">
+    <span class="ct">Climate, not a forecast</span>
+    Every weather figure here is <strong>typical historical climate</strong> for the 11 June–19 July window, averaged over 2021–2024 from the Open-Meteo archive (CC BY 4.0) — <strong>not a prediction</strong> for any specific 2026 match date. “Feels-like” (apparent temperature) approximates a heat index from air temperature and humidity; it is not the WBGT metric FIFA and FIFPRO use for thresholds. Raw climate also ignores stadium roofs and air conditioning: Dallas, Houston and Atlanta have full climate control, BC Place's roof will be open in 2026, and MetLife has none. Some fixtures list playoff placeholder opponents; this story depends only on venue and date.
+  </div>
+</section>
+
+<!-- ======================= References ======================= -->
+<footer class="wrap">
+  <h3>Sources &amp; credits</h3>
+  <ul>
+    <li><strong>Schedule data:</strong> Official 2026 FIFA World Cup match schedule (104 matches, 16 venues), joined to per-venue climate.</li>
+    <li><strong>Climate data:</strong> <a href="https://open-meteo.com/en/docs/historical-weather-api" target="_blank" rel="noopener">Open-Meteo Historical Weather API</a> — averaged over 11 Jun–19 Jul, 2021–2024. License: CC BY 4.0 (Open-Meteo).</li>
+    <li><strong>Heat &amp; player-welfare context:</strong> <a href="https://www.espn.com/soccer/story/_/id/45703299/club-world-cup-heat-usa-mexico-fifa-2026-world-cup-concerns-temperatures-cooling-breaks" target="_blank" rel="noopener">ESPN: Is the US too hot for 2026?</a>; <a href="https://www.espn.com/soccer/story/_/id/45619017/fifpro-us-summer-temps-concern-2026-world-cup" target="_blank" rel="noopener">ESPN: FIFPRO on US summer temps</a>; <a href="https://www.thecooldown.com/outdoors/2026-world-cup-heat-safety-concerns/" target="_blank" rel="noopener">The Cool Down: “impossible to justify”</a>; <a href="https://time.com/7303535/extreme-heat-fifa-world-cup-2026/" target="_blank" rel="noopener">TIME: extreme heat risk</a>.</li>
+    <li><strong>Tournament &amp; venue facts:</strong> <a href="https://en.wikipedia.org/wiki/2026_FIFA_World_Cup" target="_blank" rel="noopener">2026 FIFA World Cup (Wikipedia)</a>; <a href="https://www.goal.com/en/lists/fifa-president-gianni-infantino-2026-world-cup/blt417961314c391fea" target="_blank" rel="noopener">Goal.com: Infantino on roofed stadiums</a>.</li>
+    <li><strong>Stadium photos (Wikimedia Commons):</strong> Estadio Azteca — ProtoplasmaKid (CC BY 4.0); Estadio Akron — Juan Olivas (CC BY 2.0); Estadio BBVA — Arne M&uuml;seler (CC BY-SA 3.0 de); BMO Field — Pablopicassotoronto (CC BY-SA 4.0); BC Place — Yvrphoto (CC BY-SA 3.0); Mercedes-Benz Stadium — Atlanta Falcons (CC BY 3.0); Gillette Stadium — Bernard Gagnon (CC BY-SA 3.0); AT&amp;T Stadium — bobbyh_80 (CC BY 2.0); NRG Stadium — eschipul/Flickr (CC BY-SA 2.0); SoFi Stadium — "Thank You (21 Millions+) views" (CC BY 2.0); Hard Rock Stadium — elisfkc2 (CC BY-SA 2.0); MetLife Stadium — babyknight (CC BY 2.0); Lincoln Financial Field — Betp (CC BY-SA 3.0); Levi's Stadium — Matthew Roth (CC BY-SA 2.0); Lumen Field — Smart Destinations (CC BY-SA 2.0).</li>
+    <li><strong>Generated media:</strong> Hero image &amp; hot/cool contrast — OpenRouter <code>openai/gpt-5.4-image-2</code>; heat-shimmer clip — <code>google/veo-3.1-fast</code> (image2video); ambient bed — <code>google/lyria-3-pro-preview</code>.</li>
+    <li><strong>Tools:</strong> Leaflet 1.9.4 (map, CartoDB Positron tiles), Vega-Lite 5.21 (charts), Web Audio API (sonification).</li>
+  </ul>
+  <p class="credit">A Data2Story data-journalism pipeline output. Climate is typical historical average, not a forecast.</p>
+</footer>
+</main>
+
+<script>
+/* ===================== DATA from analyst.json data_tables ===================== */
+// ana_09 map master (stadium, venue, city, country, lat, lon, elevation, feels, air, hum, rain%, matches, photo)
+const VENUES = [
+ ["Mexico City Stadium","Estadio Azteca","Mexico City","Mexico",19.3029,-99.1505,2200,24.3,23.9,67,72,5,"mexico_city__photo.jpg"],
+ ["Estadio Guadalajara","Estadio Akron","Guadalajara","Mexico",20.6817,-103.4625,1566,28.3,26.9,74,73,4,"guadalajara__photo.jpg"],
+ ["Estadio Monterrey","Estadio BBVA","Monterrey","Mexico",25.669,-100.2443,450,36.2,34.0,63,24,4,"monterrey__photo.jpg"],
+ ["Toronto Stadium","BMO Field","Toronto","Canada",43.6332,-79.4185,76,26.3,25.0,72,40,6,"toronto__photo.png"],
+ ["BC Place Vancouver","BC Place","Vancouver","Canada",49.2767,-123.1119,3,21.5,21.1,73,21,7,"vancouver__photo.jpg"],
+ ["Atlanta Stadium","Mercedes-Benz Stadium","Atlanta","USA",33.7554,-84.4008,320,34.1,30.8,72,50,8,"atlanta__photo.jpg"],
+ ["Boston Stadium","Gillette Stadium","Foxborough","USA",42.0909,-71.2643,89,28.6,27.0,76,47,7,"boston__photo.jpg"],
+ ["Dallas Stadium","AT&T Stadium","Arlington","USA",32.7473,-97.0945,150,38.3,34.9,61,27,9,"dallas__photo.jpg"],
+ ["Houston Stadium","NRG Stadium","Houston","USA",29.6847,-95.4107,15,38.6,33.5,76,47,7,"houston__photo.jpg"],
+ ["Kansas City Stadium","Arrowhead Stadium","Kansas City","USA",39.0489,-94.4839,270,33.9,31.3,67,38,6,""],
+ ["Los Angeles Stadium","SoFi Stadium","Inglewood","USA",33.9535,-118.3392,30,28.1,27.1,70,1,8,"los_angeles__photo.jpg"],
+ ["Miami Stadium","Hard Rock Stadium","Miami Gardens","USA",25.958,-80.2389,3,36.9,31.0,82,88,7,"miami__photo.jpg"],
+ ["New York New Jersey Stadium","MetLife Stadium","East Rutherford","USA",40.8135,-74.0745,2,30.3,28.5,71,43,8,"new_york_new_jersey__photo.jpg"],
+ ["Philadelphia Stadium","Lincoln Financial Field","Philadelphia","USA",39.9008,-75.1675,12,32.1,30.2,68,46,6,"philadelphia__photo.jpg"],
+ ["San Francisco Bay Area Stadium","Levi's Stadium","Santa Clara","USA",37.403,-121.97,8,26.8,27.4,62,0,6,"san_francisco_bay_area__photo.jpg"],
+ ["Seattle Stadium","Lumen Field","Seattle","USA",47.5952,-122.3316,5,23.1,23.2,68,13,6,"seattle__photo.jpg"]
+];
+const C={S:0,V:1,CI:2,CO:3,LA:4,LO:5,EL:6,FE:7,AI:8,HU:9,RA:10,MA:11,PH:12};
+
+// hot-to-cool color ramp by feels-like (21.5 -> 38.6)
+function heatColor(f){
+  const stops=[[21,[44,127,184]],[26,[65,182,196]],[30,[254,204,92]],[34,[253,141,60]],[37,[227,26,28]],[39,[177,0,38]]];
+  let lo=stops[0],hi=stops[stops.length-1];
+  for(let i=0;i<stops.length-1;i++){if(f>=stops[i][0]&&f<=stops[i+1][0]){lo=stops[i];hi=stops[i+1];break;}}
+  if(f<=stops[0][0])return rgb(stops[0][1]); if(f>=hi[0]&&f===stops[stops.length-1][0])return rgb(hi[1]);
+  const t=(f-lo[0])/((hi[0]-lo[0])||1);
+  return rgb(lo[1].map((c,i)=>Math.round(c+(hi[1][i]-c)*t)));
+}
+function rgb(a){return 'rgb('+a[0]+','+a[1]+','+a[2]+')';}
+
+/* ===================== LEAFLET MAP (des_02) ===================== */
+const map=L.map('des_02',{scrollWheelZoom:false,minZoom:2}).setView([38.5,-99],3.4);
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{
+  attribution:'&copy; OpenStreetMap, &copy; CARTO', subdomains:'abcd', maxZoom:19
+}).addTo(map);
+VENUES.forEach(v=>{
+  const f=v[C.FE];
+  const m=L.circleMarker([v[C.LA],v[C.LO]],{
+    radius:6+v[C.MA]*1.3, fillColor:heatColor(f), color:'#fff', weight:1.5, fillOpacity:.9
+  }).addTo(map);
+  const img = v[C.PH] ? `<img class="pop-img" src="assets/${v[C.PH]}" alt="${v[C.V]}">`
+                      : `<div class="pop-noimg">No public-domain photo available</div>`;
+  m.bindPopup(
+    `<div class="pop-title">${v[C.V]}</div>`+
+    `<div class="pop-sub">${v[C.CI]}, ${v[C.CO]} &middot; ${v[C.MA]} matches</div>`+
+    img+
+    `<div class="pop-stats">`+
+      `<span>Feels-like high</span><b>${f}&deg;C</b>`+
+      `<span>Air high</span><b>${v[C.AI]}&deg;C</b>`+
+      `<span>Humidity</span><b>${v[C.HU]}%</b>`+
+      `<span>Rainy days</span><b>${v[C.RA]}%</b>`+
+      `<span>Elevation</span><b>${v[C.EL]} m</b>`+
+    `</div>`,{maxWidth:240});
+});
+
+/* ===================== GALLERY (des_14) ===================== */
+(function(){
+  const g=document.getElementById('des_14');
+  // sort by feels-like desc to mirror the heat narrative
+  const sorted=[...VENUES].sort((a,b)=>b[C.FE]-a[C.FE]);
+  sorted.forEach(v=>{
+    const stat = v[C.RA]>=70 ? `rain ${v[C.RA]}% of days`
+               : v[C.EL]>=1000 ? `${v[C.EL]} m altitude`
+               : `feels-like ${v[C.FE]}&deg;C`;
+    const card=document.createElement('div'); card.className='gcard';
+    card.innerHTML = (v[C.PH]
+        ? `<img src="assets/${v[C.PH]}" alt="${v[C.V]}">`
+        : `<div class="gnoimg">No public-domain photo &mdash; placeholder</div>`)
+      + `<div class="gbody"><div class="gname">${v[C.V]}</div>`
+      + `<div class="gcity">${v[C.CI]}, ${v[C.CO]}</div>`
+      + `<div class="gstat">${stat}</div></div>`;
+    g.appendChild(card);
+  });
+})();
+
+/* ===================== VEGA-LITE CHARTS ===================== */
+const FONT={labelFont:"system-ui",titleFont:"system-ui"};
+function toVals(cols,rows){return rows.map(r=>Object.fromEntries(cols.map((c,i)=>[c,r[i]])));}
+const cfg={background:null,view:{stroke:null},axis:{...FONT,grid:false,domainColor:'#cbbfa9',tickColor:'#cbbfa9',labelColor:'#6b5d4d',titleColor:'#6b5d4d'},legend:{...FONT}};
+const HEATSCHEME={scheme:null};
+const heatScale={domain:[21,30,34,38.6],range:['#2c7fb8','#fecc5c','#fd8d3c','#b10026']};
+
+// des_03 feels-like ranking (ana_04)
+const feelsData=toVals(["city","venue","feels_like_c","air_high_c","humidity_pct","matches"],[
+ ["Houston","NRG Stadium",38.6,33.5,76,7],["Arlington","AT&T Stadium",38.3,34.9,61,9],
+ ["Miami Gardens","Hard Rock Stadium",36.9,31.0,82,7],["Monterrey","Estadio BBVA",36.2,34.0,63,4],
+ ["Atlanta","Mercedes-Benz Stadium",34.1,30.8,72,8],["Kansas City","Arrowhead Stadium",33.9,31.3,67,6],
+ ["Philadelphia","Lincoln Financial Field",32.1,30.2,68,6],["East Rutherford","MetLife Stadium",30.3,28.5,71,8],
+ ["Foxborough","Gillette Stadium",28.6,27.0,76,7],["Guadalajara","Estadio Akron",28.3,26.9,74,4],
+ ["Inglewood","SoFi Stadium",28.1,27.1,70,8],["Santa Clara","Levi's Stadium",26.8,27.4,62,6],
+ ["Toronto","BMO Field",26.3,25.0,72,6],["Mexico City","Estadio Azteca",24.3,23.9,67,5],
+ ["Seattle","Lumen Field",23.1,23.2,68,6],["Vancouver","BC Place",21.5,21.1,73,7]]);
+vegaEmbed('#chart_feels',{
+ $schema:"https://vega.github.io/schema/vega-lite/v5.json",config:cfg,
+ width:"container",height:420,data:{values:feelsData},
+ mark:{type:"bar",cornerRadiusEnd:3,height:{band:0.8}},
+ encoding:{
+  y:{field:"city",type:"nominal",sort:null,title:null,axis:{labelFontSize:11}},
+  x:{field:"feels_like_c",type:"quantitative",title:"feels-like high (°C)",scale:{domain:[0,42]}},
+  color:{field:"feels_like_c",type:"quantitative",scale:heatScale,legend:null},
+  tooltip:[{field:"venue",title:"Venue"},{field:"city",title:"City"},{field:"feels_like_c",title:"Feels-like °C"},{field:"air_high_c",title:"Air high °C"},{field:"humidity_pct",title:"Humidity %"},{field:"matches",title:"Matches"}]
+ }
+},{actions:false});
+
+// des_04 matches per venue (ana_02) colored by country
+const matchData=toVals(["city","venue","country","matches"],[
+ ["Arlington","AT&T Stadium","USA",9],["Inglewood","SoFi Stadium","USA",8],["East Rutherford","MetLife Stadium","USA",8],
+ ["Atlanta","Mercedes-Benz Stadium","USA",8],["Foxborough","Gillette Stadium","USA",7],["Vancouver","BC Place","Canada",7],
+ ["Houston","NRG Stadium","USA",7],["Miami Gardens","Hard Rock Stadium","USA",7],["Toronto","BMO Field","Canada",6],
+ ["Santa Clara","Levi's Stadium","USA",6],["Philadelphia","Lincoln Financial Field","USA",6],["Seattle","Lumen Field","USA",6],
+ ["Kansas City","Arrowhead Stadium","USA",6],["Mexico City","Estadio Azteca","Mexico",5],
+ ["Guadalajara","Estadio Akron","Mexico",4],["Monterrey","Estadio BBVA","Mexico",4]]);
+vegaEmbed('#chart_matches',{
+ $schema:"https://vega.github.io/schema/vega-lite/v5.json",config:cfg,
+ width:"container",height:420,data:{values:matchData},
+ mark:{type:"bar",cornerRadiusEnd:3,height:{band:0.8}},
+ encoding:{
+  y:{field:"city",type:"nominal",sort:null,title:null,axis:{labelFontSize:11}},
+  x:{field:"matches",type:"quantitative",title:"matches",scale:{domain:[0,10]},axis:{tickMinStep:1}},
+  color:{field:"country",type:"nominal",scale:{domain:["USA","Mexico","Canada"],range:["#e0531a","#2a9d8f","#577590"]},legend:{title:"Host nation",orient:"bottom"}},
+  tooltip:[{field:"venue",title:"Venue"},{field:"city"},{field:"country"},{field:"matches"}]
+ }
+},{actions:false});
+
+// des_06 heat-exposure index (ana_05)
+const expData=toVals(["city","matches","feels_like_c","exposure_index"],[
+ ["Arlington",9,38.3,344.7],["Atlanta",8,34.1,272.8],["Houston",7,38.6,270.2],["Miami Gardens",7,36.9,258.3],
+ ["East Rutherford",8,30.3,242.4],["Inglewood",8,28.1,224.8],["Kansas City",6,33.9,203.4],["Foxborough",7,28.6,200.2],
+ ["Philadelphia",6,32.1,192.6],["Santa Clara",6,26.8,160.8],["Toronto",6,26.3,157.8],["Vancouver",7,21.5,150.5],
+ ["Monterrey",4,36.2,144.8],["Seattle",6,23.1,138.6],["Mexico City",5,24.3,121.5],["Guadalajara",4,28.3,113.2]]);
+vegaEmbed('#chart_exposure',{
+ $schema:"https://vega.github.io/schema/vega-lite/v5.json",config:cfg,
+ width:"container",height:420,data:{values:expData},
+ mark:{type:"bar",cornerRadiusEnd:3,height:{band:0.8}},
+ encoding:{
+  y:{field:"city",type:"nominal",sort:null,title:null,axis:{labelFontSize:11}},
+  x:{field:"exposure_index",type:"quantitative",title:"heat-exposure index (matches × feels-like)"},
+  color:{field:"feels_like_c",type:"quantitative",scale:heatScale,legend:null},
+  tooltip:[{field:"city"},{field:"matches",title:"Matches"},{field:"feels_like_c",title:"Feels-like °C"},{field:"exposure_index",title:"Exposure index"}]
+ }
+},{actions:false});
+
+// des_10 scatter (ana_08) with tribe filter
+const tribeColor={brutal:"#b10026","dry-hot":"#fd8d3c",warm:"#fec44f",mild:"#2c7fb8"};
+const scatterData=toVals(["city","feels_like_c","humidity_pct","matches","tribe"],[
+ ["Houston",38.6,76.5,7,"brutal"],["Miami Gardens",36.9,82.9,7,"brutal"],["Atlanta",34.1,72.8,8,"brutal"],
+ ["Arlington",38.3,61.6,9,"dry-hot"],["Monterrey",36.2,63.6,4,"dry-hot"],
+ ["Kansas City",33.9,67.2,6,"warm"],["Philadelphia",32.1,68.6,6,"warm"],["East Rutherford",30.3,71.7,8,"warm"],
+ ["Foxborough",28.6,76.0,7,"warm"],["Guadalajara",28.3,74.2,4,"warm"],["Inglewood",28.1,70.4,8,"warm"],
+ ["Santa Clara",26.8,62.3,6,"mild"],["Toronto",26.3,72.3,6,"mild"],["Mexico City",24.3,67.9,5,"mild"],
+ ["Seattle",23.1,68.6,6,"mild"],["Vancouver",21.5,73.6,7,"mild"]]);
+let activeTribes=new Set(["brutal","dry-hot","warm","mild"]);
+function scatterSpec(){
+ const data=scatterData.filter(d=>activeTribes.has(d.tribe));
+ return {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",config:cfg,
+  width:"container",height:380,data:{values:data},
+  layer:[{
+   mark:{type:"point",filled:true,opacity:.85},
+   encoding:{
+    x:{field:"humidity_pct",type:"quantitative",title:"humidity (%)",scale:{domain:[55,88]}},
+    y:{field:"feels_like_c",type:"quantitative",title:"feels-like high (°C)",scale:{domain:[19,40]}},
+    size:{field:"matches",type:"quantitative",scale:{range:[80,600]},legend:{title:"matches",orient:"bottom"}},
+    color:{field:"tribe",type:"nominal",scale:{domain:Object.keys(tribeColor),range:Object.values(tribeColor)},legend:null},
+    tooltip:[{field:"city"},{field:"feels_like_c",title:"Feels-like °C"},{field:"humidity_pct",title:"Humidity %"},{field:"matches"},{field:"tribe"}]
+   }
+  },{
+   mark:{type:"text",dy:-12,fontSize:9,color:"#6b5d4d"},
+   encoding:{x:{field:"humidity_pct",type:"quantitative"},y:{field:"feels_like_c",type:"quantitative"},text:{field:"city"}}
+  }]
+ };
+}
+function drawScatter(){vegaEmbed('#chart_scatter',scatterSpec(),{actions:false});}
+drawScatter();
+document.querySelectorAll('#tribeLegend .tribe-chip').forEach(chip=>{
+ chip.addEventListener('click',()=>{
+  const t=chip.dataset.tribe;
+  if(activeTribes.has(t)&&activeTribes.size>1){activeTribes.delete(t);chip.classList.add('off');}
+  else{activeTribes.add(t);chip.classList.remove('off');}
+  drawScatter();
+ });
+});
+
+// des_12 rain (ana_06)
+const rainData=toVals(["city","rainy_day_pct","precip_mm_day","matches"],[
+ ["Miami Gardens",88,8.4,7],["Guadalajara",73,7.0,4],["Mexico City",72,8.1,5],["Atlanta",50,6.4,8],
+ ["Foxborough",47,4.3,7],["Houston",47,5.9,7],["Philadelphia",46,3.7,6],["East Rutherford",43,4.5,8],
+ ["Toronto",40,3.5,6],["Kansas City",38,5.2,6],["Arlington",27,2.3,9],["Monterrey",24,2.2,4],
+ ["Vancouver",21,1.1,7],["Seattle",13,0.7,6],["Inglewood",1,0.1,8],["Santa Clara",0,0.0,6]]);
+vegaEmbed('#chart_rain',{
+ $schema:"https://vega.github.io/schema/vega-lite/v5.json",config:cfg,
+ width:"container",height:420,data:{values:rainData},
+ mark:{type:"bar",cornerRadiusEnd:3,height:{band:0.8}},
+ encoding:{
+  y:{field:"city",type:"nominal",sort:null,title:null,axis:{labelFontSize:11}},
+  x:{field:"rainy_day_pct",type:"quantitative",title:"% of days with rain",scale:{domain:[0,100]}},
+  color:{field:"rainy_day_pct",type:"quantitative",scale:{scheme:"blues"},legend:null},
+  tooltip:[{field:"city"},{field:"rainy_day_pct",title:"Rainy days %"},{field:"precip_mm_day",title:"mm/day"},{field:"matches"}]
+ }
+},{actions:false});
+
+// des_13 altitude (ana_07)
+const altData=toVals(["city","elevation_m","matches"],[
+ ["Mexico City",2200,5],["Guadalajara",1566,4],["Monterrey",450,4],["Atlanta",320,8],["Kansas City",270,6],
+ ["Arlington",150,9],["Foxborough",89,7],["Toronto",76,6],["Inglewood",30,8],["Houston",15,7],
+ ["Philadelphia",12,6],["Santa Clara",8,6],["Seattle",5,6],["Vancouver",3,7],["Miami Gardens",3,7],["East Rutherford",2,8]]);
+vegaEmbed('#chart_alt',{
+ $schema:"https://vega.github.io/schema/vega-lite/v5.json",config:cfg,
+ width:"container",height:420,data:{values:altData},
+ mark:{type:"bar",cornerRadiusEnd:3,height:{band:0.8}},
+ encoding:{
+  y:{field:"city",type:"nominal",sort:null,title:null,axis:{labelFontSize:11}},
+  x:{field:"elevation_m",type:"quantitative",title:"elevation (m)"},
+  color:{field:"elevation_m",type:"quantitative",scale:{scheme:"yelloworngrn"},legend:null},
+  tooltip:[{field:"city"},{field:"elevation_m",title:"Elevation m"},{field:"matches"}]
+ }
+},{actions:false});
+
+// des_15 timeline (ana_10)
+const tlData=toVals(["date","matches"],[
+ ["2026-06-11",2],["2026-06-12",3],["2026-06-13",4],["2026-06-15",4],["2026-06-18",4],["2026-06-21",4],
+ ["2026-06-24",6],["2026-06-27",4],["2026-06-30",2],["2026-07-04",2],["2026-07-07",1],["2026-07-11",2],
+ ["2026-07-14",1],["2026-07-18",1],["2026-07-19",1]]);
+vegaEmbed('#chart_timeline',{
+ $schema:"https://vega.github.io/schema/vega-lite/v5.json",config:cfg,
+ width:"container",height:240,data:{values:tlData},
+ mark:{type:"bar",cornerRadiusEnd:3,color:"#e0531a"},
+ encoding:{
+  x:{field:"date",type:"temporal",title:null,axis:{format:"%b %d",labelAngle:-40,tickCount:8}},
+  y:{field:"matches",type:"quantitative",title:"matches that day",scale:{domain:[0,6]},axis:{tickMinStep:1}},
+  tooltip:[{field:"date",type:"temporal",title:"Date",format:"%a %d %b %Y"},{field:"matches"}]
+ }
+},{actions:false});
+
+/* ===================== SONIFICATION (des_08) + AMBIENCE (des_09) ===================== */
+let actx=null, sonifying=false;
+function playSonification(){
+ if(sonifying)return;
+ const AC=window.AudioContext||window.webkitAudioContext;
+ if(!AC){return;} // graceful: chart alone communicates
+ if(!actx)actx=new AC();
+ sonifying=true;
+ const btn=document.getElementById('sonifyBtn'); btn.textContent='♪ playing…';
+ const minF=21.5, maxF=38.6, minHz=330, maxHz=990, note=0.22;
+ const bars=document.querySelectorAll('#chart_feels .mark-rect path, #chart_feels rect');
+ feelsData.forEach((d,i)=>{
+  const t=actx.currentTime+i*note;
+  const hz=minHz+(d.feels_like_c-minF)/(maxF-minF)*(maxHz-minHz);
+  const o=actx.createOscillator(), g=actx.createGain();
+  o.type='triangle'; o.frequency.setValueAtTime(hz,t);
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.22,t+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001,t+note*0.95);
+  o.connect(g).connect(actx.destination); o.start(t); o.stop(t+note);
+  setTimeout(()=>{ if(bars[i]){bars[i].style.transition='opacity .1s'; bars[i].style.opacity='.4'; setTimeout(()=>{if(bars[i])bars[i].style.opacity='1';},note*800);} }, i*note*1000);
+ });
+ setTimeout(()=>{sonifying=false; btn.innerHTML='&#9654;&nbsp; Play the heat ranking';}, feelsData.length*note*1000+200);
+}
+let ambOn=false;
+function toggleAmbience(){
+ const a=document.getElementById('ambAudio'), b=document.getElementById('ambBtn');
+ if(!ambOn){a.volume=0.5; a.play().then(()=>{ambOn=true; b.innerHTML='&#9834;&nbsp; Ambient heat bed: on';}).catch(()=>{b.innerHTML='&#9834;&nbsp; audio unavailable';});}
+ else{a.pause(); ambOn=false; b.innerHTML='&#9834;&nbsp; Ambient heat bed: off';}
+}
+</script>
+</body>
+</html>

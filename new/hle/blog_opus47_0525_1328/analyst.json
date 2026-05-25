@@ -1,0 +1,320 @@
+{
+  "meta": { "role": "analyst", "version": "2.0" },
+  "dataset": {
+    "files": ["hle_questions.csv"],
+    "rows": 2500,
+    "columns": 9,
+    "what_one_row_represents": "One question on Humanity's Last Exam — its text, correct answer, answer-grading format, whether it carries an image, the contributor's name, an expert rationale, and contributor-assigned subject + top-level category.",
+    "time_range": "Public release snapshot of cais/hle (benchmark first released early 2025)",
+    "geographic_scope": "Global — contributors from 50+ countries and 500+ institutions"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset shape, completeness, and anonymity",
+      "content": "The snapshot is 2,500 questions by 9 columns with one question per row. It is almost completely intact: only 2 of 2,500 answers and 1 rationale are missing, and category, subject, question text, image flag and answer_type have zero missing values. The one field with substantial gaps is the contributor name: 2,109 questions (84.4%) carry a named author while 391 (15.6%) are anonymous or blank. So roughly one in six of these expert-written questions was submitted without public attribution.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [22, 30],
+        "output": "rows=2500 cols=9\nmissing per column: answer: 2, author_name: 391, rationale: 1, all others 0\nnamed authors present: 2109 (84.4%)  anonymous/blank: 391 (15.6%)"
+      },
+      "data_table": {
+        "description": "Author attribution status across the 2,500 questions",
+        "columns": ["status", "count", "pct"],
+        "rows": [["Named contributor", 2109, 84.4], ["Anonymous / blank", 391, 15.6]]
+      },
+      "based_on": ["det_01", "det_05"]
+    },
+    "ana_02": {
+      "label": "Category distribution matches the official benchmark",
+      "content": "The eight top-level categories in this CSV line up almost exactly with the figures HLE's creators publish, which is a strong sign the snapshot is faithful to the public release. Math is 40.8% (official ~41%), Biology/Medicine 11.2% (~11%), Computer Science/AI 9.6% (~10%), Other 9.3% (~9%), Physics 9.2% (~9%), Humanities/Social Science 8.8% (~9%), Chemistry 6.6% (~7%) and Engineering 4.4% (~4%). No category deviates from the official share by more than about one percentage point.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [32, 40],
+        "output": "Math: 1021 (40.8%) official~41%\nBiology/Medicine: 280 (11.2%) official~11%\nComputer Science/AI: 241 (9.6%) official~10%\nOther: 233 (9.3%) official~9%\nPhysics: 230 (9.2%) official~9%\nHumanities/Social Science: 219 (8.8%) official~9%\nChemistry: 165 (6.6%) official~7%\nEngineering: 111 (4.4%) official~4%"
+      },
+      "data_table": {
+        "description": "Question count and share per top-level category, with official benchmark share for comparison",
+        "columns": ["category", "count", "pct", "official_pct"],
+        "rows": [
+          ["Math", 1021, 40.8, 41],
+          ["Biology/Medicine", 280, 11.2, 11],
+          ["Computer Science/AI", 241, 9.6, 10],
+          ["Other", 233, 9.3, 9],
+          ["Physics", 230, 9.2, 9],
+          ["Humanities/Social Science", 219, 8.8, 9],
+          ["Chemistry", 165, 6.6, 7],
+          ["Engineering", 111, 4.4, 4]
+        ]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_03": {
+      "label": "Math dominates: 41% of the whole exam",
+      "content": "Mathematics is not just the largest category — it is larger than everything else combined would suggest. The 1,021 math questions make up 40.8% of the exam, 3.6 times the next-largest category (Biology/Medicine, 280). The other seven categories together account for the remaining 1,479 questions (59.2%). HLE is, in headcount terms, a math exam with seven sizeable appendices.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [42, 49],
+        "output": "Math: 1021/2500 = 40.8%\nAll 7 non-Math categories combined: 1479 (59.2%)\nMath is 3.6x the next-largest category (Biology/Medicine: 280)"
+      },
+      "data_table": {
+        "description": "Math vs all other categories combined",
+        "columns": ["group", "count", "pct"],
+        "rows": [["Math", 1021, 40.8], ["All 7 other categories", 1479, 59.2]]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_04": {
+      "label": "Three-quarters are short-answer, not multiple choice",
+      "content": "The dominant grading format is exact-match short answer: 1,909 questions (76.4%) require the model to produce the exact correct string with no options to anchor on, while only 591 (23.6%) are multiple choice. This 76/24 split matches the official figure and is what makes HLE so unforgiving — on most questions there is no partial credit and no lucky guess; the answer is right or it is wrong.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [51, 56],
+        "output": "exactMatch: 1909 (76.4%)\nmultipleChoice: 591 (23.6%)"
+      },
+      "data_table": {
+        "description": "Answer-grading format split",
+        "columns": ["answer_type", "count", "pct"],
+        "rows": [["exactMatch (short answer)", 1909, 76.4], ["multipleChoice", 591, 23.6]]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_05": {
+      "label": "One in seven questions needs an image",
+      "content": "342 questions (13.7%) carry an image that is essential to answering them, while 2,158 (86.3%) are text-only. This matches the ~14% multimodal figure the creators report. These are the questions where a model must both perceive a chess position, a chemical structure or a star chart AND reason about it at expert level — the hardest cases for many systems.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [57, 62],
+        "output": "no: 2158 (86.3%)\nyes: 342 (13.7%)"
+      },
+      "data_table": {
+        "description": "Multimodal (has image) vs text-only",
+        "columns": ["type", "count", "pct"],
+        "rows": [["Has image (multimodal)", 342, 13.7], ["Text only", 2158, 86.3]]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_06": {
+      "label": "Image-heavy fields: Engineering & Chemistry",
+      "content": "Multimodal questions are far from evenly spread. Engineering is the most visual category — 42.3% of its questions carry an image (47 of 111) — followed by Chemistry at 38.8% (64 of 165). The hands-on, diagram-and-structure fields lean heavily on images, while Math is the least visual at just 4.4% (45 of 1,021) despite being by far the largest category. Computer Science/AI is also low at 7.1%. The overall rate is 13.7%.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [63, 71],
+        "output": "Engineering: 47/111 = 42.3%\nChemistry: 64/165 = 38.8%\nOther: 57/233 = 24.5%\nBiology/Medicine: 58/280 = 20.7%\nPhysics: 28/230 = 12.2%\nHumanities/Social Science: 26/219 = 11.9%\nComputer Science/AI: 17/241 = 7.1%\nMath: 45/1021 = 4.4%\nOVERALL: 13.7%"
+      },
+      "data_table": {
+        "description": "Share of questions with an image, by category (sorted desc)",
+        "columns": ["category", "image_count", "total", "image_pct"],
+        "rows": [
+          ["Engineering", 47, 111, 42.3],
+          ["Chemistry", 64, 165, 38.8],
+          ["Other", 57, 233, 24.5],
+          ["Biology/Medicine", 58, 280, 20.7],
+          ["Physics", 28, 230, 12.2],
+          ["Humanities/Social Science", 26, 219, 11.9],
+          ["Computer Science/AI", 17, 241, 7.1],
+          ["Math", 45, 1021, 4.4]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_07": {
+      "label": "Format varies wildly by field",
+      "content": "The exact-match vs multiple-choice mix is very different across fields. Biology/Medicine is the outlier: 59.3% of its questions are multiple choice (166 of 280) — likely because diagnostic and 'which-of-these' questions fit that format. At the other extreme, Math is overwhelmingly short answer with only 9.2% multiple choice (94 of 1,021): a polynomial or a number can be graded exactly. Humanities/Social Science (39.3%) and Engineering (30.6%) sit in between. The format a field uses reflects how its answers are naturally expressed.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [72, 79],
+        "output": "Biology/Medicine: 166/280 = 59.3% MC\nHumanities/Social Science: 86/219 = 39.3%\nEngineering: 34/111 = 30.6%\nComputer Science/AI: 71/241 = 29.5%\nChemistry: 43/165 = 26.1%\nOther: 57/233 = 24.5%\nPhysics: 40/230 = 17.4%\nMath: 94/1021 = 9.2%\nOVERALL: 23.6%"
+      },
+      "data_table": {
+        "description": "Multiple-choice share by category (rest are exact-match)",
+        "columns": ["category", "mc_count", "total", "mc_pct"],
+        "rows": [
+          ["Biology/Medicine", 166, 280, 59.3],
+          ["Humanities/Social Science", 86, 219, 39.3],
+          ["Engineering", 34, 111, 30.6],
+          ["Computer Science/AI", 71, 241, 29.5],
+          ["Chemistry", 43, 165, 26.1],
+          ["Other", 57, 233, 24.5],
+          ["Physics", 40, 230, 17.4],
+          ["Math", 94, 1021, 9.2]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_08": {
+      "label": "193 subjects, but a long thin tail",
+      "content": "Beneath the 8 categories sit 193 distinct contributor-labelled subjects, and they are extremely uneven. 'Mathematics' alone is 863 questions (34.5% of the whole exam); together with Physics (182), Computer Science (168) and Chemistry (154) the top four subjects already cover well over half the data. The tail is enormous: 147 subjects appear in 5 or fewer questions and 83 subjects appear exactly once. That long tail — from Classical Ballet to Musicology to Linguistics — is the visible signature of the ~1,000 specialists who each donated their own corner of expertise.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [80, 94],
+        "output": "distinct raw_subjects: 193\nMathematics: 863 (34.5%)\nPhysics: 182 (7.3%)\nComputer Science: 168 (6.7%)\nChemistry: 154 (6.2%)\nApplied Mathematics: 104 (4.2%)\n...\nsubjects with <=5 questions: 147 covering 296 (11.8%)\nsubjects represented by exactly 1 question: 83"
+      },
+      "data_table": {
+        "description": "Top 15 raw_subjects by question count (of 193 total)",
+        "columns": ["subject", "count", "pct"],
+        "rows": [
+          ["Mathematics", 863, 34.5],
+          ["Physics", 182, 7.3],
+          ["Computer Science", 168, 6.7],
+          ["Chemistry", 154, 6.2],
+          ["Applied Mathematics", 104, 4.2],
+          ["Trivia", 59, 2.4],
+          ["Medicine", 52, 2.1],
+          ["Biology", 51, 2.0],
+          ["Electrical Engineering", 46, 1.8],
+          ["Linguistics", 42, 1.7],
+          ["Ecology", 28, 1.1],
+          ["Genetics", 28, 1.1],
+          ["Musicology", 27, 1.1],
+          ["History", 24, 1.0],
+          ["Neuroscience", 22, 0.9]
+        ]
+      },
+      "based_on": ["det_01", "det_05"]
+    },
+    "ana_09": {
+      "label": "579 contributors; half wrote a single question",
+      "content": "The 2,109 attributed questions come from 579 distinct named contributors, and the contribution pattern is classic crowd-of-experts: a small group of prolific authors plus a vast tail of one-off specialists. The most prolific contributor (Dmitry D) wrote 99 questions; Tung N 72; Daron A 52. But the top 10 authors together account for only 467 of the 2,109 attributed questions (22.1%), and 289 contributors — 49.9% of all named authors — wrote exactly one question. HLE is built far more on breadth than on a handful of power users.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [95, 108],
+        "output": "distinct named authors: 579\nDmitry D: 99\nTung N: 72\nDaron A: 52\nMikhail D: 47\nAlun S: 42\n...\ncontributors with exactly 1 question: 289 (49.9% of named authors)\ntop 10 authors account for 467 of 2109 attributed questions (22.1%)"
+      },
+      "data_table": {
+        "description": "Top 10 contributors by attributed question count",
+        "columns": ["author", "count"],
+        "rows": [
+          ["Dmitry D", 99],
+          ["Tung N", 72],
+          ["Daron A", 52],
+          ["Mikhail D", 47],
+          ["Alun S", 42],
+          ["Mobeen M", 39],
+          ["John-Clark L", 31],
+          ["Jessica W", 31],
+          ["Serguei P", 27],
+          ["Steven F (et al.)", 27]
+        ]
+      },
+      "based_on": ["det_01", "det_05"],
+      "notable_instance": {
+        "name": "Mikhail D",
+        "value": "47 questions, including the 'Guess the music' Musicology image (Shinzou wo Sasageyo!)",
+        "why": "A prolific contributor whose actual question image is in the gallery — puts a face/name behind the long tail"
+      }
+    },
+    "ana_10": {
+      "label": "What's in 'Other': Trivia, Musicology, Ballet, Chess",
+      "content": "The 'Other' category (233 questions) is where the exam's most unexpected expertise lives. It breaks down into 13 subjects led by Trivia (59), Musicology (27), Art History (22), Games (16) and Chess (15), and includes Classical Ballet (13), Geography, Logic, Game Design, Puzzles, Geology and Earth Science. This is the bucket that makes HLE feel like a test of all human knowledge rather than just STEM — it is where a chess mate-in-2 or a 'name this anime opening' question sits alongside the polynomials.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [109, 115],
+        "output": "'Other' n=233\nTrivia: 59\nMusicology: 27\nArt History: 22\nGames: 16\nChess: 15\nClassical Ballet: 13\nGeography: 10\nLogic: 8\nGame Design: 6\nPuzzle: 5\nGeology: 5\nEarth Science: 5"
+      },
+      "data_table": {
+        "description": "Subject composition of the 'Other' category",
+        "columns": ["subject", "count"],
+        "rows": [
+          ["Trivia", 59],
+          ["Musicology", 27],
+          ["Art History", 22],
+          ["Games", 16],
+          ["Chess", 15],
+          ["Classical Ballet", 13],
+          ["Geography", 10],
+          ["Logic", 8],
+          ["Game Design", 6],
+          ["Puzzle", 5],
+          ["Geology", 5],
+          ["Earth Science", 5]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_11": {
+      "label": "Most exact-match answers are tiny",
+      "content": "Short-answer does not mean long-answer: among the 1,909 exact-match questions the median answer string is just 8 characters and 30.5% are 3 characters or fewer — a single number, letter or symbol. About 33.9% of exact-match answers are a bare number. The terseness is the trap: the answer is small and unambiguous, but arriving at it requires expert reasoning, and being one digit or one sign off scores zero.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [116, 128],
+        "output": "exactMatch n=1909\nanswer length: median=8, mean=14.8, max=234\n<=3 chars: 582 (30.5%)\nbare number: 648 (33.9%)"
+      },
+      "data_table": {
+        "description": "Form of exact-match answers (n=1909)",
+        "columns": ["form", "count", "pct"],
+        "rows": [
+          ["<=3 chars (single number/letter)", 582, 30.5],
+          ["A bare number", 648, 33.9],
+          ["Longer string", 1327, 69.5]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_12": {
+      "label": "The longest prompts are in CS and Engineering",
+      "content": "Question prompts get long where the setup is complex. Computer Science/AI has the longest prompts (median 881 characters) followed by Engineering (835) and Biology/Medicine (697) — fields that must describe code, a system, or a clinical scenario before asking anything. The terse end is Other (295) and Chemistry (306), where a structure or a single fact does the work. The overall median question is 487 characters, roughly a dense paragraph.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/analyze.py",
+        "lines": [129, 135],
+        "output": "Computer Science/AI: 881\nEngineering: 835\nBiology/Medicine: 697\nPhysics: 539\nHumanities/Social Science: 431\nMath: 431\nChemistry: 306\nOther: 295\nOVERALL median: 487"
+      },
+      "data_table": {
+        "description": "Median question length (characters) by category",
+        "columns": ["category", "median_chars"],
+        "rows": [
+          ["Computer Science/AI", 881],
+          ["Engineering", 835],
+          ["Biology/Medicine", 697],
+          ["Physics", 539],
+          ["Humanities/Social Science", 431],
+          ["Math", 431],
+          ["Chemistry", 306],
+          ["Other", 295]
+        ]
+      },
+      "based_on": []
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "Categories and raw_subjects are contributor-assigned and inconsistent in granularity (e.g. 'Mathematics', 'Applied Mathematics' and a category 'Math' coexist). Counts are exact for this CSV but the labels are human-made, not authoritative taxonomy."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "This is a snapshot/subset of the public cais/hle release; the public set itself is a fraction of the full benchmark (a private holdout exists). Shares match official figures to ~1pp but should be read as 'this snapshot', not the entire HLE."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Per detective det_10, an independent audit estimated ~30% of text-only chemistry/biology answers may conflict with the literature (HLE team's own estimate ~18%). 'answer' and 'rationale' are expert-reviewed but not guaranteed correct; do not treat them as ground truth."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "15.6% of questions have no contributor name, so author-level statistics (579 authors, top-10 share) describe only the 2,109 attributed questions, not all 2,500."
+    }
+  ]
+}

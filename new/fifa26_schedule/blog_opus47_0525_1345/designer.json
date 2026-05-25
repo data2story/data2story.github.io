@@ -1,0 +1,313 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive_or_map); the interactive Leaflet map is the centerpiece carrying both location and weather; charts read from analyst data_tables; real stadium photos and real climate numbers are credited",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "Quantitative rankings (feels-like, heat exposure, rain, altitude, calendar) and a temp-vs-humidity scatter are the analytical backbone."},
+      "image": {"used": true, "reason": "15 real licensed stadium photos ground every venue; two AI atmospheric images (heat hero, hot/cool contrast) set tone and break analytical density. No fabricated stadium photos — Kansas City uses a placeholder card."},
+      "video": {"used": true, "reason": "A 6s heat-shimmer clip animates the hero so the reader sees the wavering heat rather than reading about it (image2video / veo-3.1-fast)."},
+      "audio": {"used": true, "reason": "A Web-Audio sonification maps the 16 venue feels-like highs to ascending pitch, synced to the heat bar chart, plus an optional muted ambient bed; both have visual fallbacks and never autoplay."},
+      "interactive_or_map": {"used": true, "reason": "Leaflet map with 16 venues colored by heat index is the centerpiece; a 'pick a city' selector and the guess-first scatter add exploration."}
+    },
+    "media_blockers": [
+      {"category": "video", "reason": "First image2video (veo-3.1-fast) attempt returned 'service experiencing high load' and failed after ~36s.", "attempted_command": "generate_video_from_image.py --image hero_heat.png --duration 6", "fallback_des": "Retried once per instructions; the retry succeeded and produced heat_shimmer.mp4. No fallback to text2video or CSS was needed."},
+      {"category": "image", "reason": "No real photo exists in the wikimedia cache for Kansas City / Arrowhead Stadium (det_media_16).", "attempted_command": "n/a — cache had no kansas_city photo", "fallback_des": "des_14 — Kansas City rendered as a clean placeholder card (city name + climate stats + a 'no photo available' note), never a fabricated stadium image."}
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Hero: blazing stadium with heat-shimmer video",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "heat_shimmer.mp4",
+        "poster": "hero_heat.png",
+        "tool": "image2video",
+        "source_image": "assets/hero_heat.png",
+        "prompt": "Slow cinematic push-in on the sun-baked stadium; heat shimmer ripples rising off the pitch, hazy amber air trembling with thermals, gentle dust motes. No camera shake, no text.",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Full-bleed hero: a 6-second muted, autoplay-on-view, looping clip of a packed open-air stadium baking under a white midday sun with visible heat shimmer. Headline overlays at the bottom. The still hero_heat.png is the poster/fallback. This sets the emotional thesis — heat — before a single number.",
+      "rationale": "The story's emotional core is heat you can feel; subtle motion (shimmer) conveys that better than a static image, and the poster guarantees a graceful fallback.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Interactive Leaflet venue-climate map (CENTERPIECE)",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "leaflet_map",
+        "data_source": "ana_09",
+        "initial_state": "A map of North America with 16 circle markers at each venue's lat/lon. Marker color runs on a hot-to-cool ramp keyed to feels_like_c (deep red ~38C -> amber -> teal -> blue ~21C); marker radius scales with matches. A legend explains the color = feels-like and size = match count.",
+        "trigger": "Click or tap any marker",
+        "transition": "A popup opens showing venue real name, city, country, match count, feels-like high, air high, humidity, rainy-day %, elevation, and a thumbnail of the real stadium photo (photo field). Kansas City shows a clean 'no photo available' placeholder in the popup instead of an image.",
+        "payoff": "The reader sees location and weather fused: the red cluster across the southern US/Monterrey vs the cool blue of Vancouver/Seattle, and how many matches sit in each.",
+        "style": {"basemap": "CartoDB Positron (light, muted)", "color_scale": ["#2c7fb8", "#41b6c4", "#fecc5c", "#fd8d3c", "#e31a1c", "#b10026"], "no_clutter": true}
+      },
+      "brief": "Leaflet.js map (CDN) plotting all 16 venues from ana_09's data_table. Color = feels-like heat index, size = matches. Click a marker for a popup with full climate stats and the real stadium photo thumbnail (Kansas City: placeholder). Caption credits Open-Meteo (CC BY 4.0) for climate and Wikimedia for photos. This is the single most important visual on the page.",
+      "rationale": "The data is inherently geographic with lat/lon and the story is location+weather; a Leaflet map carries both dimensions at once better than any chart.",
+      "based_on": ["ana_09", "ana_04"]
+    },
+    "des_03": {
+      "label": "Feels-like ranking bar (hot->cool)",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_04",
+        "x": "feels_like_c",
+        "y": "city",
+        "color": "feels_like_c",
+        "highlight": {"city": "Houston", "and": "Vancouver"},
+        "interaction": "hover tooltip showing venue, air high, humidity, matches; play button triggers the sonification (des_07) which sweeps the bars top to bottom",
+        "style": {"sort": "descending by feels_like_c", "palette": "hot-to-cool diverging (red top, blue bottom)", "no_gridlines": true, "value_labels": true}
+      },
+      "brief": "16-bar horizontal ranking of average feels-like high, Houston (38.6C) at top to Vancouver (21.5C) at bottom, colored on the same hot-to-cool ramp as the map. Annotate the 17.1C spread between top and bottom. A small 'Play' control sonifies the ranking.",
+      "rationale": "A sorted bar makes the 17C spread and the hot cluster instantly legible; sharing the color ramp with the map ties the two together.",
+      "based_on": ["ana_04"]
+    },
+    "des_04": {
+      "label": "Matches per venue bar + host-nation split",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_02",
+        "x": "matches",
+        "y": "city",
+        "color": "country",
+        "highlight": {"city": "Arlington"},
+        "interaction": "hover shows venue real name + country; a small inset donut/stacked bar shows the 78/13/13 nation split from ana_03",
+        "style": {"sort": "descending by matches", "palette": "by country (USA / Mexico / Canada)", "value_labels": true}
+      },
+      "brief": "Horizontal bar of matches per venue (Dallas 9 highlighted at top), colored by host nation, with a compact inset showing USA 78 / Mexico 13 / Canada 13. Sits beside a real stadium photo of AT&T Stadium (Dallas).",
+      "rationale": "Shows the lopsided match load and the national split together; pairing with a real photo breaks the chart rhythm.",
+      "based_on": ["ana_02", "ana_03"]
+    },
+    "des_05": {
+      "label": "Dallas stadium photo (real, credited)",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "dallas__photo.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Cowboys_Stadium_2.jpg",
+        "attribution": "AT&T Stadium (Arlington) — photo by bobbyh_80, Wikimedia Commons, CC BY 2.0",
+        "license": "CC BY 2.0"
+      },
+      "brief": "Real photo of AT&T Stadium beside the matches-per-venue chart. Caption: 'AT&T Stadium, Arlington — 9 matches, the busiest venue and a dry-hot, climate-controlled bowl.' Credit bobbyh_80 / Wikimedia (CC BY 2.0).",
+      "rationale": "Grounds the abstract '9 matches' lead venue in a real place; ties to the dry-hot + roof caveat.",
+      "based_on": ["ana_02"]
+    },
+    "des_06": {
+      "label": "Heat-exposure index bar (matches x feels-like)",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_05",
+        "x": "exposure_index",
+        "y": "city",
+        "color": "feels_like_c",
+        "highlight": {"city": "Arlington"},
+        "interaction": "hover shows matches x feels-like breakdown; an annotation band marks the FIFPRO 'extremely high risk' venues",
+        "style": {"sort": "descending by exposure_index", "palette": "hot-to-cool", "value_labels": false}
+      },
+      "brief": "Bar of heat-exposure index (matches x feels-like), Dallas (344.7) at top. Annotate the two headline figures: 35 matches (33.7%) at feels-like >= 34C and 41 matches (39.4%) at the six FIFPRO 'extremely high risk' venues. Colored by feels-like.",
+      "rationale": "Combines the two key dimensions — where the matches are AND how hot — into one ranked view that supports the lead claim.",
+      "based_on": ["ana_05"]
+    },
+    "des_07": {
+      "label": "Stat callouts: the headline extremes",
+      "type": "stat_callout",
+      "section": "edt_03",
+      "content": {
+        "data_source": "ana_12",
+        "callouts": [
+          {"value": "38.6°C", "label": "feels-like high in Houston — the hottest venue"},
+          {"value": "39.4%", "label": "of matches at FIFPRO 'extremely high risk' venues"},
+          {"value": "17.1°C", "label": "gap between the hottest and coolest venue"}
+        ]
+      },
+      "brief": "Three oversized stat callouts in a row (72px numbers) drawn from ana_12 and ana_05: hottest feels-like, share of matches in the danger band, and the feels-like spread. Each with a one-line label.",
+      "rationale": "These numbers are striking enough to stand alone as headline stats and pace the heat section.",
+      "based_on": ["ana_12", "ana_05"]
+    },
+    "des_08": {
+      "label": "Heat-index sonification synced to the ranking bar",
+      "type": "audio",
+      "section": "edt_03",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "Hearing the 16 feels-like highs as descending tones makes the cliff from Houston's danger-zone heat down to Vancouver's mild evening audible, not just visible.",
+        "trigger": "Click 'Play the heat ranking' below the feels-like bar chart (des_03). Never autoplays.",
+        "ui_form": "Web Audio API generated in-browser (no asset file): each of the 16 venues maps feels_like_c to pitch (21.5C -> ~330Hz, 38.6C -> ~990Hz), 220ms per note, simple sine/triangle tone. As each tone plays, the corresponding bar in des_03 briefly highlights.",
+        "content": {
+          "synthesis": "in_browser_web_audio",
+          "data_mapping": {"field": "feels_like_c", "from_data_source": "ana_04", "pitch_range_hz": [330, 990], "note_ms": 220, "waveform": "triangle"}
+        },
+        "fallback": "If Web Audio is unavailable or the reader does not click, the bar chart fully communicates the ranking; the optional ambient bed (heat_ambience.mp3) is a separate muted-by-default toggle.",
+        "novelty_note": "Not a generic click-to-play tone card: the sonification is bound to and visibly drives the heat ranking bar, so sound and chart explain the same cliff."
+      },
+      "brief": "In-browser Web Audio sonification of the 16 venue feels-like highs (from ana_04 data_table), triggered by a button under the heat bar chart, with each tone highlighting its bar. A separate optional ambient soundscape (heat_ambience.mp3) can be toggled on as atmosphere; both are off by default.",
+      "rationale": "16 ordered values are an ideal small ranked sequence to sonify; binding it to the chart keeps it explanatory rather than decorative.",
+      "based_on": ["ana_04"]
+    },
+    "des_09": {
+      "label": "Ambient heat soundscape (optional bed)",
+      "type": "audio",
+      "section": "edt_03",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "An optional warm shimmering drone reinforces the oppressive-heat mood of the section for readers who want atmosphere.",
+        "trigger": "A small mute/unmute toggle in the heat section header; OFF by default, never autoplays.",
+        "ui_form": "section-integrated mini-toggle, not a central card.",
+        "content": {
+          "filename": "heat_ambience.mp3",
+          "tool": "text2music",
+          "prompt": "A short tense ambient cinematic bed evoking shimmering desert heat: sustained warm drone, distant cicada-like high shimmer, slow rising tension, no vocals, no drums, ~20s.",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "Page is fully functional silent; the toggle defaults to muted.",
+        "novelty_note": "Used as an opt-in ambience toggle rather than a foregrounded audio player."
+      },
+      "brief": "Optional 20s ambient heat bed, off by default, toggled from the heat section. Pure atmosphere; the sonification (des_08) is the data-bound audio.",
+      "rationale": "Adds tactile mood without forcing sound on the reader.",
+      "based_on": []
+    },
+    "des_10": {
+      "label": "Climate-tribes scatter (feels-like vs humidity, guess-first)",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "scatter_with_reveal",
+        "data_source": "ana_08",
+        "initial_state": "Scatter: x = humidity_pct, y = feels_like_c, bubble size = matches, point color = tribe (brutal=deep red, dry-hot=orange, warm=amber, mild=teal). A faint dividing guide at feels-like 34C and humidity 70%.",
+        "trigger": "Reader hovers/clicks a point, or toggles tribe filters in a legend",
+        "transition": "Hover shows city, feels-like, humidity, matches, tribe; clicking a tribe in the legend dims the others",
+        "payoff": "The four tribes separate visually — the brutal corner (Houston/Miami/Atlanta) vs the mild corner (Vancouver/Seattle/Mexico City) — making the classification self-evident.",
+        "style": {"palette": "tribe categorical", "quadrant_guides": true}
+      },
+      "brief": "Interactive temp-vs-humidity scatter from ana_08 with bubble = matches and color = climate tribe, filterable by tribe. Annotated with the roof/AC fairness caveat (Dallas/Houston/Atlanta climate-controlled; BC Place roof open; MetLife no roof).",
+      "rationale": "A scatter is the natural way to show two climate axes at once, and letting readers filter tribes turns a static chart into exploration.",
+      "based_on": ["ana_08"]
+    },
+    "des_11": {
+      "label": "Hot-vs-cool contrast image (AI)",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "contrast_hotcool.png",
+        "tool": "text2image",
+        "prompt": "Split-screen diptych: left a brutally hot stadium under harsh white sun with heat shimmer; right a cool misty stadium under soft blue-grey overcast with drifting fog. Clean vertical seam. No text, no logos.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-width AI image contrasting a sweltering venue (left) with a cool misty one (right), placed between the scatter and the rain/altitude section to visualize the brutal-vs-mild divide.",
+      "rationale": "A single image makes the temperature gulf felt; breaks the chart streak between scatter and the rain chart.",
+      "based_on": ["ana_08", "ana_04"]
+    },
+    "des_12": {
+      "label": "Rain exposure bar (rainy-day share)",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_06",
+        "x": "rainy_day_pct",
+        "y": "city",
+        "color": "rainy_day_pct",
+        "highlight": {"city": "Miami Gardens", "and": "Santa Clara"},
+        "interaction": "hover shows mean precip mm/day and match count",
+        "style": {"sort": "descending by rainy_day_pct", "palette": "blues (wet) to sandy (dry)", "value_labels": true}
+      },
+      "brief": "Bar of rainy-day share, Miami (88%) at top to Santa Clara (0%) at bottom, colored wet-to-dry. Annotate Miami 88% and the dry California pair.",
+      "rationale": "Rain is the second weather axis; a sorted bar shows the same kind of extreme spread as the heat ranking.",
+      "based_on": ["ana_06"]
+    },
+    "des_13": {
+      "label": "Altitude lollipop / bar",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_07",
+        "x": "elevation_m",
+        "y": "city",
+        "color": "elevation_m",
+        "highlight": {"city": "Mexico City"},
+        "interaction": "hover shows elevation and matches",
+        "style": {"sort": "descending by elevation_m", "palette": "earth/elevation", "value_labels": true, "log_or_break_note": "Mexico City 2200m and Guadalajara 1566m tower over the sea-level cluster"}
+      },
+      "brief": "Bar of venue elevation, Mexico City (2,200m) dominating, the rest hugging sea level. Annotate that altitude is why Mexico City stays mild despite low latitude.",
+      "rationale": "Altitude is a distinct geographic dimension; the dramatic Mexico City outlier is best shown as a ranked bar.",
+      "based_on": ["ana_07"]
+    },
+    "des_14": {
+      "label": "Venue photo gallery (15 real photos + KC placeholder)",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image_gallery",
+        "tool": "wikimedia_download",
+        "files": [
+          "mexico_city__photo.jpg","guadalajara__photo.jpg","monterrey__photo.jpg","toronto__photo.png","vancouver__photo.jpg","atlanta__photo.jpg","boston__photo.jpg","dallas__photo.jpg","houston__photo.jpg","los_angeles__photo.jpg","miami__photo.jpg","new_york_new_jersey__photo.jpg","philadelphia__photo.jpg","san_francisco_bay_area__photo.jpg","seattle__photo.jpg"
+        ],
+        "placeholder": {"city": "Kansas City", "venue": "Arrowhead Stadium", "note": "No public-domain photo available — shown as a climate placeholder card."},
+        "license": "Various CC (per Wikimedia manifest)",
+        "attribution_source": "data/fifa26_schedule/wikimedia_assets/wikimedia_manifest.json"
+      },
+      "brief": "A responsive gallery of the 15 real licensed stadium photos, each captioned with venue name + city + its headline climate stat (feels-like / rain / altitude). Kansas City is a 16th clean placeholder card (name + stats + 'no photo available'), never a fabricated image. Every photo credited per the manifest in a Sources block.",
+      "rationale": "The venues are real places; showing them makes the geography tangible and honors the real-asset-first mandate.",
+      "based_on": ["ana_09"]
+    },
+    "des_15": {
+      "label": "Tournament calendar timeline",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "bar_timeline",
+        "data_source": "ana_10",
+        "x": "date",
+        "y": "matches",
+        "highlight": {"date": "2026-06-24"},
+        "interaction": "hover shows matches that day",
+        "style": {"palette": "single warm accent", "annotate": ["opener 11 Jun = 2", "peak 24 Jun = 6", "final 19 Jul = 1"]}
+      },
+      "brief": "A timeline bar chart of matches per match-day across the 39-day window, opener (2) -> dense group stage peak (6 on 24 Jun) -> single-match knockouts -> final. Frames the closing point that dense days multiply pitches under peak afternoon heat.",
+      "rationale": "Closes the loop on 'schedule meets sky' by showing when the most venues run at once.",
+      "based_on": ["ana_10"]
+    },
+    "des_16": {
+      "label": "Climate-not-forecast caveat callout",
+      "type": "stat_callout",
+      "section": "edt_06",
+      "content": {
+        "data_source": "ana_12",
+        "callouts": [
+          {"value": "2021–2024", "label": "the years these climate averages are drawn from — this is typical climate for the window, NOT a 2026 forecast"}
+        ]
+      },
+      "brief": "A distinct, visible caveat panel (not a footnote) stating the weather figures are typical historical climate (Open-Meteo, CC BY 4.0, 2021-2024 average) and not a forecast for any 2026 match; also notes roofs/AC mitigation and placeholder team names.",
+      "rationale": "Editorial notes flag this as load-bearing honesty; it must be visible, so it gets its own callout in the close.",
+      "based_on": ["ana_12"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm editorial, sun-bleached light palette with a hot-to-cool accent ramp; clean, airy, mobile-first single column with full-bleed media breaks",
+    "text_visual_pattern": "visual-first: hero video -> map centerpiece -> alternating prose, ranked bars, photos, scatter, gallery, timeline; never 3 charts in a row (photos/map/scatter/contrast image break every chart run)",
+    "centrepiece": "des_02",
+    "anti_sameness_notes": "The map is the hero rather than a chart grid; audio is a chart-bound sonification plus an opt-in ambient toggle, not a tone card; the contrast image and real-photo gallery interrupt the chart cadence; color is a single consistent hot-to-cool ramp shared between map and heat bars.",
+    "typography_notes": "Large 72px stat callouts; a clear 'CLIMATE, NOT A FORECAST' caveat panel; per-photo credits and an Open-Meteo / Wikimedia Sources block at the foot; hot-to-cool ramp legend reused across map and heat charts."
+  }
+}

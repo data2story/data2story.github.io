@@ -1,0 +1,251 @@
+{
+  "meta": { "role": "analyst", "version": "2.0" },
+  "dataset": {
+    "files": ["uk_prime_ministers.csv", "pm_count_by_university.csv", "oxbridge_comparison.csv", "wikimedia_assets/wikimedia_manifest.json"],
+    "rows": 59,
+    "columns": 7,
+    "what_one_row_represents": "One holder of the office of UK Prime Minister (Wikidata Q14211, real humans only), with their Wikidata ID, first term start, Oxford/Cambridge flags, an overall classification, and the institutions they studied at.",
+    "time_range": "1721 (Robert Walpole) to 2024 (Keir Starmer); one undated holder",
+    "geographic_scope": "United Kingdom (Oxford vs Cambridge)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "The mirror image — Oxford makes PMs, Cambridge makes Nobels",
+      "content": "The two universities split Britain's elite almost perfectly down the middle. Oxford has educated 31 UK Prime Ministers to Cambridge's 15 — a 2.07-to-1 lead in politics. But flip to science and the ratio inverts: Cambridge claims 79 Nobel laureates to Oxford's 30, a 2.63-to-1 lead. Each university dominates exactly one domain and trails badly in the other. This is the headline of the whole dataset: the same two institutions that sit a few hours apart by train have spent three centuries quietly sorting the country's most ambitious people into rulers and discoverers.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_pms.py", "lines": [60, 76], "output": "Oxford: PMs=31 Nobel=30 alumni=39259\nCambridge: PMs=15 Nobel=79 alumni=31284\nPM ratio Oxford:Cambridge = 2.07:1\nNobel ratio Cambridge:Oxford = 2.63:1" },
+      "data_table": {
+        "description": "Oxford vs Cambridge across the two prestige categories",
+        "columns": ["university", "metric", "count"],
+        "rows": [
+          ["Oxford", "Prime Ministers", 31],
+          ["Cambridge", "Prime Ministers", 15],
+          ["Oxford", "Nobel laureates", 30],
+          ["Cambridge", "Nobel laureates", 79]
+        ]
+      },
+      "based_on": ["det_02", "det_03"]
+    },
+    "ana_02": {
+      "label": "Where all 59 Prime Ministers were educated",
+      "content": "Of the 59 people who have held the office, 31 attended Oxford (including one — Henry Pelham — who attended both Oxford and Cambridge) and 15 attended Cambridge. Counting the dual-attendee once, that leaves 14 Cambridge-only PMs. Ten went to a university that was neither Oxford nor Cambridge, and four have no university recorded on Wikidata. Put another way, Oxbridge alone accounts for 76.3% of every Prime Minister Britain has ever had. The non-Oxbridge routes to Downing Street are the exception, not the rule.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_pms.py", "lines": [78, 100], "output": "Total PMs: 59\nOxford (total incl both): 31  | Oxford only: 30\nCambridge (total incl both): 15 | Cambridge only: 14\nBoth: 1\nOther university: 10\nNo university recorded: 4\nOxbridge share of all PMs: 76.3%" },
+      "data_table": {
+        "description": "Education breakdown of all 59 UK Prime Ministers",
+        "columns": ["category", "count"],
+        "rows": [
+          ["Oxford only", 30],
+          ["Cambridge only", 14],
+          ["Both Oxford & Cambridge", 1],
+          ["Other university", 10],
+          ["No university recorded", 4]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_03": {
+      "label": "The regime change — Cambridge's silence since 1937",
+      "content": "The dataset's term-start dates expose a clean historical hinge. In the eighteenth century the two universities traded the premiership roughly evenly. But the last Cambridge-linked Prime Minister to take office was Stanley Baldwin in 1923; since then, Cambridge has produced nothing. Run the count forward from 1937 and the asymmetry is total: 14 Prime Ministers since then attended Oxford, and exactly zero attended Cambridge. Every PM who went to an English university in the last ninety years went to the same one.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_pms.py", "lines": [102, 132], "output": "Last Cambridge-linked PM first term: 1923\nFirst Oxford PM first term: 1742  Last: 2024\nSince 1937, PMs whose university is Oxford-linked: 14\nSince 1937, PMs whose university is Cambridge-linked: 0" },
+      "data_table": {
+        "description": "PMs by university group across 20-year buckets of first-term year",
+        "columns": ["period", "Oxford", "Cambridge", "Other", "None"],
+        "rows": [
+          ["1720s", 0, 1, 0, 0],
+          ["1740s", 2, 2, 0, 1],
+          ["1760s", 3, 2, 1, 0],
+          ["1780s", 2, 1, 0, 0],
+          ["1800s", 3, 1, 0, 0],
+          ["1820s", 2, 3, 1, 0],
+          ["1840s", 1, 2, 1, 0],
+          ["1860s", 1, 0, 1, 0],
+          ["1880s", 2, 0, 0, 0],
+          ["1900s", 1, 2, 0, 1],
+          ["1920s", 0, 1, 3, 0],
+          ["1940s", 3, 0, 1, 0],
+          ["1960s", 4, 0, 0, 1],
+          ["1980s", 1, 0, 1, 0],
+          ["2000s", 3, 0, 1, 0],
+          ["2020s", 3, 0, 0, 0]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_04": {
+      "label": "Christ Church — the college that made 13 Prime Ministers",
+      "content": "Oxford's dominance narrows to a single building. Thirteen Prime Ministers studied at Christ Church, more than any other college at either university — and more than most entire universities on earth. No other Oxford college comes close: Balliol is next with four, then Trinity with three. The route to Downing Street did not just run through Oxford; for much of British history it ran through one Oxford college.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_pms.py", "lines": [134, 158], "output": "PMs whose record includes 'Christ Church': 13\nOxford college (first match) counts among Oxford PMs:\n  Christ Church: 13\n  Balliol College: 4\n  Trinity College: 3\n  Brasenose College: 2" },
+      "data_table": {
+        "description": "Oxford colleges by number of PMs educated there (dataset)",
+        "columns": ["college", "pms"],
+        "rows": [
+          ["Christ Church", 13],
+          ["Balliol College", 4],
+          ["Trinity College", 3],
+          ["Brasenose College", 2],
+          ["Hertford College", 1],
+          ["University College, Oxford", 1],
+          ["Jesus College", 1],
+          ["Somerville College", 1],
+          ["St John's College", 1],
+          ["St Hugh's College", 1],
+          ["Merton College", 1],
+          ["Lincoln College", 1],
+          ["St Edmund Hall", 1]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_05": {
+      "label": "The Eton funnel",
+      "content": "Below the university is a school. Twenty of the 59 Prime Ministers were educated at Eton College — a single fee-paying school responsible for roughly a third of every PM in British history. Nine of them followed the exact same path: Eton, then Christ Church, Oxford. The narrowest, most-trodden route to power in Britain is one school feeding one college.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze_pms.py", "lines": [160, 167], "output": "PMs educated at Eton College (in dataset): 20\nPMs educated at BOTH Eton and Christ Church (in dataset): 9" },
+      "data_table": {
+        "description": "Eton / Christ Church pipeline among 59 PMs",
+        "columns": ["path", "pms"],
+        "rows": [
+          ["Educated at Eton", 20],
+          ["Eton AND Christ Church, Oxford", 9],
+          ["All other PMs", 39]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_06": {
+      "label": "The Prime Ministers who broke the mould",
+      "content": "The pipeline has leaks worth naming. Four PMs have no university recorded: the 4th Duke of Devonshire, the genuinely non-graduate David Lloyd George and James Callaghan, and the undated Earl of Denbigh. Ten more took a route outside Oxbridge entirely — among them Winston Churchill, who went to Sandhurst not university; John Major, the most recent PM never to hold a degree; Benjamin Disraeli; the Duke of Wellington; Bonar Law and Gordon Brown, who took his PhD at Edinburgh and is the only post-1937 PM to attend an English-speaking university other than Oxford. These eleven names are the entire counterweight to three centuries of Oxbridge supremacy.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze_pms.py", "lines": [169, 175], "output": "No university recorded (4): ['William Cavendish, 4th Duke of Devonshire', 'David Lloyd George', 'James Callaghan', 'Basil Feilding, 6th Earl of Denbigh']\nOther university (10): ['John Stuart, 3rd Earl of Bute', 'Arthur Wellesley, 1st Duke of Wellington', 'John Russell, 1st Earl Russell', 'Benjamin Disraeli', 'Bonar Law', 'Ramsay MacDonald', 'Neville Chamberlain', 'Winston Churchill', 'John Major', 'Gordon Brown']" },
+      "data_table": {
+        "description": "Non-Oxbridge PMs by route",
+        "columns": ["route", "count"],
+        "rows": [
+          ["No university recorded", 4],
+          ["Other university (non-Oxbridge)", 10]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_07": {
+      "label": "Normalising for notability — what the raw totals hide",
+      "content": "The raw Wikidata alumni totals (39,259 for Oxford, 31,284 for Cambridge) are a coverage artefact, not enrolment — they count only people famous enough to have a Wikidata entry, so they must never be read as 'Oxford is bigger'. But used carefully as a notability denominator they sharpen the story rather than confuse it. Per 1,000 recorded alumni, Oxford produces 0.79 Prime Ministers to Cambridge's 0.48 — a 1.65x political edge. For Nobels the gap is far larger: Cambridge yields 2.53 laureates per 1,000 recorded alumni to Oxford's 0.76, a 3.30x scientific edge. Even after correcting for who gets recorded, each university's specialism holds.",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze_pms.py", "lines": [177, 195], "output": "Oxford PMs per 1,000 recorded alumni: 0.790\nCambridge PMs per 1,000 recorded alumni: 0.479\nOxford Nobels per 1,000 recorded alumni: 0.764\nCambridge Nobels per 1,000 recorded alumni: 2.525\nOxford PM-rate advantage over Cambridge: 1.65x\nCambridge Nobel-rate advantage over Oxford: 3.30x" },
+      "data_table": {
+        "description": "Prestige rate per 1,000 recorded Wikidata alumni",
+        "columns": ["university", "PMs_per_1000", "Nobels_per_1000"],
+        "rows": [
+          ["Oxford", 0.79, 0.76],
+          ["Cambridge", 0.48, 2.53]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_09": {
+      "label": "The full bench — all 59 PMs with portrait, term and college",
+      "content": "Every one of the 59 Prime Ministers can be matched to a real, attributed Wikimedia portrait via Wikidata QID, alongside their first term year, university group and college. Sorted chronologically, the deck runs from Robert Walpole (Cambridge, King's College, 1721) to Keir Starmer (Oxford, St Edmund Hall, 2024). The group tallies across the bench are Oxford 30, Cambridge 14, Both 1, Other 10, and None 4. This table powers the portrait gallery and the timeline, and is the visual spine of the piece.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": { "file": "code/build_gallery.py", "lines": [33, 52], "output": "Gallery rows: 59\nGroup tallies: {'Cambridge': 14, 'Oxford': 30, 'Both': 1, 'None': 4, 'Other': 10}\nFirst: Robert Walpole 1721 Cambridge; Last: Keir Starmer 2024 Oxford" },
+      "data_table": {
+        "description": "All 59 PMs: name, term_start year, university group, college, portrait file, artist, license",
+        "columns": ["name", "year", "group", "college", "portrait", "artist", "license"],
+        "rows": [
+          ["Robert Walpole", "1721", "Cambridge", "King's College", "robert_walpole__photo.jpg", "Jean-Baptiste van Loo", "Public domain"],
+          ["Spencer Compton, 1st Earl of Wilmington", "1742", "Oxford", "Trinity College", "spencer_compton_1st_earl_of_wilmington__photo.jpg", "Godfrey Kneller", "Public domain"],
+          ["Henry Pelham", "1743", "Both", "Hertford College", "henry_pelham__photo.jpg", "William Hoare", "Public domain"],
+          ["Thomas Pelham-Holles, 1st Duke of Newcastle-upon-Tyne", "1754", "Cambridge", "Clare College", "thomas_pelham_holles_1st_duke_of_newcastle_upon_tyne__photo.jpg", "William Hoare", "Public domain"],
+          ["William Cavendish, 4th Duke of Devonshire", "1756", "None", "", "william_cavendish_4th_duke_of_devonshire__photo.jpg", "After Thomas Hudson", "Public domain"],
+          ["John Stuart, 3rd Earl of Bute", "1762", "Other", "", "john_stuart_3rd_earl_of_bute__photo.jpg", "Joshua Reynolds", "Public domain"],
+          ["George Grenville", "1763", "Oxford", "Christ Church", "george_grenville__photo.jpg", "William Hoare", "Public domain"],
+          ["Charles Watson-Wentworth, 2nd Marquess of Rockingham", "1765", "Cambridge", "St John's College", "charles_watson_wentworth_2nd_marquess_of_rockingham__photo.jpg", "After Joshua Reynolds", "Public domain"],
+          ["William Pitt, 1st Earl of Chatham", "1766", "Oxford", "Trinity College", "william_pitt_1st_earl_of_chatham__photo.jpg", "After Richard Brompton", "Public domain"],
+          ["Augustus FitzRoy, 3rd Duke of Grafton", "1768", "Cambridge", "Peterhouse", "augustus_fitzroy_3rd_duke_of_grafton__photo.png", "Pompeo Batoni", "Public domain"],
+          ["Frederick North, 2nd Earl of Guilford", "1770", "Oxford", "Trinity College", "frederick_north_2nd_earl_of_guilford__photo.jpg", "Nathaniel Dance-Holland", "Public domain"],
+          ["William Petty, 2nd Earl of Shelburne", "1782", "Oxford", "Christ Church", "william_petty_2nd_earl_of_shelburne__photo.jpg", "Joshua Reynolds", "Public domain"],
+          ["William Cavendish-Bentinck, 3rd Duke of Portland", "1783", "Oxford", "Christ Church", "william_cavendish_bentinck_3rd_duke_of_portland__photo.jpg", "Matthew Pratt", "Public domain"],
+          ["William Pitt the Younger", "1783", "Cambridge", "Pembroke College", "william_pitt_the_younger__photo.jpg", "John Hoppner", "Public domain"],
+          ["Henry Addington, 1st Viscount Sidmouth", "1801", "Oxford", "Brasenose College", "henry_addington_1st_viscount_sidmouth__photo.jpg", "William Beechey", "Public domain"],
+          ["William Wyndham Grenville, 1st Baron Grenville", "1806", "Oxford", "Christ Church", "william_wyndham_grenville_1st_baron_grenville__photo.jpg", "John Hoppner", "Public domain"],
+          ["Spencer Perceval", "1809", "Cambridge", "Trinity College", "spencer_perceval__photo.jpg", "George Francis Joseph", "Public domain"],
+          ["Robert Jenkinson, 2nd Earl of Liverpool", "1812", "Oxford", "Christ Church", "robert_jenkinson_2nd_earl_of_liverpool__photo.jpg", "Thomas Lawrence", "Public domain"],
+          ["George Canning", "1827", "Oxford", "Christ Church", "george_canning__photo.jpg", "After Thomas Lawrence", "Public domain"],
+          ["F. J. Robinson, 1st Viscount Goderich", "1827", "Cambridge", "St John's College", "f_j_robinson_1st_viscount_goderich__photo.jpg", "Thomas Lawrence", "Public domain"],
+          ["Arthur Wellesley, 1st Duke of Wellington", "1828", "Other", "", "arthur_wellesley_1st_duke_of_wellington__photo.jpg", "Thomas Lawrence", "Public domain"],
+          ["Charles Grey, 2nd Earl Grey", "1830", "Cambridge", "Trinity College", "charles_grey_2nd_earl_grey__photo.jpg", "Attributed to Thomas Phillips", "Public domain"],
+          ["William Lamb, 2nd Viscount Melbourne", "1834", "Cambridge", "Trinity College", "william_lamb_2nd_viscount_melbourne__photo.jpg", "John Partridge", "Public domain"],
+          ["Robert Peel", "1834", "Oxford", "Christ Church", "robert_peel__photo.jpg", "John Linnell", "Public domain"],
+          ["John Russell, 1st Earl Russell", "1846", "Other", "", "john_russell_1st_earl_russell__photo.jpg", "John Jabez Edwin Mayall", "Public domain"],
+          ["Edward Smith-Stanley, 14th Earl of Derby", "1852", "Oxford", "Christ Church", "edward_smith_stanley_14th_earl_of_derby__photo.jpg", "After J. J. E. Mayall", "Public domain"],
+          ["George Hamilton-Gordon, 4th Earl of Aberdeen", "1852", "Cambridge", "St John's College", "george_hamilton_gordon_4th_earl_of_aberdeen__photo.jpg", "Thomas Woolnoth", "Public domain"],
+          ["Henry Temple, 3rd Viscount Palmerston", "1855", "Cambridge", "St John's College", "henry_temple_3rd_viscount_palmerston__photo.jpg", "", "Public domain"],
+          ["Benjamin Disraeli", "1868", "Other", "", "benjamin_disraeli__photo.png", "Cornelius Jabez Hughes", "Public domain"],
+          ["William Ewart Gladstone", "1868", "Oxford", "Christ Church", "william_ewart_gladstone__photo.jpg", "Samuel Alexander Walker", "Public domain"],
+          ["Robert Gascoyne-Cecil, 3rd Marquess of Salisbury", "1885", "Oxford", "Christ Church", "robert_gascoyne_cecil_3rd_marquess_of_salisbury__photo.jpg", "Elliott & Fry", "Public domain"],
+          ["Archibald Primrose, 5th Earl of Rosebery", "1894", "Oxford", "Christ Church", "archibald_primrose_5th_earl_of_rosebery__photo.jpg", "Elliott & Fry", "Public domain"],
+          ["Arthur Balfour", "1902", "Cambridge", "Trinity College", "arthur_balfour__photo.jpg", "George Charles Beresford", "Public domain"],
+          ["Henry Campbell-Bannerman", "1905", "Cambridge", "Trinity College", "henry_campbell_bannerman__photo.jpg", "George Charles Beresford", "Public domain"],
+          ["H. H. Asquith", "1908", "Oxford", "Balliol College", "h_h_asquith__photo.jpg", "Bain News Service", "Public domain"],
+          ["David Lloyd George", "1916", "None", "", "david_lloyd_george__photo.jpg", "Harris & Ewing", "Public domain"],
+          ["Bonar Law", "1922", "Other", "", "bonar_law__photo.jpg", "Bain News Service", "Public domain"],
+          ["Stanley Baldwin", "1923", "Cambridge", "Trinity College", "stanley_baldwin__photo.jpg", "Bain News Service", "Public domain"],
+          ["Ramsay MacDonald", "1924", "Other", "", "ramsay_macdonald__photo.jpg", "Walter Stoneman", "Public domain"],
+          ["Neville Chamberlain", "1937", "Other", "", "neville_chamberlain__photo.jpg", "Lafayette Ltd", "Public domain"],
+          ["Winston Churchill", "1940", "Other", "", "winston_churchill__photo.jpg", "Yousuf Karsh", "Public domain"],
+          ["Clement Attlee", "1945", "Oxford", "University College, Oxford", "clement_attlee__photo.jpg", "Winterbergen", "CC0"],
+          ["Anthony Eden", "1955", "Oxford", "Christ Church", "anthony_eden__photo.jpg", "Walter Stoneman", "Public domain"],
+          ["Harold Macmillan", "1957", "Oxford", "Balliol College", "harold_macmillan__photo.jpg", "Unknown photographer", "Public domain"],
+          ["Alec Douglas-Home", "1963", "Oxford", "Christ Church", "alec_douglas_home__photo.jpg", "Unknown for Anefo", "CC0"],
+          ["Harold Wilson", "1964", "Oxford", "Jesus College", "harold_wilson__photo.jpg", "Eric Koch for Anefo", "CC BY-SA 3.0 nl"],
+          ["Edward Heath", "1970", "Oxford", "Balliol College", "edward_heath__photo.jpg", "Moshe Milner", "Public domain"],
+          ["James Callaghan", "1976", "None", "", "james_callaghan__photo.jpg", "Christian Lambiotte", "CC BY 4.0"],
+          ["Margaret Thatcher", "1979", "Oxford", "Somerville College", "margaret_thatcher__photo.jpg", "derivative work by Begoon", "Copyrighted free use"],
+          ["John Major", "1990", "Other", "", "john_major__photo.jpg", "Sharon Farmer", "Public domain"],
+          ["Tony Blair", "1997", "Oxford", "St John's College", "tony_blair__photo.jpg", "Pavel Golovkin", "CC BY 4.0"],
+          ["Gordon Brown", "2007", "Other", "", "gordon_brown__photo.jpg", "Unknown photographer", "OGL 3"],
+          ["David Cameron", "2010", "Oxford", "Brasenose College", "david_cameron__photo.jpg", "Lauren Hurley / No 10", "OGL 3"],
+          ["Theresa May", "2016", "Oxford", "St Hugh's College", "theresa_may__photo.jpg", "Roger Harris", "CC BY 3.0"],
+          ["Boris Johnson", "2019", "Oxford", "Balliol College", "boris_johnson__photo.jpg", "Ben Shread", "OGL 3"],
+          ["Liz Truss", "2022", "Oxford", "Merton College", "liz_truss__photo.jpg", "Simon Dawson / No 10", "OGL 3"],
+          ["Rishi Sunak", "2022", "Oxford", "Lincoln College", "rishi_sunak__photo.jpg", "Prime Minister's Office", "OGL 3"],
+          ["Keir Starmer", "2024", "Oxford", "St Edmund Hall", "keir_starmer__photo.jpg", "Prime Minister's Office", "OGL 3"],
+          ["Basil Feilding, 6th Earl of Denbigh", "", "None", "", "basil_feilding_6th_earl_of_denbigh__photo.jpg", "John Watts, after N. Dance-Holland", "Public domain"]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_10": {
+      "label": "University head-to-head asset map (crests, logos, campus)",
+      "content": "The two universities are represented in the dataset's image cache by their official coat-of-arms, logo and a campus photograph each, sourced and attributed from Wikimedia Commons. Oxford (Q34433) supplies a public-domain coat of arms and logo plus an aerial campus panorama by Chensiyuan (CC BY-SA 4.0); Cambridge (Q35794) supplies a CC BY-SA 3.0 coat of arms and a St John's College courtyard photo by Diliff (CC BY-SA 3.0). These anchor the head-to-head comparison block visually.",
+      "type": "distribution",
+      "strength": "weak",
+      "calculation": { "file": "code/build_gallery.py", "lines": [54, 66], "output": "Q34433 (Oxford): coat_of_arms PD, logo PD, photo CC BY-SA 4.0 by Chensiyuan\nQ35794 (Cambridge): coat_of_arms CC BY-SA 3.0, logo CC BY-SA 4.0, photo CC BY-SA 3.0 by Diliff" },
+      "data_table": {
+        "description": "University crest / logo / campus asset files and attribution",
+        "columns": ["university", "coat_of_arms", "logo", "campus_photo", "campus_artist", "campus_license"],
+        "rows": [
+          ["Oxford", "q34433__coat_of_arms.png", "q34433__logo.png", "q34433__photo.jpg", "Chensiyuan", "CC BY-SA 4.0"],
+          ["Cambridge", "q35794__coat_of_arms.png", "q35794__logo.png", "q35794__photo.jpg", "Diliff", "CC BY-SA 3.0"]
+        ]
+      },
+      "based_on": ["det_01"]
+    }
+  },
+  "caveats": [
+    { "id": "ana_caveat_01", "content": "'Total alumni on Wikidata' (Oxford 39,259, Cambridge 31,284) is coverage-biased — it counts only people notable enough to have a Wikidata item with an educated-at field, never enrolment. Treat as relative notability coverage, not headcount." },
+    { "id": "ana_caveat_02", "content": "Nobel counts use 'educated at', so a laureate can be linked as a former student OR as a later academic affiliate. Describe as 'associated with', not 'graduated from'. The dataset's 30/79 differs from PR figures (~76/121) because those use a broader 'affiliated with' definition." },
+    { "id": "ana_caveat_03", "content": "The PM total of 59 includes pre-1801 Great Britain prime ministers and one undated holder (Earl of Denbigh), so it can differ by one or two from lists that start at a different date." },
+    { "id": "ana_caveat_04", "content": "College attribution takes the first college matching a known Oxford/Cambridge college list; a few PMs attended more than one. Christ Church=13, Eton=20 are robust and match external sources (Oxford Summer Courses)." }
+  ]
+}

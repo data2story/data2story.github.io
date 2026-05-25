@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive_or_map); each chosen data-drivenly. This is a rich-media run: real Wikimedia crests and photos are the primary imagery, AI media provides atmosphere and motion.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": { "used": true, "reason": "Foundations-by-century, founding gaps, dataset composition and namesake split are all decisive quantitative comparisons." },
+      "image": { "used": true, "reason": "Primary imagery is 24 REAL Wikimedia Commons assets — 19 college coats of arms and 5 campus photos — plus one AI golden-hour hero. The crests are evidentiary: each encodes its founder's heraldry. Every Wikimedia image is credited per-image and in a Sources section." },
+      "video": { "used": true, "reason": "The AI hero still is animated via image2video into a slow aerial push-in over Oxford's spires, used as the full-bleed teaser — motion sets the atmosphere a still cannot." },
+      "audio": { "used": true, "reason": "A generated ambient chapel soundscape (organ/strings/bell) plays as a reader-controlled bed in the closing section, evoking the eight-century span. Non-autoplay, with a visual fallback caption." },
+      "interactive_or_map": { "used": true, "reason": "A guess-first quiz on Oxford's oldest college (the unwinnable 15-year cluster) and a browsable real-crest gallery card deck for the namesake section. No geographic dimension, so no map." }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser — animated golden-hour Oxford hero (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "hero.mp4",
+        "poster": "hero.png",
+        "tool": "image2video",
+        "source_image": "assets/hero.png",
+        "prompt": "Very slow cinematic aerial push-in over Oxford's golden-hour spires and the Radcliffe Camera dome, gentle parallax drift, soft warm light slowly intensifying, faint atmospheric haze, no camera shake, no text, smooth and meditative",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Full-viewport muted, autoplay, looping video of Oxford's dreaming spires at golden hour, drifting slowly forward. The headline and subhead overlay the lower third. The hero.png still is the poster fallback. No text baked into the video.",
+      "rationale": "The dataset is a history of stone and time; a slow drift over real-looking Oxford rooftops sets the eight-century mood better than any chart. We already had a strong AI still, so image2video preserves that composition while adding life.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Hero still (AI) — poster + atmosphere",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic aerial photograph of Oxford's dreaming spires and honey-coloured stone quadrangles at golden hour, Radcliffe Camera dome and gothic pinnacles, soft autumn haze, long shadows, editorial fine-art photography, amber and slate tones, no text, no people",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Serves as the poster for the hero video and the OG/atmosphere still. AI-generated (clearly an evocative composite, not a real specific photo), so it is labelled as illustrative atmosphere, not evidence.",
+      "rationale": "An atmospheric establishing image; explicitly distinct from the real Wikimedia photos used as evidence.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Guess-first: which is Oxford's oldest college?",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Three face-down cards labelled University College (1249), Balliol (1263), Merton (1264). Prompt: 'Which is Oxford's oldest college? Pick one.' The years are visible; the real crests are hidden.",
+        "trigger": "Reader clicks one of the three cards.",
+        "transition": "All three cards flip to reveal their REAL coats of arms (crest_university.png, crest_balliol.png, crest_merton.png). A verdict panel fades in.",
+        "payoff": "The verdict reveals there is no single winner: each college defines 'oldest' differently (earliest endowment / longest continuous site / first statutes), and all three fall inside a 15-year window. A footnote warns that Rewley Abbey (1201) is older in the data but was a dissolved monastery, not a college.",
+        "data_source": "ana_03"
+      },
+      "brief": "A three-card guess-first interaction using the three real college crests. Whatever the reader picks, the reveal is the same: it's a genuine three-way tie. The surprise is that the question has no answer. Cards use real PNG crests with a subtle flip animation; verdict text cites the 1249/1263/1264 dates and the 15-year window.",
+      "rationale": "The finding is a surprise (no winner), so a guess-first interaction lands it far harder than a chart. Real crests make the three rivals concrete.",
+      "based_on": ["ana_03"]
+    },
+    "des_04": {
+      "label": "Foundations per century — barbell bar chart",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_02",
+        "x": "century",
+        "y": "founded",
+        "highlight": { "century": ["19th", "20th"] },
+        "interaction": "hover tooltip showing century and exact count",
+        "style": { "palette": "warm amber bars, two highlighted (19th/20th) in deep accent", "no_gridlines": true, "annotate": "label the medieval wave and modern wave; note the 17th-18th sag" }
+      },
+      "brief": "Vertical bar chart of colleges founded per century (13th through 21st). The 13th-14th bars and 19th-20th bars are visually emphasised as the two waves; the 17th (3) and 18th (1) sag in the middle. Tooltip on hover. This is the spine chart of the piece.",
+      "rationale": "A simple bar-per-century makes the barbell shape instantly legible — two peaks, a trough between.",
+      "based_on": ["ana_02"]
+    },
+    "des_05": {
+      "label": "Half-century view — the Victorian spike",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_10",
+        "x": "window",
+        "y": "founded",
+        "highlight": { "window": "1850–1899" },
+        "interaction": "hover tooltip with window and count",
+        "style": { "palette": "muted slate bars, 1850–1899 in accent", "no_gridlines": true }
+      },
+      "brief": "Bar chart of foundations per 50-year window. The 1850–1899 bar (9) towers over every other window across 800 years; 1950–1999 (7) is the second surge. Highlight the 1850–1899 bar in the accent colour.",
+      "rationale": "Sharpening from centuries to half-centuries turns the modern wave into a single dramatic spike — a second chart with a different grain, avoiding a chart streak by sitting after the century chart with distinct framing.",
+      "based_on": ["ana_10"]
+    },
+    "des_06": {
+      "label": "The 156-year silence — gap chart",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_07",
+        "x": "gap_years",
+        "y": "from_year",
+        "orientation": "horizontal",
+        "highlight": { "gap_years": 156 },
+        "interaction": "hover tooltip showing 'X years: from_year → to_year'",
+        "style": { "palette": "single muted tone, the 156-year bar in strong accent", "no_gridlines": true }
+      },
+      "brief": "Horizontal bar chart of the five largest gaps between consecutive founding years, sorted longest-first. The 156-year gap (1714→1870) is roughly double the next (75 years) and is highlighted. Each bar labelled with its from→to years. Conveys the Georgian silence as a physical length.",
+      "rationale": "A gap is a length of time; a horizontal bar literally draws that length, making the 156-year silence feel like the void it was.",
+      "based_on": ["ana_07"]
+    },
+    "des_07": {
+      "label": "Reformation churn — Christ Church photo + caption",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "photo_christchurch.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:UK-2014-Oxford-Christ_Church_01.jpg",
+        "license": "CC BY-SA 4.0",
+        "artist": "Godot13",
+        "credit": "Wikimedia Commons"
+      },
+      "brief": "A real photograph of Christ Church, captioned to make the point that this single building was Cardinal College (1525), then King Henry VIII's College (1532), then Christ Church (1546) — one institution counted three times in the data. Per-image credit: 'Christ Church. Source: Wikimedia Commons — Godot13, CC BY-SA 4.0.'",
+      "rationale": "Christ Church is the literal embodiment of the Reformation-churn finding; a real photo of the survivor grounds the abstract count of defunct rows.",
+      "based_on": ["ana_06"]
+    },
+    "des_08": {
+      "label": "Living vs dead — dataset composition stat",
+      "type": "stat_callout",
+      "section": "edt_04",
+      "content": {
+        "value": "11 of 50",
+        "label": "rows are colleges that no longer exist as living colleges — leaving roughly 39 survivors",
+        "data_source": "ana_06"
+      },
+      "brief": "Large stat callout: '11 of 50' with the label about defunct/merged/non-residential rows and the ~39 survivors. Sits beneath the Christ Church photo.",
+      "rationale": "One arresting number captures the 'ghosts in the count' caveat better than a chart.",
+      "based_on": ["ana_06"]
+    },
+    "des_09": {
+      "label": "Somerville photo — the women's colleges",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "photo_somerville.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Somerville_College.jpg",
+        "license": "CC BY-SA 3.0",
+        "artist": "Philip Allfrey",
+        "credit": "Wikimedia Commons"
+      },
+      "brief": "Real photograph of Somerville College, captioned to anchor the 1878-1893 women's-college wave and the 1920 degree gap. Per-image credit below. Pair with the LMH/Somerville crests inline.",
+      "rationale": "A real photo of one of the first women's colleges makes the Victorian-spike finding human, not just a tall bar.",
+      "based_on": ["ana_10", "ana_04"]
+    },
+    "des_10": {
+      "label": "Saints vs surnames — namesake split chart",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_05",
+        "x": "count",
+        "y": "namesake_type",
+        "orientation": "horizontal",
+        "interaction": "hover tooltip with exact count",
+        "style": { "palette": "two-tone: religious in deep gold, personal in slate", "no_gridlines": true }
+      },
+      "brief": "A compact horizontal two-bar chart: personal/secular namesakes (20) vs religious/saint namesakes (17), of the 37 colleges with a recorded namesake. Two distinct colours. Introduces the crest gallery below.",
+      "rationale": "A tiny, decisive comparison — almost a tally — that frames the secularisation story before the gallery shows it.",
+      "based_on": ["ana_05"]
+    },
+    "des_11": {
+      "label": "Real coat-of-arms gallery — browsable card deck",
+      "type": "interactive",
+      "section": "edt_06",
+      "content": {
+        "interaction_type": "card_deck",
+        "initial_state": "A horizontally scrollable / arrow-navigable deck of cards, each showing a REAL college coat of arms with its name, founding year, and namesake. Ordered oldest to newest to show saints giving way to surnames.",
+        "trigger": "Reader scrolls or clicks arrows to browse cards.",
+        "transition": "Each card shows crest image, college name, year, and 'Named after: …'. Religious namesakes tinted gold, personal tinted slate, matching the chart above.",
+        "payoff": "Browsing chronologically, the reader watches the namesakes drift from saints and feast days (Magdalen → Mary Magdalene; All Souls → All Souls' Day) to surnames of benefactors (Keble, Nuffield, Wolfson, Kellogg, Reuben).",
+        "data_source": "ana_05",
+        "cards": [
+          { "img": "crest_merton.png", "college": "Merton College", "year": 1264, "named_after": "Walter de Merton", "type": "personal" },
+          { "img": "crest_exeter_college.png", "college": "Exeter College", "year": 1314, "named_after": "Walter de Stapledon", "type": "personal" },
+          { "img": "crest_the_queens_college.png", "college": "The Queen's College", "year": 1341, "named_after": "Philippa of Hainault", "type": "personal" },
+          { "img": "crest_new_college.png", "college": "New College", "year": 1379, "named_after": "(William of Wykeham)", "type": "personal" },
+          { "img": "crest_lincoln_college.png", "college": "Lincoln College", "year": 1427, "named_after": "Richard Fleming", "type": "personal" },
+          { "img": "crest_all_souls_college.png", "college": "All Souls College", "year": 1438, "named_after": "All Souls' Day", "type": "religious" },
+          { "img": "crest_magdalen_college.png", "college": "Magdalen College", "year": 1458, "named_after": "Mary Magdalene", "type": "religious" },
+          { "img": "crest_brasenose_college.png", "college": "Brasenose College", "year": 1509, "named_after": "(the brazen nose knocker)", "type": "personal" },
+          { "img": "crest_st_johns_college.png", "college": "St John's College", "year": 1555, "named_after": "John the Baptist", "type": "religious" },
+          { "img": "crest_trinity_college.png", "college": "Trinity College", "year": 1555, "named_after": "Holy Trinity", "type": "religious" },
+          { "img": "crest_jesus_college.png", "college": "Jesus College", "year": 1571, "named_after": "Jesus Christ", "type": "religious" },
+          { "img": "crest_keble_college.png", "college": "Keble College", "year": 1870, "named_after": "John Keble", "type": "personal" },
+          { "img": "crest_lady_margaret_hall.png", "college": "Lady Margaret Hall", "year": 1878, "named_after": "Margaret Beaufort", "type": "personal" },
+          { "img": "crest_somerville_college.png", "college": "Somerville College", "year": 1879, "named_after": "Mary Somerville", "type": "personal" },
+          { "img": "crest_nuffield_college.png", "college": "Nuffield College", "year": 1937, "named_after": "Lord Nuffield", "type": "personal" },
+          { "img": "crest_wolfson_college.png", "college": "Wolfson College", "year": 1965, "named_after": "Isaac Wolfson", "type": "personal" },
+          { "img": "crest_kellogg_college.png", "college": "Kellogg College", "year": 1990, "named_after": "Will Keith Kellogg", "type": "personal" },
+          { "img": "crest_reuben_college.png", "college": "Reuben College", "year": 2019, "named_after": "Reuben Foundation", "type": "personal" },
+          { "img": "crest_university.png", "college": "University College", "year": 1249, "named_after": "(William of Durham)", "type": "personal" }
+        ]
+      },
+      "brief": "A scroll-snap card deck of 19 REAL college crests, each card: crest image (max ~120px, object-fit contain on a parchment-tone tile), college name, founding year, namesake line. Sorted by year. Religious vs personal namesakes colour-coded to match des_10. Arrow buttons + horizontal scroll. Each crest is real Wikimedia heraldry; a single gallery-level credit line ('All crests: Wikimedia Commons, CC BY-SA — see Sources') plus full per-crest attribution in the Sources section. This is the visual centrepiece.",
+      "rationale": "The dataset's richest visual asset is the real heraldry. A browsable deck lets the reader feel the saints-to-surnames drift directly, and showcases the 19 authentic crests as evidence rather than decoration.",
+      "based_on": ["ana_05", "ana_09"]
+    },
+    "des_12": {
+      "label": "Reuben College photo — the newest college",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "photo_reuben.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Reuben_College,_Oxford_-_Worthington_and_Jackson_wings.jpg",
+        "license": "CC BY-SA 4.0",
+        "artist": "Allyox",
+        "credit": "Wikimedia Commons"
+      },
+      "brief": "Real photograph of Reuben College (the former Radcliffe Science Library), captioned as the newest row in the dataset (2019, first new college since Kellogg 1990). Per-image credit below.",
+      "rationale": "Closing the 800-year arc on a real photo of the most recent college visually completes the timeline opened by the medieval quiz.",
+      "based_on": ["ana_01"]
+    },
+    "des_13": {
+      "label": "Eight centuries of stone — ambient chapel soundscape",
+      "type": "audio",
+      "section": "edt_07",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "A slow organ-and-strings chapel ambience with a single low bell evokes the eight-century timespan the data covers — the sound of the institutions the numbers stand for. It deepens the closing reflection that the dates are a sketch and the silences are the story.",
+        "trigger": "Reader clicks a clearly-labelled play button ('Listen: eight centuries of stone'). Never autoplays.",
+        "ui_form": "A slim chapter-break mini-player integrated into the closing section — a single play/pause control with a one-line caption, not a generic waveform card.",
+        "content": {
+          "filename": "ambience.mp3",
+          "tool": "text2music",
+          "prompt": "Solemn spacious instrumental ambient: slow sustained strings, distant wordless choir pad, soft pipe-organ swell, a single low bell toll, contemplative, reverberant cathedral space, no drums, no vocals",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "If audio is muted or unsupported, the closing prose and the Reuben photo carry the section fully; the player simply shows a disabled state with its caption.",
+        "novelty_note": "Not a click-to-play tone card and not a sonification — it is a single restrained mood player tucked into the close, matching the elegiac tone of the final section.",
+        "ui_form_detail": "section-integrated mini-player"
+      },
+      "brief": "A reader-triggered ambient chapel soundscape (~0:30+) embedded as a slim player in the closing section, captioned 'Eight centuries of Oxford stone, in sound.' Visual fallback: the prose and Reuben photo stand alone.",
+      "rationale": "Audio earns its slot here by setting the elegiac, timeless mood of the close — something neither the charts nor the crests can do.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "warm editorial on near-black, candle-lit / golden-stone palette (amber accent, parchment tiles, deep charcoal background)",
+    "text_visual_pattern": "visual-first teaser, then alternating prose → interactive/chart → real imagery, never two charts adjacent without a mode change",
+    "centrepiece": "des_11",
+    "anti_sameness_notes": "Unlike the prior lean run (one hero only), this page leans into real heraldry as its signature: a 19-crest gallery and a 3-crest guess-first quiz make authentic Wikimedia art the spine. The AI hero is animated to motion, audio is a single restrained mood player. No chart streaks — every chart is separated by an image, stat, interactive, or photo.",
+    "typography_notes": "Serif (Georgia) body for the historical voice; system-ui for chart labels and UI. Large stat callout ('11 of 50') at ~64px. Section titles in small-caps amber. Generous vertical rhythm. Crests on warm parchment tiles so transparent PNGs read on the dark ground."
+  }
+}

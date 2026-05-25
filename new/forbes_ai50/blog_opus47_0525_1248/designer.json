@@ -1,0 +1,262 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Rich-media run defaulting to all five channels. Primary imagery is 18 VERIFIED real Wikimedia company logos used in a filterable company-card deck and a funding leaderboard; 12 confirmed mismatch logos were dropped and those companies (plus 20 not-found) render as clean CSS typographic wordmark cards. AI media (one abstract hero + one motion clip) provides atmosphere for the power-law funding story; a generated ambient bed closes the piece. Each channel is chosen to fit the dataset, not a quota.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": { "used": true, "reason": "Funding leaderboard (power law), geography distribution, founding-year timeline and category count-vs-capital inversion are all decisive quantitative comparisons drawn from analyst data_tables." },
+      "image": { "used": true, "reason": "Primary imagery is 18 REAL Wikimedia logos (credited per-card and in Sources) in a filterable deck + leaderboard. One AI abstract hero ('two pillars of light over a field of nodes') literally visualizes the 79.4% funding concentration." },
+      "video": { "used": true, "reason": "A 5s text2video clip animates the gold-rush / power-law motif as the full-bleed teaser — motion conveys the towering-pillars concentration a still cannot. (image2video on the hero was attempted first but the veo service was under high load; fell back to text2video seedance-2.0 — see media_blockers.)" },
+      "audio": { "used": true, "reason": "A generated ambient tech soundscape plays as a reader-controlled bed in the closing section, evoking a quiet capital frontier. Non-autoplay with a visual caption fallback." },
+      "interactive_or_map": { "used": true, "reason": "A guess-first quiz on the OpenAI+Anthropic funding share (the surprising 79.4%) and a filterable real-logo company card deck (filter by category). Geography shown as a chart rather than a fake map — the data is city names, well served by a ranked bar." }
+    },
+    "media_blockers": [
+      {
+        "category": "video",
+        "reason": "image2video (google/veo-3.1-fast) returned 'service experiencing high load' twice on the hero still.",
+        "attempted_command": "generate_video_from_image.py --image assets/hero.png --duration 6 (x2 retries, both failed)",
+        "fallback_des": "des_12 — used text2video (bytedance/seedance-2.0) to generate teaser.mp4 from a matching prompt instead; succeeded."
+      }
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser — power-law gold-rush motion clip",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser.mp4",
+        "tool": "text2video",
+        "prompt": "Abstract cinematic visualization of an AI gold rush: a dark navy field filled with hundreds of tiny faint twinkling teal nodes, and two enormous radiant pillars of golden-white light slowly rising and pulsing far above the rest, dwarfing everything. Slow push-in, drifting particle bokeh, volumetric fog, luminous gold and teal palette, editorial tech mood, no text, no logos.",
+        "model": "bytedance/seedance-2.0",
+        "duration": 5,
+        "aspect_ratio": "16:9",
+        "poster": "hero.png"
+      },
+      "brief": "Full-viewport teaser. Looping muted clip of two towering pillars of light over a field of faint nodes — a visual metaphor for two companies holding 79.4% of the money. Headline overlaid at the bottom with a dark scrim. Poster fallback is hero.png.",
+      "rationale": "Motion sells the dwarfing effect; the two pillars are the whole thesis in one image before a word is read.",
+      "based_on": ["ana_02"]
+    },
+    "des_02": {
+      "label": "Hero still (poster + atmospheric image)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "A striking abstract visualization of an AI gold rush and extreme capital concentration: a vast dark field of hundreds of tiny faint glowing nodes, and two enormous radiant pillars of golden-white light towering above them. Deep navy-to-black gradient, volumetric fog, fine particle bokeh, luminous teal and warm gold palette, editorial tech aesthetic, no text, no logos.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Serves as the teaser video poster/fallback. Two golden light pillars dwarf a field of dim nodes — the power-law concentration made visible.",
+      "rationale": "A strong still is needed as the video poster and as the no-JS / mobile fallback for the teaser.",
+      "based_on": ["ana_02"]
+    },
+    "des_03": {
+      "label": "Guess-first quiz — what share do the top 2 hold?",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Prompt: 'Of all $305.7B raised by the 50 companies, what share do the top two (OpenAI + Anthropic) hold?' with four choices: ~25%, ~50%, ~65%, ~79%.",
+        "trigger": "Reader clicks a choice.",
+        "transition": "Choices lock; the correct option (79%) highlights gold; a short reveal panel fades in.",
+        "payoff": "Reveal: 79.4% — two companies out of fifty. The mean ($6.1B) is 8.3x the median ($735M).",
+        "data_source": "ana_02"
+      },
+      "brief": "Four-button guess-first quiz. Most readers guess far too low, which makes the 79.4% reveal land. Reveal panel cites the exact figures from ana_02/ana_03.",
+      "rationale": "The concentration is surprising — letting the reader commit to a guess maximizes the shock of the real number, better than opening with a static chart.",
+      "based_on": ["ana_02", "ana_03"]
+    },
+    "des_04": {
+      "label": "OpenAI+Anthropic share stat callout",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": { "value": "79.4%", "label": "of all $305.7B raised is held by just two companies — OpenAI and Anthropic", "data_source": "ana_02" },
+      "brief": "Large 64px gold stat under the quiz, restating the headline figure.",
+      "rationale": "The number is striking enough to stand alone as a headline stat.",
+      "based_on": ["ana_02"]
+    },
+    "des_05": {
+      "label": "Funding leaderboard — full power-law bar chart",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_02",
+        "x": "funding_m",
+        "y": "name",
+        "highlight": { "name": ["OpenAI", "Anthropic"] },
+        "interaction": "hover tooltip with exact $ value; log-friendly note that OpenAI/Anthropic bars are clipped in scale",
+        "style": { "palette": "gold-on-navy", "no_gridlines": true, "sort": "descending", "highlight_color": "#e9b949" }
+      },
+      "brief": "Full 50-company horizontal bar chart sorted descending by funding (millions USD). OpenAI and Anthropic bars are highlighted gold and visibly dwarf the rest; the long flat tail is the point. Tooltip shows exact $M. Use a sqrt or log-ish visual treatment OR keep linear but let the two giants run off — the dwarfing IS the message; label OpenAI 182,600 and Anthropic 60,000 explicitly.",
+      "rationale": "The single most important finding (the power law) deserves the full leaderboard; showing all 50 makes the tail undeniable.",
+      "based_on": ["ana_02"]
+    },
+    "des_06": {
+      "label": "Two-giants-vs-tail stat callout",
+      "type": "stat_callout",
+      "section": "edt_02",
+      "content": { "value": "64%", "label": "of the list has raised under $1 billion; only 18 of 50 have crossed it", "data_source": "ana_03" },
+      "brief": "Secondary stat callout reinforcing the long tail.",
+      "rationale": "Pairs the headline concentration with the tail's scale.",
+      "based_on": ["ana_03"]
+    },
+    "des_07": {
+      "label": "Geography distribution chart",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_05",
+        "x": "count",
+        "y": "region",
+        "color": "region",
+        "highlight": { "region": "San Francisco" },
+        "interaction": "hover tooltip with count and pct",
+        "style": { "palette": "teal-gold", "no_gridlines": true, "sort": ["San Francisco", "Rest of Bay Area / CA", "Rest of US", "International"] }
+      },
+      "brief": "Four-bar horizontal chart: San Francisco (25, 50%), Rest of Bay Area / CA (8), Rest of US (11), International (6). San Francisco bar highlighted. Shows one city = half the list.",
+      "rationale": "The data is city/region names, best read as a ranked bar; a literal map would scatter dots without adding insight, so a clean bar wins.",
+      "based_on": ["ana_05"]
+    },
+    "des_08": {
+      "label": "Founding-year timeline histogram",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "column",
+        "data_source": "ana_06",
+        "x": "year",
+        "y": "count",
+        "highlight": { "year": 2022 },
+        "interaction": "hover tooltip with count; annotation marking late-2022 ChatGPT inflection",
+        "style": { "palette": "gold-on-navy", "no_gridlines": true, "annotate_2022": "ChatGPT, Nov 2022" }
+      },
+      "brief": "Vertical column chart of company count by founding year 2013-2025, with 2022 (the peak, 11 companies) highlighted and a small annotation at the late-2022 ChatGPT moment. The post-2020 surge should be visually obvious.",
+      "rationale": "Founding years are a time series — a column timeline reads instantly and lets the 2022 spike speak.",
+      "based_on": ["ana_06", "ana_10"]
+    },
+    "des_09": {
+      "label": "Category count chart",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_07",
+        "x": "count",
+        "y": "category",
+        "interaction": "hover tooltip with count",
+        "style": { "palette": "teal", "no_gridlines": true, "sort": "descending" }
+      },
+      "brief": "Horizontal bar of company COUNT by application category (Generative media 8, Foundation models 7, Infrastructure 7, Agents 6, Coding 5, ...). Establishes the breadth of applied AI by headcount.",
+      "rationale": "Sets up the inversion in des_10 — readers see breadth here, then narrowness in capital next.",
+      "based_on": ["ana_07"]
+    },
+    "des_10": {
+      "label": "Category capital chart — the inversion",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_08",
+        "x": "funding_m",
+        "y": "category",
+        "highlight": { "category": "Foundation models" },
+        "interaction": "hover tooltip with exact $M and % of total",
+        "style": { "palette": "gold-on-navy", "no_gridlines": true, "sort": "descending", "highlight_color": "#e9b949" }
+      },
+      "brief": "Horizontal bar of total FUNDING by category. Foundation models ($254.4B) dwarfs everything; highlighted gold. Placed directly after the count chart so the reader sees the same categories reorder violently — breadth by count, narrowness by capital.",
+      "rationale": "The juxtaposition of count vs capital is the turn of the whole piece; two paired charts make the inversion visceral.",
+      "based_on": ["ana_08"]
+    },
+    "des_11": {
+      "label": "Company card deck — verified logos + wordmarks, filterable",
+      "type": "interactive",
+      "section": "edt_06",
+      "content": {
+        "interaction_type": "filterable_card_deck",
+        "initial_state": "A responsive grid of 50 company cards. 18 cards show a REAL verified logo on a light tile; the other 32 show a clean CSS typographic wordmark (company name set in a strong display style on a tinted tile). Each card shows name, category tag, funding, and founding year.",
+        "trigger": "Reader clicks a category filter chip (All, Foundation models, Generative media, Infrastructure, Agents, Coding, Robotics, Healthcare, Legal & finance, Other).",
+        "transition": "Cards not matching the filter fade/collapse out with a short transition; matching cards reflow.",
+        "payoff": "The reader can browse the whole list as faces, see which categories are crowded, and read each company's funding/year at a glance.",
+        "data_source": ["ana_07", "ana_11", "ana_02", "ana_06"]
+      },
+      "brief": "VISUAL CENTERPIECE. 50-card filterable deck. Verified-logo cards (18): Anthropic, Applied Intuition, Cohere, Cursor, Databricks, ElevenLabs, Glean, HeyGen, Lovable, Mistral AI, Notion, OpenAI, OpenEvidence, Perplexity, Physical Intelligence, Replit, Runway, Suno — each logo on a white/light rounded tile with a small 'logo: Wikimedia' credit, max-height constrained, object-fit contain. Wordmark cards (32): company name in a bold condensed display treatment on a navy/teal-tinted tile (NOT a fake logo). Every card carries category tag + funding ($) + year. Filter chips along the top filter by category. The card data (name, category, funding, year, has_logo, logo_file) should be inlined as a JS array built from ana_02 (funding), ana_06 (years), ana_07 (categories) and ana_11 (logo coverage).",
+      "rationale": "A 50-item list of comparable entities is exactly what a filterable card deck is for; real logos as primary imagery, honest wordmarks for the rest. This is the page's richest, most browsable moment.",
+      "based_on": ["ana_07", "ana_11", "ana_02", "ana_06"]
+    },
+    "des_12": {
+      "label": "Verified-logo credit note",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "logo_openai.png",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:OpenAI_Logo.svg",
+        "license": "Public domain",
+        "artist": "OpenAI",
+        "credit": "Wikimedia Commons",
+        "all_logos": [
+          {"name": "Anthropic", "file": "logo_anthropic.png", "source_url": "https://commons.wikimedia.org/wiki/File:Anthropic_logo.svg", "license": "Public domain", "artist": "Anthropic"},
+          {"name": "Applied Intuition", "file": "logo_applied_intuition.png", "source_url": "https://commons.wikimedia.org/wiki/File:Applied_Intuition_Logo.png", "license": "CC BY 4.0", "artist": "Redpod22"},
+          {"name": "Cohere", "file": "logo_cohere.png", "source_url": "https://commons.wikimedia.org/wiki/File:Cohere-Logo.png", "license": "CC0", "artist": "Ayub MK09"},
+          {"name": "Cursor", "file": "logo_cursor.png", "source_url": "https://commons.wikimedia.org/wiki/File:Cursor_logo.svg", "license": "Public domain", "artist": "Anysphere"},
+          {"name": "Databricks", "file": "logo_databricks.png", "source_url": "https://commons.wikimedia.org/wiki/File:Databricks-logo.svg", "license": "Public domain", "artist": "Databricks Inc."},
+          {"name": "ElevenLabs", "file": "logo_elevenlabs.png", "source_url": "https://commons.wikimedia.org/wiki/File:ElevenLabs_Logo_03.svg", "license": "Public domain", "artist": "ElevenLabs"},
+          {"name": "Glean", "file": "logo_glean.png", "source_url": "https://commons.wikimedia.org/wiki/File:Glean_logo.svg", "license": "Public domain", "artist": "Glean Technologies, Inc."},
+          {"name": "HeyGen", "file": "logo_heygen.png", "source_url": "https://commons.wikimedia.org/wiki/File:HeyGen_logo.svg", "license": "Public domain", "artist": "HeyGen (vectorized by Deltaspace42)"},
+          {"name": "Lovable", "file": "logo_lovable.png", "source_url": "https://commons.wikimedia.org/wiki/File:Logowhite_lovable.svg", "license": "CC0", "artist": "Donglak"},
+          {"name": "Mistral AI", "file": "logo_mistral_ai.png", "source_url": "https://commons.wikimedia.org/wiki/File:Mistral_AI_logo_(2025%E2%80%93).svg", "license": "Public domain", "artist": "Mistral AI / Pantarch"},
+          {"name": "Notion", "file": "logo_notion.png", "source_url": "https://commons.wikimedia.org/wiki/File:Notion-logo.svg", "license": "Public domain", "artist": "Notion Labs, Inc."},
+          {"name": "OpenAI", "file": "logo_openai.png", "source_url": "https://commons.wikimedia.org/wiki/File:OpenAI_Logo.svg", "license": "Public domain", "artist": "OpenAI"},
+          {"name": "OpenEvidence", "file": "logo_openevidence.png", "source_url": "https://commons.wikimedia.org/wiki/File:OpenEvidence_logo.svg", "license": "Public domain", "artist": "OpenEvidence"},
+          {"name": "Perplexity", "file": "logo_perplexity.png", "source_url": "https://commons.wikimedia.org/wiki/File:Perplexity_AI_logo.svg", "license": "Public domain", "artist": "Perplexity AI / Alisperic"},
+          {"name": "Physical Intelligence", "file": "logo_physical_intelligence.png", "source_url": "https://commons.wikimedia.org/wiki/File:Physical_Intelligence_logo.png", "license": "CC BY 4.0", "artist": "Physical Intelligence"},
+          {"name": "Replit", "file": "logo_replit.png", "source_url": "https://commons.wikimedia.org/wiki/File:New_Replit_Logo.svg", "license": "Public domain", "artist": "Replit"},
+          {"name": "Runway", "file": "logo_runway.png", "source_url": "https://commons.wikimedia.org/wiki/File:Runway_Logo.png", "license": "Public domain", "artist": "Runway AI, Inc."},
+          {"name": "Suno", "file": "logo_suno.png", "source_url": "https://commons.wikimedia.org/wiki/File:Suno_logo_July_2024.svg", "license": "Public domain", "artist": "Suno, Inc."}
+        ]
+      },
+      "brief": "Not a standalone image — this item carries the per-logo attribution table for the 18 verified logos used in the card deck (des_11). The Programmer renders these credits in a compact Sources block under the deck and in the References section. Every used logo is credited to Wikimedia Commons with artist + license.",
+      "rationale": "Attribution requirement: every real logo used must be credited.",
+      "based_on": ["ana_11"]
+    },
+    "des_13": {
+      "label": "Closing ambient soundscape bed",
+      "type": "audio",
+      "section": "edt_07",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "A quiet ambient bed turns the closing caveats into a contemplative outro — the sound of a frontier mid-break — rather than a dry disclaimer list.",
+        "trigger": "Click a play button in the closing section (never autoplay).",
+        "ui_form": "section-integrated mini-player: a slim play/pause control inside the closing chapter, with a one-line caption.",
+        "content": {
+          "filename": "ambient_bed.wav",
+          "tool": "text2music",
+          "prompt": "Ambient minimal tech soundscape, slow and contemplative, soft warm synth pads, distant glassy bell tones rising like a slow gold-rush dawn, gentle low drone, no drums, no vocals, cinematic and restrained, 30 seconds.",
+          "model": "google/lyria-3-pro-preview"
+        },
+        "fallback": "If audio is muted or unsupported, the closing prose stands alone; the play button shows a caption describing the bed.",
+        "novelty_note": "Not a tone card and not a sonification gimmick — a restrained reader-controlled bed scoped to the final chapter only."
+      },
+      "brief": "Reader-controlled 30s ambient bed in the closing section. Slim mini-player, non-autoplay, with caption fallback.",
+      "rationale": "Audio earns its slot as atmosphere for the close; a sonification would feel forced on a funding ranking already shown as a bar chart.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, luminous gold-and-teal on near-black navy — a 'capital frontier at night' mood",
+    "text_visual_pattern": "visual-first teaser, then text → chart/interactive alternating; the card deck is the browsable centerpiece",
+    "centrepiece": "des_11",
+    "anti_sameness_notes": "Centerpiece is a filterable real-logo card deck, not a chart; the teaser is a power-law metaphor video; audio is a scoped closing bed, not a tone card. Two paired charts (count vs capital) create a deliberate inversion rather than a chart streak.",
+    "typography_notes": "Large gold stat callouts (56-64px); system-ui for UI/labels and wordmark cards (bold condensed); Georgia serif for body. Section kickers in letterspaced uppercase teal."
+  }
+}

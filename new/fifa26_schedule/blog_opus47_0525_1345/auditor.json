@@ -1,0 +1,3 @@
+[
+  {"type": "chart_mount_zero_width", "count": 7, "note": "Added defensive CSS rule giving every Vega mount div (#chart_* inside .chart-container/.interactive-container) width:100%;min-width:0;display:block to prevent zero-width collapse on first render.", "lines": [54, 55]}
+]

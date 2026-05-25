@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "domain": "Venture capital / artificial-intelligence industry — the Forbes AI 50 list of top privately held AI companies",
+    "dataset_note": "51-row Excel sheet (50 companies + header) with columns Name, What It Does, Funding, Year Founded, Headquarters. Source: https://www.forbes.com/lists/ai50/. Snapshot of the 2025 edition."
+  },
+  "items": {
+    "det_01": {
+      "label": "What the AI 50 is and who builds it",
+      "content": "The Forbes AI 50 is an annual editorial list of the most promising privately held companies building artificial intelligence, produced by Forbes in partnership with Sequoia Capital and Meritech Capital. The 2025 edition is the seventh annual list. Companies are selected through a proprietary algorithm plus editorial judgment that weighs business promise, AI sophistication and real-world impact; only private companies are eligible, so public AI giants (Nvidia, Microsoft, Google) are excluded by construction. This is therefore a curated snapshot of the private AI frontier at a single moment in 2025, not a complete census of the industry.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.forbes.com/lists/ai50/",
+          "title": "Forbes AI 50 2025",
+          "facts": ["The AI 50 is Forbes' annual ranking of top private AI companies", "Private companies only are eligible"]
+        },
+        {
+          "url": "https://insights.tryspecter.com/forbes-ai-50-2025/",
+          "title": "Forbes AI 50 2025: AI Moves Beyond Chat to Real-World Impact",
+          "facts": ["Produced by Forbes in partnership with Sequoia Capital and Meritech Capital", "2025 is the seventh annual edition", "Companies selected via a proprietary algorithm plus editorial selection"]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "2025 theme: from chat to workflows and agents",
+      "content": "The defining narrative of the 2025 AI 50 is a shift away from the 'model race' and chat interfaces toward AI that completes entire workflows — so-called agentic AI. Forbes and its partners frame the buzziest startups as those automating real 'scutwork' across engineering, healthcare, legal and sales rather than simply answering prompts. Cognition's software-engineering agent Devin is cited as emblematic: you can delegate a whole task, not just a question. This reframes the list as evidence that AI's value is migrating up the stack from raw foundation models to applied, vertical products.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://insights.tryspecter.com/forbes-ai-50-2025/",
+          "title": "Forbes AI 50 2025: AI Moves Beyond Chat to Real-World Impact",
+          "facts": ["The 2025 list highlights AI moving beyond chat to complete entire workflows", "The buzziest startups automate scutwork across engineering, healthcare, legal and sales", "Cognition's Devin can be delegated whole software-engineering tasks"]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "The two giants: Anthropic and OpenAI",
+      "content": "Two foundation-model companies tower over everyone else on cumulative capital raised. OpenAI (founded 2015, San Francisco) and Anthropic (founded 2021, San Francisco) together account for the majority of all money raised by the cohort. The dataset records OpenAI at roughly $182.6 B and Anthropic at $60 B in cumulative funding — figures that are point-in-time and have escalated rapidly: Anthropic's valuation alone climbed from about $61.5 B in March 2025 to $183 B that September, and OpenAI closed a round near an $852 B valuation in early 2026. The two are locked in a foundation-model rivalry that the rest of the list largely orbits.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://insights.tryspecter.com/forbes-ai-50-2025/",
+          "title": "Forbes AI 50 2025: AI Moves Beyond Chat to Real-World Impact",
+          "facts": ["OpenAI and Anthropic combined account for $81 billion of cohort funding (57% of the total in that telling)", "Total cohort funding was reported at $142.45 billion"]
+        },
+        {
+          "url": "https://sacra.com/c/anthropic/",
+          "title": "Anthropic revenue, valuation & funding | Sacra",
+          "facts": ["Anthropic's valuation rose from ~$61.5B in March 2025 to ~$183B by its September 2025 Series F"]
+        },
+        {
+          "url": "https://www.cnbc.com/2026/03/31/openai-funding-round-ipo.html",
+          "title": "OpenAI closes funding round at an $852 billion valuation",
+          "facts": ["OpenAI closed a funding round at an $852 billion valuation in early 2026"]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "San Francisco / Bay Area as the AI capital",
+      "content": "Geographically the list is overwhelmingly American and concentrated in the San Francisco Bay Area. Industry coverage describes San Francisco and the broader California region as 'the absolute epicenter of AI innovation,' home to the majority of listed companies — Cursor, Cognition, Anthropic, OpenAI, Physical Intelligence and many more. A minority of companies sit elsewhere in the US (New York, Denver, Miami, Pittsburgh, Cambridge MA) and a small international tail spans Canada, France, Germany, Sweden and the UK. The clustering reflects the dense capital, talent and research ecosystem of the Bay Area.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://insights.tryspecter.com/forbes-ai-50-2025/",
+          "title": "Forbes AI 50 2025: AI Moves Beyond Chat to Real-World Impact",
+          "facts": ["San Francisco and California remain the epicenter of AI innovation, concentrating the majority of listed companies", "Cursor (San Francisco), Cognition (San Francisco) are Bay Area examples"]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "The coding / developer-tools wave",
+      "content": "A striking share of the 2025 list is software that helps build software. Forbes coverage singles out the coding and development sector — Cursor (AI coding software, $3.3 B), Cognition (AI coding agents), Replit and Lovable (AI app and website builders) — as changing how software itself gets made. Cursor in particular became a poster child for fast growth, reportedly reaching $100M+ annualized revenue within roughly three years. This concentration of dev-tools companies is one reason the list reads as a story about AI eating the software-engineering workflow first.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://insights.tryspecter.com/forbes-ai-50-2025/",
+          "title": "Forbes AI 50 2025: AI Moves Beyond Chat to Real-World Impact",
+          "facts": ["Cursor, Cognition, Replit and Lovable are highlighted as changing how software gets built", "Cursor reached $100M+ annualized revenue in about three years"]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "The AI funding boom of 2025",
+      "content": "The list sits inside an extraordinary capital surge. In 2025, top AI startups raised on the order of $150 billion — more than 40% of all global venture capital — with foundation-model companies alone taking roughly $80 billion. Forbes reported the AI 50 cohort's combined funding at about $142.45 billion. This macro backdrop explains why the dataset's funding column is so top-heavy: a handful of foundation-model labs are absorbing capital at a scale unprecedented in venture history, while dozens of application-layer companies operate on far smaller (though still nine-figure) rounds.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://news.crunchbase.com/ai/big-funding-trends-charts-eoy-2025/",
+          "title": "6 Charts That Show The Big AI Funding Trends Of 2025",
+          "facts": ["In 2025 top AI startups raised roughly $150 billion, more than 40% of global venture capital", "Foundation-model companies raised about $80 billion"]
+        },
+        {
+          "url": "https://insights.tryspecter.com/forbes-ai-50-2025/",
+          "title": "Forbes AI 50 2025",
+          "facts": ["Forbes reported total AI 50 cohort funding of about $142.45 billion"]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Caveats — a curated, point-in-time, rounded snapshot",
+      "content": "Several caveats govern any reading of this dataset. It is a curated editorial list of private companies only, so it omits public AI leaders and any private company Forbes' algorithm did not surface. Funding figures are cumulative capital raised, rounded (e.g. '$830 M', '$60 B'), and point-in-time — they were already stale within months given the pace of AI rounds. Two entries record '$0 M' (Midjourney and Surge AI), reflecting famously bootstrapped or non-disclosed companies rather than literally zero capital. Founding years cluster tightly in the last decade, and 'What It Does' is a one-line editorial gloss, not a formal taxonomy. The data is best read as a careful sketch of the private AI frontier, not a precise ledger.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.forbes.com/lists/ai50/",
+          "title": "Forbes AI 50 2025",
+          "facts": ["The list is restricted to privately held companies", "Funding figures are reported as rounded cumulative totals"]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Generative-media and the new creative stack",
+      "content": "A cluster of the list is generative media — tools that create images, video, voice and music. ElevenLabs (voice), Runway and Black Forest Labs (image/video generation), HeyGen and Synthesia (AI avatars/video), Suno (music) and Midjourney (image) form a creative-tools bloc, often paired with infrastructure companies like Fal that serve generative media at scale. This bloc shows AI moving into creative production, and several of these companies (ElevenLabs, Runway, Suno, Synthesia) maintain widely recognized brand logos, which makes them natural anchors for a visual company-card treatment.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.forbes.com/lists/ai50/",
+          "title": "Forbes AI 50 2025",
+          "facts": ["The list includes ElevenLabs (voice), Runway and Black Forest Labs (image/video), Suno (music), Synthesia and HeyGen (avatars)"]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Real company logos available as primary imagery",
+      "content": "A local cache of real company logos sourced from Wikimedia Commons is available for roughly 30 of the 50 companies, each with license and attribution metadata. After manual verification against each file's Wikimedia source, 18 logos genuinely belong to their AI-50 company (Anthropic, Applied Intuition, Cohere, Cursor, Databricks, ElevenLabs, Glean, HeyGen, Lovable, Mistral AI, Notion, OpenAI, OpenEvidence, Perplexity, Physical Intelligence, Replit, Runway, Suno) and are cleared for use with per-image credit. Twelve cached files are confirmed mismatches — a similarly named but different entity — and must be dropped: Clay (Clay Telecom), Cognition (Bear Cognition), Crusoe (Transmeta Crusoe CPU), Fal (FAL Argentina), Gamma (Gamma hardware stores), Harvey (PJ Harvey musician), Midjourney (an AI-generated Wikipedia logo, not the brand mark), Reflection (Blue Reflection video game), Sierra (Sierra game studio), Speak (Fuji TV FNN Speak), Synthesia (the Synthesia piano-learning app), and World Labs (CIA World Factbook). For dropped and not-found companies, a clean CSS typographic wordmark card is the honest fallback.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://commons.wikimedia.org/",
+          "title": "Wikimedia Commons (logo source for cached assets)",
+          "facts": ["Logo files carry per-file license and attribution metadata", "18 of ~30 cached logos verified as genuine matches; 12 confirmed mismatches dropped"]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Scope suggestions for the analyst",
+      "content": "Worth analyzing deeply: (1) the funding distribution and its extreme right-skew — Anthropic and OpenAI dwarf the rest, so compute the share held by the top 2 and the median vs mean gap, and normalize all funding to one unit (millions). (2) Geography — count San Francisco vs rest-of-Bay-Area vs rest-of-US vs international. (3) Founding year — histogram and the post-2020 / post-2022 surge, including the single 2025 entry. (4) Categorize 'What It Does' into themes (foundation models, coding/dev tools, generative media, agents/customer service, healthcare, legal, robotics/autonomy, infrastructure/chips, search, data labeling, productivity). Watch for: '$0 M' entries (treat as bootstrapped/undisclosed, not zero), the '$60 B'/'$182.6 B' unit parsing (billions → millions), and the international tail being small. Benchmarks to compare against: Forbes' reported ~$142.45 B cohort total and the ~$81 B OpenAI+Anthropic combined figure.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://insights.tryspecter.com/forbes-ai-50-2025/",
+          "title": "Forbes AI 50 2025",
+          "facts": ["Forbes reported a cohort total around $142.45 billion and an OpenAI+Anthropic combined figure around $81 billion"]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "(logo cache, not copied at detective stage)",
+      "url": "https://commons.wikimedia.org/",
+      "license": "Mixed (per-file: Public domain, CC0, CC BY 4.0, CC BY-SA 4.0)",
+      "source": "Wikimedia Commons — local cache at data/forbes_ai50/wikimedia_assets/",
+      "description": "~30 cached real company logos with a logos_manifest.json carrying per-file license + attribution. 18 verified genuine, 12 verified mismatches to drop (see det_09). The Designer should copy verified logos into assets/ and credit each.",
+      "relates_to": ["det_08", "det_09"]
+    }
+  ],
+  "instances": []
+}

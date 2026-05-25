@@ -1,0 +1,96 @@
+{
+  "meta": { "role": "editor", "version": "2.0" },
+  "core_claim": "The Forbes AI 50 looks like a diverse field of fifty companies, but by the numbers it is two stories stacked — a couple of foundation-model giants holding almost all the money, and four dozen young applied startups crowded into one California city.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — Guess who holds the money",
+      "purpose": "hook",
+      "title": null,
+      "findings": ["ana_02", "ana_03"],
+      "context": ["det_03", "det_06"],
+      "triage": { "ana_02": "lead", "ana_03": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": "interactive",
+      "editorial_notes": "79.4%, $305.7B, $735M median, $6.1B mean, 8.3x must be exact. Guess-first interaction on the OpenAI+Anthropic share."
+    },
+    "edt_02": {
+      "label": "The two giants and the long tail",
+      "purpose": "evidence",
+      "title": "Two giants, forty-eight shadows",
+      "findings": ["ana_02", "ana_03"],
+      "context": ["det_03"],
+      "triage": { "ana_02": "lead", "ana_03": "supporting" },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "chart",
+      "editorial_notes": "Leaderboard chart must show the full power-law tail with logos where verified; highlight OpenAI and Anthropic."
+    },
+    "edt_03": {
+      "label": "One city, half the list",
+      "purpose": "evidence",
+      "title": "One city, half the list",
+      "findings": ["ana_05", "ana_04"],
+      "context": ["det_04"],
+      "triage": { "ana_05": "lead", "ana_04": "supporting" },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "chart",
+      "editorial_notes": "25/50 SF, 33/50 California, 6 international exact. A geographic chart or simple map."
+    },
+    "edt_04": {
+      "label": "Born yesterday",
+      "purpose": "evidence",
+      "title": "Born yesterday",
+      "findings": ["ana_06", "ana_10"],
+      "context": ["det_02", "det_06"],
+      "triage": { "ana_06": "lead", "ana_10": "supporting" },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "chart",
+      "editorial_notes": "68% founded 2020+, 56% 2022+, 2022=11. Timeline/histogram of founding years; mark the 2022 ChatGPT inflection."
+    },
+    "edt_05": {
+      "label": "A broad field, a narrow purse",
+      "purpose": "turn",
+      "title": "A broad field, a narrow purse",
+      "findings": ["ana_07", "ana_09", "ana_08"],
+      "context": ["det_02", "det_05", "det_08"],
+      "triage": { "ana_07": "supporting", "ana_09": "color", "ana_08": "lead" },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "chart",
+      "editorial_notes": "83.2% capital in foundation models / 14% of companies. Show count-vs-capital inversion. Two charts allowed but break with the card deck after."
+    },
+    "edt_06": {
+      "label": "Fifty companies, fifty faces",
+      "purpose": "evidence",
+      "title": "Fifty companies, fifty faces",
+      "findings": ["ana_07", "ana_11"],
+      "context": ["det_08", "det_09"],
+      "triage": { "ana_11": "lead", "ana_07": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": "interactive",
+      "editorial_notes": "VISUAL CENTERPIECE. Filterable card deck: verified real logos + clean CSS wordmarks. Name the dropped impostors honestly. Credit every real logo."
+    },
+    "edt_07": {
+      "label": "What the list can't tell you",
+      "purpose": "close",
+      "title": "What the list can't tell you",
+      "findings": ["ana_01", "ana_02"],
+      "context": ["det_01", "det_07"],
+      "triage": { "ana_01": "supporting", "ana_02": "color" },
+      "chart_placeholder": null,
+      "media_placeholder": "audio",
+      "editorial_notes": "Keep curated-list + rounded/point-in-time + $0M caveats visible. Close on tension, not summary. Optional sonification of the funding ranking as a quiet outro."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "color",
+    "ana_10": "supporting",
+    "ana_11": "supporting"
+  }
+}

@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Rich-media run. Default to all five channels and use them data-drivenly. Real Wikimedia portraits and crests are the PRIMARY imagery; AI media adds atmosphere and motion; charts carry the quantitative spine; interactives carry the surprise and the browse.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": { "used": true, "reason": "The dataset is fundamentally a set of quantitative comparisons (PMs vs Nobels, over time, by college, normalised rates)." },
+      "image": { "used": true, "reason": "61 real attributed PM portraits + Oxford/Cambridge crests and campus photos are the journalistic backbone; one AI split-hero and one AI corridor add atmosphere." },
+      "video": { "used": true, "reason": "The AI hero still is animated into a slow parallax chapter-break clip to mark the regime-change turn." },
+      "audio": { "used": true, "reason": "A short generated chamber-orchestra bed sets the period/place of old quadrangles; reader-controlled, non-autoplay, with a visual fallback. Also a data sonification of the Oxford/Cambridge head-to-head." },
+      "interactive_or_map": { "used": true, "reason": "A guess-first quiz on the PM count and a filterable 59-portrait card deck let readers feel the dominance before the chart explains it. No geographic dimension, so no map." }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — Oxford/Cambridge split (animated)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "hero_motion.mp4",
+        "poster": "hero.png",
+        "tool": "image2video",
+        "source_image": "assets/hero.png",
+        "prompt": "Slow cinematic parallax push-in across the split Oxford-Cambridge scene, gentle drift of morning mist, soft volumetric light, no text",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Full-viewport teaser: a split cinematic image — warm golden Oxford dreaming spires on the left, cool blue Cambridge Backs with punts on the right, a luminous seam down the middle. Animated as a slow parallax push-in (hero_motion.mp4), autoplay muted loop, with hero.png as poster fallback. Overlaid lower-third: the eyebrow 'Oxford vs Cambridge' and the title appear after the teaser, not on the frame.",
+      "rationale": "The whole story is a mirror-image split; a split-screen visual states the thesis wordlessly. Animating it gives motion without inventing a fake scene.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Hero still (poster + fallback)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic split composition: Oxford dreaming spires at golden dawn (left) vs Cambridge Backs and King's College Chapel in cool blue (right), luminous central seam, no text",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "The static split-hero PNG. Used as the video poster and as the fallback if video fails. Also reusable as a section divider.",
+      "rationale": "A strong still earns the teaser slot and doubles as the motion-clip source.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "The mirror-image head-to-head chart",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_01",
+        "x": "metric",
+        "y": "count",
+        "color": "university",
+        "highlight": { "note": "Oxford bar dominates Prime Ministers; Cambridge bar dominates Nobel laureates" },
+        "interaction": "hover tooltip with exact count",
+        "style": { "palette": { "Oxford": "#0a2b5c", "Cambridge": "#9e1b32" }, "no_gridlines": true, "large_labels": true }
+      },
+      "brief": "Grouped bar chart with two metric groups (Prime Ministers, Nobel laureates) and two bars each (Oxford navy, Cambridge crimson). The visual flips: Oxford towers on PMs (31 vs 15), Cambridge towers on Nobels (79 vs 30). The crossing X-pattern is the point. Hover shows exact counts.",
+      "rationale": "A single grouped bar makes the inversion legible at a glance — the core thesis in one figure.",
+      "based_on": ["ana_01"]
+    },
+    "des_04": {
+      "label": "Oxford vs Cambridge crest head-to-head block",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "q34433__coat_of_arms.png",
+        "secondary_files": ["q35794__coat_of_arms.png", "q34433__photo.jpg", "q35794__photo.jpg"],
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Arms_of_University_of_Oxford.svg",
+        "attribution": { "oxford_coat_of_arms": "Wikimedia Commons — Public domain", "cambridge_coat_of_arms": "Wikimedia Commons — CC BY-SA 3.0", "oxford_campus": "Wikimedia Commons — Chensiyuan, CC BY-SA 4.0", "cambridge_campus": "Wikimedia Commons — Diliff, CC BY-SA 3.0" }
+      },
+      "brief": "A two-column head-to-head panel: left Oxford (navy tint) with its real coat of arms over a faint aerial campus photo, the stat '31 Prime Ministers'; right Cambridge (crimson tint) with its real coat of arms over a St John's courtyard photo, the stat '79 Nobel laureates'. Per-image credit captions beneath ('Source: Wikimedia Commons — <artist>, <license>').",
+      "rationale": "Real crests and campus photos make the rivalry concrete and accurate; this is journalism, so the institutions appear as themselves.",
+      "based_on": ["ana_01", "ana_10"]
+    },
+    "des_05": {
+      "label": "Guess-first quiz — how many PMs went to Oxford?",
+      "type": "interactive",
+      "section": "edt_02",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Prompt: 'Of the 59 people who have been UK Prime Minister, how many went to Oxford?' with a slider (0-59) defaulting to a neutral middle value and a 'Reveal' button.",
+        "trigger": "Reader drags the slider to a guess and clicks Reveal",
+        "transition": "The chosen number animates toward the truth; a marker snaps to 31; the reader's guess error is shown ('You were X off').",
+        "payoff": "Reveals 31 (Oxford) vs 15 (Cambridge), and that Oxbridge together is 76.3% of all PMs.",
+        "data_source": "ana_02"
+      },
+      "brief": "A slider-based guess-first interaction. Reader commits to a number before the reveal, maximising the surprise of Oxford's 31. After reveal, a compact bar shows the full 59-PM breakdown (Oxford only 30, Cambridge only 14, Both 1, Other 10, None 4). Navy/crimson palette.",
+      "rationale": "The dominance is more striking when readers anchor on a guess first; a slider fits a single count better than a card grid.",
+      "based_on": ["ana_02"]
+    },
+    "des_06": {
+      "label": "The bench — filterable 59-PM portrait card deck",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "filterable_card_deck",
+        "initial_state": "A responsive grid of all 59 PM portrait cards in chronological order, each card: real portrait, name, term year, university group (colored ring/badge), college. Filter chips: All / Oxford (30) / Cambridge (14) / Both (1) / Other (10) / None (4).",
+        "trigger": "Reader clicks a filter chip or hovers a card",
+        "transition": "Non-matching cards fade and collapse; matching cards reorder into a tidy grid. Hover reveals a credit line (artist + license).",
+        "payoff": "Filtering to Oxford fills the grid; filtering to Cambridge shows it thinning out after 1923 — the dominance is felt by browsing.",
+        "data_source": "ana_09"
+      },
+      "brief": "The centrepiece browse. 59 cards built from ana_09.data_table; portrait = assets/<portrait>, badge color by group (Oxford navy, Cambridge crimson, Both purple, Other slate, None grey). Cards carry name, year, college. Filter chips with counts. Each card's portrait has alt text and a small Wikimedia credit (artist + license) shown on hover and aggregated in the References section. Lazy-load images. Mobile: 2-3 columns.",
+      "rationale": "61 real attributed portraits is a gift; a filterable deck turns the data into faces and lets the reader discover the Oxford skew themselves.",
+      "based_on": ["ana_09", "ana_02"]
+    },
+    "des_07": {
+      "label": "Regime-change timeline chart (stacked by period)",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "stacked_bar",
+        "data_source": "ana_03",
+        "x": "period",
+        "y": "count",
+        "color": "group(Oxford/Cambridge/Other/None)",
+        "highlight": { "annotation": "Cambridge's last PM: 1923; zero since 1937", "marker_period": "1920s" },
+        "interaction": "hover tooltip with per-group counts per period",
+        "style": { "palette": { "Oxford": "#0a2b5c", "Cambridge": "#9e1b32", "Other": "#6b7280", "None": "#cbd5e1" }, "no_gridlines": true }
+      },
+      "brief": "Stacked vertical bars, one per 20-year period from 1720s to 2020s, segments colored by university group. The eye sees Cambridge crimson vanish after the 1920s while Oxford navy dominates the modern bars. Annotation band marks the post-1937 Oxford-only streak. Data from ana_03.data_table (columns period, Oxford, Cambridge, Other, None).",
+      "rationale": "A stacked time chart shows the regime change as a shape — crimson disappearing — better than prose.",
+      "based_on": ["ana_03"]
+    },
+    "des_08": {
+      "label": "Regime-change chapter-break motion clip",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "video",
+        "filename": "hero_motion.mp4",
+        "poster": "hero.png",
+        "tool": "image2video",
+        "source_image": "assets/hero.png",
+        "prompt": "Slow parallax push-in across the split Oxford-Cambridge scene, drifting mist, shifting light, no text",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9"
+      },
+      "brief": "The same animated split clip reused as a full-width chapter break introducing the regime-change turn. Autoplay muted loop, hero.png poster. If video is unavailable, show hero.png still.",
+      "rationale": "A breath of motion between the bench and the timeline marks the narrative pivot and breaks a potential chart streak.",
+      "based_on": []
+    },
+    "des_09": {
+      "label": "Christ Church college ranking chart",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_04",
+        "x": "pms",
+        "y": "college",
+        "highlight": { "college": "Christ Church" },
+        "interaction": "hover tooltip with PM count",
+        "style": { "palette": "single navy with Christ Church accent gold", "no_gridlines": true, "sorted_desc": true }
+      },
+      "brief": "Horizontal bar chart of Oxford colleges by PM count, sorted descending. Christ Church (13) is rendered in accent gold and dwarfs Balliol (4) and Trinity (3); the long tail of single-PM colleges trails below. Data from ana_04.data_table.",
+      "rationale": "A horizontal ranking makes Christ Church's outlier dominance immediate and readable with long college names.",
+      "based_on": ["ana_04"]
+    },
+    "des_10": {
+      "label": "Eton funnel stat callouts",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": { "value": "20", "label": "PMs educated at Eton — and 9 went on to Christ Church", "data_source": "ana_05" },
+      "brief": "Two big stats side by side: '20' (Eton PMs) and '9' (Eton + Christ Church), framed as a narrowing funnel. 64px numerals, navy.",
+      "rationale": "The funnel idea lands hardest as bare numbers next to the college chart.",
+      "based_on": ["ana_05"]
+    },
+    "des_11": {
+      "label": "The outliers — real portrait strip",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "david_lloyd_george__photo.jpg",
+        "secondary_files": ["james_callaghan__photo.jpg", "winston_churchill__photo.jpg", "john_major__photo.jpg", "gordon_brown__photo.jpg"],
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:David_Lloyd_George.jpg",
+        "attribution": { "note": "Each portrait credited from wikimedia_manifest.json: Lloyd George (Harris & Ewing, PD), Callaghan (Christian Lambiotte, CC BY 4.0), Churchill (Yousuf Karsh, PD), Major (Sharon Farmer, PD), Brown (OGL 3)." }
+      },
+      "brief": "A horizontal strip of five real portraits — Lloyd George, Callaghan, Churchill, Major, Brown — the non-Oxbridge counterweight, each with a one-line caption (route to power) and a small Wikimedia credit. Greyscale-on-hover-to-color treatment to set them apart from the bench.",
+      "rationale": "Naming and showing the exceptions humanises the caveat and breaks the analytical density before the final number.",
+      "based_on": ["ana_06"]
+    },
+    "des_12": {
+      "label": "Notability-normalised rate chart",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_07",
+        "x": "university",
+        "y": "rate",
+        "color": "metric(PMs_per_1000/Nobels_per_1000)",
+        "highlight": { "note": "Oxford leads PMs/1000; Cambridge leads Nobels/1000 by 3.3x" },
+        "interaction": "hover tooltip with exact rate",
+        "style": { "palette": { "PMs_per_1000": "#0a2b5c", "Nobels_per_1000": "#9e1b32" }, "no_gridlines": true, "caption": "Rates per 1,000 RECORDED Wikidata alumni — coverage-biased, not enrolment" }
+      },
+      "brief": "Grouped bar chart per university showing PMs-per-1000 and Nobels-per-1000 recorded alumni (Oxford 0.79/0.76, Cambridge 0.48/2.53). A mandatory caption restates the coverage-bias caveat directly beneath the chart so the rates are never read as enrolment. Data from ana_07.data_table.",
+      "rationale": "Normalising sharpens rather than muddies the split, but the caveat must travel with the chart — so it lives in the caption.",
+      "based_on": ["ana_07"]
+    },
+    "des_13": {
+      "label": "Sonification — hear the head-to-head",
+      "type": "audio",
+      "section": "edt_01",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "Mapping the four headline counts to pitch lets the reader HEAR the inversion: Oxford's PM tone is high and Cambridge's low; for Nobels the pitches swap — the crossing is audible as well as visible.",
+        "trigger": "Click 'Play the split' below the head-to-head chart",
+        "ui_form": "chart-synced sonification — each of the four bars lights up as its tone plays, in order PM-Oxford, PM-Cambridge, Nobel-Oxford, Nobel-Cambridge",
+        "content": {
+          "method": "Web Audio API oscillator tones, no external file",
+          "data_mapping": { "field": "count", "scale": "count mapped to 220-880 Hz log scale", "order": ["Oxford PMs 31", "Cambridge PMs 15", "Oxford Nobels 30", "Cambridge Nobels 79"], "tone_ms": 600, "waveform": "triangle" },
+          "legend": "higher pitch = larger count"
+        },
+        "fallback": "If Web Audio is unavailable the grouped bar chart (des_03) communicates the same inversion; the play button shows a disabled tooltip.",
+        "novelty_note": "Not a generic tone card — the four tones are bound to the four bars and only meaningful while watching the chart highlight."
+      },
+      "brief": "A 'Play the split' button under the head-to-head chart that plays four oscillator tones mapped to the four counts, lighting the matching bar as each plays, with a 'higher pitch = larger count' legend.",
+      "rationale": "The dataset's centrepiece is four numbers whose crossing is the whole point — exactly the small ranked set sonification handles well.",
+      "based_on": ["ana_01"]
+    },
+    "des_14": {
+      "label": "Atmospheric bed — old quadrangles",
+      "type": "audio",
+      "section": "teaser",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "A short dignified chamber-orchestra bed sets the period and place of stone quadrangles and old libraries — the emotional register of British academic tradition — before the data argument begins.",
+        "trigger": "Click the small 'Play atmosphere' control in the teaser/intro; never autoplay",
+        "ui_form": "section-integrated mini-player tucked into the intro, not a central card",
+        "content": { "filename": "atmosphere.wav", "tool": "text2music", "prompt": "Dignified orchestral chamber piece, warm strings and solo piano, slow, contemplative, old libraries and stone quadrangles, no vocals, no percussion", "model": "google/lyria-3-pro-preview" },
+        "fallback": "Page works fully muted; control has a clear play/pause affordance and the visual teaser carries the mood on its own.",
+        "novelty_note": "Reader-controlled mood bed integrated into the intro rather than a standalone audio card."
+      },
+      "brief": "A compact, labelled, reader-controlled mini-player offering the generated atmosphere.wav bed, placed in the intro. Visible controls, no autoplay.",
+      "rationale": "Atmosphere genuinely adds period and place to a story about three centuries of institutional tradition.",
+      "based_on": []
+    },
+    "des_15": {
+      "label": "Corridor-of-power atmospheric image",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "corridor.png",
+        "tool": "text2image",
+        "prompt": "Atmospheric empty Westminster-style corridor of power, worn red carpet, long shafts of afternoon light, blurred portraits on the walls, no people, no text",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "A cinematic empty corridor-of-power image used as a quiet atmospheric beat at the section on exceptions/access — the institutional setting the data describes. Credited as AI-generated. Full-width with caption.",
+      "rationale": "An atmospheric, non-portrait image breaks the analytical rhythm and evokes the abstract subject (power, access) the close turns to.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark-accented editorial on light paper; navy (Oxford) vs crimson (Cambridge) as the two-team palette; serif body, system-ui UI",
+    "text_visual_pattern": "visual-first teaser, then alternating prose -> chart/interactive, with the portrait deck as the mid-page centrepiece and a motion chapter-break before the timeline",
+    "centrepiece": "des_06",
+    "anti_sameness_notes": "Unlike a lean single-hero blog, this run leans on 65 real attributed images: a filterable 59-portrait deck and a real-crest head-to-head are the spine. AI media (split hero, motion, corridor) plays a supporting atmospheric role; charts never run 3+ in a row without a deck, video, image strip, or stat block between them.",
+    "typography_notes": "Big 64px stat callouts; navy/crimson section accents; pull the 14-vs-0 and 13 numbers large; per-image credit captions in small system-ui; a Sources/Credits section listing every Wikimedia file's artist + license."
+  }
+}

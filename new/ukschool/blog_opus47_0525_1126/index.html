@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oxford vs Cambridge: The Rulers and the Discoverers</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style>
+  :root{
+    --oxford:#0a2b5c; --cambridge:#9e1b32; --both:#5b3a8c; --other:#64748b; --none:#b8c0cc;
+    --ink:#1a1a1a; --muted:#5b6470; --paper:#faf8f4; --line:#e3ddd2; --gold:#b8902f;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:Georgia,'Times New Roman',serif; color:var(--ink); background:var(--paper);
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+  h1,h2,h3,.ui{font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+  h1{font-size:clamp(2.1rem,6vw,3.4rem);line-height:1.05;letter-spacing:-.02em;margin:.2em 0 .3em;font-weight:800}
+  h2{font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.12;letter-spacing:-.01em;margin:2.6em 0 .5em;font-weight:750}
+  .eyebrow{font-family:system-ui,sans-serif;text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:var(--muted);font-weight:700}
+  p{margin:0 0 1.15em}
+  section{padding:.4em 0}
+  a{color:var(--oxford)}
+  /* teaser */
+  .teaser{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);max-width:none;height:100vh;min-height:540px;overflow:hidden;background:#0a1626}
+  .teaser video,.teaser img.poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .teaser .veil{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,16,30,.12) 0%,rgba(8,16,30,.05) 45%,rgba(8,16,30,.78) 100%)}
+  .teaser .tcap{position:absolute;left:0;right:0;bottom:8%;text-align:center;color:#fff;padding:0 20px}
+  .teaser .tcap .eyebrow{color:#dfe6f2}
+  .teaser .tcap .vs{font-family:system-ui,sans-serif;font-weight:800;font-size:clamp(2rem,7vw,4.4rem);text-shadow:0 2px 24px rgba(0,0,0,.55);letter-spacing:-.02em;margin:.1em 0}
+  .teaser .tcap .vs .ox{color:#ffd27a}.teaser .tcap .vs .ca{color:#ff9aa9}
+  .teaser .scrollhint{font-family:system-ui,sans-serif;font-size:.8rem;opacity:.8;margin-top:.6em;letter-spacing:.06em}
+  /* intro */
+  .deck{font-size:1.22rem;color:var(--muted);margin:.2em 0 1.6em;line-height:1.5}
+  .byline{font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:1.2em;margin-bottom:1.6em}
+  /* visual containers */
+  .visual-container,.chart-container,.interactive-container,.video-container,.audio-container{display:block;clear:both;margin:2.2rem 0}
+  .chart-container{max-width:720px;margin-left:auto;margin-right:auto}
+  .chart-mount{width:100%;min-width:0;display:block}
+  figure{margin:2.2rem 0}
+  figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:6px}
+  figcaption,.credit{font-family:system-ui,sans-serif;font-size:.74rem;color:var(--muted);text-align:center;margin-top:.6em;line-height:1.4}
+  .full-bleed{width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);max-width:none}
+  .full-bleed img,.full-bleed video{width:100%;height:auto;display:block;max-height:62vh;object-fit:cover}
+  .full-bleed figcaption{max-width:720px;margin:.6em auto 0;padding:0 22px}
+  /* stat callouts */
+  .stat-row{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;margin:2.2rem 0;text-align:center}
+  .stat{flex:1 1 200px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:22px 16px;box-shadow:0 1px 0 rgba(0,0,0,.02)}
+  .stat .num{font-family:system-ui,sans-serif;font-weight:800;font-size:clamp(2.6rem,8vw,4rem);line-height:1;color:var(--oxford)}
+  .stat .lab{font-family:system-ui,sans-serif;font-size:.86rem;color:var(--muted);margin-top:.5em;line-height:1.35}
+  /* head-to-head */
+  .h2h{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:2.2rem 0}
+  .h2h .col{position:relative;border-radius:14px;overflow:hidden;color:#fff;min-height:280px;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+  .h2h .col .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.34}
+  .h2h .ox{background:var(--oxford)} .h2h .ca{background:var(--cambridge)}
+  .h2h .crest{position:relative;width:74px;height:74px;object-fit:contain;margin-bottom:auto;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));background:rgba(255,255,255,.92);border-radius:10px;padding:6px}
+  .h2h .uni{position:relative;font-family:system-ui,sans-serif;font-weight:700;font-size:1.1rem}
+  .h2h .big{position:relative;font-family:system-ui,sans-serif;font-weight:800;font-size:2.6rem;line-height:1;margin:.1em 0}
+  .h2h .sub{position:relative;font-family:system-ui,sans-serif;font-size:.85rem;opacity:.92}
+  .h2h .cr{position:relative;font-family:system-ui,sans-serif;font-size:.62rem;opacity:.72;margin-top:.7em;line-height:1.3}
+  /* quiz */
+  .quiz{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px}
+  .quiz .q{font-family:system-ui,sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:14px}
+  .quiz input[type=range]{width:100%;accent-color:var(--oxford);margin:8px 0}
+  .quiz .gv{font-family:system-ui,sans-serif;font-weight:800;font-size:2rem;color:var(--oxford);text-align:center}
+  .quiz button{font-family:system-ui,sans-serif;font-weight:700;background:var(--oxford);color:#fff;border:0;border-radius:8px;padding:11px 20px;cursor:pointer;font-size:.95rem;width:100%}
+  .quiz button:disabled{opacity:.5;cursor:default}
+  .quiz .reveal{display:none;margin-top:16px}
+  .quiz .reveal.on{display:block;animation:fade .5s ease}
+  .quiz .bars{margin-top:12px}
+  .qbar{display:flex;align-items:center;gap:10px;font-family:system-ui,sans-serif;font-size:.85rem;margin:5px 0}
+  .qbar .lab{flex:0 0 130px;text-align:right;color:var(--muted)}
+  .qbar .track{flex:1;background:#eee;border-radius:5px;height:20px;overflow:hidden}
+  .qbar .fill{height:100%;border-radius:5px;transition:width .9s cubic-bezier(.2,.7,.2,1)}
+  .qbar .n{flex:0 0 30px;font-weight:700}
+  /* deck */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:1.2rem 0 1.4rem}
+  .chip{font-family:system-ui,sans-serif;font-size:.82rem;font-weight:600;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;color:var(--muted);transition:all .15s}
+  .chip.active{color:#fff}
+  .chip[data-g=all].active{background:var(--ink);border-color:var(--ink)}
+  .chip[data-g=Oxford].active{background:var(--oxford);border-color:var(--oxford)}
+  .chip[data-g=Cambridge].active{background:var(--cambridge);border-color:var(--cambridge)}
+  .chip[data-g=Both].active{background:var(--both);border-color:var(--both)}
+  .chip[data-g=Other].active{background:var(--other);border-color:var(--other)}
+  .chip[data-g=None].active{background:var(--none);border-color:var(--none);color:var(--ink)}
+  .deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:12px}
+  .pm{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:opacity .3s,transform .3s;position:relative}
+  .pm.hide{display:none}
+  .pm .ph{aspect-ratio:1/1;width:100%;object-fit:cover;background:#eee;border-bottom:3px solid var(--other)}
+  .pm.g-Oxford .ph{border-color:var(--oxford)} .pm.g-Cambridge .ph{border-color:var(--cambridge)}
+  .pm.g-Both .ph{border-color:var(--both)} .pm.g-Other .ph{border-color:var(--other)} .pm.g-None .ph{border-color:var(--none)}
+  .pm .meta{padding:8px 9px 10px;font-family:system-ui,sans-serif}
+  .pm .nm{font-weight:700;font-size:.76rem;line-height:1.2}
+  .pm .yr{font-size:.7rem;color:var(--muted);margin-top:2px}
+  .pm .cl{font-size:.66rem;color:var(--muted);margin-top:2px;font-style:italic}
+  .pm .cred{font-size:.58rem;color:#9aa3af;margin-top:4px;display:none}
+  .pm:hover .cred{display:block}
+  /* outlier strip */
+  .strip{display:flex;gap:12px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
+  .strip .o{flex:0 0 150px;scroll-snap-align:center;text-align:center}
+  .strip .o img{width:150px;height:150px;object-fit:cover;border-radius:10px;filter:grayscale(100%);transition:filter .3s}
+  .strip .o:hover img{filter:grayscale(0)}
+  .strip .o .nm{font-family:system-ui,sans-serif;font-weight:700;font-size:.8rem;margin-top:6px}
+  .strip .o .rt{font-family:system-ui,sans-serif;font-size:.72rem;color:var(--muted);line-height:1.3}
+  .strip .o .cr{font-family:system-ui,sans-serif;font-size:.56rem;color:#9aa3af;margin-top:3px}
+  /* audio mini player */
+  .miniaudio{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-family:system-ui,sans-serif}
+  .miniaudio .ttl{font-weight:700;font-size:.85rem}
+  .miniaudio .sub{font-size:.72rem;color:var(--muted)}
+  .miniaudio audio{height:34px}
+  .sonify{font-family:system-ui,sans-serif;background:#fff;border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-top:14px}
+  .sonify button{font-family:system-ui,sans-serif;font-weight:700;background:var(--cambridge);color:#fff;border:0;border-radius:8px;padding:9px 16px;cursor:pointer}
+  .sonify .leg{font-size:.72rem;color:var(--muted);margin-top:8px}
+  .caption-note{font-family:system-ui,sans-serif;font-size:.76rem;color:var(--muted);background:#fff7ed;border-left:3px solid var(--gold);padding:10px 14px;border-radius:4px;margin-top:.4em}
+  /* references */
+  .refs{border-top:1px solid var(--line);margin-top:3em;padding-top:1.6em;font-family:system-ui,sans-serif;font-size:.82rem;color:var(--muted)}
+  .refs h2{font-size:1.2rem;color:var(--ink)}
+  .refs ul{padding-left:1.1em} .refs li{margin:.3em 0}
+  .credits-grid{columns:2;column-gap:24px;font-size:.7rem;line-height:1.45}
+  @media(max-width:520px){.h2h{grid-template-columns:1fr}.credits-grid{columns:1}}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .fade-in{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .fade-in.vis{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- ============ TEASER ============ -->
+<div class="teaser" data-des="des_01">
+  <video autoplay loop muted playsinline poster="assets/hero.png" data-des="des_01">
+    <source src="assets/hero_motion.mp4" type="video/mp4">
+  </video>
+  <img class="poster" src="assets/hero.png" alt="Split scene: Oxford's golden spires on the left, Cambridge's blue river backs on the right" data-des="des_02" style="display:none">
+  <div class="veil"></div>
+  <div class="tcap">
+    <div class="eyebrow">UK Prime Ministers &amp; Nobel Laureates</div>
+    <div class="vs"><span class="ox">Oxford</span> vs <span class="ca">Cambridge</span></div>
+    <div class="scrollhint">Two universities. One nation's elite. Scroll &darr;</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ HEADLINE / INTRO ============ -->
+  <header>
+    <div class="eyebrow" style="margin-top:1.6em">Data journalism · Wikidata</div>
+    <h1>The rulers and the discoverers</h1>
+    <p class="deck">For three centuries, two universities an hour apart have quietly divided Britain's elite between them — one makes Prime Ministers, the other makes Nobel laureates. Here is the data behind the most durable fact in British public life.</p>
+    <div class="byline">
+      Analysis of 59 UK Prime Ministers and Oxford vs Cambridge prestige counts, from Wikidata (queried 2026-05-24).
+      <div class="audio-container" data-des="des_14" style="margin:1em 0 0">
+        <div class="miniaudio" data-des="des_14">
+          <div>
+            <div class="ttl">Atmosphere — old quadrangles</div>
+            <div class="sub">A short chamber-orchestra bed (optional). Generated audio · play when you like.</div>
+          </div>
+          <audio controls preload="metadata" src="assets/atmosphere.wav" data-des="des_14"></audio>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ edt_01 ============ -->
+  <section data-edt="edt_01" data-det="det_02,det_03">
+    <h2>Two trains, two destinies</h2>
+    <p data-ana="ana_01">Oxford has educated 31 of Britain's Prime Ministers; Cambridge just 15 — a 2.07-to-1 lead in politics. Now look at the Nobel Prize and the world flips: Cambridge claims 79 laureates to Oxford's 30, a 2.63-to-1 lead in science.</p>
+    <p data-ana="ana_01" data-det="det_02,det_03">Each university dominates exactly one domain and trails badly in the other. The same two institutions, an hour apart by train, have sorted the nation's most ambitious people into two streams: rulers and discoverers.</p>
+    <p>We lump them together as &ldquo;Oxbridge&rdquo;, as if they were one engine of privilege. They are two — and they make opposite things.</p>
+
+    <div class="chart-container" id="des_03" data-des="des_03" data-ana="ana_01">
+      <div class="chart-mount" id="chart_des_03"></div>
+    </div>
+
+    <!-- sonification attached to the head-to-head chart -->
+    <div class="sonify" data-des="des_13" data-ana="ana_01">
+      <button id="sonifyBtn" type="button">▶ Play the split</button>
+      <span style="font-family:system-ui;font-size:.8rem;color:var(--muted);margin-left:10px">Hear the four headline counts as tones — the bars light up as they play.</span>
+      <div class="leg" id="sonifyLeg">Higher pitch = larger count. Order: Oxford PMs · Cambridge PMs · Oxford Nobels · Cambridge Nobels.</div>
+    </div>
+  </section>
+
+  <!-- ============ edt_02 ============ -->
+  <section data-edt="edt_02" data-det="det_02,det_03">
+    <h2>The prime-minister factory and the Nobel factory</h2>
+    <p data-ana="ana_01">It is the single most durable fact in British public life: Oxford is the prime-minister factory, Cambridge the Nobel factory. One number captures it — 31 PMs against 79 laureates, two towers leaning in opposite directions.</p>
+    <p data-det="det_02">Oxford built its machine deliberately. The Oxford Union, founded in 1823 and nicknamed a &ldquo;children's House of Commons&rdquo;, has trained at least 12 future Prime Ministers; the PPE degree, born in the 1920s, became the unofficial finishing school of British politics, with five PPE graduates reaching Number 10.</p>
+    <p data-det="det_03">Cambridge built the other one. Since 1904, 121 of its affiliates have won Nobel Prizes — more than any university on earth — anchored by the Cavendish Laboratory, where the electron, the neutron and the structure of DNA were found.</p>
+
+    <!-- head-to-head crests -->
+    <div class="visual-container" data-des="des_04" data-ana="ana_01,ana_10">
+      <div class="h2h">
+        <div class="col ox">
+          <img class="bg" src="assets/q34433__photo.jpg" alt="University of Oxford aerial campus">
+          <img class="crest" src="assets/q34433__coat_of_arms.png" alt="University of Oxford coat of arms">
+          <div class="uni">University of Oxford</div>
+          <div class="big">31</div>
+          <div class="sub">Prime Ministers — vs 30 Nobel laureates</div>
+          <div class="cr">Crest: Wikimedia Commons — Public domain · Campus: Chensiyuan, CC BY-SA 4.0</div>
+        </div>
+        <div class="col ca">
+          <img class="bg" src="assets/q35794__photo.jpg" alt="University of Cambridge, St John's College courtyard">
+          <img class="crest" src="assets/q35794__coat_of_arms.png" alt="University of Cambridge coat of arms">
+          <div class="uni">University of Cambridge</div>
+          <div class="big">79</div>
+          <div class="sub">Nobel laureates — vs 15 Prime Ministers</div>
+          <div class="cr">Crest: Wikimedia Commons — CC BY-SA 3.0 · Campus: Diliff, CC BY-SA 3.0</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- guess-first quiz -->
+    <div class="interactive-container" data-des="des_05" data-ana="ana_02">
+      <div class="quiz">
+        <div class="q">Of the 59 people who have been UK Prime Minister, how many went to Oxford?</div>
+        <input type="range" id="qslider" min="0" max="59" value="20">
+        <div class="gv"><span id="qval">20</span> <span style="font-size:1rem;color:var(--muted);font-weight:600">your guess</span></div>
+        <button id="qbtn" type="button">Reveal the answer</button>
+        <div class="reveal" id="qreveal">
+          <p style="font-family:system-ui;font-size:.95rem;margin:14px 0 4px"><strong id="qresult"></strong></p>
+          <div class="bars" id="qbars"></div>
+          <p style="font-family:system-ui;font-size:.82rem;color:var(--muted);margin-top:10px">Oxbridge together account for <strong>76.3%</strong> of every Prime Minister Britain has ever had.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ edt_03 — THE BENCH ============ -->
+  <section data-edt="edt_03" data-det="det_01,det_05">
+    <h2>The whole bench</h2>
+    <p data-ana="ana_09">Here is the entire bench: all 59 people who have ever held the office, each with their real portrait, the year they took power, and where they studied. It runs from Robert Walpole — Cambridge, 1721 — to Keir Starmer — Oxford, 2024.</p>
+    <p data-ana="ana_02">Filter it and the dominance is plain. Thirty went to Oxford only, fourteen to Cambridge only, one to both, ten to another university, and four to none at all. Oxbridge alone accounts for 76.3% of every Prime Minister Britain has ever had.</p>
+    <p>Scroll the faces and a pattern emerges before any chart does: the dark blue of Oxford keeps coming back, again and again, into the present day.</p>
+
+    <div class="interactive-container" data-des="des_06" data-ana="ana_09">
+      <div class="filters" id="deckFilters">
+        <button class="chip active" data-g="all" type="button">All 59</button>
+        <button class="chip" data-g="Oxford" type="button">Oxford 30</button>
+        <button class="chip" data-g="Cambridge" type="button">Cambridge 14</button>
+        <button class="chip" data-g="Both" type="button">Both 1</button>
+        <button class="chip" data-g="Other" type="button">Other 10</button>
+        <button class="chip" data-g="None" type="button">None 4</button>
+      </div>
+      <div class="deck-grid" id="deckGrid"></div>
+      <div class="credit" style="margin-top:1em">Portraits: Wikimedia Commons. Each card credits its artist and licence on hover; full list in Sources below.</div>
+    </div>
+  </section>
+
+  <!-- ============ edt_04 — REGIME CHANGE ============ -->
+  <section data-edt="edt_04" data-det="det_06">
+    <h2>The day Cambridge stopped</h2>
+    <p data-ana="ana_03">In the eighteenth century the two universities traded the premiership almost evenly. Then something broke. The last Cambridge-linked Prime Minister to take office was Stanley Baldwin, in 1923.</p>
+    <p data-ana="ana_03" data-det="det_06">Count forward from 1937 and the asymmetry is absolute: 14 Prime Ministers since then went to Oxford, and exactly zero went to Cambridge. For nearly ninety years, every PM who attended an English university attended the same one.</p>
+    <p>This is not a gentle drift. It is a hinge — a moment after which one university simply stopped producing rulers, and the other never let go.</p>
+
+    <div class="chart-container" id="des_07" data-des="des_07" data-ana="ana_03">
+      <div class="chart-mount" id="chart_des_07"></div>
+    </div>
+
+    <!-- motion chapter break -->
+    <figure class="visual-container full-bleed" data-des="des_08">
+      <video autoplay loop muted playsinline poster="assets/hero.png" data-des="des_08" style="max-width:100%">
+        <source src="assets/hero_motion.mp4" type="video/mp4">
+      </video>
+      <figcaption>The two worlds, drifting apart. AI-generated atmospheric clip (OpenRouter, Veo 3.1) animating the hero still — illustrative, not a photograph.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ edt_05 — COLLEGE / ETON ============ -->
+  <section data-edt="edt_05" data-det="det_07">
+    <h2>One college, thirteen Prime Ministers</h2>
+    <p data-ana="ana_04">The funnel narrows past the university gates. Thirteen Prime Ministers studied at a single Oxford college — Christ Church — more than any other college at either university, and more than most entire nations. Balliol is a distant second with four.</p>
+    <p data-ana="ana_05">Below the college sits a school. Twenty of the 59 PMs were educated at Eton, and nine walked the exact same path: Eton, then Christ Church. The most-trodden route to power in Britain is one school feeding one college.</p>
+
+    <div class="chart-container" id="des_09" data-des="des_09" data-ana="ana_04">
+      <div class="chart-mount" id="chart_des_09"></div>
+    </div>
+
+    <div class="stat-row" data-des="des_10" data-ana="ana_05">
+      <div class="stat"><div class="num">20</div><div class="lab">PMs educated at Eton College</div></div>
+      <div class="stat"><div class="num" style="color:var(--gold)">9</div><div class="lab">of them took the exact route: Eton &rarr; Christ Church</div></div>
+    </div>
+  </section>
+
+  <!-- ============ edt_06 — OUTLIERS ============ -->
+  <section data-edt="edt_06" data-det="det_05">
+    <h2>The eleven who didn't fit</h2>
+    <p data-ana="ana_06">The pipeline leaks, and the leaks have names. Four PMs have no university on record — among them David Lloyd George, who left school at fifteen, and James Callaghan, too poor to afford a degree.</p>
+    <p data-ana="ana_06" data-det="det_05">Ten more took a route outside Oxbridge entirely: Churchill went to Sandhurst, John Major holds no degree at all, and Gordon Brown took his PhD at Edinburgh — the only post-1937 PM to attend an English-speaking university that wasn't Oxford. These eleven names are the whole counterweight to three centuries of Oxbridge rule.</p>
+
+    <div class="visual-container" data-des="des_11" data-ana="ana_06">
+      <div class="strip">
+        <div class="o"><img src="assets/david_lloyd_george__photo.jpg" alt="David Lloyd George"><div class="nm">David Lloyd George</div><div class="rt">Left school at 15; trained as a solicitor</div><div class="cr">Wikimedia — Harris &amp; Ewing, PD</div></div>
+        <div class="o"><img src="assets/james_callaghan__photo.jpg" alt="James Callaghan"><div class="nm">James Callaghan</div><div class="rt">Too poor for university; tax clerk</div><div class="cr">Wikimedia — C. Lambiotte, CC BY 4.0</div></div>
+        <div class="o"><img src="assets/winston_churchill__photo.jpg" alt="Winston Churchill"><div class="nm">Winston Churchill</div><div class="rt">Sandhurst, not university</div><div class="cr">Wikimedia — Yousuf Karsh, PD</div></div>
+        <div class="o"><img src="assets/john_major__photo.jpg" alt="John Major"><div class="nm">John Major</div><div class="rt">Most recent PM with no degree</div><div class="cr">Wikimedia — Sharon Farmer, PD</div></div>
+        <div class="o"><img src="assets/gordon_brown__photo.jpg" alt="Gordon Brown"><div class="nm">Gordon Brown</div><div class="rt">PhD, Edinburgh — the lone post-1937 exception</div><div class="cr">Wikimedia — OGL 3</div></div>
+      </div>
+    </div>
+
+    <figure class="visual-container full-bleed" data-des="des_15">
+      <img src="assets/corridor.png" alt="An empty Westminster-style corridor of power with worn red carpet and shafts of light">
+      <figcaption>The corridor the data describes. AI-generated atmospheric image (OpenRouter, GPT-5.4-image-2) — illustrative, not a real location.</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ edt_07 — NORMALISED ============ -->
+  <section data-edt="edt_07" data-det="det_04">
+    <h2>Correcting for who gets remembered</h2>
+    <p data-det="det_04">A warning before the last number. The raw &ldquo;alumni on Wikidata&rdquo; totals — 39,259 for Oxford, 31,284 for Cambridge — are not enrolment figures. They count only people famous enough to have a Wikidata entry, so they can never be read as &ldquo;Oxford is bigger&rdquo;.</p>
+    <p data-ana="ana_07">But used carefully as a notability denominator, they sharpen the story. Per 1,000 recorded alumni, Oxford produces 0.79 Prime Ministers to Cambridge's 0.48 — a 1.65x political edge. For Nobels, Cambridge yields 2.53 laureates per 1,000 to Oxford's 0.76 — a 3.30x scientific edge. Correct for who gets remembered, and each university's specialism still holds.</p>
+
+    <div class="chart-container" id="des_12" data-des="des_12" data-ana="ana_07">
+      <div class="chart-mount" id="chart_des_12"></div>
+      <div class="caption-note" data-ana="ana_07">Rates are per 1,000 <em>recorded</em> Wikidata alumni — a coverage-biased notability measure, <strong>not</strong> enrolment. Use for relative comparison only.</div>
+    </div>
+  </section>
+
+  <!-- ============ edt_08 — CLOSE ============ -->
+  <section data-edt="edt_08" data-det="det_08">
+    <h2>Who runs the country, and where were they made</h2>
+    <p data-det="det_08">So the cliché is wrong and right at once. &ldquo;Oxbridge&rdquo; is not one thing — it is two opposite machines. But one of them, the political one, has narrowed to a single university, a single college, a single school.</p>
+    <p data-ana="ana_02" data-det="det_08">When 76% of every Prime Minister in history comes from two universities, and the most recent fourteen English-educated ones all come from just one, the question stops being trivia. Who runs the country, and where were they made — and is that door open, or shut?</p>
+  </section>
+
+  <!-- ============ REFERENCES ============ -->
+  <section class="refs" data-edt="edt_08">
+    <h2>Sources &amp; credits</h2>
+    <p><strong>Data:</strong> <a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> SPARQL endpoint (free, queried 2026-05-24). PMs = holders of position Q14211 filtered to humans (Q5); university attribution via <em>educated at</em> (P69) following the <em>part of</em> (P361) college chain.</p>
+    <p><strong>Context:</strong>
+      <a href="https://www.suttontrust.com/news-opinion/all-news-opinion/the-stomping-ground-of-the-political-elite-why-does-oxford-produce-so-many-prime-ministers/" target="_blank" rel="noopener">The Sutton Trust — why Oxford produces so many PMs</a>;
+      <a href="https://oxfordsummercourses.com/articles/how-many-nobel-prizes-does-cambridge-have" target="_blank" rel="noopener">Cambridge Nobel count</a>;
+      <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10464628/" target="_blank" rel="noopener">Cavendish Laboratory Nobels</a>;
+      <a href="https://en.wikipedia.org/wiki/List_of_prime_ministers_of_the_United_Kingdom_by_education" target="_blank" rel="noopener">PMs by education (Wikipedia)</a>;
+      <a href="https://oxfordsummercourses.com/articles/prime-ministers-who-studied-at-oxford" target="_blank" rel="noopener">Christ Church &amp; Eton figures</a>.
+    </p>
+    <p><strong>University imagery:</strong> Oxford coat of arms (Wikimedia Commons, Public domain) &amp; aerial campus (Chensiyuan, CC BY-SA 4.0); Cambridge coat of arms (Wikimedia Commons, CC BY-SA 3.0) &amp; St John's College (Diliff, CC BY-SA 3.0).</p>
+    <p><strong>AI-generated media (OpenRouter):</strong> split hero image &amp; corridor image (GPT-5.4-image-2); hero motion clip (Veo 3.1-fast); atmosphere bed (Lyria-3-pro). All clearly labelled as illustrative.</p>
+    <p><strong>Prime Minister portraits — Wikimedia Commons (per-image credit):</strong></p>
+    <div class="credits-grid" id="creditsGrid"></div>
+    <p style="margin-top:1.4em"><strong>Tools:</strong> Vega-Lite v5 (charts), Web Audio API (sonification). Built by the Data2Story pipeline.</p>
+  </section>
+
+</div><!-- /wrap -->
+
+<script>
+// ---------- DATA (from analyst.json data_tables) ----------
+// ana_09: all 59 PMs [name, year, group, college, portrait, artist, license]
+var PMS = [
+["Robert Walpole","1721","Cambridge","King's College","robert_walpole__photo.jpg","Jean-Baptiste van Loo","Public domain"],
+["Spencer Compton, 1st Earl of Wilmington","1742","Oxford","Trinity College","spencer_compton_1st_earl_of_wilmington__photo.jpg","Godfrey Kneller","Public domain"],
+["Henry Pelham","1743","Both","Hertford College","henry_pelham__photo.jpg","William Hoare","Public domain"],
+["Thomas Pelham-Holles, 1st Duke of Newcastle-upon-Tyne","1754","Cambridge","Clare College","thomas_pelham_holles_1st_duke_of_newcastle_upon_tyne__photo.jpg","William Hoare","Public domain"],
+["William Cavendish, 4th Duke of Devonshire","1756","None","","william_cavendish_4th_duke_of_devonshire__photo.jpg","After Thomas Hudson","Public domain"],
+["John Stuart, 3rd Earl of Bute","1762","Other","","john_stuart_3rd_earl_of_bute__photo.jpg","Joshua Reynolds","Public domain"],
+["George Grenville","1763","Oxford","Christ Church","george_grenville__photo.jpg","William Hoare","Public domain"],
+["Charles Watson-Wentworth, 2nd Marquess of Rockingham","1765","Cambridge","St John's College","charles_watson_wentworth_2nd_marquess_of_rockingham__photo.jpg","After Joshua Reynolds","Public domain"],
+["William Pitt, 1st Earl of Chatham","1766","Oxford","Trinity College","william_pitt_1st_earl_of_chatham__photo.jpg","After Richard Brompton","Public domain"],
+["Augustus FitzRoy, 3rd Duke of Grafton","1768","Cambridge","Peterhouse","augustus_fitzroy_3rd_duke_of_grafton__photo.png","Pompeo Batoni","Public domain"],
+["Frederick North, 2nd Earl of Guilford","1770","Oxford","Trinity College","frederick_north_2nd_earl_of_guilford__photo.jpg","Nathaniel Dance-Holland","Public domain"],
+["William Petty, 2nd Earl of Shelburne","1782","Oxford","Christ Church","william_petty_2nd_earl_of_shelburne__photo.jpg","Joshua Reynolds","Public domain"],
+["William Cavendish-Bentinck, 3rd Duke of Portland","1783","Oxford","Christ Church","william_cavendish_bentinck_3rd_duke_of_portland__photo.jpg","Matthew Pratt","Public domain"],
+["William Pitt the Younger","1783","Cambridge","Pembroke College","william_pitt_the_younger__photo.jpg","John Hoppner","Public domain"],
+["Henry Addington, 1st Viscount Sidmouth","1801","Oxford","Brasenose College","henry_addington_1st_viscount_sidmouth__photo.jpg","William Beechey","Public domain"],
+["William Wyndham Grenville, 1st Baron Grenville","1806","Oxford","Christ Church","william_wyndham_grenville_1st_baron_grenville__photo.jpg","John Hoppner","Public domain"],
+["Spencer Perceval","1809","Cambridge","Trinity College","spencer_perceval__photo.jpg","George Francis Joseph","Public domain"],
+["Robert Jenkinson, 2nd Earl of Liverpool","1812","Oxford","Christ Church","robert_jenkinson_2nd_earl_of_liverpool__photo.jpg","Thomas Lawrence","Public domain"],
+["George Canning","1827","Oxford","Christ Church","george_canning__photo.jpg","After Thomas Lawrence","Public domain"],
+["F. J. Robinson, 1st Viscount Goderich","1827","Cambridge","St John's College","f_j_robinson_1st_viscount_goderich__photo.jpg","Thomas Lawrence","Public domain"],
+["Arthur Wellesley, 1st Duke of Wellington","1828","Other","","arthur_wellesley_1st_duke_of_wellington__photo.jpg","Thomas Lawrence","Public domain"],
+["Charles Grey, 2nd Earl Grey","1830","Cambridge","Trinity College","charles_grey_2nd_earl_grey__photo.jpg","Attributed to Thomas Phillips","Public domain"],
+["William Lamb, 2nd Viscount Melbourne","1834","Cambridge","Trinity College","william_lamb_2nd_viscount_melbourne__photo.jpg","John Partridge","Public domain"],
+["Robert Peel","1834","Oxford","Christ Church","robert_peel__photo.jpg","John Linnell","Public domain"],
+["John Russell, 1st Earl Russell","1846","Other","","john_russell_1st_earl_russell__photo.jpg","John Jabez Edwin Mayall","Public domain"],
+["Edward Smith-Stanley, 14th Earl of Derby","1852","Oxford","Christ Church","edward_smith_stanley_14th_earl_of_derby__photo.jpg","After J. J. E. Mayall","Public domain"],
+["George Hamilton-Gordon, 4th Earl of Aberdeen","1852","Cambridge","St John's College","george_hamilton_gordon_4th_earl_of_aberdeen__photo.jpg","Thomas Woolnoth","Public domain"],
+["Henry Temple, 3rd Viscount Palmerston","1855","Cambridge","St John's College","henry_temple_3rd_viscount_palmerston__photo.jpg","Unknown","Public domain"],
+["Benjamin Disraeli","1868","Other","","benjamin_disraeli__photo.png","Cornelius Jabez Hughes","Public domain"],
+["William Ewart Gladstone","1868","Oxford","Christ Church","william_ewart_gladstone__photo.jpg","Samuel Alexander Walker","Public domain"],
+["Robert Gascoyne-Cecil, 3rd Marquess of Salisbury","1885","Oxford","Christ Church","robert_gascoyne_cecil_3rd_marquess_of_salisbury__photo.jpg","Elliott & Fry","Public domain"],
+["Archibald Primrose, 5th Earl of Rosebery","1894","Oxford","Christ Church","archibald_primrose_5th_earl_of_rosebery__photo.jpg","Elliott & Fry","Public domain"],
+["Arthur Balfour","1902","Cambridge","Trinity College","arthur_balfour__photo.jpg","George Charles Beresford","Public domain"],
+["Henry Campbell-Bannerman","1905","Cambridge","Trinity College","henry_campbell_bannerman__photo.jpg","George Charles Beresford","Public domain"],
+["H. H. Asquith","1908","Oxford","Balliol College","h_h_asquith__photo.jpg","Bain News Service","Public domain"],
+["David Lloyd George","1916","None","","david_lloyd_george__photo.jpg","Harris & Ewing","Public domain"],
+["Bonar Law","1922","Other","","bonar_law__photo.jpg","Bain News Service","Public domain"],
+["Stanley Baldwin","1923","Cambridge","Trinity College","stanley_baldwin__photo.jpg","Bain News Service","Public domain"],
+["Ramsay MacDonald","1924","Other","","ramsay_macdonald__photo.jpg","Walter Stoneman","Public domain"],
+["Neville Chamberlain","1937","Other","","neville_chamberlain__photo.jpg","Lafayette Ltd","Public domain"],
+["Winston Churchill","1940","Other","","winston_churchill__photo.jpg","Yousuf Karsh","Public domain"],
+["Clement Attlee","1945","Oxford","University College, Oxford","clement_attlee__photo.jpg","Winterbergen","CC0"],
+["Anthony Eden","1955","Oxford","Christ Church","anthony_eden__photo.jpg","Walter Stoneman","Public domain"],
+["Harold Macmillan","1957","Oxford","Balliol College","harold_macmillan__photo.jpg","Unknown photographer","Public domain"],
+["Alec Douglas-Home","1963","Oxford","Christ Church","alec_douglas_home__photo.jpg","Unknown for Anefo","CC0"],
+["Harold Wilson","1964","Oxford","Jesus College","harold_wilson__photo.jpg","Eric Koch for Anefo","CC BY-SA 3.0 nl"],
+["Edward Heath","1970","Oxford","Balliol College","edward_heath__photo.jpg","Moshe Milner","Public domain"],
+["James Callaghan","1976","None","","james_callaghan__photo.jpg","Christian Lambiotte","CC BY 4.0"],
+["Margaret Thatcher","1979","Oxford","Somerville College","margaret_thatcher__photo.jpg","derivative work by Begoon","Copyrighted free use"],
+["John Major","1990","Other","","john_major__photo.jpg","Sharon Farmer","Public domain"],
+["Tony Blair","1997","Oxford","St John's College","tony_blair__photo.jpg","Pavel Golovkin","CC BY 4.0"],
+["Gordon Brown","2007","Other","","gordon_brown__photo.jpg","Unknown photographer","OGL 3"],
+["David Cameron","2010","Oxford","Brasenose College","david_cameron__photo.jpg","Lauren Hurley / No 10","OGL 3"],
+["Theresa May","2016","Oxford","St Hugh's College","theresa_may__photo.jpg","Roger Harris","CC BY 3.0"],
+["Boris Johnson","2019","Oxford","Balliol College","boris_johnson__photo.jpg","Ben Shread","OGL 3"],
+["Liz Truss","2022","Oxford","Merton College","liz_truss__photo.jpg","Simon Dawson / No 10","OGL 3"],
+["Rishi Sunak","2022","Oxford","Lincoln College","rishi_sunak__photo.jpg","Prime Minister's Office","OGL 3"],
+["Keir Starmer","2024","Oxford","St Edmund Hall","keir_starmer__photo.jpg","Prime Minister's Office","OGL 3"],
+["Basil Feilding, 6th Earl of Denbigh","","None","","basil_feilding_6th_earl_of_denbigh__photo.jpg","John Watts, after N. Dance-Holland","Public domain"]
+];
+var GCOLOR={Oxford:"#0a2b5c",Cambridge:"#9e1b32",Both:"#5b3a8c",Other:"#64748b",None:"#b8c0cc"};
+
+// ---------- DECK ----------
+(function(){
+  var grid=document.getElementById('deckGrid');
+  var html="";
+  for(var i=0;i<PMS.length;i++){
+    var p=PMS[i];
+    var yr=p[1]?p[1]:"—";
+    var col=p[3]?p[3]:(p[2]==="Other"||p[2]==="None"?"Non-Oxbridge":"");
+    var cred=p[5]?("Wikimedia — "+p[5]+", "+p[6]):"";
+    html+='<div class="pm g-'+p[2]+'" data-g="'+p[2]+'">'
+      +'<img class="ph" loading="lazy" src="assets/'+p[4]+'" alt="Portrait of '+p[0]+'">'
+      +'<div class="meta"><div class="nm">'+p[0]+'</div><div class="yr">'+yr+' · '+p[2]+'</div>'
+      +(col?'<div class="cl">'+col+'</div>':'')
+      +(cred?'<div class="cred">'+cred+'</div>':'')+'</div></div>';
+  }
+  grid.innerHTML=html;
+  var chips=document.querySelectorAll('#deckFilters .chip');
+  for(var c=0;c<chips.length;c++){
+    chips[c].addEventListener('click',function(){
+      for(var k=0;k<chips.length;k++)chips[k].classList.remove('active');
+      this.classList.add('active');
+      var g=this.getAttribute('data-g');
+      var cards=grid.querySelectorAll('.pm');
+      for(var j=0;j<cards.length;j++){
+        var show=(g==='all'||cards[j].getAttribute('data-g')===g);
+        cards[j].classList.toggle('hide',!show);
+      }
+    });
+  }
+  // credits grid
+  var cg=document.getElementById('creditsGrid'),ch="";
+  for(var m=0;m<PMS.length;m++){ch+='<div>'+PMS[m][0]+' — '+PMS[m][5]+', '+PMS[m][6]+'</div>';}
+  cg.innerHTML=ch;
+})();
+
+// ---------- QUIZ ----------
+(function(){
+  var sl=document.getElementById('qslider'),val=document.getElementById('qval'),btn=document.getElementById('qbtn');
+  var rev=document.getElementById('qreveal'),res=document.getElementById('qresult'),bars=document.getElementById('qbars');
+  sl.addEventListener('input',function(){val.textContent=sl.value;});
+  var data=[["Oxford only",30,"#0a2b5c"],["Cambridge only",14,"#9e1b32"],["Both",1,"#5b3a8c"],["Other university",10,"#64748b"],["No university",4,"#b8c0cc"]];
+  btn.addEventListener('click',function(){
+    var guess=parseInt(sl.value,10);
+    var off=Math.abs(guess-31);
+    res.textContent="31 went to Oxford (including 1 who attended both). You guessed "+guess+" — "+(off===0?"spot on!":off+" off.");
+    var html="";
+    for(var i=0;i<data.length;i++){
+      var pct=data[i][1]/30*100;
+      html+='<div class="qbar"><div class="lab">'+data[i][0]+'</div>'
+        +'<div class="track"><div class="fill" style="width:0%;background:'+data[i][2]+'"></div></div>'
+        +'<div class="n">'+data[i][1]+'</div></div>';
+    }
+    bars.innerHTML=html;
+    rev.classList.add('on');
+    btn.disabled=true;
+    setTimeout(function(){
+      var fills=bars.querySelectorAll('.fill');
+      for(var i=0;i<fills.length;i++){fills[i].style.width=(data[i][1]/30*100)+'%';}
+    },60);
+  });
+})();
+
+// ---------- SONIFICATION (ana_01) ----------
+(function(){
+  var btn=document.getElementById('sonifyBtn');
+  var seq=[["PM-Oxford",31],["PM-Cambridge",15],["Nobel-Oxford",30],["Nobel-Cambridge",79]];
+  // map count -> freq (log scale 220..880)
+  function freq(c){var lo=Math.log(15),hi=Math.log(79);var t=(Math.log(c)-lo)/(hi-lo);return 220*Math.pow(4,t);}
+  btn.addEventListener('click',function(){
+    var AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC){btn.disabled=true;return;}
+    var ctx=new AC();var t=ctx.currentTime;
+    for(var i=0;i<seq.length;i++){
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.type='triangle';o.frequency.value=freq(seq[i][1]);
+      o.connect(g);g.connect(ctx.destination);
+      var st=t+i*0.62;
+      g.gain.setValueAtTime(0,st);g.gain.linearRampToValueAtTime(0.18,st+0.03);
+      g.gain.linearRampToValueAtTime(0,st+0.55);
+      o.start(st);o.stop(st+0.6);
+      // highlight matching chart bar via the chart's view if available
+      (function(idx){setTimeout(function(){flashBar(idx);},idx*620);})(i);
+    }
+    document.getElementById('sonifyLeg').textContent="Playing… Oxford PMs · Cambridge PMs · Oxford Nobels · Cambridge Nobels (higher pitch = larger count).";
+  });
+  window._flashIdx=-1;
+  window.flashBar=function(i){window._flashIdx=i;if(window._des03view){window._des03view.signal&&window._des03view.signal('hl',i);}};
+})();
+
+// ---------- CHARTS ----------
+function toValues(cols,rows){return rows.map(function(r){var o={};for(var i=0;i<cols.length;i++)o[cols[i]]=r[i];return o;});}
+
+// des_03 grouped bar (ana_01)
+var d03=toValues(["university","metric","count"],[
+  ["Oxford","Prime Ministers",31],["Cambridge","Prime Ministers",15],
+  ["Oxford","Nobel laureates",30],["Cambridge","Nobel laureates",79]]);
+vegaEmbed('#chart_des_03',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "description":"Oxford vs Cambridge: PMs and Nobel laureates",
+  "width":"container","height":300,
+  "data":{"values":d03},
+  "mark":{"type":"bar","cornerRadiusEnd":3},
+  "encoding":{
+    "x":{"field":"metric","type":"nominal","title":null,"axis":{"labelFontSize":14,"labelFontWeight":"bold"}},
+    "xOffset":{"field":"university"},
+    "y":{"field":"count","type":"quantitative","title":"count","axis":{"grid":false}},
+    "color":{"field":"university","type":"nominal","scale":{"domain":["Oxford","Cambridge"],"range":["#0a2b5c","#9e1b32"]},"legend":{"orient":"top","title":null,"labelFontSize":13}},
+    "tooltip":[{"field":"university"},{"field":"metric"},{"field":"count"}]
+  },
+  "config":{"view":{"stroke":null},"axis":{"labelColor":"#5b6470","titleColor":"#5b6470"}}
+},{actions:false}).then(function(r){window._des03view=r.view;});
+
+// des_07 stacked bar over time (ana_03)
+var a03cols=["period","Oxford","Cambridge","Other","None"];
+var a03rows=[["1720s",0,1,0,0],["1740s",2,2,0,1],["1760s",3,2,1,0],["1780s",2,1,0,0],["1800s",3,1,0,0],["1820s",2,3,1,0],["1840s",1,2,1,0],["1860s",1,0,1,0],["1880s",2,0,0,0],["1900s",1,2,0,1],["1920s",0,1,3,0],["1940s",3,0,1,0],["1960s",4,0,0,1],["1980s",1,0,1,0],["2000s",3,0,1,0],["2020s",3,0,0,0]];
+var d07=[];a03rows.forEach(function(r){["Oxford","Cambridge","Other","None"].forEach(function(g,gi){if(r[gi+1]>0)d07.push({period:r[0],group:g,count:r[gi+1]});});});
+vegaEmbed('#chart_des_07',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "description":"PMs by university group over 20-year periods",
+  "width":"container","height":320,
+  "data":{"values":d07},
+  "layer":[
+   {"mark":{"type":"bar"},
+    "encoding":{
+      "x":{"field":"period","type":"nominal","sort":a03rows.map(function(r){return r[0];}),"title":null,"axis":{"labelAngle":-50,"labelFontSize":10}},
+      "y":{"field":"count","type":"quantitative","stack":"zero","title":"PMs taking office","axis":{"grid":false,"tickMinStep":1}},
+      "color":{"field":"group","type":"nominal","scale":{"domain":["Oxford","Cambridge","Other","None"],"range":["#0a2b5c","#9e1b32","#64748b","#b8c0cc"]},"legend":{"orient":"top","title":null}},
+      "order":{"field":"group"},
+      "tooltip":[{"field":"period"},{"field":"group"},{"field":"count"}]
+    }}
+  ],
+  "config":{"view":{"stroke":null},"axis":{"labelColor":"#5b6470","titleColor":"#5b6470"}}
+},{actions:false});
+
+// des_09 horizontal bar colleges (ana_04)
+var d09=toValues(["college","pms"],[
+["Christ Church",13],["Balliol College",4],["Trinity College",3],["Brasenose College",2],
+["Hertford College",1],["University College, Oxford",1],["Jesus College",1],["Somerville College",1],
+["St John's College",1],["St Hugh's College",1],["Merton College",1],["Lincoln College",1],["St Edmund Hall",1]]);
+vegaEmbed('#chart_des_09',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "description":"Oxford colleges by PMs educated",
+  "width":"container","height":360,
+  "data":{"values":d09},
+  "mark":{"type":"bar","cornerRadiusEnd":3},
+  "encoding":{
+    "y":{"field":"college","type":"nominal","sort":"-x","title":null,"axis":{"labelFontSize":11}},
+    "x":{"field":"pms","type":"quantitative","title":"Prime Ministers","axis":{"grid":false,"tickMinStep":1}},
+    "color":{"condition":{"test":"datum.college=='Christ Church'","value":"#b8902f"},"value":"#0a2b5c"},
+    "tooltip":[{"field":"college"},{"field":"pms","title":"PMs"}]
+  },
+  "config":{"view":{"stroke":null},"axis":{"labelColor":"#5b6470","titleColor":"#5b6470"}}
+},{actions:false});
+
+// des_12 normalised rates (ana_07)
+var d12=[];
+[["Oxford",0.79,0.76],["Cambridge",0.48,2.53]].forEach(function(r){
+  d12.push({university:r[0],metric:"PMs per 1,000",rate:r[1]});
+  d12.push({university:r[0],metric:"Nobels per 1,000",rate:r[2]});
+});
+vegaEmbed('#chart_des_12',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "description":"Prestige per 1,000 recorded alumni",
+  "width":"container","height":280,
+  "data":{"values":d12},
+  "mark":{"type":"bar","cornerRadiusEnd":3},
+  "encoding":{
+    "x":{"field":"university","type":"nominal","title":null,"axis":{"labelFontSize":14,"labelFontWeight":"bold"}},
+    "xOffset":{"field":"metric"},
+    "y":{"field":"rate","type":"quantitative","title":"per 1,000 recorded alumni","axis":{"grid":false}},
+    "color":{"field":"metric","type":"nominal","scale":{"domain":["PMs per 1,000","Nobels per 1,000"],"range":["#0a2b5c","#9e1b32"]},"legend":{"orient":"top","title":null}},
+    "tooltip":[{"field":"university"},{"field":"metric"},{"field":"rate"}]
+  },
+  "config":{"view":{"stroke":null},"axis":{"labelColor":"#5b6470","titleColor":"#5b6470"}}
+},{actions:false});
+
+// ---------- fade-in on scroll ----------
+(function(){
+  var secs=document.querySelectorAll('section');
+  for(var i=0;i<secs.length;i++)secs[i].classList.add('fade-in');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:0.08});
+    for(var j=0;j<secs.length;j++)io.observe(secs[j]);
+  }else{for(var k=0;k<secs.length;k++)secs[k].classList.add('vis');}
+})();
+</script>
+</body>
+</html>

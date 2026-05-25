@@ -1,0 +1,95 @@
+{
+  "meta": { "role": "editor", "version": "2.0" },
+  "core_claim": "Oxford founded its colleges in two short bursts seven centuries apart; the 156-year silence and the dozen defunct colleges hidden in the count are the real story.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — Guess Oxford's oldest college",
+      "purpose": "hook",
+      "title": "Which is Oxford's oldest college?",
+      "findings": ["ana_03"],
+      "context": ["det_02", "det_08"],
+      "triage": { "ana_03": "lead" },
+      "chart_placeholder": null,
+      "media_placeholder": "interactive",
+      "editorial_notes": "The 15-year window (1249/1263/1264) must be exact. Rewley Abbey 1201 is the trap answer — make clear it is not a real college."
+    },
+    "edt_02": {
+      "label": "The two waves",
+      "purpose": "evidence",
+      "title": "Two waves, seven centuries apart",
+      "findings": ["ana_02", "ana_10"],
+      "context": ["det_03", "det_04", "det_05"],
+      "triage": { "ana_02": "lead", "ana_10": "supporting" },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "chart",
+      "editorial_notes": "9 colleges each in 19th and 20th c.; 1850-1899 window = 9. Keep barbell framing."
+    },
+    "edt_03": {
+      "label": "The 156-year silence",
+      "purpose": "turn",
+      "title": "The Georgian silence",
+      "findings": ["ana_07"],
+      "context": ["det_04"],
+      "triage": { "ana_07": "lead" },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": null,
+      "editorial_notes": "156 years (1714-1870) is the headline number. 18th c. = exactly 1 college (Worcester)."
+    },
+    "edt_04": {
+      "label": "The Reformation churn",
+      "purpose": "context",
+      "title": "Destruction dressed as growth",
+      "findings": ["ana_06"],
+      "context": ["det_03"],
+      "triage": { "ana_06": "supporting" },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "image",
+      "editorial_notes": "11 of 50 rows are defunct/merged/non-residential; ~39 survive. Cardinal->Henry VIII's->Christ Church is one institution thrice."
+    },
+    "edt_05": {
+      "label": "The Victorians open the gates",
+      "purpose": "evidence",
+      "title": "The women's colleges arrive",
+      "findings": ["ana_10", "ana_04"],
+      "context": ["det_04"],
+      "triage": { "ana_10": "supporting", "ana_04": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "Elizabeth Wordsworth founded LMH (1878) and St Hugh's (1886). Women could not take degrees until 1920 — keep the 42-year gap."
+    },
+    "edt_06": {
+      "label": "Saints become surnames",
+      "purpose": "evidence",
+      "title": "From saints to surnames",
+      "findings": ["ana_05"],
+      "context": ["det_06"],
+      "triage": { "ana_05": "lead" },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "interactive",
+      "editorial_notes": "17 religious vs 20 personal namesakes of 37. Crests encode founder heraldry — this is where the coat-of-arms gallery belongs."
+    },
+    "edt_07": {
+      "label": "The newest college and the limits of the data",
+      "purpose": "close",
+      "title": "The newest college, and the honest holes",
+      "findings": ["ana_01", "ana_08"],
+      "context": ["det_05", "det_07"],
+      "triage": { "ana_01": "supporting", "ana_08": "color" },
+      "chart_placeholder": null,
+      "media_placeholder": "audio",
+      "editorial_notes": "Reuben 2019, first since Kellogg 1990, £80m gift, first students 2021. 49/50 blank mottos; only Magdalen. End on tension, not summary."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "lead",
+    "ana_03": "lead",
+    "ana_04": "supporting",
+    "ana_05": "lead",
+    "ana_06": "supporting",
+    "ana_07": "lead",
+    "ana_08": "color",
+    "ana_09": "supporting",
+    "ana_10": "supporting"
+  }
+}

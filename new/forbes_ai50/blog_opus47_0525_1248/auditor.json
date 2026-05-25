@@ -1,0 +1,3 @@
+[
+  {"type": "missing_image_responsive", "count": 1, "lines": [452], "note": "Added inline max-width:100%;height:auto;display:block to dynamically-built deck logo <img> as a defensive constraint; tile CSS already constrained max-height."}
+]

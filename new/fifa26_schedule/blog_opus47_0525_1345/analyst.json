@@ -1,0 +1,287 @@
+{
+  "meta": {"role": "analyst", "version": "2.0"},
+  "dataset": {
+    "files": ["FIFA2026_schedule.csv", "FIFA2026_schedule_Fixtures.csv", "venue_weather.csv"],
+    "rows": 104,
+    "columns": 5,
+    "what_one_row_represents": "One scheduled 2026 FIFA World Cup match (date, match number, group, stadium), joinable to per-venue historical climate via venue_weather.csv on the stadium key.",
+    "time_range": "2026-06-11 to 2026-07-19 (34 match days)",
+    "geographic_scope": "16 venues across USA (11), Mexico (3), Canada (2)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Clean 104-match schedule, perfect weather join",
+      "content": "The schedule contains 104 matches over 34 distinct match days (11 June to 19 July 2026), played at exactly 16 unique stadiums. The venue_weather.csv file carries one row per venue and joins to the schedule on the stadium column with zero unmatched rows: all 16 schedule stadiums have a climate record. This makes the location-and-weather join clean and complete, with no missing venues to caveat.",
+      "type": "distribution", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [33, 46], "output": "schedule rows=104 fixtures rows=104 weather rows=16\nunique stadiums in schedule=16\nunique stadiums in weather=16\ndate range 2026-06-11 -> 2026-07-19 across 34 match days\nstadiums in schedule with NO weather match: none"},
+      "based_on": ["det_02", "det_11"]
+    },
+    "ana_02": {
+      "label": "Matches per venue: Dallas leads with 9",
+      "content": "Match load is uneven across the 16 venues. Dallas (AT&T Stadium, Arlington) hosts the most with 9 matches, followed by Los Angeles (SoFi), New York/New Jersey (MetLife) and Atlanta (Mercedes-Benz) at 8 each. A middle tier of Boston, Vancouver, Houston and Miami host 7, while Mexico's venues sit at the bottom: Mexico City 5, Guadalajara and Monterrey 4 each. The busiest venues are concentrated in the hot southern U.S. and the populous Northeast.",
+      "type": "ranking", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [49, 56], "output": " 9  Dallas Stadium ... Arlington\n 8  Los Angeles Stadium ... Inglewood\n 8  New York New Jersey Stadium ... East Rutherford\n 8  Atlanta Stadium ... Atlanta\n 7  Boston / BC Place Vancouver / Houston / Miami\n 6  Toronto / SF Bay / Philadelphia / Seattle / Kansas City\n 5  Mexico City\n 4  Guadalajara / Monterrey\ntotal matches = 104"},
+      "data_table": {
+        "description": "Matches per venue (all 16), descending",
+        "columns": ["city", "venue", "country", "matches"],
+        "rows": [
+          ["Arlington", "AT&T Stadium", "USA", 9],
+          ["Inglewood", "SoFi Stadium", "USA", 8],
+          ["East Rutherford", "MetLife Stadium", "USA", 8],
+          ["Atlanta", "Mercedes-Benz Stadium", "USA", 8],
+          ["Foxborough", "Gillette Stadium", "USA", 7],
+          ["Vancouver", "BC Place", "Canada", 7],
+          ["Houston", "NRG Stadium", "USA", 7],
+          ["Miami Gardens", "Hard Rock Stadium", "USA", 7],
+          ["Toronto", "BMO Field", "Canada", 6],
+          ["Santa Clara", "Levi's Stadium", "USA", 6],
+          ["Philadelphia", "Lincoln Financial Field", "USA", 6],
+          ["Seattle", "Lumen Field", "USA", 6],
+          ["Kansas City", "Arrowhead Stadium", "USA", 6],
+          ["Mexico City", "Estadio Azteca", "Mexico", 5],
+          ["Guadalajara", "Estadio Akron", "Mexico", 4],
+          ["Monterrey", "Estadio BBVA", "Mexico", 4]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_03": {
+      "label": "USA hosts 78 of 104 matches",
+      "content": "The host load is heavily skewed to the United States, which stages 78 of the 104 matches across its 11 venues, while Canada (2 venues) and Mexico (3 venues) host 13 each. This matches FIFA's announced split and means three-quarters of the tournament is played in the country with the broadest internal climate range — from cool Seattle to scorching Houston.",
+      "type": "group-diff", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [59, 66], "output": "USA: 78 matches across 11 venues\nMexico: 13 matches across 3 venues\nCanada: 13 matches across 2 venues"},
+      "data_table": {
+        "description": "Matches and venues per host nation",
+        "columns": ["country", "matches"],
+        "rows": [["USA", 78], ["Mexico", 13], ["Canada", 13]]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_04": {
+      "label": "Feels-like spread of 17.1C across venues",
+      "content": "Ranking all 16 venues by average apparent (feels-like) high temperature in the tournament window reveals an enormous spread. Houston tops it at 38.6C feels-like, with Dallas/Arlington at 38.3C, Miami at 36.9C and Monterrey at 36.2C. At the cool end sit Vancouver (21.5C), Seattle (23.1C) and Mexico City (24.3C, tempered by its altitude). The gap between the hottest and coolest venue is 17.1C — the difference between dangerous heat-stress conditions and a mild spring afternoon, within the same tournament.",
+      "type": "ranking", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [69, 80], "output": " 38.6C feels (33.5C air) hum 76.5% Houston / NRG Stadium\n 38.3C feels (34.9C air) hum 61.6% Arlington / AT&T Stadium\n 36.9C feels (31.0C air) hum 82.9% Miami Gardens\n 36.2C feels Monterrey\n ...\n 23.1C Seattle\n 21.5C Vancouver\nfeels-like spread: 38.6C (Houston) to 21.5C (Vancouver) = 17.1C"},
+      "data_table": {
+        "description": "Feels-like (apparent) high vs air high vs humidity, all 16 venues, hottest first",
+        "columns": ["city", "venue", "feels_like_c", "air_high_c", "humidity_pct", "matches"],
+        "rows": [
+          ["Houston", "NRG Stadium", 38.6, 33.5, 76, 7],
+          ["Arlington", "AT&T Stadium", 38.3, 34.9, 61, 9],
+          ["Miami Gardens", "Hard Rock Stadium", 36.9, 31.0, 82, 7],
+          ["Monterrey", "Estadio BBVA", 36.2, 34.0, 63, 4],
+          ["Atlanta", "Mercedes-Benz Stadium", 34.1, 30.8, 72, 8],
+          ["Kansas City", "Arrowhead Stadium", 33.9, 31.3, 67, 6],
+          ["Philadelphia", "Lincoln Financial Field", 32.1, 30.2, 68, 6],
+          ["East Rutherford", "MetLife Stadium", 30.3, 28.5, 71, 8],
+          ["Foxborough", "Gillette Stadium", 28.6, 27.0, 76, 7],
+          ["Guadalajara", "Estadio Akron", 28.3, 26.9, 74, 4],
+          ["Inglewood", "SoFi Stadium", 28.1, 27.1, 70, 8],
+          ["Santa Clara", "Levi's Stadium", 26.8, 27.4, 62, 6],
+          ["Toronto", "BMO Field", 26.3, 25.0, 72, 6],
+          ["Mexico City", "Estadio Azteca", 24.3, 23.9, 67, 5],
+          ["Seattle", "Lumen Field", 23.1, 23.2, 68, 6],
+          ["Vancouver", "BC Place", 21.5, 21.1, 73, 7]
+        ]
+      },
+      "based_on": ["det_04", "det_09"]
+    },
+    "ana_05": {
+      "label": "A third of all matches in dangerous heat",
+      "content": "Combining match load with climate shows where the most football is played in the most heat. Weighting each venue's matches by its feels-like high, Dallas tops the 'heat exposure' index (9 matches x 38.3C), followed by Atlanta, Houston and Miami. Crucially, 35 of the 104 matches (33.7%) are at venues whose typical feels-like high is 34C or more, and 41 matches (39.4%) fall at the six venues FIFPRO flagged as 'extremely high risk' for heat-stress injury. So roughly four in ten World Cup matches are scheduled into the climate band that prompted the player-welfare alarm.",
+      "type": "ranking", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [83, 99], "output": "  344.7  Arlington   9 matches x 38.3C\n  272.8  Atlanta     8 x 34.1C\n  270.2  Houston     7 x 38.6C\n  258.3  Miami Gardens 7 x 36.9C\n ...\nmatches at venues with feels-like >= 34C: 35 of 104 = 33.7%\nmatches at FIFPRO 'extremely high risk' 6 venues: 41 of 104 = 39.4%"},
+      "data_table": {
+        "description": "Heat-exposure index = matches x feels-like high, descending",
+        "columns": ["city", "matches", "feels_like_c", "exposure_index"],
+        "rows": [
+          ["Arlington", 9, 38.3, 344.7],
+          ["Atlanta", 8, 34.1, 272.8],
+          ["Houston", 7, 38.6, 270.2],
+          ["Miami Gardens", 7, 36.9, 258.3],
+          ["East Rutherford", 8, 30.3, 242.4],
+          ["Inglewood", 8, 28.1, 224.8],
+          ["Kansas City", 6, 33.9, 203.4],
+          ["Foxborough", 7, 28.6, 200.2],
+          ["Philadelphia", 6, 32.1, 192.6],
+          ["Santa Clara", 6, 26.8, 160.8],
+          ["Toronto", 6, 26.3, 157.8],
+          ["Vancouver", 7, 21.5, 150.5],
+          ["Monterrey", 4, 36.2, 144.8],
+          ["Seattle", 6, 23.1, 138.6],
+          ["Mexico City", 5, 24.3, 121.5],
+          ["Guadalajara", 4, 28.3, 113.2]
+        ]
+      },
+      "based_on": ["det_04", "det_05"]
+    },
+    "ana_06": {
+      "label": "Rain: Miami soaks 88% of days, LA almost never",
+      "content": "Precipitation exposure is just as polarized as heat. Miami sees rain on 88% of days in the tournament window (8.4 mm/day), with Mexico's altitude cities close behind (Guadalajara 73%, Mexico City 72%) reflecting the North American summer monsoon and afternoon thunderstorms. At the opposite extreme, Santa Clara records rain on 0% of sampled days and Inglewood (LA) just 1% — California's bone-dry summer. Seattle, despite its rainy reputation, is dry in midsummer at 13%. Wet venues raise the risk of weather delays and lightning stoppages; dry-but-hot venues trade that for heat stress.",
+      "type": "ranking", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [102, 108], "output": "   88% wet days  8.4mm/day Miami Gardens\n   73% Guadalajara\n   72% Mexico City\n ...\n    1% Inglewood\n    0% Santa Clara"},
+      "data_table": {
+        "description": "Rainy-day share (% of days with rain) and mean precip, all 16 venues",
+        "columns": ["city", "rainy_day_pct", "precip_mm_day", "matches"],
+        "rows": [
+          ["Miami Gardens", 88, 8.4, 7],
+          ["Guadalajara", 73, 7.0, 4],
+          ["Mexico City", 72, 8.1, 5],
+          ["Atlanta", 50, 6.4, 8],
+          ["Foxborough", 47, 4.3, 7],
+          ["Houston", 47, 5.9, 7],
+          ["Philadelphia", 46, 3.7, 6],
+          ["East Rutherford", 43, 4.5, 8],
+          ["Toronto", 40, 3.5, 6],
+          ["Kansas City", 38, 5.2, 6],
+          ["Arlington", 27, 2.3, 9],
+          ["Monterrey", 24, 2.2, 4],
+          ["Vancouver", 21, 1.1, 7],
+          ["Seattle", 13, 0.7, 6],
+          ["Inglewood", 1, 0.1, 8],
+          ["Santa Clara", 0, 0.0, 6]
+        ]
+      },
+      "based_on": ["det_09"]
+    },
+    "ana_07": {
+      "label": "Altitude: Mexico City at 2,200 m towers over the field",
+      "content": "Elevation varies by more than two kilometres across venues. Mexico City's Estadio Azteca sits at 2,200 m, far above any other venue and high enough to measurably reduce aerobic capacity and ball aerodynamics; Guadalajara follows at 1,566 m and Monterrey at 450 m. Every other venue is below 330 m, and the final venue MetLife sits essentially at sea level (2 m). Altitude is the reason Mexico City stays mild despite its low latitude: thin mountain air keeps its feels-like high to just 24.3C even as it sits at the same latitude as the Sahara.",
+      "type": "ranking", "strength": "moderate",
+      "calculation": {"file": "code/analyze.py", "lines": [111, 116], "output": " 2200m  Mexico City (Estadio Azteca)\n 1566m  Guadalajara\n  450m  Monterrey\n  ...\n    2m  East Rutherford (MetLife Stadium)"},
+      "data_table": {
+        "description": "Venue elevation in metres, highest first",
+        "columns": ["city", "elevation_m", "matches"],
+        "rows": [
+          ["Mexico City", 2200, 5], ["Guadalajara", 1566, 4], ["Monterrey", 450, 4],
+          ["Atlanta", 320, 8], ["Kansas City", 270, 6], ["Arlington", 150, 9],
+          ["Foxborough", 89, 7], ["Toronto", 76, 6], ["Inglewood", 30, 8],
+          ["Houston", 15, 7], ["Philadelphia", 12, 6], ["Santa Clara", 8, 6],
+          ["Seattle", 5, 6], ["Vancouver", 3, 7], ["Miami Gardens", 3, 7],
+          ["East Rutherford", 2, 8]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_08": {
+      "label": "Four climate tribes: brutal, dry-hot, warm, mild",
+      "content": "Plotting feels-like high against humidity sorts the 16 venues into four tribes. Three are 'brutal' — hot AND humid: Houston (38.6C, 76%), Miami (36.9C, 83%) and Atlanta (34.1C, 73%). Two are 'dry-hot' — fierce air temperature but lower humidity, where evaporative cooling and roofs help: Dallas (38.3C, 62%) and Monterrey (36.2C, 64%). Six are 'warm', and five are genuinely 'mild' (feels-like at or below 27C): Mexico City, Toronto, Vancouver, Seattle and Santa Clara. The brutal tribe is the player-welfare hotspot; the mild tribe is where European players will feel most at home.",
+      "type": "group-diff", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [119, 135], "output": "Houston feels 38.6C hum 76.5% -> brutal (hot+humid)\nMiami feels 36.9C hum 82.9% -> brutal\nAtlanta feels 34.1C hum 72.8% -> brutal\nArlington 38.3C hum 61.6% -> dry-hot\nMonterrey 36.2C hum 63.6% -> dry-hot\n...\nbuckets: {'mild': 5, 'warm': 6, 'dry-hot': 2, 'brutal (hot+humid)': 3}"},
+      "data_table": {
+        "description": "Feels-like vs humidity scatter with bubble=matches and climate tribe",
+        "columns": ["city", "feels_like_c", "humidity_pct", "matches", "tribe"],
+        "rows": [
+          ["Houston", 38.6, 76.5, 7, "brutal"],
+          ["Miami Gardens", 36.9, 82.9, 7, "brutal"],
+          ["Atlanta", 34.1, 72.8, 8, "brutal"],
+          ["Arlington", 38.3, 61.6, 9, "dry-hot"],
+          ["Monterrey", 36.2, 63.6, 4, "dry-hot"],
+          ["Kansas City", 33.9, 67.2, 6, "warm"],
+          ["Philadelphia", 32.1, 68.6, 6, "warm"],
+          ["East Rutherford", 30.3, 71.7, 8, "warm"],
+          ["Foxborough", 28.6, 76.0, 7, "warm"],
+          ["Guadalajara", 28.3, 74.2, 4, "warm"],
+          ["Inglewood", 28.1, 70.4, 8, "warm"],
+          ["Santa Clara", 26.8, 62.3, 6, "mild"],
+          ["Toronto", 26.3, 72.3, 6, "mild"],
+          ["Mexico City", 24.3, 67.9, 5, "mild"],
+          ["Seattle", 23.1, 68.6, 6, "mild"],
+          ["Vancouver", 21.5, 73.6, 7, "mild"]
+        ]
+      },
+      "based_on": ["det_04", "det_07"]
+    },
+    "ana_09": {
+      "label": "Geo-climate master table for the interactive map",
+      "content": "The full per-venue table for the interactive map combines coordinates, elevation, climate and match load for all 16 stadiums. Fifteen venues have a real licensed stadium photo; Kansas City (Arrowhead Stadium) has no cached photo and must be handled with a placeholder rather than a fake image. The continental footprint runs from Vancouver (49.3N, the coolest) down to Mexico City (19.3N, the highest) and Miami (the wettest), spanning four time zones.",
+      "type": "distribution", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [138, 158], "output": "Mexico City (19.3029,-99.1505) feels 24.3 photo=mexico_city__photo.jpg\n... Kansas City (39.0489,-94.4839) feels 33.9 photo=  (NONE)\n... Vancouver (49.2767,-123.1119) feels 21.5"},
+      "data_table": {
+        "description": "Map master: stadium, venue, city, country, lat, lon, elevation, feels-like, air high, humidity, rainy %, matches, photo file",
+        "columns": ["stadium", "venue", "city", "country", "lat", "lon", "elevation_m", "feels_like_c", "air_high_c", "humidity_pct", "rainy_day_pct", "matches", "photo"],
+        "rows": [
+          ["Mexico City Stadium", "Estadio Azteca", "Mexico City", "Mexico", 19.3029, -99.1505, 2200, 24.3, 23.9, 67, 72, 5, "mexico_city__photo.jpg"],
+          ["Estadio Guadalajara", "Estadio Akron", "Guadalajara", "Mexico", 20.6817, -103.4625, 1566, 28.3, 26.9, 74, 73, 4, "guadalajara__photo.jpg"],
+          ["Estadio Monterrey", "Estadio BBVA", "Monterrey", "Mexico", 25.669, -100.2443, 450, 36.2, 34.0, 63, 24, 4, "monterrey__photo.jpg"],
+          ["Toronto Stadium", "BMO Field", "Toronto", "Canada", 43.6332, -79.4185, 76, 26.3, 25.0, 72, 40, 6, "toronto__photo.png"],
+          ["BC Place Vancouver", "BC Place", "Vancouver", "Canada", 49.2767, -123.1119, 3, 21.5, 21.1, 73, 21, 7, "vancouver__photo.jpg"],
+          ["Atlanta Stadium", "Mercedes-Benz Stadium", "Atlanta", "USA", 33.7554, -84.4008, 320, 34.1, 30.8, 72, 50, 8, "atlanta__photo.jpg"],
+          ["Boston Stadium", "Gillette Stadium", "Foxborough", "USA", 42.0909, -71.2643, 89, 28.6, 27.0, 76, 47, 7, "boston__photo.jpg"],
+          ["Dallas Stadium", "AT&T Stadium", "Arlington", "USA", 32.7473, -97.0945, 150, 38.3, 34.9, 61, 27, 9, "dallas__photo.jpg"],
+          ["Houston Stadium", "NRG Stadium", "Houston", "USA", 29.6847, -95.4107, 15, 38.6, 33.5, 76, 47, 7, "houston__photo.jpg"],
+          ["Kansas City Stadium", "Arrowhead Stadium", "Kansas City", "USA", 39.0489, -94.4839, 270, 33.9, 31.3, 67, 38, 6, ""],
+          ["Los Angeles Stadium", "SoFi Stadium", "Inglewood", "USA", 33.9535, -118.3392, 30, 28.1, 27.1, 70, 1, 8, "los_angeles__photo.jpg"],
+          ["Miami Stadium", "Hard Rock Stadium", "Miami Gardens", "USA", 25.958, -80.2389, 3, 36.9, 31.0, 82, 88, 7, "miami__photo.jpg"],
+          ["New York New Jersey Stadium", "MetLife Stadium", "East Rutherford", "USA", 40.8135, -74.0745, 2, 30.3, 28.5, 71, 43, 8, "new_york_new_jersey__photo.jpg"],
+          ["Philadelphia Stadium", "Lincoln Financial Field", "Philadelphia", "USA", 39.9008, -75.1675, 12, 32.1, 30.2, 68, 46, 6, "philadelphia__photo.jpg"],
+          ["San Francisco Bay Area Stadium", "Levi's Stadium", "Santa Clara", "USA", 37.403, -121.97, 8, 26.8, 27.4, 62, 0, 6, "san_francisco_bay_area__photo.jpg"],
+          ["Seattle Stadium", "Lumen Field", "Seattle", "USA", 47.5952, -122.3316, 5, 23.1, 23.2, 68, 13, 6, "seattle__photo.jpg"]
+        ]
+      },
+      "based_on": ["det_01", "det_07"]
+    },
+    "ana_10": {
+      "label": "39-day calendar peaks at 6 matches a day",
+      "content": "The tournament unfolds over 39 days and 34 match days. It opens softly on 11 June with 2 matches, ramps through a dense group stage that peaks at 6 matches in a single day (24 June), then thins to one match per day in the late knockout rounds, ending with the final on 19 July. The dense group-stage days are when the most venues run simultaneously, multiplying the number of pitches exposed to peak afternoon heat on any given day.",
+      "type": "trend", "strength": "moderate",
+      "calculation": {"file": "code/analyze.py", "lines": [161, 169], "output": "first day 2026-06-11 (2 matches), last 2026-07-19 (1)\nbusiest day: 2026-06-24 with 6 matches"},
+      "data_table": {
+        "description": "Matches per match-day (sampled key days; full 34-day series in code)",
+        "columns": ["date", "matches"],
+        "rows": [
+          ["2026-06-11", 2], ["2026-06-12", 3], ["2026-06-13", 4], ["2026-06-15", 4],
+          ["2026-06-18", 4], ["2026-06-21", 4], ["2026-06-24", 6], ["2026-06-27", 4],
+          ["2026-06-30", 2], ["2026-07-04", 2], ["2026-07-07", 1], ["2026-07-11", 2],
+          ["2026-07-14", 1], ["2026-07-18", 1], ["2026-07-19", 1]
+        ]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_11": {
+      "label": "Humidity drives the feels-like penalty",
+      "content": "Why does Houston (33.5C air) feel hotter than Dallas (34.9C air)? Humidity. The gap between feels-like and air temperature is largest at the most humid venues: Miami adds +5.9C, Houston +5.1C, while dry Santa Clara actually feels 0.6C cooler than its air temperature. Across all 16 venues the correlation between humidity and the feels-like penalty is positive (Pearson r = 0.49). This is the meteorological mechanism behind the player-welfare concern: it is not just heat, it is heat the body cannot shed by sweating.",
+      "type": "correlation", "strength": "moderate",
+      "calculation": {"file": "code/analyze.py", "lines": [172, 187], "output": " +5.9C feels-gap hum 82.9% Miami Gardens\n +5.1C feels-gap hum 76.5% Houston\n ...\n -0.6C feels-gap hum 62.3% Santa Clara\npearson(humidity, feels-gap) = 0.49"},
+      "data_table": {
+        "description": "Feels-like minus air-high gap vs humidity, all venues",
+        "columns": ["city", "humidity_pct", "feels_gap_c"],
+        "rows": [
+          ["Miami Gardens", 82.9, 5.9], ["Houston", 76.5, 5.1], ["Arlington", 61.6, 3.4],
+          ["Atlanta", 72.8, 3.3], ["Kansas City", 67.2, 2.6], ["Monterrey", 63.6, 2.2],
+          ["Philadelphia", 68.6, 1.9], ["East Rutherford", 71.7, 1.8], ["Foxborough", 76.0, 1.6],
+          ["Guadalajara", 74.2, 1.4], ["Toronto", 72.3, 1.3], ["Inglewood", 70.4, 1.0],
+          ["Mexico City", 67.9, 0.4], ["Vancouver", 73.6, 0.4], ["Seattle", 68.6, -0.1],
+          ["Santa Clara", 62.3, -0.6]
+        ]
+      },
+      "based_on": ["det_04", "det_05"]
+    },
+    "ana_12": {
+      "label": "The headline extremes",
+      "content": "The dataset's extremes frame the whole story: hottest feels-like venue is Houston at 38.6C; coolest is Vancouver at 21.5C; wettest is Miami with rain on 88% of days; driest is Santa Clara at 0%; highest is Mexico City at 2,200 m; and the single hottest day recorded in the window at any venue was Monterrey at 42.5C. These six numbers are the stat callouts that anchor the location-and-weather narrative.",
+      "type": "anomaly", "strength": "strong",
+      "calculation": {"file": "code/analyze.py", "lines": [190, 204], "output": "hottest feels-like: Houston 38.6C\ncoolest feels-like: Vancouver 21.5C\nwettest: Miami Gardens 88% of days\ndriest: Santa Clara 0% of days\nhighest altitude: Mexico City 2200m\nhottest single day on record in window: Monterrey 42.5C"},
+      "data_table": {
+        "description": "Headline stat callouts",
+        "columns": ["metric", "city", "value"],
+        "rows": [
+          ["Hottest feels-like", "Houston", "38.6 C"],
+          ["Coolest feels-like", "Vancouver", "21.5 C"],
+          ["Wettest (rainy days)", "Miami", "88%"],
+          ["Driest (rainy days)", "Santa Clara", "0%"],
+          ["Highest altitude", "Mexico City", "2,200 m"],
+          ["Hottest day on record", "Monterrey", "42.5 C"]
+        ]
+      },
+      "based_on": ["det_04"]
+    }
+  },
+  "caveats": [
+    {"id": "ana_caveat_01", "content": "All weather figures are TYPICAL historical climate for the 11 Jun-19 Jul window averaged over 2021-2024 (Open-Meteo, CC BY 4.0), NOT a 2026 forecast for any specific match date. They describe the loaded dice, not the roll."},
+    {"id": "ana_caveat_02", "content": "Apparent (feels-like) temperature approximates a heat index from air temperature, humidity, wind and radiation; it is not the WBGT metric FIFA/FIFPRO use for thresholds, though it tracks the same heat-stress concept."},
+    {"id": "ana_caveat_03", "content": "Raw climate ignores stadium roofs and air conditioning. Dallas (AT&T), Houston (NRG) and Atlanta (Mercedes-Benz) have full climate control that buffers their high feels-like numbers; BC Place's roof will be OPEN for 2026 and MetLife has no roof. Heat numbers are the hazard, not the experienced condition."},
+    {"id": "ana_caveat_04", "content": "Fixtures include playoff placeholder team names (e.g. slash-separated opponents); the location/weather analysis depends only on venue and date, so this does not affect the findings."},
+    {"id": "ana_caveat_05", "content": "Kansas City / Arrowhead Stadium has no cached real photo; it is represented in the map by a placeholder, never a fabricated image."}
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "meta": { "role": "editor", "version": "2.0" },
+  "core_claim": "Oxford and Cambridge have spent three centuries dividing Britain's elite — Oxford manufactures the rulers, Cambridge the discoverers — and the political half has hardened into a near-monopoly that has owned Downing Street for nearly ninety years.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — Two trains, two destinies",
+      "purpose": "hook",
+      "title": "Two trains, two destinies",
+      "findings": ["ana_01"],
+      "context": ["det_02", "det_03"],
+      "triage": { "ana_01": "lead" },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "image",
+      "editorial_notes": "31 vs 15 and 30 vs 79 must be exact; the 2.07:1 and 2.63:1 ratios must not be rounded differently."
+    },
+    "edt_02": {
+      "label": "The headline tension",
+      "purpose": "context",
+      "title": "The prime-minister factory and the Nobel factory",
+      "findings": ["ana_01"],
+      "context": ["det_02", "det_03"],
+      "triage": { "ana_01": "lead" },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Use the head-to-head with real Oxford/Cambridge crests. Guess-first quiz on the PM count is ideal here."
+    },
+    "edt_03": {
+      "label": "The bench — three centuries of faces",
+      "purpose": "evidence",
+      "title": "The whole bench",
+      "findings": ["ana_09", "ana_02"],
+      "context": ["det_01", "det_05"],
+      "triage": { "ana_09": "lead", "ana_02": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": "interactive",
+      "editorial_notes": "Filterable portrait card deck of all 59 PMs using real Wikimedia portraits, filter by Oxford/Cambridge/Other/None. Every portrait credited (artist + license)."
+    },
+    "edt_04": {
+      "label": "The regime change",
+      "purpose": "turn",
+      "title": "The day Cambridge stopped",
+      "findings": ["ana_03"],
+      "context": ["det_06"],
+      "triage": { "ana_03": "lead" },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "video",
+      "editorial_notes": "14 vs 0 since 1937 is the killer stat. Stacked timeline chart by period. Hero motion video as chapter break."
+    },
+    "edt_05": {
+      "label": "The college inside the university",
+      "purpose": "evidence",
+      "title": "One college, thirteen Prime Ministers",
+      "findings": ["ana_04", "ana_05"],
+      "context": ["det_07"],
+      "triage": { "ana_04": "lead", "ana_05": "supporting" },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "Christ Church 13, Balliol 4. Eton 20, Eton+Christ Church 9 — keep exact."
+    },
+    "edt_06": {
+      "label": "The ones who broke the mould",
+      "purpose": "color",
+      "title": "The eleven who didn't fit",
+      "findings": ["ana_06"],
+      "context": ["det_05"],
+      "triage": { "ana_06": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "Name Lloyd George, Callaghan, Churchill, Major, Brown. Use their real portraits as a small inline strip."
+    },
+    "edt_07": {
+      "label": "What the totals hide",
+      "purpose": "evidence",
+      "title": "Correcting for who gets remembered",
+      "findings": ["ana_07"],
+      "context": ["det_04"],
+      "triage": { "ana_07": "lead" },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": null,
+      "editorial_notes": "MUST keep the coverage-bias caveat visible — never present alumni totals as a size comparison. Rates 0.79/0.48/0.76/2.53 and 1.65x/3.30x exact."
+    },
+    "edt_08": {
+      "label": "Close — who runs the country",
+      "purpose": "close",
+      "title": "Who runs the country, and where were they made",
+      "findings": ["ana_02"],
+      "context": ["det_08"],
+      "triage": { "ana_02": "supporting" },
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "End on the open question, not a summary. 76.3% and 14 must stay exact."
+    }
+  },
+  "full_triage": {
+    "ana_01": "lead",
+    "ana_02": "supporting",
+    "ana_03": "lead",
+    "ana_04": "lead",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "lead",
+    "ana_09": "lead",
+    "ana_10": "supporting"
+  }
+}

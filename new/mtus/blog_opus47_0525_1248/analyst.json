@@ -1,0 +1,223 @@
+{
+  "meta": { "role": "analyst", "version": "2.0" },
+  "dataset": {
+    "files": ["MTUS_haf.dta"],
+    "rows": 1429253,
+    "columns": 160,
+    "what_one_row_represents": "One harmonized time-use diary day for one person: a full 24-hour (1,440-minute) accounting of activities collapsed into 25 standard categories, plus that person's demographics, country, survey year, and survey weights.",
+    "time_range": "Surveys 1961-2023 (diary years 1961-2023)",
+    "geographic_scope": "25 countries (US, KR, IT, NL, UK, ES, CA, FR, HU, ZA, FI, BE, AT, DE, NO, BG, DK, AR, SI, IL, PL, AM, RS, CZ, PE)",
+    "method_note": "All means are PROPWT-weighted (the CTUR proposed weight, which also corrects day-of-week imbalance) and restricted to good-quality diaries (propwt>0) with valid sex. Analysis read only column subsets from MTUS_haf.dta. Activity totals are minutes/day. Composites: housework = foodprep+cleanetc+maintain+shopserv+garden+petcare; childcare = pkidcare+ikidcare; unpaid = housework+childcare+eldcare; screen = tvradio+compint; totalwork = paidwork+unpaid."
+  },
+  "items": {
+    "ana_01": {
+      "label": "The unpaid-work gender gap: women do 2.3x men's",
+      "content": "Across all 1.4 million weighted diary days, the division of labour is stark and asymmetric. Women average 236.8 minutes a day of unpaid work (housework, childcare and adult care) to men's 104.9 — a gap of 131.9 minutes, meaning women do 2.26 times as much. The largest single piece is routine housework: women 201.0 minutes versus men 90.0. Men compensate with paid work: 228.3 minutes a day to women's 128.8, a 99.4-minute lead. But the paid surplus does not fully cancel the unpaid one. Add the two together and women's total work day (365.6 minutes) is 32.5 minutes longer than men's (333.2) — the 'second shift' visible in the numbers, and consistent with OECD findings that women's unpaid work is roughly twice men's.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [59, 78],
+        "output": "Men: paid=228.3 (3h48m) unpaid=104.9 (1h45m) housework=90.0 childcare=11.3 total=333.2 (5h33m)\nWomen: paid=128.8 (2h09m) unpaid=236.8 (3h57m) housework=201.0 childcare=30.2 total=365.6 (6h06m)\nUnpaid gap (W-M): 131.9 min; ratio W/M = 2.26\nPaid gap (M-W): 99.4 min\nTotal work gap (W-M): 32.5 min"
+      },
+      "data_table": {
+        "description": "Weighted minutes/day by sex across work types",
+        "columns": ["sex", "category", "minutes"],
+        "rows": [
+          ["Men", "Paid work", 228.3], ["Women", "Paid work", 128.8],
+          ["Men", "Housework", 90.0], ["Women", "Housework", 201.0],
+          ["Men", "Childcare", 11.3], ["Women", "Childcare", 30.2],
+          ["Men", "Total work", 333.2], ["Women", "Total work", 365.6]
+        ]
+      },
+      "based_on": ["det_04", "det_06", "det_09"]
+    },
+    "ana_02": {
+      "label": "The average human day, in minutes",
+      "content": "Pooled across every country and year and weighted to represent populations, the average diary day is dominated by three blocks. Sleep is by far the largest at 506.4 minutes (8h26m). Screen time — television, radio and computer combined — is the next single leisure block at 142.5 minutes (2h22m). Paid work averages 176.8 minutes and housework 147.5 across the whole sample (which includes the non-employed, children and retirees, pulling the paid-work average below a working adult's). The reported categories shown sum to 1,408.5 of the 1,440 minutes in a day; the small remainder is spread across minor and unclassified activities. The day, in short, is mostly sleep, work, and screens.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [80, 94],
+        "output": "Sleep 506.4 (8h26m); Paid work 176.8; Housework 147.5; Childcare 21.1; Eating 82.5; Personal care 53.0; Education 44.0; Commute 23.2; Other travel 46.7; TV/radio/computer 142.5; Reading 23.0; Sport 23.7; Going out 28.1; Other leisure 90.0. Sum=1408.5 of 1440."
+      },
+      "data_table": {
+        "description": "Weighted average day, minutes by activity (all people, all countries, all years)",
+        "columns": ["activity", "minutes"],
+        "rows": [
+          ["Sleep", 506.4], ["TV, radio & computer", 142.5], ["Paid work", 176.8],
+          ["Housework", 147.5], ["Other leisure", 90.0], ["Eating & drinking", 82.5],
+          ["Personal care", 53.0], ["Other travel", 46.7], ["Education", 44.0],
+          ["Going out", 28.1], ["Sport & exercise", 23.7], ["Commute", 23.2],
+          ["Reading", 23.0], ["Childcare", 21.1]
+        ]
+      },
+      "based_on": ["det_02"]
+    },
+    "ana_03": {
+      "label": "Who sleeps most and least (country ranking)",
+      "content": "Sleep varies by more than an hour and a half a day across countries. South Africa tops the ranking at 566.0 minutes (9h26m), followed by Armenia (554.8) and Bulgaria (554.5). At the bottom sit Austria (457.1, 7h37m), the United Kingdom (468.4) and South Korea (471.1, 7h51m) — the latter consistent with Korea's reputation as one of the most sleep-deprived, overworked societies. The 109-minute spread between South Africa and Austria is larger than most individual activity categories. Some of this gap reflects genuine differences in daily life; some reflects different survey years and diary conventions across countries, so the ranking should be read as indicative rather than a precise league table.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [96, 104],
+        "output": "South Africa 566.0; Armenia 554.8; Bulgaria 554.5; ... South Korea 471.1; United Kingdom 468.4; Austria 457.1"
+      },
+      "data_table": {
+        "description": "Weighted mean sleep, minutes/day, by country (ranked)",
+        "columns": ["country", "iso", "minutes"],
+        "rows": [
+          ["South Africa","ZA",566.0],["Armenia","AM",554.8],["Bulgaria","BG",554.5],
+          ["Israel","IL",537.2],["Peru","PE",535.2],["Spain","ES",527.4],["Italy","IT",525.1],
+          ["France","FR",523.1],["Hungary","HU",519.7],["Belgium","BE",516.0],["Slovenia","SI",514.9],
+          ["Finland","FI",513.8],["Netherlands","NL",512.8],["Argentina","AR",508.8],
+          ["United States","US",507.4],["Canada","CA",506.5],["Norway","NO",505.9],["Germany","DE",502.7],
+          ["Serbia","RS",500.6],["Poland","PL",490.1],["Czech Republic","CZ",484.0],["Denmark","DK",480.5],
+          ["South Korea","KR",471.1],["United Kingdom","UK",468.4],["Austria","AT",457.1]
+        ]
+      },
+      "based_on": ["det_03", "det_08"]
+    },
+    "ana_04": {
+      "label": "Who does the most paid work (country ranking)",
+      "content": "Average daily paid work (across the whole population, including the non-employed) ranges from 292.7 minutes in Poland and 275.7 in the Czech Republic down to 131.1 in Belgium and 132.9 in the Netherlands. South Korea, despite its overwork reputation, sits high at 210.7 minutes — but is below several Central and Eastern European countries, a reminder that population-wide diary averages mix employment rates, part-time prevalence and survey timing, not just the intensity of those who work. The Netherlands' low figure reflects its well-known high rate of part-time employment. These are population averages, not averages among workers.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [106, 114],
+        "output": "Poland 292.7; Czech Republic 275.7; Serbia 271.5; Denmark 215.4; Peru 212.7; South Korea 210.7; ... Italy 144.5; Netherlands 132.9; Belgium 131.1"
+      },
+      "data_table": {
+        "description": "Weighted mean paid work, minutes/day, by country (ranked)",
+        "columns": ["country", "iso", "minutes"],
+        "rows": [
+          ["Poland","PL",292.7],["Czech Republic","CZ",275.7],["Serbia","RS",271.5],["Denmark","DK",215.4],
+          ["Peru","PE",212.7],["South Korea","KR",210.7],["Hungary","HU",204.8],["Canada","CA",200.1],
+          ["United States","US",197.8],["Argentina","AR",195.4],["Germany","DE",188.6],["Norway","NO",181.3],
+          ["Finland","FI",178.7],["United Kingdom","UK",176.0],["Israel","IL",172.0],["Slovenia","SI",171.1],
+          ["Bulgaria","BG",167.6],["France","FR",166.0],["Armenia","AM",160.4],["Austria","AT",155.2],
+          ["Spain","ES",155.2],["South Africa","ZA",144.7],["Italy","IT",144.5],["Netherlands","NL",132.9],
+          ["Belgium","BE",131.1]
+        ]
+      },
+      "based_on": ["det_03", "det_08"]
+    },
+    "ana_05": {
+      "label": "The housework gender gap is widest in Peru, narrowest in the US",
+      "content": "The size of the unpaid-work gender gap depends enormously on where you live. In Peru women do 290.8 more minutes of unpaid work per day than men (women 346.6, men 55.9) — nearly five hours of difference. Serbia (273.3), Armenia (242.5), the Czech Republic (227.6) and Poland (223.7) follow. The gap is smallest in the United States (79.6 minutes), Finland (88.4), Canada (90.0) and Belgium (94.6). The pattern broadly tracks the literature: Nordic and Anglo countries sit near the bottom while several Southern, Eastern European and Latin American societies sit near the top. Note the US and Finland figures fit the established 'low-gap' group, while Korea's 170-minute gap aligns with its reputation for traditional divisions of household labour.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [116, 126],
+        "output": "Peru W=346.6 M=55.9 gap=290.8; Serbia gap=273.3; Armenia 242.5; Czech 227.6; Poland 223.7; ... Finland 88.4; United States W=206.8 M=127.1 gap=79.6"
+      },
+      "data_table": {
+        "description": "Unpaid-work gender gap (women minus men, minutes/day) by country, with each sex's level",
+        "columns": ["country", "iso", "women", "men", "gap"],
+        "rows": [
+          ["Peru","PE",346.6,55.9,290.8],["Serbia","RS",409.6,136.4,273.3],["Armenia","AM",295.7,53.2,242.5],
+          ["Czech Republic","CZ",351.6,124.0,227.6],["Poland","PL",320.2,96.5,223.7],["Italy","IT",276.5,83.1,193.4],
+          ["Austria","AT",297.9,126.8,171.1],["South Korea","KR",207.5,37.3,170.2],["Israel","IL",248.3,79.0,169.3],
+          ["Hungary","HU",259.7,98.5,161.2],["Germany","DE",293.1,135.4,157.7],["Spain","ES",251.4,100.2,151.2],
+          ["South Africa","ZA",216.7,83.6,133.1],["Slovenia","SI",264.2,132.1,132.1],["Bulgaria","BG",274.2,143.4,130.8],
+          ["United Kingdom","UK",237.4,109.4,128.1],["Argentina","AR",253.1,126.6,126.4],["Netherlands","NL",240.7,115.3,125.4],
+          ["Norway","NO",258.9,133.5,125.4],["France","FR",262.8,142.9,119.9],["Denmark","DK",216.9,101.3,115.6],
+          ["Belgium","BE",231.5,136.9,94.6],["Canada","CA",221.9,131.8,90.0],["Finland","FI",213.6,125.2,88.4],
+          ["United States","US",206.8,127.1,79.6]
+        ]
+      },
+      "based_on": ["det_04", "det_05", "det_08"]
+    },
+    "ana_06": {
+      "label": "The screen shifts from broadcast to computer",
+      "content": "The MTUS captures the digital transition in slow motion. Computer and internet time (e-mail, web, programming, games) was effectively zero in the 1960s and 1970s, registered a trace 0.4 minutes/day in the 1980s, then climbed to 5.3 minutes in the 1990s, 14.1 in the 2000s, 16.6 in the 2010s and 19.5 in the 2020s. Television and radio, meanwhile, never collapsed — it rose from about 100 minutes/day in the 1960s-70s to 151.1 minutes in the 2020s. The result is that total screen time (broadcast plus computer) has grown steadily from roughly 100 minutes a day in the 1970s to 170.6 in the 2020s. Note that diaries record only one primary activity at a time, so computer time here is almost certainly an undercount of true device exposure in the smartphone era.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [128, 139],
+        "output": "1960s TV/radio=104.4 computer=0.0 screen=104.4; 1970s 100.3/0.0/100.3; 1980s 117.7/0.4/118.1; 1990s 135.2/5.3/140.5; 2000s 131.3/14.1/145.4; 2010s 147.5/16.6/164.0; 2020s 151.1/19.5/170.6"
+      },
+      "data_table": {
+        "description": "Weighted minutes/day of TV/radio, computer/internet, and total screen, by decade",
+        "columns": ["decade", "tv_radio", "computer", "total_screen"],
+        "rows": [
+          ["1960s",104.4,0.0,104.4],["1970s",100.3,0.0,100.3],["1980s",117.7,0.4,118.1],
+          ["1990s",135.2,5.3,140.5],["2000s",131.3,14.1,145.4],["2010s",147.5,16.6,164.0],["2020s",151.1,19.5,170.6]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_07": {
+      "label": "How the average day changed: more sleep and screens, less work",
+      "content": "Comparing diaries before 1980 with diaries from 2010 onward shows where the modern day diverged from the 20th-century one. Reported sleep rose sharply (+90.0 minutes), though much of this reflects changing diary conventions and the mix of countries measured early versus late, so it should be read cautiously. More robustly: TV and radio rose +45.9 minutes, computer and internet appeared from nothing (+17.0), paid work fell -22.8 minutes and housework fell -13.9. Childcare rose +6.3 and sport +5.8. The direction is consistent with the broad story of the era: less time at work and on housework, more on screens and (modestly) on active leisure and hands-on parenting.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [141, 151],
+        "output": "early n=105335 (<1980); late n=314211 (>=2010). Sleep 436.9->526.9 (+90.0); Paid work 200.5->177.7 (-22.8); Housework 158.7->144.8 (-13.9); TV&radio 102.1->148.0 (+45.9); Computer 0.0->17.0 (+17.0); Eating 79.6->75.4 (-4.2); Commute 20.5->22.4 (+1.8); Sport 14.8->20.6 (+5.8); Childcare 16.7->23.1 (+6.3)"
+      },
+      "data_table": {
+        "description": "Weighted minutes/day, pre-1980 vs 2010+, by activity",
+        "columns": ["activity", "before_1980", "after_2010", "change"],
+        "rows": [
+          ["TV & radio",102.1,148.0,45.9],["Computer & internet",0.0,17.0,17.0],
+          ["Childcare",16.7,23.1,6.3],["Sport & exercise",14.8,20.6,5.8],["Commute",20.5,22.4,1.8],
+          ["Eating",79.6,75.4,-4.2],["Housework",158.7,144.8,-13.9],["Paid work",200.5,177.7,-22.8]
+        ]
+      },
+      "based_on": ["det_07", "det_02"]
+    },
+    "ana_08": {
+      "label": "The unpaid-work gap narrows as men step up",
+      "content": "Watching the unpaid-work gender gap across decades shows the convergence the literature predicts — driven mostly by men. Setting aside the sparse, convention-affected 1960s, the gap ran 129.6 minutes in the 1970s, widened to 156.5 in the 1980s, then narrowed steadily: 143.7 (1990s), 135.6 (2000s), 89.4 (2010s) and 88.6 (2020s). The mechanism is asymmetric: women's unpaid minutes drifted down only modestly (260.8 in the 1980s to 222.7 in the 2020s) while men's rose substantially (104.3 to 134.0). In other words, the gap closed less because women did dramatically less and more because men finally did more — but the gap is still roughly an hour and a half a day, far from parity.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [153, 164],
+        "output": "1960s W=314.5 M=91.1 gap=223.4; 1970s 216.1/86.5/129.6; 1980s 260.8/104.3/156.5; 1990s 241.2/97.5/143.7; 2000s 234.5/98.9/135.6; 2010s 216.2/126.7/89.4; 2020s 222.7/134.0/88.6"
+      },
+      "data_table": {
+        "description": "Unpaid-work minutes/day by sex and the gap, by decade",
+        "columns": ["decade", "women", "men", "gap"],
+        "rows": [
+          ["1970s",216.1,86.5,129.6],["1980s",260.8,104.3,156.5],["1990s",241.2,97.5,143.7],
+          ["2000s",234.5,98.9,135.6],["2010s",216.2,126.7,89.4],["2020s",222.7,134.0,88.6]
+        ]
+      },
+      "based_on": ["det_05", "det_04"]
+    },
+    "ana_09": {
+      "label": "Total work time stays remarkably flat across decades",
+      "content": "When paid and unpaid work are added into a single 'total work' measure, the decade-to-decade total is strikingly stable for the whole population — hovering between roughly 310 and 380 minutes a day from the 1970s to the 2020s, with no clear trend. This is the historical 'work-time invariance' described in the time-use literature: what changes over the decades is the mix of who does paid versus unpaid work, far more than the total amount of work society performs. In every decade women's total work edges above men's, but both sexes' totals move together, reinforcing that the gender story is about composition, not aggregate effort.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/analyze_mtus.py",
+        "lines": [166, 177],
+        "output": "1970s W_total=318.2 M_total=302.9 all=310.8; 1980s 359.2/320.6/340.7; 1990s 370.2/336.9/354.1; 2000s 363.4/322.9/343.8; 2010s 357.7/335.9/347.2; 2020s 381.9/373.3/377.8"
+      },
+      "data_table": {
+        "description": "Total work (paid+unpaid) minutes/day by sex, by decade",
+        "columns": ["decade", "women", "men", "all"],
+        "rows": [
+          ["1970s",318.2,302.9,310.8],["1980s",359.2,320.6,340.7],["1990s",370.2,336.9,354.1],
+          ["2000s",363.4,322.9,343.8],["2010s",357.7,335.9,347.2],["2020s",381.9,373.3,377.8]
+        ]
+      },
+      "based_on": ["det_05", "det_06"]
+    }
+  },
+  "caveats": [
+    { "id": "ana_caveat_01", "content": "Countries were surveyed in different years with harmonised but not identical diary instruments and recall windows; cross-country differences partly reflect when and how a country was measured." },
+    { "id": "ana_caveat_02", "content": "Diaries record one primary activity per moment, so computer/ICT time undercounts true device exposure (multitasked smartphone use is largely invisible)." },
+    { "id": "ana_caveat_03", "content": "All means are PROPWT-weighted on good-quality diaries (propwt>0); raw unweighted averages would differ. Population averages include the non-employed, children and retirees, which pulls paid-work means below a working adult's day." },
+    { "id": "ana_caveat_04", "content": "Decade trends mix different country compositions; the 1960s in particular rest on few countries and older diary conventions (e.g. unusually high reported sleep), so early-decade levels are read cautiously." }
+  ]
+}

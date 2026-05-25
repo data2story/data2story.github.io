@@ -1,0 +1,305 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Rich-media run using all five channels, but the data dictates the centerpiece. The STAR of this story is the set of 16 REAL HLE question images — shown in a guess-then-reveal card deck / gallery where each card pairs the actual question image + question text + subject + contributing author + an answer reveal. This is the load-bearing interactive. Charts carry the distribution findings (category, subject long tail, image-rate, launch scores). An AI conceptual hero (exam hall at the frontier of knowledge) + its animated clip set the tone without faking any logos or text. A generated ambient bed gives a non-autoplay cerebral atmosphere. Real images > AI images here, deliberately.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": { "used": true, "reason": "Strong quantitative findings: category distribution vs official benchmark, 193-subject long tail, image-rate by category, exactMatch/MC splits, and launch model scores. Multiple distinct chart types." },
+      "image": { "used": true, "reason": "PRIMARY channel is 16 real dataset question images (the centerpiece gallery). One AI conceptual hero adds atmosphere about the frontier of knowledge. No fake logos/text generated." },
+      "video": { "used": true, "reason": "The AI hero still is animated with image2video (veo) into a 6s parallax clip of the floating-equation exam hall — a living frontier-of-knowledge motif for the opening." },
+      "audio": { "used": true, "reason": "A generated tense/cerebral ambient instrumental bed (lyria) provides optional, non-autoplay atmosphere fitting the 'impossible exam' tone, with a mute/play toggle and full visual fallback." },
+      "interactive_or_map": { "used": true, "reason": "No geography to map; instead the centerpiece is a guess-then-reveal card deck over the 16 real questions — readers try a real HLE question, then reveal the answer. Charts also offer hover detail." }
+    },
+    "media_blockers": [
+      {
+        "category": "video",
+        "reason": "First image2video (veo google/veo-3.1-fast) attempt returned 'The service is currently experiencing high load' and failed at 36s.",
+        "attempted_command": "tools/openrouter-image2video/scripts/generate_video_from_image.py --image assets/hero.png --duration 6 --aspect-ratio 16:9",
+        "fallback_des": "des_02b",
+        "resolution": "Retried once per skill guidance; the retry succeeded and produced hero_motion.mp4 (7.6MB, 6s). No fallback needed."
+      }
+    ]
+  },
+  "items": {
+    "des_hero": {
+      "label": "Conceptual hero — exam hall at the frontier of knowledge",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "prompt": "Cinematic conceptual hero: a colossal dark stone examination hall at the frontier of human knowledge, rows of empty desks dissolving into a glowing aurora of equations, molecular structures, star charts and musical notation floating like constellations at the far edge of a void; a single shaft of cold blue light on one distant desk. Deep indigo/teal with gold highlights, volumetric fog, painterly editorial illustration, no text, no logos."
+      },
+      "brief": "Full-bleed page hero. An empty exam hall whose ceiling becomes a constellation of equations and star charts, one lone lit desk under a blue shaft. Sets the awe/intimidation tone. Headline + dek overlaid with a dark scrim at the bottom. Poster/fallback for the motion clip.",
+      "rationale": "The dataset is abstract (a benchmark); a single striking metaphor for 'the limit of human knowledge' frames the piece without faking any chart, logo or readable text.",
+      "based_on": []
+    },
+    "des_hero_motion": {
+      "label": "Animated hero clip (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "hero_motion.mp4",
+        "tool": "image2video",
+        "model": "google/veo-3.1-fast",
+        "source_image": "assets/hero.png",
+        "frame_role": "first",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "prompt": "very slow cinematic parallax push-in toward the lit distant desk; floating equations and star charts drift and twinkle; faint volumetric fog; the blue light subtly pulses; no camera shake, no text",
+        "poster": "hero.png"
+      },
+      "brief": "6-second muted, looping clip animating hero.png — slow parallax push-in with drifting equation-constellations. Used as the hero background behind the title; autoplays muted on view, with hero.png as the poster fallback. The reader should feel the frontier is alive.",
+      "rationale": "We already had a strong still; image2video preserves its composition while adding the gentle motion that a static hero lacks.",
+      "based_on": []
+    },
+    "des_gallery": {
+      "label": "CENTERPIECE — Can you answer a real HLE question? (guess-then-reveal deck)",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "card_deck_guess_reveal",
+        "data_source": "assets/gallery.json",
+        "initial_state": "A deck/grid of cards, one per real HLE question image. Each card front shows: a category chip (color-coded by the 8 categories), the subject label, the REAL question image, the verbatim question text, and a hidden answer behind a 'Reveal answer' button. A filter row lets the reader show all 8 categories or one.",
+        "trigger": "Reader reads a question, optionally studies the image, then clicks 'Reveal answer' on that card.",
+        "transition": "The answer panel slides open showing the exact correct answer, the answer_type (exactMatch / multipleChoice) and the credit line 'Source: Humanity's Last Exam (cais/hle); question contributed by <author>'.",
+        "payoff": "The reader feels the gap between what they can do and what the question demands — the visceral definition of 'impossibly hard'.",
+        "images": [
+          {"file": "hle_00_other_chess.jpg", "category": "Other", "subject": "Chess", "author": "Elliott T"},
+          {"file": "hle_01_chemistry_chemistry.png", "category": "Chemistry", "subject": "Chemistry", "author": "Carl F"},
+          {"file": "hle_02_computer_science_computer_science.png", "category": "Computer Science/AI", "subject": "Computer Science", "author": "Ștefan C"},
+          {"file": "hle_03_math_mathematics.png", "category": "Math", "subject": "Mathematics", "author": "Lennart F"},
+          {"file": "hle_04_other_musicology.png", "category": "Other", "subject": "Musicology", "author": "Mikhail D"},
+          {"file": "hle_05_biologymedicine_medicine.png", "category": "Biology/Medicine", "subject": "Medicine", "author": "Ethan B"},
+          {"file": "hle_06_chemistry_electrochemistry.webp", "category": "Chemistry", "subject": "Electrochemistry", "author": "Roman L"},
+          {"file": "hle_07_biologymedicine_microbiology.png", "category": "Biology/Medicine", "subject": "Microbiology", "author": "Richard W"},
+          {"file": "hle_08_humanitiessocial_education.gif", "category": "Humanities/Social Science", "subject": "Education", "author": "Anonymous contributor"},
+          {"file": "hle_09_engineering_mechanical_engineeri.jpg", "category": "Engineering", "subject": "Mechanical Engineering", "author": "Anonymous contributor"},
+          {"file": "hle_10_humanitiessocial_economics.png", "category": "Humanities/Social Science", "subject": "Economics", "author": "Anonymous contributor"},
+          {"file": "hle_11_engineering_materials_science.jpg", "category": "Engineering", "subject": "Materials Science", "author": "Anonymous contributor"},
+          {"file": "hle_12_physics_physics.png", "category": "Physics", "subject": "Physics", "author": "Felipe D"},
+          {"file": "hle_13_computer_science_data_science.png", "category": "Computer Science/AI", "subject": "Data Science", "author": "Victor V"},
+          {"file": "hle_14_physics_astronomy.png", "category": "Physics", "subject": "Astronomy", "author": "Johannes S"},
+          {"file": "hle_15_math_graph_theory.png", "category": "Math", "subject": "Graph Theory", "author": "Anonymous contributor"}
+        ]
+      },
+      "brief": "The heart of the page. 16 cards, each built from gallery.json: color-coded category chip, subject, the REAL question image (object-fit contain on a dark mat so wide/tall images aren't cropped), the full question text (render LaTeX/math safely as monospace/plain — do NOT let raw $...$ break layout; just show it literally in a code-style span), and a 'Reveal answer' toggle. Below the deck, a category filter (All + 8 chips). Every card carries the attribution line. Lead the section with the two anchor stats: GPT-4o 2.7% at launch (det_03) and 13.7% of questions need an image (ana_05).",
+      "rationale": "Editor flagged this as the load-bearing centerpiece and chose 'interactive'. Real question images make difficulty visceral in a way no chart can; guess-then-reveal maximizes the felt gap.",
+      "based_on": ["ana_05"]
+    },
+    "des_anchor_launch": {
+      "label": "Stat callout — GPT-4o scored 2.7%",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": { "value": "2.7%", "label": "GPT-4o's score on Humanity's Last Exam at launch — on benchmarks like MMLU it scores over 90%", "data_source": null },
+      "brief": "Headline stat near the hook. Large 2.7% with the comparison to 90%+ on MMLU underneath. Pull from det_03.",
+      "rationale": "One number that captures the entire premise.",
+      "based_on": []
+    },
+    "des_stats_origin": {
+      "label": "Stat trio — who built it",
+      "type": "stat_callout",
+      "section": "edt_02",
+      "content": { "value": "~1,000 / 500+ / 50", "label": "subject-matter experts · institutions · countries", "data_source": null },
+      "brief": "Three big numbers in a row: ~1,000 contributors, 500+ institutions, 50 countries (det_01). Plus a secondary line: 2,500 questions across 100+ subjects. Place beside or under the 'Test Built to Be Failed' prose.",
+      "rationale": "The scale of human effort is itself a finding worth a callout.",
+      "based_on": []
+    },
+    "des_funnel": {
+      "label": "Difficulty funnel — 70k attempts to 2,500 questions",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "static_funnel_diagram",
+        "data_source": null,
+        "stages": [
+          {"label": "Model-evaluation attempts", "value": "70,000+"},
+          {"label": "Questions that stumped the models", "value": "~13,000"},
+          {"label": "Survived two rounds of expert review", "value": "2,500"}
+        ]
+      },
+      "brief": "A three-stage horizontal funnel (CSS, no chart library needed): 70,000+ attempts → ~13,000 stumpers → 2,500 final questions, each tier narrower and labelled. Annotate that every kept question both beat the models AND passed two human-expert reviews. Numbers from det_05.",
+      "rationale": "The 'engineered difficulty' point is a process/sequence — a funnel shows the brutal attrition better than prose. Replaces the video media hint (no real footage exists; the animated hero already covers motion).",
+      "based_on": []
+    },
+    "des_category": {
+      "label": "Category distribution vs official benchmark",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_02",
+        "x": "pct",
+        "y": "category",
+        "secondary": "official_pct",
+        "highlight": {"category": "Math"},
+        "interaction": "hover tooltip showing count, snapshot %, and official %",
+        "style": {"palette": "category-coded (Math gold/highlight, others teal)", "no_gridlines": true, "sort": "desc", "annotate": "small tick or ghost bar for official_pct to show the match"}
+      },
+      "brief": "Horizontal bars of the 8 categories by share, sorted descending, Math highlighted. Overlay a thin marker per bar for the official benchmark % so the reader sees the snapshot matches official within ~1pp. Lead the section with the Math-dominance stat (40.8%, 3.6x next, from ana_03).",
+      "rationale": "A decisive single comparison; the official overlay doubles as the 'this snapshot is faithful' proof.",
+      "based_on": ["ana_02", "ana_03"]
+    },
+    "des_longtail": {
+      "label": "The long tail of 193 subjects",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_08",
+        "x": "count",
+        "y": "subject",
+        "highlight": {"subject": "Mathematics"},
+        "interaction": "hover shows count and % of exam",
+        "style": {"palette": "single teal with Mathematics highlighted", "no_gridlines": true, "sort": "desc", "annotation": "caption noting 147 subjects appear <=5 times and 83 appear exactly once"}
+      },
+      "brief": "Top-15 subjects as descending bars (Mathematics dwarfs the rest at 863). A bold caption/annotation drives home the tail: 193 distinct subjects, 147 with <=5 questions, 83 singletons. Pair with the author concentration stat as a small inline callout.",
+      "rationale": "Shows both the spike (Mathematics) and, via annotation, the breadth that prose alone undersells.",
+      "based_on": ["ana_08"]
+    },
+    "des_authors": {
+      "label": "Contributor concentration callout + mini-bar",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_09",
+        "x": "count",
+        "y": "author",
+        "highlight": {"author": "Dmitry D"},
+        "interaction": "hover shows question count",
+        "style": {"palette": "muted gold", "no_gridlines": true, "compact": true}
+      },
+      "brief": "Compact top-10 contributor bar (Dmitry D 99 leading). Accompany with the key stat: 579 named authors, top-10 only 22.1%, and 289 (half) wrote exactly one question. Keeps the 'breadth not power-users' point concrete. Avoids a 3rd-chart-in-a-row feel by being compact and stat-led.",
+      "rationale": "Reinforces the long-tail story from the people side; small enough to avoid a chart streak.",
+      "based_on": ["ana_09"]
+    },
+    "des_other": {
+      "label": "What's inside 'Other' — stat strip",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": { "value": "Trivia · Musicology · Art History · Chess · Ballet", "label": "the 233 questions in the 'Other' category — where HLE stops being STEM", "data_source": "ana_10" },
+      "brief": "A short textual strip listing the surprising subjects in 'Other' (Trivia 59, Musicology 27, Art History 22, Games 16, Chess 15, Classical Ballet 13). Tie back to the chess and musicology cards in the gallery. Use ana_10 data.",
+      "rationale": "Color finding best as a punchy list, not another bar chart.",
+      "based_on": ["ana_10"]
+    },
+    "des_imagerate": {
+      "label": "Image rate by category",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_06",
+        "x": "image_pct",
+        "y": "category",
+        "highlight": {"category": "Engineering"},
+        "interaction": "hover shows image_count / total and %",
+        "style": {"palette": "teal gradient by value", "no_gridlines": true, "sort": "desc", "reference_line": "overall 13.7%"}
+      },
+      "brief": "Bars showing % of each category's questions that carry an image, sorted desc (Engineering 42.3% top, Math 4.4% bottom), with a dashed reference line at the overall 13.7%. Lead the section with the exactMatch stats (76.4%, 8-char median answer, 30.5% <=3 chars from ana_04/ana_11) as small stat blocks above the chart so it isn't a chart streak.",
+      "rationale": "Decisive comparison; the reference line frames each field against the whole.",
+      "based_on": ["ana_06", "ana_04", "ana_11"]
+    },
+    "des_format": {
+      "label": "Format by field — MC share mini-chart",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_07",
+        "x": "mc_pct",
+        "y": "category",
+        "highlight": {"category": "Biology/Medicine"},
+        "interaction": "hover shows mc_count / total and %",
+        "style": {"palette": "muted purple", "no_gridlines": true, "sort": "desc", "compact": true}
+      },
+      "brief": "Compact companion bar to des_imagerate: multiple-choice share by category (Biology/Medicine 59.3% top, Math 9.2% bottom). Frame the contrast: diagnosis fits 'which-of-these', a number can be graded exactly. ana_07 data.",
+      "rationale": "Completes the 'shape of a question' section; compact to vary rhythm.",
+      "based_on": ["ana_07"]
+    },
+    "des_scores": {
+      "label": "Launch scores — single digits to o3-mini",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "des_scores_inline",
+        "x": "accuracy",
+        "y": "model",
+        "highlight": {"model": "o3-mini"},
+        "interaction": "hover shows accuracy and calibration error",
+        "style": {"palette": "red-to-amber by accuracy", "no_gridlines": true, "sort": "asc", "annotation": "all launch scores; tool-free early-2025 numbers"},
+        "inline_data": {
+          "description": "Model accuracy at HLE launch (early 2025), no tools (det_03/det_04)",
+          "columns": ["model", "accuracy", "calibration_error"],
+          "rows": [
+            ["GPT-4o", 2.7, 89],
+            ["Grok 2", 3.0, 87],
+            ["Claude 3.5 Sonnet", 4.1, 84],
+            ["Gemini 1.5 Pro", 4.6, 88],
+            ["o1", 8.0, 83],
+            ["DeepSeek-R1", 8.5, 73],
+            ["o3-mini", 13.4, 80]
+          ]
+        }
+      },
+      "brief": "Bar chart of the seven launch model scores (2.7% to 13.4%), with a clear note these are no-tools early-2025 figures. Annotate the calibration-error angle (80%+ for most) in the prose/tooltip — models were confidently wrong (det_04). Then a single contrasting callout: by May 2026 the leader (Gemini 3.1 Pro Preview) reaches ~44.7% (det_09), explicitly labelled as tool-augmented and not directly comparable. Data is inline in this des item (sourced from det_03/det_04); the Programmer should use content.inline_data, NOT an ana_xx table.",
+      "rationale": "The close needs the launch numbers as evidence; a small bar makes the single-digit shock concrete while the prose handles the climb and the caveat.",
+      "based_on": []
+    },
+    "des_progress": {
+      "label": "Stat callout — from 2.7% to ~44.7%",
+      "type": "stat_callout",
+      "section": "edt_07",
+      "content": { "value": "2.7% → ~44.7%", "label": "best HLE score, launch (GPT-4o, no tools) to May 2026 (Gemini 3.1 Pro Preview, tool-augmented) — still over half unsolved", "data_source": null },
+      "brief": "Big before/after stat for the climb (det_03, det_09). Label the comparison caveat explicitly. Sits near des_scores.",
+      "rationale": "The single sharpest signal of how fast the wall is being scaled.",
+      "based_on": []
+    },
+    "des_controversy": {
+      "label": "The cracks — ~30% vs 18% callout",
+      "type": "stat_callout",
+      "section": "edt_07",
+      "content": { "value": "~30%", "label": "of text-only chemistry/biology answers an independent audit (FutureHouse, 2025) flagged as conflicting with the literature; HLE's own re-check put it nearer 18%", "data_source": null },
+      "brief": "Honesty-beat callout (det_10). Render both figures so neither is overstated. This is the close's tension — the exam is remarkable but fallible.",
+      "rationale": "Keeps the controversy visible rather than buried in prose.",
+      "based_on": []
+    },
+    "des_audio": {
+      "label": "Ambient bed — cerebral tension",
+      "type": "audio",
+      "section": "edt_07",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "An optional contemplative/slightly-ominous instrumental bed lets the reader sit with the 'frontier of knowledge' mood — atmosphere prose and charts cannot supply.",
+        "trigger": "Click a small play/mute toggle in the closing section (or a fixed corner button). Never autoplays.",
+        "ui_form": "section-integrated mini-player at the close (small play button + label 'Play ambient bed'), not a generic waveform card.",
+        "content": {
+          "filename": "ambient.wav",
+          "tool": "text2music",
+          "model": "google/lyria-3-pro-preview",
+          "prompt": "Tense, cerebral ambient instrumental bed: slow evolving minor-key synth pads, distant sparse piano, faint pulsing low drone, no drums, no vocals, contemplative and slightly ominous — background for an article about the frontier of knowledge."
+        },
+        "fallback": "Page is fully readable and complete with audio muted; the toggle defaults to OFF and shows a muted-speaker icon.",
+        "novelty_note": "Not a click-to-play tone card and not a sonification — a single ambient bed offered as an optional mood layer at the close, defaulting off."
+      },
+      "brief": "A small, optional, default-off ambient player in the closing section. Mood: cerebral, tense, awe. Visual remains the source of truth.",
+      "rationale": "Audio earns a slot as atmosphere for an abstract topic; kept restrained and non-autoplay with a full visual fallback.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, cerebral, observatory-at-night palette (deep indigo/teal with gold + a category color system)",
+    "text_visual_pattern": "visual-first: cinematic hero/clip → immediate guess-then-reveal real-question deck → alternating prose + charts → close with launch-scores chart, before/after stat, controversy callout, and optional ambient audio",
+    "centrepiece": "des_gallery",
+    "anti_sameness_notes": "Centerpiece is real source images in a guess-then-reveal deck, NOT an AI-art gallery or a funding leaderboard. Charts are all distinct (category-vs-official overlay, long-tail spike, image-rate with reference line, launch-score ramp). Funnel is pure CSS, audio is a default-off ambient bed. Avoid 3 charts in a row by interleaving stat strips and the funnel.",
+    "typography_notes": "Large stat callouts (~64-72px) for 2.7%, ~1,000/500+/50, 2.7%→44.7%. Category color chips reused consistently between the gallery and the category chart. Render math/LaTeX in question text literally inside a monospace span — never inject raw $...$ into flowing HTML where it could break layout. Pull quote for the core claim. Clear visual divider between 'engineered difficulty' and 'the data' acts."
+  }
+}

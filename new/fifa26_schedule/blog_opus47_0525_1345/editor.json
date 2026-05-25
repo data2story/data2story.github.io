@@ -1,0 +1,86 @@
+{
+  "meta": {"role": "editor", "version": "2.0"},
+  "core_claim": "The 2026 World Cup is the first scattered across a continent, and that geography hands teams 16 wildly different climates — with about four in ten matches scheduled into a heat band the players' union calls dangerous.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — One tournament, sixteen climates",
+      "purpose": "hook",
+      "title": "One Tournament, Sixteen Climates",
+      "findings": ["ana_04", "ana_12"],
+      "context": ["det_01", "det_04"],
+      "triage": {"ana_04": "lead", "ana_12": "supporting"},
+      "chart_placeholder": "ana_04",
+      "media_placeholder": "map",
+      "editorial_notes": "17.1C spread, 38.6C Houston, 21.5C Vancouver must be exact. The interactive Leaflet map is the centerpiece and lives here."
+    },
+    "edt_02": {
+      "label": "The first continental World Cup",
+      "purpose": "context",
+      "title": "The First Continental World Cup",
+      "findings": ["ana_02", "ana_03"],
+      "context": ["det_01", "det_02"],
+      "triage": {"ana_03": "supporting", "ana_02": "supporting"},
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "image",
+      "editorial_notes": "78 (USA), 13/13, Dallas=9 exact. Use a real stadium photo here (e.g. AT&T/Dallas or a gallery)."
+    },
+    "edt_03": {
+      "label": "The heat map",
+      "purpose": "evidence",
+      "title": "The Heat Is the Headline",
+      "findings": ["ana_04", "ana_05", "ana_11"],
+      "context": ["det_04", "det_05", "det_06"],
+      "triage": {"ana_05": "lead", "ana_04": "supporting", "ana_11": "supporting"},
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "image",
+      "editorial_notes": "33.7% / 35 matches and 39.4% / 41 matches must be exact. Keep FIFPRO 28C vs FIFA 32C WBGT framing accurate."
+    },
+    "edt_04": {
+      "label": "Four climate tribes + roof caveat",
+      "purpose": "turn",
+      "title": "Brutal, Dry-Hot, Warm, Mild",
+      "findings": ["ana_08"],
+      "context": ["det_07", "det_08"],
+      "triage": {"ana_08": "lead"},
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Roof/AC fairness caveat (det_07) is load-bearing here. BC Place roof OPEN, MetLife no roof. Scatter = feels-like vs humidity, bubble=matches."
+    },
+    "edt_05": {
+      "label": "Rain, altitude, the mild corners",
+      "purpose": "evidence",
+      "title": "Rain, Altitude and the Cool Corners",
+      "findings": ["ana_06", "ana_07"],
+      "context": ["det_03"],
+      "triage": {"ana_06": "supporting", "ana_07": "supporting"},
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "image",
+      "editorial_notes": "88% Miami, 0% Santa Clara, 2200m Mexico City exact. Opener Azteca / final MetLife framing."
+    },
+    "edt_06": {
+      "label": "The schedule meets the sky (close)",
+      "purpose": "close",
+      "title": "The Schedule Meets the Sky",
+      "findings": ["ana_10", "ana_05"],
+      "context": ["det_05", "det_09"],
+      "triage": {"ana_10": "supporting", "ana_05": "color"},
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "video",
+      "editorial_notes": "Climate-not-forecast caveat (det_09 / ana_caveat_01) MUST appear visibly here. End on the gamble, not a summary."
+    }
+  },
+  "full_triage": {
+    "ana_01": "cut",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "lead",
+    "ana_05": "lead",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "lead",
+    "ana_09": "supporting",
+    "ana_10": "supporting",
+    "ana_11": "supporting",
+    "ana_12": "supporting"
+  }
+}

@@ -1,0 +1,213 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "fifa26_schedule",
+    "summary": "External context for a LOCATION & WEATHER story about the 2026 FIFA World Cup match schedule: the first 16-city, 3-nation World Cup, plotted against real tournament-window climate per venue."
+  },
+  "items": {
+    "det_01": {
+      "label": "First 3-nation, 16-city World Cup",
+      "content": "The 2026 FIFA World Cup is the first to be co-hosted by three countries — the United States, Canada and Mexico — and the first to be spread across 16 host cities: 11 in the U.S., 3 in Mexico, and 2 in Canada. It is also the first 48-team, 104-match edition, expanded from 32 teams and 64 matches. The U.S. hosts 78 matches (including everything from the quarterfinals onward), while Canada and Mexico host 13 each. This continental scale — from Vancouver and Seattle in the cool Pacific Northwest to Miami in subtropical Florida to Mexico City at 2,200 m altitude — is the geographic spine of the tournament and the reason climate varies so wildly between venues.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_FIFA_World_Cup",
+          "title": "2026 FIFA World Cup - Wikipedia",
+          "facts": [
+            "48 teams and 104 matches across 16 cities in the United States, Canada and Mexico",
+            "11 host cities in the U.S., 3 in Mexico, 2 in Canada",
+            "The U.S. hosts 78 matches including from the quarterfinal stage onward; Canada and Mexico host 13 each"
+          ]
+        },
+        {
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/host-cities",
+          "title": "Host Countries and Cities - FIFA",
+          "facts": [
+            "16 official host cities across three nations"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Schedule window and three regional clusters",
+      "content": "The tournament runs 39 days, from 11 June to 19 July 2026 — longer than the 32-day 2014 and 2018 editions — with 72 group-stage matches and 24 knockout matches. To limit punishing travel across a continent, FIFA grouped the 16 host cities into three regional clusters: a Western Region (Vancouver, Seattle, San Francisco Bay Area, Los Angeles), a Central Region (Guadalajara, Mexico City, Monterrey, Houston, Dallas, Kansas City), and an Eastern Region (Atlanta, Miami, Toronto, Boston, Philadelphia, New York/New Jersey). Even so, the spread covers four time zones and thousands of kilometres, and the climate the clusters experience in mid-summer is dramatically different.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_FIFA_World_Cup",
+          "title": "2026 FIFA World Cup - Wikipedia",
+          "facts": [
+            "Tournament runs 11 June to 19 July 2026 (39 days), with 72 group-stage and 24 knockout matches",
+            "Host cities grouped into Western, Central and Eastern regions to limit travel"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Opener in Mexico City, final at MetLife",
+      "content": "The opening match is at Estadio Azteca in Mexico City on 11 June 2026 — a stadium sitting at roughly 2,200 m of altitude, the highest venue in the tournament. The final is at MetLife Stadium in East Rutherford, New Jersey on 19 July 2026. Notably, MetLife is an open-air stadium with no roof, so the showpiece match has no built-in shelter from summer heat. The bookends of the tournament thus capture its geographic extremes: thin mountain air at one end, an exposed coastal-plain bowl at the other.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.goal.com/en/lists/fifa-president-gianni-infantino-2026-world-cup/blt417961314c391fea",
+          "title": "Infantino says 2026 World Cup will use covered stadiums to combat daytime heat - Goal.com",
+          "facts": [
+            "Opening match at Estadio Azteca, Mexico City on 11 June 2026; final at MetLife Stadium on 19 July 2026",
+            "MetLife Stadium is open-air with no retractable roof"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Heat is the headline player-welfare concern",
+      "content": "Heat is the defining off-pitch story of the 2026 World Cup. FIFPRO, the global players' union, has identified six venues — Atlanta, Dallas, Houston, Kansas City and Miami in the U.S. plus Monterrey in Mexico — as posing an 'extremely high risk' of heat-stress injury to players, with three more rated 'very high risk.' A staging of the tournament in June–July across the southern U.S. and Mexico puts it squarely in the hottest part of the year for those cities. The concern is not abstract: it shapes how the schedule's afternoon kickoffs in those cities should be read.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.espn.com/soccer/story/_/id/45703299/club-world-cup-heat-usa-mexico-fifa-2026-world-cup-concerns-temperatures-cooling-breaks",
+          "title": "Is the United States too hot to handle the 2026 FIFA Men's World Cup? - ESPN",
+          "facts": [
+            "FIFPRO identified six venues — Atlanta, Dallas, Houston, Kansas City, Miami and Monterrey — as 'extremely high risk' for heat-stress injury, with three more 'very high risk'"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "FIFA vs FIFPRO WBGT threshold dispute",
+      "content": "There is an open dispute between FIFA and FIFPRO over how hot is too hot. FIFPRO recommends postponing play when the wet-bulb globe temperature (WBGT) reaches 28°C (82.4°F); FIFA does not consider postponement until WBGT exceeds 32°C (89.6°F). Around five matches could plausibly reach the 28°C WBGT level. A group of health, sports-performance and climate experts publicly called FIFA's heat guidelines 'impossible to justify.' FIFA's confirmed mitigation for 2026 is mandatory three-minute hydration breaks in each half — which medical experts say does not go far enough. This is the genuine controversy a weather-focused story must engage with honestly.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.espn.com/soccer/story/_/id/45619017/fifpro-us-summer-temps-concern-2026-world-cup",
+          "title": "FIFPRO: U.S. summer temps a concern for 2026 World Cup - ESPN",
+          "facts": [
+            "FIFPRO recommends postponing play at 28°C WBGT; FIFA's threshold for action is 32°C WBGT",
+            "Around five matches could reach 28°C WBGT"
+          ]
+        },
+        {
+          "url": "https://www.thecooldown.com/outdoors/2026-world-cup-heat-safety-concerns/",
+          "title": "Researchers say FIFA's 2026 World Cup heat plan is impossible to justify - The Cool Down",
+          "facts": [
+            "Health, sports-performance and climate experts called FIFA's heat guidelines 'impossible to justify'",
+            "FIFA confirmed mandatory three-minute hydration breaks in each half for 2026"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "2025 Club World Cup was the heat dress rehearsal",
+      "content": "The 2025 FIFA Club World Cup, staged in the U.S. the summer before, was widely seen as a stress test for 2026. Players battled extreme heat — temperatures peaked at around 104°F (40°C) for Benfica v Bayern Munich in Charlotte, and players including Real Madrid's Jude Bellingham described the conditions as extremely difficult. After FIFPRO intervened early in that tournament, FIFA lowered the cooling-break WBGT threshold to 82.4°F and added extra water, ice and towels pitchside — a departure from its standard 32°C policy. The Club World Cup is the empirical precedent that makes the 2026 heat concern concrete rather than speculative.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.espn.com/soccer/story/_/id/45703299/club-world-cup-heat-usa-mexico-fifa-2026-world-cup-concerns-temperatures-cooling-breaks",
+          "title": "Is the United States too hot to handle the 2026 FIFA Men's World Cup? - ESPN",
+          "facts": [
+            "Temperatures peaked around 104°F at the 2025 Club World Cup match Benfica v Bayern Munich in Charlotte, N.C.",
+            "FIFA lowered the Club World Cup cooling-break threshold to 82.4°F after FIFPRO intervention and added water, ice and towels"
+          ]
+        },
+        {
+          "url": "https://time.com/7303535/extreme-heat-fifa-world-cup-2026/",
+          "title": "Extreme Heat Is Putting 2026 World Cup Athletes at Risk - TIME",
+          "facts": [
+            "The 2025 Club World Cup was seen as a test for how FIFA will protect players in 2026"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Roofs and air conditioning mitigate — partly",
+      "content": "Not every hot venue is equally exposed. Several 2026 stadiums have roofs and climate control: Mercedes-Benz Stadium (Atlanta), AT&T Stadium (Dallas) and NRG Stadium (Houston) offer full climate control, and BC Place (Vancouver) has a roof. FIFA President Gianni Infantino has said roofed stadiums will be used for daytime matches: 'we have stadiums with roofs, and we will definitely use these stadiums during the day.' The crucial caveat: BC Place's roof will be OPEN for all 2026 matches because FIFA requires natural sunlight on the grass pitch, and the final venue MetLife has no roof at all. So a fair weather story must note that the worst raw heat numbers (Dallas, Houston, Atlanta) are partly buffered by AC, while some exposed venues are not — the climate data is the hazard, the roof is the mitigation.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.goal.com/en/lists/fifa-president-gianni-infantino-2026-world-cup/blt417961314c391fea",
+          "title": "Infantino says 2026 World Cup will use covered stadiums to combat daytime heat - Goal.com",
+          "facts": [
+            "Mercedes-Benz (Atlanta), AT&T (Dallas) and NRG (Houston) provide full climate control",
+            "BC Place's roof will be open during all 2026 matches because FIFA requires natural sunlight on the pitch",
+            "Infantino: 'we have stadiums with roofs, and we will definitely use these stadiums during the day next year'"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Midday kickoffs and the MLS evening-game model",
+      "content": "Kickoff timing is a lever FIFA can pull. FIFPRO has urged FIFA to follow Major League Soccer's model in Florida, where matches in Miami are scheduled only for evening kickoffs and have not been played at midday for years, precisely to avoid the worst heat. Broadcast economics push toward early-afternoon European-friendly kickoffs, which collides head-on with player safety in the hottest cities. This tension — TV windows versus the thermometer — is the practical bridge between the schedule data and the climate data.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.espn.com/soccer/story/_/id/45703299/club-world-cup-heat-usa-mexico-fifa-2026-world-cup-concerns-temperatures-cooling-breaks",
+          "title": "Is the United States too hot to handle the 2026 FIFA Men's World Cup? - ESPN",
+          "facts": [
+            "FIFPRO urged FIFA to follow the MLS model where Miami matches are scheduled only for evening kickoffs and have not been played at midday for years"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Climate data is historical typical, not a forecast",
+      "content": "The weather figures used throughout this story come from the Open-Meteo historical archive, averaged over the 11 June – 19 July window across 2021–2024 for each venue's coordinates (CC BY 4.0). They describe the TYPICAL climate a venue experiences during the tournament window — not a 2026 forecast for any specific match date. 'Apparent temperature' (feels-like) approximates a heat index by combining air temperature with humidity, wind and radiation, which is why humid Houston and Miami feel hotter than their raw air temperature alone. This caveat must be stated plainly in the blog: these are climatological expectations, the loaded dice, not a prediction of any one day.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://open-meteo.com/en/docs/historical-weather-api",
+          "title": "Open-Meteo Historical Weather API (CC BY 4.0)",
+          "facts": [
+            "Data averaged over 11 June – 19 July across 2021–2024; apparent temperature approximates heat index (temp + humidity)"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Fixtures include playoff placeholder team names",
+      "content": "The fixtures file lists matchups such as 'Korea Republic v Czechia/Denmark/North Macedonia/Republic of Ireland' for slots that will be filled by inter-confederation or European playoff winners. These slash-separated names are placeholders, not confirmed opponents, and any team-level reference in the blog should be treated cautiously. The location and weather story does not depend on who plays whom — it depends on WHERE and WHEN — so this is a caveat rather than a blocker.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026",
+          "title": "FIFA World Cup 2026",
+          "facts": [
+            "Several group-stage slots are filled by playoff winners, shown as placeholder names until qualification concludes"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "Analyst scope: join schedule to climate on stadium",
+      "content": "Recommended focus for the Analyst: (1) match counts per venue/city (Dallas 9 leads, then LA, NY/NJ, Atlanta at 8) and by host nation; (2) join venue_weather.csv to the schedule on the 'stadium' key and rank all 16 venues by avg_apparent_high_c (feels-like) — the spread runs from ~38–39°C in Houston/Dallas/Miami/Monterrey down to ~21–23°C in Vancouver/Seattle; (3) compute total 'hot match-hours' = matches × feels-like to find where the most football is played in the most heat; (4) rain exposure via rainy_day_share (Miami ~0.88 vs LA ~0.01, Santa Clara 0.0); (5) altitude (Mexico City 2,200 m, Guadalajara 1,566 m); (6) temperature-vs-humidity scatter to separate 'brutal' (hot+humid) from 'dry-hot' and 'mild' venues. Watch the roof/AC confound (det_07) and the climate-not-forecast caveat (det_09).",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://open-meteo.com/en/docs/historical-weather-api",
+          "title": "Open-Meteo Historical Weather API",
+          "facts": [
+            "venue_weather.csv joins to the schedule on the stadium column and carries avg_apparent_high_c, avg_humidity_pct, rainy_day_share, elevation_m"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {"id": "det_media_01", "filename": "mexico_city__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Vista_a%C3%A9rea_del_Estadio_Azteca_-_2026_-_02.jpg", "license": "CC BY 4.0", "source": "Wikimedia Commons", "artist": "ProtoplasmaKid", "description": "Aerial view of Estadio Azteca, Mexico City — highest venue (2,200 m), opening-match host", "relates_to": ["det_03"]},
+    {"id": "det_media_02", "filename": "monterrey__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Mexico_Guadalupe_Monterrey_Estadio_BBVA_Bancomer_fifa_world_cup_2026_6.JPG", "license": "CC BY-SA 3.0 de", "source": "Wikimedia Commons", "artist": "Arne Müseler", "description": "Estadio BBVA, Monterrey — a FIFPRO 'extremely high risk' heat venue (~36°C feels-like)", "relates_to": ["det_04"]},
+    {"id": "det_media_03", "filename": "dallas__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Cowboys_Stadium_2.jpg", "license": "CC BY 2.0", "source": "Wikimedia Commons", "artist": "bobbyh_80", "description": "AT&T Stadium, Arlington (Dallas) — most matches (9), hottest dry-heat venue, full climate control", "relates_to": ["det_04", "det_07"]},
+    {"id": "det_media_04", "filename": "houston__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Reliantstadium.jpg", "license": "CC BY-SA 2.0", "source": "Wikimedia Commons", "artist": "User eschipul on Flickr", "description": "NRG Stadium, Houston — highest feels-like high (~38.6°C), full climate control", "relates_to": ["det_04", "det_07"]},
+    {"id": "det_media_05", "filename": "miami__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Hard_Rock_Stadium_for_Super_Bowl_LIV_(49606707583).jpg", "license": "CC BY-SA 2.0", "source": "Wikimedia Commons", "artist": "elisfkc2", "description": "Hard Rock Stadium, Miami Gardens — wettest venue (rain ~88% of days), high humidity", "relates_to": ["det_04"]},
+    {"id": "det_media_06", "filename": "atlanta__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Mercedes_Benz_Stadium_time_lapse_capture_2017-08-13.jpg", "license": "CC BY 3.0", "source": "Wikimedia Commons", "artist": "Atlanta Falcons", "description": "Mercedes-Benz Stadium, Atlanta — 8 matches, climate-controlled roof", "relates_to": ["det_04", "det_07"]},
+    {"id": "det_media_07", "filename": "vancouver__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:BC_Place_Opening_Day_2011-09-30.jpg", "license": "CC BY-SA 3.0", "source": "Wikimedia Commons", "artist": "Yvrphoto", "description": "BC Place, Vancouver — coolest venue (~21.5°C feels-like); roof open for 2026 per FIFA pitch-sunlight rule", "relates_to": ["det_07"]},
+    {"id": "det_media_08", "filename": "seattle__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Qwest_Field_North.jpg", "license": "CC BY-SA 2.0", "source": "Wikimedia Commons", "artist": "Smart Destinations / GoSeattleCard.com", "description": "Lumen Field, Seattle — mild Pacific Northwest climate (~23°C feels-like)", "relates_to": ["det_02"]},
+    {"id": "det_media_09", "filename": "los_angeles__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:SoFi_Stadium_(51126606022).jpg", "license": "CC BY 2.0", "source": "Wikimedia Commons", "artist": "Thank You (21 Millions+) views", "description": "SoFi Stadium, Inglewood (LA) — 8 matches, near-zero rain in the window", "relates_to": ["det_01"]},
+    {"id": "det_media_10", "filename": "new_york_new_jersey__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:New_Meadowlands_Stadium_Mezz_Corner.jpg", "license": "CC BY 2.0", "source": "Wikimedia Commons", "artist": "babyknight", "description": "MetLife Stadium, East Rutherford — final venue, open-air (no roof), 8 matches", "relates_to": ["det_03"]},
+    {"id": "det_media_11", "filename": "toronto__photo.png", "url": "https://commons.wikimedia.org/wiki/File:BMO_Field_in_2016.png", "license": "CC BY-SA 4.0", "source": "Wikimedia Commons", "artist": "Pablopicassotoronto", "description": "BMO Field, Toronto — Canadian host, mild climate", "relates_to": ["det_02"]},
+    {"id": "det_media_12", "filename": "boston__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Gillette_Stadium02.jpg", "license": "CC BY-SA 3.0", "source": "Wikimedia Commons", "artist": "Bernard Gagnon", "description": "Gillette Stadium, Foxborough (Boston) — 7 matches, temperate Northeast climate", "relates_to": ["det_02"]},
+    {"id": "det_media_13", "filename": "philadelphia__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Philly_(45).JPG", "license": "CC BY-SA 3.0", "source": "Wikimedia Commons", "artist": "Betp (French Wikipedia)", "description": "Lincoln Financial Field, Philadelphia — 6 matches, warm humid Northeast", "relates_to": ["det_02"]},
+    {"id": "det_media_14", "filename": "san_francisco_bay_area__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Levi%27s_Stadium_interior_1.jpg", "license": "CC BY-SA 2.0", "source": "Wikimedia Commons", "artist": "Matthew Roth", "description": "Levi's Stadium, Santa Clara — essentially zero rain in the window (rainy_day_share 0.0)", "relates_to": ["det_01"]},
+    {"id": "det_media_15", "filename": "guadalajara__photo.jpg", "url": "https://commons.wikimedia.org/wiki/File:Estadio_Omnilife_Chivas.jpg", "license": "CC BY 2.0", "source": "Wikimedia Commons", "artist": "Juan Olivas", "description": "Estadio Akron, Guadalajara — second-highest venue (1,566 m), rainy Mexican summer", "relates_to": ["det_01"]},
+    {"id": "det_media_16", "filename": "NONE_kansas_city", "url": "https://commons.wikimedia.org/wiki/Category:Arrowhead_Stadium", "license": "n/a", "source": "Wikimedia Commons", "artist": "n/a", "description": "NO real photo cached for Kansas City / Arrowhead Stadium. Designer must handle gracefully — use a clean placeholder card or an AI/skyline image, never a fake stadium photo.", "relates_to": ["det_04"]}
+  ],
+  "instances": []
+}

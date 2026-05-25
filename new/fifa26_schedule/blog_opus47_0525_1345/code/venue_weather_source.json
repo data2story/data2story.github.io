@@ -1,0 +1,12 @@
+{
+  "source": "Open-Meteo Historical Weather API (archive-api.open-meteo.com)",
+  "license": "CC BY 4.0 (Open-Meteo)",
+  "years_sampled": [
+    2021,
+    2022,
+    2023,
+    2024
+  ],
+  "window": "June 11 - July 19",
+  "note": "Typical tournament-window climate; apparent temperature approximates heat index (temp+humidity)."
+}

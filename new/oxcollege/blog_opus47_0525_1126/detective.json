@@ -1,0 +1,1604 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0"
+  },
+  "items": {
+    "det_01": {
+      "label": "Where the data comes from: Wikidata SPARQL",
+      "content": "Every row in this dataset was pulled from Wikidata's free SPARQL endpoint on 2026-05-24. A college is defined as any item that is an 'instance of' the class 'college of the University of Oxford' (Q2581649). Founding years are read from the 'inception' property (P571), founders from 'founded by' (P112), and namesakes from 'named after' (P138). Because Wikidata is a crowd-curated, CC0-licensed knowledge base, the dataset is fully reproducible by anyone with the query — but it also inherits Wikidata's editorial choices. It deliberately mixes the ~39 living colleges with long-dead ones, and a few entries (Examination Schools, Greek College) are really administrative or scholarly bodies rather than residential colleges. The data should be read as a snapshot of how Wikidata models Oxford, not as an official register.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.wikidata.org",
+          "title": "Wikidata",
+          "facts": [
+            "Colleges identified as instance of college of the University of Oxford (Q2581649)",
+            "Inception P571 gives founding year, founded-by P112 gives founder, named-after P138 gives namesake",
+            "Wikidata is CC0-licensed and queryable for free via SPARQL"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Three colleges, one unsolvable argument about age",
+      "content": "Oxford's oldest-college title has three claimants and no referee, because each rests on a different definition of 'oldest'. University College (1249) points to the earliest money: a bequest in the 1249 will of William of Durham to support Oxford scholars. Balliol (c.1263) claims the longest unbroken physical presence — a house of scholars living on its founder's land on the present Broad Street site, continuously ever since. Merton (1264) holds the oldest formal constitution: Walter de Merton gave it statutes that made it a self-governing college, something Balliol and Univ lacked until the 1280s. All three dates fall inside a fifteen-year window, the medieval records are thin and disputed, and members of each college still cheerfully reject the others' claims. There is, in effect, no correct answer — which is exactly what makes it a good story.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://balliolarchivist.wordpress.com/2011/10/06/q-a-oldest-established/",
+          "title": "Q&A: oldest established — Balliol College Archives",
+          "facts": [
+            "Balliol founded c.1263 as a house of scholars on land owned by its founder, on its present Broad Street site, continuously since",
+            "University College traces its claim to William of Durham's 1249 bequest"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Balliol_College,_Oxford",
+          "title": "Balliol College — Wikipedia",
+          "facts": [
+            "The three oldest colleges (University, Balliol, Merton) were established between 1249 and 1264",
+            "There is dispute over the exact order and when each began taking students"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "The Reformation: destruction disguised as growth",
+      "content": "The 16th century is the single biggest century in the dataset by foundations — but much of that count is churn, not pure expansion. Henry VIII's Reformation dissolved Oxford's monastic colleges: Gloucester College fell in 1539, St Mary's College in 1540, as the suppression of the monasteries cut off the religious orders that staffed them. At the same moment, new colleges rose from the rubble, often on the same stone. Cardinal Wolsey's Cardinal College (1525) was suppressed when Wolsey fell from favour, refounded as King Henry VIII's College in 1532, and finally re-established by the king in 1546 as Christ Church — which doubles as the cathedral of the new Diocese of Oxford. So the 16th-century 'boom' is partly a single institution being killed and reborn under three names, all of which survive as separate rows in the data.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Christ_Church,_Oxford",
+          "title": "Christ Church, Oxford — Wikipedia",
+          "facts": [
+            "Cardinal College was suppressed after Wolsey's fall and refounded as King Henry VIII's College in 1532",
+            "Refounded as Christ Church in 1546, also serving as the cathedral of the Diocese of Oxford"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Timeline_of_Oxford",
+          "title": "Timeline of Oxford — Wikipedia",
+          "facts": [
+            "Gloucester College dissolved 1539",
+            "St Mary's College dissolved 1540"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "1878–1893: the women's colleges arrive",
+      "content": "The 19th-century cluster in the data is not just more colleges — it is a change in who Oxford was for. Lady Margaret Hall (1878) was the first women's college; Somerville opened in 1879, splitting from LMH over religious denomination. St Anne's (1879), St Hugh's (1886) and St Hilda's (1893) followed within fifteen years. The catch: these colleges existed for decades before women could actually take Oxford degrees. Women attended lectures and sat examinations but were not full members of the University until 1920. So a row dated 1878 marks the founding of an institution whose students could not graduate for another forty-two years — the dataset records the building before it records the right.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Somerville_College,_Oxford",
+          "title": "Somerville College, Oxford — Wikipedia",
+          "facts": [
+            "Lady Margaret Hall founded 1878 as the first women's college; first students 1879",
+            "Somerville Hall opened 1879, splitting from LMH over religious denomination"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/First_women_admitted_to_degrees_at_the_University_of_Oxford",
+          "title": "First women admitted to degrees — Wikipedia",
+          "facts": [
+            "Women were not admitted to full Oxford degrees until 1920",
+            "The first women had degrees conferred in October 1920"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "The modern wave: philanthropists, mergers, and Reuben (2019)",
+      "content": "The 20th–21st century foundations are dominated by graduate colleges endowed by industrial and financial wealth: Nuffield (1937, the motor magnate Lord Nuffield), Wolfson (1965, Isaac Wolfson), Kellogg (1990, the cereal fortune) and Reuben (2019). Reuben is the newest college in the dataset and the first new college at Oxford since Kellogg in 1990. It was approved by Congregation in May 2019 as 'Parks College', then renamed after an £80 million gift from the Reuben Foundation in 2020, and took its first graduate students in 2021 in the former Radcliffe Science Library. Green Templeton (2008) is a different kind of entry: it is a merger of Green College and Templeton College (1965), which is why both Templeton and Green Templeton appear as separate rows — the data captures a marriage and both of its partners.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Reuben_College,_Oxford",
+          "title": "Reuben College, Oxford — Wikipedia",
+          "facts": [
+            "Reuben is the first new Oxford college since Kellogg in 1990",
+            "Approved by Congregation on 7 May 2019 as Parks College",
+            "Renamed after an £80m Reuben Foundation gift in 2020; first students 2021 in the former Radcliffe Science Library"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Colleges_of_the_University_of_Oxford",
+          "title": "Colleges of the University of Oxford — Wikipedia",
+          "facts": [
+            "Green Templeton College was formed in 2008 from the merger of Green College and Templeton College",
+            "Modern graduate colleges are frequently endowed by industrial benefactors"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Coats of arms and namesakes as a social history",
+      "content": "Read the founder and namesake columns top to bottom and you get a compact social history of who held wealth and power in England across eight centuries. The medieval founders are bishops and royal clerks — Walter de Merton, William of Wykeham, William Waynflete. The Tudor era brings monarchs and prelates — Henry VIII, Elizabeth I, Cardinal Wolsey, Bishop Foxe. The modern era brings industrialists and financiers — Lord Nuffield, Isaac Wolfson, the Reuben brothers. The namesakes split the same way: early colleges are named for saints and feast days (Mary Magdalene, John the Baptist, All Souls' Day, the Holy Trinity), while later ones are named for the benefactor's own surname. The colleges' heraldic coats of arms encode this lineage visually — each crest borrows the arms of its founder or patron — which is why the real crests are the natural visual spine for this story.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Colleges_of_the_University_of_Oxford",
+          "title": "Colleges of the University of Oxford — Wikipedia",
+          "facts": [
+            "Colleges were founded by a mix of clergy, royalty and modern philanthropists",
+            "College coats of arms frequently derive from the arms of the founder or namesake"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Caveats the analyst must respect",
+      "content": "Several traps lurk in the data. (1) It blends current colleges with defunct, dissolved and merged ones — Rewley Abbey, Gloucester, Durham, Canterbury, Cardinal, King Henry VIII's, St Mary's, St Bernard's, Greek College, Templeton, Examination Schools — so any 'typical Oxford college' statistic must separate the ~39 survivors from the full historical set. (2) Two rows (Harris Manchester, St Bernard's) have a blank founding year and must be dropped from year-based math. (3) Medieval dates are approximate and disputed; 1249/1263/1264 are nominal. (4) Founder and namesake fields are often blank and sometimes hold multiple semicolon-separated names (Balliol, Christ Church, Green Templeton) that must be split before counting people. (5) The century table includes an 'unknown' bucket of 2 — the two blank-year colleges.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.wikidata.org",
+          "title": "Wikidata",
+          "facts": [
+            "Founder field can hold multiple semicolon-separated values",
+            "Some colleges have no inception date recorded"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Rewley Abbey: the 1201 outlier that is not really a college",
+      "content": "The single oldest row in the dataset, Rewley Abbey (1201), is also the one that should not be counted as a college at all in the modern sense. It was a Cistercian monastic studium — a house where monks studied — founded on the edge of Oxford and dissolved at the Reformation. It appears because Wikidata's class definition is generous, and it sits 48 years before University College's 1249 claim. Including it would let someone say 'Oxford's oldest college dates to 1201', which is technically in the data but historically misleading. It is the clearest example of why the dataset's caveats matter: the earliest number is not the earliest college.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Rewley_Abbey",
+          "title": "Rewley Abbey — Wikipedia",
+          "facts": [
+            "Rewley Abbey was a Cistercian monastic house with a studium near Oxford",
+            "It was dissolved during the Reformation and is not a surviving college"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "rewley_abbey__photo.jpg",
+      "kind": "photo",
+      "college": "Rewley Abbey",
+      "qid": "Q2147035",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Named_after_-_geograph.org.uk_-_1403550.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Named_after_-_geograph.org.uk_-_1403550.jpg",
+      "license": "CC BY-SA 2.0",
+      "artist": "Bill Nicholls",
+      "credit": "From geograph.org.uk",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Rewley Abbey, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "university_college_oxford__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "University College, Oxford",
+      "qid": "Q81087",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/University_College_Oxford_Coat_Of_Arms.svg/1280px-University_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:University_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for University College, Oxford, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "university_college_oxford__photo.jpg",
+      "kind": "photo",
+      "college": "University College, Oxford",
+      "qid": "Q81087",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/2c/University_College_Oxford.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:University_College_Oxford.jpg",
+      "license": "Public domain",
+      "artist": "No machine-readable author provided. Man vyi assumed (based on copyright claims).",
+      "credit": "No machine-readable source provided. Own work assumed (based on copyright claims).",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for University College, Oxford, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_04",
+      "filename": "balliol_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Balliol College",
+      "qid": "Q805285",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Coat_of_Arms_of_Balliol_College_Oxford.svg/1280px-Coat_of_Arms_of_Balliol_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Balliol_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Balliol College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_05",
+      "filename": "balliol_college__photo.jpg",
+      "kind": "photo",
+      "college": "Balliol College",
+      "qid": "Q805285",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Balliol_College_Feb_2005.jpg/1280px-Balliol_College_Feb_2005.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Balliol_College_Feb_2005.jpg",
+      "license": "CC BY-SA 2.5",
+      "artist": "Toby Ord",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Balliol College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_06",
+      "filename": "merton_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Merton College",
+      "qid": "Q82513",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Coat_of_Arms_of_Merton_College_Oxford.svg/1280px-Coat_of_Arms_of_Merton_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Merton_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Merton College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_07",
+      "filename": "merton_college__photo.jpg",
+      "kind": "photo",
+      "college": "Merton College",
+      "qid": "Q82513",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Merton_College_front_quad.jpg/1280px-Merton_College_front_quad.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Merton_College_front_quad.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Tom Murphy VII",
+      "credit": "Taken by user (Tom Murphy VII)",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Merton College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_08",
+      "filename": "st_edmund_hall__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "St Edmund Hall",
+      "qid": "Q973884",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/St-Edmund-Hall_College_Oxford_Coat_Of_Arms.svg/1280px-St-Edmund-Hall_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St-Edmund-Hall_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for St Edmund Hall, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_09",
+      "filename": "st_edmund_hall__photo.jpg",
+      "kind": "photo",
+      "college": "St Edmund Hall",
+      "qid": "Q973884",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/40/SEHQuad.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:SEHQuad.jpg",
+      "license": "Public domain",
+      "artist": "Simon Ho",
+      "credit": "en.wikipedia.org",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St Edmund Hall, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_10",
+      "filename": "durham_college__photo.png",
+      "kind": "photo",
+      "college": "Durham College",
+      "qid": "Q5316483",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/Trinity_College_Oxford%2C_1566.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Trinity_College_Oxford,_1566.png",
+      "license": "Public domain",
+      "artist": "Original, now lost, by John Bereblock (fl.1557–1572). Scan, or possibly photograph, probably by a representative of Trinity College.",
+      "credit": "durhamworldheritagesite.com (c.f. Hopkins 2005, Trinity: 450 years of an Oxford college community). Probably drawn from the copy of Bereblock's originals donated by John More to the Bodleian Library in 1630.",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Durham College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_11",
+      "filename": "exeter_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Exeter College",
+      "qid": "Q81173",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Coat_of_Arms_of_Exeter_College_Oxford.svg/1280px-Coat_of_Arms_of_Exeter_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Exeter_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Jonas Magnus Lystad",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Exeter College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_12",
+      "filename": "exeter_college__photo.jpg",
+      "kind": "photo",
+      "college": "Exeter College",
+      "qid": "Q81173",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Exeter_College_as_viewed_on_Broad_Street.jpg/1280px-Exeter_College_as_viewed_on_Broad_Street.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Exeter_College_as_viewed_on_Broad_Street.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Ozeye",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Exeter College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_13",
+      "filename": "oriel_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Oriel College",
+      "qid": "Q81170",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Arms_of_Oriel_College.svg/1280px-Arms_of_Oriel_College.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Arms_of_Oriel_College.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Oriel College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_14",
+      "filename": "oriel_college__photo.jpg",
+      "kind": "photo",
+      "college": "Oriel College",
+      "qid": "Q81170",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Oriel_College_First_Quad.jpg/1280px-Oriel_College_First_Quad.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Oriel_College_First_Quad.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Alf",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Oriel College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_15",
+      "filename": "the_queens_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "The Queen's College",
+      "qid": "Q73094",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Queens_College_Oxford_Coat_Of_Arms.svg/1280px-Queens_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Queens_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for The Queen's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_16",
+      "filename": "the_queens_college__photo.jpg",
+      "kind": "photo",
+      "college": "The Queen's College",
+      "qid": "Q73094",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/36/Queens_College.JPG",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Queens_College.JPG",
+      "license": "CC BY-SA 3.0",
+      "artist": "M stone at English Wikipedia",
+      "credit": "Transferred from en.wikipedia to Commons by Pauk using CommonsHelper.",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for The Queen's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_17",
+      "filename": "new_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "New College",
+      "qid": "Q1376987",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/New_College_Oxford_Coat_Of_Arms_%28Motto%29.svg/1280px-New_College_Oxford_Coat_Of_Arms_%28Motto%29.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:New_College_Oxford_Coat_Of_Arms_(Motto).svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for New College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_18",
+      "filename": "new_college__photo.jpg",
+      "kind": "photo",
+      "college": "New College",
+      "qid": "Q1376987",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/New_College%2C_Oxford_%283915972658%29.jpg/1280px-New_College%2C_Oxford_%283915972658%29.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:New_College,_Oxford_(3915972658).jpg",
+      "license": "CC BY 2.0",
+      "artist": "Simon Q from United Kingdom",
+      "credit": "New College, Oxford\n\nUploaded by tm",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for New College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_19",
+      "filename": "lincoln_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Lincoln College",
+      "qid": "Q81153",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Lincoln_College_Oxford_Coat_Of_Arms.svg/1280px-Lincoln_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Lincoln_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Lincoln College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_20",
+      "filename": "lincoln_college__photo.jpg",
+      "kind": "photo",
+      "college": "Lincoln College",
+      "qid": "Q81153",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Lincoln_College_-_geograph.org.uk_-_5537670.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Lincoln_College_-_geograph.org.uk_-_5537670.jpg",
+      "license": "CC BY-SA 2.0",
+      "artist": "N Chadwick",
+      "credit": "Geograph Britain and Ireland",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Lincoln College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_21",
+      "filename": "all_souls_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "All Souls College",
+      "qid": "Q81092",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Arms_of_Chichele.svg/1280px-Arms_of_Chichele.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Arms_of_Chichele.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for All Souls College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_22",
+      "filename": "all_souls_college__photo.jpg",
+      "kind": "photo",
+      "college": "All Souls College",
+      "qid": "Q81092",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/1_all_souls_college_oxford_2012.jpg/1280px-1_all_souls_college_oxford_2012.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:1_all_souls_college_oxford_2012.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "chensiyuan",
+      "credit": "chensiyuan",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for All Souls College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_23",
+      "filename": "magdalen_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Magdalen College",
+      "qid": "Q81162",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Coat_of_Arms_of_Magdalen_College_Oxford.svg/1280px-Coat_of_Arms_of_Magdalen_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Magdalen_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Magdalen College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_24",
+      "filename": "magdalen_college__photo.jpg",
+      "kind": "photo",
+      "college": "Magdalen College",
+      "qid": "Q81162",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Magdalen_College_Tower.jpg/1280px-Magdalen_College_Tower.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Magdalen_College_Tower.jpg",
+      "license": "CC BY 2.0",
+      "artist": "Alexis O'Connor",
+      "credit": "originally posted to Flickr as Magdalen College Tower.",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Magdalen College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_25",
+      "filename": "brasenose_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Brasenose College",
+      "qid": "Q899030",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Brasenose_College_Oxford_Coat_Of_Arms.svg/1280px-Brasenose_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Brasenose_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "http://d3upfpng8piaqj.cloudfront.net/UGP%202015%20Colleges.pdf",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Brasenose College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_26",
+      "filename": "brasenose_college__photo.jpg",
+      "kind": "photo",
+      "college": "Brasenose College",
+      "qid": "Q899030",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/UK-2014-Oxford-Brasenose_College_01.jpg/1280px-UK-2014-Oxford-Brasenose_College_01.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:UK-2014-Oxford-Brasenose_College_01.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Godot13",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Brasenose College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_27",
+      "filename": "corpus_christi_college__photo.jpg",
+      "kind": "photo",
+      "college": "Corpus Christi College",
+      "qid": "Q1135137",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Corpus_Quad.jpg/1280px-Corpus_Quad.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Corpus_Quad.jpg",
+      "license": "Public domain",
+      "artist": "en:User:Mike Young",
+      "credit": "Photography of Mike Young",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Corpus Christi College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_28",
+      "filename": "cardinal_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Cardinal College",
+      "qid": "Q33113400",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Christ_Church_Oxford_Coat_Of_Arms.svg/1280px-Christ_Church_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Christ_Church_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "http://d3upfpng8piaqj.cloudfront.net/UGP%202015%20Colleges.pdf",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Cardinal College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_29",
+      "filename": "cardinal_college__photo.jpg",
+      "kind": "photo",
+      "college": "Cardinal College",
+      "qid": "Q33113400",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Christ_Church_Oxford_Hall_2007.jpg/1280px-Christ_Church_Oxford_Hall_2007.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Christ_Church_Oxford_Hall_2007.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Mtcv",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Cardinal College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_30",
+      "filename": "christ_church__photo.jpg",
+      "kind": "photo",
+      "college": "Christ Church",
+      "qid": "Q745967",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/UK-2014-Oxford-Christ_Church_01.jpg/1280px-UK-2014-Oxford-Christ_Church_01.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:UK-2014-Oxford-Christ_Church_01.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Godot13",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Christ Church, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_31",
+      "filename": "st_johns_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "St John's College",
+      "qid": "Q609646",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/St-John%27s_College_Oxford_Coat_Of_Arms.svg/1280px-St-John%27s_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St-John%27s_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for St John's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_32",
+      "filename": "st_johns_college__photo.jpg",
+      "kind": "photo",
+      "college": "St John's College",
+      "qid": "Q609646",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/7/7d/View_across_St_Giles_towards_St_John%27s_College_-_geograph.org.uk_-_1289963_cropped.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:View_across_St_Giles_towards_St_John%27s_College_-_geograph.org.uk_-_1289963_cropped.jpg",
+      "license": "CC BY-SA 2.0",
+      "artist": "View_across_St_Giles_towards_St_John's_College_-_geograph.org.uk_-_1289963.jpg: Roger Davies\nderivative work: Fluteflute",
+      "credit": "This file was derived from:  View across St Giles towards St John's College - geograph.org.uk - 1289963.jpg:",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St John's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_33",
+      "filename": "trinity_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Trinity College",
+      "qid": "Q73079",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Arms_of_Thomas_Pope.svg/1280px-Arms_of_Thomas_Pope.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Arms_of_Thomas_Pope.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Trinity College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_34",
+      "filename": "trinity_college__photo.jpg",
+      "kind": "photo",
+      "college": "Trinity College",
+      "qid": "Q73079",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/UK-2014-Oxford-Trinity_College_01.JPG/1280px-UK-2014-Oxford-Trinity_College_01.JPG",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:UK-2014-Oxford-Trinity_College_01.JPG",
+      "license": "CC BY-SA 4.0",
+      "artist": "Godot13",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Trinity College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_35",
+      "filename": "jesus_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Jesus College",
+      "qid": "Q81174",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Coat_of_Arms_of_Jesus_College_Oxford.svg/1280px-Coat_of_Arms_of_Jesus_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Jesus_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Jesus College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_36",
+      "filename": "jesus_college__photo.jpg",
+      "kind": "photo",
+      "college": "Jesus College",
+      "qid": "Q81174",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Oxford_-_Jesus_College_Library_-_0473.jpg/1280px-Oxford_-_Jesus_College_Library_-_0473.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Oxford_-_Jesus_College_Library_-_0473.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Jorge Royan",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Jesus College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_37",
+      "filename": "wadham_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Wadham College",
+      "qid": "Q2537765",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Coat_Of_Arms_of_Wadham_College_Oxford.svg/1280px-Coat_Of_Arms_of_Wadham_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Coat_Of_Arms_of_Wadham_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Jonas Magnus Lystad",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Wadham College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_38",
+      "filename": "wadham_college__photo.jpg",
+      "kind": "photo",
+      "college": "Wadham College",
+      "qid": "Q2537765",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Wadham.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Wadham.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Babooli",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Wadham College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_39",
+      "filename": "pembroke_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Pembroke College",
+      "qid": "Q82606",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Coat_of_Arms_of_Pembroke_College_Oxford.svg/1280px-Coat_of_Arms_of_Pembroke_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Pembroke_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Pembroke College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_40",
+      "filename": "pembroke_college__photo.jpg",
+      "kind": "photo",
+      "college": "Pembroke College",
+      "qid": "Q82606",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f5/Pembroke_Chapel_Quad.JPG/1280px-Pembroke_Chapel_Quad.JPG",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Pembroke_Chapel_Quad.JPG",
+      "license": "CC BY-SA 4.0",
+      "artist": "Djr xi",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Pembroke College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_41",
+      "filename": "greek_college__photo.jpg",
+      "kind": "photo",
+      "college": "Greek College",
+      "qid": "Q5601756",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/UK-2014-Oxford-Worcester_College_03.jpg/1280px-UK-2014-Oxford-Worcester_College_03.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:UK-2014-Oxford-Worcester_College_03.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Godot13",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Greek College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_42",
+      "filename": "worcester_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Worcester College",
+      "qid": "Q780745",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Worcester_College_Oxford_Coat_Of_Arms.svg/1280px-Worcester_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Worcester_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Worcester College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_43",
+      "filename": "worcester_college__photo.jpg",
+      "kind": "photo",
+      "college": "Worcester College",
+      "qid": "Q780745",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/f/fa/WorcQuad.JPG",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:WorcQuad.JPG",
+      "license": "Public domain",
+      "artist": "MKung",
+      "credit": "http://en.wikipedia.org/wiki/File:MKung_WorcQuad.JPG",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Worcester College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_44",
+      "filename": "keble_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Keble College",
+      "qid": "Q1276338",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Keble_College_Oxford_Coat_Of_Arms.svg/1280px-Keble_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Keble_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Unknown",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Keble College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_45",
+      "filename": "keble_college__photo.jpg",
+      "kind": "photo",
+      "college": "Keble College",
+      "qid": "Q1276338",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/UK-2014-Oxford-Keble_College_02.jpg/1280px-UK-2014-Oxford-Keble_College_02.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:UK-2014-Oxford-Keble_College_02.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Godot13",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Keble College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_46",
+      "filename": "hertford_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Hertford College",
+      "qid": "Q81090",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Coat_of_Arms_of_Hertford_College_Oxford.svg/1280px-Coat_of_Arms_of_Hertford_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Hertford_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Hertford College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_47",
+      "filename": "hertford_college__photo.jpg",
+      "kind": "photo",
+      "college": "Hertford College",
+      "qid": "Q81090",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Hertford_College%2C_Oxford.jpg/1280px-Hertford_College%2C_Oxford.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Hertford_College,_Oxford.jpg",
+      "license": "CC BY 2.0",
+      "artist": "simononly",
+      "credit": "https://www.flickr.com/photos/simononly/7988398466/sizes/o/in/photostream/",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Hertford College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_48",
+      "filename": "lady_margaret_hall__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Lady Margaret Hall",
+      "qid": "Q951946",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Arms_of_Lady_Margaret_Hall.svg/1280px-Arms_of_Lady_Margaret_Hall.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Arms_of_Lady_Margaret_Hall.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Lady Margaret Hall, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_49",
+      "filename": "lady_margaret_hall__photo.jpg",
+      "kind": "photo",
+      "college": "Lady Margaret Hall",
+      "qid": "Q951946",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Lady_Margaret_Hall_%286148510434%29.jpg/1280px-Lady_Margaret_Hall_%286148510434%29.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Lady_Margaret_Hall_(6148510434).jpg",
+      "license": "CC BY 2.0",
+      "artist": "Ed Webster",
+      "credit": "Lady Margaret Hall",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Lady Margaret Hall, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_50",
+      "filename": "st_annes_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "St Anne's College",
+      "qid": "Q1819342",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/St-Anne%27s_College_Oxford_Coat_Of_Arms.svg/1280px-St-Anne%27s_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St-Anne%27s_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for St Anne's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_51",
+      "filename": "st_annes_college__photo.jpg",
+      "kind": "photo",
+      "college": "St Anne's College",
+      "qid": "Q1819342",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Bevington_Road_Rear%2C_St_Anne%27s_College%2C_University_of_Oxford.jpg/1280px-Bevington_Road_Rear%2C_St_Anne%27s_College%2C_University_of_Oxford.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Bevington_Road_Rear,_St_Anne%27s_College,_University_of_Oxford.jpg",
+      "license": "CC BY 3.0",
+      "artist": "User:Stannered",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St Anne's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_52",
+      "filename": "somerville_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Somerville College",
+      "qid": "Q774489",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Achievement_of_Somerville_College_Oxford.svg/1280px-Achievement_of_Somerville_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Achievement_of_Somerville_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Somerville College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_53",
+      "filename": "somerville_college__photo.jpg",
+      "kind": "photo",
+      "college": "Somerville College",
+      "qid": "Q774489",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Somerville_College.jpg/1280px-Somerville_College.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Somerville_College.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Philip Allfrey",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Somerville College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_54",
+      "filename": "examination_schools__photo.jpg",
+      "kind": "photo",
+      "college": "Examination Schools",
+      "qid": "Q5419282",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Examination_Schools_Oxford_University.jpg/1280px-Examination_Schools_Oxford_University.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Examination_Schools_Oxford_University.jpg",
+      "license": "CC BY-SA 2.0",
+      "artist": "Mike Knell",
+      "credit": "Flickr",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Examination Schools, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_55",
+      "filename": "st_hughs_college__photo.jpg",
+      "kind": "photo",
+      "college": "St Hugh's College",
+      "qid": "Q128497",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/96/Oxford%2C_St_Hugh%27s_College_-_geograph.org.uk_-_264777.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Oxford,_St_Hugh%27s_College_-_geograph.org.uk_-_264777.jpg",
+      "license": "CC BY-SA 2.0",
+      "artist": "Nigel Cox",
+      "credit": "From geograph.org.uk",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St Hugh's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_56",
+      "filename": "mansfield_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Mansfield College",
+      "qid": "Q2487309",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Mansfield_College_Oxford_Coat_Of_Arms.svg/1280px-Mansfield_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Mansfield_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Mansfield College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_57",
+      "filename": "mansfield_college__photo.jpg",
+      "kind": "photo",
+      "college": "Mansfield College",
+      "qid": "Q2487309",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Mansfield-hdr.jpg/1280px-Mansfield-hdr.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Mansfield-hdr.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "HiraV",
+      "credit": "Own work (Original text: self-made)",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Mansfield College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_58",
+      "filename": "st_hildas_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "St Hilda's College",
+      "qid": "Q1465651",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/St-Hilda%27s_College_Oxford_Coat_Of_Arms.svg/1280px-St-Hilda%27s_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St-Hilda%27s_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for St Hilda's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_59",
+      "filename": "st_hildas_college__photo.jpg",
+      "kind": "photo",
+      "college": "St Hilda's College",
+      "qid": "Q1465651",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cc/Sthildas_south_building.JPG/1280px-Sthildas_south_building.JPG",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Sthildas_south_building.JPG",
+      "license": "Public domain",
+      "artist": "Oxonist",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St Hilda's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_60",
+      "filename": "st_peters_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "St Peter's College",
+      "qid": "Q2487322",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/St-Peters_College_Oxford_Coat_Of_Arms.svg/1280px-St-Peters_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St-Peters_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for St Peter's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_61",
+      "filename": "st_peters_college__photo.jpg",
+      "kind": "photo",
+      "college": "St Peter's College",
+      "qid": "Q2487322",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Oxford_%282024-06-06%29_21.jpg/1280px-Oxford_%282024-06-06%29_21.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Oxford_(2024-06-06)_21.jpg",
+      "license": "CC0",
+      "artist": "Simon Cobb",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St Peter's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_62",
+      "filename": "nuffield_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Nuffield College",
+      "qid": "Q1758457",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Arms_of_Nuffield_College.svg/1280px-Arms_of_Nuffield_College.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Arms_of_Nuffield_College.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Jonas Magnus Lystad",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Nuffield College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_63",
+      "filename": "nuffield_college__photo.jpg",
+      "kind": "photo",
+      "college": "Nuffield College",
+      "qid": "Q1758457",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Nuffield_College_lower_quadrangle.jpg/1280px-Nuffield_College_lower_quadrangle.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Nuffield_College_lower_quadrangle.jpg",
+      "license": "CC BY 2.0",
+      "artist": "SBA73",
+      "credit": "originally posted to Flickr as Nuffield College",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Nuffield College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_64",
+      "filename": "st_antonys_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "St Antony's College",
+      "qid": "Q2035359",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/St-Antony%27s_College_Oxford_Coat_Of_Arms.svg/1280px-St-Antony%27s_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St-Antony%27s_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for St Antony's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_65",
+      "filename": "st_antonys_college__photo.jpg",
+      "kind": "photo",
+      "college": "St Antony's College",
+      "qid": "Q2035359",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/St_Antony%27s_College.jpg/1280px-St_Antony%27s_College.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St_Antony%27s_College.jpg",
+      "license": "CC BY 2.0",
+      "artist": "Janet McKnight",
+      "credit": "originally posted to Flickr as St Antony's College",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St Antony's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_66",
+      "filename": "linacre_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Linacre College",
+      "qid": "Q653483",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Linacre_College_Oxford_Coat_Of_Arms.svg/1280px-Linacre_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Linacre_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Linacre College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_67",
+      "filename": "linacre_college__photo.jpg",
+      "kind": "photo",
+      "college": "Linacre College",
+      "qid": "Q653483",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ea/LinacreCollegeFromFields.jpg/1280px-LinacreCollegeFromFields.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:LinacreCollegeFromFields.jpg",
+      "license": "CC BY 3.0",
+      "artist": "Trezatium at English Wikipedia",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Linacre College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_68",
+      "filename": "st_catherines_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "St Catherine's College",
+      "qid": "Q2706734",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/St-Catherines_College_Oxford_Coat_Of_Arms.svg/1280px-St-Catherines_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St-Catherines_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for St Catherine's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_69",
+      "filename": "st_catherines_college__photo.jpg",
+      "kind": "photo",
+      "college": "St Catherine's College",
+      "qid": "Q2706734",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Stcatz_East_Outside_Quad.JPG/1280px-Stcatz_East_Outside_Quad.JPG",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Stcatz_East_Outside_Quad.JPG",
+      "license": "CC BY 2.5",
+      "artist": "Munkfishmonger at English Wikipedia",
+      "credit": "Transferred from en.wikipedia to Commons by Kurpfalzbilder.de using CommonsHelper.",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St Catherine's College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_70",
+      "filename": "st_cross_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "St Cross College",
+      "qid": "Q1247550",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/St-Cross_College_Oxford_Coat_Of_Arms_%28Motto%29.svg/1280px-St-Cross_College_Oxford_Coat_Of_Arms_%28Motto%29.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St-Cross_College_Oxford_Coat_Of_Arms_(Motto).svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for St Cross College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_71",
+      "filename": "st_cross_college__photo.jpg",
+      "kind": "photo",
+      "college": "St Cross College",
+      "qid": "Q1247550",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/St_Cross_Oxford_20050315.jpg/1280px-St_Cross_Oxford_20050315.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:St_Cross_Oxford_20050315.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "Kaihsu Tai",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for St Cross College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_72",
+      "filename": "wolfson_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Wolfson College",
+      "qid": "Q2007225",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Wolfson_College_Oxford_Coat_Of_Arms_%28Motto%29.svg/1280px-Wolfson_College_Oxford_Coat_Of_Arms_%28Motto%29.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Wolfson_College_Oxford_Coat_Of_Arms_(Motto).svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Wolfson College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_73",
+      "filename": "wolfson_college__photo.jpg",
+      "kind": "photo",
+      "college": "Wolfson College",
+      "qid": "Q2007225",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Wolfson_college_oxford.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Wolfson_college_oxford.jpg",
+      "license": "CC BY-SA 3.0",
+      "artist": "The original uploader was WolfsonPix at English Wikipedia.",
+      "credit": "Transferred from en.wikipedia to Commons.",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Wolfson College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_74",
+      "filename": "templeton_college__photo.png",
+      "kind": "photo",
+      "college": "Templeton College",
+      "qid": "Q958470",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/University_of_Oxford_coat-of-arms.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:University_of_Oxford_coat-of-arms.png",
+      "license": "CC BY-SA 3.0",
+      "artist": "The original uploader was Kaihsu at English Wikipedia.",
+      "credit": "Photographer Kaihsu Tai Copyright © 2004 and moral rights asserted.\nOriginally from en.wikipedia; description page is/was here.",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Templeton College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_75",
+      "filename": "kellogg_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Kellogg College",
+      "qid": "Q1738296",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Kellogg_College_Oxford_Coat_Of_Arms.svg/1280px-Kellogg_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Kellogg_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Kellogg College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_76",
+      "filename": "kellogg_college__photo.jpg",
+      "kind": "photo",
+      "college": "Kellogg College",
+      "qid": "Q1738296",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Kellogg_College_by_John_Cairns_15.5.14-129.jpg/1280px-Kellogg_College_by_John_Cairns_15.5.14-129.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Kellogg_College_by_John_Cairns_15.5.14-129.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "KelloggCollege",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Kellogg College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_77",
+      "filename": "green_templeton_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Green Templeton College",
+      "qid": "Q1544655",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Green-Templeton_College_Oxford_Coat_Of_Arms.svg/1280px-Green-Templeton_College_Oxford_Coat_Of_Arms.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Green-Templeton_College_Oxford_Coat_Of_Arms.svg",
+      "license": "CC BY-SA 3.0",
+      "artist": "ChevronTango",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Green Templeton College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_78",
+      "filename": "green_templeton_college__photo.jpg",
+      "kind": "photo",
+      "college": "Green Templeton College",
+      "qid": "Q1544655",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Green_Templeton_College.jpg/1280px-Green_Templeton_College.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Green_Templeton_College.jpg",
+      "license": "CC BY 3.0",
+      "artist": "Cwawebber",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Green Templeton College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_79",
+      "filename": "reuben_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Reuben College",
+      "qid": "Q63198474",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Arms_of_Reuben_College%2C_Oxford.svg/1280px-Arms_of_Reuben_College%2C_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Arms_of_Reuben_College,_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Reuben College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_80",
+      "filename": "reuben_college__photo.jpg",
+      "kind": "photo",
+      "college": "Reuben College",
+      "qid": "Q63198474",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/Reuben_College%2C_Oxford_-_Worthington_and_Jackson_wings.jpg/1280px-Reuben_College%2C_Oxford_-_Worthington_and_Jackson_wings.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Reuben_College,_Oxford_-_Worthington_and_Jackson_wings.jpg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Allyox",
+      "credit": "Own work",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Reuben College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    },
+    {
+      "id": "det_media_81",
+      "filename": "harris_manchester_college__coat_of_arms.png",
+      "kind": "coat_of_arms",
+      "college": "Harris Manchester College",
+      "qid": "Q2706726",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e2/Full_Achievement_of_Harris_Manchester_College_Oxford.svg/1280px-Full_Achievement_of_Harris_Manchester_College_Oxford.svg.png",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Full_Achievement_of_Harris_Manchester_College_Oxford.svg",
+      "license": "CC BY-SA 4.0",
+      "artist": "Unknown",
+      "credit": "This SVG coat of arms includes elements that have been taken or adapted from this coat of arms:",
+      "source": "Wikimedia Commons",
+      "description": "Real coat of arms for Harris Manchester College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_06"
+      ]
+    },
+    {
+      "id": "det_media_82",
+      "filename": "harris_manchester_college__photo.jpg",
+      "kind": "photo",
+      "college": "Harris Manchester College",
+      "qid": "Q2706726",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Harris_Manchester_College_Oxford_20040124.jpg",
+      "descriptionurl": "https://commons.wikimedia.org/wiki/File:Harris_Manchester_College_Oxford_20040124.jpg",
+      "license": "GFDL",
+      "artist": "Kaihsu at English Wikipedia",
+      "credit": "Transferred from en.wikipedia to Commons.",
+      "source": "Wikimedia Commons",
+      "description": "Real photo for Harris Manchester College, from Wikimedia Commons.",
+      "relates_to": [
+        "det_01",
+        "det_05"
+      ]
+    }
+  ],
+  "instances": []
+}

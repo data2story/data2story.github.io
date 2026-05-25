@@ -1,0 +1,152 @@
+{
+ "crest_university.png": {
+  "college": "University College, Oxford",
+  "license": "CC BY-SA 3.0",
+  "artist": "ChevronTango",
+  "source_url": "https://commons.wikimedia.org/wiki/File:University_College_Oxford_Coat_Of_Arms.svg"
+ },
+ "crest_balliol.png": {
+  "college": "Balliol College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Balliol_College_Oxford.svg"
+ },
+ "crest_merton.png": {
+  "college": "Merton College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Merton_College_Oxford.svg"
+ },
+ "crest_magdalen_college.png": {
+  "college": "Magdalen College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Magdalen_College_Oxford.svg"
+ },
+ "crest_new_college.png": {
+  "college": "New College",
+  "license": "CC BY-SA 3.0",
+  "artist": "ChevronTango",
+  "source_url": "https://commons.wikimedia.org/wiki/File:New_College_Oxford_Coat_Of_Arms_(Motto).svg"
+ },
+ "crest_the_queens_college.png": {
+  "college": "The Queen's College",
+  "license": "CC BY-SA 3.0",
+  "artist": "ChevronTango",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Queens_College_Oxford_Coat_Of_Arms.svg"
+ },
+ "crest_all_souls_college.png": {
+  "college": "All Souls College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Arms_of_Chichele.svg"
+ },
+ "crest_trinity_college.png": {
+  "college": "Trinity College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Arms_of_Thomas_Pope.svg"
+ },
+ "crest_jesus_college.png": {
+  "college": "Jesus College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Jesus_College_Oxford.svg"
+ },
+ "crest_keble_college.png": {
+  "college": "Keble College",
+  "license": "CC BY-SA 3.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Keble_College_Oxford_Coat_Of_Arms.svg"
+ },
+ "crest_somerville_college.png": {
+  "college": "Somerville College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Achievement_of_Somerville_College_Oxford.svg"
+ },
+ "crest_lady_margaret_hall.png": {
+  "college": "Lady Margaret Hall",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Arms_of_Lady_Margaret_Hall.svg"
+ },
+ "crest_nuffield_college.png": {
+  "college": "Nuffield College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Jonas Magnus Lystad",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Arms_of_Nuffield_College.svg"
+ },
+ "crest_wolfson_college.png": {
+  "college": "Wolfson College",
+  "license": "CC BY-SA 3.0",
+  "artist": "ChevronTango",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Wolfson_College_Oxford_Coat_Of_Arms_(Motto).svg"
+ },
+ "crest_kellogg_college.png": {
+  "college": "Kellogg College",
+  "license": "CC BY-SA 3.0",
+  "artist": "ChevronTango",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Kellogg_College_Oxford_Coat_Of_Arms.svg"
+ },
+ "crest_reuben_college.png": {
+  "college": "Reuben College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Unknown",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Arms_of_Reuben_College,_Oxford.svg"
+ },
+ "crest_st_johns_college.png": {
+  "college": "St John's College",
+  "license": "CC BY-SA 3.0",
+  "artist": "ChevronTango",
+  "source_url": "https://commons.wikimedia.org/wiki/File:St-John%27s_College_Oxford_Coat_Of_Arms.svg"
+ },
+ "crest_exeter_college.png": {
+  "college": "Exeter College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Jonas Magnus Lystad",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_Exeter_College_Oxford.svg"
+ },
+ "crest_lincoln_college.png": {
+  "college": "Lincoln College",
+  "license": "CC BY-SA 3.0",
+  "artist": "ChevronTango",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Lincoln_College_Oxford_Coat_Of_Arms.svg"
+ },
+ "crest_brasenose_college.png": {
+  "college": "Brasenose College",
+  "license": "CC BY-SA 3.0",
+  "artist": "ChevronTango",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Brasenose_College_Oxford_Coat_Of_Arms.svg"
+ },
+ "photo_christchurch.jpg": {
+  "college": "Christ Church",
+  "license": "CC BY-SA 4.0",
+  "artist": "Godot13",
+  "source_url": "https://commons.wikimedia.org/wiki/File:UK-2014-Oxford-Christ_Church_01.jpg"
+ },
+ "photo_somerville.jpg": {
+  "college": "Somerville College",
+  "license": "CC BY-SA 3.0",
+  "artist": "Philip Allfrey",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Somerville_College.jpg"
+ },
+ "photo_magdalen.jpg": {
+  "college": "Magdalen College",
+  "license": "CC BY 2.0",
+  "artist": "Alexis O'Connor",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Magdalen_College_Tower.jpg"
+ },
+ "photo_reuben.jpg": {
+  "college": "Reuben College",
+  "license": "CC BY-SA 4.0",
+  "artist": "Allyox",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Reuben_College,_Oxford_-_Worthington_and_Jackson_wings.jpg"
+ },
+ "photo_merton.jpg": {
+  "college": "Merton College",
+  "license": "CC BY-SA 3.0",
+  "artist": "Tom Murphy VII",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Merton_College_front_quad.jpg"
+ }
+}

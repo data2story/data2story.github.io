@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1,440 Minutes: How the World Spends Its Day</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style>
+  :root{
+    --bg:#10151a; --bg2:#161d24; --ink:#e9e6df; --muted:#9aa7b0;
+    --amber:#e0a25e; --teal:#5b8fb0; --rose:#d98b5f; --line:#2a343d;
+    --serif:Georgia,'Times New Roman',serif; --ui:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.7;font-size:18px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:var(--ui);font-weight:700;line-height:1.18}
+  p{margin:1.05rem 0}
+  a{color:var(--amber)}
+  section{padding:2.2rem 0;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+  .kicker{font-family:var(--ui);text-transform:uppercase;letter-spacing:.18em;font-size:.72rem;color:var(--amber);margin:0 0 .4rem}
+  h2{font-size:1.7rem;margin:.1rem 0 1rem;color:#fff}
+  .lede{color:var(--muted);font-size:1.05rem}
+  /* Teaser */
+  .teaser{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);max-width:none;height:100vh;min-height:540px;overflow:hidden;background:#0b0f13;display:flex;align-items:center;justify-content:center}
+  .teaser img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:kb 24s ease-in-out infinite alternate}
+  @keyframes kb{0%{transform:scale(1.04) translateY(0)}100%{transform:scale(1.14) translateY(-1.5%)}}
+  .teaser .daynight{position:absolute;inset:0;mix-blend-mode:soft-light;background:linear-gradient(120deg,rgba(224,162,94,.55),rgba(20,30,45,.0) 45%,rgba(12,18,30,.65));animation:dn 18s ease-in-out infinite alternate}
+  @keyframes dn{0%{opacity:.35}100%{opacity:.85}}
+  .teaser .vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 40%,rgba(8,11,15,.85) 100%)}
+  .teaser .tline{position:relative;z-index:2;text-align:center;padding:0 24px}
+  .teaser .tline .t1{font-family:var(--ui);font-size:clamp(2rem,6vw,3.6rem);font-weight:800;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.6);margin:0}
+  .teaser .tline .t2{font-family:var(--ui);color:#f2e9dd;font-size:clamp(.95rem,2.4vw,1.25rem);letter-spacing:.04em;margin:.6rem 0 0;text-shadow:0 2px 18px rgba(0,0,0,.7)}
+  .scrollcue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:2;color:#f2e9dd;font-family:var(--ui);font-size:.75rem;letter-spacing:.2em;opacity:.8}
+  @media (prefers-reduced-motion:reduce){.teaser img,.teaser .daynight{animation:none}}
+  /* Headline block */
+  .headline{padding:3rem 0 1rem}
+  .headline h1{font-size:clamp(2rem,5.4vw,3.1rem);color:#fff;margin:0 0 1rem}
+  .headline .sub{color:var(--muted);font-size:1.15rem}
+  .byline{font-family:var(--ui);font-size:.8rem;color:var(--muted);letter-spacing:.04em;margin-top:1.2rem}
+  /* Visual containers */
+  .visual-container,.chart-container,.interactive-container,.audio-container,figure{display:block;clear:both}
+  figure{margin:2rem 0}
+  figure img{max-width:100%;height:auto;display:block;margin:0 auto;border-radius:8px}
+  figcaption{font-family:var(--ui);font-size:.78rem;color:var(--muted);text-align:center;margin-top:.6rem;line-height:1.5}
+  .chart-container{margin:2rem auto;max-width:720px;width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:16px}
+  .chart-mount{width:100%;min-width:0;display:block}
+  .chart-title{font-family:var(--ui);font-size:.9rem;color:#fff;font-weight:600;margin:0 0 .2rem}
+  .chart-note{font-family:var(--ui);font-size:.74rem;color:var(--muted);margin:.5rem 0 0;line-height:1.5}
+  /* Stat callouts */
+  .stat{margin:2rem 0;text-align:center;display:block;background:linear-gradient(180deg,rgba(224,162,94,.08),transparent);border:1px solid var(--line);border-radius:12px;padding:1.6rem 1rem}
+  .stat .num{font-family:var(--ui);font-weight:800;color:var(--amber);font-size:clamp(2.6rem,9vw,4.3rem);line-height:1}
+  .stat .lab{font-family:var(--ui);color:var(--ink);font-size:1rem;margin-top:.5rem;max-width:460px;margin-left:auto;margin-right:auto}
+  /* Interactive: guess slider */
+  .guess{margin:2rem 0;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:1.4rem}
+  .guess h3{font-family:var(--ui);font-size:1rem;margin:0 0 .8rem;color:#fff}
+  .guess input[type=range]{width:100%;accent-color:var(--amber)}
+  .guess .gread{font-family:var(--ui);font-size:2.4rem;font-weight:800;color:var(--amber);text-align:center}
+  .guess .gbtn{font-family:var(--ui);background:var(--amber);color:#10151a;border:none;border-radius:8px;padding:.6rem 1.2rem;font-weight:700;cursor:pointer;display:block;margin:.8rem auto 0}
+  .guess .greveal{font-family:var(--ui);margin-top:1rem;color:var(--ink);text-align:center;display:none}
+  .guess .greveal .big{color:var(--rose);font-weight:800;font-size:1.3rem}
+  /* Flag ranking */
+  .flagrank{margin:2rem 0;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:1.2rem}
+  .frtabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+  .frtab{font-family:var(--ui);font-size:.82rem;background:#1d262e;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:.4rem .9rem;cursor:pointer}
+  .frtab.active{background:var(--amber);color:#10151a;border-color:var(--amber);font-weight:700}
+  .frrow{display:flex;align-items:center;gap:.6rem;margin:.34rem 0;transition:all .35s ease}
+  .frrow .flag{width:30px;height:20px;object-fit:cover;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.12);flex:0 0 auto}
+  .frrow .cname{font-family:var(--ui);font-size:.82rem;width:118px;flex:0 0 auto;color:var(--ink)}
+  .frrow .barwrap{flex:1;background:#141b22;border-radius:4px;overflow:hidden;height:18px}
+  .frrow .bar{height:100%;background:linear-gradient(90deg,var(--teal),var(--amber));border-radius:4px;transition:width .45s ease}
+  .frrow .val{font-family:var(--ui);font-size:.76rem;color:var(--muted);width:54px;text-align:right;flex:0 0 auto}
+  /* Audio */
+  .audio-container{margin:2rem 0;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:1.2rem}
+  .audio-container h3{font-family:var(--ui);font-size:1rem;margin:0 0 .6rem;color:#fff}
+  .sonbtn{font-family:var(--ui);background:var(--teal);color:#10151a;border:none;border-radius:8px;padding:.6rem 1.1rem;font-weight:700;cursor:pointer}
+  .sonlegend{font-family:var(--ui);font-size:.74rem;color:var(--muted);margin-top:.6rem}
+  audio{width:100%;margin-top:.8rem}
+  /* References */
+  .refs{font-family:var(--ui);font-size:.82rem;color:var(--muted)}
+  .refs h2{font-size:1.2rem}
+  .refs li{margin:.4rem 0}
+  .refs a{word-break:break-word}
+  .caveat{font-family:var(--ui);font-size:.82rem;color:var(--muted);border-left:3px solid var(--line);padding:.2rem 0 .2rem 1rem;margin:1.4rem 0}
+  /* fade-in */
+  @keyframes fade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  section>*{animation:fade .7s ease both}
+</style>
+</head>
+<body>
+
+<!-- ============ TEASER (des_01) ============ -->
+<div class="teaser" data-des="des_01">
+  <img src="assets/hero.png" alt="A 24-hour clock dissolving into a dawn-to-night sky, silhouettes of everyday life arranged around the dial">
+  <div class="daynight"></div>
+  <div class="vig"></div>
+  <div class="tline">
+    <p class="t1">1,440 minutes</p>
+    <p class="t2">Everyone gets the same day. Almost no one spends it the same way.</p>
+  </div>
+  <div class="scrollcue">SCROLL</div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ HEADLINE ============ -->
+<header class="headline">
+  <h1>1,440 Minutes: How the World Spends Its Day</h1>
+  <p class="sub">1.4 million time-use diaries, 25 countries, six decades — and a division of labour measured in minutes.</p>
+  <p class="byline">A Data2Story analysis of the Multinational Time Use Study (MTUS v11). All figures are population-weighted (PROPWT) on good-quality diaries.</p>
+</header>
+
+<!-- ============ edt_01 : HOOK ============ -->
+<section data-edt="edt_01" data-det="det_02,det_09,det_04">
+  <p class="kicker">The gap</p>
+  <h2>1,440 minutes, unequally spent</h2>
+
+  <p>A day is the one thing everyone owns in equal measure: exactly 1,440 minutes, no more for the rich, no fewer for the poor. The question is what we do with them.</p>
+
+  <p data-ana="ana_01">The world's largest archive of time-use diaries answers that question, and the answer is lopsided. Women average 236.8 minutes a day of unpaid work — housework, childcare, looking after relatives — to men's 104.9. That is 2.26 times as much. Men do more paid work, 228.3 minutes a day to women's 128.8, but the paid surplus does not erase the unpaid one.</p>
+
+  <p data-ana="ana_01" data-det="det_06">Add both kinds of work together and the ledger tips the other way: women's total working day runs 365.6 minutes, men's 333.2. Women work about half an hour longer, every day — the "second shift," visible in the numbers.</p>
+
+  <figure class="visual-container" data-des="des_02">
+    <img src="assets/hero.png" alt="Conceptual 24-hour clock with silhouettes of cooking, working and sleeping arranged around the dial">
+    <figcaption>A day, divided. Conceptual hero image (AI-generated, OpenRouter / gpt-5.4-image-2). A planned day-to-night time-lapse clip could not be generated (provider high-load); the still is shown with gentle CSS motion in the teaser instead.</figcaption>
+  </figure>
+
+  <!-- des_04 : guess-first interactive -->
+  <div class="interactive-container guess" id="des_04" data-des="des_04" data-ana="ana_01">
+    <h3>Before the chart: how much more unpaid work do women do?</h3>
+    <p style="font-family:var(--ui);font-size:.85rem;color:var(--muted);margin:.2rem 0 .8rem">Drag the slider to guess how many times as much unpaid work women do compared with men, then reveal the answer.</p>
+    <div class="gread"><span id="gval">1.5</span>&times;</div>
+    <input type="range" id="gslider" min="1" max="4" step="0.05" value="1.5" aria-label="Guess the unpaid-work ratio">
+    <button class="gbtn" id="gbtn" type="button">Reveal the answer</button>
+    <div class="greveal" id="greveal">Your guess: <strong id="gmine">1.5&times;</strong> &nbsp;|&nbsp; The data: <span class="big">2.26&times;</span><br>Women average 236.8 minutes of unpaid work a day to men's 104.9.</div>
+  </div>
+
+  <!-- des_03 : lead chart -->
+  <div class="chart-container" id="des_03" data-des="des_03" data-ana="ana_01">
+    <p class="chart-title">The gendered working day — minutes per day, men vs women</p>
+    <div class="chart-mount" id="mount_03"></div>
+    <p class="chart-note">Men lead on paid work; women lead far more on unpaid work. Added together, women's total working day is 32.5 minutes longer. PROPWT-weighted, all countries and years.</p>
+  </div>
+</section>
+
+<!-- ============ edt_02 : METHOD ============ -->
+<section data-edt="edt_02" data-det="det_01,det_02,det_03">
+  <p class="kicker">The method</p>
+  <h2>How the diaries work</h2>
+
+  <p data-det="det_01,det_02">The data comes from the Multinational Time Use Study, which harmonises 1.4 million diary days from 108 surveys across 25 countries and six decades. Instead of asking people how much they "usually" work or sleep — questions that invite flattering guesses — the diary records what someone was actually doing, minute by minute, across one real day. Every day sums to exactly 1,440 minutes, so every activity competes with every other.</p>
+
+  <p data-ana="ana_02">Pooled and weighted to represent populations, the average human day is mostly three things: sleep (506 minutes, 8h26m), screens (143 minutes of television, radio and computer), and paid work (177 minutes). Housework takes another 147. The remaining categories — eating, travel, reading, sport, going out — divide what is left.</p>
+
+  <p data-ana="ana_02" data-det="det_03">These are weighted averages on good-quality diaries, and they mix workers with the retired and the young, which is why population-wide paid work looks modest. The point is the shape of the day, not any one person's.</p>
+
+  <div class="chart-container" id="des_05" data-des="des_05" data-ana="ana_02">
+    <p class="chart-title">One day = 1,440 minutes (weighted average, all people)</p>
+    <div class="chart-mount" id="mount_05"></div>
+    <p class="chart-note">A single day as a stacked budget. Sleep alone takes more than a third of it. Hover any segment for its minutes and share of the day.</p>
+  </div>
+</section>
+
+<!-- ============ edt_03 : COUNTRIES ============ -->
+<section data-edt="edt_03" data-det="det_08,det_03">
+  <p class="kicker">A tour of 25 flags</p>
+  <h2>Who sleeps, who works</h2>
+
+  <p data-ana="ana_03">Sleep is not the same everywhere. South Africans sleep most in the data, 566 minutes a day (9h26m); Austrians least, 457 (7h37m) — a spread of nearly an hour and three-quarters. Near the bottom sit the United Kingdom and South Korea, the latter long known as one of the most sleep-starved, overworked societies on earth.</p>
+
+  <p data-ana="ana_04">Paid work tells its own geography. Poland, the Czech Republic and Serbia top the population-wide paid-work ranking; the Netherlands and Belgium sit at the bottom, the Dutch figure pulled down by the world's highest rate of part-time work. South Korea's overwork reputation shows up, but below several Central European countries — a reminder that a country's diary average blends employment rates and survey timing, not just how hard its workers grind.</p>
+
+  <p data-ana="ana_03" data-det="det_03">Read these league tables with care: countries were surveyed in different years on harmonised but not identical instruments, so part of every gap is when and how a place was measured.</p>
+
+  <!-- des_06 : sortable flag ranking -->
+  <div class="interactive-container flagrank" id="des_06" data-des="des_06" data-ana="ana_03,ana_04">
+    <div class="frtabs">
+      <button class="frtab active" data-mode="sleep" type="button">Sleep</button>
+      <button class="frtab" data-mode="paid" type="button">Paid work</button>
+    </div>
+    <div id="frlist"></div>
+    <p class="chart-note">Real national flags (Wikimedia Commons, public domain). Toggle to re-sort the same 25 countries between sleep and paid work — watch the order scramble. Values are PROPWT-weighted minutes per day.</p>
+  </div>
+</section>
+
+<!-- ============ edt_04 : GAP MAP ============ -->
+<section data-edt="edt_04" data-det="det_04,det_05">
+  <p class="kicker">Inequality at home</p>
+  <h2>The map of inequality at home</h2>
+
+  <p data-ana="ana_05">The unpaid-work gender gap is a story of place as much as sex. In Peru, women do 290.8 more minutes of unpaid work a day than men — nearly five hours of difference. Serbia, Armenia, the Czech Republic and Poland follow with gaps over 220 minutes.</p>
+
+  <p data-ana="ana_05" data-det="det_04">At the other end sit the United States (a 79.6-minute gap), Finland, Canada and Belgium. The pattern broadly matches what researchers find elsewhere: Nordic and Anglo countries cluster near parity while several Southern, Eastern European and Latin American societies show the widest divides. Nowhere is the gap zero.</p>
+
+  <div class="chart-container" id="des_07" data-des="des_07" data-ana="ana_05">
+    <p class="chart-title">The unpaid-work gender gap, by country (women minus men, minutes/day)</p>
+    <div class="chart-mount" id="mount_07"></div>
+    <p class="chart-note">Peru's gap (290.8 min) is more than three and a half times the United States' (79.6). Hover for each sex's daily minutes.</p>
+  </div>
+
+  <!-- des_08 : sonification -->
+  <div class="audio-container" id="des_08" data-des="des_08" data-ana="ana_05">
+    <h3>Hear the gap fall, country by country</h3>
+    <p style="font-family:var(--ui);font-size:.85rem;color:var(--muted);margin:.2rem 0 .8rem">Press play to step through all 25 countries from the widest gap (Peru) to the narrowest (United States). Each tone's pitch falls with the gap; the matching bar above lights up as it plays.</p>
+    <button class="sonbtn" id="sonbtn" type="button">▶ Play the gap</button>
+    <p class="sonlegend">Higher pitch = wider gender gap. Web Audio synthesis, no autoplay — the chart alone tells the full story if sound is off.</p>
+    <details style="margin-top:1rem">
+      <summary style="font-family:var(--ui);font-size:.8rem;color:var(--muted);cursor:pointer">Optional: ambient bed (generated)</summary>
+      <audio controls preload="metadata" src="assets/screen_rise.wav" data-des="des_08"></audio>
+      <p class="sonlegend">A short generated tone sequence (OpenRouter / lyria-3-pro-preview) offered as quiet atmosphere for this section.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ edt_05 : SCREENS ============ -->
+<section data-edt="edt_05" data-det="det_07">
+  <p class="kicker">The turn</p>
+  <h2>The screen ate the evening</h2>
+
+  <p data-ana="ana_06">One block of the day grew almost without interruption: the screen. Computer and internet time was effectively zero before the 1990s, then climbed — 5 minutes a day in the 1990s, 14 in the 2000s, 20 in the 2020s. Television never collapsed to make room; it rose too, from about 100 minutes a day in the 1970s to 151 in the 2020s. Total screen time grew from roughly 100 minutes to 171.</p>
+
+  <p data-ana="ana_07" data-det="det_07">Set the modern day beside the 20th-century one and the trade is clear: more time on screens (TV and radio up 46 minutes, computer up 17), less on paid work (down 23) and housework (down 14). Because the diary logs only one activity at a time, the computer figure almost certainly undercounts the scrolling we now layer on top of everything else.</p>
+
+  <div class="chart-container" id="des_09" data-des="des_09" data-ana="ana_06">
+    <p class="chart-title">Screen time by decade — TV/radio, computer, and the two combined</p>
+    <div class="chart-mount" id="mount_09"></div>
+    <p class="chart-note">Broadcast and computer screens rose together rather than substituting. Pre-1990s computer time is effectively zero. Diaries record one primary activity, so computer time is an undercount of true device exposure.</p>
+  </div>
+
+  <div class="chart-container" id="des_10" data-des="des_10" data-ana="ana_07">
+    <p class="chart-title">What the day traded: change in minutes, pre-1980 vs 2010 onward</p>
+    <div class="chart-mount" id="mount_10"></div>
+    <p class="chart-note">Screens and active leisure up; paid work and housework down. (Reported sleep also rose, but early diaries used different conventions, so it is left out of this ledger.)</p>
+  </div>
+</section>
+
+<!-- ============ edt_06 : CONVERGENCE ============ -->
+<section data-edt="edt_06" data-det="det_05,det_06">
+  <p class="kicker">The turn</p>
+  <h2>The gap is closing — because men finally showed up</h2>
+
+  <p data-ana="ana_08">The unpaid-work gap is narrowing, but not the way the optimistic story goes. It ran about 130 minutes in the 1970s and is down to roughly 89 today. The cause is asymmetric: women's unpaid minutes barely fell, while men's rose from 87 in the 1970s to 134 in the 2020s. The gap closed less because women were freed and more because men finally started doing more at home.</p>
+
+  <p data-ana="ana_09" data-det="det_05">And the total amount of work society does barely moves. Add paid and unpaid work together and the decade totals hover near each other from the 1970s to the 2020s — the "work-time invariance" researchers describe. What changes across sixty years is who does which kind of work, not how much work there is.</p>
+
+  <p data-ana="ana_08">Even now the gap is about an hour and a half a day. At the pace of the last half-century, parity is still generations away.</p>
+
+  <div class="chart-container" id="des_11" data-des="des_11" data-ana="ana_08">
+    <p class="chart-title">Unpaid work by sex, by decade — the closing gap</p>
+    <div class="chart-mount" id="mount_11"></div>
+    <p class="chart-note">The women's line barely descends; the men's line climbs to meet it. Convergence driven by men, not by women being freed. The 1960s are omitted (few countries, older diary conventions).</p>
+  </div>
+
+  <div class="stat" id="des_12" data-des="des_12" data-ana="ana_09">
+    <div class="num">~310&ndash;380</div>
+    <div class="lab">minutes of total work (paid + unpaid) per day &mdash; barely changed across six decades. What shifts is <em>who</em> does which kind, not how much there is.</div>
+  </div>
+</section>
+
+<!-- ============ edt_07 : CLOSE ============ -->
+<section data-edt="edt_07" data-det="det_09">
+  <p class="kicker">The fairness ledger</p>
+  <h2>The fairness ledger</h2>
+
+  <p>Time is the most evenly distributed resource on earth and one of the most unevenly spent. The diaries turn an invisible kind of labour — the cooking, the cleaning, the carrying of children — into something countable, and once counted it is hard to unsee.</p>
+
+  <p data-ana="ana_01" data-det="det_09">Women still hand over half an hour more of their day to work of every kind, most of it unpaid and uncounted in any economy's books. The gap is smaller than it was. It is not gone. The next minutes are still up for grabs.</p>
+
+  <div class="stat" id="des_13" data-des="des_13" data-ana="ana_01">
+    <div class="num">+32.5 min</div>
+    <div class="lab">longer total working day for women than men &mdash; every single day.</div>
+  </div>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section class="refs" data-edt="edt_07">
+  <h2>References &amp; sources</h2>
+  <p><strong>Data source.</strong> Multinational Time Use Study (MTUS), Version 11, Harmonized Aggregated File (<code>MTUS_haf.dta</code>; 1,429,253 diary days, 108 surveys, 25 countries, 1961&ndash;2023). Lamote de Grignon Perez, J., Gershuny, J., Vega-Rap&uacute;n, M., Kondiparthy, T. &amp; Walthery, P. (2024). <em>Multinational Time Use Study Database Version 11.</em> Centre for Time Use Research. <a href="https://www.timeuse.org" target="_blank" rel="noopener">timeuse.org</a>. All means PROPWT-weighted on good-quality diaries.</p>
+  <ul>
+    <li>Centre for Time Use Research (CTUR), UCL &mdash; <a href="https://www.ucl.ac.uk/ioe/departments-and-centres/centre-time-use-research" target="_blank" rel="noopener">methodology &amp; weights</a></li>
+    <li>OECD &mdash; <a href="https://www.oecd.org/en/publications/gender-equality-in-a-changing-world_e808086f-en/full-report/persistent-gender-gaps-in-paid-and-unpaid-work_cb137837.html" target="_blank" rel="noopener">Persistent gender gaps in paid and unpaid work</a> (women's unpaid work ~2x men's; benchmark)</li>
+    <li>CTUR Working Paper 2/2018 &mdash; <a href="https://www.timeuse.org/sites/default/files/2018-02/CTUR%20WP%202%202018_0.pdf" target="_blank" rel="noopener">Gender Symmetry, Gender Convergence and Historical Work-time Invariance</a></li>
+    <li>World Economic Forum &mdash; <a href="https://www.weforum.org/stories/2017/06/its-official-women-work-nearly-an-hour-longer-than-men-every-day/" target="_blank" rel="noopener">Women work nearly an hour longer than men every day</a></li>
+    <li>PLOS ONE &mdash; <a href="https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0264411" target="_blank" rel="noopener">Gender differences in time use across age groups</a></li>
+    <li>UNDP &mdash; <a href="https://www.undp.org/latin-america/blog/missing-piece-valuing-womens-unrecognized-contribution-economy" target="_blank" rel="noopener">Valuing women's unrecognized contribution to the economy</a></li>
+  </ul>
+  <p><strong>Media.</strong> 25 national flags: Wikimedia Commons, all public domain (per <code>flags_manifest.json</code>). Hero image: OpenRouter <code>gpt-5.4-image-2</code>. Ambient audio: OpenRouter <code>lyria-3-pro-preview</code>. A planned image-to-video clip (veo-3.1-fast) could not be generated due to provider high-load. <strong>Tools.</strong> Vega-Lite 5 (charts); Web Audio API (sonification); vanilla JS (interactives).</p>
+  <p class="caveat">Caveats. Countries were surveyed in different years on harmonised but not identical instruments, so cross-country differences partly reflect measurement. Diaries log one primary activity at a time, undercounting multitasked screen use. Population averages include the non-employed, children and retirees. Decade figures mix changing country compositions; the 1960s rest on few countries and older conventions.</p>
+</section>
+
+</div><!-- /wrap -->
+
+<script>
+// ---------- chart data resolved from analyst.json data_tables ----------
+var VL_CONFIG = {
+  background: null,
+  font: "system-ui",
+  axis: {labelColor:"#9aa7b0", titleColor:"#cfd6db", gridColor:"#222b33", domainColor:"#2a343d", tickColor:"#2a343d", labelFontSize:11, titleFontSize:12},
+  legend:{labelColor:"#cfd6db", titleColor:"#cfd6db"},
+  view:{stroke:null}
+};
+function embed(id, spec){ spec.config = VL_CONFIG; spec.width="container"; vegaEmbed("#"+id, spec, {actions:false, renderer:"svg"}); }
+
+// des_03 — grouped horizontal bar, men vs women (ana_01)
+embed("mount_03", {
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"sex":"Men","category":"Paid work","minutes":228.3},{"sex":"Women","category":"Paid work","minutes":128.8},
+    {"sex":"Men","category":"Housework","minutes":90.0},{"sex":"Women","category":"Housework","minutes":201.0},
+    {"sex":"Men","category":"Childcare","minutes":11.3},{"sex":"Women","category":"Childcare","minutes":30.2},
+    {"sex":"Men","category":"Total work","minutes":333.2},{"sex":"Women","category":"Total work","minutes":365.6}
+  ]},
+  "height":230,
+  "encoding":{
+    "y":{"field":"category","type":"nominal","sort":["Paid work","Housework","Childcare","Total work"],"title":null,"axis":{"labelFontSize":12}},
+    "x":{"field":"minutes","type":"quantitative","title":"minutes per day"},
+    "yOffset":{"field":"sex"},
+    "color":{"field":"sex","scale":{"domain":["Men","Women"],"range":["#5b8fb0","#d98b5f"]},"title":null},
+    "tooltip":[{"field":"sex"},{"field":"category"},{"field":"minutes","title":"minutes/day"}]
+  },
+  "mark":{"type":"bar","cornerRadiusEnd":3}
+});
+
+// des_05 — stacked single day-bar (ana_02)
+(function(){
+  var rows=[["Sleep",506.4],["TV, radio & computer",142.5],["Paid work",176.8],["Housework",147.5],
+    ["Other leisure",90.0],["Eating & drinking",82.5],["Personal care",53.0],["Other travel",46.7],
+    ["Education",44.0],["Going out",28.1],["Sport & exercise",23.7],["Commute",23.2],["Reading",23.0],["Childcare",21.1]];
+  var vals=rows.map(function(r){return {activity:r[0],minutes:r[1],pct:Math.round(r[1]/1440*1000)/10};});
+  embed("mount_05",{
+    "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+    "data":{"values":vals},
+    "height":80,
+    "encoding":{
+      "x":{"field":"minutes","type":"quantitative","stack":"zero","title":"minutes (a full day = 1,440)","scale":{"domain":[0,1440]}},
+      "color":{"field":"activity","type":"nominal","scale":{"scheme":"goldorange"},"legend":{"orient":"bottom","columns":4,"labelFontSize":10,"symbolSize":80,"title":null}},
+      "order":{"field":"minutes","sort":"descending"},
+      "tooltip":[{"field":"activity"},{"field":"minutes","title":"minutes/day"},{"field":"pct","title":"% of day"}]
+    },
+    "mark":{"type":"bar","stroke":"#10151a","strokeWidth":1}
+  });
+})();
+
+// des_07 — country gap diverging bar (ana_05)
+(function(){
+  var d=[["Peru","PE",346.6,55.9,290.8],["Serbia","RS",409.6,136.4,273.3],["Armenia","AM",295.7,53.2,242.5],
+    ["Czech Republic","CZ",351.6,124.0,227.6],["Poland","PL",320.2,96.5,223.7],["Italy","IT",276.5,83.1,193.4],
+    ["Austria","AT",297.9,126.8,171.1],["South Korea","KR",207.5,37.3,170.2],["Israel","IL",248.3,79.0,169.3],
+    ["Hungary","HU",259.7,98.5,161.2],["Germany","DE",293.1,135.4,157.7],["Spain","ES",251.4,100.2,151.2],
+    ["South Africa","ZA",216.7,83.6,133.1],["Slovenia","SI",264.2,132.1,132.1],["Bulgaria","BG",274.2,143.4,130.8],
+    ["United Kingdom","UK",237.4,109.4,128.1],["Argentina","AR",253.1,126.6,126.4],["Netherlands","NL",240.7,115.3,125.4],
+    ["Norway","NO",258.9,133.5,125.4],["France","FR",262.8,142.9,119.9],["Denmark","DK",216.9,101.3,115.6],
+    ["Belgium","BE",231.5,136.9,94.6],["Canada","CA",221.9,131.8,90.0],["Finland","FI",213.6,125.2,88.4],
+    ["United States","US",206.8,127.1,79.6]];
+  var vals=d.map(function(r){return {country:r[0],women:r[2],men:r[3],gap:r[4],hl:(r[0]==="Peru"||r[0]==="United States")};});
+  embed("mount_07",{
+    "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+    "data":{"values":vals},
+    "height":470,
+    "encoding":{
+      "y":{"field":"country","type":"nominal","sort":{"field":"gap","order":"descending"},"title":null,"axis":{"labelFontSize":11}},
+      "x":{"field":"gap","type":"quantitative","title":"gap: women − men (minutes/day)"},
+      "color":{"field":"gap","type":"quantitative","scale":{"scheme":"goldorange"},"legend":null},
+      "tooltip":[{"field":"country"},{"field":"women","title":"women min/day"},{"field":"men","title":"men min/day"},{"field":"gap","title":"gap (min)"}]
+    },
+    "mark":{"type":"bar","cornerRadiusEnd":3}
+  });
+})();
+
+// des_09 — screen time by decade, 3 lines (ana_06)
+(function(){
+  var d=[["1960s",104.4,0.0,104.4],["1970s",100.3,0.0,100.3],["1980s",117.7,0.4,118.1],
+    ["1990s",135.2,5.3,140.5],["2000s",131.3,14.1,145.4],["2010s",147.5,16.6,164.0],["2020s",151.1,19.5,170.6]];
+  var vals=[];
+  d.forEach(function(r){
+    vals.push({decade:r[0],series:"TV / radio",minutes:r[1]});
+    vals.push({decade:r[0],series:"Computer / internet",minutes:r[2]});
+    vals.push({decade:r[0],series:"Total screen",minutes:r[3]});
+  });
+  embed("mount_09",{
+    "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+    "data":{"values":vals},
+    "height":300,
+    "encoding":{
+      "x":{"field":"decade","type":"ordinal","title":null,"axis":{"labelAngle":0}},
+      "y":{"field":"minutes","type":"quantitative","title":"minutes per day"},
+      "color":{"field":"series","type":"nominal","scale":{"domain":["TV / radio","Computer / internet","Total screen"],"range":["#9aa7b0","#d98b5f","#e0a25e"]},"title":null,"legend":{"orient":"top"}},
+      "tooltip":[{"field":"decade"},{"field":"series"},{"field":"minutes","title":"min/day"}]
+    },
+    "layer":[{"mark":{"type":"line","strokeWidth":3,"point":{"filled":true,"size":55}}}]
+  });
+})();
+
+// des_10 — then vs now diverging change bar (ana_07)
+(function(){
+  var d=[["TV & radio",45.9],["Computer & internet",17.0],["Childcare",6.3],["Sport & exercise",5.8],
+    ["Commute",1.8],["Eating",-4.2],["Housework",-13.9],["Paid work",-22.8]];
+  var vals=d.map(function(r){return {activity:r[0],change:r[1],dir:r[1]>=0?"more":"less"};});
+  embed("mount_10",{
+    "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+    "data":{"values":vals},
+    "height":260,
+    "encoding":{
+      "y":{"field":"activity","type":"nominal","sort":{"field":"change","order":"descending"},"title":null,"axis":{"labelFontSize":11}},
+      "x":{"field":"change","type":"quantitative","title":"change in minutes/day (pre-1980 → 2010+)"},
+      "color":{"field":"dir","type":"nominal","scale":{"domain":["more","less"],"range":["#d98b5f","#5b8fb0"]},"legend":null},
+      "tooltip":[{"field":"activity"},{"field":"change","title":"Δ minutes/day"}]
+    },
+    "mark":{"type":"bar","cornerRadiusEnd":3}
+  });
+})();
+
+// des_11 — convergence two lines with shaded gap (ana_08)
+(function(){
+  var d=[["1970s",216.1,86.5],["1980s",260.8,104.3],["1990s",241.2,97.5],
+    ["2000s",234.5,98.9],["2010s",216.2,126.7],["2020s",222.7,134.0]];
+  var lines=[]; var band=[];
+  d.forEach(function(r){
+    lines.push({decade:r[0],sex:"Women",minutes:r[1]});
+    lines.push({decade:r[0],sex:"Men",minutes:r[2]});
+    band.push({decade:r[0],men:r[2],women:r[1]});
+  });
+  embed("mount_11",{
+    "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+    "height":300,
+    "encoding":{"x":{"field":"decade","type":"ordinal","title":null,"axis":{"labelAngle":0}}},
+    "layer":[
+      {"data":{"values":band},
+       "mark":{"type":"area","opacity":0.16,"color":"#e0a25e"},
+       "encoding":{"y":{"field":"men","type":"quantitative","title":"unpaid work (minutes/day)"},"y2":{"field":"women"},
+         "tooltip":[{"field":"decade"},{"field":"women","title":"women min/day"},{"field":"men","title":"men min/day"}]}},
+      {"data":{"values":lines},
+       "mark":{"type":"line","strokeWidth":3,"point":{"filled":true,"size":55}},
+       "encoding":{"y":{"field":"minutes","type":"quantitative"},
+         "color":{"field":"sex","type":"nominal","scale":{"domain":["Women","Men"],"range":["#d98b5f","#5b8fb0"]},"title":null,"legend":{"orient":"top"}},
+         "tooltip":[{"field":"decade"},{"field":"sex"},{"field":"minutes","title":"min/day"}]}}
+    ]
+  });
+})();
+
+// ---------- des_04 : guess-first interactive ----------
+(function(){
+  var s=document.getElementById("gslider"), v=document.getElementById("gval"),
+      btn=document.getElementById("gbtn"), rev=document.getElementById("greveal"), mine=document.getElementById("gmine");
+  function upd(){ v.textContent=parseFloat(s.value).toFixed(2); }
+  s.addEventListener("input",upd); upd();
+  btn.addEventListener("click",function(){
+    mine.innerHTML=parseFloat(s.value).toFixed(2)+"&times;";
+    rev.style.display="block";
+    var chart=document.getElementById("des_03");
+    if(chart) chart.scrollIntoView({behavior:"smooth",block:"center"});
+  });
+})();
+
+// ---------- des_06 : sortable flag ranking ----------
+(function(){
+  var ISO={"South Africa":"south_africa","Armenia":"armenia","Bulgaria":"bulgaria","Israel":"israel","Peru":"peru",
+    "Spain":"spain","Italy":"italy","France":"france","Hungary":"hungary","Belgium":"belgium","Slovenia":"slovenia",
+    "Finland":"finland","Netherlands":"netherlands","Argentina":"argentina","United States":"united_states","Canada":"canada",
+    "Norway":"norway","Germany":"germany","Serbia":"serbia","Poland":"poland","Czech Republic":"czech_republic",
+    "Denmark":"denmark","South Korea":"south_korea","United Kingdom":"united_kingdom","Austria":"austria"};
+  var SLEEP=[["South Africa",566.0],["Armenia",554.8],["Bulgaria",554.5],["Israel",537.2],["Peru",535.2],["Spain",527.4],
+    ["Italy",525.1],["France",523.1],["Hungary",519.7],["Belgium",516.0],["Slovenia",514.9],["Finland",513.8],
+    ["Netherlands",512.8],["Argentina",508.8],["United States",507.4],["Canada",506.5],["Norway",505.9],["Germany",502.7],
+    ["Serbia",500.6],["Poland",490.1],["Czech Republic",484.0],["Denmark",480.5],["South Korea",471.1],
+    ["United Kingdom",468.4],["Austria",457.1]];
+  var PAID=[["Poland",292.7],["Czech Republic",275.7],["Serbia",271.5],["Denmark",215.4],["Peru",212.7],["South Korea",210.7],
+    ["Hungary",204.8],["Canada",200.1],["United States",197.8],["Argentina",195.4],["Germany",188.6],["Norway",181.3],
+    ["Finland",178.7],["United Kingdom",176.0],["Israel",172.0],["Slovenia",171.1],["Bulgaria",167.6],["France",166.0],
+    ["Armenia",160.4],["Austria",155.2],["Spain",155.2],["South Africa",144.7],["Italy",144.5],["Netherlands",132.9],["Belgium",131.1]];
+  function hm(m){var h=Math.floor(m/60),mm=Math.round(m-h*60);if(mm===60){h++;mm=0;}return h+"h"+(mm<10?"0":"")+mm;}
+  var list=document.getElementById("frlist"), tabs=document.querySelectorAll(".frtab");
+  function render(mode){
+    var data=(mode==="sleep"?SLEEP:PAID), max=data[0][1];
+    list.innerHTML="";
+    data.forEach(function(r){
+      var row=document.createElement("div"); row.className="frrow";
+      row.innerHTML='<img class="flag" src="assets/flag_'+ISO[r[0]]+'.png" alt="'+r[0]+' flag">'+
+        '<span class="cname">'+r[0]+'</span>'+
+        '<span class="barwrap"><span class="bar" style="width:'+(r[1]/max*100)+'%"></span></span>'+
+        '<span class="val">'+hm(r[1])+'</span>';
+      list.appendChild(row);
+    });
+  }
+  tabs.forEach(function(t){ t.addEventListener("click",function(){
+    tabs.forEach(function(x){x.classList.remove("active");}); t.classList.add("active"); render(t.dataset.mode);
+  });});
+  render("sleep");
+})();
+
+// ---------- des_08 : sonification synced to des_07 bars ----------
+(function(){
+  var GAPS=[["Peru",290.8],["Serbia",273.3],["Armenia",242.5],["Czech Republic",227.6],["Poland",223.7],["Italy",193.4],
+    ["Austria",171.1],["South Korea",170.2],["Israel",169.3],["Hungary",161.2],["Germany",157.7],["Spain",151.2],
+    ["South Africa",133.1],["Slovenia",132.1],["Bulgaria",130.8],["United Kingdom",128.1],["Argentina",126.4],
+    ["Netherlands",125.4],["Norway",125.4],["France",119.9],["Denmark",115.6],["Belgium",94.6],["Canada",90.0],
+    ["Finland",88.4],["United States",79.6]];
+  var btn=document.getElementById("sonbtn"), playing=false, ctx=null;
+  var minG=79.6, maxG=290.8, loHz=261, hiHz=880;
+  function freq(g){ return loHz + (g-minG)/(maxG-minG)*(hiHz-loHz); }
+  function highlight(i){
+    var svg=document.querySelector("#mount_07 svg"); if(!svg) return;
+    var bars=svg.querySelectorAll("path[role='graphics-symbol'], rect");
+    // fallback visual: flash whole chart container border
+    var box=document.getElementById("des_07");
+    if(box){ box.style.transition="box-shadow .15s"; box.style.boxShadow="0 0 0 2px #e0a25e"; setTimeout(function(){box.style.boxShadow="none";},170); }
+  }
+  btn.addEventListener("click",function(){
+    if(playing) return;
+    try{ ctx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ btn.textContent="Audio not supported"; return; }
+    playing=true; btn.textContent="♪ Playing…";
+    var t0=ctx.currentTime, dur=0.28;
+    GAPS.forEach(function(r,i){
+      var osc=ctx.createOscillator(), g=ctx.createGain(), st=t0+i*dur;
+      osc.type="triangle"; osc.frequency.setValueAtTime(freq(r[1]),st);
+      g.gain.setValueAtTime(0.0001,st); g.gain.exponentialRampToValueAtTime(0.22,st+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,st+dur*0.9);
+      osc.connect(g).connect(ctx.destination); osc.start(st); osc.stop(st+dur);
+      setTimeout(highlight, i*dur*1000);
+    });
+    setTimeout(function(){ playing=false; btn.textContent="▶ Play the gap"; if(ctx) ctx.close(); },
+      GAPS.length*dur*1000+200);
+  });
+})();
+</script>
+</body>
+</html>

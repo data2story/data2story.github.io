@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "hle",
+    "dataset_title": "Humanity's Last Exam (cais/hle)",
+    "researched_on": "2026-05-25"
+  },
+  "items": {
+    "det_01": {
+      "label": "What HLE is and who built it",
+      "content": "Humanity's Last Exam (HLE) is a closed-ended academic benchmark of 2,500 extremely hard questions spanning over 100 subjects in mathematics, the natural sciences, humanities and engineering. It was built jointly by the Center for AI Safety (CAIS) and Scale AI, with questions contributed by nearly 1,000 subject-matter experts affiliated with more than 500 institutions across 50 countries — mostly professors, researchers and graduate-degree holders. Every question has a single, unambiguous, easily verifiable solution that nonetheless cannot be answered by a quick internet search. The dataset published on Hugging Face (cais/hle) is the public release; the project's stated ambition was to be 'the final closed-ended academic benchmark of its kind with broad subject coverage'.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://arxiv.org/abs/2501.14249",
+          "title": "Humanity's Last Exam (arXiv:2501.14249)",
+          "facts": [
+            "2,500 questions across dozens of subjects including mathematics, humanities and the natural sciences",
+            "Developed by the Center for AI Safety and Scale AI with the HLE Contributors Consortium",
+            "Each question has a known, unambiguous, easily verifiable solution that cannot be quickly answered via internet retrieval",
+            "Described as 'the final closed-ended academic benchmark of its kind with broad subject coverage'"
+          ]
+        },
+        {
+          "url": "https://artificialanalysis.ai/evaluations/humanitys-last-exam",
+          "title": "Humanity's Last Exam Benchmark Leaderboard | Artificial Analysis",
+          "facts": [
+            "Questions from nearly 1,000 subject expert contributors",
+            "Contributors affiliated with over 500 institutions across 50 countries",
+            "Contributors mostly professors, researchers and graduate degree holders"
+          ]
+        },
+        {
+          "url": "https://huggingface.co/datasets/cais/hle",
+          "title": "cais/hle on Hugging Face",
+          "facts": ["The dataset analysed here is the public cais/hle release"]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Why HLE exists: benchmarks got too easy",
+      "content": "HLE was created because the standard yardsticks for measuring AI had become saturated: large language models now score over 90% on popular benchmarks like MMLU, which makes those tests nearly useless for distinguishing one frontier model from another. Dan Hendrycks, director of the Center for AI Safety, has said he started the project after Elon Musk remarked that existing benchmarks were 'too easy'. The original working title was even more provocative; the team settled on 'Humanity's Last Exam', framing it as the hardest closed-ended academic test that could still be written and graded by people — a final ruler for measuring machine knowledge against the expert human frontier.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://arxiv.org/abs/2501.14249",
+          "title": "Humanity's Last Exam (arXiv:2501.14249)",
+          "facts": [
+            "LLMs achieve over 90% accuracy on popular benchmarks like MMLU, limiting informed measurement of state-of-the-art capabilities"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Humanity's_Last_Exam",
+          "title": "Humanity's Last Exam - Wikipedia",
+          "facts": [
+            "Dan Hendrycks, director of the Center for AI Safety, created it after Elon Musk suggested existing benchmarks like MMLU were too easy"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Single-digit scores at launch",
+      "content": "When HLE was released in early 2025, the most capable AI models of the day scored in the single digits, an almost unheard-of result for a modern benchmark. GPT-4o managed just 2.7%, Grok 2 reached 3.0%, Claude 3.5 Sonnet 4.1%, and Gemini 1.5 Pro 4.6%. Even dedicated reasoning models barely moved the needle: OpenAI's o1 hit 8.0%, DeepSeek-R1 8.5%, and o3-mini topped the launch table at 13.4%. The gap between these scores and the near-perfect performance the same models post on older tests is the entire point of HLE — it re-opened headroom that other benchmarks had closed.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://arxiv.org/html/2501.14249v8",
+          "title": "Humanity's Last Exam (arXiv:2501.14249v8)",
+          "facts": [
+            "GPT-4o accuracy 2.7%",
+            "Grok 2 accuracy 3.0%",
+            "Claude 3.5 Sonnet accuracy 4.1%",
+            "Gemini 1.5 Pro accuracy 4.6%",
+            "o1 accuracy 8.0%",
+            "DeepSeek-R1 accuracy 8.5%",
+            "o3-mini accuracy 13.4%"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Not just wrong, but overconfident",
+      "content": "HLE measures not only whether a model gets the answer right but how well-calibrated its confidence is — and the calibration results at launch were arguably more alarming than the accuracy ones. Models reported high confidence in answers that were almost always wrong, producing calibration errors of 80% or more: GPT-4o 89%, Gemini 1.5 Pro 88%, Grok 2 87%, Claude 3.5 Sonnet 84%, o1 83%, o3-mini 80%, with DeepSeek-R1 the least miscalibrated at 73%. A high calibration error means the model confidently hallucinates rather than saying 'I don't know' — exactly the failure mode that matters most when AI is deployed in high-stakes domains.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://arxiv.org/html/2501.14249v8",
+          "title": "Humanity's Last Exam (arXiv:2501.14249v8)",
+          "facts": [
+            "GPT-4o calibration error 89%",
+            "Gemini 1.5 Pro calibration error 88%",
+            "Grok 2 calibration error 87%",
+            "Claude 3.5 Sonnet calibration error 84%",
+            "o1 calibration error 83%",
+            "o3-mini calibration error 80%",
+            "DeepSeek-R1 calibration error 73%"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "How a question earns its place: 70,000 attempts, 13,000 survivors",
+      "content": "The difficulty of HLE is engineered, not accidental. Experts worldwide submitted candidate questions competing for a $500,000 prize pool ($5,000 for each of the top 50 questions, $500 for the next 500). Each submission was first thrown at frontier models: only questions where the models failed or did worse than random guessing advanced. Over 70,000 model-evaluation attempts winnowed the pool to roughly 13,000 questions that genuinely stumped the LLMs. Those then passed through two rounds of graduate-level human expert review for correctness and clarity before the organizers selected the final 2,500. In other words, every question in this dataset is one a machine could not answer and at least two human experts agreed was both correct and unambiguous.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://arxiv.org/html/2501.14249v8",
+          "title": "Humanity's Last Exam (arXiv:2501.14249v8)",
+          "facts": [
+            "Over 70,000 LLM evaluation attempts yielded approximately 13,000 questions that stumped LLMs and advanced to expert review",
+            "Round 1: each submission received 1-3 graduate-level reviews; Round 2: organizers and expert reviewers selected final questions",
+            "Final benchmark contains 2,500 questions across over 100 subjects"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Humanity's_Last_Exam",
+          "title": "Humanity's Last Exam - Wikipedia",
+          "facts": [
+            "Prize pool of $500,000: $5,000 per top 50 questions and $500 for the next 500",
+            "Questions that failed models or did worse than random guessing underwent two rounds of human expert review"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "exactMatch vs multipleChoice",
+      "content": "HLE questions come in two grading formats. 'multipleChoice' questions present labelled answer options (A, B, C ...) and the model must pick the right letter; with five-or-more options, chance accuracy is well below 20%. 'exactMatch' (short-answer) questions require the model to produce the exact correct string — a number, a chemical formula, a polynomial, a name — with no options to anchor on; guessing is effectively impossible. The exactMatch format dominates the dataset and is the harder of the two: there is no credit for being close. Official figures put the public set at roughly 24% multiple-choice and 76% short-answer, which is close to the split in this CSV snapshot.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Humanity's_Last_Exam",
+          "title": "Humanity's Last Exam - Wikipedia",
+          "facts": [
+            "24% multiple-choice; 76% short-answer exact-match questions"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Multimodal: ~14% need an image",
+      "content": "HLE is explicitly a multi-modal benchmark: a meaningful minority of questions cannot be answered from text alone but require interpreting an accompanying image — a chess position, a chemical structure, a knot diagram, a histopathology slide, a star chart, an engineering schematic. Roughly 14% of the public set is multimodal. These are the hardest cases for many systems because they demand both perception and expert reasoning over what is perceived. The 16 real question images bundled with this dataset are drawn from exactly this multimodal slice and span all eight top-level categories.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Humanity's_Last_Exam",
+          "title": "Humanity's Last Exam - Wikipedia",
+          "facts": [
+            "~14% of questions require text and image comprehension (multimodal)"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "The official subject distribution",
+      "content": "The HLE creators publish a top-level subject breakdown for the public set that is dominated by mathematics: Mathematics 41%, Biology/Medicine 11%, Computer Science/AI 10%, Physics 9%, Humanities/Social Science 9%, Other 9%, Chemistry 7%, Engineering 4%. This is a useful external benchmark to compare against the category counts computed directly from this CSV — they should line up closely if the snapshot is faithful to the public release.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Humanity's_Last_Exam",
+          "title": "Humanity's Last Exam - Wikipedia",
+          "facts": [
+            "Subject distribution: Mathematics 41%, Physics 9%, Biology/Medicine 11%, Humanities/Social Science 9%, Computer Science/AI 10%, Engineering 4%, Chemistry 7%, Other 9%"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Progress since launch: from single digits toward ~45%",
+      "content": "HLE was designed to last, but AI moves fast. Within about a year, scores climbed from the single digits at launch into the mid-40s. As of May 2026 the leaderboard is led by Google DeepMind's Gemini 3.1 Pro Preview at around 44.7%, with OpenAI's GPT-5.4 close behind at 41.6% and GPT-5.3 Codex at 39.9%. That is a dramatic jump from o3-mini's 13.4% launch-day high, but it still leaves more than half the exam unsolved — and the climb itself is the clearest single signal of how quickly frontier reasoning is improving. Note these are tool-augmented leaderboard figures and not directly comparable to the no-tools launch numbers.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://artificialanalysis.ai/evaluations/humanitys-last-exam",
+          "title": "Humanity's Last Exam Benchmark Leaderboard | Artificial Analysis",
+          "facts": [
+            "As of May 2026 the top model is Gemini 3.1 Pro Preview at 44.7%",
+            "GPT-5.4 at 41.6% and GPT-5.3 Codex at 39.9%"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Controversy: ~30% of chem/bio answers may be wrong",
+      "content": "HLE is not above criticism. In July 2025 the AI-science lab FutureHouse audited the text-only chemistry and biology subset (321 questions) using its PaperQA2 / Crow literature agent and concluded that about 29 ± 3.7% of those answers had directly conflicting evidence in the peer-reviewed literature — i.e. roughly 30% could be wrong. The HLE team acknowledged the findings, ran its own checks, and reported a lower error rate of around 18%, committing to ongoing revisions. The lesson for any analysis of this CSV: 'answer' and 'rationale' are contributor-supplied and expert-reviewed but not infallible, and the category/subject labels are likewise contributor-assigned. Treat the data as a high-quality but human-made artifact, not ground truth.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.futurehouse.org/research-announcements/hle-exam",
+          "title": "About 30% of Humanity's Last Exam chemistry/biology answers are likely wrong | FutureHouse",
+          "facts": [
+            "29 ± 3.7% (95% CI) of text-only chemistry and biology answers had directly conflicting evidence in peer-reviewed literature",
+            "Audit covered 321 text-only biology/health and chemistry questions using the PaperQA2/Crow agent"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Humanity's_Last_Exam",
+          "title": "Humanity's Last Exam - Wikipedia",
+          "facts": [
+            "Scale AI revised the HLE preprint in light of the evaluation and reported an error rate of 18%"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "Scope guidance for the analyst",
+      "content": "Recommended angles to quantify from the CSV: (1) the extreme Math dominance — verify the ~41% share and the count (~1021 of 2500); (2) the long tail of expertise — count distinct raw_subjects (~193) and distinct authors (~580), and show how concentrated vs spread the contributions are; (3) the image vs text-only split (~342 vs ~2158) and whether multimodal questions cluster in particular categories; (4) the exactMatch vs multipleChoice split (~1909 vs ~591) overall and within categories; (5) within-category subject composition (e.g. what subjects make up 'Other'). Caveats to flag: categories and subjects are contributor-labeled and inconsistent in granularity; this CSV is a snapshot/subset of the public set; 'hard' is defined relative to the models of early 2025; and per det_10, a non-trivial share of answers may be disputed. Do not present model scores beyond the launch and current figures verified here.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://huggingface.co/datasets/cais/hle",
+          "title": "cais/hle on Hugging Face",
+          "facts": ["Analysis is over the local hle_questions.csv snapshot of cais/hle"]
+        }
+      ]
+    }
+  },
+  "reference_media": [],
+  "instances": []
+}

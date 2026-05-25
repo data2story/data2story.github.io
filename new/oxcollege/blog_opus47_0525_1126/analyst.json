@@ -1,0 +1,150 @@
+{
+  "meta": { "role": "analyst", "version": "2.0" },
+  "dataset": {
+    "files": ["oxford_colleges.csv", "colleges_by_century.csv"],
+    "rows": 50,
+    "columns": 7,
+    "what_one_row_represents": "One college (or college-like institution) of the University of Oxford, as classified by Wikidata — including current, defunct, and merged houses.",
+    "time_range": "1201–2019 (818 years)",
+    "geographic_scope": "Oxford, England"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset shape and where the gaps are",
+      "content": "The dataset is 50 rows by 7 columns, one row per college, with founding years spanning 1201 to 2019 — 818 years. Coverage is wildly uneven across columns. The motto field is essentially empty: 49 of 50 colleges record no motto, with only Magdalen's 'Floreat Magdalena!' surviving. Founder is blank for 22 colleges, namesake for 13, website for 10, and two colleges (Harris Manchester and St Bernard's) have no founding year at all and must be excluded from any date-based analysis. The sparsity is informative rather than sloppy: Wikidata records who founded and named a college far more reliably than its Latin motto, and the missing founders cluster among the oldest, murkiest monastic houses.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [33, 47], "output": "rows=50 cols=7\nfounded_year range: 1201 -> 2019 (span 818 years)\n  motto: 49 missing\n  founder: 22 missing\n  named_after: 13 missing\n  website: 10 missing\n  founded_year: 2 missing\nblank founded_year: 2 -> ['Harris Manchester College', \"St Bernard's College, Oxford\"]" },
+      "data_table": {
+        "description": "Missing-value count per column (out of 50 rows)",
+        "columns": ["column", "missing"],
+        "rows": [["motto", 49], ["founder", 22], ["named_after", 13], ["website", 10], ["founded_year", 2], ["college", 0], ["wikidata_id", 0]]
+      },
+      "based_on": ["det_01", "det_07"]
+    },
+    "ana_02": {
+      "label": "Two waves of foundation, 700 years apart",
+      "content": "Plotting foundations by century reveals two distinct peaks rather than steady growth. A medieval wave fills the 13th and 14th centuries (7 and 5 colleges), and a modern wave fills the 19th and 20th centuries (9 each — the two joint-largest centuries). Between them sits a long sag: the 17th century has 3, the 18th just 1. The 16th century records 8, the second-highest, but this number is inflated by Reformation churn — Cardinal College, King Henry VIII's College and Christ Church are partly the same institution renamed (see context). The shape of the dataset is therefore a barbell: a medieval origin, a modern expansion, and a quiet middle.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [50, 61], "output": "  13th century: 7\n  14th century: 5\n  15th century: 4\n  16th century: 8\n  17th century: 3\n  18th century: 1\n  19th century: 9\n  20th century: 9\n  21st century: 2\n  unknown: 2\npeak century: 19th century with 9\n13th+14th medieval = 12; 19th+20th modern = 18" },
+      "data_table": {
+        "description": "Colleges founded per century (excluding the 'unknown' bucket of 2 blank-year rows)",
+        "columns": ["century", "founded"],
+        "rows": [["13th", 7], ["14th", 5], ["15th", 4], ["16th", 8], ["17th", 3], ["18th", 1], ["19th", 9], ["20th", 9], ["21st", 2]]
+      },
+      "based_on": ["det_03", "det_04", "det_05"]
+    },
+    "ana_03": {
+      "label": "The oldest college is a three-way tie inside 15 years",
+      "content": "The three colleges that claim to be Oxford's oldest are separated by just 15 years in the data: University College (1249), Balliol (1263) and Merton (1264). No single number resolves the dispute because each college defines 'oldest' differently — earliest endowment, longest continuous site, or first formal statutes. Complicating it further, the single oldest row is Rewley Abbey (1201), a dissolved Cistercian monastic house that precedes University College by 48 years but is not a college in the modern sense. So the data contains a tempting wrong answer (1201) sitting just above a genuinely unresolvable three-way tie.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [64, 73], "output": "  1201  Rewley Abbey\n  1249  University College, Oxford\n  1263  Balliol College\n  1264  Merton College\n  1278  St Edmund Hall\n  1283  Gloucester College\noldest-three window: 1249-1264 = 15 years\nRewley Abbey (1201) precedes Univ (1249) by 48 years" },
+      "data_table": {
+        "description": "Six oldest rows by founding year",
+        "columns": ["year", "college", "note"],
+        "rows": [[1201, "Rewley Abbey", "dissolved monastic house, not a modern college"], [1249, "University College", "earliest endowment claim"], [1263, "Balliol College", "longest continuous site claim"], [1264, "Merton College", "first formal statutes claim"], [1278, "St Edmund Hall", "last surviving medieval hall"], [1283, "Gloucester College", "monastic, dissolved at Reformation"]]
+      },
+      "based_on": ["det_02", "det_08"]
+    },
+    "ana_04": {
+      "label": "Founders: 27 people, only three founded twice",
+      "content": "Of 50 colleges, 28 record a founder; after splitting the semicolon-separated joint foundations, there are 27 distinct founders. Almost everyone founded exactly one college. Only three names appear twice: Thomas Wolsey (Cardinal College and, jointly, Christ Church), Henry VIII (King Henry VIII's College and Christ Church), and Elizabeth Wordsworth, who founded both Lady Margaret Hall (1878) and St Hugh's (1886) for women. The Wolsey and Henry repeats are really the same Reformation institution under successive names; Wordsworth's are two genuinely separate women's colleges, making her arguably the most productive single founder in the dataset.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze.py", "lines": [76, 88], "output": "colleges with a recorded founder: 28/50\ndistinct founders: 27\n  Thomas Wolsey: 2\n  Henry VIII of England: 2\n  Elizabeth Wordsworth: 2\n  William of Durham: 1\n  ...\nmost prolific: Thomas Wolsey (2)" },
+      "data_table": {
+        "description": "Founders who founded more than one college (after splitting joint foundations)",
+        "columns": ["founder", "colleges_founded"],
+        "rows": [["Thomas Wolsey", 2], ["Henry VIII of England", 2], ["Elizabeth Wordsworth", 2]]
+      },
+      "based_on": ["det_03", "det_04", "det_06"]
+    },
+    "ana_05": {
+      "label": "Namesakes shift from saints to surnames",
+      "content": "37 of 50 colleges record a namesake, and they split almost evenly: 17 are religious (saints, feast days, holy figures — Mary Magdalene, John the Baptist, All Souls' Day, the Holy Trinity, Jesus Christ) and 20 are personal or secular (founders, royal consorts, scholars, philanthropists — Walter de Merton, Philippa of Hainault, Mary Somerville, Isaac Wolfson). The split is not random across time: religious namesakes dominate the medieval and Tudor colleges, while the 19th- and 20th-century foundations are overwhelmingly named after a person — often the benefactor whose money built them. The namesake column is, in effect, a record of England's slow secularisation of patronage.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze.py", "lines": [91, 105], "output": "colleges with a namesake: 37/50\nreligious/saint namesakes: 17\npersonal/secular namesakes: 20\nreligious examples: [('Magdalen College', 'Mary Magdalene'), ('Christ Church', 'Jesus Christ'), ('All Souls College', \"All Souls' Day\")...]\npersonal examples: [('Merton College', 'Walter de Merton'), (\"The Queen's College\", 'Philippa of Hainault')...]" },
+      "data_table": {
+        "description": "Namesake type split (of 37 colleges with a recorded namesake)",
+        "columns": ["namesake_type", "count"],
+        "rows": [["personal / secular", 20], ["religious / saint", 17]]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_06": {
+      "label": "Roughly 1 in 5 rows is not a living college",
+      "content": "The dataset deliberately mixes survivors with the dead. Eleven of the 50 rows are defunct, dissolved, merged, or not residential colleges at all: Rewley Abbey, Gloucester, Durham, Canterbury, Cardinal, King Henry VIII's, St Mary's, St Bernard's and Greek College (all dissolved or vanished), Templeton (merged into Green Templeton in 2008), and Examination Schools (an administrative building, not a college). Removing these leaves roughly 39 surviving colleges — the figure usually quoted for Oxford today. Any statistic about 'the typical Oxford college' that uses all 50 rows is silently averaging in eight-century-old ghosts.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [108, 118], "output": "defunct/merged/non-residential rows flagged: 11\n  Rewley Abbey\n  Gloucester College\n  Durham College\n  Canterbury College\n  St Mary's College\n  Cardinal College\n  King Henry VIII's College\n  Greek College\n  Examination Schools\n  Templeton College\n  St Bernard's College, Oxford\nsurviving-college estimate: 39 of 50" },
+      "data_table": {
+        "description": "Dataset composition: surviving vs non-surviving rows",
+        "columns": ["category", "count"],
+        "rows": [["surviving colleges", 39], ["defunct / merged / non-residential", 11]]
+      },
+      "based_on": ["det_03", "det_05", "det_07", "det_08"]
+    },
+    "ana_07": {
+      "label": "A 156-year silence, and an 18th century with one college",
+      "content": "The single most striking gap in the founding record runs from Worcester College's predecessor in 1714 to Keble in 1870 — a 156-year stretch with almost no new colleges. The 18th century produces exactly one foundation in the dataset (Worcester, 1714). Other long gaps appear (75 years from 1624 to 1699, then 51, 48, 48 years earlier on), but nothing matches the Georgian silence. After the medieval rush and the Tudor Reformation churn, Oxford essentially stopped founding colleges for a century and a half — then opened the floodgates in the Victorian era. The quiet middle of the barbell is not gradual; it is a near-total halt.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [121, 131], "output": "largest gaps between founding years:\n  156 years: 1714 -> 1870\n  75 years: 1624 -> 1699\n  51 years: 1458 -> 1509\n  48 years: 1379 -> 1427\n  48 years: 1201 -> 1249\n18th-century foundations: 1 -> ['Worcester College']" },
+      "data_table": {
+        "description": "Five largest gaps between consecutive founding years",
+        "columns": ["gap_years", "from_year", "to_year"],
+        "rows": [[156, 1714, 1870], [75, 1624, 1699], [51, 1458, 1509], [48, 1379, 1427], [48, 1201, 1249]]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_08": {
+      "label": "Only one college records a motto",
+      "content": "The motto column is the emptiest field in the dataset: 49 of 50 colleges have no recorded motto, and the lone survivor is Magdalen's 'Floreat Magdalena!' ('May Magdalen flourish!'). This is not because Oxford colleges lack mottoes — most have them — but because Wikidata simply does not capture them consistently. It is a clean illustration of the dataset's central caveat: absence in the data is usually absence in Wikidata, not absence in the world.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze.py", "lines": [134, 138], "output": "colleges with a recorded motto: 1/50\n  Magdalen College: Floreat Magdalena!" },
+      "data_table": {
+        "description": "Motto coverage",
+        "columns": ["status", "count"],
+        "rows": [["no motto recorded", 49], ["motto recorded", 1]]
+      },
+      "based_on": ["det_01", "det_07"]
+    },
+    "ana_09": {
+      "label": "Real heraldry exists for most of the dataset",
+      "content": "The accompanying image cache contains real, attributed Wikimedia Commons imagery for the great majority of the dataset: 37 college coats of arms and 45 campus photographs, against 50 colleges. This means almost every living college can be represented by its genuine crest and a real photograph of its buildings — the natural visual vocabulary for a history of foundations, founders and heraldic patronage. The crests are not decorative; each encodes the arms of the founder or namesake, so a wall of crests is itself a map of who funded Oxford.",
+      "type": "distribution",
+      "strength": "moderate",
+      "calculation": { "file": "code/analyze.py", "lines": [141, 147], "output": "real coats of arms available: 37\nreal campus photos available: 45\ncolleges in CSV: 50" },
+      "data_table": {
+        "description": "Real Wikimedia imagery available vs colleges in dataset",
+        "columns": ["asset_type", "count"],
+        "rows": [["college coats of arms", 37], ["campus photos", 45], ["colleges in dataset", 50]]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_10": {
+      "label": "Half-century view: the Victorian spike",
+      "content": "Bucketing foundations into 50-year windows sharpens the modern wave to a single point. The 1850–1899 window holds 9 colleges — more than any other half-century in 800 years — driven by Keble (1870), Hertford's refounding (1874) and the burst of women's colleges (1878–1893). The 1950–1999 window holds 7, a second modern surge of graduate colleges. Nothing in the medieval or early-modern record comes close to the Victorian rate; the densest medieval window (1250–1299) holds 5. The data's busiest fifty years are the most recent ones a Victorian would have lived through, not the founding centuries.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": { "file": "code/analyze.py", "lines": [150, 157], "output": "  1200s-1249: 2\n  1250s-1299: 5\n  1300s-1349: 3\n  1350s-1399: 2\n  1400s-1449: 3\n  1450s-1499: 1\n  1500s-1549: 5\n  1550s-1599: 3\n  1600s-1649: 2\n  1650s-1699: 1\n  1700s-1749: 1\n  1850s-1899: 9\n  1900s-1949: 2\n  1950s-1999: 7\n  2000s-2049: 2" },
+      "data_table": {
+        "description": "Colleges founded per 50-year window (windows with at least one founding)",
+        "columns": ["window", "founded"],
+        "rows": [["1200–1249", 2], ["1250–1299", 5], ["1300–1349", 3], ["1350–1399", 2], ["1400–1449", 3], ["1450–1499", 1], ["1500–1549", 5], ["1550–1599", 3], ["1600–1649", 2], ["1650–1699", 1], ["1700–1749", 1], ["1850–1899", 9], ["1900–1949", 2], ["1950–1999", 7], ["2000–2049", 2]]
+      },
+      "based_on": ["det_04", "det_05"]
+    }
+  },
+  "caveats": [
+    { "id": "ana_caveat_01", "content": "Two colleges (Harris Manchester, St Bernard's) have no founding year and are excluded from all date-based analysis." },
+    { "id": "ana_caveat_02", "content": "Medieval founding dates (1201, 1249, 1263, 1264) are approximate and disputed between sources; treat them as nominal." },
+    { "id": "ana_caveat_03", "content": "The dataset mixes ~39 surviving colleges with 11 defunct/merged/non-residential rows; per-college averages over all 50 rows are misleading." },
+    { "id": "ana_caveat_04", "content": "The 16th-century count is inflated by Reformation renaming (Cardinal College → King Henry VIII's College → Christ Church are partly one institution)." },
+    { "id": "ana_caveat_05", "content": "Empty fields (especially motto, 49/50 blank) reflect Wikidata coverage, not the real-world absence of the attribute." }
+  ]
+}

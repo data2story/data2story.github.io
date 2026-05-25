@@ -1,0 +1,98 @@
+{
+  "meta": { "role": "detective", "version": "2.0" },
+  "items": {
+    "det_01": {
+      "label": "What the MTUS is and how it was built",
+      "content": "The Multinational Time Use Study (MTUS) is the world's longest-running cross-national archive of how ordinary people actually spend their day. Its method is the time-use diary: respondents record, episode by episode, what they were doing across a full 24-hour day, which is then harmonised into comparable activity totals measured in minutes per day (every diary day sums to 1,440 minutes). The Harmonized Aggregated File (HAF) used here collapses each diary into 25 standard activity categories — sleep, paid work, food preparation, cleaning and laundry, childcare, screen/computer time, leisure, travel, and so on — alongside demographics (country, survey year, sex, age, employment, education) and survey weights. Version 11 of the database, released in 2024 by the Centre for Time Use Research, contains 1,429,253 diary days drawn from 108 surveys across 25 countries, spanning 1961 to 2023. It is curated and harmonised rather than a single raw survey, which is exactly what makes cross-country and cross-decade comparison possible.",
+      "category": "origin",
+      "sources": [
+        { "url": "https://www.timeuse.org", "title": "Centre for Time Use Research — MTUS", "facts": ["MTUS is harmonised from national time-use diary surveys", "Version 11 released 2024 by the Centre for Time Use Research"] },
+        { "url": "https://www.ucl.ac.uk/ioe/departments-and-centres/centre-time-use-research", "title": "Centre for Time Use Research (CTUR), UCL", "facts": ["CTUR maintains the MTUS and produces the proposed survey weight (propwt)"] }
+      ]
+    },
+    "det_02": {
+      "label": "The time-use diary method and the 1,440-minute budget",
+      "content": "Time-use research rests on a simple but powerful constraint: a day has exactly 24 hours, or 1,440 minutes, and they cannot be created or destroyed — only reallocated. Unlike survey questions that ask people to estimate how much they 'usually' work or sleep (which produce notoriously inflated, socially desirable answers), the diary asks what someone was doing at each moment of a specific day. Because every activity competes for the same fixed budget, the diary captures trade-offs that stylised questions miss: more screen time must come out of something else. The MTUS harmonises diaries collected at 5-, 10-, 15-, or 30-minute intervals and on free-interval instruments into common categories, so a Korean diary from 2019 and a British diary from 1974 can be placed on the same axis.",
+      "category": "background",
+      "sources": [
+        { "url": "https://www.timeuse.org", "title": "Centre for Time Use Research — methodology", "facts": ["Diaries record sequential episodes across a 24-hour day", "Diaries are collected at intervals from 5 minutes to free-form and then harmonised"] }
+      ]
+    },
+    "det_03": {
+      "label": "Survey weights and comparability caveats",
+      "content": "Raw diary counts are not representative populations. The MTUS provides two weights: OCOMBWT, the original survey weight supplied by each national statistics office, and PROPWT, a 'proposed weight' created by CTUR that additionally corrects for imbalances in which days of the week were sampled (weekends are under-collected in many surveys, yet a Sunday looks very different from a Tuesday). Low-quality diaries — flagged by the BADCASE variable — are given a weight of zero so they drop out of weighted estimates. All population means in this analysis are therefore PROPWT-weighted. The headline caveat for any cross-country comparison: countries were surveyed in different years, with different diary instruments and recall windows, so differences partly reflect when and how a country was measured, not only how its people live. These are harmonised but not identical instruments.",
+      "category": "scope_suggestion",
+      "sources": [
+        { "url": "https://www.timeuse.org", "title": "MTUS Codebook — weights and BADCASE", "facts": ["PROPWT corrects for day-of-week imbalance", "BADCASE flags low-quality diaries which receive propwt=0", "OCOMBWT is the original national survey weight"] }
+      ]
+    },
+    "det_04": {
+      "label": "The established gender gap in unpaid work",
+      "content": "The single most robust finding in the time-use literature is that women perform far more unpaid domestic and care work than men, while men do more paid work — a division that persists even where women's paid employment has risen sharply. OECD analysis across countries finds women average about four hours a day of unpaid household and care work, roughly twice men's, and across 23 European countries women spend about 262 minutes versus men's 141 — a gap of roughly two hours every day. The gap varies enormously by place: under an hour a day in Denmark, Norway and Sweden, but over 200 minutes in countries such as Türkiye, Portugal and Mexico. Routine housework is the single largest component of unpaid work for both sexes. This is the benchmark against which the MTUS housework and childcare numbers should be read.",
+      "category": "benchmark",
+      "sources": [
+        { "url": "https://www.oecd.org/en/publications/gender-equality-in-a-changing-world_e808086f-en/full-report/persistent-gender-gaps-in-paid-and-unpaid-work_cb137837.html", "title": "OECD — Persistent gender gaps in paid and unpaid work", "facts": ["Women average ~4 hours/day of unpaid work, about twice men's", "Across 23 European countries women spend ~262 min vs men's 141 min on unpaid work", "Gender unpaid-work gaps exceed 200 min/day in Türkiye, Portugal, Mexico and are under 60 min/day in Denmark, Norway, Sweden"] }
+      ]
+    },
+    "det_05": {
+      "label": "Gender convergence over cohorts",
+      "content": "Time-use scholars have documented a slow but strikingly regular convergence: across successive birth cohorts and survey waves, men have taken on more unpaid work and women more paid work, narrowing both gaps in nearly every country studied. The convergence is real but incomplete — it has slowed, and in some domains stalled, well before parity. Research using these very diaries describes a 'gender convergence' alongside a near-invariance in total work time (paid plus unpaid combined), implying that what changes is the mix of who does what, more than the total burden. This is the interpretive frame for any decade-over-decade trend the analyst finds.",
+      "category": "interpretive_hook",
+      "sources": [
+        { "url": "https://www.timeuse.org/sites/default/files/2018-02/CTUR%20WP%202%202018_0.pdf", "title": "Gender Symmetry, Gender Convergence and Historical Work-time Invariance (CTUR WP 2/2018)", "facts": ["Regular but incomplete gender convergence: men do more unpaid work, women more paid work over cohorts", "Total work time (paid + unpaid) shows historical near-invariance"] }
+      ]
+    },
+    "det_06": {
+      "label": "Women work more total hours — the 'second shift'",
+      "content": "When paid and unpaid work are added together, multiple cross-national analyses conclude that women work slightly more total hours than men in most countries — the long hours of unpaid domestic and care work more than offset men's longer paid hours. The World Economic Forum, summarising OECD data, reported that women work on average nearly an hour longer per day than men once unpaid work is counted. This is the empirical backbone of the 'second shift' idea: paid-work parity on paper can coexist with a heavier overall workload at home.",
+      "category": "benchmark",
+      "sources": [
+        { "url": "https://www.weforum.org/stories/2017/06/its-official-women-work-nearly-an-hour-longer-than-men-every-day/", "title": "WEF — Women work nearly an hour longer than men every day", "facts": ["Counting paid and unpaid work together, women work on average nearly an hour more per day than men"] }
+      ]
+    },
+    "det_07": {
+      "label": "The rise of screen and ICT time",
+      "content": "One of the clearest secular trends in modern time-use data is the growth of screen-based and information-and-communication-technology (ICT) time. The MTUS captures this through two categories: TVRADIO (watching television and listening to radio), historically the dominant leisure activity of the late 20th century, and COMPINT (e-mail, web, programming, computer games), which barely existed before the late 1990s and has expanded rapidly since. Because diaries record a single primary activity per moment, these totals likely undercount true device exposure (people scroll while doing other things), but the harmonised categories still let us watch the centre of gravity of leisure shift from the broadcast screen toward the personal, networked screen across the decades the MTUS spans.",
+      "category": "background",
+      "sources": [
+        { "url": "https://www.timeuse.org", "title": "MTUS Codebook — 25-category activity grouping", "facts": ["TVRADIO = watch television, listen to radio", "COMPINT = e-mail, web, program, computer games"] }
+      ]
+    },
+    "det_08": {
+      "label": "South Korea and the long-work-hours world",
+      "content": "Several MTUS countries are known cultural outliers in work and rest. South Korea has long been one of the most overworked societies in the developed world; its government has repeatedly legislated to cut a 68-hour legal work week, and Koreans are frequently reported among the shortest sleepers and longest workers in international comparisons. At the other pole, Northern European countries (Denmark, Norway, Finland, the Netherlands) consistently appear near the top of leisure, sleep and work-life-balance rankings. These reputations give the analyst concrete hypotheses to test: if any country tops the work ranking or bottoms the sleep ranking, Korea is the prior; if any tops leisure or sleep, the Nordics are.",
+      "category": "interpretive_hook",
+      "sources": [
+        { "url": "https://journals.plos.org/plosone/article?id=10.1371%2Fjournal.pone.0264411", "title": "Gender differences in time use across age groups (PLOS ONE)", "facts": ["Gender gaps in time use are reported largest in Japan and South Korea and smallest in Finland among industrialised countries"] }
+      ]
+    },
+    "det_09": {
+      "label": "Why this data matters",
+      "content": "Time is the one resource distributed perfectly equally — everyone gets exactly 24 hours — and yet how it is spent maps almost every social inequality we care about: who does the unpaid work that keeps households running, who has leisure, who sleeps enough, how technology rewires daily life. Unpaid domestic and care work, largely invisible in GDP, has been valued at a substantial fraction of national output; the UNDP and others argue that ignoring it systematically undervalues women's contribution to the economy. Time-use diaries are the instrument that makes this invisible labour countable. A blog grounded in the MTUS is therefore a blog about fairness, measured in minutes.",
+      "category": "why_it_matters",
+      "sources": [
+        { "url": "https://www.undp.org/latin-america/blog/missing-piece-valuing-womens-unrecognized-contribution-economy", "title": "UNDP — Valuing women's unrecognized contribution to the economy", "facts": ["Unpaid care and domestic work is largely excluded from GDP and disproportionately performed by women"] }
+      ]
+    },
+    "det_10": {
+      "label": "Scope suggestions for the analyst",
+      "content": "Priority analyses, given the dataset's strengths: (1) the gender gap in unpaid work (FOODPREP + CLEANETC + childcare) versus paid work (PAIDWORK), and the combined-work 'second shift' total, weighted by PROPWT; (2) cross-country rankings of sleep, paid work, and the housework gender gap, which pair naturally with the 25 national flags in the asset cache; (3) the decade-by-decade rise of COMPINT screen time and the fate of TVRADIO; (4) the long-run change in the average day from the 1960s/70s to the 2020s. Caveats to surface honestly: different survey years per country, harmonised-but-not-identical instruments, primary-activity-only recording (which undercounts multitasked screen time), and the need to weight. Restrict to good-quality diaries (positive PROPWT) and report sample sizes.",
+      "category": "scope_suggestion",
+      "sources": [
+        { "url": "https://www.sciencedirect.com/science/article/pii/S2666558122000100", "title": "Variety and change of patterns in the gender balance between unpaid care-work, paid work and free time", "facts": ["Cross-national MTUS-style work measures combine unpaid care work, paid work and free time as a wellbeing balance"] }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "flag_*.png (25 national flags)",
+      "url": "https://commons.wikimedia.org/",
+      "license": "Public domain",
+      "source": "Wikimedia Commons (pre-cached flags_manifest.json)",
+      "description": "Official national flags for all 25 MTUS countries, to label country rankings (sleep, paid work, housework gender gap). Each flag is public domain; per-file source URLs in flags_manifest.json.",
+      "relates_to": ["det_08", "det_10"]
+    }
+  ],
+  "instances": []
+}

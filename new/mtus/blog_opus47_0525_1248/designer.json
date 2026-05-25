@@ -1,0 +1,255 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive_or_map); each chosen from the data's properties — a fixed 1,440-minute budget, 25 flagged countries, and six decades of trend.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": { "used": true, "reason": "The dataset is a set of weighted minute-per-day comparisons, rankings and decade trends — inherently chart-shaped." },
+      "image": { "used": true, "reason": "A single atmospheric 24-hour-clock hero sets the 'a day in a life' frame that pure numbers cannot." },
+      "video": { "used": true, "reason": "Animating the hero into a day-to-night time-lapse embodies the 1,440-minute cycle that the whole piece is built on." },
+      "audio": { "used": true, "reason": "The screen-time decade trend is a short rising ranked sequence — sonified and synced to its line chart so the reader hears the climb. Visual fallback always present." },
+      "interactive_or_map": { "used": true, "reason": "25 flagged countries invite an explorable sortable ranking; the central finding invites a guess-first reveal of the gendered day." }
+    },
+    "media_blockers": [
+      {
+        "category": "video",
+        "reason": "image2video (veo-3.1-fast) ultimately unavailable. Attempt 1 rejected aspect-ratio 1:1 (HTTP 400 INVALID_ARGUMENT); attempts 2 and 3 at 16:9 failed with 'service experiencing high load' (provider-side). Teaser falls back to the still hero image (des_02) animated with a CSS Ken-Burns / gradient drift so the day-to-night feel is preserved without the generated clip.",
+        "attempted_command": "generate_video_from_image.py --image assets/hero.png --duration 6 --aspect-ratio 16:9",
+        "fallback_des": "des_02"
+      }
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser — 24-hour clock hero (video unavailable; CSS-animated still fallback)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "fallback_from": "image2video (veo-3.1-fast) failed on provider high-load; see meta.media_blockers",
+        "animation": "CSS slow Ken-Burns zoom + a soft warm-to-cool gradient overlay that drifts dawn->night, ~18s loop, prefers-reduced-motion respected"
+      },
+      "brief": "Full-viewport hero of the 24-hour clock with silhouettes of daily life around the dial. Because the generated time-lapse clip failed (provider load), the teaser is the still hero.png with a gentle CSS Ken-Burns zoom and a drifting day-to-night gradient overlay so the cyclical feeling survives. No headline text baked in.",
+      "rationale": "The whole piece is about how one fixed day is divided; opening on the clock makes the reader feel the 1,440-minute frame before a single number. CSS motion preserves the day-night intent without the generated video.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Hero still (poster / fallback)",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic 24-hour clock dissolving into a dawn-to-night gradient sky with silhouettes of everyday domestic life arranged around the dial, painterly, teal and amber, no text",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "The still version of the teaser, reused inside the hook section as an atmospheric anchor beside the lead finding, and as the video poster.",
+      "rationale": "Reusing the hero still keeps the visual language cohesive and guarantees a graceful fallback for the teaser video.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Lead chart — the gendered work day",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "grouped_horizontal_bar",
+        "data_source": "ana_01",
+        "x": "minutes",
+        "y": "category",
+        "color": "sex",
+        "highlight": { "category": "Total work" },
+        "interaction": "hover tooltip with exact minutes and h:mm",
+        "style": { "palette": { "Men": "#5b8fb0", "Women": "#d98b5f" }, "no_gridlines": true, "annotate": "label the 32.5-min total-work gap" }
+      },
+      "brief": "Four paired horizontal bars (Paid work, Housework, Childcare, Total work), men vs women. Women's Housework bar dwarfs men's; the Total work pair is highlighted to show women's bar extends 32.5 min further despite men's longer paid bar. Convert minutes to h:mm in tooltips.",
+      "rationale": "A grouped bar makes the asymmetry instantly legible: men lead on paid, women lead far more on unpaid, and the total flips against men.",
+      "based_on": ["ana_01"]
+    },
+    "des_04": {
+      "label": "Guess-first — the gendered day",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "guess_first_slider",
+        "initial_state": "Prompt: 'Women do X times as much unpaid work as men. Drag to guess X.' A slider from 1.0x to 4.0x with a live readout.",
+        "trigger": "Reader drags the slider and clicks 'Reveal'",
+        "transition": "The true value 2.26x snaps into place; the reader's guess and the truth are shown side by side",
+        "payoff": "Reveal text: women average 236.8 min of unpaid work to men's 104.9 — 2.26x — then the lead chart (des_03) scrolls into view",
+        "data_source": "ana_01"
+      },
+      "brief": "A single-slider guess-first widget that asks readers to commit to the unpaid-work ratio before seeing it. Cheap to build, vanilla JS, maximises the surprise of the 2.26x figure. Pairs with the lead chart below.",
+      "rationale": "The lead finding is counterintuitive enough that letting readers guess first lands harder than presenting the number cold.",
+      "based_on": ["ana_01"]
+    },
+    "des_05": {
+      "label": "The average day — stacked 1,440-minute bar",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_stacked_bar",
+        "data_source": "ana_02",
+        "x": "minutes",
+        "y": "single_row",
+        "color": "activity",
+        "highlight": { "activity": "Sleep" },
+        "interaction": "hover each segment for activity + minutes + h:mm + share of day",
+        "style": { "palette": "warm-to-cool sequential", "single_bar": true, "show_1440_axis": true }
+      },
+      "brief": "One long horizontal bar representing a full 1,440-minute day, segmented by activity (Sleep largest, then screen, paid work, housework, etc.). Axis labelled to 1,440. Reinforces that every activity competes for the same fixed budget.",
+      "rationale": "A single stacked day-bar visually argues the core constraint of time-use research: the day is zero-sum.",
+      "based_on": ["ana_02"]
+    },
+    "des_06": {
+      "label": "Sleep ranking with national flags (sortable)",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "sortable_flag_ranking",
+        "initial_state": "25 rows, each a national flag + country + a bar for sleep minutes, sorted by sleep descending (South Africa top, Austria bottom)",
+        "trigger": "Toggle buttons: 'Sleep' / 'Paid work' re-sort and re-scale the bars",
+        "transition": "Rows animate to their new order with a 300ms ease; bars re-length",
+        "payoff": "Readers see the same 25 countries rearrange completely between sleep and work, making the 'who sleeps vs who works' contrast tactile",
+        "data_source": ["ana_03", "ana_04"]
+      },
+      "brief": "A flag-labelled horizontal bar ranking that flips between sleep (ana_03) and paid work (ana_04) on toggle. Each row: flag_<country>.png + country name + value bar + h:mm label. Flags from the wikimedia cache (public domain). Caption notes the comparability caveat.",
+      "rationale": "Real flags make the country dimension concrete and inviting; letting readers re-sort turns two static rankings into one exploration.",
+      "based_on": ["ana_03", "ana_04"]
+    },
+    "des_07": {
+      "label": "Housework gender gap by country (diverging bar with flags)",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_05",
+        "x": "gap",
+        "y": "country",
+        "color": "gap",
+        "highlight": { "country": ["Peru", "United States"] },
+        "interaction": "hover for women/men minutes and the gap in h:mm",
+        "style": { "palette": "single warm ramp by gap size", "sort": "gap descending", "no_gridlines": true }
+      },
+      "brief": "Horizontal bar of all 25 countries ranked by the unpaid-work gender gap (women minus men, minutes/day). Peru (290.8) at top, US (79.6) at bottom, both highlighted. Optional small flag icon at the end of each bar. Tooltip shows each sex's level.",
+      "rationale": "A ranked bar shows the full spread of the gap across societies and anchors the two extremes the prose names.",
+      "based_on": ["ana_05"]
+    },
+    "des_08": {
+      "label": "Sonification — the housework gap from widest to narrowest",
+      "type": "audio",
+      "section": "edt_04",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "Hearing the 25-country gap descend from a high, tense pitch (Peru) to a low, settled one (US) makes the spread of inequality audible as well as visible.",
+        "trigger": "Click 'Play the gap' below the diverging-bar chart",
+        "ui_form": "chart-synced sonification — each country's bar highlights in turn as a Web Audio tone plays, pitch mapped to gap size; a soft generated ambient bed (screen_rise.wav) is offered separately as the section's atmosphere",
+        "content": {
+          "filename": "screen_rise.wav",
+          "tool": "text2music",
+          "prompt": "Seven gentle marimba/synth tones rising step by step, calm contemplative, no vocals, ~12s",
+          "model": "google/lyria-3-pro-preview",
+          "data_mapping": { "field": "gap", "scale": "linear_to_pitch", "range_hz": [261, 880], "engine": "Web Audio oscillator, one tone per country in ranked order" }
+        },
+        "fallback": "If audio is muted or unsupported, the diverging-bar chart alone communicates the full ranking; the play button shows a tooltip.",
+        "novelty_note": "Not a detached tone card: the playback is bound to the chart, walking the reader down the ranked bars while the pitch falls with the gap."
+      },
+      "brief": "A click-to-play Web Audio sonification that steps through the 25 country gaps (ana_05) from widest to narrowest, highlighting each bar as its tone sounds, pitch falling with the gap. The generated screen_rise.wav serves as an optional ambient bed.",
+      "rationale": "This dataset's ranked 25-value sequence is exactly the small ordered series sonification handles well, and it deepens the chart rather than decorating it.",
+      "based_on": ["ana_05"]
+    },
+    "des_09": {
+      "label": "Screen time by decade (line) + then-vs-now bars",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "multi_line",
+        "data_source": "ana_06",
+        "x": "decade",
+        "y": "minutes",
+        "color": "series (tv_radio / computer / total_screen)",
+        "highlight": { "series": "computer" },
+        "interaction": "hover for exact minutes; the sonification (des_08 engine) can step through total_screen by decade",
+        "style": { "palette": { "tv_radio": "#9aa7b0", "computer": "#d98b5f", "total_screen": "#3b4a52" }, "no_gridlines": true }
+      },
+      "brief": "Three-line chart across decades (1960s-2020s): TV/radio, computer/internet, and total screen. The computer line climbs from near-zero; total screen rises throughout. Caption carries the primary-activity undercount caveat.",
+      "rationale": "A line chart is the natural form for a six-decade trend and shows broadcast and computer screens rising together rather than substituting.",
+      "based_on": ["ana_06"]
+    },
+    "des_10": {
+      "label": "Then vs now — what the day traded",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "diverging_bar",
+        "data_source": "ana_07",
+        "x": "change",
+        "y": "activity",
+        "color": "change_sign",
+        "highlight": { "activity": ["TV & radio", "Paid work"] },
+        "interaction": "hover for before-1980 and 2010+ values",
+        "style": { "palette": { "pos": "#d98b5f", "neg": "#5b8fb0" }, "zero_line": true, "no_gridlines": true }
+      },
+      "brief": "Diverging bar of minute changes from pre-1980 to 2010+: screens and active leisure up (right), paid work and housework down (left). Sleep deliberately excluded from emphasis per editor note (convention-affected); show it greyed if included.",
+      "rationale": "A diverging bar reads as a ledger of trades — what the modern day gained and gave up — matching the section's argument.",
+      "based_on": ["ana_07"]
+    },
+    "des_11": {
+      "label": "Convergence — the closing unpaid-work gap",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "line_with_band",
+        "data_source": "ana_08",
+        "x": "decade",
+        "y": "minutes",
+        "color": "sex",
+        "highlight": { "series": "men_rising" },
+        "interaction": "hover for women, men, and the gap each decade",
+        "style": { "palette": { "women": "#d98b5f", "men": "#5b8fb0" }, "shade_gap": true, "no_gridlines": true }
+      },
+      "brief": "Two lines (women, men) of unpaid-work minutes by decade with the shrinking gap shaded between them. The visual point: the women's line barely descends while the men's line climbs to meet it — convergence driven by men.",
+      "rationale": "Shading the gap between two lines makes the asymmetric mechanism (men rising, women roughly flat) immediately readable.",
+      "based_on": ["ana_08"]
+    },
+    "des_12": {
+      "label": "Total-work invariance stat callout",
+      "type": "stat_callout",
+      "section": "edt_06",
+      "content": {
+        "value": "~310-380 min",
+        "label": "total work per day — barely changed across six decades",
+        "data_source": "ana_09"
+      },
+      "brief": "Large stat callout stating total work (paid+unpaid) stayed near-flat from the 1970s to the 2020s, reinforcing that the gender story is about composition, not total effort.",
+      "rationale": "The invariance is a single striking idea best delivered as a headline number rather than another chart in a chart streak.",
+      "based_on": ["ana_09"]
+    },
+    "des_13": {
+      "label": "Closing stat — the second shift",
+      "type": "stat_callout",
+      "section": "edt_07",
+      "content": {
+        "value": "+32.5 min",
+        "label": "longer total working day for women, every day",
+        "data_source": "ana_01"
+      },
+      "brief": "Final stat callout: women's total working day runs 32.5 minutes longer than men's. Closes the fairness-ledger theme on the lead finding.",
+      "rationale": "Ending on the lead finding's most human number leaves the reader on tension, not summary.",
+      "based_on": ["ana_01"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial with warm-amber and cool-teal accents — dawn-to-dusk palette echoing the hero",
+    "text_visual_pattern": "visual-first teaser, then text-then-visual per section, breaking any chart streak with the flag ranking, sonification and stat callouts",
+    "centrepiece": "des_06",
+    "anti_sameness_notes": "Avoids the generic chart-after-chart rhythm: a guess-first slider opens, a flag ranking that re-sorts is the centrepiece, audio is a chart-bound sonification (not a tone card), and stat callouts punctuate rather than repeat charts.",
+    "typography_notes": "Georgia serif body; system-ui labels; 64-72px stat callouts in amber; section titles in small-caps tracking; pull the 2.26x and +32.5 min as oversized figures."
+  }
+}

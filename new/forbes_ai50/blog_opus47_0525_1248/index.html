@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Pillars and a Long Tail — Reading the Forbes AI 50 by the Numbers</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style>
+  :root{
+    --bg:#0a0e16; --bg2:#121826; --ink:#e6e9f0; --muted:#8c93a6;
+    --gold:#e9b949; --gold2:#f5d27a; --teal:#3dd6c4; --teal2:#7fe9dc;
+    --line:#222a3c; --tile:#f4f1e9;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif; font-size:19px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:0 22px}
+  h1,h2,h3{font-family:Georgia,serif;line-height:1.18;font-weight:700}
+  p{margin:0 0 1.25em}
+  a{color:var(--gold2)}
+  .kicker{font-family:system-ui,-apple-system,sans-serif;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--teal);font-weight:700;margin:0 0 .6em}
+  section{padding:3.4rem 0;border-top:1px solid var(--line)}
+  section h2{font-size:1.95rem;margin:.1em 0 .9em;color:#fff}
+  .dek{font-size:1.05rem;color:var(--muted);margin:0 auto 1.4em;max-width:640px}
+  /* ---- Teaser ---- */
+  .teaser{position:relative;width:100vw;margin:0 0 0 calc(50% - 50vw);max-width:none;
+    height:100vh;min-height:560px;overflow:hidden;border:none}
+  .teaser video,.teaser img.poster{position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;display:block}
+  .teaser .scrim{position:absolute;inset:0;
+    background:radial-gradient(ellipse at 50% 35%,rgba(10,14,22,.05) 0%,rgba(10,14,22,.45) 55%,rgba(10,14,22,.96) 100%)}
+  .teaser .titlebox{position:absolute;left:0;right:0;bottom:9vh;text-align:center;padding:0 24px}
+  .teaser h1{font-size:clamp(2.1rem,6vw,4.1rem);color:#fff;margin:0 0 .35em;
+    text-shadow:0 2px 36px rgba(0,0,0,.7);line-height:1.08}
+  .teaser h1 .acc{color:var(--gold2)}
+  .teaser .sub{font-size:clamp(1rem,2.4vw,1.35rem);color:#e9edf6;max-width:660px;
+    margin:0 auto;text-shadow:0 1px 18px rgba(0,0,0,.7);font-family:system-ui,sans-serif}
+  .scroll-cue{position:absolute;bottom:2.4vh;left:50%;transform:translateX(-50%);
+    color:#dfe5f0;font-family:system-ui,sans-serif;font-size:.7rem;letter-spacing:.2em;opacity:.8}
+  /* ---- visuals ---- */
+  .visual-container,figure.visual-container{margin:2.4rem 0;display:block;clear:both;max-width:100%}
+  figure{margin:2.4rem 0}
+  figcaption{font-family:system-ui,sans-serif;font-size:.78rem;color:var(--muted);
+    text-align:center;margin-top:.7em;line-height:1.5}
+  figcaption a{color:var(--teal)}
+  .chart-container{margin:2.4rem auto;max-width:720px;width:100%;background:var(--bg2);
+    border:1px solid var(--line);border-radius:12px;padding:1.3rem 1.1rem .8rem}
+  .chart-mount{width:100%;min-width:0;display:block}
+  .chart-title{font-family:system-ui,sans-serif;font-size:.95rem;color:#fff;font-weight:700;margin:0 0 .2em}
+  .chart-note{font-family:system-ui,sans-serif;font-size:.76rem;color:var(--muted);
+    margin-top:.5em;line-height:1.5}
+  /* ---- stat callout ---- */
+  .stat-callout{margin:2.6rem 0;text-align:center;display:block;
+    background:linear-gradient(180deg,var(--bg2),#0d1320);border:1px solid var(--line);
+    border-radius:14px;padding:2.2rem 1.5rem}
+  .stat-number{display:block;font-size:64px;line-height:1;color:var(--gold2);font-weight:700;
+    font-family:system-ui,sans-serif}
+  .stat-label{display:block;font-family:system-ui,sans-serif;font-size:1rem;
+    color:var(--muted);margin-top:.7em;max-width:540px;margin-left:auto;margin-right:auto}
+  /* ---- quiz ---- */
+  .interactive-container{margin:2.6rem 0;display:block;clear:both}
+  .quiz{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:1.6rem 1.4rem}
+  .quiz-prompt{font-family:system-ui,sans-serif;font-size:1.08rem;color:#fff;
+    margin-bottom:1.1rem;line-height:1.45}
+  .quiz-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .qopt{background:#0d1320;border:1px solid var(--line);border-radius:10px;padding:1rem .8rem;
+    cursor:pointer;text-align:center;font-family:system-ui,sans-serif;font-size:1.15rem;color:var(--ink);
+    font-weight:700;transition:transform .2s ease,border-color .2s ease,background .2s ease}
+  .qopt:hover{transform:translateY(-3px);border-color:var(--teal)}
+  .qopt.correct{border-color:var(--gold);background:rgba(233,185,73,.16);color:var(--gold2)}
+  .qopt.wrong{opacity:.45}
+  .quiz-verdict{margin-top:1.3rem;background:#0d1320;border:1px solid var(--line);
+    border-left:3px solid var(--gold);border-radius:8px;padding:1.1rem 1.2rem;
+    font-size:1rem;display:none}
+  .quiz-verdict.show{display:block;animation:fade .5s ease}
+  .quiz-verdict b{color:var(--gold2)}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  /* ---- card deck ---- */
+  .deck-filters{display:flex;flex-wrap:wrap;gap:8px;margin:.4rem 0 1.4rem;justify-content:center}
+  .chip{font-family:system-ui,sans-serif;font-size:.8rem;border:1px solid var(--line);
+    background:var(--bg2);color:var(--muted);border-radius:20px;padding:.35em .9em;cursor:pointer;
+    transition:all .18s ease}
+  .chip:hover{border-color:var(--teal);color:var(--teal2)}
+  .chip.active{background:var(--teal);border-color:var(--teal);color:#06201d;font-weight:700}
+  .deck{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+  .card{background:var(--bg2);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .25s ease,border-color .25s ease,opacity .3s ease}
+  .card:hover{transform:translateY(-4px);border-color:var(--teal)}
+  .card.hide{display:none}
+  .card .tile{height:84px;display:flex;align-items:center;justify-content:center;padding:.7rem;
+    background:var(--tile)}
+  .card .tile img{max-width:100%;max-height:60px;object-fit:contain}
+  .card .tile.wm{background:linear-gradient(135deg,#16203a,#0f1626)}
+  .card .tile.wm span{font-family:system-ui,sans-serif;font-weight:800;font-size:1.02rem;
+    color:#fff;text-align:center;letter-spacing:-.01em;line-height:1.1;
+    text-shadow:0 1px 10px rgba(0,0,0,.5)}
+  .card .body{padding:.65rem .7rem .8rem;display:flex;flex-direction:column;gap:.18rem;flex:1}
+  .card .cname{font-family:system-ui,sans-serif;font-weight:700;font-size:.86rem;color:#fff}
+  .card .ctag{font-family:system-ui,sans-serif;font-size:.66rem;letter-spacing:.04em;
+    text-transform:uppercase;color:var(--teal2)}
+  .card .cmeta{font-family:system-ui,sans-serif;font-size:.74rem;color:var(--muted);margin-top:.15em}
+  .card .cmeta b{color:var(--gold2);font-weight:700}
+  .card .credit{font-family:system-ui,sans-serif;font-size:.6rem;color:#5a6173}
+  .deck-foot{font-family:system-ui,sans-serif;font-size:.76rem;color:var(--muted);margin-top:1.2rem;line-height:1.55}
+  .deck-foot a{color:var(--teal)}
+  /* ---- audio ---- */
+  .audio-container{margin:2.6rem 0;display:block;background:var(--bg2);
+    border:1px solid var(--line);border-radius:12px;padding:1.2rem 1.3rem}
+  .audio-row{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+  .audio-btn{background:var(--gold);color:#1a160f;border:none;border-radius:50%;
+    width:52px;height:52px;font-size:1.2rem;cursor:pointer;flex:0 0 auto;min-width:44px}
+  .audio-btn:hover{background:var(--gold2)}
+  .audio-meta{font-family:system-ui,sans-serif}
+  .audio-meta .at{font-weight:700;color:#fff;font-size:.98rem}
+  .audio-meta .ac{color:var(--muted);font-size:.82rem}
+  /* ---- pull quote ---- */
+  .pull{font-size:1.5rem;line-height:1.42;color:var(--gold2);font-style:italic;
+    border-left:3px solid var(--gold);padding-left:1.1rem;margin:2.2rem 0}
+  /* ---- references ---- */
+  .refs{font-family:system-ui,sans-serif;font-size:.85rem;color:var(--muted)}
+  .refs h2{font-family:system-ui,sans-serif;font-size:1.1rem;letter-spacing:.04em;color:#fff}
+  .refs ul{padding-left:1.2em;margin:.4em 0}
+  .refs a{color:var(--teal)}
+  .credit-grid{display:grid;grid-template-columns:1fr 1fr;gap:.2em 1.4em;margin:.6em 0 0}
+  @media(max-width:560px){.quiz-opts{grid-template-columns:1fr}.credit-grid{grid-template-columns:1fr}}
+  /* fade-in */
+  section{animation:secfade .8s ease both}
+  @keyframes secfade{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<!-- ============ TEASER ============ -->
+<figure class="teaser" data-des="des_01">
+  <video autoplay loop muted playsinline poster="assets/hero.png" data-des="des_01">
+    <source src="assets/teaser.mp4" type="video/mp4">
+  </video>
+  <img class="poster" src="assets/hero.png" alt="Abstract visualization: two towering pillars of golden light dwarfing a field of faint nodes" data-des="des_02" style="display:none">
+  <div class="scrim"></div>
+  <div class="titlebox">
+    <h1>Two Pillars,<br><span class="acc">a Long Tail</span></h1>
+    <p class="sub">Reading the Forbes AI 50 by the numbers — where the money, the addresses, and the founding dates really are.</p>
+  </div>
+  <div class="scroll-cue">SCROLL ▾</div>
+</figure>
+
+<div class="wrap">
+
+<!-- ============ edt_01 ============ -->
+<section data-edt="edt_01" data-det="det_03,det_06">
+  <div class="kicker">The Forbes AI 50 · 2025</div>
+  <h2>Fifty companies. Almost all the money belongs to two.</h2>
+
+  <p data-ana="ana_02">Add up every dollar raised by the fifty most promising private AI companies in the world and you get about $305.7 billion. Then notice that two of them — OpenAI and Anthropic — hold $242.6 billion of it. Two companies. 79.4% of the money.</p>
+
+  <p data-ana="ana_03">The other forty-eight split what's left. The median company on this list has raised $735 million; the average has raised $6.1 billion. When the mean is more than eight times the median, you are not looking at a leaderboard — you are looking at a power law.</p>
+
+  <p data-det="det_03">This is what an AI gold rush looks like from the capital side: a vanishingly small number of foundation-model labs absorbing money at a scale venture capital has never seen, while everyone else operates one or two orders of magnitude below them.</p>
+
+  <div class="interactive-container" data-des="des_03" data-ana="ana_02">
+    <div class="quiz">
+      <div class="quiz-prompt">Of the $305.7&nbsp;billion raised by all fifty companies, what share do the top two — OpenAI and Anthropic — hold between them?</div>
+      <div class="quiz-opts" id="quizOpts">
+        <div class="qopt" data-v="25">about 25%</div>
+        <div class="qopt" data-v="50">about 50%</div>
+        <div class="qopt" data-v="65">about 65%</div>
+        <div class="qopt" data-v="79">about 79%</div>
+      </div>
+      <div class="quiz-verdict" id="quizVerdict">
+        <b>79.4%.</b> Two companies out of fifty hold nearly four-fifths of all the capital on the list. The mean raise ($6.1&nbsp;billion) is <b>8.3&times;</b> the median ($735&nbsp;million) — the fingerprint of a power law.
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-callout" data-des="des_04" data-ana="ana_02">
+    <span class="stat-number">79.4%</span>
+    <span class="stat-label">of all $305.7B raised is held by just two companies — OpenAI and Anthropic</span>
+  </div>
+</section>
+
+<!-- ============ edt_02 ============ -->
+<section data-edt="edt_02" data-det="det_03">
+  <div class="kicker">The leaderboard</div>
+  <h2>Two giants, forty-eight shadows</h2>
+
+  <p data-ana="ana_02">Plot the full leaderboard and the shape is brutal. OpenAI's $182.6 billion bar dwarfs the page. Anthropic's $60 billion is the only thing visible next to it. Databricks at $20 billion is a distant third, and then the list collapses into a long, flat tail where Cursor's $3.3 billion — a number that would be a blockbuster anywhere else — barely registers.</p>
+
+  <p data-ana="ana_03">Sixty-four percent of the list has raised under $1 billion. Only eighteen companies have crossed that mark at all. The two leaders alone outweigh the other forty-eight combined, four times over.</p>
+
+  <div class="chart-container" data-des="des_05" data-ana="ana_02">
+    <div class="chart-title">Cumulative funding raised, all 50 companies ($ billions)</div>
+    <div id="des_05" class="chart-mount"></div>
+    <div class="chart-note">Bars use a square-root scale so the long tail stays legible; OpenAI and Anthropic (gold) would run several screens off the page on a linear axis. Hover for exact figures. Source: Forbes AI 50 2025, funding normalized to USD millions.</div>
+  </div>
+
+  <div class="stat-callout" data-des="des_06" data-ana="ana_03">
+    <span class="stat-number">64%</span>
+    <span class="stat-label">of the list has raised under $1 billion; only 18 of 50 have crossed it</span>
+  </div>
+</section>
+
+<!-- ============ edt_03 ============ -->
+<section data-edt="edt_03" data-det="det_04">
+  <div class="kicker">Geography</div>
+  <h2>One city, half the list</h2>
+
+  <p data-ana="ana_05">If the money is concentrated, the geography is almost comic. Exactly half the entire list — 25 of 50 companies — is headquartered in the city of San Francisco. Not the Bay Area, not California: the city itself.</p>
+
+  <p data-ana="ana_05">Widen to the rest of California and you reach 33 of 50, two-thirds of the list. Only eleven companies are anywhere else in the United States, and just six are international. One city holds as many AI-50 companies as the rest of the world and the rest of America put together.</p>
+
+  <p data-ana="ana_04" data-det="det_04">The international tail is thin enough to name in a breath: Cohere in Toronto, Mistral in Paris, Black Forest Labs in Freiburg, Synthesia in London, and two Swedish companies — Legora and Lovable — both in Stockholm. No company on the list is headquartered in Asia.</p>
+
+  <div class="chart-container" data-des="des_07" data-ana="ana_05">
+    <div class="chart-title">Where the AI 50 are headquartered</div>
+    <div id="des_07" class="chart-mount"></div>
+    <div class="chart-note">Hover for share of the list. Source: Forbes AI 50 2025, Headquarters field.</div>
+  </div>
+</section>
+
+<!-- ============ edt_04 ============ -->
+<section data-edt="edt_04" data-det="det_02,det_06">
+  <div class="kicker">Vintage</div>
+  <h2>Born yesterday</h2>
+
+  <p data-ana="ana_06">These are not seasoned institutions. Sixty-eight percent of the list was founded in 2020 or later, and 56% in 2022 or later — after ChatGPT's late-2022 debut lit the fuse. The single busiest founding year is 2022 with eleven companies, trailed by 2023 with ten. Those two years alone produced 21 of the 50.</p>
+
+  <p data-ana="ana_06">The oldest company here, Databricks, dates to 2013. The newest, Thinking Machines Lab, was founded in 2025 — and had already raised $2 billion in time to make the list.</p>
+
+  <p data-ana="ana_10">Age buys you nothing in this market. The correlation between founding year and funding is slightly negative, and the 2022–2025 cohort's median raise ($668 million) sits within reach of companies twice their age. Capital chases perceived frontier potential, not seniority.</p>
+
+  <div class="chart-container" data-des="des_08" data-ana="ana_06">
+    <div class="chart-title">Companies by founding year</div>
+    <div id="des_08" class="chart-mount"></div>
+    <div class="chart-note">The dashed marker sits at late 2022 — the ChatGPT moment. Hover for counts. Source: Forbes AI 50 2025, Year Founded.</div>
+  </div>
+</section>
+
+<!-- ============ edt_05 ============ -->
+<section data-edt="edt_05" data-det="det_02,det_05,det_08">
+  <div class="kicker">The turn</div>
+  <h2>A broad field, a narrow purse</h2>
+
+  <p data-ana="ana_07">By headcount, the AI 50 is mostly applied AI, not labs. The largest single category is generative media — eight companies turning text into images, video, voice and music. Foundation models and AI infrastructure tie for second at seven each. Then come agents, coding tools, robotics, healthcare, legal, and data labeling.</p>
+
+  <p data-ana="ana_09">The descriptions themselves carry the 2025 zeitgeist: five companies are built around "agents," eight around "generation," six around coding and app-building. The verbs have shifted from answering to doing.</p>
+
+  <div class="chart-container" data-des="des_09" data-ana="ana_07">
+    <div class="chart-title">How many companies, by what they build</div>
+    <div id="des_09" class="chart-mount"></div>
+    <div class="chart-note">Count of companies per category (all 50 assigned). Source: Forbes AI 50 2025, "What It Does", analyst taxonomy.</div>
+  </div>
+
+  <p data-ana="ana_08">But sort by dollars instead of by count and the field inverts. Those seven foundation-model companies — just 14% of the list — hold 83.2% of all the capital. Every other category combined, all the generative-media darlings and agent startups and coding tools, splits the remaining 16.8% — most of which is Databricks' $20 billion sitting by itself in infrastructure. The list is broad in what it builds and narrow in what it's worth.</p>
+
+  <div class="chart-container" data-des="des_10" data-ana="ana_08">
+    <div class="chart-title">…and where the money actually went ($ billions)</div>
+    <div id="des_10" class="chart-mount"></div>
+    <div class="chart-note">Same categories, sorted by total funding — watch them reorder violently. Foundation models (gold) hold 83.2% of all capital. Source: Forbes AI 50 2025.</div>
+  </div>
+
+  <div class="pull" data-ana="ana_08">Broad in what it builds, narrow in what it's worth: 14% of the companies hold 83% of the money.</div>
+</section>
+
+<!-- ============ edt_06 ============ -->
+<section data-edt="edt_06" data-det="det_08,det_09">
+  <div class="kicker">The whole list</div>
+  <h2>Fifty companies, fifty faces</h2>
+
+  <p data-ana="ana_11">Behind every row is a real company with a real logo. Eighteen of them appear here as verified marks pulled from Wikimedia Commons — OpenAI, Anthropic, Cohere, Mistral, Cursor, Perplexity, Runway, ElevenLabs, Suno and more — each credited to its source.</p>
+
+  <p data-ana="ana_11">The rest wear clean typographic wordmarks, because honesty matters more than decoration: a dozen "logos" in the cache turned out to be impostors — Clay Telecom standing in for the AI startup Clay, the musician PJ Harvey for the legal-AI company Harvey, a piano-tutor app for the video company Synthesia — and inventing a logo for a company is worse than not showing one.</p>
+
+  <p data-ana="ana_07">Browse them by category and the shape of the list becomes tangible: the model labs, the media generators, the agent-builders, the robot-makers, each a card you can pick up.</p>
+
+  <div class="interactive-container" data-des="des_11" data-ana="ana_07,ana_11,ana_02,ana_06">
+    <div class="deck-filters" id="deckFilters"></div>
+    <div class="deck" id="deck"></div>
+    <div class="deck-foot" data-des="des_12" data-ana="ana_11">
+      <strong>Verified logos</strong> (18, used with credit) are from Wikimedia Commons under each file's licence:
+      OpenAI, Anthropic (PD); Applied Intuition, Physical Intelligence (CC BY 4.0); Cohere, Lovable (CC0);
+      Databricks, Cursor, ElevenLabs, Glean, HeyGen, Mistral AI, Notion, OpenEvidence, Perplexity, Replit, Runway, Suno (PD/own work).
+      The other 32 companies are shown as plain wordmarks — 12 because the only cached "logo" was a mismatched, unrelated brand
+      (e.g. Clay&nbsp;Telecom, PJ&nbsp;Harvey, the Synthesia piano app, the CIA World&nbsp;Factbook) and 20 because no free logo was found.
+      Full attribution in the References below.
+    </div>
+  </div>
+</section>
+
+<!-- ============ edt_07 ============ -->
+<section data-edt="edt_07" data-det="det_01,det_07">
+  <div class="kicker">Caveats</div>
+  <h2>What the list can't tell you</h2>
+
+  <p data-det="det_01,det_07">Read all of this as a careful sketch, not a ledger. The AI 50 is a curated editorial list of private companies only — chosen by Forbes with Sequoia and Meritech — so it omits every public AI leader and any private company the algorithm didn't surface. Nvidia, Google and Microsoft are nowhere on it by design.</p>
+
+  <p data-ana="ana_01,ana_02">The funding figures are rounded and frozen in time: Anthropic's "$60 billion" was already climbing past $180 billion in valuation within months, and two companies — Midjourney and Surge AI — read "$0" not because they have no money but because they never disclosed it or never needed it.</p>
+
+  <p>So the numbers are a snapshot of a wave mid-break: the concentration is real, the youth is real, the California gravity is real. But a list this top-heavy and this recent is, above all, a bet on a future that hadn't arrived yet when the data was frozen.</p>
+
+  <div class="audio-container" data-des="des_13">
+    <div class="audio-row">
+      <button class="audio-btn" id="audioBtn" aria-label="Play ambient soundscape" data-des="des_13">▶</button>
+      <div class="audio-meta">
+        <div class="at">A quiet frontier — ambient outro</div>
+        <div class="ac">Generated soundscape (Lyria). Click to play; never autoplays. If muted, the prose stands alone.</div>
+      </div>
+    </div>
+    <audio id="audioEl" preload="none" src="assets/ambient_bed.wav" data-des="des_13"></audio>
+  </div>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<section class="refs" data-edt="edt_07">
+  <h2>References &amp; sources</h2>
+  <ul>
+    <li><strong>Data source:</strong> <a href="https://www.forbes.com/lists/ai50/">Forbes AI 50 (2025)</a> — produced by Forbes in partnership with Sequoia Capital and Meritech Capital. 50 private companies; columns: Name, What It Does, Funding, Year Founded, Headquarters.</li>
+    <li><strong>Context:</strong> <a href="https://insights.tryspecter.com/forbes-ai-50-2025/">Forbes AI 50 2025: AI Moves Beyond Chat to Real-World Impact</a>; <a href="https://news.crunchbase.com/ai/big-funding-trends-charts-eoy-2025/">Crunchbase — Big AI funding trends of 2025</a>; <a href="https://sacra.com/c/anthropic/">Sacra — Anthropic valuation</a>; <a href="https://www.cnbc.com/2026/03/31/openai-funding-round-ipo.html">CNBC — OpenAI $852B valuation</a>.</li>
+    <li><strong>Funding note:</strong> figures are cumulative capital raised, rounded and point-in-time as of the 2025 list; "$0 M" denotes bootstrapped/undisclosed (Midjourney, Surge AI).</li>
+    <li><strong>Verified company logos (Wikimedia Commons, used with credit):</strong></li>
+  </ul>
+  <div class="credit-grid">
+    <span><a href="https://commons.wikimedia.org/wiki/File:OpenAI_Logo.svg">OpenAI</a> — PD, OpenAI</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Anthropic_logo.svg">Anthropic</a> — PD, Anthropic</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Databricks-logo.svg">Databricks</a> — PD, Databricks Inc.</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Cursor_logo.svg">Cursor</a> — PD, Anysphere</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Mistral_AI_logo_(2025%E2%80%93).svg">Mistral AI</a> — PD, Mistral AI</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Perplexity_AI_logo.svg">Perplexity</a> — PD, Perplexity AI</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Cohere-Logo.png">Cohere</a> — CC0, Ayub MK09</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Physical_Intelligence_logo.png">Physical Intelligence</a> — CC BY 4.0</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Applied_Intuition_Logo.png">Applied Intuition</a> — CC BY 4.0, Redpod22</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:New_Replit_Logo.svg">Replit</a> — PD, Replit</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Runway_Logo.png">Runway</a> — PD, Runway AI</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:ElevenLabs_Logo_03.svg">ElevenLabs</a> — PD, ElevenLabs</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Suno_logo_July_2024.svg">Suno</a> — PD, Suno Inc.</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Glean_logo.svg">Glean</a> — PD, Glean</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:HeyGen_logo.svg">HeyGen</a> — PD, HeyGen</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Notion-logo.svg">Notion</a> — PD, Notion Labs</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:OpenEvidence_logo.svg">OpenEvidence</a> — PD, OpenEvidence</span>
+    <span><a href="https://commons.wikimedia.org/wiki/File:Logowhite_lovable.svg">Lovable</a> — CC0, Donglak</span>
+  </div>
+  <ul>
+    <li><strong>Generated media:</strong> hero image (OpenAI gpt-5.4-image-2), teaser clip (Bytedance Seedance 2.0), ambient bed (Google Lyria) — all via OpenRouter.</li>
+    <li><strong>Tools:</strong> Vega-Lite 5 (charts); analysis in Python/openpyxl. All chart values from analyst.json data tables.</li>
+  </ul>
+</section>
+
+</div><!-- /wrap -->
+
+<script>
+/* ===== Teaser: hide poster img (video covers it) but keep for no-JS fallback ===== */
+(function(){
+  var v=document.querySelector('.teaser video');
+  if(v){ v.addEventListener('error',function(){ var p=document.querySelector('.teaser img.poster'); if(p) p.style.display='block'; }); }
+})();
+
+/* ===== Quiz ===== */
+(function(){
+  var opts=document.querySelectorAll('#quizOpts .qopt'), done=false;
+  opts.forEach(function(o){
+    o.addEventListener('click',function(){
+      if(done) return; done=true;
+      opts.forEach(function(x){
+        if(x.getAttribute('data-v')==='79') x.classList.add('correct');
+        else x.classList.add('wrong');
+      });
+      document.getElementById('quizVerdict').classList.add('show');
+    });
+  });
+})();
+
+/* ===== Audio ===== */
+(function(){
+  var btn=document.getElementById('audioBtn'), el=document.getElementById('audioEl');
+  if(!btn||!el) return;
+  btn.addEventListener('click',function(){
+    if(el.paused){ el.play(); btn.textContent='❚❚'; }
+    else { el.pause(); btn.textContent='▶'; }
+  });
+  el.addEventListener('ended',function(){ btn.textContent='▶'; });
+})();
+
+/* ===== Company card deck (data from ana_02 funding, ana_06 years, ana_07 categories, ana_11 logos) ===== */
+var COMPANIES=[
+{"name":"OpenAI","cat":"Foundation models","fundRaw":"$182.6 B","year":2015,"logo":"logo_openai.png"},
+{"name":"Anthropic","cat":"Foundation models","fundRaw":"$60 B","year":2021,"logo":"logo_anthropic.png"},
+{"name":"Databricks","cat":"Infrastructure","fundRaw":"$20 B","year":2013,"logo":"logo_databricks.png"},
+{"name":"Cursor","cat":"Coding & app builders","fundRaw":"$3.3 B","year":2022,"logo":"logo_cursor.png"},
+{"name":"Mistral AI","cat":"Foundation models","fundRaw":"$3.1 B","year":2023,"logo":"logo_mistral_ai.png"},
+{"name":"Safe Superintelligence","cat":"Foundation models","fundRaw":"$3 B","year":2024,"logo":""},
+{"name":"Crusoe","cat":"Infrastructure","fundRaw":"$2.9 B","year":2018,"logo":""},
+{"name":"Reflection","cat":"Foundation models","fundRaw":"$2.1 B","year":2024,"logo":""},
+{"name":"Skild AI","cat":"Robotics & autonomy","fundRaw":"$2 B","year":2023,"logo":""},
+{"name":"Thinking Machines Lab","cat":"Foundation models","fundRaw":"$2 B","year":2025,"logo":""},
+{"name":"Cyera","cat":"Security","fundRaw":"$1.7 B","year":2021,"logo":""},
+{"name":"Perplexity","cat":"Search","fundRaw":"$1.7 B","year":2022,"logo":"logo_perplexity.png"},
+{"name":"Cohere","cat":"Foundation models","fundRaw":"$1.6 B","year":2019,"logo":"logo_cohere.png"},
+{"name":"SambaNova","cat":"Infrastructure","fundRaw":"$1.5 B","year":2017,"logo":""},
+{"name":"Cognition","cat":"Coding & app builders","fundRaw":"$1 B","year":2024,"logo":""},
+{"name":"Harvey","cat":"Legal & finance","fundRaw":"$1 B","year":2022,"logo":""},
+{"name":"Physical Intelligence","cat":"Robotics & autonomy","fundRaw":"$1 B","year":2024,"logo":"logo_physical_intelligence.png"},
+{"name":"World Labs","cat":"Robotics & autonomy","fundRaw":"$1 B","year":2023,"logo":""},
+{"name":"Replit","cat":"Coding & app builders","fundRaw":"$880 M","year":2016,"logo":"logo_replit.png"},
+{"name":"Runway","cat":"Generative media","fundRaw":"$860 M","year":2018,"logo":"logo_runway.png"},
+{"name":"Applied Intuition","cat":"Robotics & autonomy","fundRaw":"$850 M","year":2017,"logo":"logo_applied_intuition.png"},
+{"name":"Abridge","cat":"Healthcare","fundRaw":"$830 M","year":2018,"logo":""},
+{"name":"Legora","cat":"Legal & finance","fundRaw":"$815 M","year":2023,"logo":""},
+{"name":"ElevenLabs","cat":"Generative media","fundRaw":"$800 M","year":2022,"logo":"logo_elevenlabs.png"},
+{"name":"Glean","cat":"Agents","fundRaw":"$770 M","year":2019,"logo":"logo_glean.png"},
+{"name":"OpenEvidence","cat":"Healthcare","fundRaw":"$700 M","year":2022,"logo":"logo_openevidence.png"},
+{"name":"Sierra","cat":"Agents","fundRaw":"$635 M","year":2023,"logo":""},
+{"name":"Baseten","cat":"Infrastructure","fundRaw":"$585 M","year":2019,"logo":""},
+{"name":"Lovable","cat":"Coding & app builders","fundRaw":"$552 M","year":2023,"logo":"logo_lovable.png"},
+{"name":"Together AI","cat":"Infrastructure","fundRaw":"$548 M","year":2022,"logo":""},
+{"name":"Genspark.ai","cat":"Agents","fundRaw":"$545 M","year":2023,"logo":""},
+{"name":"Synthesia","cat":"Generative media","fundRaw":"$535 M","year":2017,"logo":""},
+{"name":"Mercor","cat":"Data labeling","fundRaw":"$483 M","year":2023,"logo":""},
+{"name":"Decagon","cat":"Agents","fundRaw":"$481 M","year":2023,"logo":""},
+{"name":"Black Forest Labs","cat":"Generative media","fundRaw":"$450 M","year":2024,"logo":""},
+{"name":"EliseAI","cat":"Agents","fundRaw":"$392 M","year":2017,"logo":""},
+{"name":"Suno","cat":"Generative media","fundRaw":"$375 M","year":2022,"logo":"logo_suno.png"},
+{"name":"Fal","cat":"Infrastructure","fundRaw":"$330 M","year":2021,"logo":""},
+{"name":"Notion","cat":"Productivity","fundRaw":"$330 M","year":2013,"logo":"logo_notion.png"},
+{"name":"Fireworks AI","cat":"Infrastructure","fundRaw":"$327 M","year":2022,"logo":""},
+{"name":"Chai Discovery","cat":"Healthcare","fundRaw":"$225 M","year":2024,"logo":""},
+{"name":"Clay","cat":"Agents","fundRaw":"$204 M","year":2017,"logo":""},
+{"name":"Speak","cat":"Education","fundRaw":"$162 M","year":2016,"logo":""},
+{"name":"Rogo","cat":"Legal & finance","fundRaw":"$150 M","year":2022,"logo":""},
+{"name":"Listen Labs","cat":"Data labeling","fundRaw":"$100 M","year":2023,"logo":""},
+{"name":"Gamma","cat":"Coding & app builders","fundRaw":"$91 M","year":2020,"logo":""},
+{"name":"Krea","cat":"Generative media","fundRaw":"$83 M","year":2022,"logo":""},
+{"name":"HeyGen","cat":"Generative media","fundRaw":"$74 M","year":2022,"logo":"logo_heygen.png"},
+{"name":"Midjourney","cat":"Generative media","fundRaw":"$0 M*","year":2021,"logo":""},
+{"name":"Surge AI","cat":"Data labeling","fundRaw":"$0 M*","year":2020,"logo":""}
+];
+(function(){
+  var deck=document.getElementById('deck'), filt=document.getElementById('deckFilters');
+  var cats=["All","Foundation models","Generative media","Infrastructure","Agents","Coding & app builders","Robotics & autonomy","Healthcare","Legal & finance","Data labeling","Other"];
+  var primary={"Foundation models":1,"Generative media":1,"Infrastructure":1,"Agents":1,"Coding & app builders":1,"Robotics & autonomy":1,"Healthcare":1,"Legal & finance":1,"Data labeling":1};
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  // build cards
+  var html='';
+  for(var i=0;i<COMPANIES.length;i++){
+    var c=COMPANIES[i];
+    var tile = c.logo
+      ? '<div class="tile"><img src="assets/'+c.logo+'" alt="'+esc(c.name)+' logo" loading="lazy" style="max-width:100%;height:auto;display:block"></div>'
+      : '<div class="tile wm"><span>'+esc(c.name)+'</span></div>';
+    html+='<div class="card" data-cat="'+esc(c.cat)+'">'+tile+
+      '<div class="body"><span class="cname">'+esc(c.name)+'</span>'+
+      '<span class="ctag">'+esc(c.cat)+'</span>'+
+      '<span class="cmeta"><b>'+esc(c.fundRaw)+'</b> · '+c.year+'</span></div></div>';
+  }
+  deck.innerHTML=html;
+  // build filters
+  var fh='';
+  for(var j=0;j<cats.length;j++){
+    fh+='<span class="chip'+(j===0?' active':'')+'" data-f="'+esc(cats[j])+'">'+esc(cats[j])+'</span>';
+  }
+  filt.innerHTML=fh;
+  var chips=filt.querySelectorAll('.chip'), cards=deck.querySelectorAll('.card');
+  filt.addEventListener('click',function(e){
+    var chip=e.target.closest('.chip'); if(!chip) return;
+    chips.forEach(function(x){x.classList.remove('active');}); chip.classList.add('active');
+    var f=chip.getAttribute('data-f');
+    cards.forEach(function(card){
+      var cc=card.getAttribute('data-cat');
+      var show = (f==='All') || (cc===f) || (f==='Other' && !primary[cc]);
+      card.classList.toggle('hide',!show);
+    });
+  });
+})();
+
+/* ===== Vega-Lite charts ===== */
+var VEGA_CFG={
+  background:null,
+  view:{stroke:null},
+  axis:{labelColor:'#aeb6c8',titleColor:'#cfd5e3',gridColor:'#1c2433',domainColor:'#2a3245',
+        labelFont:'system-ui',titleFont:'system-ui',labelFontSize:11,titleFontSize:12},
+  axisX:{labelFont:'system-ui'},
+  legend:{labelColor:'#aeb6c8',titleColor:'#cfd5e3',labelFont:'system-ui'},
+  font:'system-ui'
+};
+function embed(id,spec){
+  spec.background=null; spec.config=VEGA_CFG; spec.width='container';
+  vegaEmbed('#'+id,spec,{actions:false,renderer:'svg'}).catch(function(e){console.error(id,e);});
+}
+
+/* des_05 — funding leaderboard (sqrt scale, full 50) */
+embed('des_05',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"name":"OpenAI","b":182.6},{"name":"Anthropic","b":60},{"name":"Databricks","b":20},
+    {"name":"Cursor","b":3.3},{"name":"Mistral AI","b":3.1},{"name":"Safe Superintelligence","b":3},
+    {"name":"Crusoe","b":2.9},{"name":"Reflection","b":2.1},{"name":"Skild AI","b":2},
+    {"name":"Thinking Machines Lab","b":2},{"name":"Cyera","b":1.7},{"name":"Perplexity","b":1.7},
+    {"name":"Cohere","b":1.6},{"name":"SambaNova","b":1.5},{"name":"Cognition","b":1},
+    {"name":"Harvey","b":1},{"name":"Physical Intelligence","b":1},{"name":"World Labs","b":1},
+    {"name":"Replit","b":0.88},{"name":"Runway","b":0.86},{"name":"Applied Intuition","b":0.85},
+    {"name":"Abridge","b":0.83},{"name":"Legora","b":0.815},{"name":"ElevenLabs","b":0.8},
+    {"name":"Glean","b":0.77},{"name":"OpenEvidence","b":0.7},{"name":"Sierra","b":0.635},
+    {"name":"Baseten","b":0.585},{"name":"Lovable","b":0.552},{"name":"Together AI","b":0.548},
+    {"name":"Genspark.ai","b":0.545},{"name":"Synthesia","b":0.535},{"name":"Mercor","b":0.483},
+    {"name":"Decagon","b":0.481},{"name":"Black Forest Labs","b":0.45},{"name":"EliseAI","b":0.392},
+    {"name":"Suno","b":0.375},{"name":"Fal","b":0.33},{"name":"Notion","b":0.33},
+    {"name":"Fireworks AI","b":0.327},{"name":"Chai Discovery","b":0.225},{"name":"Clay","b":0.204},
+    {"name":"Speak","b":0.162},{"name":"Rogo","b":0.15},{"name":"Listen Labs","b":0.1},
+    {"name":"Gamma","b":0.091},{"name":"Krea","b":0.083},{"name":"HeyGen","b":0.074},
+    {"name":"Midjourney","b":0},{"name":"Surge AI","b":0}
+  ]},
+  "height":640,
+  "mark":{"type":"bar","cornerRadiusEnd":2,"height":{"band":0.78}},
+  "encoding":{
+    "y":{"field":"name","type":"nominal","sort":null,"title":null,"axis":{"labelLimit":150,"labelFontSize":9.5}},
+    "x":{"field":"b","type":"quantitative","scale":{"type":"sqrt"},"title":"Funding raised ($ billions, √ scale)"},
+    "color":{"condition":{"test":"datum.name==='OpenAI'||datum.name==='Anthropic'","value":"#e9b949"},"value":"#3dd6c4"},
+    "tooltip":[{"field":"name","title":"Company"},{"field":"b","title":"$ billions"}]
+  }
+});
+
+/* des_07 — geography */
+embed('des_07',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"region":"San Francisco","count":25,"pct":50},
+    {"region":"Rest of Bay Area / CA","count":8,"pct":16},
+    {"region":"Rest of US","count":11,"pct":22},
+    {"region":"International","count":6,"pct":12}
+  ]},
+  "height":190,
+  "mark":{"type":"bar","cornerRadiusEnd":3,"height":{"band":0.7}},
+  "encoding":{
+    "y":{"field":"region","type":"nominal","sort":["San Francisco","Rest of Bay Area / CA","Rest of US","International"],"title":null},
+    "x":{"field":"count","type":"quantitative","title":"Number of companies"},
+    "color":{"condition":{"test":"datum.region==='San Francisco'","value":"#e9b949"},"value":"#3dd6c4"},
+    "tooltip":[{"field":"region","title":"Region"},{"field":"count","title":"Companies"},{"field":"pct","title":"% of list"}]
+  }
+});
+
+/* des_08 — founding years */
+embed('des_08',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"year":2013,"count":2},{"year":2014,"count":0},{"year":2015,"count":1},{"year":2016,"count":2},
+    {"year":2017,"count":5},{"year":2018,"count":3},{"year":2019,"count":3},{"year":2020,"count":2},
+    {"year":2021,"count":4},{"year":2022,"count":11},{"year":2023,"count":10},{"year":2024,"count":6},
+    {"year":2025,"count":1}
+  ]},
+  "height":260,
+  "layer":[
+    {"mark":{"type":"bar","cornerRadiusEnd":3,"width":{"band":0.8}},
+     "encoding":{
+       "x":{"field":"year","type":"ordinal","title":null,"axis":{"labelAngle":0}},
+       "y":{"field":"count","type":"quantitative","title":"Companies founded"},
+       "color":{"condition":{"test":"datum.year===2022","value":"#e9b949"},"value":"#3dd6c4"},
+       "tooltip":[{"field":"year","title":"Founded"},{"field":"count","title":"Companies"}]
+     }},
+    {"data":{"values":[{"year":2022,"lbl":"ChatGPT, late 2022"}]},
+     "mark":{"type":"rule","color":"#f5d27a","strokeDash":[4,4],"opacity":0.7},
+     "encoding":{"x":{"field":"year","type":"ordinal"}}}
+  ]
+});
+
+/* des_09 — category counts */
+embed('des_09',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"cat":"Generative media","count":8},{"cat":"Foundation models","count":7},
+    {"cat":"AI infrastructure & chips","count":7},{"cat":"Agents (CS / GTM / knowledge)","count":6},
+    {"cat":"Coding & app builders","count":5},{"cat":"Robotics & autonomy","count":4},
+    {"cat":"Healthcare","count":3},{"cat":"Legal & finance","count":3},
+    {"cat":"Data labeling / research data","count":3},{"cat":"Security","count":1},
+    {"cat":"Productivity","count":1},{"cat":"Search","count":1},{"cat":"Education / voice tutor","count":1}
+  ]},
+  "height":340,
+  "mark":{"type":"bar","cornerRadiusEnd":3,"height":{"band":0.74}},
+  "encoding":{
+    "y":{"field":"cat","type":"nominal","sort":"-x","title":null,"axis":{"labelLimit":190}},
+    "x":{"field":"count","type":"quantitative","title":"Number of companies"},
+    "color":{"value":"#3dd6c4"},
+    "tooltip":[{"field":"cat","title":"Category"},{"field":"count","title":"Companies"}]
+  }
+});
+
+/* des_10 — category capital */
+embed('des_10',{
+  "$schema":"https://vega.github.io/schema/vega-lite/v5.json",
+  "data":{"values":[
+    {"cat":"Foundation models","b":254.4},{"cat":"AI infrastructure & chips","b":26.19},
+    {"cat":"Coding & app builders","b":5.823},{"cat":"Robotics & autonomy","b":4.85},
+    {"cat":"Generative media","b":3.177},{"cat":"Agents (CS / GTM / knowledge)","b":3.027},
+    {"cat":"Legal & finance","b":1.965},{"cat":"Healthcare","b":1.755},
+    {"cat":"Security","b":1.7},{"cat":"Search","b":1.7},
+    {"cat":"Data labeling / research data","b":0.583},{"cat":"Productivity","b":0.33},
+    {"cat":"Education / voice tutor","b":0.162}
+  ]},
+  "height":340,
+  "mark":{"type":"bar","cornerRadiusEnd":3,"height":{"band":0.74}},
+  "encoding":{
+    "y":{"field":"cat","type":"nominal","sort":"-x","title":null,"axis":{"labelLimit":190}},
+    "x":{"field":"b","type":"quantitative","scale":{"type":"sqrt"},"title":"Total funding ($ billions, √ scale)"},
+    "color":{"condition":{"test":"datum.cat==='Foundation models'","value":"#e9b949"},"value":"#3dd6c4"},
+    "tooltip":[{"field":"cat","title":"Category"},{"field":"b","title":"$ billions"}]
+  }
+});
+</script>
+</body>
+</html>

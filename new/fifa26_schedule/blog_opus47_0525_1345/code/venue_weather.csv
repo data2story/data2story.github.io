@@ -1,0 +1,17 @@
+stadium,venue,city,country,lat,lon,elevation_m,avg_high_c,avg_low_c,avg_mean_c,avg_apparent_high_c,avg_humidity_pct,avg_precip_mm_per_day,max_high_c,rainy_day_share,n_days_sampled
+Mexico City Stadium,Estadio Azteca,Mexico City,Mexico,19.3029,-99.1505,2200,23.9,12.9,17.9,24.3,67.9,8.1,33.4,0.72,156
+Estadio Guadalajara,Estadio Akron,Guadalajara,Mexico,20.6817,-103.4625,1566,26.9,16.0,20.5,28.3,74.2,7.0,37.8,0.73,156
+Estadio Monterrey,Estadio BBVA,Monterrey,Mexico,25.669,-100.2443,450,34.0,22.6,28.0,36.2,63.6,2.2,42.5,0.24,156
+Toronto Stadium,BMO Field,Toronto,Canada,43.6332,-79.4185,76,25.0,16.4,20.7,26.3,72.3,3.5,33.6,0.4,156
+BC Place Vancouver,BC Place,Vancouver,Canada,49.2767,-123.1119,3,21.1,13.8,17.5,21.5,73.6,1.1,36.3,0.21,156
+Atlanta Stadium,Mercedes-Benz Stadium,Atlanta,USA,33.7554,-84.4008,320,30.8,20.9,25.5,34.1,72.8,6.4,37.8,0.5,156
+Boston Stadium,Gillette Stadium,Foxborough,USA,42.0909,-71.2643,89,27.0,17.1,21.7,28.6,76.0,4.3,35.8,0.47,156
+Dallas Stadium,AT&T Stadium,Arlington,USA,32.7473,-97.0945,150,34.9,24.9,29.8,38.3,61.6,2.3,42.2,0.27,156
+Houston Stadium,NRG Stadium,Houston,USA,29.6847,-95.4107,15,33.5,24.8,28.6,38.6,76.5,5.9,38.7,0.47,156
+Kansas City Stadium,Arrowhead Stadium,Kansas City,USA,39.0489,-94.4839,270,31.3,20.9,25.8,33.9,67.2,5.2,39.2,0.38,156
+Los Angeles Stadium,SoFi Stadium,Inglewood,USA,33.9535,-118.3392,30,27.1,16.3,20.8,28.1,70.4,0.1,32.5,0.01,156
+Miami Stadium,Hard Rock Stadium,Miami Gardens,USA,25.958,-80.2389,3,31.0,23.8,26.9,36.9,82.9,8.4,34.2,0.88,156
+New York New Jersey Stadium,MetLife Stadium,East Rutherford,USA,40.8135,-74.0745,2,28.5,19.2,23.5,30.3,71.7,4.5,35.5,0.43,156
+Philadelphia Stadium,Lincoln Financial Field,Philadelphia,USA,39.9008,-75.1675,12,30.2,19.7,24.6,32.1,68.6,3.7,37.3,0.46,156
+San Francisco Bay Area Stadium,Levi's Stadium,Santa Clara,USA,37.403,-121.97,8,27.4,14.2,19.8,26.8,62.3,0.0,40.5,0.0,156
+Seattle Stadium,Lumen Field,Seattle,USA,47.5952,-122.3316,5,23.2,13.4,17.9,23.1,68.6,0.7,37.9,0.13,156
