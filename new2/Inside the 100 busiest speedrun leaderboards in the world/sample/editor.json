@@ -1,0 +1,95 @@
+{
+  "meta": { "role": "editor", "version": "2.0" },
+  "core_claim": "The 100 most-active speedrun.com leaderboards in May 2026 are a labour-market snapshot, not a fame list: dominated by a 15-month-old Russian-speaking horror community, one 7-year-anticipated indie launch, and a long tail of one-game specialists.",
+  "title": "Inside the 100 busiest speedrun leaderboards in the world",
+  "subtitle": "61,797 verified runs, one 15-month-old horror game, and what they say about who actually grinds.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — the busiest leaderboard isn't who you'd guess",
+      "purpose": "hook",
+      "title": "The busiest leaderboard isn't who you'd guess",
+      "findings": ["ana_26", "ana_05", "ana_04"],
+      "context": ["det_04", "det_09", "det_10"],
+      "triage": { "ana_26": "lead", "ana_05": "supporting", "ana_04": "supporting" },
+      "chart_placeholder": "ana_26",
+      "media_placeholder": "image",
+      "editorial_notes": "Open with the 25.2% / Granny number. Use an atmospheric image (e.g. ref_gdq_cheese) only if it doesn't dilute the punch."
+    },
+    "edt_02": {
+      "label": "What 'most active' actually selects",
+      "purpose": "context",
+      "title": "What 'most active' actually selects",
+      "findings": ["ana_25", "ana_27", "ana_01", "ana_07"],
+      "context": ["det_01", "det_02", "det_04"],
+      "triage": { "ana_25": "lead", "ana_27": "supporting", "ana_01": "supporting", "ana_07": "supporting" },
+      "chart_placeholder": "ana_25",
+      "media_placeholder": null,
+      "editorial_notes": "Anchor the timeline chart on monthly verifications; reference the March 2026 peak (3,151) but save the full unpacking for edt_04."
+    },
+    "edt_03": {
+      "label": "The megalaunch arc — Silksong",
+      "purpose": "evidence",
+      "title": "The megalaunch arc",
+      "findings": ["ana_22", "ana_24", "ana_23", "ana_12"],
+      "context": ["det_05"],
+      "triage": { "ana_24": "lead", "ana_22": "supporting", "ana_23": "supporting", "ana_12": "color" },
+      "chart_placeholder": "ana_24",
+      "media_placeholder": "instance",
+      "editorial_notes": "Lead with the median-time-decay chart (ana_24); do not promote the raw WR progression (ana_21) — contaminated by glitch subcategories. Embed Blue's 1:03:41 video (inst_02) as the concrete artefact. Use the secondary chart (ana_22 weekly runs) inline if space allows."
+    },
+    "edt_04": {
+      "label": "The grinder dynasty — Granny & SpongeBob",
+      "purpose": "turn",
+      "title": "The grinder dynasty",
+      "findings": ["ana_31", "ana_13", "ana_26", "ana_28"],
+      "context": ["det_09", "det_10"],
+      "triage": { "ana_13": "lead", "ana_31": "supporting", "ana_28": "supporting", "ana_26": "color" },
+      "chart_placeholder": "ana_13",
+      "media_placeholder": null,
+      "editorial_notes": "The Slavic concentration (ana_13) is the lead, growth curve (ana_31) is the visual evidence. Pair both charts side by side. Keep the prose blunt: 62% post-Soviet is the headline."
+    },
+    "edt_05": {
+      "label": "The runners — monogamists and one polyglot",
+      "purpose": "evidence",
+      "title": "92% of speedrunners only run one game",
+      "findings": ["ana_20", "ana_19", "ana_18"],
+      "context": ["det_10"],
+      "triage": { "ana_20": "lead", "ana_19": "supporting", "ana_18": "supporting" },
+      "chart_placeholder": "ana_19",
+      "media_placeholder": null,
+      "editorial_notes": "Akuretaki (ana_18) is the human anchor — name them. Pair the Lorenz curve (ana_19) with the monogamist waffle/breakdown (ana_20)."
+    },
+    "edt_06": {
+      "label": "Where the records actually live",
+      "purpose": "turn",
+      "title": "Where the records actually live",
+      "findings": ["ana_11", "ana_09"],
+      "context": [],
+      "triage": { "ana_11": "lead", "ana_09": "supporting" },
+      "chart_placeholder": "ana_11",
+      "media_placeholder": null,
+      "editorial_notes": "Use ana_11's data_table directly — it has both WR% and runner% columns, so the chart should compare them. The Czech Republic and Romania over-performance is the surprise."
+    },
+    "edt_07": {
+      "label": "The platforms beneath the runs",
+      "purpose": "close",
+      "title": "The platforms beneath the runs",
+      "findings": ["ana_14", "ana_15", "ana_16"],
+      "context": ["det_02"],
+      "triage": { "ana_15": "lead", "ana_16": "supporting", "ana_14": "color" },
+      "chart_placeholder": "ana_15",
+      "media_placeholder": "image",
+      "editorial_notes": "Close with the SM64 N64 emulator stat (40%) as the kicker. Use ref_livesplit as a subtle atmospheric image if space permits — it grounds the 'this is real labour' point. Keep the meditation honest: snapshot not verdict."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting", "ana_02": "cut", "ana_03": "cut",
+    "ana_04": "supporting", "ana_05": "supporting", "ana_07": "supporting",
+    "ana_09": "supporting", "ana_11": "lead", "ana_12": "color", "ana_13": "lead",
+    "ana_14": "color", "ana_15": "lead", "ana_16": "supporting",
+    "ana_18": "supporting", "ana_19": "supporting", "ana_20": "lead",
+    "ana_22": "supporting", "ana_23": "supporting", "ana_24": "lead",
+    "ana_25": "lead", "ana_26": "lead", "ana_27": "supporting",
+    "ana_28": "supporting", "ana_31": "supporting"
+  }
+}

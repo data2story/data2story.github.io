@@ -1,0 +1,263 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "speedrun_top100",
+    "dataset_summary": "61,797 verified runs across the 100 currently-most-active games on speedrun.com (per-game categories only), fetched 2026-05-25. 791 categories, 29,548 distinct registered players."
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin of speedrun.com",
+      "content": "Speedrun.com was founded in March 2014 by Irish programmer Peter Chase, who goes by the username 'Pac'. It was designed with deliberately looser submission rules than the older Speed Demos Archive (SDA, 1998) and gave each game its own community-elected moderators rather than a single editorial board. The first migration was a wave of Grand Theft Auto runners; from there it grew into the de-facto central hub for speedrun leaderboards. In October 2020 Chase sold the site to Elo Entertainment, citing growth ambitions. By July 2021, Wikipedia reports the site hosted 'leaderboards for over 20,000 video games' — a five-year ramp from a single game's leaderboard to a multi-thousand-game commons.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speedrunning",
+          "title": "Speedrunning — Wikipedia",
+          "facts": [
+            "Speedrun.com was created in 2014 with 'less stringent submission guidelines than SDA' and centralized leaderboards across many games",
+            "As of July 2021, Speedrun.com hosts 'leaderboards for over 20,000 video games'",
+            "Migration from SDA was driven by Speedrun.com and Discord becoming the dominant infrastructure"
+          ]
+        },
+        {
+          "url": "https://weareirish.ie/business-and-tech/peter-chase-speedrun-video-games/",
+          "title": "Meet the Irishman who owns Speedrun.com — WE ARE IRISH",
+          "facts": [
+            "Speedrun.com founder is Peter Chase, an Irish programmer who uses the handle 'Pac'",
+            "Site launched in March 2014; the GTA community was the first to move over",
+            "Sold to Elo Entertainment in October 2020"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Verification: how a run becomes 'verified'",
+      "content": "Every run on a speedrun.com leaderboard exists in one of three states: pending, verified, or rejected. A submission must include video proof and is reviewed by the community-elected moderators of that specific game, who check splits, audio sync, glitch boundaries, and (for high-end runs) sometimes a handcam showing the player's hands on the controller. The site does not run a single global verification policy; each game's moderator team writes its own ruleset, defines its own categories, and decides what counts as proof. This is why the same dataset can contain a 4-minute Subnautica 2 glitched run and a 3-hour Silksong True Ending run, both stamped 'verified' — they are verified by completely different small teams of volunteers. The technical scaffolding that made this workable was YouTube (2005, video hosting) and Twitch (2011, livestream replays); together they let any moderator anywhere watch any submitted run frame by frame.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speedrunning",
+          "title": "Speedrunning — Wikipedia",
+          "facts": [
+            "Submissions are 'reviewed by moderators of each game in the community' before a run becomes verified",
+            "Stricter competitions require 'a video of the hands on the controller or keyboard' (handcam)",
+            "YouTube (2005) and Twitch (2011) are cited as the platforms that 'enabled speedrun sharing' and 'facilitated livestream verification'",
+            "Detection methods include 'forensic audio analysis and mathematical analysis of probability'"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Category fragmentation: Any%, 100%, Glitchless, Low%",
+      "content": "A 'game' on speedrun.com is not one leaderboard but a small constellation. The standard taxonomy is Any% (no qualifier, fastest end), 100% (full completion as the community defines it), Glitchless (no glitches allowed), Low% (minimum items / upgrades / kills), and No Major Glitches (a softened middle ground). Beyond the canonical five, each moderator team can also add 'misc' or category-extensions: Bow Only, All Bosses, All Achievements, NMG+RBA, Pacifist runs, and so on. The result is that 100 games in our dataset spawn 791 per-game categories — an average of nearly eight separately-ranked leaderboards per title. This is what makes the speedrun world feel infinite: a popular game might have one true 'world record' but eight or twenty parallel ones, each with its own first-place runner.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speedrunning",
+          "title": "Speedrunning — Wikipedia",
+          "facts": [
+            "Standard category definitions: Any% ('getting to the end as fast as possible with no qualifier'), 100% ('full completion'), Low% ('minimum amount possible'), Glitchless ('no glitches'), No Major Glitches"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "What 'top-100 most active' actually selects",
+      "content": "The dataset is the 100 games with the most recently verified runs as of 25 May 2026 — not the 100 most-popular games, not the 100 most-iconic, not the 100 with the most lifetime runs. This is a moving window. Three populations dominate the cut: (1) brand-new releases whose communities are still onboarding (Subnautica 2 hit Early Access on 14 May 2026, eleven days before the fetch, and tops the list); (2) recent blockbusters where the meta is still being figured out (Hollow Knight: Silksong, Hades 2, Pirates of the Caribbean: At World's End); and (3) 'evergreen grinder' titles whose verification rate is dominated by a single dedicated community uploading hundreds of runs each (Granny: Legacy, multiple SpongeBob games, ROBLOX-engine titles, Geometry Dash). The 'casual canon' games — Super Mario 64, Hollow Knight, BotW, Undertale — appear too, but as second-rank presences rather than the top of the list.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.subnautica2.gg/news/subnautica-2-early-access-launches-may-14-2026/",
+          "title": "Subnautica 2 Early Access Launches May 14, 2026",
+          "facts": ["Subnautica 2 Early Access launched on May 14, 2026"]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Hollow_Knight:_Silksong",
+          "title": "Hollow Knight: Silksong — Wikipedia",
+          "facts": ["Hollow Knight: Silksong was released on September 4, 2025"]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Silksong: six years of waiting, one month of records",
+      "content": "Hollow Knight: Silksong was announced on 14 February 2019 and released on 4 September 2025 — a wait of roughly six and a half years, during which Team Cherry's near-silence became its own running joke. The release was vertical: over 500,000 concurrent Steam players on launch day, more than 5 million distinct players in the first three days, and over 7 million copies sold by mid-December 2025. The speedrun community detonated to match. Per PC Gamer reporting on the Silksong speedrun.com leaderboards, in just one month after launch Silksong had 'more active runners than every other game on Speedrun.com, including Celeste and ULTRAKILL'. The Any% world record was driven from no-record to 1:08:15 to 1:03:41 (both by runner Blue / BlueSR) within weeks. This single release explains a meaningful chunk of the top-100 verification activity in our dataset.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Hollow_Knight:_Silksong",
+          "title": "Hollow Knight: Silksong — Wikipedia",
+          "facts": [
+            "Announced February 14, 2019",
+            "Released September 4, 2025",
+            "Over 500,000 active players on Steam on launch day",
+            "Over 5 million players in the first three days",
+            "Over 7 million copies sold by mid-December 2025"
+          ]
+        },
+        {
+          "url": "https://www.pcgamer.com/games/action/silksongs-any-percent-speedrun-is-already-below-1-hour-in-case-you-were-worried-this-game-would-be-too-hard-to-clown-on/",
+          "title": "Silksong's Any-percent speedrun is already below 1 hour — PC Gamer",
+          "facts": [
+            "Leaderboards opened October 1, 2025",
+            "Over 1,000 runners submitted over 2,500 runs in the first 3 months",
+            "In just one month Silksong had more active runners than every other game on Speedrun.com, including Celeste and ULTRAKILL"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Subnautica 2 Early Access: brand-new at the very top",
+      "content": "Subnautica 2 dropped into Early Access on 14 May 2026 — eleven days before this dataset was captured — and shows up as the single most-recently-active leaderboard in the top-100 cut. Categories include 'Hello New Planet' (the canonical Any% goal) with an 'Observatory Ending' subroute; glitched runs were already down to roughly five minutes in those eleven days. The pattern matters: a sufficiently anticipated launch can dominate the 'most active' window for weeks at a time, especially during the early-grind phase when route optimisations are coming out almost daily and routes turn over fast. This is the same dynamic that put Silksong, Hades 2, and Hollow Knight: Silksong: Category Extensions in the dataset too.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.pcgamer.com/games/sim/subnautica-2-now-has-a-firm-early-access-launch-date-and-its-really-soon/",
+          "title": "Subnautica 2 now has a firm early access launch date — PC Gamer",
+          "facts": ["Subnautica 2 launched into Early Access on May 14, 2026"]
+        },
+        {
+          "url": "https://games.gg/subnautica-2/guides/how-long-it-takes-to-beat-subnautica-2-early-access/",
+          "title": "How Long it Takes to Beat Subnautica 2 Early Access — games.gg",
+          "facts": [
+            "Glitched runs are around 5 minutes",
+            "Internal playthroughs took 5-8 hours; a standard Early Access playthrough is over 20 hours"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "GDQ: the charity-marathon scaffolding around the leaderboards",
+      "content": "Games Done Quick is the cultural anchor of the modern speedrunning world: a biannual week-long marathon (Awesome Games Done Quick in January, Summer Games Done Quick in July) where vetted runners perform back-to-back live runs while raising money for a rotating charity. Summer Games Done Quick 2025 raised $2,436,614 for Médecins Sans Frontières. Awesome Games Done Quick 2026 raised $2,443,414 for the Prevent Cancer Foundation. Cumulatively since inception, GDQ events have raised 'almost $60 million for charities' across organisations including Doctors Without Borders, Prevent Cancer Foundation, Malala Fund, and Organization for Autism Research. GDQ doesn't itself host leaderboards, but appearing on its stream is the closest thing to a Hall of Fame moment a runner can have, and the categories shown on its stages tend to spike on the speedrun.com leaderboards in the weeks afterward.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://gameinformer.com/2025/07/14/summer-games-done-quick-raises-more-than-24-million-for-charity-during-annual-speedrun",
+          "title": "Summer Games Done Quick Raises More Than $2.4 Million — Game Informer",
+          "facts": ["SGDQ 2025 raised $2,436,614 for Doctors Without Borders / Médecins Sans Frontières"]
+        },
+        {
+          "url": "https://www.gamedeveloper.com/business/awesome-games-done-quick-2026-raises-over-2-44-million-for-charity",
+          "title": "Awesome Games Done Quick 2026 raises over $2.44 million — Game Developer",
+          "facts": ["AGDQ 2026 raised $2,443,414 for the Prevent Cancer Foundation"]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Games_Done_Quick",
+          "title": "Games Done Quick — Wikipedia",
+          "facts": ["Games Done Quick has raised almost $60 million for charity since its inception"]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Verification controversies and the rise of forensics",
+      "content": "The verification model has been tested by high-profile cheating cases. The most famous is the 2020 Dream Minecraft Any% controversy: an analysis by speedrun.com's verification team computed the odds of his observed rare-drop rates as roughly 1 in 20 sextillion, and the run was removed. Dream initially denied, then admitted five months later to using a modified version of the game. A similar pattern recurred with MinecrAvenger — one of Dream's accusers — in late 2022. Going further back, the Todd Rogers Dragster record (5.51 seconds, claimed 1982) survived for decades on Activision's Hall of Fame until 2017 disassembly analysis showed the fastest physically possible time was 5.57 seconds. These episodes pushed the broader community toward harder forensic standards — handcam, audio analysis, RNG verification, and pre-run / post-run inventory checks — that are now the norm at the high end of any popular leaderboard.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speedrunning",
+          "title": "Speedrunning — Wikipedia",
+          "facts": [
+            "Dream's 2020 Minecraft Any% runs were rejected at odds of 'approximately 1 in 20 sextillion'",
+            "Dream admitted five months later to using a modified version of the game",
+            "The Todd Rogers Dragster 5.51-second record (1982) was contradicted by 2017 disassembly showing the fastest possible time as 5.57 seconds — 'two ticks faster than' expert analysis"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "SpongeBob: an unlikely speedrun dynasty",
+      "content": "Eight separate SpongeBob entries appear in our top-100 ('Battle for Bikini Bottom' original and Rehydrated, plus Category Extensions for both, 'Cosmic Shake', 'Titans of the Tide', 'Big Guy Challenge', 'Basics! - Remastered', 'Destroy SpongeBob'). The series became a speedrun anchor after 'Battle for Bikini Bottom' was performed at AGDQ 2017 by the runner SHIFT, and PC Gamer profiled the community in 2020 as 'a surprisingly compelling bracket packed with enough nuance to seduce any aspiring speed player.' What this tells us about our top-100 cut: a single dedicated community can keep a 22-year-old kids' platformer above 'Super Mario 64' in terms of recent verification activity. The currently-most-active list rewards active grinders, not historical fame.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.pcgamer.com/inside-the-wild-speedrunning-community-of-16-year-old-spongebob-battle-for-bikini-bottom/",
+          "title": "Inside the wild speedrunning community of 16-year-old SpongeBob: Battle for Bikini Bottom — PC Gamer",
+          "facts": [
+            "Runner SHIFT helped get BFBB into Awesome Games Done Quick 2017",
+            "Community described as 'a surprisingly compelling bracket packed with enough nuance to seduce any aspiring speed player'"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "The lens: a snapshot of what people are grinding right now",
+      "content": "Put items det_04 through det_09 together and the dataset reveals its true subject: this is not a 'best games to speedrun' census, it is a snapshot of the speedrunning labour pool's attention in May 2026. Three forces shape the picture. First, a megalaunch (Silksong; Subnautica 2 EA) pulls dozens of runners onto a single leaderboard for weeks. Second, an entrenched grind (Granny: Legacy, SpongeBob, ROBLOX Speed Run 4, Geometry Dash) keeps a small dedicated cohort uploading runs at a steady rate. Third, infrastructure events (GDQ marathons; Discord category resets; rule revisions like the Silksong DLC patch coming in 2026) periodically flood verification queues. A good blog should treat this as a labour-market document, not a hall of fame.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.pcgamer.com/games/action/silksongs-any-percent-speedrun-is-already-below-1-hour-in-case-you-were-worried-this-game-would-be-too-hard-to-clown-on/",
+          "title": "Silksong's Any-percent speedrun is already below 1 hour — PC Gamer",
+          "facts": ["The leaderboards opened October 1, 2025 and saw 1,000+ runners / 2,500+ runs in 3 months"]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "Scope suggestion for the Analyst",
+      "content": "Recommended angles, in priority order: (1) lead = the leaderboard concentration story — show that within the top-100 list, the median game has a small but loyal cohort while a handful of breakout titles (Silksong, Subnautica 2 EA, Hades 2) have dozens of distinct active runners; (2) the country map — speedrun.com is global but uneven; show the top-5 countries by runs and any country×game upsets (Granny:Legacy / Russia in the previous run was a real finding); (3) the platform shift — for the games that allow both, show the emulator share over time and the platform mix on the leaderboard (PC vs Switch vs PS5); (4) the WR-progression mini-story — pick the game with the densest, most-recent date_verified cluster and show the record falling step by step (Silksong is the obvious candidate given the BlueSR sub-1:10 → 1:03:41 chain); (5) the 'who grinds the most' tail — Lorenz / Pareto curve over players' runs-per-player. Caveats for the analyst: 'guest' runs have no player_id so they should be excluded from per-player analysis but kept in per-game totals; date_played is often missing so use date_verified for time series; ignore the 'rejected' status filter — the API was queried with status=verified only, so every row in runs.csv should be verified.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.speedrun.com/silksong",
+          "title": "Hollow Knight: Silksong leaderboard — Speedrun.com",
+          "facts": ["Game has active leaderboards as of 2026"]
+        }
+      ]
+    },
+    "det_12": {
+      "label": "Glossary the reader will need",
+      "content": "A glossary that the blog should weave in (not as a sidebar, but inline at first use): 'Any%' = finish the game's end-credits trigger in any way you can; '100%' = the game-specific full-completion target (every collectible, every boss, etc.); 'Glitchless' = no exploit usage; 'IL / per-level' = a single level treated as its own leaderboard (we excluded those for size — only per-game categories are in our dataset); 'RTA' = real-time attack, the wall-clock duration; 'IGT' = in-game timer; 'WR' = world record; 'TAS' = tool-assisted speedrun (excluded from real-runner leaderboards). The dataset's `time_seconds` is the canonical primary time per the game's ruleset (`ruleset_default_time` in games.csv), which can be RTA or RTA-no-loads or IGT depending on the game.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Speedrunning",
+          "title": "Speedrunning — Wikipedia",
+          "facts": ["Standard category definitions: Any%, 100%, Low%, Glitchless, No Major Glitches"]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_gdq_cheese.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/2/28/Cheese_performing%2C_SGDQ.jpg",
+      "license": "CC BY-SA (per Wikimedia Commons file page)",
+      "source": "Wikimedia Commons — Category:Games_Done_Quick",
+      "description": "Live photograph of speedrunner Cheese performing at Summer Games Done Quick — the canonical visual of the GDQ stage setup (runner at the controller, couch / commentators behind, side monitor). Gives the Designer a real-world atmospheric anchor for the GDQ section.",
+      "relates_to": ["det_07"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_livesplit.png",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/33/LiveSplit_interface.png",
+      "license": "CC (Wikimedia Commons)",
+      "source": "Wikimedia Commons — Category:Speedrunning",
+      "description": "Screenshot of the LiveSplit timer interface — the per-segment timing tool that essentially every runner on speedrun.com uses. Instantly recognizable to anyone inside the hobby; serves as a 'this is what the work looks like' visual.",
+      "relates_to": ["det_02", "det_03"]
+    }
+  ],
+  "instances": [
+    {
+      "id": "inst_01",
+      "type": "youtube",
+      "label": "BlueSR — Hollow Knight: Silksong Any% in 1:08:15 (former WR)",
+      "embed_url": "https://www.youtube.com/embed/nWgAOLujsA0",
+      "watch_url": "https://www.youtube.com/watch?v=nWgAOLujsA0",
+      "relates_to": ["det_05"],
+      "why": "Concrete artefact of the Silksong sub-1:10 milestone — the run that put the new game's record under 70 minutes for the first time.",
+      "verified": true,
+      "verified_title": "Hollow Knight: Silksong Any% Speedrun in 1:08:15 (WORLD RECORD (former))"
+    },
+    {
+      "id": "inst_02",
+      "type": "youtube",
+      "label": "BlueSR — Hollow Knight: Silksong Any% in 1:03:41 (former WR)",
+      "embed_url": "https://www.youtube.com/embed/QH-Oblh1yRI",
+      "watch_url": "https://www.youtube.com/watch?v=QH-Oblh1yRI",
+      "relates_to": ["det_05"],
+      "why": "The same runner's improvement to 1:03:41 — shows what 'a record falls week by week' actually looks like in this dataset's most-active game.",
+      "verified": true,
+      "verified_title": "Hollow Knight: Silksong Any% Speedrun in 1:03:41 (WORLD RECORD (former))"
+    }
+  ]
+}

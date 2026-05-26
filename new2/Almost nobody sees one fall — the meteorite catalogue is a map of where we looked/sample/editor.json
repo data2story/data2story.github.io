@@ -1,0 +1,147 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0",
+    "title": "Almost nobody sees one fall — how the meteorite catalogue is really made"
+  },
+  "core_claim": "The 45,716-row Meteoritical Bulletin is not a record of meteorites that fell, but a record of meteorites that humans found — 97.6% as later Finds, 59% lifted off Antarctic ice, 97% catalogued after 1969 when systematic searches began. Every other pattern follows from that.",
+  "story_spine": {
+    "tension": "Readers assume the catalogue is roughly what hits Earth, sampled by witnesses. In fact only 2.42% were ever seen falling.",
+    "payoff": "The catalogue is mostly an inventory of human attention — which search programs ran, where, and for how long."
+  },
+  "items": {
+    "edt_01": {
+      "label": "Hook — Almost nobody sees one fall",
+      "purpose": "hook",
+      "title": "Almost nobody sees one fall",
+      "findings": ["ana_04", "ana_18", "ana_01"],
+      "context": ["det_02", "det_03"],
+      "triage": {
+        "ana_04": "lead",
+        "ana_18": "supporting",
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": "image",
+      "editorial_notes": "Headline numbers 2.42% and ~6 falls/year must be exact. Image hint: the immovable Hoba meteorite (ref_hoba.jpg) — a 60-ton iron block sitting in Namibia for 80,000 years sets the tone that meteorites are physical objects we mostly fail to witness."
+    },
+    "edt_02": {
+      "label": "The Find explosion of 1969",
+      "purpose": "context",
+      "title": "The Find explosion of 1969",
+      "findings": ["ana_06", "ana_07"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_07": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "image",
+      "editorial_notes": "The decade pivot chart should show Fell and Found as two stacked or paired bars per decade — Fell stays flat, Found explodes after 1970. Antarctic recovery image (ref_antarctic_recovery.jpg) belongs here. 30x ratio and 17,698 (2000s decade) numbers must be exact."
+    },
+    "edt_03": {
+      "label": "A map of where humans looked",
+      "purpose": "evidence",
+      "title": "A map of where humans looked",
+      "findings": ["ana_14", "ana_15", "ana_16"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_14": "lead",
+        "ana_15": "supporting",
+        "ana_16": "color"
+      },
+      "chart_placeholder": "ana_15",
+      "media_placeholder": "map",
+      "editorial_notes": "Centrepiece. Use the all-1,097 Fells (red) + 2,000-sample Founds (blue) on a world map. Antarctic and desert hotspots must be unmistakable. Weave in ana_caveat_01: 16% of rows lack coordinates and the map silently drops them."
+    },
+    "edt_04": {
+      "label": "Ten orders of magnitude, log-normal",
+      "purpose": "evidence",
+      "title": "Ten orders of magnitude, log-normal",
+      "findings": ["ana_08", "ana_05"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_08": "supporting",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": null,
+      "editorial_notes": "Log-bucket histogram. The 92x median-mass gap (Fell vs Found) and the 400x mean-to-median ratio are the headline numbers. Text-only is correct here — a chart of bars on log scale is the strongest visual."
+    },
+    "edt_05": {
+      "label": "The top 20 are a wall of iron",
+      "purpose": "evidence",
+      "title": "The top 20 are a wall of iron",
+      "findings": ["ana_09", "ana_20", "ana_22"],
+      "context": ["det_05", "det_07", "det_08", "det_09"],
+      "triage": {
+        "ana_09": "lead",
+        "ana_20": "supporting",
+        "ana_22": "supporting"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "image",
+      "editorial_notes": "Top-20 leaderboard with bars or numeric blocks. Image: ref_ahnighito.jpg (Cape York's 34-t fragment at AMNH) is the strongest single image — it shows a real heavyweight at human scale. Rank-19 reveal (Jilin chondrite) is the rhetorical punch."
+    },
+    "edt_06": {
+      "label": "Counts say chondrite, mass says iron",
+      "purpose": "turn",
+      "title": "Counts say chondrite, mass says iron",
+      "findings": ["ana_10", "ana_11", "ana_12"],
+      "context": ["det_11"],
+      "triage": {
+        "ana_10": "supporting",
+        "ana_11": "supporting",
+        "ana_12": "color"
+      },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": null,
+      "editorial_notes": "Twin-chart opportunity: family-by-count and family-by-median-mass side by side, showing the rank flip. The lunar 0% Fell observation in ana_12 is the closer — every lunar meteorite in the catalogue came from Antarctica or a desert, none was ever seen falling."
+    },
+    "edt_07": {
+      "label": "Close — The catalogue is a record of where we looked",
+      "purpose": "close",
+      "title": "The catalogue is a record of where we looked",
+      "findings": ["ana_19", "ana_07"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_19": "supporting",
+        "ana_07": "supporting"
+      },
+      "chart_placeholder": "ana_19",
+      "media_placeholder": "image",
+      "editorial_notes": "Closer should tie the three load-bearing numbers back together (2.4% witnessed, 59% Antarctic, 97% post-1969). Image: ref_meteor_crater.jpg — the only entry in the catalogue you can still see from orbit. Mention ana_caveat_02 (dataset frozen ~2013) as the reason the 2010s row dips."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "cut",
+    "ana_03": "cut",
+    "ana_04": "lead",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "lead",
+    "ana_10": "supporting",
+    "ana_11": "supporting",
+    "ana_12": "color",
+    "ana_13": "cut",
+    "ana_14": "lead",
+    "ana_15": "supporting",
+    "ana_16": "color",
+    "ana_17": "cut",
+    "ana_18": "supporting",
+    "ana_19": "supporting",
+    "ana_20": "supporting",
+    "ana_21": "cut",
+    "ana_22": "supporting"
+  },
+  "cut_rationale": {
+    "ana_02": "Missing-rate detail is a data-quality footnote, not a story beat — referenced in editorial_notes for the map section instead.",
+    "ana_03": "Year-quality typo is a Detective-flagged caveat (det_13), already covered there.",
+    "ana_13": "Hemisphere split is fully explained by the Antarctic story (ana_14) — would duplicate.",
+    "ana_17": "Oldest-10 list is charming but tangential to the central argument; the Ensisheim/Nogata names would distract from the post-1969 explosion.",
+    "ana_21": "Continent buckets duplicate ana_14/ana_15 with coarser geography; the map and region tables already cover it."
+  }
+}

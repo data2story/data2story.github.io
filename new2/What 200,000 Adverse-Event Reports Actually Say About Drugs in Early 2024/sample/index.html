@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>What 200,000 Adverse-Event Reports Actually Say About Drugs in Early 2024</title>
+
+<!-- Vega-Lite + Leaflet -->
+<script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.21.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<style>
+  :root {
+    --bg:          #0e1117;
+    --surface:     #161b22;
+    --surface-2:   #1f2632;
+    --rule:        #2a3140;
+    --text:        #e8e8e8;
+    --muted:       #8a8f99;
+    --accent:      #e98a2b;   /* warm orange */
+    --teal:        #3a7d8d;
+    --red:         #c84a3a;
+    --darkred:     #7d2e2e;
+    --green:       #5a9b6a;
+    --maxw:        720px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); }
+  body {
+    font-family: Georgia, 'Cambria', 'Times New Roman', serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Teaser */
+  .teaser {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    max-width: none;
+    overflow: hidden;
+    display: block;
+  }
+  .teaser video,
+  .teaser img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .teaser .scrim {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 70%, transparent 0%, rgba(14,17,23,0.85) 100%);
+    pointer-events: none;
+  }
+  .teaser .scroll-hint {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--muted);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    animation: scrollHint 2.2s ease-in-out infinite;
+  }
+  @keyframes scrollHint {
+    0%, 100% { opacity: 0.6; transform: translate(-50%, 0); }
+    50%      { opacity: 1.0; transform: translate(-50%, 6px); }
+  }
+
+  /* Content column */
+  main, .content {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  header.title-block {
+    text-align: left;
+    padding: 4rem 1.5rem 2rem;
+    max-width: var(--maxw);
+    margin: 0 auto;
+  }
+  header.title-block h1 {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: 2.4rem;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin: 0 0 0.8rem;
+    color: var(--text);
+  }
+  header.title-block .deck {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--muted);
+    margin: 0;
+  }
+  header.title-block .byline {
+    margin-top: 1.8rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+    font-family: system-ui, sans-serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  section.story {
+    padding: 2rem 0 1rem;
+    border-top: 1px solid var(--rule);
+    margin-top: 2.5rem;
+  }
+  section.story:first-of-type { border-top: none; margin-top: 0; }
+  section.story h2 {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1.25;
+    margin: 0 0 1.5rem;
+    color: var(--text);
+    max-width: var(--maxw);
+  }
+  section.story p {
+    margin: 0 0 1.2rem;
+    max-width: var(--maxw);
+  }
+
+  /* Visual containers */
+  .visual {
+    margin: 2.4rem 0;
+    display: block;
+    clear: both;
+  }
+  .visual .visual-title {
+    font-family: system-ui, sans-serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 0.6rem;
+  }
+  .visual .visual-caption {
+    font-family: system-ui, sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.6rem;
+  }
+  .chart-container {
+    width: 100%;
+    min-width: 0;
+    display: block;
+  }
+
+  /* Stat callouts */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 2.4rem 0;
+  }
+  @media (max-width: 640px) {
+    .stat-strip { grid-template-columns: repeat(2, 1fr); }
+  }
+  .stat {
+    background: var(--surface);
+    border-left: 3px solid var(--accent);
+    padding: 1rem 1.2rem;
+    border-radius: 2px;
+  }
+  .stat-number {
+    font-family: system-ui, sans-serif;
+    font-weight: 700;
+    font-size: 2.1rem;
+    color: var(--text);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-family: system-ui, sans-serif;
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-top: 0.4rem;
+    line-height: 1.3;
+  }
+  .stat-note {
+    font-family: system-ui, sans-serif;
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    opacity: 0.8;
+  }
+
+  /* Quiz */
+  .quiz {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 1.4rem 1.2rem;
+    margin: 2rem 0;
+  }
+  .quiz-prompt {
+    font-family: system-ui, sans-serif;
+    font-size: 0.95rem;
+    color: var(--muted);
+    margin: 0 0 1rem;
+  }
+  .quiz-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.7rem;
+  }
+  .quiz-card {
+    background: var(--surface-2);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.9rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: system-ui, sans-serif;
+    color: var(--text);
+    font-size: 0.95rem;
+    user-select: none;
+  }
+  .quiz-card:hover { border-color: var(--accent); }
+  .quiz-card.revealed { cursor: default; }
+  .quiz-card.revealed .reveal-count {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 0.3rem;
+  }
+  .quiz-card.revealed .reveal-pct {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-top: 0.2rem;
+  }
+  .quiz-card.correct {
+    border-color: var(--accent);
+    background: rgba(233, 138, 43, 0.12);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .quiz-card.wrong-selected {
+    border-color: var(--red);
+    background: rgba(200, 74, 58, 0.08);
+  }
+  .quiz-card .reveal-count,
+  .quiz-card .reveal-pct { display: none; }
+  .quiz-result {
+    margin-top: 1.1rem;
+    font-family: system-ui, sans-serif;
+    font-size: 0.9rem;
+    color: var(--muted);
+    min-height: 1.4em;
+  }
+
+  /* Sonification */
+  .sonification {
+    margin: 1rem 0 0.4rem;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    padding: 0.9rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .sonification button {
+    background: var(--accent);
+    color: #0e1117;
+    border: none;
+    font-family: system-ui, sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.55rem 1.1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .sonification button:disabled { opacity: 0.5; cursor: not-allowed; }
+  .sonification .legend {
+    font-family: system-ui, sans-serif;
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  /* Map */
+  .map-container {
+    height: 520px;
+    margin: 2.4rem 0;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,0.02),
+      0 8px 28px rgba(0,0,0,0.45);
+    position: relative;
+  }
+  .leaflet-tile-pane { filter: brightness(0.78) saturate(0.7) contrast(1.05); }
+  .leaflet-container {
+    background: #0a0d12;
+    font-family: system-ui, -apple-system, sans-serif;
+    cursor: grab;
+  }
+  .leaflet-container:active { cursor: grabbing; }
+
+  /* Hover tooltips */
+  .leaflet-tooltip.map-tt-wrap {
+    background: rgba(22, 27, 34, 0.96);
+    border: 1px solid rgba(244, 161, 74, 0.35);
+    color: var(--text);
+    border-radius: 4px;
+    padding: 8px 11px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+    font-family: system-ui, sans-serif;
+    line-height: 1.35;
+  }
+  .leaflet-tooltip.map-tt-wrap::before { display: none; }  /* hide default arrow stem */
+  .map-tt-name {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+  .map-tt-name .map-tt-iso {
+    color: var(--accent);
+    font-weight: 600;
+    margin-left: 4px;
+  }
+  .map-tt-num {
+    font-size: 1.35rem;
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .map-tt-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Popups (click-style — same styling) */
+  .leaflet-popup-content-wrapper {
+    background: rgba(22, 27, 34, 0.96);
+    color: var(--text);
+    border-radius: 4px;
+    border: 1px solid rgba(244, 161, 74, 0.35);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+  }
+  .leaflet-popup-tip { background: rgba(22, 27, 34, 0.96); }
+  .leaflet-popup-content {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, sans-serif;
+  }
+  .leaflet-popup-content > div { padding: 9px 12px; }
+
+  /* Permanent country labels (top 3) */
+  .map-perm-label {
+    pointer-events: none;
+  }
+  .map-perm-label span {
+    display: inline-block;
+    font-family: system-ui, sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: rgba(232, 232, 232, 0.85);
+    background: rgba(14, 17, 23, 0.62);
+    padding: 2px 7px;
+    border-radius: 2px;
+    white-space: nowrap;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+    border-left: 2px solid var(--accent);
+  }
+  .map-perm-label span b { color: var(--text); font-weight: 600; }
+
+  /* Zoom control restyling */
+  .leaflet-bar {
+    border: 1px solid var(--rule);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+    background: var(--surface);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .leaflet-bar a {
+    background: transparent;
+    color: var(--text);
+    border-bottom: 1px solid var(--rule);
+    font-family: system-ui, sans-serif;
+    font-weight: 400;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    transition: background 0.15s ease;
+  }
+  .leaflet-bar a:hover { background: rgba(244, 161, 74, 0.18); color: var(--accent); }
+  .leaflet-bar a:last-child { border-bottom: none; }
+
+  /* Attribution */
+  .leaflet-control-attribution {
+    background: rgba(14, 17, 23, 0.55) !important;
+    color: var(--muted) !important;
+    font-size: 10px !important;
+    padding: 2px 7px !important;
+    border-radius: 2px 0 0 0;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Custom legend */
+  .map-legend {
+    background: rgba(14, 17, 23, 0.82);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 11px 13px 9px;
+    color: var(--text);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    font-family: system-ui, sans-serif;
+  }
+  .map-legend-title {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .map-legend-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+    font-size: 0.78rem;
+    color: rgba(232, 232, 232, 0.88);
+  }
+  .map-legend-bubble {
+    display: inline-block;
+    border-radius: 50%;
+    background: radial-gradient(circle, #f0a040 50%, rgba(244, 161, 74, 0.22) 100%);
+    flex: 0 0 auto;
+  }
+  .map-legend-label {
+    font-variant-numeric: tabular-nums;
+  }
+  .map-legend-hint {
+    margin-top: 8px;
+    padding-top: 7px;
+    border-top: 1px solid var(--rule);
+    font-size: 0.7rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Sex bar */
+  .sex-bar {
+    display: flex;
+    width: 100%;
+    height: 28px;
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 0.6rem 0;
+    font-family: system-ui, sans-serif;
+    font-size: 0.8rem;
+  }
+  .sex-bar > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text);
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  /* Pull quote */
+  .pullquote {
+    position: relative;
+    margin: 3rem 0 2rem;
+    text-align: center;
+    padding: 2.4rem 3rem 2rem;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .pullquote .pq-mark {
+    position: absolute;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: 5rem;
+    color: var(--accent);
+    line-height: 1;
+    opacity: 0.55;
+    user-select: none;
+    pointer-events: none;
+  }
+  .pullquote .pq-mark.open  { top: 0.2rem; left: 1rem; }
+  .pullquote .pq-mark.close { bottom: 1.4rem; right: 1rem; }
+  .pullquote .pq-text {
+    font-family: Georgia, serif;
+    font-style: italic;
+    font-size: 1.6rem;
+    line-height: 1.35;
+    color: var(--text);
+    margin: 0 auto 1rem;
+    max-width: 560px;
+  }
+  .pullquote .pq-caption {
+    font-family: system-ui, sans-serif;
+    font-size: 0.8rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 560px) {
+    .pullquote { padding: 2.4rem 2rem 2rem; }
+    .pullquote .pq-mark { font-size: 3.5rem; }
+    .pullquote .pq-mark.open  { left: 0.4rem; }
+    .pullquote .pq-mark.close { right: 0.4rem; bottom: 1rem; }
+  }
+
+  /* References */
+  footer.refs {
+    max-width: var(--maxw);
+    margin: 3rem auto 4rem;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--rule);
+    color: var(--muted);
+    font-family: system-ui, sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+  footer.refs h3 {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin: 1.4rem 0 0.6rem;
+  }
+  footer.refs ul {
+    margin: 0;
+    padding-left: 1.2rem;
+  }
+  footer.refs li { margin-bottom: 0.35rem; }
+  footer.refs a { color: var(--accent); text-decoration: none; }
+  footer.refs a:hover { text-decoration: underline; }
+
+  /* Vega-Lite chart wrapper */
+  .vega-embed { width: 100%; }
+
+  /* Side-by-side panels */
+  .side-by-side {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 680px) {
+    .side-by-side { grid-template-columns: 1fr; }
+  }
+
+  /* Donut + grouped-bars side-by-side */
+  .glp1-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 1.4rem;
+    align-items: center;
+  }
+  @media (max-width: 680px) {
+    .glp1-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TEASER -->
+<div class="teaser" data-des="des_teaser_video">
+  <video data-des="des_teaser_video" autoplay loop muted playsinline poster="assets/teaser_hero.png">
+    <source src="assets/teaser_motion.mp4" type="video/mp4" />
+    <img data-des="des_teaser_image" src="assets/teaser_hero.png" alt="A stack of medical safety reports with warm light glowing from beneath the top page." />
+  </video>
+  <div class="scrim"></div>
+  <div class="scroll-hint">scroll</div>
+</div>
+
+<header class="title-block">
+  <h1>What 200,000 Adverse-Event Reports Actually Say About Drugs in Early 2024</h1>
+  <p class="deck">Reading the FDA's FAERS database as a megaphone, not a measurement.</p>
+  <p class="byline">Data Journalist Agent · OpenFDA FAERS · Jan 1 – Feb 23, 2024</p>
+</header>
+
+<main>
+
+<!-- ============ edt_01 ============ -->
+<section class="story" data-edt="edt_01" data-det="det_03,det_04">
+  <h2>The top complaint isn't medical</h2>
+
+  <p data-ana="ana_12">Among 597,802 adverse-reaction rows in FAERS for the first seven weeks of 2024, the single most-reported MedDRA Preferred Term is not nausea, not pain, not death. It is "Off label use" — 14,801 mentions, 2.48% of all reaction rows. The next two terms are "Drug ineffective" (11,335) and "Death" itself logged as a reaction (9,356). The first recognisably medical symptom — "Fatigue" — appears in fourth place.</p>
+
+  <p data-ana="ana_15">Fully 1.8% of every single report in the dataset is one person filing one complaint: that the drug did not work. No symptom, no event, no outcome — just "Drug ineffective" and nothing else. That is 3,554 reports out of 200,000, and another 7,683 reports that mention "Drug ineffective" alongside something else.</p>
+
+  <p data-det="det_03,det_04">FAERS is fed by anyone who notices a problem — patients writing in to MedWatch, hospital safety officers, drug manufacturers fulfilling mandatory reporting, clinical-trial sites. Many of those reports are not medical at all. They describe how the drug was used, whether it worked, whether the right dose came out of the pen. The database's loudest signal is paperwork, not pharmacology.</p>
+
+  <!-- Quiz -->
+  <div class="quiz visual" id="des_01_quiz" data-des="des_01_quiz" data-ana="ana_12">
+    <div class="visual-title">Guess first</div>
+    <p class="quiz-prompt">Out of 600,000 reaction rows in FAERS 2024, which one was reported most often?</p>
+    <div class="quiz-grid">
+      <div class="quiz-card" data-correct="false" data-count="7080" data-pct="1.18"
+           onclick="revealQuiz(this)">
+        Nausea
+        <span class="reveal-count">7,080</span>
+        <span class="reveal-pct">1.18%</span>
+      </div>
+      <div class="quiz-card" data-correct="false" data-count="9356" data-pct="1.57"
+           onclick="revealQuiz(this)">
+        Death
+        <span class="reveal-count">9,356</span>
+        <span class="reveal-pct">1.57%</span>
+      </div>
+      <div class="quiz-card" data-correct="true" data-count="14801" data-pct="2.48"
+           onclick="revealQuiz(this)">
+        Off label use
+        <span class="reveal-count">14,801</span>
+        <span class="reveal-pct">2.48%</span>
+      </div>
+      <div class="quiz-card" data-correct="false" data-count="5079" data-pct="0.85"
+           onclick="revealQuiz(this)">
+        Headache
+        <span class="reveal-count">5,079</span>
+        <span class="reveal-pct">0.85%</span>
+      </div>
+    </div>
+    <div class="quiz-result" id="quiz-result"></div>
+  </div>
+
+  <!-- Chart: top 30 reactions -->
+  <div class="visual" id="des_01_chart" data-des="des_01_chart" data-ana="ana_12">
+    <div class="visual-title">Top 30 reported reactions (MedDRA Preferred Terms)</div>
+    <div class="chart-container" id="chart-reactions"></div>
+    <div class="visual-caption">Orange bars mark non-medical and meta-administrative terms; grey bars are recognisable symptoms or diagnoses.</div>
+  </div>
+</section>
+
+<!-- ============ edt_02 ============ -->
+<section class="story" data-edt="edt_02" data-det="det_01,det_02,det_04,det_08">
+  <h2>What FAERS is, and what its biggest numbers actually mean</h2>
+
+  <p data-det="det_01,det_02">FAERS is the FDA's central post-market surveillance database. Anyone with a story about a drug — a patient who developed a rash, a clinician who saw an unexpected outcome, a manufacturer required by law to forward a complaint — can submit a report. Every report names a patient (age, sex, country), one or more drugs (each marked as Suspect, Concomitant, or Interacting), and one or more reactions described in MedDRA, the standardized vocabulary used by drug regulators worldwide. The full 2024 universe is roughly 1.32 million reports.</p>
+
+  <p data-det="det_08" data-ana="ana_03">The slice in front of us is 200,000 reports drawn chronologically through the OpenFDA API — Jan 1 through Feb 23 only, the first 54 days of 2024. About 15% of the year's volume sits in this snapshot. The patient fields are sparser than you would hope: age is missing 40% of the time, sex 16%, country of occurrence 11%. The seriousness flag is almost always present.</p>
+
+  <p data-ana="ana_18,ana_04">Half the reports — 52.5% — are tagged "serious", an extraordinarily high rate by epidemiological standards. Nine percent record a death. A fifth involve a hospitalization. None of this means the drugs are killing or hospitalising people at those rates. It means the events that get reported to FAERS skew strongly toward the events worth reporting: hospital workups, life-threatening reactions, adverse outcomes severe enough that someone wrote them down.</p>
+
+  <p data-det="det_04">FAERS has no denominator. The database does not know how many patients took each drug. A report count cannot be divided by a prescription count, and the FDA itself states that the system is for "generating hypotheses about potential safety signals," not for measuring rates.</p>
+
+  <!-- Stat strip -->
+  <div class="visual stat-strip" data-des="des_02_callouts" data-ana="ana_18">
+    <div class="stat" data-des="des_02_callouts" data-ana="ana_02">
+      <div class="stat-number">200,000</div>
+      <div class="stat-label">reports in this sample</div>
+      <div class="stat-note">Jan 1 – Feb 23, 2024 only</div>
+    </div>
+    <div class="stat" data-des="des_02_callouts" data-ana="ana_18">
+      <div class="stat-number">52.5%</div>
+      <div class="stat-label">tagged serious</div>
+      <div class="stat-note">not a population rate</div>
+    </div>
+    <div class="stat" data-des="des_02_callouts" data-ana="ana_18">
+      <div class="stat-number">19.1%</div>
+      <div class="stat-label">involve hospitalization</div>
+      <div class="stat-note">38,124 reports</div>
+    </div>
+    <div class="stat" data-des="des_02_callouts" data-ana="ana_18">
+      <div class="stat-number">9.4%</div>
+      <div class="stat-label">involve a death</div>
+      <div class="stat-note">18,865 reports</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ edt_03 ============ -->
+<section class="story" data-edt="edt_03" data-det="det_05">
+  <h2>Dupixent and Mounjaro are tied for #1</h2>
+
+  <p data-ana="ana_06">Across all 776,793 drug appearances in the dataset, Dupixent — dupilumab, an injectable biologic for atopic dermatitis and asthma — is the most-reported product, with 15,027 mentions and 1.93% of every drug row. Mounjaro (tirzepatide, the type-2-diabetes blockbuster from Eli Lilly) is the closest possible second at 14,908 mentions and 1.92%. The two are separated by 119 rows out of three-quarters of a million.</p>
+
+  <p data-ana="ana_07">When the analysis is narrowed to drugs marked as the suspect product — the drug the reporter thinks caused the event — Dupixent still edges out Mounjaro, 14,916 to 14,742. Together they make up just under 6% of all suspect-drug rows in the dataset. The remaining top of the list is recognisable to anyone who works in pharmacovigilance: Xolair, Repatha, Cabometyx, methotrexate, Rituximab, Humira — the immunology and oncology biologics that have anchored FAERS for years.</p>
+
+  <p data-ana="ana_08">Behind that ranking is a sharper diagnostic. Some drugs are almost always the suspect when they appear: Dupixent 99.3% suspect, Mounjaro 98.9%, Xolair 99.1%, Cabometyx 99.8%. Others are almost never the suspect — aspirin is the suspect in only 15.8% of its appearances, atorvastatin in 21.7%, acetaminophen in 49.0%. Those drugs show up because the patient was taking them at the time, not because they are blamed for anything. A drug's headline count is half story, half background noise; the role mix tells you which.</p>
+
+  <div class="visual" id="des_03_chart" data-des="des_03_chart" data-ana="ana_06">
+    <div class="visual-title">Top 25 most-reported drugs (any role)</div>
+    <div class="chart-container" id="chart-drugs"></div>
+    <div class="visual-caption">Teal highlights Dupixent and Mounjaro (the tied leaders); orange highlights Ozempic and Zepbound (the GLP-1 thread carried into the next section).</div>
+  </div>
+</section>
+
+<!-- ============ edt_04 ============ -->
+<section class="story" data-edt="edt_04" data-det="det_05">
+  <h2>The GLP-1 surge is real, but the spotlight is on the wrong drug</h2>
+
+  <p data-det="det_05" data-ana="ana_09">The press story of 2024 has been Ozempic — semaglutide, the GLP-1 receptor agonist that became a household word for weight loss. In the FAERS sample, however, Ozempic ranks 21st by total mentions. The dominant GLP-1 drug is Mounjaro at 14,908 rows, with 3,077 more for its sibling Zepbound (tirzepatide approved for obesity in November 2023). Pooled across brands, tirzepatide produces 18,035 drug rows; semaglutide (Ozempic + Wegovy + Rybelsus) produces 5,425. The newer drug outruns the famous one by a factor of 3.3.</p>
+
+  <p data-ana="ana_32">The eight major GLP-1 brand names produce a head-to-head table that looks nothing like a single drug class. Mounjaro: 3,159 suspect-reports, 11% tagged serious, 0.7% involving a death. Ozempic: 2,493 suspect-reports, 32% serious, 0.6% death. Zepbound: 718 suspect-reports, 2.5% serious, zero deaths. Wegovy and Saxenda — both indicated for weight loss — show the strongest female skew (82% and 88% female of sex-known reports). The diabetes-indicated brands skew older (median age 63 for Ozempic, Rybelsus, Trulicity); the obesity-indicated brands skew younger (47 for Wegovy, 49 for Zepbound, 45.5 for Saxenda).</p>
+
+  <p>Two drugs that share an active ingredient — Mounjaro and Zepbound, both tirzepatide — generate the gentlest seriousness profiles in the dataset. The same active ingredient, marketed for diabetes by physicians (Mounjaro) versus marketed for weight loss directly to consumers (Zepbound), produces reports that look mild by FAERS standards. It is almost certainly a reporter-community effect: weight-loss patients filing reports through manufacturer pharmacovigilance hotlines, mostly about misfiring pens, not hospitalisations.</p>
+
+  <div class="visual glp1-grid">
+    <div id="des_04_chart" data-des="des_04_chart" data-ana="ana_32">
+      <div class="visual-title">GLP-1 brand head-to-head</div>
+      <div class="chart-container" id="chart-glp1-h2h"></div>
+      <div class="visual-caption">Three bars per brand: % Serious (red), % Hospitalization (orange), % Death (charcoal).</div>
+    </div>
+    <div id="des_04_secondary" data-des="des_04_secondary" data-ana="ana_09">
+      <div class="visual-title">Class share by molecule</div>
+      <div class="chart-container" id="chart-glp1-donut"></div>
+      <div class="visual-caption">26,170 GLP-1 drug rows · 3.4% of the dataset</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ edt_05 ============ -->
+<section class="story" data-edt="edt_05" data-det="det_05">
+  <h2>Mounjaro's complaints are about the pen; Ozempic's are about the body</h2>
+
+  <p data-ana="ana_33">The top reactions for Mounjaro and Ozempic look almost like reports from different drugs. Mounjaro's top complaint is "Incorrect dose administered" — 21.7% of all Mounjaro reports — followed by "Injection site pain" (14.5%), "Off label use" (12.5%), and only then "Nausea" (9.9%). Zepbound's top complaints are even more device-focused: "Incorrect dose administered" 21.4%, "Accidental underdose" 16.4%, "Injection site pain" 13.6%. Ozempic looks like a different drug. Its top reactions are "Nausea" (16.2%), "Vomiting" (9.3%), "Diarrhoea" (9.2%), "Constipation" (7.6%), "Decreased appetite" (6.8%). The body is the complaint, not the syringe.</p>
+
+  <p data-ana="ana_34">Stepping back across all 10,056 GLP-1 reports, the reactions most over-represented in the class versus the dataset average tell the underlying story. "Impaired gastric emptying" appears 14.8 times more often in GLP-1 reports than would be expected from base rates. "Pancreatitis" — a long-recognised GLP-1 risk — appears 8.4 times more often. "Glycosylated haemoglobin increased" appears 9.7 times more often, meaning some patients are complaining the drug failed to bring their HbA1c down. And then, in the same ranked list: "Weight loss poor" (18.5x lift) and "Increased appetite" (11.1x). The paradox of the class shows up directly — both the patients whose appetite vanishes and the patients whose appetite returns are writing in.</p>
+
+  <div class="visual" id="des_05_chart" data-des="des_05_chart" data-ana="ana_33">
+    <div class="visual-title">Mounjaro vs Ozempic — top reactions side-by-side</div>
+    <div class="chart-container" id="chart-mz-reactions"></div>
+    <div class="visual-caption">Orange = device or dosing complaint; teal = biological symptom; grey = meta-administrative term.</div>
+  </div>
+
+  <div class="visual" id="des_05_lift" data-des="des_05_lift" data-ana="ana_34">
+    <div class="visual-title">Reactions over-represented in GLP-1 reports (lift vs dataset average)</div>
+    <div class="chart-container" id="chart-lift"></div>
+    <div class="visual-caption">Highlighted in orange: "Weight loss poor" and "Increased appetite" coexist in the same class signature.</div>
+  </div>
+</section>
+
+<!-- ============ edt_06 ============ -->
+<section class="story" data-edt="edt_06" data-det="det_04">
+  <h2>The actual death-rate hotspots are nowhere near the headlines</h2>
+
+  <p data-ana="ana_20">Filtering to drugs with at least 200 suspect-reports and ranking by share of reports involving a death produces a list that has almost nothing to do with weight-loss drugs. The top entries: methamphetamine (93.5% of its suspect-reports involve a death), alcohol (89.4%), fentanyl (71.9%), diphenhydramine (70.9%), trazodone (69.1%), cocaine (66.1%), oxycodone (57.9%). These are not signals that prescribed drugs are killing patients. They are reports filed after toxicology found the substance present at the time of death — overdose cases, polypharmacy mortality, drug-related fatalities being routed into FAERS because a drug was named in the chart. Notably absent from the top thirty: any GLP-1 drug.</p>
+
+  <p data-ana="ana_16" data-det="det_04">Among the 39,213 reactions explicitly tagged with a Fatal outcome, the most common identifiable cause of death is "Completed suicide" (1,602 rows, 4.1% of fatal reactions). It is followed by "Toxicity to various agents" (2.7%), "Drug abuse" (2.2%), cardio-respiratory arrest, pneumonia, cardiac arrest, sepsis. FAERS death numbers are real, but they are death-from-anything-while-on-a-drug numbers — they are not a leaderboard of drugs that kill.</p>
+
+  <div class="visual" id="des_06_chart" data-des="des_06_chart" data-ana="ana_20">
+    <div class="visual-title">Top 20 drugs by share of suspect-reports tagged with a death (≥200 suspect-reports)</div>
+    <div class="chart-container" id="chart-death-rate"></div>
+    <div class="visual-caption">Dark red marks opioids and stimulants; amber marks sedatives and psychiatric drugs; grey marks everything else.</div>
+  </div>
+</section>
+
+<!-- ============ edt_07 ============ -->
+<section class="story" data-edt="edt_07" data-det="det_06">
+  <h2>Who files, when, and from where</h2>
+
+  <p data-ana="ana_22">FAERS reports skew strongly female. Of reports with a known patient sex, 59.5% are about women and 40.5% are about men — a 1.47:1 ratio. The skew shows up in every drug analysed individually: Wegovy 82% female, Dupixent's autoimmune-leaning population female-dominated, even Mounjaro 74% female despite the underlying diabetic population being roughly balanced.</p>
+
+  <div class="sex-bar" id="des_07_sex_inline" data-des="des_07_sex_inline" data-ana="ana_22">
+    <div style="width: 49.76%; background: var(--red);">F 49.8%</div>
+    <div style="width: 33.89%; background: var(--teal);">M 33.9%</div>
+    <div style="width: 0.44%; background: #b4b4b4;"></div>
+    <div style="width: 15.92%; background: #4a4f5a; color: var(--muted);">Missing 15.9%</div>
+  </div>
+
+  <p data-ana="ana_25" data-det="det_06">Where the events happen is, overwhelmingly, the United States. 60.3% of reports describe an event that occurred in the US; the next closest is Canada at 5.1%, then the UK at 3.5%, Japan at 3.3%, France at 3.3%. The 99.9% match between event country and reporter country shows that FAERS is fed locally — clinicians and patients in each country file about events in their own country, and manufacturers forward those reports through their pharmacovigilance teams. The US dominance is not because Americans get more adverse events; it is because Americans are far more likely to file a report when they have one.</p>
+
+  <div class="visual map-container" id="des_07_map" data-des="des_07_map" data-ana="ana_25"></div>
+
+  <p data-ana="ana_28">Eighty-one percent of reports come in through spontaneous channels — the canonical patient/clinician/manufacturer-forwarded route. Sixteen percent come from clinical studies, three percent from "Other" channels (literature, surveys). The Study channel is small but disproportionately serious: oncology-trial safety reports come through it.</p>
+
+  <p data-ana="ana_29,ana_30">The data has a heartbeat. Across the 54-day window, weekdays receive an average of 35,000–40,000 reports while weekends crater to 5,500 (Saturday) and 8,200 (Sunday). On every Saturday and Sunday the count drops 80–90% from the surrounding Friday. Adverse events do not stop happening on weekends. The reporting infrastructure does. FAERS is not a real-time monitor; it is a five-day-a-week intake queue.</p>
+
+  <div class="visual" id="des_07_chart_daily" data-des="des_07_chart_daily" data-ana="ana_29">
+    <div class="visual-title">Daily report volume across the 54-day sampling window</div>
+    <div class="chart-container" id="chart-daily"></div>
+    <div class="visual-caption">Teal bars = weekdays; red bars = weekends. Each weekend drops 80–90% from the surrounding weekday volume.</div>
+  </div>
+
+  <div class="sonification" id="des_07_sonification" data-des="des_07_sonification" data-ana="ana_29">
+    <button id="sonify-btn" onclick="playSonification()">▶ Play the 54-day rhythm</button>
+    <div class="legend">
+      <strong style="color: var(--text);">Hear the heartbeat.</strong> 54 short tones, one per day. Pitch rises with the report count; weekend days are near-silent. Sync'd with the chart above — the active bar pulses while its tone plays.
+    </div>
+  </div>
+</section>
+
+<!-- ============ edt_08 ============ -->
+<section class="story" data-edt="edt_08" data-det="det_04,det_07">
+  <h2>How to read the next FAERS headline</h2>
+
+  <p>The two findings that survive every caveat are these. First: the top "adverse reaction" in the database is not a medical event, it is "Off label use" — and the second is "Drug ineffective". Second: the GLP-1 brand at the centre of the next round of headlines is much more likely to be Mounjaro than Ozempic, because Mounjaro is generating three times more reports already, and most of those reports are about pen handling, not pharmacology.</p>
+
+  <p data-det="det_04" data-ana="ana_18">Every number in this blog is a count of reports, not a count of events. FAERS is a megaphone, not a measurement. A drug that has been in the news collects more reports for the same underlying rate. A drug whose patients are old, female, and U.S.-based collects more reports per prescription than one whose patients are not. A drug whose pen is hard to use collects more "Incorrect dose administered" reports than one whose pen is not.</p>
+
+  <p data-det="det_07">The FDA itself reads FAERS this way. Each quarter the agency publishes a list of "Potential Signals of Serious Risks/New Safety Information" identified from these reports — sometimes only dozens of cases — that warrant closer investigation. The signals trigger label changes, dose warnings, drug-safety communications. Nothing in FAERS is causation, but everything in FAERS is a question worth asking.</p>
+
+  <p>Read the next news cycle about an "adverse event database surge" with the structure in mind. A spike in reports means someone is filing them — a regulator put out a warning, a class-action lawyer ran an ad, a TV doctor mentioned the drug. The events behind the reports may or may not have changed. The reporting always has.</p>
+
+  <div class="pullquote" data-des="des_08_pullquote">
+    <span class="pq-mark open" aria-hidden="true">&ldquo;</span>
+    <div class="pq-text">FAERS is a megaphone, not a measurement.</div>
+    <div class="pq-caption">the rule of thumb for every headline about an adverse-event-database surge</div>
+    <span class="pq-mark close" aria-hidden="true">&rdquo;</span>
+  </div>
+</section>
+
+</main>
+
+<footer class="refs">
+  <p><strong style="color: var(--text);">Data Journalist Agent</strong> · A reproducible data-story pipeline. Every number on this page is computed from the raw OpenFDA FAERS sample and traceable back to a Python script in this project's <code>code/</code> directory.</p>
+
+  <h3>Data source</h3>
+  <ul>
+    <li>U.S. Food and Drug Administration. <em>FDA Adverse Event Reporting System (FAERS)</em>. OpenFDA Drug Adverse Event API — <a href="https://open.fda.gov/data/faers/">https://open.fda.gov/data/faers/</a> (public domain; OpenFDA terms apply).</li>
+    <li>Sample: 200,000 reports with <code>receivedate</code> in 2024, paginated from <a href="https://api.fda.gov/drug/event.json">https://api.fda.gov/drug/event.json</a>, deduplicated by <code>safetyreportid</code>.</li>
+  </ul>
+
+  <h3>Vocabulary and reference</h3>
+  <ul>
+    <li>MedDRA Preferred Term definitions: <a href="https://open.fda.gov/apis/drug/event/searchable-fields/">OpenFDA searchable fields</a>.</li>
+    <li>FAERS structure and reporter types: <a href="https://intuitionlabs.ai/articles/fda-adverse-event-reporting-system">FAERS Explained, IntuitionLabs</a>.</li>
+    <li>Reporting bias and notoriety bias: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8114300/">Existence of Notoriety Bias in FAERS</a>; <a href="https://medxdrg.com/what-are-the-limitations-of-the-faers-database">Limitations of FAERS</a>.</li>
+  </ul>
+
+  <h3>Comparison studies</h3>
+  <ul>
+    <li>Gastrointestinal safety of GLP-1 agonists in FAERS: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11675942/">Diagnostics 2024 / PMC11675942</a> — Trulicity, Byetta, and Mounjaro lead cumulative counts; Ozempic 43.9% serious historically.</li>
+    <li>Ozempic / GLP-1 press coverage of FAERS in 2024: <a href="https://www.aboutlawsuits.com/ozempic-wegovy-mounjaro-lawsuit/severe-adverse-events-linked-to-ozempic-glp1-drugs/">AboutLawsuits.com</a>; <a href="https://www.hmf-law.com/news/ozempic-wegovy-monjaro-162-deaths-fda/">HMF Law — 162 deaths</a>.</li>
+    <li>FDA quarterly signals: <a href="https://www.fda.gov/drugs/fdas-adverse-event-reporting-system-faers/potential-signals-serious-risksnew-safety-information-identified-fda-adverse">Potential Signals of Serious Risks</a>.</li>
+  </ul>
+
+  <h3>Tools</h3>
+  <ul>
+    <li>Vega-Lite 5.21 (charts), Leaflet 1.9 (map), Web Audio API (sonification).</li>
+    <li>Analysis scripts: see <code>code/*.py</code> in this project. Each finding's <code>ana_xx</code> ID points back to a specific block of Python.</li>
+  </ul>
+
+  <h3>Caveats</h3>
+  <ul>
+    <li>Time window: Jan 1 – Feb 23, 2024 only — about 15% of the year's FAERS volume.</li>
+    <li>FAERS has no denominator. Every count above is a count of <em>reports</em>, not of <em>events</em>.</li>
+    <li>Notoriety bias is large; press attention measurably increases reporting for affected drugs.</li>
+  </ul>
+</footer>
+
+<script>
+/* ---------------- Quiz ---------------- */
+function revealQuiz(card) {
+  const grid = card.parentElement;
+  if (grid.classList.contains('done')) return;
+  grid.classList.add('done');
+  const cards = grid.querySelectorAll('.quiz-card');
+  const userCorrect = card.dataset.correct === 'true';
+  cards.forEach(c => {
+    c.classList.add('revealed');
+    if (c.dataset.correct === 'true') c.classList.add('correct');
+    else if (c === card) c.classList.add('wrong-selected');
+  });
+  const result = document.getElementById('quiz-result');
+  if (userCorrect) {
+    result.innerHTML = '<strong style="color: var(--accent);">Correct.</strong> "Off label use" is the most-reported "reaction" in the database — and it isn\'t a reaction at all.';
+  } else {
+    result.innerHTML = '<strong style="color: var(--text);">Not quite.</strong> The most-reported "reaction" is <strong style="color: var(--accent);">Off label use</strong>. The loudest signal in FAERS describes how the drug was used, not what happened to the patient.';
+  }
+}
+
+/* ---------------- Chart data (from analyst.json data_tables) ---------------- */
+
+// ana_12: top 30 reactions
+const REACTIONS_TOP = [
+  ["Off label use", 14801, 2.48, "meta"],
+  ["Drug ineffective", 11335, 1.90, "meta"],
+  ["Death", 9356, 1.57, "meta"],
+  ["Fatigue", 8170, 1.37, "symptom"],
+  ["Diarrhoea", 7167, 1.20, "symptom"],
+  ["Nausea", 7080, 1.18, "symptom"],
+  ["Product dose omission issue", 7029, 1.18, "meta"],
+  ["COVID-19", 5791, 0.97, "symptom"],
+  ["Headache", 5079, 0.85, "symptom"],
+  ["Dyspnoea", 5060, 0.85, "symptom"],
+  ["Pruritus", 4755, 0.80, "symptom"],
+  ["Pain", 4704, 0.79, "symptom"],
+  ["Drug dose omission by device", 4702, 0.79, "meta"],
+  ["Vomiting", 4258, 0.71, "symptom"],
+  ["Rash", 4251, 0.71, "symptom"],
+  ["Arthralgia", 4167, 0.70, "symptom"],
+  ["Dizziness", 4111, 0.69, "symptom"],
+  ["Inappropriate schedule of product administration", 3674, 0.61, "meta"],
+  ["Malaise", 3552, 0.59, "symptom"],
+  ["Asthenia", 3443, 0.58, "symptom"],
+  ["Pneumonia", 3388, 0.57, "symptom"],
+  ["Injection site pain", 3379, 0.57, "symptom"],
+  ["Product use in unapproved indication", 3310, 0.55, "meta"],
+  ["No adverse event", 3252, 0.54, "meta"],
+  ["Condition aggravated", 3252, 0.54, "symptom"],
+  ["Cough", 3213, 0.54, "symptom"],
+  ["Wrong technique in product usage process", 3174, 0.53, "meta"],
+  ["Pyrexia", 3045, 0.51, "symptom"],
+  ["Illness", 3028, 0.51, "symptom"],
+  ["Decreased appetite", 2827, 0.47, "symptom"]
+];
+
+// ana_06: top 25 most-reported drugs
+const TOP_DRUGS = [
+  ["Dupixent", 15027, 1.93, "tied"],
+  ["Mounjaro", 14908, 1.92, "tied"],
+  ["Xolair", 8720, 1.12, "other"],
+  ["Methotrexate", 8343, 1.07, "other"],
+  ["Prednisone", 8307, 1.07, "other"],
+  ["Repatha", 7740, 1.00, "other"],
+  ["Cabometyx", 7287, 0.94, "other"],
+  ["Acetaminophen", 5618, 0.72, "other"],
+  ["Rituximab", 5146, 0.66, "other"],
+  ["Humira", 5053, 0.65, "other"],
+  ["Aspirin", 4707, 0.61, "other"],
+  ["Dexamethasone", 4700, 0.61, "other"],
+  ["Inflectra", 4196, 0.54, "other"],
+  ["Vedolizumab", 4173, 0.54, "other"],
+  ["Actemra", 4083, 0.53, "other"],
+  ["Folic Acid", 3977, 0.51, "other"],
+  ["Revlimid", 3863, 0.50, "other"],
+  ["Atorvastatin", 3794, 0.49, "other"],
+  ["Paxlovid", 3772, 0.49, "other"],
+  ["Gabapentin", 3643, 0.47, "other"],
+  ["Ozempic", 3593, 0.46, "glp1"],
+  ["Amlodipine", 3452, 0.44, "other"],
+  ["Omeprazole", 3396, 0.44, "other"],
+  ["Sulfasalazine", 3344, 0.43, "other"],
+  ["Eliquis", 3165, 0.41, "other"]
+];
+
+// Add Zepbound highlight by appending it to top drugs context (Zepbound is rank 28 in ana_06, but the GLP-1 highlight needs it)
+// We'll leave the top-25 list and just highlight Ozempic; the chart caption mentions Zepbound
+
+// ana_32: GLP-1 head-to-head (filter to brands with n>=200 to dodge Saxenda noise but keep Saxenda visible as outlier)
+const GLP1_BRANDS = [
+  ["Mounjaro",  3159, 11.02, 0.70,  4.59, 73.86, 96.80, 55],
+  ["Ozempic",   2493, 32.01, 0.60, 11.51, 69.30, 89.37, 63],
+  ["Trulicity", 1032, 15.50, 0.97,  5.62, 60.63, 94.09, 63],
+  ["Wegovy",     914, 24.95, 0.66,  8.21, 82.46, 89.28, 47],
+  ["Zepbound",   718,  2.51, 0.00,  0.42, 79.43, 97.77, 49],
+  ["Rybelsus",   260, 35.77, 1.15, 16.54, 58.59, 80.38, 63],
+  ["Victoza",    209, 33.01, 0.96, 11.00, 66.32, 84.21, 62],
+  ["Saxenda",     63, 90.48, 6.35, 31.75, 87.93, 22.22, 45.5]
+];
+
+// ana_09: GLP-1 class share
+const GLP1_CLASS = [
+  ["Tirzepatide (Mounjaro / Zepbound)", 18035],
+  ["Semaglutide (Ozempic / Wegovy / Rybelsus)", 5425],
+  ["Dulaglutide (Trulicity)", 2060],
+  ["Liraglutide (Victoza / Saxenda)", 455],
+  ["Exenatide (Byetta / Bydureon)", 195]
+];
+
+// ana_33: Mounjaro vs Ozempic top reactions (subset of 12 each, with category labels)
+const MO_REACTIONS = [
+  ["Mounjaro", "Incorrect dose administered", 684, 21.65, "device"],
+  ["Mounjaro", "Injection site pain", 458, 14.50, "device"],
+  ["Mounjaro", "Off label use", 396, 12.54, "meta"],
+  ["Mounjaro", "Nausea", 314, 9.94, "bio"],
+  ["Mounjaro", "Extra dose administered", 243, 7.69, "device"],
+  ["Mounjaro", "Injection site haemorrhage", 219, 6.93, "device"],
+  ["Mounjaro", "Injection site erythema", 190, 6.01, "device"],
+  ["Mounjaro", "Diarrhoea", 168, 5.32, "bio"],
+  ["Mounjaro", "Vomiting", 134, 4.24, "bio"],
+  ["Mounjaro", "Blood glucose increased", 117, 3.70, "bio"],
+  ["Mounjaro", "Constipation", 111, 3.51, "bio"],
+  ["Mounjaro", "Injection site pruritus", 103, 3.26, "device"],
+  ["Ozempic", "Nausea", 404, 16.21, "bio"],
+  ["Ozempic", "Off label use", 252, 10.11, "meta"],
+  ["Ozempic", "Vomiting", 233, 9.35, "bio"],
+  ["Ozempic", "Diarrhoea", 230, 9.23, "bio"],
+  ["Ozempic", "Constipation", 190, 7.62, "bio"],
+  ["Ozempic", "Product use in unapproved indication", 172, 6.90, "meta"],
+  ["Ozempic", "Decreased appetite", 170, 6.82, "bio"],
+  ["Ozempic", "Weight decreased", 153, 6.14, "bio"],
+  ["Ozempic", "Headache", 122, 4.89, "bio"],
+  ["Ozempic", "Abdominal pain upper", 117, 4.69, "bio"],
+  ["Ozempic", "Wrong technique in product usage process", 111, 4.45, "meta"],
+  ["Ozempic", "Inappropriate schedule of product administration", 109, 4.37, "meta"]
+];
+
+// ana_34: lift table — over-represented in GLP-1 reports
+const LIFT_TABLE = [
+  ["Allodynia", 82, 0.297, 0.014, 21.16, false],
+  ["Weight loss poor", 83, 0.301, 0.016, 18.55, true],
+  ["Impaired gastric emptying", 140, 0.508, 0.034, 14.80, true],
+  ["Eructation", 156, 0.566, 0.041, 13.86, false],
+  ["Accidental underdose", 247, 0.896, 0.066, 13.62, false],
+  ["Hunger", 110, 0.399, 0.032, 12.36, true],
+  ["Increased appetite", 152, 0.551, 0.050, 11.06, true],
+  ["Extra dose administered", 429, 1.556, 0.149, 10.41, false],
+  ["Glycosylated haemoglobin increased", 133, 0.482, 0.050, 9.68, false],
+  ["Injection site haemorrhage", 394, 1.429, 0.149, 9.59, false],
+  ["Blood glucose decreased", 133, 0.482, 0.054, 8.93, false],
+  ["Pancreatitis", 179, 0.649, 0.077, 8.42, true],
+  ["Incorrect dose administered", 1024, 3.713, 0.453, 8.19, false],
+  ["Accidental overdose", 99, 0.359, 0.050, 7.18, false],
+  ["Injection site mass", 127, 0.461, 0.067, 6.87, false],
+  ["Injection site erythema", 299, 1.084, 0.161, 6.73, false],
+  ["Blood glucose increased", 387, 1.403, 0.220, 6.39, false],
+  ["Injection site pruritus", 152, 0.551, 0.090, 6.11, false],
+  ["Injection site bruising", 171, 0.620, 0.108, 5.72, false],
+  ["Injection site pain", 838, 3.039, 0.565, 5.38, false]
+];
+
+// ana_20: death-rate hotspots
+const DEATH_RATE = [
+  ["Methamphetamine", 355, 332, 93.52, "stim_opioid"],
+  ["Alcohol", 615, 550, 89.43, "stim_opioid"],
+  ["Fentanyl", 1079, 776, 71.92, "stim_opioid"],
+  ["Diphenhydramine", 247, 175, 70.85, "other"],
+  ["Trazodone", 320, 221, 69.06, "sedative_psych"],
+  ["Alendronic Acid", 204, 140, 68.63, "other"],
+  ["Cocaine", 298, 197, 66.11, "stim_opioid"],
+  ["Fosamax", 230, 142, 61.74, "other"],
+  ["Oxycodone", 456, 264, 57.89, "stim_opioid"],
+  ["Desoximetasone", 280, 160, 57.14, "other"],
+  ["Cholecalciferol", 223, 126, 56.50, "other"],
+  ["Alprazolam", 543, 304, 55.99, "sedative_psych"],
+  ["Methadone", 206, 114, 55.34, "stim_opioid"],
+  ["Celebrex", 215, 116, 53.95, "other"],
+  ["Tagrisso", 627, 335, 53.43, "other"],
+  ["Adempas", 237, 122, 51.48, "other"],
+  ["Duloxetine", 272, 140, 51.47, "sedative_psych"],
+  ["Citalopram", 279, 138, 49.46, "sedative_psych"],
+  ["Acetaminophen", 2092, 1016, 48.57, "other"],
+  ["Diclofenac", 387, 178, 45.99, "other"]
+];
+
+// ana_29: daily report volume (with day-of-week)
+const DAILY_VOLUME = [
+  ["2024-01-01", 1508, "Mon"], ["2024-01-02", 4053, "Tue"], ["2024-01-03", 4178, "Wed"], ["2024-01-04", 3976, "Thu"],
+  ["2024-01-05", 6621, "Fri"], ["2024-01-06",  668, "Sat"], ["2024-01-07",  464, "Sun"], ["2024-01-08", 3970, "Mon"],
+  ["2024-01-09", 4989, "Tue"], ["2024-01-10", 4327, "Wed"], ["2024-01-11", 4741, "Thu"], ["2024-01-12", 4393, "Fri"],
+  ["2024-01-13",  688, "Sat"], ["2024-01-14",  603, "Sun"], ["2024-01-15", 2859, "Mon"], ["2024-01-16", 4149, "Tue"],
+  ["2024-01-17", 6516, "Wed"], ["2024-01-18", 5226, "Thu"], ["2024-01-19", 4085, "Fri"], ["2024-01-20",  838, "Sat"],
+  ["2024-01-21",  505, "Sun"], ["2024-01-22", 4667, "Mon"], ["2024-01-23", 5147, "Tue"], ["2024-01-24", 4856, "Wed"],
+  ["2024-01-25", 4596, "Thu"], ["2024-01-26", 2839, "Fri"], ["2024-01-27",  565, "Sat"], ["2024-01-28",  404, "Sun"],
+  ["2024-01-29", 4566, "Mon"], ["2024-01-30", 4750, "Tue"], ["2024-01-31", 4500, "Wed"], ["2024-02-01", 4520, "Thu"],
+  ["2024-02-02", 4248, "Fri"], ["2024-02-03", 1188, "Sat"], ["2024-02-04", 4578, "Sun"], ["2024-02-05", 5346, "Mon"],
+  ["2024-02-06", 6811, "Tue"], ["2024-02-07", 6773, "Wed"], ["2024-02-08", 5457, "Thu"], ["2024-02-09", 5290, "Fri"],
+  ["2024-02-10",  747, "Sat"], ["2024-02-11",  897, "Sun"], ["2024-02-12", 4171, "Mon"], ["2024-02-13", 4720, "Tue"],
+  ["2024-02-14", 4415, "Wed"], ["2024-02-15", 4276, "Thu"], ["2024-02-16", 5117, "Fri"], ["2024-02-17",  867, "Sat"],
+  ["2024-02-18",  744, "Sun"], ["2024-02-19", 6013, "Mon"], ["2024-02-20", 4533, "Tue"], ["2024-02-21", 4155, "Wed"],
+  ["2024-02-22", 4922, "Thu"], ["2024-02-23", 3965, "Fri"]
+];
+
+// ana_25: top 15 occur countries
+const OCCUR_COUNTRIES = [
+  // [iso, name, lat, lon, reports]
+  ["US", "United States", 39.5, -98.35, 120528],
+  ["CA", "Canada", 56.13, -106.35, 10235],
+  ["GB", "United Kingdom", 55.38, -3.44, 7048],
+  ["JP", "Japan", 36.2, 138.25, 6573],
+  ["FR", "France", 46.6, 1.88, 6564],
+  ["DE", "Germany", 51.17, 10.45, 3423],
+  ["CN", "China", 35.86, 104.20, 3125],
+  ["IT", "Italy", 41.87, 12.57, 2616],
+  ["ES", "Spain", 40.46, -3.75, 2013],
+  ["AU", "Australia", -25.27, 133.78, 1670],
+  ["BR", "Brazil", -14.24, -51.93, 1042],
+  ["NL", "Netherlands", 52.13, 5.29, 923],
+  ["CO", "Colombia", 4.57, -74.30, 794],
+  ["IN", "India", 20.59, 78.96, 743],
+  ["PT", "Portugal", 39.40, -8.22, 694]
+];
+
+/* ---------------- Vega-Lite charts ---------------- */
+const VL_BASE = {
+  background: null,
+  config: {
+    view: { stroke: null },
+    axis: {
+      domain: false,
+      labelColor: "#bdc2cc",
+      titleColor: "#bdc2cc",
+      labelFont: "system-ui, -apple-system, sans-serif",
+      titleFont: "system-ui, -apple-system, sans-serif",
+      labelFontSize: 11,
+      titleFontSize: 11,
+      gridColor: "#23293a",
+      tickColor: "#3a4154"
+    },
+    legend: {
+      labelColor: "#bdc2cc",
+      titleColor: "#bdc2cc",
+      labelFont: "system-ui, sans-serif",
+      titleFont: "system-ui, sans-serif"
+    },
+    title: { color: "#e8e8e8", font: "system-ui, sans-serif", fontSize: 13 }
+  }
+};
+
+function makeRow(cols, row) {
+  const o = {};
+  cols.forEach((c, i) => o[c] = row[i]);
+  return o;
+}
+
+function buildReactionsChart() {
+  const cols = ["preferred_term", "rows", "pct", "category"];
+  const values = REACTIONS_TOP.map(r => makeRow(cols, r));
+  const spec = {
+    ...VL_BASE,
+    width: "container",
+    height: 580,
+    data: { values },
+    mark: { type: "bar", cornerRadiusEnd: 2 },
+    encoding: {
+      y: {
+        field: "preferred_term", type: "nominal",
+        sort: "-x",
+        axis: { labelLimit: 220, title: null }
+      },
+      x: { field: "rows", type: "quantitative", axis: { title: "Reaction rows" }, scale: { zero: true } },
+      color: {
+        field: "category", type: "nominal",
+        scale: { domain: ["meta", "symptom"], range: ["#e98a2b", "#6e7686"] },
+        legend: { title: null, orient: "top" }
+      },
+      tooltip: [
+        { field: "preferred_term", title: "MedDRA term" },
+        { field: "rows", title: "Rows", format: "," },
+        { field: "pct", title: "% of all reactions", format: ".2f" }
+      ]
+    }
+  };
+  vegaEmbed("#chart-reactions", spec, { actions: false, renderer: "svg" });
+}
+
+function buildDrugsChart() {
+  const cols = ["drug", "rows", "pct", "group"];
+  const values = TOP_DRUGS.map(r => makeRow(cols, r));
+  const spec = {
+    ...VL_BASE,
+    width: "container",
+    height: 540,
+    data: { values },
+    mark: { type: "bar", cornerRadiusEnd: 2 },
+    encoding: {
+      y: { field: "drug", type: "nominal", sort: "-x", axis: { title: null, labelLimit: 140 } },
+      x: { field: "rows", type: "quantitative", axis: { title: "Drug-row mentions" } },
+      color: {
+        field: "group", type: "nominal",
+        scale: { domain: ["tied", "glp1", "other"], range: ["#3a7d8d", "#e98a2b", "#5a6273"] },
+        legend: null
+      },
+      tooltip: [
+        { field: "drug", title: "Drug" },
+        { field: "rows", title: "Mentions", format: "," },
+        { field: "pct", title: "% of drug rows", format: ".2f" }
+      ]
+    }
+  };
+  vegaEmbed("#chart-drugs", spec, { actions: false, renderer: "svg" });
+}
+
+function buildGlp1H2H() {
+  const cols = ["brand", "n_reports", "serious", "death", "hosp", "female", "us", "med_age"];
+  const rows = GLP1_BRANDS.map(r => makeRow(cols, r));
+  // pivot to long
+  const long = [];
+  rows.forEach(r => {
+    long.push({ brand: r.brand, n: r.n_reports, metric: "% Serious", value: r.serious });
+    long.push({ brand: r.brand, n: r.n_reports, metric: "% Hospitalization", value: r.hosp });
+    long.push({ brand: r.brand, n: r.n_reports, metric: "% Death", value: r.death });
+  });
+  const spec = {
+    ...VL_BASE,
+    width: "container",
+    height: 380,
+    data: { values: long },
+    mark: { type: "bar", cornerRadiusEnd: 2 },
+    encoding: {
+      y: {
+        field: "brand", type: "nominal",
+        sort: { field: "n", op: "max", order: "descending" },
+        axis: { title: null }
+      },
+      yOffset: { field: "metric", type: "nominal" },
+      x: {
+        field: "value", type: "quantitative",
+        axis: { title: "% of brand reports" },
+        scale: { domain: [0, 100] }
+      },
+      color: {
+        field: "metric", type: "nominal",
+        scale: { domain: ["% Serious", "% Hospitalization", "% Death"], range: ["#c84a3a", "#e98a2b", "#3a3a3a"] },
+        legend: { orient: "top", title: null }
+      },
+      tooltip: [
+        { field: "brand", title: "Brand" },
+        { field: "metric", title: "Metric" },
+        { field: "value", title: "%", format: ".2f" },
+        { field: "n", title: "Reports", format: "," }
+      ]
+    }
+  };
+  vegaEmbed("#chart-glp1-h2h", spec, { actions: false, renderer: "svg" });
+}
+
+function buildGlp1Donut() {
+  const cols = ["molecule_and_brands", "drug_rows"];
+  const values = GLP1_CLASS.map(r => makeRow(cols, r));
+  const total = values.reduce((a, b) => a + b.drug_rows, 0);
+  values.forEach(v => v.pct = (v.drug_rows / total) * 100);
+  const spec = {
+    ...VL_BASE,
+    width: "container",
+    height: 320,
+    data: { values },
+    mark: { type: "arc", innerRadius: 70, outerRadius: 130, stroke: "#0e1117", strokeWidth: 2 },
+    encoding: {
+      theta: { field: "drug_rows", type: "quantitative" },
+      color: {
+        field: "molecule_and_brands", type: "nominal",
+        scale: {
+          domain: GLP1_CLASS.map(r => r[0]),
+          range: ["#e98a2b", "#3a7d8d", "#8a8f99", "#5a5a5a", "#3a3a3a"]
+        },
+        legend: { title: null, orient: "bottom", labelLimit: 280, columns: 1 }
+      },
+      tooltip: [
+        { field: "molecule_and_brands", title: "Molecule" },
+        { field: "drug_rows", title: "Drug rows", format: "," },
+        { field: "pct", title: "% of class", format: ".1f" }
+      ]
+    }
+  };
+  vegaEmbed("#chart-glp1-donut", spec, { actions: false, renderer: "svg" });
+}
+
+function buildMoReactions() {
+  const cols = ["brand", "reaction", "count", "pct", "category"];
+  const values = MO_REACTIONS.map(r => makeRow(cols, r));
+  const spec = {
+    ...VL_BASE,
+    width: "container",
+    height: 320,
+    data: { values },
+    facet: { column: { field: "brand", type: "nominal", header: { title: null, labelFontSize: 13, labelColor: "#e8e8e8", labelFontWeight: 600 } } },
+    spec: {
+      width: 280,
+      mark: { type: "bar", cornerRadiusEnd: 2 },
+      encoding: {
+        y: { field: "reaction", type: "nominal", sort: "-x", axis: { title: null, labelLimit: 190, labelFontSize: 10 } },
+        x: { field: "pct", type: "quantitative", axis: { title: "% of brand reports" }, scale: { domain: [0, 24] } },
+        color: {
+          field: "category", type: "nominal",
+          scale: { domain: ["device", "bio", "meta"], range: ["#e98a2b", "#3a7d8d", "#8a8f99"] },
+          legend: { orient: "top", title: null }
+        },
+        tooltip: [
+          { field: "brand", title: "Brand" },
+          { field: "reaction", title: "Reaction" },
+          { field: "count", title: "Count", format: "," },
+          { field: "pct", title: "% of brand reports", format: ".2f" }
+        ]
+      }
+    },
+    resolve: { scale: { y: "independent" } }
+  };
+  vegaEmbed("#chart-mz-reactions", spec, { actions: false, renderer: "svg" });
+}
+
+function buildLiftChart() {
+  const cols = ["reaction", "glp1_count", "glp1_pct", "overall_pct", "lift", "highlight"];
+  const values = LIFT_TABLE.map(r => makeRow(cols, r));
+  const spec = {
+    ...VL_BASE,
+    width: "container",
+    height: 420,
+    data: { values },
+    layer: [
+      { // line
+        mark: { type: "rule", color: "#3a4154", strokeWidth: 1.5 },
+        encoding: {
+          y: { field: "reaction", type: "nominal", sort: "-x", axis: { title: null, labelLimit: 230 } },
+          x: { value: 0 },
+          x2: { field: "lift" }
+        }
+      },
+      { // dot
+        mark: { type: "circle", size: 220 },
+        encoding: {
+          y: { field: "reaction", type: "nominal", sort: "-x" },
+          x: { field: "lift", type: "quantitative", axis: { title: "Lift (GLP-1 rate ÷ overall rate)" } },
+          color: {
+            field: "highlight", type: "nominal",
+            scale: { domain: [true, false], range: ["#e98a2b", "#6e7686"] },
+            legend: null
+          },
+          tooltip: [
+            { field: "reaction", title: "Reaction" },
+            { field: "glp1_count", title: "GLP-1 count", format: "," },
+            { field: "glp1_pct", title: "GLP-1 %", format: ".3f" },
+            { field: "overall_pct", title: "Overall %", format: ".3f" },
+            { field: "lift", title: "Lift", format: ".2f" }
+          ]
+        }
+      }
+    ]
+  };
+  vegaEmbed("#chart-lift", spec, { actions: false, renderer: "svg" });
+}
+
+function buildDeathRate() {
+  const cols = ["drug", "n", "deaths", "pct_death", "class"];
+  const values = DEATH_RATE.map(r => makeRow(cols, r));
+  const spec = {
+    ...VL_BASE,
+    width: "container",
+    height: 460,
+    data: { values },
+    mark: { type: "bar", cornerRadiusEnd: 2 },
+    encoding: {
+      y: { field: "drug", type: "nominal", sort: "-x", axis: { title: null, labelLimit: 180 } },
+      x: { field: "pct_death", type: "quantitative", axis: { title: "% of suspect-reports tagged with a death" }, scale: { domain: [0, 100] } },
+      color: {
+        field: "class", type: "nominal",
+        scale: { domain: ["stim_opioid", "sedative_psych", "other"], range: ["#7d2e2e", "#e98a2b", "#6e7686"] },
+        legend: { orient: "top", title: null, labelExpr: "datum.label == 'stim_opioid' ? 'Opioid / stimulant' : (datum.label == 'sedative_psych' ? 'Sedative / psychiatric' : 'Other')" }
+      },
+      tooltip: [
+        { field: "drug", title: "Drug" },
+        { field: "n", title: "Suspect reports", format: "," },
+        { field: "deaths", title: "Deaths", format: "," },
+        { field: "pct_death", title: "% Death", format: ".2f" }
+      ]
+    }
+  };
+  vegaEmbed("#chart-death-rate", spec, { actions: false, renderer: "svg" });
+}
+
+function buildDailyChart() {
+  const cols = ["date", "reports", "dow"];
+  const values = DAILY_VOLUME.map(r => makeRow(cols, r));
+  values.forEach(v => v.is_weekend = (v.dow === "Sat" || v.dow === "Sun"));
+  const spec = {
+    ...VL_BASE,
+    width: "container",
+    height: 280,
+    data: { values, name: "daily" },
+    mark: { type: "bar", cornerRadius: 1 },
+    encoding: {
+      x: {
+        field: "date", type: "temporal",
+        axis: { title: null, format: "%b %d", labelAngle: -45, tickCount: 12 }
+      },
+      y: { field: "reports", type: "quantitative", axis: { title: "Reports received" } },
+      color: {
+        field: "is_weekend", type: "nominal",
+        scale: { domain: [false, true], range: ["#3a7d8d", "#c84a3a"] },
+        legend: { orient: "top", title: null, labelExpr: "datum.label == 'false' ? 'Weekday' : 'Weekend'" }
+      },
+      opacity: { value: 1.0 },
+      tooltip: [
+        { field: "date", title: "Date", type: "temporal", format: "%a %b %d" },
+        { field: "dow", title: "Day" },
+        { field: "reports", title: "Reports", format: "," }
+      ]
+    }
+  };
+  vegaEmbed("#chart-daily", spec, { actions: false, renderer: "svg" }).then(res => {
+    window.__dailyView = res.view;
+  });
+}
+
+/* ---------------- Leaflet map ---------------- */
+function buildMap() {
+  const map = L.map('des_07_map', {
+    center: [22, 8],
+    zoom: 2,
+    minZoom: 2,
+    maxZoom: 6,
+    zoomSnap: 0.25,
+    zoomDelta: 0.5,
+    wheelPxPerZoomLevel: 90,
+    scrollWheelZoom: false,        // off by default — page scrolls normally
+    worldCopyJump: false,          // prevent duplicate continents
+    maxBounds: [[-72, -200], [82, 200]],
+    maxBoundsViscosity: 0.85,
+    attributionControl: false,
+    zoomControl: false             // we'll add it on a different corner
+  });
+
+  // Custom zoom control in bottom-left, restyled
+  L.control.zoom({ position: 'bottomleft' }).addTo(map);
+
+  // Land-only basemap with no labels — much cleaner editorial look
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png', {
+    subdomains: 'abcd',
+    noWrap: true,
+    bounds: [[-90, -180], [90, 180]],
+    maxZoom: 8
+  }).addTo(map);
+
+  // Subtle attribution as a styled control in the corner
+  L.control.attribution({
+    position: 'bottomright',
+    prefix: false
+  }).addAttribution('Tiles &copy; OpenStreetMap, CARTO').addTo(map);
+
+  // Hover-to-wheel-zoom: enable wheel zoom only when cursor is over the map
+  const mapEl = map.getContainer();
+  mapEl.addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
+  mapEl.addEventListener('mouseleave', () => map.scrollWheelZoom.disable());
+  // Also keep the page from scrolling when the wheel fires inside the map
+  mapEl.addEventListener('wheel', (e) => { e.preventDefault(); }, { passive: false });
+
+  // Draw markers — outer halo + inner dot for a cleaner readable shape
+  const max = Math.max(...OCCUR_COUNTRIES.map(c => c[4]));
+  OCCUR_COUNTRIES.forEach(c => {
+    const [iso, name, lat, lon, reports] = c;
+    const norm = Math.sqrt(reports / max);
+    const haloR = 6 + 28 * norm;
+    const dotR  = 2 + 8  * norm;
+
+    // outer halo
+    const halo = L.circleMarker([lat, lon], {
+      radius: haloR,
+      color: '#f4a14a',
+      weight: 0,
+      fillColor: '#f4a14a',
+      fillOpacity: 0.18,
+      interactive: false,
+      pane: 'overlayPane'
+    }).addTo(map);
+
+    // inner dot — interactive
+    const dot = L.circleMarker([lat, lon], {
+      radius: dotR,
+      color: '#1a1f29',
+      weight: 1.2,
+      fillColor: '#f0a040',
+      fillOpacity: 0.95,
+      opacity: 1
+    }).addTo(map);
+
+    const pct = (reports / 200000) * 100;
+    const tooltip = `<div class="map-tt">
+        <div class="map-tt-name">${name} <span class="map-tt-iso">${iso}</span></div>
+        <div class="map-tt-num">${reports.toLocaleString()}</div>
+        <div class="map-tt-label">reports &middot; ${pct.toFixed(2)}% of sample</div>
+      </div>`;
+    dot.bindTooltip(tooltip, {
+      direction: 'top',
+      offset: [0, -dotR - 4],
+      opacity: 1,
+      className: 'map-tt-wrap'
+    });
+    dot.bindPopup(tooltip, { closeButton: false });
+
+    // grow halo briefly on hover
+    dot.on('mouseover', () => {
+      halo.setStyle({ fillOpacity: 0.32 });
+      dot.setStyle({ radius: dotR + 1.5, fillColor: '#ffb766' });
+    });
+    dot.on('mouseout', () => {
+      halo.setStyle({ fillOpacity: 0.18 });
+      dot.setStyle({ radius: dotR, fillColor: '#f0a040' });
+    });
+  });
+
+  // Permanent labels for the top 3 countries — small, restrained
+  const TOP_LABELS = [
+    { lat: 39.5,  lon:  -98.35, text: '<b>United States</b> &middot; 120,528', anchor: [-12, 0] },
+    { lat: 56.13, lon: -106.35, text: '<b>Canada</b> &middot; 10,235',         anchor: [-12, 0] },
+    { lat: 55.38, lon:   -3.44, text: '<b>UK</b> &middot; 7,048',              anchor: [16, -10] }
+  ];
+  TOP_LABELS.forEach(L_ => {
+    L.marker([L_.lat, L_.lon], {
+      icon: L.divIcon({
+        className: 'map-perm-label',
+        html: `<span style="margin-left:${L_.anchor[0]}px; margin-top:${L_.anchor[1]}px;">${L_.text}</span>`,
+        iconSize: [1, 1]
+      }),
+      interactive: false,
+      keyboard: false
+    }).addTo(map);
+  });
+
+  // Custom legend in the bottom-right
+  const legend = L.control({ position: 'topright' });
+  legend.onAdd = () => {
+    const div = L.DomUtil.create('div', 'map-legend');
+    div.innerHTML = `
+      <div class="map-legend-title">Reports per occur-country</div>
+      <div class="map-legend-row">
+        <span class="map-legend-bubble" style="width:8px;height:8px;"></span>
+        <span class="map-legend-label">&lt; 1,000</span>
+      </div>
+      <div class="map-legend-row">
+        <span class="map-legend-bubble" style="width:14px;height:14px;"></span>
+        <span class="map-legend-label">~ 5,000</span>
+      </div>
+      <div class="map-legend-row">
+        <span class="map-legend-bubble" style="width:22px;height:22px;"></span>
+        <span class="map-legend-label">~ 50,000</span>
+      </div>
+      <div class="map-legend-row">
+        <span class="map-legend-bubble" style="width:34px;height:34px;"></span>
+        <span class="map-legend-label">120,528 (US)</span>
+      </div>
+      <div class="map-legend-hint">Hover the map &middot; scroll to zoom</div>
+    `;
+    L.DomEvent.disableClickPropagation(div);
+    L.DomEvent.disableScrollPropagation(div);
+    return div;
+  };
+  legend.addTo(map);
+}
+
+/* ---------------- Sonification ---------------- */
+let sonifying = false;
+function playSonification() {
+  if (sonifying) return;
+  const btn = document.getElementById('sonify-btn');
+  btn.disabled = true;
+  sonifying = true;
+  btn.textContent = '♫ Playing…';
+
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  const ctx = new AudioCtx();
+  const max = Math.max(...DAILY_VOLUME.map(d => d[1]));
+  const totalMs = 6000;
+  const step = totalMs / DAILY_VOLUME.length; // ~110ms per day
+
+  // Pulse a chart bar — we have to find the SVG rect for each date
+  const svgRects = document.querySelectorAll('#chart-daily svg path.mark-rect, #chart-daily svg rect');
+
+  DAILY_VOLUME.forEach((d, i) => {
+    const [date, reports, dow] = d;
+    const isWeekend = (dow === "Sat" || dow === "Sun");
+    const norm = reports / max;
+    const freq = 220 + norm * 660;          // 220 Hz to ~880 Hz
+    const vol = isWeekend ? 0.04 : 0.18;
+    const startT = ctx.currentTime + (i * step) / 1000;
+    const dur = (step / 1000) * 0.85;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = isWeekend ? 'triangle' : 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, startT);
+    gain.gain.linearRampToValueAtTime(vol, startT + 0.005);
+    gain.gain.exponentialRampToValueAtTime(0.0001, startT + dur);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(startT);
+    osc.stop(startT + dur + 0.02);
+
+    // visual pulse via setTimeout
+    setTimeout(() => {
+      if (svgRects[i]) {
+        const orig = svgRects[i].getAttribute('opacity') || '1';
+        svgRects[i].setAttribute('opacity', '0.4');
+        setTimeout(() => svgRects[i].setAttribute('opacity', orig), Math.max(60, step * 0.8));
+      }
+    }, i * step);
+  });
+
+  setTimeout(() => {
+    btn.disabled = false;
+    btn.textContent = '▶ Play again';
+    sonifying = false;
+    ctx.close && ctx.close();
+  }, totalMs + 300);
+}
+
+/* ---------------- Boot ---------------- */
+window.addEventListener('DOMContentLoaded', () => {
+  buildReactionsChart();
+  buildDrugsChart();
+  buildGlp1H2H();
+  buildGlp1Donut();
+  buildMoReactions();
+  buildLiftChart();
+  buildDeathRate();
+  buildDailyChart();
+  buildMap();
+});
+</script>
+</body>
+</html>

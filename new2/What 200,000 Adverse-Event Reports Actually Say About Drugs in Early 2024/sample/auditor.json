@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "role": "auditor",
+    "version": "1.0",
+    "checks_run": [
+      "unwrapped media adjacent to <p>",
+      "missing data-* attributes on visual elements",
+      "chart-mount zero-width containers",
+      "missing image/video responsive constraints",
+      "full-bleed centering math",
+      "map container fixed height"
+    ]
+  },
+  "summary": "HTML was structurally clean on first pass. Only the teaser contains media; the rest of the page is chart-driven through Vega-Lite mount divs and a Leaflet map container. Defensive CSS for chart-mount sizing, image/video responsiveness, and full-viewport teaser centering was already present in the <style> block.",
+  "fixes": []
+}

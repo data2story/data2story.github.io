@@ -1,0 +1,263 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "ntsb_small_aircraft",
+    "dataset_path": "D:/AI/journalist agent review/phase2/datasets/ntsb_small_aircraft",
+    "topic": "General-aviation (FAR Part 91) accidents in the United States, 2010-2024"
+  },
+  "items": {
+    "det_01": {
+      "label": "NTSB Aviation Accident Database — origin and scope",
+      "content": "The dataset is the National Transportation Safety Board's complete, public Aviation Accident Database. The NTSB is an independent U.S. federal agency whose primary statutory mission is 'to determine the probable cause of transportation accidents and incidents and to formulate safety recommendations to improve transportation safety.' For aviation, the database goes back to 1962 and covers every civil aviation accident or selected incident inside the United States, its territories, and international waters where U.S. carriers were involved. Each row is the formal investigative output of a federal accident investigation: investigators arrive on scene, collect physical and documentary evidence, interview witnesses and survivors, examine wreckage, pull weather and air-traffic data, and ultimately publish a probable-cause finding. The 'narratives' columns in our slice (narr_accp, narr_accf, narr_cause) are the actual paragraphs investigators wrote — they are not summaries we have constructed but the agency's own words. This makes the dataset rare among public-domain records: every event is paired with a primary-source qualitative explanation written by a federal investigator with cause to be careful.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.ntsb.gov/investigations/process/Pages/default.aspx",
+          "title": "The Investigative Process — NTSB",
+          "facts": [
+            "NTSB primary mission: 'determine the probable cause of transportation accidents and incidents and to formulate safety recommendations.'",
+            "Accident Reports include factual data, analysis, conclusions, probable cause, and safety recommendations."
+          ]
+        },
+        {
+          "url": "https://guides.erau.edu/ntsb/databases",
+          "title": "Navigating the NTSB Website (Embry-Riddle research guide)",
+          "facts": [
+            "NTSB aviation accident database contains information from 1962 onward.",
+            "Covers civil aviation accidents and selected incidents in the U.S., its territories, and in international waters."
+          ]
+        },
+        {
+          "url": "https://data.ntsb.gov/avdata",
+          "title": "NTSB Aviation Accident Database — bulk download portal",
+          "facts": [
+            "Full historical Microsoft Access snapshot (avall.zip, ~94 MB) is the canonical bulk download.",
+            "Snapshot contains one .mdb file with 20 tables; the dataset here joins events + aircraft + narratives on ev_id."
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "What 'FAR Part 91' means — and why our slice excludes the airlines",
+      "content": "The data is filtered to far_part = '091', which is the NTSB code for flights conducted under 14 CFR Part 91 — the U.S. federal regulations covering general operating and flight rules for non-commercial flying. In plain English, Part 91 is the private side of American aviation: a single owner-pilot taking a Cessna 172 up on a Saturday, a flight school's training circuits, a doctor commuting home from a fishing trip in a Bonanza, two friends in a homebuilt RV-6 making a $100 hamburger run. It explicitly excludes the airlines (Part 121, which covers United, Delta, Southwest, etc.), commuter and on-demand carriers like medical evacuation under Part 135, agricultural crop-dusters under Part 137, and foreign carriers operating under Part 129. The narrative consequence is significant. Part 121 (the airlines) has gone two decades with essentially zero passenger fatalities on U.S. soil; Part 91 has not. Almost every fatal small-aircraft crash a reader sees on the local news happens under Part 91, and the question the dataset implicitly asks is: how dangerous, exactly, is it to fly as a private pilot, and what kills the most people who do?",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.ecfr.gov/current/title-49/subtitle-B/chapter-VIII/part-831",
+          "title": "49 CFR Part 831 — NTSB Investigation Procedures",
+          "facts": [
+            "FAR Part 91 (14 CFR Part 91) governs general operating and flight rules — the non-commercial side of U.S. aviation."
+          ]
+        },
+        {
+          "url": "https://www.bts.gov/content/us-general-aviationa-safety-data",
+          "title": "U.S. General Aviation Safety Data — Bureau of Transportation Statistics",
+          "facts": [
+            "General aviation is defined as all aviation activity other than scheduled airline (Part 121) and on-demand/commuter (Part 135) operations."
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Benchmark — GA fatal accident rate per 100,000 flight hours",
+      "content": "To make any sense of raw accident counts you need a flight-hours denominator. The FAA's annual General Aviation and Part 135 Activity Survey is the canonical source. The headline number to anchor on: the GA fatal accident rate has spent the last two decades drifting between roughly 0.65 and 1.40 fatal accidents per 100,000 flight hours. NBAA reported preliminary 2020 GA data at 1.049 fatal accidents per 100,000 hours, a 20-year low at the time, down from 1.274 in 2001 and a peak of 1.381 in 2005. By 2023 the figure had fallen further to about 0.65 per 100,000 flight hours, with 186 fatal accidents from 1,097 total. For comparison: U.S. Part 121 airline operations are essentially zero on the same scale. So the long-run story is: GA flying is slowly getting safer, but its fatal accident rate is still on the order of a hundred times worse than airline flying.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://nbaa.org/preliminary-ntsb-statistics-show-general-aviation-accident-rate-at-20-year-low/",
+          "title": "Preliminary NTSB Statistics Show General Aviation Accident Rate at 20-Year Low — NBAA",
+          "facts": [
+            "2001 GA fatal accident rate: 1.274 per 100,000 flight hours.",
+            "Peak in 2005: 1.381 per 100,000 flight hours.",
+            "2020 rate: 1.049 per 100,000 flight hours — a 20-year low at the time of publication.",
+            "Lowest year cited prior was 2017 at 0.935 per 100,000 flight hours."
+          ]
+        },
+        {
+          "url": "https://www.bts.gov/content/us-general-aviationa-safety-data",
+          "title": "U.S. General Aviation Safety Data — Bureau of Transportation Statistics",
+          "facts": [
+            "2023: 1,097 total GA accidents, 186 of them fatal.",
+            "2023 total accident rate ~3.86 and fatal accident rate ~0.65 per 100,000 flight hours."
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "The homebuilt-aircraft fatality premium",
+      "content": "Experimental / amateur-built (E/A-B) aircraft — homebuilt kit planes like the Van's RV series, the Lancair Legacy, the Glasair, the Sonex — have a measurably worse fatal accident profile than factory-certificated GA aircraft. The 2012 NTSB safety study on E/A-B aircraft (NTSB/SS-12/01) found the E/A-B fatal accident rate over 2001-2010 was roughly four times higher than non-E/A-B aircraft. More recent industry analyses put the overall accident rate for homebuilts at about 2.5× the GA average, and roughly 4× higher than common type-certificated trainers like the Cessna 172, with equipment-related fatal accidents appearing at roughly twice the rate of certificated airplanes. The data field that flags this in our slice is homebuilt = 'Y'. Because there are 17,712 rows and homebuilts make up roughly 10-15% of the GA fleet by some measures, even a moderately elevated fatality rate among homebuilts shows up clearly in this dataset — the Analyst should look at fatal-share by homebuilt status as one of the cleanest 'big number' comparisons available.",
+      "category": "related_work",
+      "sources": [
+        {
+          "url": "https://www.ntsb.gov/safety/safety-studies/Documents/SS1201.pdf",
+          "title": "The Safety of Experimental Amateur-Built Aircraft — NTSB Safety Study SS-12/01",
+          "facts": [
+            "NTSB found the E/A-B fatal accident rate was roughly 4× greater than non-E/A-B aircraft over 2001-2010."
+          ]
+        },
+        {
+          "url": "https://www.kitplanes.com/homebuilt-accidents-comparing-the-rates/",
+          "title": "Homebuilt Accidents — Comparing the Rates (Kitplanes)",
+          "facts": [
+            "Homebuilt overall accident rate is about 2.5× the GA average.",
+            "Homebuilt overall accident rate is about 4× higher than the Cessna 172.",
+            "Roughly a quarter of NTSB 'homebuilt' flags in 2014 were misclassified, so the raw homebuilt field has known noise."
+          ]
+        },
+        {
+          "url": "https://www.mdpi.com/2313-576X/11/4/109",
+          "title": "Static Rate of Failed Equipment-Related Fatal Accidents in General Aviation",
+          "facts": [
+            "Equipment-related fatal accidents appear roughly 2× more often per flight in E/A-B aircraft than in type-certificated references."
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "VFR into IMC — the '178 seconds' problem",
+      "content": "VFR into IMC — a pilot trained only for Visual Flight Rules continuing into Instrument Meteorological Conditions (clouds, fog, reduced visibility) — is one of general aviation's most lethal accident categories. The fatality rate when this happens has stayed roughly 79-92% across decades. A 1954 University of Illinois study, repeatedly re-validated, found that non-instrument-rated pilots who entered cloud lost control of the aircraft within an average of 178 seconds — under three minutes from blue sky to spiral or stall. AOPA's Air Safety Institute reports that pilots flying in IMC are about 14× more likely to be involved in a fatal accident than those in VMC. In our slice the relevant columns are wx_cond_basic (VMC vs IMC) and flt_plan_filed (VFR / IFR / none); the canonical VFR-into-IMC pattern shows up as: pilot operating under VFR (no IFR plan) ends up in IMC weather, and the narr_cause field will often spell it out in plain language. This is the single highest-yield comparison in the dataset because both the data fields and the NTSB's own probable-cause text identify the pattern explicitly.",
+      "category": "related_work",
+      "sources": [
+        {
+          "url": "https://generalaviationnews.com/2025/10/30/vfr-into-imc-deadly-for-ga-pilots-in-under-three-minutes/",
+          "title": "VFR into IMC deadly for GA pilots in under three minutes — General Aviation News",
+          "facts": [
+            "Average loss-of-control time for non-instrument-rated pilots entering IMC: 178 seconds.",
+            "Original source is a 1954 University of Illinois study, periodically re-confirmed."
+          ]
+        },
+        {
+          "url": "https://www.aopa.org/training-and-safety/air-safety-institute/accident-analysis/vfr-into-imc/overview",
+          "title": "VFR into IMC — AOPA Air Safety Institute overview",
+          "facts": [
+            "VFR-into-IMC fatality rate has remained between 79% and 92% across recent decades.",
+            "Flights in IMC are about 14× more likely to be involved in a fatal accident than flights in VMC."
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Loss of Control In-flight (LOC-I) is the dominant fatal category",
+      "content": "Across the NTSB's modern reporting, Loss of Control In-flight (LOC-I) — the airplane stops doing what the pilot is telling it to do while airborne, typically stall/spin — is the single largest source of fatal accidents in GA. It has been a fixture on the NTSB's Most Wanted List of safety improvements and is one of the General Aviation Joint Steering Committee's top focus areas. Many of the most-cited subcategories (VFR into IMC, base-to-final stalls during landing, maneuvering at low altitude) ultimately classify as LOC-I in the NTSB taxonomy. In this dataset, LOC-I will not be a single column — the Analyst will need to recognize it through phase_flt_spec (maneuvering, approach, climb) plus the language of narr_cause (which will say things like 'failure to maintain airspeed,' 'aerodynamic stall,' 'loss of control'). The narrative-text co-occurrence with structured fields is exactly the kind of place where a small grep through narr_cause can quantify what was previously qualitative.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.aopa.org/training-and-safety/air-safety-institute/accident-analysis/richard-g-mcspadden-report/mcspadden-report-figure-view",
+          "title": "Richard G. McSpadden Report Figure View — AOPA Air Safety Institute",
+          "facts": [
+            "Loss of control in-flight produces more GA fatalities than any other defined accident category.",
+            "LOC-I is a long-standing top focus area for NTSB and the GA Joint Steering Committee."
+          ]
+        },
+        {
+          "url": "https://nbaa.org/aircraft-operations/safety/2024-nbaa-top-safety-focus-areas/",
+          "title": "2024 NBAA Top Safety Focus Areas",
+          "facts": [
+            "Loss of Control In-Flight is identified as a top safety focus area by GAJSC and NBAA for 2024."
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Alaska — the per-flight-hour outlier",
+      "content": "Alaska is a special case in U.S. general aviation. For much of the state, aviation is not a hobby but transportation infrastructure: villages are reachable only by floatplane, ski-equipped Cessna, or chartered Piper Navajo. The state's accident rate reflects this. A 2004-2008 analysis put Alaska's GA accident rate at 13.59 per 100,000 flight hours versus a national 5.85 — more than double. ProPublica reported in 2021 that Alaska accounts for a growing share of the country's deadly aviation crashes. The drivers are structural: rapidly changing weather around mountains and coastal fjords, large stretches of uncontrolled airspace without ground-based weather or radar coverage, short and unpaved backcountry strips, and what Alaskan safety researchers call 'bush syndrome' — pilots accepting unnecessary risk to complete a flight because the alternative is leaving a customer or a load stranded for days. In our dataset, ev_state = 'AK' will be a meaningful slice, and joining it with phase_flt_spec, light_cond, and wx_cond_basic will probably show a heavier weighting toward maneuvering / approach / IMC accidents than the lower-48 average.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.juneauempire.com/news/alaskas-aviation-average-is-deadlier-than-national-norms/",
+          "title": "Alaska's aviation average is deadlier than national norms — Juneau Empire",
+          "facts": [
+            "Alaska GA accident rate 2004-2008: 13.59 per 100,000 flight hours vs national 5.85.",
+            "Bush syndrome (voluntarily accepting unnecessary risk to complete a flight) identified as a top contributor."
+          ]
+        },
+        {
+          "url": "https://www.propublica.org/article/commercial-aviation-is-essential-to-life-here-its-also-home-to-a-growing-share-of-the-countrys-deadly-crashes",
+          "title": "Commercial Aviation Is Essential to Life Here. Alaska Is Also Home to a Growing Share of the Country's Deadly Crashes — ProPublica",
+          "facts": [
+            "Alaska accounts for a disproportionately large and growing share of U.S. fatal aviation crashes.",
+            "Limited ground-based weather/radar coverage and unpaved backcountry strips amplify weather and terrain risk."
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Cessna and Piper dominate the fleet — and the accident record",
+      "content": "The U.S. GA fleet is heavily skewed toward a small number of long-lived single-engine piston designs. By cumulative NTSB record, more than half of all aviation accidents in the database involve Cessna (~25,865 crashes historically), Piper (~14,105), or Beech (~5,098) aircraft. The Cessna 172 Skyhawk is the most-built airplane in history (over 44,000 produced since 1956) and serves as the default trainer for most American flight schools. Per-hour, its fatal accident rate is actually low — historical estimates from AOPA put the 172 at ~0.56 fatal accidents per 100,000 flight hours against a fleet average of 1.2-1.4 — but in absolute counts it appears constantly because there are so many of them flying. The Analyst should therefore distinguish between two questions: 'which airplane shows up the most often?' (Cessna 172, by far) and 'which airplane is most dangerous per hour?' (a very different question, harder to answer without an exposure denominator we don't have in this slice). The naming is also a known data-quality wrinkle: acft_make is a free-text field, so 'CESSNA', 'Cessna', and 'CESSNA AIRCRAFT' may all appear — the Analyst will need to normalize.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.cliffordlaw.com/aviation-accidents-and-incidents/",
+          "title": "Aviation Accidents and Incidents — Clifford Law Offices",
+          "facts": [
+            "More than half (54%) of NTSB-database aviation accidents involve Cessna (~25,865), Piper (~14,105), or Beech (~5,098)."
+          ]
+        },
+        {
+          "url": "https://www.aopa.org/news-and-media/all-news/1995/december/pilot/cessna-172-safety-review",
+          "title": "Cessna 172 Safety Review — AOPA",
+          "facts": [
+            "AOPA's 1990s safety review put the Cessna 172 fatal accident rate at ~0.56 per 100,000 hours, well below the GA average of 1.2-1.4."
+          ]
+        },
+        {
+          "url": "https://airfactsjournal.com/2016/07/whats-wrong-cessna-172-pilots/",
+          "title": "What's wrong with Cessna 172 pilots? — Air Facts Journal",
+          "facts": [
+            "The Cessna 172 is the most-built airplane in history with over 44,000 units produced since 1956.",
+            "About 85% of Cessna 172 accidents have a primary pilot cause, consistent with its role as the default trainer."
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Why this story matters — the gap between flying-as-airline-passenger and flying-as-private-pilot",
+      "content": "U.S. commercial aviation is one of the safest forms of transportation ever engineered: the airlines have flown for years on end without a passenger fatality in the U.S. General aviation is a different story. A private pilot in a Cessna 172 is operating in a regulatory regime, training environment, weather-decision context, and maintenance economy that is meaningfully closer to driving a car than to riding on Delta. The gap matters for two reasons. First, it shapes public perception: small-plane crashes generate disproportionate local-news coverage relative to airline accidents because they are common enough to be regular and rare enough to still be newsworthy. Second, the regulatory and educational levers that fixed airline safety in the 1990s and 2000s (crew resource management, sophisticated simulator training, two-pilot crews, mandatory route planning) only partly map onto single-pilot light-aircraft operations. So the story this dataset can tell — what kills private pilots, where, in what airplanes, in what weather — is also the story of a safety problem that the easy fixes have already been applied to and which remains stubbornly resistant to the next wave of fixes.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.ntsb.gov/news/Documents/2022-07-13%20-%20House%20T&I%20-%20State%20of%20General%20Aviation%20-%20NTSB%20Statement.pdf",
+          "title": "NTSB Statement to House Transportation & Infrastructure Committee — State of General Aviation (2022)",
+          "facts": [
+            "NTSB testifies repeatedly that GA fatal accident reduction has plateaued relative to commercial aviation.",
+            "Single-pilot operations and decision-making remain the largest contributor categories."
+          ]
+        },
+        {
+          "url": "https://www.aopa.org/training-and-safety/air-safety-institute/accident-analysis/richard-g-mcspadden-report/mcspadden-report-figure-view",
+          "title": "Richard G. McSpadden Report — AOPA Air Safety Institute",
+          "facts": [
+            "Pilot decision-making, especially around weather, is the single largest source of fatal GA accidents."
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Scope suggestions for the Analyst",
+      "content": "Five high-yield slices this dataset can answer cleanly without an exposure denominator: (1) the fatal-share split by homebuilt = 'Y' vs 'N' — whether the four-times-higher fatality premium documented elsewhere shows up in 2010-2024 NTSB data. (2) The VFR-into-IMC pattern via wx_cond_basic = 'IMC' combined with flt_plan_filed not equal to 'IFR' — count and fatality share against the all-other baseline. (3) Phase-of-flight distribution from phase_flt_spec — where in a flight do accidents and fatalities happen, and how does the takeoff/landing/maneuvering ratio compare with the conventional wisdom? (4) Make-and-model concentration after free-text normalization of acft_make — what fraction of all accidents the top 10 manufacturers account for, and which model has the highest absolute fatal count. (5) State/geography, including the Alaska outlier — accidents per state, and a separate look at the lower 48 versus AK. Three caveats the Analyst should respect: acft_make and ev_city are free text with capitalization and spelling variance; many rows have a Y/N flag in narrative form ('False' literal string, blanks); and we have no flight-hour denominator, so the dataset can tell us 'how many accidents' but not 'how dangerous per hour' — every per-hour rate has to be borrowed from external benchmarks like det_03.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://www.ntsb.gov/safety/data/Pages/GeneralAviationDashboard.aspx",
+          "title": "General Aviation Accident Dashboard 2012-2021 — NTSB",
+          "facts": [
+            "NTSB's own dashboard slices by year, phase of flight, defining event, aircraft category — these are the canonical splits that match this dataset's columns."
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_note_01",
+      "filename": null,
+      "url": null,
+      "license": null,
+      "source": null,
+      "description": "Reference media collection deliberately skipped. The dataset is fundamentally statistical, covers ~17,700 events across 50+ states, and has no single iconic person, plane, or place at its center. Generic 'small aircraft' or 'crash scene' photos would be filler. The Designer should generate domain-appropriate imagery via text2image, and the strongest visual material in the dataset itself is the NTSB's own narr_cause prose — those quotes will outperform any stock photo.",
+      "relates_to": ["det_01", "det_08"]
+    }
+  ],
+  "instances": []
+}

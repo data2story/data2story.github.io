@@ -1,0 +1,8 @@
+[
+  {
+    "type": "composite_chart_overflow",
+    "count": 1,
+    "lines": [918, 922],
+    "note": "Fixed the broken quadrant-line layer in spec_des_04 (cause-pattern scatter). The original first layer used pixel-space `value:` encodings against data-bound `field:` x/y in other layers, which would have rendered the rule at the wrong place or not at all. Replaced with a clean two-rule pair: horizontal rule at fatal_share=40% and vertical rule at events≈400 (log midpoint), both in data space using `datum:` encoding. Visual quadrants now align with the data."
+  }
+]

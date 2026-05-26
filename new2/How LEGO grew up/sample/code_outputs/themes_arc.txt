@@ -1,0 +1,191 @@
+=== ana_07 ===
+root_theme_name
+Gear                       4805
+Duplo                      1404
+Books                      1297
+Educational and Dacta      1065
+Star Wars                   994
+City                        909
+Collectible Minifigures     906
+Town                        678
+Friends                     604
+Ninjago                     584
+Creator                     584
+Technic                     550
+Service Packs               504
+System                      499
+Bionicle                    468
+Seasonal                    467
+LEGO Brand Store            434
+Universal Building Set      415
+Super Heroes Marvel         337
+Space                       333
+Promotional                 284
+Racers                      283
+Other                       272
+Castle                      267
+Train                       244
+
+Total unique root themes: 142
+Total unique sub-themes: 470
+=== ana_08 ===
+
+1940s:
+ decade root_theme_name  n
+   1940          System  5
+
+1950s:
+ decade root_theme_name   n
+   1950          System 156
+   1950           Other  17
+   1950           Books   2
+
+1960s:
+ decade root_theme_name   n
+   1960          System 310
+   1960           Train  48
+   1960         Modulex  35
+   1960           Books  20
+   1960           Other   8
+
+1970s:
+ decade        root_theme_name   n
+   1970               Legoland 157
+   1970 Universal Building Set  72
+   1970          Service Packs  62
+   1970                   Town  53
+   1970                  Train  45
+
+1980s:
+ decade        root_theme_name   n
+   1980          Service Packs 259
+   1980                   Town 189
+   1980 Universal Building Set 141
+   1980                  Duplo 138
+   1980  Educational and Dacta 122
+
+1990s:
+ decade        root_theme_name   n
+   1990                   Town 338
+   1990                  Duplo 302
+   1990  Educational and Dacta 258
+   1990 Universal Building Set 186
+   1990          Service Packs 176
+
+2000s:
+ decade       root_theme_name   n
+   2000                  Gear 784
+   2000                 Duplo 434
+   2000              Bionicle 412
+   2000 Educational and Dacta 280
+   2000               Creator 253
+
+2010s:
+ decade         root_theme_name    n
+   2010                    Gear 2244
+   2010                   Books  698
+   2010 Collectible Minifigures  643
+   2010               Star Wars  521
+   2010                    City  427
+
+2020s:
+ decade         root_theme_name    n
+   2020                    Gear 1733
+   2020                   Books  496
+   2020                    City  296
+   2020 Collectible Minifigures  257
+   2020                 Friends  245
+=== ana_09 ===
+      n_all  n_sw  sw_share
+year                       
+1995    195   0.0  0.000000
+1996    196   0.0  0.000000
+1997    286   0.0  0.000000
+1998    423   0.0  0.000000
+1999    384  13.0  3.385417
+2000    408  23.0  5.637255
+2001    460  12.0  2.608696
+2002    583  25.0  4.288165
+2003    544  27.0  4.963235
+2004    468  24.0  5.128205
+2005    415  29.0  6.987952
+2006    442  13.0  2.941176
+2007    481  17.0  3.534304
+2008    463  24.0  5.183585
+2009    553  37.0  6.690778
+2010    531  30.0  5.649718
+2011    657  33.0  5.022831
+2012    776  43.0  5.541237
+2013    837  43.0  5.137395
+2014   1055  47.0  4.454976
+2015   1024  70.0  6.835938
+2016    999  64.0  6.406406
+2017   1109  65.0  5.861136
+2018   1069  69.0  6.454630
+2019   1111  57.0  5.130513
+2020   1121  46.0  4.103479
+2021   1233  38.0  3.081914
+2022   1239  41.0  3.309120
+2023   1175  48.0  4.085106
+2024   1271  56.0  4.405980
+=== ana_10 ===
+year
+2001    46
+2002    42
+2003    63
+2004    50
+2005    44
+2006    60
+2007    36
+2008    39
+2009    32
+2010     6
+2014     2
+2015    28
+2016    20
+
+Total Bionicle sets: 468
+Years active: [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2014, 2015, 2016]
+=== theme_yearly_top12 ===
+top 12 super-themes: ['Gear', 'Duplo', 'Books', 'Educational and Dacta', 'Star Wars', 'City', 'Collectible Minifigures', 'Town', 'Friends', 'Ninjago', 'Creator', 'Technic']
+ year         root_theme_name   n
+ 2021                   Duplo  22
+ 2021   Educational and Dacta  20
+ 2021                 Friends  47
+ 2021                    Gear 351
+ 2021                 Ninjago  45
+ 2021               Star Wars  38
+ 2021                 Technic  16
+ 2022                   Books 106
+ 2022                    City  64
+ 2022 Collectible Minifigures  48
+ 2022                 Creator  29
+ 2022                   Duplo  24
+ 2022   Educational and Dacta   7
+ 2022                 Friends  40
+ 2022                    Gear 401
+ 2022                 Ninjago  45
+ 2022               Star Wars  41
+ 2022                 Technic  17
+ 2023                   Books 116
+ 2023                    City  60
+ 2023 Collectible Minifigures  55
+ 2023                 Creator  25
+ 2023                   Duplo  23
+ 2023   Educational and Dacta   3
+ 2023                 Friends  50
+ 2023                    Gear 298
+ 2023                 Ninjago  45
+ 2023               Star Wars  48
+ 2023                 Technic  18
+ 2024                   Books  92
+ 2024                    City  56
+ 2024 Collectible Minifigures  48
+ 2024                 Creator  24
+ 2024                   Duplo  24
+ 2024   Educational and Dacta   5
+ 2024                 Friends  50
+ 2024                    Gear 360
+ 2024                 Ninjago  49
+ 2024               Star Wars  56
+ 2024                 Technic  29

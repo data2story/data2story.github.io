@@ -1,0 +1,282 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "topic": "Each industrial revolution unlocked a different primary fuel; CO2 is the throughline; AI training compute is the newest electricity consumer."
+  },
+  "items": {
+    "det_01": {
+      "label": "1st industrial revolution: coal + steam (1760-1840, Britain)",
+      "content": "The first industrial revolution is conventionally dated c. 1760-1840 and centred on Britain, where Thomas Newcomen's atmospheric steam engine (1712) and especially James Watt's separate-condenser improvement (patented 1769, commercial 1776) made coal-fired mechanical power economically viable at scale. By the early 1700s deforestation had pushed Britain off charcoal and toward coal for heat and metallurgy; the engine then created the demand that justified extracting coal at far greater volumes. The new mechanised textile mills, iron furnaces, and pumping engines all consumed coal directly. Britain's pre-industrial fuel base was overwhelmingly biomass (firewood, dung, peat); the revolution's signature wasn't \"new technology\" alone but the conversion of an entire economy to a fossil substrate — coal — that previously only specialists used. The English coal column in the Bank of England's millennium dataset shows industrial coal use was already nontrivial in England before James Watt, so the steam engine should be read as accelerating an existing fuel transition rather than starting one from zero.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.worldhistory.org/article/2166/the-steam-engine-in-the-british-industrial-revolut/",
+          "title": "The Steam Engine in the British Industrial Revolution — World History Encyclopedia",
+          "facts": [
+            "The first industrial revolution is conventionally dated 1760-1840.",
+            "Newcomen's coal-powered steam engine dates from 1712.",
+            "James Watt's improved version with a separate water condenser was developed in the 1760s."
+          ]
+        },
+        {
+          "url": "https://www.oerproject.com/OER-Materials/OER-Media/HTML-Articles/Origins/Unit7/The-Industrial-Revolution/1050L",
+          "title": "The Industrial Revolution — OER Project",
+          "facts": [
+            "By the early 1700s the British had cut down most of their trees, so they needed coal for heat and energy.",
+            "Machines and the new products they made (steel, iron) required more mines and more coal."
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "2nd industrial revolution: oil + electricity + steel (1870-1914)",
+      "content": "The second industrial revolution, c. 1870-1914, was the period when oil entered the global energy mix and electricity became the dominant carrier of mechanical work over distance. Three innovations stand out: the Bessemer steel process (1856; supplying ~80% of all steel between 1880 and 1895), the internal combustion engine, and the electrification of factories and cities through dynamos, motors, and the incandescent bulb. Oil's first commercial volumes were refined for kerosene lighting, not transport — the gasoline market followed the automobile. Hydropower entered roughly in parallel: large-scale hydroelectric stations come online from the 1880s-1900s and feed the new electric grids. The era's per-capita energy consumption climbed sharply in the industrialising countries, and its CO2 footprint shows the steepest pre-WWI climb in the OWID Global Carbon Project series. Economic historian Joel Mokyr characterises this period as a genuine \"technological revolution\" distinct from the first — not a continuation of steam, but a substitution of new energy carriers (electricity, oil) for the old one.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Second_Industrial_Revolution",
+          "title": "Second Industrial Revolution — Wikipedia",
+          "facts": [
+            "The Second Industrial Revolution spanned approximately 1870 to 1914.",
+            "It was built on steelmaking, electrical energy, and chemical processes that enabled mass production."
+          ]
+        },
+        {
+          "url": "https://faculty.wcas.northwestern.edu/jmokyr/castronovo.pdf",
+          "title": "Joel Mokyr — The Second Industrial Revolution, 1870-1914",
+          "facts": [
+            "The Bessemer process made steel production cheap and fast for the first time.",
+            "From 1880 through 1895, 80 percent of all steel came from the Bessemer process."
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "3rd industrial revolution: nuclear + natural gas + digital (1950-2000)",
+      "content": "The third industrial revolution, c. 1950-2000, paired a new primary-energy entrant — civilian nuclear fission — with the fastest-growing fossil fuel of the era, natural gas, and the digital substrate that came to define the period: semiconductors and computers. The first grid-connected civilian nuclear plant was Obninsk in the Soviet Union (commissioned 27 June 1954, ~6 MW); the first full-scale commercial reactor was Shippingport, Pennsylvania (first criticality 2 December 1957, first power 18 December 1957). Natural gas, previously flared at oil wells, became economic over long distances once high-pressure pipeline networks expanded after WWII; it grew faster than coal or oil through the second half of the 20th century. In parallel, Moore's Law observed that transistor counts per integrated circuit roughly doubled every two years — the OWID transistors-per-chip series captures this from the Intel 4004 (1971) onwards. That density curve is what made digital computing affordable, then ubiquitous, and ultimately what made training large neural networks even imaginable by the 2010s.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.ans.org/news/article-1703/anniversary-at-obninsk-the-first-commercial-nuclear-power-plant/",
+          "title": "Anniversary at Obninsk — ANS Nuclear Newswire",
+          "facts": [
+            "Obninsk was the world's first grid-connected nuclear power plant.",
+            "It was commissioned on June 27, 1954 with a capacity of about 6 megawatts."
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Shippingport_Atomic_Power_Station",
+          "title": "Shippingport Atomic Power Station — Wikipedia",
+          "facts": [
+            "Shippingport was the first commercial nuclear power plant to become operational in 1957 in the United States.",
+            "The reactor reached criticality on December 2, 1957, and first electrical power was produced on December 18, 1957."
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "4th industrial revolution: renewables + AI compute (2010-present)",
+      "content": "The framing of a \"Fourth Industrial Revolution\" was popularised by Klaus Schwab (World Economic Forum) in 2016, describing the convergence of artificial intelligence, robotics, IoT, and biotechnology that blurs the physical, digital, and biological worlds. The periodisation is contested — critics argue it's a marketing label rather than a discrete technological break — but two empirical regularities ground it as more than rhetoric. First, solar and wind, negligible in 2000, supplied ~15% of global electricity generation by 2024 (up about 13 percentage points since 2010), and the IEA forecasts ~30% by 2030 from wind+solar alone. Second, frontier AI training compute has doubled roughly every six months since 2010 — a 4.4x annual growth that no prior energy-intensive workload has matched. The two trends collide on the electricity grid: data centres consumed ~415 TWh globally in 2024 (about 1.5% of world electricity) and the IEA projects ~945 TWh by 2030, with hyperscaler campuses now routinely contracting for 100 MW to >1 GW of dedicated capacity. The 4th industrial revolution's signature fuel question is therefore unsettled: it's running on whichever electrons the grid can spare, and the grid is built for an earlier era.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Fourth_Industrial_Revolution",
+          "title": "Fourth Industrial Revolution — Wikipedia",
+          "facts": [
+            "Klaus Schwab popularised the term Fourth Industrial Revolution in 2016.",
+            "It describes the joining of AI, gene editing, and advanced robotics that blur the physical, digital, and biological worlds."
+          ]
+        },
+        {
+          "url": "https://www.iea.org/reports/renewables-2024/electricity",
+          "title": "Renewables 2024 — Electricity (IEA)",
+          "facts": [
+            "Globally, the share of wind and solar in power generation rose by 1.5 percentage points in 2024 to 15%, nearly +13 pp since 2010.",
+            "In 2030 wind and solar PV together make up 30% of global electricity generation."
+          ]
+        },
+        {
+          "url": "https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai",
+          "title": "Energy demand from AI — IEA Energy and AI",
+          "facts": [
+            "Data centres consumed around 415 TWh in 2024, about 1.5% of global electricity consumption.",
+            "Global data centre electricity consumption is projected to roughly double to ~945 TWh by 2030.",
+            "Hyperscale AI facilities typically contract for >100 MW, with some campuses planned to scale to the gigawatt level."
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Vaclav Smil: energy transitions take decades, not years",
+      "content": "Energy historian Vaclav Smil has spent his career documenting that primary-energy transitions are slow. He defines an energy transition as the time between a new primary source being introduced and its rise to a substantial share of the market — and notes that historically every such transition took decades from first production to even modest market share, and another 2-3 decades to capture a quarter or a third of the market. The wood-to-coal-to-oil-to-gas trajectory took more than a century; he argues the renewables transition will occupy generations rather than years. This is the most important interpretive frame for the stacked-area energy chart: each fuel didn't \"replace\" its predecessor cleanly, it stacked on top. World coal consumption is higher now than at any point in the steam era; oil consumption is higher now than during the post-war boom. Each revolution added a new fuel rather than substituting for the old one — which is why CO2 only ever cumulatively rises.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.fundacionnaturgy.org/en/vaclav-smil-replacing-fossil-fuels-with-renewable-energies-is-a-task-that-will-inevitably-occupy-us-for-several-generations/",
+          "title": "Vaclav Smil interview — Fundación Naturgy",
+          "facts": [
+            "Smil: replacing fossil fuels with renewable energies is a task that will inevitably occupy us for several generations."
+          ]
+        },
+        {
+          "url": "https://www.e-education.psu.edu/geog432/node/450",
+          "title": "Energy Transitions — Penn State GEOG/EME 432 (summarising Smil)",
+          "facts": [
+            "Past shifts to new primary energy sources took decades from the beginning of production to become more than insignificant contributors.",
+            "Then another two to three decades before capturing a quarter or a third of their respective energy markets."
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "AI training compute is doubling every ~6 months",
+      "content": "Since 2010, the training compute used to create notable AI models has been growing at roughly 4.4x per year — a doubling time of approximately 6 months. This is Epoch AI's headline finding from their AI Models database (the same database that supplies the core__ai-notable-models.csv file in this bundle, with 1,018 models from 1950 to 2026). The growth is sourced from three multipliers compounding together: more chips deployed in parallel, longer training runs, and newer accelerators with higher per-chip throughput. Frontier training-compute spending is doubling roughly every 8 months; power draw per frontier run is doubling annually. For context, the doubling time across all machine-learning history before 2010 was much slower (~20 months in the original 2018 OpenAI analysis). The post-2010 acceleration is the empirical anchor for the \"4th industrial revolution as compute revolution\" framing.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://epoch.ai/data-insights/compute-trend-post-2010",
+          "title": "The training compute of notable AI models has been doubling roughly every six months — Epoch AI",
+          "facts": [
+            "Since 2010, training compute for notable AI models has grown at 4.4x per year.",
+            "This corresponds to a doubling time of approximately six months.",
+            "The Epoch AI Models database underpinning this finding contains over 2700 models trained since 1950."
+          ]
+        },
+        {
+          "url": "https://epoch.ai/data-insights/power-usage-trend",
+          "title": "The power required to train frontier AI models is doubling annually — Epoch AI",
+          "facts": [
+            "Training power draw for frontier AI models is doubling annually."
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Data centres are the new heavy electricity consumer",
+      "content": "The IEA's 2025 Energy and AI report quantifies what the spike at the right edge of the AI-compute curve means for the grid. Global data-centre electricity consumption was about 415 TWh in 2024 — roughly 1.5% of world electricity. The Base Case forecast has it growing ~15% per year (more than 4x the growth rate of all other sectors combined) to ~945 TWh by 2030, by which point data centres would draw just under 3% of world electricity. AI is the primary driver: electricity use by accelerated servers — the GPU-and-TPU racks that dominate AI workloads — is projected to grow ~30% per year. A frontier training run already consumes gigawatt-hours of electricity over weeks or months on thousands of high-end accelerators. Most regional grids are not built for this profile: hyperscale campuses now routinely request 100 MW+ interconnections, with some planned to gigawatt scale, but the transmission upgrades required to deliver that power take 5-10 years to plan, permit, and build.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai",
+          "title": "Energy demand from AI — IEA Energy and AI",
+          "facts": [
+            "Data centres consumed around 415 TWh in 2024, about 1.5% of global electricity consumption.",
+            "Data centre electricity consumption is projected to grow ~15% per year, more than four times faster than total electricity consumption.",
+            "Global data centre electricity consumption is projected to roughly double to ~945 TWh by 2030, representing just under 3% of total global electricity.",
+            "Electricity consumption in accelerated servers is projected to grow by 30% annually in the Base Case.",
+            "Many regional grids cannot accommodate large-scale data centres without transmission and distribution upgrades that take 5-10 years."
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Caveat: substitution vs physical-content primary-energy accounting",
+      "content": "The spine file core__global-energy-by-source.csv uses Our World in Data's substitution-method primary-energy accounting. The substitution method divides non-fossil electricity (nuclear, hydro, solar, wind) by a thermal-efficiency factor — effectively asking \"how many TWh of fossil fuel would a thermal plant have burned to produce this much non-fossil electricity?\" — so nuclear and renewables get scaled up to fossil-equivalent terms. The IEA, Eurostat, the UN, and the US EIA now use the physical-content method, which counts the actual joules of electricity delivered without the thermal-equivalent inflation. The two methods produce significantly different shares for renewables and nuclear: substitution makes them look larger; physical content makes them look smaller. Either is defensible; they're answering different questions. The blog should call this out when comparing OWID numbers to IEA-style ones, so a reader who has seen \"renewables are 30% of energy\" from one source and \"renewables are 15%\" from another doesn't think one of them is wrong.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://ourworldindata.org/energy-substitution-method",
+          "title": "What's the difference between direct and substituted primary energy? — Our World in Data",
+          "facts": [
+            "Substitution method scales non-fossil electricity by a thermal efficiency factor (treats it as if it were fossil-fueled thermal generation).",
+            "Substitution method overstates the energy produced by non-fossil sources relative to physical-content accounting."
+          ]
+        },
+        {
+          "url": "https://clintel.org/how-primary-energy-statistics-are-reshaping-the-energy-transition-narrative/",
+          "title": "How Primary Energy Statistics Shape the Energy Narrative",
+          "facts": [
+            "The 2025 Statistical Review of World Energy switched to a physical content approach for non-combustible renewables.",
+            "This change aligns with the long-standing practice of the IEA, Eurostat, the UN system, and the US EIA."
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Maddison Project Database 2023 — GDP per capita back to 1 AD",
+      "content": "The context__gdp-per-capita-maddison.csv file comes from the Maddison Project Database 2023 release, hosted at the University of Groningen. The 2023 update covers 169 countries and aggregate regions with annual GDP-per-capita estimates from 1 AD through 2022, expressed in 2011 international dollars (combining 2011 and 1990 PPPs for historical splicing). Pre-1820 coverage expanded enormously: the original Maddison set had 158 pre-1820 observations; the 2023 update has close to 2,800. Most pre-modern values are derived indirectly from real-wage and urbanisation data; a handful of medieval and early-modern observations come from contemporaneous tax records (Tuscany 1427, Holland 1514, England 1086 via the Domesday Book). Treat any pre-1500 figure as a scholarly reconstruction with wide uncertainty bands, not a measurement.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.rug.nl/ggdc/historicaldevelopment/maddison/releases/maddison-project-database-2023?lang=en",
+          "title": "Maddison Project Database 2023 — University of Groningen",
+          "facts": [
+            "The 2023 release covers 169 countries and aggregate regions from 1 AD through 2022."
+          ]
+        },
+        {
+          "url": "https://onlinelibrary.wiley.com/doi/full/10.1111/joes.12618",
+          "title": "Bolt & van Zanden — Maddison-style estimates: A new 2023 update, Journal of Economic Surveys",
+          "facts": [
+            "Where the original Maddison set had 158 pre-1820 observations, the 2023 MPD has close to 2,800 pre-industrial data points.",
+            "Methodology links real-wage and urbanisation data to GDP-per-capita estimates for pre-modern periods.",
+            "A few countries during the Medieval and Early Modern periods collected tax data sufficient to estimate GDP directly (Tuscany 1427, Holland 1514, England 1086)."
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Bank of England Millennium of Macroeconomic Data — English coal back to 1270",
+      "content": "The context__uk-industrial-production-1270-1870.csv file is extracted from the Bank of England's \"A Millennium of Macroeconomic Data for the UK,\" a research dataset originally compiled and now maintained on the BoE website by Stephen Broadberry and collaborators. The series for British industrial output is built on Broadberry, Campbell et al. (2015) for the period before 1870, spliced with Feinstein (1972) and others for the 19th and 20th centuries. The Coal column is the most empirically grounded pre-1700 industrial series available for any country: by the late 1500s English coastal coal shipments out of Newcastle were already large enough to leave a paper trail in port records, and by 1700 coal was supplying urban heating across London. This is why the dataset can show that industrial coal use predated James Watt's engine by more than a century — the engine didn't create coal demand, it created the demand for far more of it.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.bankofengland.co.uk/statistics/research-datasets",
+          "title": "Research datasets — Bank of England",
+          "facts": [
+            "The Millennium of Macroeconomic Data dataset stretches back in some cases to the 13th century, with benchmark estimates for 1086 (Domesday)."
+          ]
+        },
+        {
+          "url": "https://datahub.io/economic-history/millennium-macroeconomic-data-uk",
+          "title": "A Millennium of Macroeconomic Data for the UK — datahub.io overview",
+          "facts": [
+            "Pre-1870 British GDP and industrial output series are based on Broadberry, Campbell et al. (2015).",
+            "The composite covers GDP, wages, prices, money/credit, fiscal and trade variables across 130+ time series."
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "Moore's Law slowdown — the compute side of the 4th-revolution story",
+      "content": "Moore's Law — Gordon Moore's 1965 observation that transistor counts per integrated circuit roughly double every two years — drove the third industrial revolution and underwrote the fourth. The OWID transistors-per-chip series in this bundle (1971-2021, 39 data points, Intel 4004 → modern multi-core CPUs) traces the long arc. But the cadence has slowed: Intel's then-CEO Brian Krzanich publicly conceded in 2015 that the cadence had moved \"closer to two and a half years than two,\" and industry observers describe the post-2010 transistor-density growth as linear rather than exponential. Continued advances now come from EUV lithography, gate-all-around transistors, and 2nm-class processes (Intel 18A, TSMC N2, Samsung 2nm), but each new node costs far more and adds less. The interpretive hook for the AI-compute story is sharp: at the moment AI training compute started doubling every six months (2010 onwards), the per-chip transistor density underneath it started growing more slowly. The compute curve is steeper than ever, but the chips are no longer carrying it — the multiplier is now parallelism, runtime, and raw electricity.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Moore's_law",
+          "title": "Moore's law — Wikipedia",
+          "facts": [
+            "Microprocessor architects report semiconductor advancement has slowed industry-wide since around 2010, below the pace predicted by Moore's law.",
+            "Brian Krzanich (Intel) announced in 2015: \"Our cadence today is closer to two and a half years than two.\""
+          ]
+        },
+        {
+          "url": "https://cap.csail.mit.edu/death-moores-law-what-it-means-and-what-might-fill-gap-going-forward",
+          "title": "The Death of Moore's Law — MIT CSAIL Alliances",
+          "facts": [
+            "Transistor density evolution of the past decade conforms to a linear trend rather than the exponential growth Moore's Law predicted."
+          ]
+        }
+      ]
+    },
+    "det_12": {
+      "label": "Scope suggestion — keep it to 5-6 charts on the spine",
+      "content": "The metadata.json narrative seed is unusually well-developed for this bundle, and the data2story_guidance section already enumerates 5 hero-chart candidates. The Analyst should resist the urge to use every column of every file: the spine is core__global-energy-by-source.csv, and every other chart should either support its 4-revolution arc or counterpoint it (per-capita energy demand for the 3rd-revolution rise, CO2 for the cumulative cost, AI compute + transistors for the 4th-revolution fingerprint, English coal pre-1800 for the origin-story prologue). Two specific cautions for the Analyst: (1) Training power draw (W) in the Epoch AI file is estimated for many models — gate any per-model quote on the Confidence column. (2) When discussing post-1965 per-capita energy convergence/divergence, separate OECD vs emerging-economy trajectories; the global aggregate hides the most interesting story (Chinese per-capita energy use overtaking the EU average mid-2010s).",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": null,
+      "url": null,
+      "license": null,
+      "source": null,
+      "description": "INTENTIONAL OMISSION. The energy_revolutions bundle is an abstract/quantitative dataset (TWh, tonnes CO2, FLOP, GDP per capita). Per validate.json's multimodal note: \"Subjects are predominantly ABSTRACT — no animals, places, sports, food, individual people. Designer should generate atmospheric/illustrative imagery rather than reference photographs.\" A handful of named AI hardware items (NVIDIA H100, Cerebras) have Wikimedia Commons coverage, but downloading them into reference_media here would be redundant — the Designer is free to source them directly if the AI-compute section needs a hardware photo. We deliberately skipped reference media collection so the Designer can pick atmospheric visuals tied to the editorial cuts rather than inherit photo choices made without seeing the narrative.",
+      "relates_to": []
+    }
+  ],
+  "instances": []
+}

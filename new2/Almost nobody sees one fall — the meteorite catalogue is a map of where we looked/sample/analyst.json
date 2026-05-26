@@ -1,0 +1,615 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["meteorite_landings.csv"],
+    "rows": 45716,
+    "columns": 10,
+    "what_one_row_represents": "One officially-named meteorite recognised by the Meteoritical Society's Nomenclature Committee (Fell = impact observed; Found = recovered later).",
+    "time_range": "860 CE - 2013 CE (with 1 typo at 2101 and 291 rows with no year)",
+    "geographic_scope": "Global — 84% of rows are geocoded (16% missing lat/long); within geocoded rows, 59% are from Antarctica."
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset profile",
+      "content": "The dataset contains 45,716 rows and 10 columns, with one row per officially-named meteorite. Of these, 1,107 (2.42%) are observed Fells and 44,609 (97.58%) are post-recovery Finds; 45,641 are Valid and only 75 are Relict (heavily weathered). The recclass column has 466 distinct values, the year column ranges from 860 to 2,101 (one typo) with 291 nulls, and mass(g) ranges from 0 to 60,000,000 with 131 nulls. Coordinates are missing for 7,315 rows (16.0%).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [11, 22],
+        "output": "rows=45,716  cols=10\nfell=1,107  found=44,609\nvalid_nametype=45,641  relict=75\ndistinct_recclass=466\nyear_min=860.0  year_max=2101.0  null_years=291\nmass_g_min=0.0  mass_g_max=60000000  null_mass=131\nmissing_coords=7,315  (16.0%)"
+      },
+      "data_table": {
+        "description": "Headline counts for the dataset",
+        "columns": ["metric", "value"],
+        "rows": [
+          ["Total rows", 45716],
+          ["Fells (impact observed)", 1107],
+          ["Founds (recovered later)", 44609],
+          ["Distinct recclass values", 466],
+          ["Rows missing coordinates", 7315],
+          ["Rows missing mass", 131],
+          ["Rows missing year", 291],
+          ["Earliest year", 860],
+          ["Latest valid year", 2013]
+        ]
+      },
+      "based_on": ["det_01"]
+    },
+    "ana_02": {
+      "label": "Missing-value rates per column",
+      "content": "Identity columns (name, id, nametype, recclass, fall) are fully populated. mass(g) is 99.71% complete (131 missing), year is 99.36% complete (291 missing), and the three spatial columns (reclat, reclong, GeoLocation) all share the same 7,315 missing rows = exactly 16.001% — i.e. geocoding is the dominant gap. The other columns can be treated as 'complete enough' for analysis without imputation.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [24, 28],
+        "output": "             missing  rate_pct\nname               0     0.000\nid                 0     0.000\nnametype           0     0.000\nrecclass           0     0.000\nmass (g)         131     0.287\nfall               0     0.000\nyear             291     0.637\nreclat          7315    16.001\nreclong         7315    16.001\nGeoLocation     7315    16.001"
+      },
+      "data_table": {
+        "description": "Missing-value rate per column",
+        "columns": ["column", "missing", "rate_pct"],
+        "rows": [
+          ["name", 0, 0.0],
+          ["id", 0, 0.0],
+          ["nametype", 0, 0.0],
+          ["recclass", 0, 0.0],
+          ["mass (g)", 131, 0.287],
+          ["fall", 0, 0.0],
+          ["year", 291, 0.637],
+          ["reclat", 7315, 16.001],
+          ["reclong", 7315, 16.001],
+          ["GeoLocation", 7315, 16.001]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_03": {
+      "label": "Year column quality — one impossible future date, two genuinely medieval",
+      "content": "The year column contains exactly one impossible value: Northwest Africa 7701 is recorded as year 2101 (a clear typo — the dataset was frozen ~2013). No rows have year=0. Two rows fall in the 800-1000 window and look genuine: Nogata (860 CE) and Narni (920 CE), both observed Fells with sensible coordinates in Japan and Italy respectively. Restricting analysis to 1 <= year <= 2025 drops 1 row.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [30, 45],
+        "output": "rows_with_year_gt_2025=1\n                 name   year  fall\nNorthwest Africa 7701 2101.0 Found\nrows_with_year_eq_0=0\nrows_with_year_in_(0,1000)=2\n  name  year fall\nNogata 860.0 Fell\n Narni 920.0 Fell\nrows_after_year_clean=45,424  dropped=1"
+      },
+      "based_on": ["det_13"]
+    },
+    "ana_04": {
+      "label": "Fell vs Found — 2.42% of all named meteorites were ever seen falling",
+      "content": "The headline split of the catalogue: 1,107 rows (2.42%) are Fells where a human witnessed the descent; 44,608 (97.58%) are Founds where the rock was recognised on the ground at some unknown later date. This is the single biggest selection effect in the dataset. The Detective's external benchmark — roughly 1,800 land-falls per year, of which only about 7–10 become observed-fall records — implies a true witnessing rate of well under 1%, consistent with what the dataset shows.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_fell_vs_found.py",
+        "lines": [8, 14],
+        "output": "fall\nFound    44608\nFell      1107\nFell pct  = 2.42%\nFound pct = 97.58%"
+      },
+      "data_table": {
+        "description": "Fell vs Found split (all clean rows)",
+        "columns": ["fall", "count", "pct"],
+        "rows": [
+          ["Fell", 1107, 2.42],
+          ["Found", 44608, 97.58]
+        ]
+      },
+      "based_on": ["det_02", "det_03"]
+    },
+    "ana_05": {
+      "label": "Fells are 92x heavier than Founds at the median",
+      "content": "Fells and Founds have wildly different mass distributions. Median Fell mass is 2,800 g (about a 3-litre bottle of water); median Found mass is just 30.5 g (an espresso ladle). Geometric means tell the same story: 2,498 g for Fells vs 39 g for Founds — a 64x ratio. This is because the only meteorites loud and bright enough to be noticed mid-fall are the big ones, while Antarctic and desert searches pick up tiny fragments down to gram scale that would never trigger a witness.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_fell_vs_found.py",
+        "lines": [16, 21],
+        "output": "Fell    n= 1,075  median_g=     2,800.0  mean_g=      47,070.7  geomean_g=   2497.51\nFound   n=44,509  median_g=        30.5  mean_g=      12,462.2  geomean_g=     39.13"
+      },
+      "data_table": {
+        "description": "Mass statistics by fall type",
+        "columns": ["fall", "n", "median_g", "mean_g", "geomean_g"],
+        "rows": [
+          ["Fell", 1075, 2800.0, 47070.7, 2497.51],
+          ["Found", 44509, 30.5, 12462.2, 39.13]
+        ]
+      },
+      "based_on": ["det_02", "det_07"]
+    },
+    "ana_06": {
+      "label": "Decade-by-decade Fell vs Found counts (860-2010s)",
+      "content": "Decade-resolved counts trace the catalogue's growth. Before 1700 the record is almost entirely sparse Fells from Europe and East Asia (Nogata 860, Narni 920, Elbogen 1399, Ensisheim 1491). Fells grow modestly through the 1800s into a steady 50-90/decade in the 20th century. Founds stay below 100/decade until the 1960s, then explode: 4,909 in the 1970s, 6,766 in the 1980s, 11,563 in the 1990s, 17,698 in the 2000s. The 2010s entry (1,963) reflects the dataset being frozen ~2013.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_fell_vs_found.py",
+        "lines": [23, 32],
+        "output": "decade pivot from 860 through 2010, columns Fell|Found|Total — see _decade_pivot.csv"
+      },
+      "data_table": {
+        "description": "Fell + Found counts per decade (only decades with >0 rows shown; truncated to 1700+)",
+        "columns": ["decade", "Fell", "Found", "Total"],
+        "rows": [
+          [1700, 1, 0, 1],
+          [1710, 1, 1, 2],
+          [1720, 1, 1, 2],
+          [1740, 2, 1, 3],
+          [1750, 4, 0, 4],
+          [1760, 4, 0, 4],
+          [1770, 4, 1, 5],
+          [1780, 2, 3, 5],
+          [1790, 9, 3, 12],
+          [1800, 17, 5, 22],
+          [1810, 24, 6, 30],
+          [1820, 25, 5, 30],
+          [1830, 21, 12, 33],
+          [1840, 31, 18, 49],
+          [1850, 36, 35, 71],
+          [1860, 56, 39, 95],
+          [1870, 51, 38, 89],
+          [1880, 40, 83, 123],
+          [1890, 51, 75, 126],
+          [1900, 56, 83, 139],
+          [1910, 66, 88, 154],
+          [1920, 70, 89, 159],
+          [1930, 91, 218, 309],
+          [1940, 58, 138, 196],
+          [1950, 60, 152, 212],
+          [1960, 62, 335, 397],
+          [1970, 60, 4909, 4969],
+          [1980, 56, 6766, 6822],
+          [1990, 56, 11563, 11619],
+          [2000, 59, 17698, 17757],
+          [2010, 13, 1950, 1963]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_07": {
+      "label": "96.8% of all Founds are post-1969 — Antarctica's signature",
+      "content": "Splitting the catalogue at 1970 (the cusp of systematic Antarctic recovery) shows that 42,886 of 44,317 dated Founds — 96.8% — were recognised in the last four-and-a-bit decades of the dataset. Fells barely budge: only 22.0% of dated Fells are post-1969 (244 out of 1,107). In other words, almost all of the Find growth is operational, not physical: rocks didn't suddenly start landing more often; humans suddenly started looking systematically.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_fell_vs_found.py",
+        "lines": [37, 47],
+        "output": "Finds before 1970: 1,431\nFinds 1970+      : 42,886\nShare of all Finds (with year) that are post-1969: 96.8%\nFells before 1970: 863\nFells 1970+      : 244\nShare of all Fells (with year) that are post-1969: 22.0%"
+      },
+      "data_table": {
+        "description": "Pre-1970 vs 1970+ split, by fall type",
+        "columns": ["fall", "pre_1970", "post_1969", "post_share_pct"],
+        "rows": [
+          ["Found", 1431, 42886, 96.8],
+          ["Fell", 863, 244, 22.0]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_08": {
+      "label": "Mass distribution is log-normal over 10 orders of magnitude",
+      "content": "Meteorite masses span from sub-gram chips to the 60-tonne Hoba — ten orders of magnitude on a linear axis. The distribution is sharply log-normal: 36% of rows (16,373) sit in the 10-100 g bucket, with a long thin tail. Median mass is 32.7 g (about a tomato), mean is 13,284 g (about a cinder block) — the mean is 400x the median, the canonical signature of a heavy-tailed distribution. Geometric mean (43 g) is the meaningful 'typical' value. The 95th percentile is 4,000 g and the 99th is 50,600 g; only 52 rows (0.1%) exceed 1 tonne.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_mass_classes.py",
+        "lines": [10, 24],
+        "output": "<1g: 2033\n1-10g: 11773\n10-100g: 16373\n100g-1kg: 10563\n1-10kg: 3463\n10-100kg: 1078\n100kg-1t: 230\n1-10t: 39\n10-100t: 13\nmedian g = 32.69\nmean g = 13283.91\ngeomean g = 43.16\n95th pct = 4000.00\n99th pct = 50600.00\nmax = 60000000"
+      },
+      "data_table": {
+        "description": "Mass distribution in log decade buckets",
+        "columns": ["bucket", "count"],
+        "rows": [
+          ["<1g", 2033],
+          ["1-10g", 11773],
+          ["10-100g", 16373],
+          ["100g-1kg", 10563],
+          ["1-10kg", 3463],
+          ["10-100kg", 1078],
+          ["100kg-1t", 230],
+          ["1-10t", 39],
+          ["10-100t", 13]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_09": {
+      "label": "Top 20 heaviest meteorites",
+      "content": "Sorted by mass, the top of the catalogue is a wall of iron: Hoba (60 t, Namibia), Cape York (58.2 t total, Greenland — Peary's haul, det_08), Campo del Cielo (50 t recovered, Argentina, det_09), Canyon Diablo (30 t, Arizona, det_06), Armanty (28 t, Xinjiang, det_10), then Gibeon, Chupaderos, Mundrabilla, Sikhote-Alin (the only Fell in the top 10!), Bacubirito. The first chondrite to appear is Jilin at #19 (4 t, an L5 that fell in China in 1976). The first stony-iron (Brenham, a pallasite) sneaks in at #18.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_mass_classes.py",
+        "lines": [26, 30],
+        "output": "Hoba 60000000 Iron, IVB Found 1920\nCape York 58200000 Iron, IIIAB Found 1818\nCampo del Cielo 50000000 Iron, IAB-MG Found 1575\nCanyon Diablo 30000000 Iron, IAB-MG Found 1891\nArmanty 28000000 Iron, IIIE Found 1898\nGibeon 26000000 Iron, IVA Found 1836\nChupaderos 24300000 Iron, IIIAB Found 1852\nMundrabilla 24000000 Iron, IAB-ung Found 1911\nSikhote-Alin 23000000 Iron, IIAB Fell 1947\nBacubirito 22000000 Iron, ungrouped Found 1863\nMbosi 16000000 Iron, ungrouped Found 1930\nWillamette 15500000 Iron, IIIAB Found 1902\nMorito 10100000 Iron, IIIAB Found 1600\nNantan 9500000 Iron, IAB-MG Found 1958\nCranbourne 8600000 Iron, IAB-MG Found 1854\nSanta Catharina 7000000 Iron, IAB-ung Found 1875\nBendegó 5360000 Iron, IC Found 1784\nBrenham 4300000 Pallasite, PMG-an Found 1882\nJilin 4000000 H5 Fell 1976\nVaca Muerta 3828000 Mesosiderite-A1 Found 1861"
+      },
+      "data_table": {
+        "description": "Top 20 heaviest meteorites in the catalogue",
+        "columns": ["rank", "name", "mass_kg", "family", "recclass", "fall", "year", "lat", "lon"],
+        "rows": [
+          [1, "Hoba", 60000, "Iron meteorite", "Iron, IVB", "Found", 1920, -19.58333, 17.91667],
+          [2, "Cape York", 58200, "Iron meteorite", "Iron, IIIAB", "Found", 1818, 76.13333, -64.93333],
+          [3, "Campo del Cielo", 50000, "Iron meteorite", "Iron, IAB-MG", "Found", 1575, -27.46667, -60.58333],
+          [4, "Canyon Diablo", 30000, "Iron meteorite", "Iron, IAB-MG", "Found", 1891, 35.05000, -111.03333],
+          [5, "Armanty", 28000, "Iron meteorite", "Iron, IIIE", "Found", 1898, 47.00000, 88.00000],
+          [6, "Gibeon", 26000, "Iron meteorite", "Iron, IVA", "Found", 1836, -25.50000, 18.00000],
+          [7, "Chupaderos", 24300, "Iron meteorite", "Iron, IIIAB", "Found", 1852, 27.00000, -105.10000],
+          [8, "Mundrabilla", 24000, "Iron meteorite", "Iron, IAB-ung", "Found", 1911, -30.78333, 127.55000],
+          [9, "Sikhote-Alin", 23000, "Iron meteorite", "Iron, IIAB", "Fell", 1947, 46.16000, 134.65333],
+          [10, "Bacubirito", 22000, "Iron meteorite", "Iron, ungrouped", "Found", 1863, 26.20000, -107.83333],
+          [11, "Mbosi", 16000, "Iron meteorite", "Iron, ungrouped", "Found", 1930, -9.11667, 33.06667],
+          [12, "Willamette", 15500, "Iron meteorite", "Iron, IIIAB", "Found", 1902, 45.36667, -122.58333],
+          [13, "Morito", 10100, "Iron meteorite", "Iron, IIIAB", "Found", 1600, 27.05000, -105.43333],
+          [14, "Nantan", 9500, "Iron meteorite", "Iron, IAB-MG", "Found", 1958, 25.10000, 107.70000],
+          [15, "Cranbourne", 8600, "Iron meteorite", "Iron, IAB-MG", "Found", 1854, -38.10000, 145.30000],
+          [16, "Santa Catharina", 7000, "Iron meteorite", "Iron, IAB-ung", "Found", 1875, -26.21667, -48.60000],
+          [17, "Bendegó", 5360, "Iron meteorite", "Iron, IC", "Found", 1784, -10.11667, -39.20000],
+          [18, "Brenham", 4300, "Stony-iron", "Pallasite, PMG-an", "Found", 1882, 37.58250, -99.16361],
+          [19, "Jilin", 4000, "Ordinary chondrite", "H5", "Fell", 1976, 44.05000, 126.16667],
+          [20, "Vaca Muerta", 3828, "Stony-iron", "Mesosiderite-A1", "Found", 1861, -25.75000, -70.50000]
+        ]
+      },
+      "based_on": ["det_05", "det_07", "det_08", "det_09", "det_10"],
+      "notable_instance": {
+        "name": "Hoba",
+        "value": "60,000 kg — the largest single meteorite mass on Earth",
+        "why": "The dataset's heaviest row is also its most photographable: a 60-ton iron block still sitting where it landed in Namibia. Reference photo at ref_hoba.jpg."
+      }
+    },
+    "ana_10": {
+      "label": "Class families: ordinary chondrites are 87% of rows",
+      "content": "Collapsing the 466 distinct recclass strings into composition families gives a clean Pareto: Ordinary chondrites dominate at 86.96% (39,756 rows), followed by Carbonaceous chondrites at 3.50% (1,602), HED achondrites at 2.59% (1,186), Iron meteorites at just 2.34% (1,069), and a long tail of enstatite/primitive achondrites/stony-irons/lunar/Martian under 1.5% each. So irons — which dominate the heavy tail (ana_09) — are barely 1 in 43 rows by count. The Detective's '87% ordinary chondrite' benchmark from the literature lines up almost exactly with this dataset's 86.96%.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_mass_classes.py",
+        "lines": [56, 70],
+        "output": "Ordinary chondrite        39756 (86.96%)\nCarbonaceous chondrite     1602 (3.50%)\nHED achondrite             1186 (2.59%)\nIron meteorite             1069 (2.34%)\nPrimitive/other achondrite  579 (1.27%)\nEnstatite chondrite         537 (1.17%)\nStony-iron                  281 (0.61%)\nOther / Ungrouped           216 (0.47%)\nLunar achondrite            165 (0.36%)\nRumuruti (R) chondrite      132 (0.29%)\nMartian achondrite          119 (0.26%)\nOther chondrite              66 (0.14%)\nUnknown                       7 (0.02%)"
+      },
+      "data_table": {
+        "description": "Composition family breakdown across all 45,716 rows",
+        "columns": ["family", "count", "pct"],
+        "rows": [
+          ["Ordinary chondrite", 39756, 86.96],
+          ["Carbonaceous chondrite", 1602, 3.50],
+          ["HED achondrite", 1186, 2.59],
+          ["Iron meteorite", 1069, 2.34],
+          ["Primitive/other achondrite", 579, 1.27],
+          ["Enstatite chondrite", 537, 1.17],
+          ["Stony-iron", 281, 0.61],
+          ["Other / Ungrouped", 216, 0.47],
+          ["Lunar achondrite", 165, 0.36],
+          ["Rumuruti (R) chondrite", 132, 0.29],
+          ["Martian achondrite", 119, 0.26],
+          ["Other chondrite", 66, 0.14],
+          ["Unknown", 7, 0.02]
+        ]
+      },
+      "based_on": ["det_11"]
+    },
+    "ana_11": {
+      "label": "Iron meteorites are ~350x heavier than ordinary chondrites at the median",
+      "content": "Median masses by family lay bare the count/mass inversion. Iron meteorites have a median mass of 10,000 g (10 kg) and a mean of nearly half a tonne; ordinary chondrites have a median of 28.5 g and a mean of 1.5 kg. Stony-irons sit in between at 496 g median. The lightest typical family is Enstatite chondrites at just 8.4 g median. So even though irons are only 2.3% of the catalogue by row, on a mass-weighted basis they massively outweigh the chondrites.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_mass_classes.py",
+        "lines": [72, 80],
+        "output": "Ordinary chondrite       39741 median=28.50 mean=1491.19\nCarbonaceous chondrite    1597 median=25.60 mean=2222.92\nHED achondrite            1186 median=89.78 mean=1127.19\nIron meteorite            1041 median=10000.00 mean=494262.89\nPrimitive achondrite       579 median=78.00 mean=7862.71\nEnstatite chondrite        536 median=8.45 mean=1670.11\nStony-iron                 280 median=496.16 mean=72445.58\nLunar                      165 median=92.57 mean=397.81\nRumuruti R                 132 median=90.40 mean=484.33\nMartian                    119 median=107.70 mean=1031.91"
+      },
+      "data_table": {
+        "description": "Median + mean mass (grams) by composition family",
+        "columns": ["family", "n", "median_g", "mean_g"],
+        "rows": [
+          ["Ordinary chondrite", 39741, 28.5, 1491.19],
+          ["Carbonaceous chondrite", 1597, 25.6, 2222.92],
+          ["HED achondrite", 1186, 89.78, 1127.19],
+          ["Iron meteorite", 1041, 10000.0, 494262.89],
+          ["Primitive/other achondrite", 579, 78.0, 7862.71],
+          ["Enstatite chondrite", 536, 8.45, 1670.11],
+          ["Stony-iron", 280, 496.16, 72445.58],
+          ["Lunar achondrite", 165, 92.57, 397.81],
+          ["Rumuruti (R) chondrite", 132, 90.4, 484.33],
+          ["Martian achondrite", 119, 107.7, 1031.91]
+        ]
+      },
+      "based_on": ["det_07", "det_11"]
+    },
+    "ana_12": {
+      "label": "%Fell by family: HED and Iron lead, Lunar is 0%",
+      "content": "The probability that a meteorite of a given family was witnessed falling reflects both its visibility (bigger = brighter = more likely to be seen) and its discovery context. HED achondrites top the table at 5.14% Fell (61 of 1,186), Iron meteorites are next at 4.58% (49 of 1,069), and Stony-irons at 3.91%. Ordinary chondrites — by far the largest family — sit at 2.09% Fell, near the overall 2.42% rate. The two outliers in opposite directions: Lunar achondrites are 0% Fell (all 165 came from Antarctic and desert searches — none were ever seen falling), while the 'Other/Ungrouped' bucket is 30.09% Fell, but that bucket holds mostly historic 'Stone-uncl' entries from 17th-19th century Europe before composition was determined.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_mass_classes.py",
+        "lines": [82, 90],
+        "output": "Ordinary chondrite       Fell=832 Found=38924 Total=39756 %Fell=2.09\nCarbonaceous chondrite   Fell=44  Found=1558  Total=1602  %Fell=2.75\nHED achondrite           Fell=61  Found=1125  Total=1186  %Fell=5.14\nIron meteorite           Fell=49  Found=1020  Total=1069  %Fell=4.58\nPrimitive achondrite     Fell=19  Found=560   Total=579   %Fell=3.28\nEnstatite chondrite      Fell=17  Found=520   Total=537   %Fell=3.17\nStony-iron               Fell=11  Found=270   Total=281   %Fell=3.91\nOther / Ungrouped        Fell=65  Found=151   Total=216   %Fell=30.09\nLunar                    Fell=0   Found=165   Total=165   %Fell=0.00\nRumuruti R               Fell=1   Found=131   Total=132   %Fell=0.76\nMartian                  Fell=5   Found=114   Total=119   %Fell=4.20\nOther chondrite          Fell=1   Found=65    Total=66    %Fell=1.52"
+      },
+      "data_table": {
+        "description": "Fell / Found counts and %Fell rate by family",
+        "columns": ["family", "Fell", "Found", "Total", "pct_Fell"],
+        "rows": [
+          ["Ordinary chondrite", 832, 38924, 39756, 2.09],
+          ["Carbonaceous chondrite", 44, 1558, 1602, 2.75],
+          ["HED achondrite", 61, 1125, 1186, 5.14],
+          ["Iron meteorite", 49, 1020, 1069, 4.58],
+          ["Primitive/other achondrite", 19, 560, 579, 3.28],
+          ["Enstatite chondrite", 17, 520, 537, 3.17],
+          ["Stony-iron", 11, 270, 281, 3.91],
+          ["Other / Ungrouped", 65, 151, 216, 30.09],
+          ["Lunar achondrite", 0, 165, 165, 0.00],
+          ["Rumuruti (R) chondrite", 1, 131, 132, 0.76],
+          ["Martian achondrite", 5, 114, 119, 4.20],
+          ["Other chondrite", 1, 65, 66, 1.52]
+        ]
+      },
+      "based_on": ["det_04", "det_11"]
+    },
+    "ana_13": {
+      "label": "Geographic hemisphere split: 56% of geocoded rows are in the south",
+      "content": "Among the 38,400 geocoded rows, 14,987 are in the Northern hemisphere and 23,413 are in the Southern (61% south, 39% north). But this is entirely a function of where searches happen, not where meteorites land: virtually the entire Southern-hemisphere total comes from the Antarctic plateau (lat<-60). Fells alone — which are scattered roughly where humans live — flip the ratio: 964 northern vs 133 southern (88% north).",
+      "type": "group-diff",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/04_geography.py",
+        "lines": [8, 12],
+        "output": "          Fell  Found  Total\nNorthern   964  14023  14987\nSouthern   133  23280  23413"
+      },
+      "data_table": {
+        "description": "Hemisphere split by fall type",
+        "columns": ["hemisphere", "Fell", "Found", "Total"],
+        "rows": [
+          ["Northern", 964, 14023, 14987],
+          ["Southern", 133, 23280, 23413]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_14": {
+      "label": "Antarctica accounts for 59% of all geocoded Founds — and 0% of Fells",
+      "content": "Splitting at latitude -60° (the Antarctic Circle plus a buffer): 22,099 rows lie in Antarctica, every single one a Found, and zero Fells. Outside Antarctica, the catalogue is 1,097 Fells and 15,204 Founds — a much more balanced 6.73% Fell rate. So Antarctica alone supplies 59.2% of every geocoded Find in the dataset, and contributes nothing to the Fell record. No one is standing under Antarctic skies to watch a meteorite fall; the ice does the collecting passively, over millennia (det_04).",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_geography.py",
+        "lines": [14, 21],
+        "output": "                       Fell  Found  Total  %Fell\nAntarctica (lat<-60)     0  22099  22099   0.00\nRest of world         1097  15204  16301   6.73\n\nShare of all geocoded Finds that are in Antarctica: 59.2%\nShare of all geocoded Fells that are in Antarctica: 0.00%"
+      },
+      "data_table": {
+        "description": "Antarctica vs rest of world",
+        "columns": ["region", "Fell", "Found", "Total", "pct_Fell"],
+        "rows": [
+          ["Antarctica (lat<-60)", 0, 22099, 22099, 0.0],
+          ["Rest of world", 1097, 15204, 16301, 6.73]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_15": {
+      "label": "Hot-desert recovery hotspots: Sahara, Arabia, US SW, Australia, Atacama",
+      "content": "Stripping out Antarctica and the rest-of-world residual, the dataset's other big concentrations are all desert recovery zones. The Arabian peninsula and Oman supply 3,154 meteorites, the Sahara/Sahel 2,414, the US south-west deserts 1,063, the Australian outback 540, and the Atacama in Chile 415. All five have %Fell rates well below the rest-of-world figure: people are out there hunting, not happening to be present at a fall. The famous Hot-Desert Meteorites (HDM) of the post-2000 boom are visible in the data as these latitude-banded blocks.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_geography.py",
+        "lines": [23, 45],
+        "output": "                  Fell  Found  Total  %Fell\nAntarctica           0  22099  22099   0.00\nRest of world     1039   7676   8715  11.92\nArabia/Oman          2   3152   3154   0.06\nSahara/Sahel        26   2388   2414   1.08\nUS SW deserts       20   1043   1063   1.88\nAustralian outback   6    534    540   1.11\nAtacama (Chile)      4    411    415   0.96"
+      },
+      "data_table": {
+        "description": "Recovery zones beyond Antarctica",
+        "columns": ["region", "Fell", "Found", "Total", "pct_Fell"],
+        "rows": [
+          ["Antarctica", 0, 22099, 22099, 0.0],
+          ["Rest of world", 1039, 7676, 8715, 11.92],
+          ["Arabia/Oman", 2, 3152, 3154, 0.06],
+          ["Sahara/Sahel", 26, 2388, 2414, 1.08],
+          ["US SW deserts", 20, 1043, 1063, 1.88],
+          ["Australian outback", 6, 534, 540, 1.11],
+          ["Atacama (Chile)", 4, 411, 415, 0.96]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_16": {
+      "label": "The single hottest 5° cell holds 6,213 meteorites — over the Antarctic ice",
+      "content": "Binning geocoded rows into 5° latitude x 5° longitude cells (about 300x300 km at the equator, tighter at the poles) shows extreme concentration. The top cell — lat -75, lon 35 — holds 4,888 meteorites alone, all from East Antarctic blue-ice fields. The next three cells (lat -80 to -90, lon 155-170) hold a further 10,770 between them: this is the Allan Hills / Yamato Mountains / Pole-of-Cold cluster. The cell containing lat 0/lon 0 (a small area off West Africa) shows 6,213 — almost all from the Sahara, since longitude 0 cuts straight through it.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_geography.py",
+        "lines": [47, 56],
+        "output": " 0     0      6213\n-80    155    5193\n-75    35     4888\n-85    165    3041\n       160    2536\n-75    75     2486\n 15    50     1541\n-75    25     1505\n 25    15     1055\n-90   -70      857\n 20    55      831\n-75    160     810\n 15    55      759\n 25    0       514\n       10      390"
+      },
+      "data_table": {
+        "description": "Top 15 hottest 5° x 5° cells in the global catalogue",
+        "columns": ["lat", "lon", "count"],
+        "rows": [
+          [0, 0, 6213],
+          [-80, 155, 5193],
+          [-75, 35, 4888],
+          [-85, 165, 3041],
+          [-85, 160, 2536],
+          [-75, 75, 2486],
+          [15, 50, 1541],
+          [-75, 25, 1505],
+          [25, 15, 1055],
+          [-90, -70, 857],
+          [20, 55, 831],
+          [-75, 160, 810],
+          [15, 55, 759],
+          [25, 0, 514],
+          [-85, 10, 390]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_17": {
+      "label": "Oldest 10 entries — eight European Fells, two East-Asian (Nogata 860 CE the earliest)",
+      "content": "The oldest dated rows in the catalogue trace the very early history of meteorite witnessing. Nogata (860 CE, Japan, L6) is the oldest: an observed fall preserved as a Shinto temple relic in Fukuoka. Narni (920 CE, Italy) is next. Then five 15th-16th century European Fells — Elbogen (1399, Czech lands), Rivolta de Bassi (1490, Italy), Ensisheim (1491, France — the most famous medieval fall, still on display), Valdinoce (1495), Oliva-Gandia (1519, Spain). The first Find in the top 10 is Campo del Cielo, recorded 1575 — though its actual fall was ~4,500 years earlier (det_09).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_year_trends.py",
+        "lines": [8, 12],
+        "output": "Nogata 860 Fell L6 472g Japan\nNarni 920 Fell Stone-uncl Italy\nElbogen 1399 Fell Iron, IID 107000g Czechia\nRivolta de Bassi 1490 Fell Stone-uncl Italy\nEnsisheim 1491 Fell LL6 127000g France\nValdinoce 1495 Fell Stone-uncl Italy\nOliva-Gandia 1519 Fell Stone-uncl Spain\nCampo del Cielo 1575 Found Iron, IAB-MG 50000000g Argentina\nCastrovillari 1583 Fell Stone-uncl 15000g Italy\nMorito 1600 Found Iron, IIIAB 10100000g Mexico"
+      },
+      "data_table": {
+        "description": "Ten oldest dated entries in the catalogue",
+        "columns": ["name", "year", "fall", "recclass", "mass_g", "lat", "lon"],
+        "rows": [
+          ["Nogata", 860, "Fell", "L6", 472.0, 33.725, 130.75],
+          ["Narni", 920, "Fell", "Stone-uncl", null, 42.51667, 12.51667],
+          ["Elbogen", 1399, "Fell", "Iron, IID", 107000.0, 50.18333, 12.73333],
+          ["Rivolta de Bassi", 1490, "Fell", "Stone-uncl", 103.3, 45.48333, 9.51667],
+          ["Ensisheim", 1491, "Fell", "LL6", 127000.0, 47.86667, 7.35],
+          ["Valdinoce", 1495, "Fell", "Stone-uncl", null, 44.06667, 12.1],
+          ["Oliva-Gandia", 1519, "Fell", "Stone-uncl", null, 39.0, -0.03333],
+          ["Campo del Cielo", 1575, "Found", "Iron, IAB-MG", 50000000.0, -27.46667, -60.58333],
+          ["Castrovillari", 1583, "Fell", "Stone-uncl", 15000.0, 39.8, 16.2],
+          ["Morito", 1600, "Found", "Iron, IIIAB", 10100000.0, 27.05, -105.43333]
+        ]
+      },
+      "based_on": ["det_09", "det_13"]
+    },
+    "ana_18": {
+      "label": "Modern Fell rate: ~6 observed falls per year worldwide",
+      "content": "Between 1900 and 2013 the catalogue records 707 observed Fells — a mean of 6.20 per year and a median of 6 per year. The peak was 17 Fells in 1933. This matches the Detective's external benchmark (7.9 reported falls/year averaged 2007-2018) almost exactly, and explains why Fells stay below 100/decade throughout the modern era while Founds explode (ana_06): the underlying physical witnessing rate is essentially flat, capped by how many humans are in the right place at the right time.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_year_trends.py",
+        "lines": [37, 44],
+        "output": "Years covered: 1900-2013\nTotal observed Fells in that window: 707\nMean Fells per year: 6.20\nMedian per year: 6.0\nMax in any one year: 17 (1933)"
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_19": {
+      "label": "Antarctic decade share: from 0% before 1969 to 93% in the 1980s, falling back as deserts took over",
+      "content": "Splitting the geocoded post-1820 record by decade and Antarctica vs Rest-of-World shows three distinct eras. Pre-1969: zero Antarctic finds (one outlier from 1912 — likely Shackleton-era). 1970s-1980s: Antarctica dominates absolutely, 88-93% of all dated geocoded rows in those decades come from the ice (4,398 of 4,962 in the 1970s; 6,364 of 6,806 in the 1980s). 1990s-2010s: hot-desert programs catch up — by the 2000s, Antarctica's share drops to 39% (4,459 Antarctic vs 6,999 elsewhere) as Saharan, Arabian, and Atacaman searches expand.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_year_trends.py",
+        "lines": [46, 60],
+        "output": "1960  RestOfWorld=373 Antarctica=12 Total=385\n1970  RestOfWorld=564 Antarctica=4398 Total=4962\n1980  RestOfWorld=442 Antarctica=6364 Total=6806\n1990  RestOfWorld=4002 Antarctica=6772 Total=10774\n2000  RestOfWorld=6999 Antarctica=4459 Total=11458\n2010  RestOfWorld=1870 Antarctica=93 Total=1963"
+      },
+      "data_table": {
+        "description": "Antarctica vs rest-of-world counts per decade (geocoded rows only)",
+        "columns": ["decade", "RestOfWorld", "Antarctica", "Total", "Antarctica_share_pct"],
+        "rows": [
+          [1900, 136, 0, 136, 0.0],
+          [1910, 152, 1, 153, 0.65],
+          [1920, 158, 0, 158, 0.0],
+          [1930, 304, 0, 304, 0.0],
+          [1940, 192, 0, 192, 0.0],
+          [1950, 208, 0, 208, 0.0],
+          [1960, 373, 12, 385, 3.12],
+          [1970, 564, 4398, 4962, 88.6],
+          [1980, 442, 6364, 6806, 93.5],
+          [1990, 4002, 6772, 10774, 62.9],
+          [2000, 6999, 4459, 11458, 38.9],
+          [2010, 1870, 93, 1963, 4.7]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_20": {
+      "label": "Top 100 by mass: 72 are irons; only 15 are ordinary chondrites",
+      "content": "The composition mix flips completely between count-ranking and mass-ranking. Out of all 45,716 rows, ordinary chondrites make up 87% (ana_10); but among the 100 heaviest meteorites in the catalogue, only 15 are ordinary chondrites. Iron meteorites — barely 2.3% of the catalogue by row — supply 72 of the top 100, joined by 10 stony-irons, 2 primitive achondrites, and a single carbonaceous chondrite. This is selection at every level: irons survive atmospheric entry intact (det_07), weather slowly on the ground, and stand out to metal detectors. Chondrites that big rarely survive any of those filters.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_top_named.py",
+        "lines": [14, 20],
+        "output": "family\nIron meteorite                  72\nOrdinary chondrite             15\nStony-iron                      10\nPrimitive/other achondrite      2\nCarbonaceous chondrite          1\nShare of top 100 that are iron meteorites: 72%"
+      },
+      "data_table": {
+        "description": "Family composition of the top 100 heaviest meteorites",
+        "columns": ["family", "count_in_top100"],
+        "rows": [
+          ["Iron meteorite", 72],
+          ["Ordinary chondrite", 15],
+          ["Stony-iron", 10],
+          ["Primitive/other achondrite", 2],
+          ["Carbonaceous chondrite", 1]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_21": {
+      "label": "Continent split: Antarctica > Africa > Asia > N.America for Founds; Europe leads for Fells",
+      "content": "Bucketing the catalogue by rough continent boundaries shows Antarctica (22,099 Founds) leading the pack, followed by Africa (10,486 Founds plus 163 Fells — mostly the Sahara/Sahel/Mbozi belt), Asia (1,725 Founds + 297 Fells), and N. America (1,637 Founds + 182 Fells). Europe is the only continent where Fells outnumber Founds: 366 Fells vs 213 Founds, reflecting both medieval/early-modern observation records and the simple fact that European countryside is not a desert and recovery hunts there are minimal. Roughly 7,315 rows have unknown location.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/06_top_named.py",
+        "lines": [37, 51],
+        "output": "Antarctica  Fell=0    Found=22099 Total=22099\nAfrica      Fell=163  Found=10486 Total=10649\nUnknown     Fell=10   Found=7305  Total=7315\nAsia        Fell=297  Found=1725  Total=2022\nN. America  Fell=182  Found=1637  Total=1819\nOceania     Fell=28   Found=638   Total=666\nEurope      Fell=366  Found=213   Total=579\nS. America  Fell=53   Found=495   Total=548\nOther       Fell=8    Found=10    Total=18"
+      },
+      "data_table": {
+        "description": "Continent buckets by fall type",
+        "columns": ["continent", "Fell", "Found", "Total"],
+        "rows": [
+          ["Antarctica", 0, 22099, 22099],
+          ["Africa", 163, 10486, 10649],
+          ["Unknown (no coords)", 10, 7305, 7315],
+          ["Asia", 297, 1725, 2022],
+          ["N. America", 182, 1637, 1819],
+          ["Oceania", 28, 638, 666],
+          ["Europe", 366, 213, 579],
+          ["S. America", 53, 495, 548],
+          ["Other", 8, 10, 18]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_22": {
+      "label": "Cross-check on famous meteorites named by Detective",
+      "content": "Each of the five 'flagship' meteorites from the Detective's items resolves cleanly to specific rows in the catalogue: Hoba is row 1 by mass (60,000 kg, Iron IVB, Namibia, 1920); Cape York is row 2 (58,200 kg total in the dataset's main entry, Iron IIIAB, Greenland, 1818); Campo del Cielo is row 3 (50,000 kg, Iron IAB-MG, Argentina, 1575); Canyon Diablo is row 4 (30,000 kg, Iron IAB-MG, Arizona, 1891); Armanty is row 5 (28,000 kg, Iron IIIE, Xinjiang, 1898). Bacubirito (which Detective didn't enumerate but is also in the top 10) sits at 22,000 kg, Mexico, 1863. All have valid coordinates and link directly to the reference images downloaded by Detective.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_top_named.py",
+        "lines": [22, 35],
+        "output": "Hoba 60000000g Iron, IVB Found 1920 lat=-19.58333 lon=17.91667\nCape York 58200000g Iron, IIIAB Found 1818 lat=76.13333 lon=-64.93333\nCampo del Cielo 50000000g Iron, IAB-MG Found 1575 lat=-27.46667 lon=-60.58333\nCanyon Diablo 30000000g Iron, IAB-MG Found 1891 lat=35.05 lon=-111.03333\nArmanty 28000000g Iron, IIIE Found 1898 lat=47.0 lon=88.0\nBacubirito 22000000g Iron, ungrouped Found 1863 lat=26.2 lon=-107.83333"
+      },
+      "data_table": {
+        "description": "Detective's flagship meteorites cross-referenced against the catalogue",
+        "columns": ["name", "mass_kg", "recclass", "fall", "year", "lat", "lon", "det_ref"],
+        "rows": [
+          ["Hoba", 60000, "Iron, IVB", "Found", 1920, -19.58333, 17.91667, "det_05"],
+          ["Cape York", 58200, "Iron, IIIAB", "Found", 1818, 76.13333, -64.93333, "det_08"],
+          ["Campo del Cielo", 50000, "Iron, IAB-MG", "Found", 1575, -27.46667, -60.58333, "det_09"],
+          ["Canyon Diablo", 30000, "Iron, IAB-MG", "Found", 1891, 35.05, -111.03333, "det_06"],
+          ["Armanty", 28000, "Iron, IIIE", "Found", 1898, 47.0, 88.0, "det_10"],
+          ["Bacubirito", 22000, "Iron, ungrouped", "Found", 1863, 26.2, -107.83333, ""]
+        ]
+      },
+      "based_on": ["det_05", "det_06", "det_07", "det_08", "det_09", "det_10"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "16.0% of rows (7,315) have no coordinates. Any geographic analysis silently drops these — they likely include many old European Fells and historical entries with imprecise locations."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "The dataset is frozen ~2013 (the 2010s decade has only 1,963 rows vs ~17,000 in the 2000s). Anything that says 'in the 2010s' or 'recently' is incomplete by design."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "The recclass family classification is rules-based (regex on the recclass string) and approximate. Most 'Stone-uncl' entries from before 1860 were rolled into 'Other / Ungrouped'; this is why that bucket has an anomalous 30% Fell rate."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Mass values for very old meteorites are often the recovered mass, not the impact mass — the original meteoroid was almost certainly larger before atmospheric ablation and post-fall weathering."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "The 5° x 5° hex grid in ana_16 distorts area near the poles (Antarctic cells cover far less ground than equatorial ones), inflating the apparent Antarctic concentration. The qualitative pattern is real, but the absolute cell counts are not directly comparable across latitudes."
+    }
+  ]
+}

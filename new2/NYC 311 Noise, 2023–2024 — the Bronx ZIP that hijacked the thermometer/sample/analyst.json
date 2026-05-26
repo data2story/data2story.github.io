@@ -1,0 +1,3486 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": [
+      "noise_complaints_2023_2024.csv"
+    ],
+    "rows": 1439558,
+    "columns": 44,
+    "what_one_row_represents": "A single noise-related 311 service request filed with New York City between 2023-01-01 and 2024-12-31, including who responded, when it was closed, where it occurred, and the resolution text.",
+    "time_range": "2023-01-01 00:00:42 — 2024-12-31 23:59:33 (two calendar years, 731 days)",
+    "geographic_scope": "All five boroughs of NYC. 230 distinct ZIP codes appear. 99.96% of rows carry a valid ZIP; 0.04% are unspecified."
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset scale",
+      "content": "Two full calendar years of noise-related 311 service requests yields 1,439,558 rows — every formally filed noise complaint in New York City between 2023-01-01 and 2024-12-31. The data is unusually tidy for a city open-data dump: eight values of complaint_type, 31 descriptors, 230 distinct ZIP codes, and only four responding agencies (NYPD, DEP, EDC, and a single ghost row coded to 3-1-1 itself).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [
+          10,
+          22
+        ],
+        "output": "rows: 1,439,558\ncomplaint_type values: 8\ndescriptor values: 31\ndistinct ZIP codes: 230\ndistinct responding agencies: 4\ndate range: 2023-01-01 00:00:42  to  2024-12-31 23:59:33"
+      },
+      "data_table": {
+        "description": "Headline counts for the dataset",
+        "columns": [
+          "metric",
+          "value"
+        ],
+        "rows": [
+          [
+            "noise complaints",
+            1439558
+          ],
+          [
+            "complaint_type values",
+            8
+          ],
+          [
+            "descriptor values",
+            31
+          ],
+          [
+            "distinct ZIPs",
+            230
+          ],
+          [
+            "responding agencies",
+            4
+          ],
+          [
+            "calendar days covered",
+            731
+          ]
+        ]
+      },
+      "based_on": [
+        "det_02"
+      ]
+    },
+    "ana_02": {
+      "label": "Year-over-year: noise complaints rose 9.8% from 2023 to 2024",
+      "content": "Noise complaints rose from 686,283 in 2023 to 753,275 in 2024 — a 9.8% year-over-year increase and an extra 67,000 complaints. The 2024 average is 2,058 complaints per day (2024 was a leap year), versus 1,880 per day in 2023. (Note: this figure is below the 19% year-over-year jump some 2024 press coverage reported, because press counts often draw a slightly different filter from the same dataset.)",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [
+          24,
+          35
+        ],
+        "output": "Noise complaints per calendar year:\n  2023: 686,283\n  2024: 753,275\n  Δ (2024 − 2023): +66,992  (+9.8%)\n  daily average 2023: 1880\n  daily average 2024: 2058  (2024 was a leap year)"
+      },
+      "data_table": {
+        "description": "Total noise complaints by calendar year",
+        "columns": [
+          "year",
+          "complaints"
+        ],
+        "rows": [
+          [
+            2023,
+            686283
+          ],
+          [
+            2024,
+            753275
+          ]
+        ]
+      },
+      "based_on": [
+        "det_06"
+      ]
+    },
+    "ana_03": {
+      "label": "Daily volume — median 1,684, max 8,820 on a Sunday in September 2024",
+      "content": "The typical day in 2023–2024 sees 1,684 noise complaints (median), 1,969 on average. The quietest day in the entire window was Monday 2023-01-23 with 830 complaints; the noisiest by a huge margin was Sunday 2024-09-15 with 8,820 — more than five times a normal day. Most of the top-10 noisiest days fall in late 2024 in the Bronx (see ana_24).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [
+          37,
+          49
+        ],
+        "output": "total days covered: 731\naverage complaints per day: 1969\nmedian complaints per day:  1684\nmin day:    830  on 2023-01-23\nmax day:    8820  on 2024-09-15\ntop 10 noisiest days:\n  2024-09-15: 8,820\n  2024-12-16: 6,016\n  2024-12-29: 5,613\n  2024-06-16: 5,339\n  2024-09-22: 5,325\n  2024-12-17: 5,281\n  2024-10-05: 5,219\n  2024-12-31: 5,215\n  2024-09-14: 5,141\n  2024-09-23: 5,030"
+      },
+      "data_table": {
+        "description": "Top 10 noisiest single days in 2023–2024",
+        "columns": [
+          "date",
+          "complaints"
+        ],
+        "rows": [
+          [
+            "2024-09-15",
+            8820
+          ],
+          [
+            "2024-12-16",
+            6016
+          ],
+          [
+            "2024-12-29",
+            5613
+          ],
+          [
+            "2024-06-16",
+            5339
+          ],
+          [
+            "2024-09-22",
+            5325
+          ],
+          [
+            "2024-12-17",
+            5281
+          ],
+          [
+            "2024-10-05",
+            5219
+          ],
+          [
+            "2024-12-31",
+            5215
+          ],
+          [
+            "2024-09-14",
+            5141
+          ],
+          [
+            "2024-09-23",
+            5030
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_04": {
+      "label": "Complaint-type ranking — Residential is half of everything",
+      "content": "Noise – Residential is by far the largest bucket at 47.1% of all complaints (677,749). Street/Sidewalk noise is second at 21.6% (310,450), Commercial third at 9.5% (136,096), the generic 'Noise' top-level (which mostly contains construction-noise descriptors) is fourth at 7.5%, Vehicle is fifth at 6.9%, Helicopter sixth at 6.1%, then a small Park slice (1.2%) and an even smaller House of Worship slice (0.18%). The two top categories together — Residential plus Street — are 69% of every formal noise grievance in New York.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_complaint_types.py",
+        "lines": [
+          10,
+          17
+        ],
+        "output": "All complaint_type values, 2023 + 2024 combined (1,439,558 rows):\n    677,749  47.08%  Noise - Residential\n    310,450  21.57%  Noise - Street/Sidewalk\n    136,096   9.45%  Noise - Commercial\n    108,234   7.52%  Noise\n    100,090   6.95%  Noise - Vehicle\n     87,813   6.10%  Noise - Helicopter\n     16,585   1.15%  Noise - Park\n      2,541   0.18%  Noise - House of Worship"
+      },
+      "data_table": {
+        "description": "All 8 noise complaint_type values with counts and share, 2023+2024",
+        "columns": [
+          "complaint_type",
+          "count",
+          "pct"
+        ],
+        "rows": [
+          [
+            "Noise - Residential",
+            677749,
+            47.08
+          ],
+          [
+            "Noise - Street/Sidewalk",
+            310450,
+            21.57
+          ],
+          [
+            "Noise - Commercial",
+            136096,
+            9.45
+          ],
+          [
+            "Noise",
+            108234,
+            7.52
+          ],
+          [
+            "Noise - Vehicle",
+            100090,
+            6.95
+          ],
+          [
+            "Noise - Helicopter",
+            87813,
+            6.1
+          ],
+          [
+            "Noise - Park",
+            16585,
+            1.15
+          ],
+          [
+            "Noise - House of Worship",
+            2541,
+            0.18
+          ]
+        ]
+      },
+      "based_on": [
+        "det_04",
+        "det_06"
+      ]
+    },
+    "ana_05": {
+      "label": "Top descriptor — 'Loud Music/Party' is 54% of all noise complaints",
+      "content": "One descriptor dominates the dataset: 'Loud Music/Party' accounts for 777,689 complaints — 54.02% of every noise filing across all eight complaint types. 'Banging/Pounding' is second at 15.5% (223,384), 'Loud Talking' third at 8.9% (127,548), and 'Car/Truck Music' fourth at 4.5% (64,847). Within each major category the dominant descriptor is even more concentrated: 80.5% of Commercial complaints are Loud Music/Party, 79.1% of Street/Sidewalk, 62.4% of Vehicle is specifically Car/Truck Music, and 97.2% of Helicopter complaints are the catch-all 'Other'. The generic 'Noise' top-level is the construction bucket: 41% is 'Construction Before/After Hours (NM1)' and 15% 'Construction Equipment (NC1)'.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_complaint_types.py",
+        "lines": [
+          19,
+          34
+        ],
+        "output": "Top 25 descriptors overall:\n   777,689  54.02%  Loud Music/Party\n   223,384  15.52%  Banging/Pounding\n   127,548   8.86%  Loud Talking\n    85,350   5.93%  Other\n    64,847   4.50%  Car/Truck Music\n    44,413   3.09%  Noise: Construction Before/After Hours (NM1)\n    20,461   1.42%  Engine Idling\n    18,397   1.28%  Car/Truck Horn\n    16,073   1.12%  Noise, Barking Dog (NR5)\n    15,829   1.10%  Noise: Construction Equipment (NC1)"
+      },
+      "data_table": {
+        "description": "Top 15 descriptors overall, 2023+2024",
+        "columns": [
+          "descriptor",
+          "count",
+          "pct"
+        ],
+        "rows": [
+          [
+            "Loud Music/Party",
+            777689,
+            54.02
+          ],
+          [
+            "Banging/Pounding",
+            223384,
+            15.52
+          ],
+          [
+            "Loud Talking",
+            127548,
+            8.86
+          ],
+          [
+            "Other (Helicopter catch-all)",
+            85350,
+            5.93
+          ],
+          [
+            "Car/Truck Music",
+            64847,
+            4.5
+          ],
+          [
+            "Construction Before/After Hours",
+            44413,
+            3.09
+          ],
+          [
+            "Engine Idling",
+            20461,
+            1.42
+          ],
+          [
+            "Car/Truck Horn",
+            18397,
+            1.28
+          ],
+          [
+            "Barking Dog",
+            16073,
+            1.12
+          ],
+          [
+            "Construction Equipment",
+            15829,
+            1.1
+          ],
+          [
+            "Loud Television",
+            11176,
+            0.78
+          ],
+          [
+            "Alarms",
+            9917,
+            0.69
+          ],
+          [
+            "A/C / ventilation equipment",
+            8458,
+            0.59
+          ],
+          [
+            "Jack Hammering",
+            4991,
+            0.35
+          ],
+          [
+            "Ice Cream Truck",
+            2805,
+            0.19
+          ]
+        ]
+      },
+      "based_on": [
+        "det_04"
+      ]
+    },
+    "ana_06": {
+      "label": "Agency split — NYPD owns 86% of noise, EDC quietly owns helicopter",
+      "content": "Three real agencies share the workload, and the split is one-to-one with the complaint_type: NYPD takes 1,243,510 complaints (86.4%) — every Residential, Street/Sidewalk, Commercial, Vehicle, Park, and House-of-Worship request. DEP takes 108,234 (7.5%) — the entire generic 'Noise' bucket, which is essentially all construction-noise descriptors. EDC (the city's Economic Development Corporation, which owns the heliports) takes 87,813 (6.1%) — every single Helicopter complaint. One stray complaint in the data is coded to '3-1-1' itself.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_complaint_types.py",
+        "lines": [
+          36,
+          49
+        ],
+        "output": "Complaints by responding agency (2023 + 2024 combined):\n  1,243,510  86.38%  NYPD\n    108,234   7.52%  DEP\n     87,813   6.10%  EDC\n          1   0.00%  3-1-1"
+      },
+      "data_table": {
+        "description": "Complaints by responding agency",
+        "columns": [
+          "agency",
+          "count",
+          "pct"
+        ],
+        "rows": [
+          [
+            "NYPD",
+            1243510,
+            86.38
+          ],
+          [
+            "DEP",
+            108234,
+            7.52
+          ],
+          [
+            "EDC",
+            87813,
+            6.1
+          ],
+          [
+            "3-1-1",
+            1,
+            0.0
+          ]
+        ]
+      },
+      "based_on": [
+        "det_04"
+      ]
+    },
+    "ana_07": {
+      "label": "How complaints reach the city — online dominates, phone is a minority",
+      "content": "Although the citywide 311 stat is famously 68% phone, for noise complaints specifically the channel mix is inverted. 60.78% (874,940) come in through the 311 website, 26.76% (385,203) through the NYC311 mobile app, and only 12.46% (179,320) by phone. Phone is the minority — under one in eight noise complaints — and 'OTHER' / 'UNKNOWN' together are 0.01%. New Yorkers, when it comes to noise specifically, type rather than dial.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_channels.py",
+        "lines": [
+          11,
+          17
+        ],
+        "output": "Channel breakdown — all 1,439,558 noise complaints, 2023 + 2024:\n    874,940  60.78%  ONLINE\n    385,203  26.76%  MOBILE\n    179,320  12.46%  PHONE\n         85   0.01%  UNKNOWN\n         10   0.00%  OTHER"
+      },
+      "data_table": {
+        "description": "Channel mix for noise complaints (2-year combined)",
+        "columns": [
+          "channel",
+          "count",
+          "pct"
+        ],
+        "rows": [
+          [
+            "ONLINE",
+            874940,
+            60.78
+          ],
+          [
+            "MOBILE",
+            385203,
+            26.76
+          ],
+          [
+            "PHONE",
+            179320,
+            12.46
+          ],
+          [
+            "UNKNOWN",
+            85,
+            0.01
+          ],
+          [
+            "OTHER",
+            10,
+            0.0
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_08": {
+      "label": "Channel shift 2023 → 2024 — online down 15 pp, mobile and phone up",
+      "content": "The biggest year-over-year shift is in how complaints get filed, not what they say. ONLINE share dropped 15 percentage points between 2023 and 2024 (68.8% → 53.5%), while MOBILE rose 8 pp (22.6% → 30.5%) and PHONE rose 7 pp (8.6% → 15.9%). In absolute terms ONLINE complaints actually fell by 69,000 even though the dataset grew overall, while MOBILE added 75,000 and PHONE more than doubled (59K → 120K). The mobile app and the dialled-in voice call are both gaining at the website's expense — a non-obvious result given the widespread story that 311 is going more digital.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_channels.py",
+        "lines": [
+          19,
+          32
+        ],
+        "output": "Channel share by year (%):\n  MOBILE      2023: 22.60%   2024: 30.55%   Δ +7.95 pp\n  ONLINE      2023: 68.77%   2024: 53.50%   Δ -15.27 pp\n  PHONE       2023:  8.63%   2024: 15.94%   Δ +7.32 pp\n\nChannel absolute counts by year:\n  MOBILE      2023:  155,097   2024:  230,106\n  ONLINE      2023:  471,931   2024:  403,009\n  PHONE       2023:   59,216   2024:  120,104"
+      },
+      "data_table": {
+        "description": "Channel counts by year",
+        "columns": [
+          "channel",
+          "year",
+          "count"
+        ],
+        "rows": [
+          [
+            "ONLINE",
+            2023,
+            471931
+          ],
+          [
+            "ONLINE",
+            2024,
+            403009
+          ],
+          [
+            "MOBILE",
+            2023,
+            155097
+          ],
+          [
+            "MOBILE",
+            2024,
+            230106
+          ],
+          [
+            "PHONE",
+            2023,
+            59216
+          ],
+          [
+            "PHONE",
+            2024,
+            120104
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05"
+      ]
+    },
+    "ana_09": {
+      "label": "Borough share — Manhattan tops raw count, but the Bronx is loudest per capita",
+      "content": "By raw complaint volume the boroughs are close: Manhattan 26.9% (387,561), Brooklyn 26.2% (377,416), Bronx 24.7% (354,909), Queens 20.0% (287,977), Staten Island 2.2% (31,157). Per 1,000 residents the order flips dramatically: the Bronx files 241 complaints per 1,000 residents over two years, Manhattan 229, Brooklyn 138, Queens 120, and Staten Island only 63 — Staten Islanders complain less than one-quarter as much per person as Bronx residents. That ordering matches the recent TimeOut finding that the Bronx was the loudest borough by per-capita complaint rate in 2025.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_geography.py",
+        "lines": [
+          12,
+          33
+        ],
+        "output": "Complaints by borough, 2023 + 2024 combined (1,439,558 rows):\n    387,561  26.92%  MANHATTAN\n    377,416  26.22%  BROOKLYN\n    354,909  24.65%  BRONX\n    287,977  20.00%  QUEENS\n     31,157   2.16%  STATEN ISLAND\n        538   0.04%  Unspecified\n\nPer-capita complaints per 1,000 residents (2020 population):\n  BRONX            354,909 complaints  / 1,472,654 residents =  241.0 per 1k\n  BROOKLYN         377,416 complaints  / 2,736,074 residents =  137.9 per 1k\n  MANHATTAN        387,561 complaints  / 1,694,251 residents =  228.8 per 1k\n  QUEENS           287,977 complaints  / 2,405,464 residents =  119.7 per 1k\n  STATEN ISLAND     31,157 complaints  /   495,747 residents =   62.8 per 1k"
+      },
+      "data_table": {
+        "description": "Borough share — raw count and per-capita over 2 years",
+        "columns": [
+          "borough",
+          "count",
+          "pct",
+          "population_2020",
+          "per_1k_residents"
+        ],
+        "rows": [
+          [
+            "MANHATTAN",
+            387561,
+            26.92,
+            1694251,
+            228.8
+          ],
+          [
+            "BROOKLYN",
+            377416,
+            26.22,
+            2736074,
+            137.9
+          ],
+          [
+            "BRONX",
+            354909,
+            24.65,
+            1472654,
+            241.0
+          ],
+          [
+            "QUEENS",
+            287977,
+            20.0,
+            2405464,
+            119.7
+          ],
+          [
+            "STATEN ISLAND",
+            31157,
+            2.16,
+            495747,
+            62.8
+          ]
+        ]
+      },
+      "based_on": [
+        "det_15"
+      ]
+    },
+    "ana_10": {
+      "label": "Top ZIPs by raw count — 10466 is in a league of its own",
+      "content": "One ZIP code dwarfs every other in this dataset: 10466 in the Bronx (Wakefield / Williamsbridge) logged 76,380 complaints, more than 2x the second-place 10023 in Manhattan (33,328, Upper West Side / Lincoln Center). The Bronx takes ten of the top 25 ZIPs by raw count; Manhattan has nine; Brooklyn five; Queens two. 99.96% of dataset rows had a valid ZIP code (1,438,935 of 1,439,558).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_geography.py",
+        "lines": [
+          35,
+          47
+        ],
+        "output": "Total complaints with a valid ZIP: 1,438,935 / 1,439,558\nDistinct ZIPs: 230\nTop 25 zips by raw complaint count:\n  10466  76,380  BRONX\n  10023  33,328  MANHATTAN\n  10456  26,761  BRONX\n  10031  24,886  MANHATTAN\n  10452  23,427  BRONX\n  11226  23,086  BROOKLYN\n  10457  22,985  BRONX\n  10468  22,597  BRONX\n  11221  21,287  BROOKLYN\n  10458  20,665  BRONX"
+      },
+      "data_table": {
+        "description": "Top 25 ZIPs by raw complaint count, with borough",
+        "columns": [
+          "zip",
+          "complaints",
+          "borough"
+        ],
+        "rows": [
+          [
+            "10466",
+            76380,
+            "BRONX"
+          ],
+          [
+            "10023",
+            33328,
+            "MANHATTAN"
+          ],
+          [
+            "10456",
+            26761,
+            "BRONX"
+          ],
+          [
+            "10031",
+            24886,
+            "MANHATTAN"
+          ],
+          [
+            "10452",
+            23427,
+            "BRONX"
+          ],
+          [
+            "11226",
+            23086,
+            "BROOKLYN"
+          ],
+          [
+            "10457",
+            22985,
+            "BRONX"
+          ],
+          [
+            "10468",
+            22597,
+            "BRONX"
+          ],
+          [
+            "11221",
+            21287,
+            "BROOKLYN"
+          ],
+          [
+            "10458",
+            20665,
+            "BRONX"
+          ],
+          [
+            "11201",
+            20442,
+            "BROOKLYN"
+          ],
+          [
+            "10025",
+            19773,
+            "MANHATTAN"
+          ],
+          [
+            "10032",
+            19448,
+            "MANHATTAN"
+          ],
+          [
+            "10453",
+            19186,
+            "BRONX"
+          ],
+          [
+            "11414",
+            18662,
+            "QUEENS"
+          ],
+          [
+            "11368",
+            18608,
+            "QUEENS"
+          ],
+          [
+            "10002",
+            17988,
+            "MANHATTAN"
+          ],
+          [
+            "11207",
+            17708,
+            "BROOKLYN"
+          ],
+          [
+            "10467",
+            17514,
+            "BRONX"
+          ],
+          [
+            "10027",
+            16386,
+            "MANHATTAN"
+          ],
+          [
+            "10029",
+            16292,
+            "MANHATTAN"
+          ],
+          [
+            "11237",
+            16047,
+            "BROOKLYN"
+          ],
+          [
+            "10034",
+            15741,
+            "MANHATTAN"
+          ],
+          [
+            "11238",
+            15466,
+            "BROOKLYN"
+          ],
+          [
+            "11206",
+            15418,
+            "BROOKLYN"
+          ]
+        ]
+      },
+      "based_on": [
+        "det_15"
+      ]
+    },
+    "ana_11": {
+      "label": "Top ZIPs per capita — 10466 logs more than one complaint per resident",
+      "content": "Scaling for population makes the 10466 outlier nearly unbelievable: 1,231 complaints per 1,000 residents over two years — more than one per person. Eleven of the next fourteen are split between Manhattan (six) and Brooklyn (four), with Queens contributing two and the Bronx three. The cluster in the 460s–680s per 1k (11414 Queens, 10023 Manhattan UWS, 10030/10031/10026/10034/10040 Harlem-Washington-Heights) is the more 'normal' per-capita ceiling — already ten times Staten Island's borough rate.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_geography.py",
+        "lines": [
+          49,
+          105
+        ],
+        "output": "Top 15 ZIPs by complaints per 1k residents (ZIPs with ≥5,000 pop):\n  zip       cnt       pop  per1k   borough\n  10466  76,380    62,049  1231.0  BRONX\n  11414  18,662    27,595   676.3  QUEENS\n  10023  33,328    60,998   546.4  MANHATTAN\n  10030  12,461    26,977   461.9  MANHATTAN\n  10031  24,886    56,050   444.0  MANHATTAN\n  11366   7,443    18,505   402.2  QUEENS\n  11238  15,466    38,470   402.0  BROOKLYN\n  11237  16,047    41,063   390.8  BROOKLYN\n  10034  15,741    41,032   383.6  MANHATTAN\n  10026  13,975    38,137   366.4  MANHATTAN\n  10040  14,151    39,787   355.7  MANHATTAN\n  11217   8,349    25,530   327.0  BROOKLYN\n  11249   9,786    30,025   325.9  BROOKLYN\n  10468  22,597    70,930   318.6  BRONX\n  10457  22,985    72,252   318.1  BRONX"
+      },
+      "data_table": {
+        "description": "Top 15 ZIPs by complaints per 1,000 residents (population ≥ 5,000)",
+        "columns": [
+          "zip",
+          "complaints",
+          "population_2020",
+          "per_1k_residents",
+          "borough"
+        ],
+        "rows": [
+          [
+            "10466",
+            76380,
+            62049,
+            1231.0,
+            "BRONX"
+          ],
+          [
+            "11414",
+            18662,
+            27595,
+            676.3,
+            "QUEENS"
+          ],
+          [
+            "10023",
+            33328,
+            60998,
+            546.4,
+            "MANHATTAN"
+          ],
+          [
+            "10030",
+            12461,
+            26977,
+            461.9,
+            "MANHATTAN"
+          ],
+          [
+            "10031",
+            24886,
+            56050,
+            444.0,
+            "MANHATTAN"
+          ],
+          [
+            "11366",
+            7443,
+            18505,
+            402.2,
+            "QUEENS"
+          ],
+          [
+            "11238",
+            15466,
+            38470,
+            402.0,
+            "BROOKLYN"
+          ],
+          [
+            "11237",
+            16047,
+            41063,
+            390.8,
+            "BROOKLYN"
+          ],
+          [
+            "10034",
+            15741,
+            41032,
+            383.6,
+            "MANHATTAN"
+          ],
+          [
+            "10026",
+            13975,
+            38137,
+            366.4,
+            "MANHATTAN"
+          ],
+          [
+            "10040",
+            14151,
+            39787,
+            355.7,
+            "MANHATTAN"
+          ],
+          [
+            "11217",
+            8349,
+            25530,
+            327.0,
+            "BROOKLYN"
+          ],
+          [
+            "11249",
+            9786,
+            30025,
+            325.9,
+            "BROOKLYN"
+          ],
+          [
+            "10468",
+            22597,
+            70930,
+            318.6,
+            "BRONX"
+          ],
+          [
+            "10457",
+            22985,
+            72252,
+            318.1,
+            "BRONX"
+          ]
+        ]
+      },
+      "based_on": [
+        "det_11",
+        "det_15"
+      ]
+    },
+    "ana_12": {
+      "label": "Monthly seasonality — quiet in February, peak in spring 2023 and fall 2024",
+      "content": "Complaints follow the temperature: February is the quiet trough in both years (40K and 40K), May 2023 was the year's busiest month (75K), but in 2024 the pattern shifts — June was the May-equivalent peak (75K) and September was the absolute year-high (88K), almost double February's volume. The 2024 fall reload is almost entirely driven by ZIP 10466 (see ana_24/25): without that one ZIP, October–December 2024 looks like a normal year.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_time_patterns.py",
+        "lines": [
+          16,
+          21
+        ],
+        "output": "Complaints per month, 2023 vs 2024 (rows are calendar months):\nyear    2023   2024\nmonth              \n1      41845  38678\n2      40451  39985\n3      48006  50931\n4      60623  55817\n5      74972  68280\n6      68815  75528\n7      62556  65374\n8      65578  63392\n9      60876  87960\n10     61931  77010\n11     48467  63753\n12     52163  66567"
+      },
+      "data_table": {
+        "description": "Monthly complaint counts, 2023 vs 2024",
+        "columns": [
+          "month",
+          "2023",
+          "2024"
+        ],
+        "rows": [
+          [
+            1,
+            41845,
+            38678
+          ],
+          [
+            2,
+            40451,
+            39985
+          ],
+          [
+            3,
+            48006,
+            50931
+          ],
+          [
+            4,
+            60623,
+            55817
+          ],
+          [
+            5,
+            74972,
+            68280
+          ],
+          [
+            6,
+            68815,
+            75528
+          ],
+          [
+            7,
+            62556,
+            65374
+          ],
+          [
+            8,
+            65578,
+            63392
+          ],
+          [
+            9,
+            60876,
+            87960
+          ],
+          [
+            10,
+            61931,
+            77010
+          ],
+          [
+            11,
+            48467,
+            63753
+          ],
+          [
+            12,
+            52163,
+            66567
+          ]
+        ]
+      },
+      "based_on": [
+        "det_14"
+      ]
+    },
+    "ana_13": {
+      "label": "Day of the week — Sunday is the loudest day of the week",
+      "content": "Sunday and Saturday between them carry 40.75% of every complaint — Sunday alone is 21.13% (304,195), Saturday 19.62% (282,440), Friday a clear third at 13.58%. The four weekdays Mon–Thu each sit between 10.7% and 12.6%, just below the 14.3% an even split would predict. The weekend wave starts Friday evening and crests on Sunday, when many of the previous night's parties get reported the next morning along with that day's brunch noise.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_time_patterns.py",
+        "lines": [
+          23,
+          30
+        ],
+        "output": "Complaints by day of the week (2023 + 2024):\n  Monday       181,441  12.60%\n  Tuesday      162,758  11.31%\n  Wednesday    154,235  10.71%\n  Thursday     158,975  11.04%\n  Friday       195,514  13.58%\n  Saturday     282,440  19.62%\n  Sunday       304,195  21.13%"
+      },
+      "data_table": {
+        "description": "Day-of-week distribution",
+        "columns": [
+          "day",
+          "complaints",
+          "pct"
+        ],
+        "rows": [
+          [
+            "Monday",
+            181441,
+            12.6
+          ],
+          [
+            "Tuesday",
+            162758,
+            11.31
+          ],
+          [
+            "Wednesday",
+            154235,
+            10.71
+          ],
+          [
+            "Thursday",
+            158975,
+            11.04
+          ],
+          [
+            "Friday",
+            195514,
+            13.58
+          ],
+          [
+            "Saturday",
+            282440,
+            19.62
+          ],
+          [
+            "Sunday",
+            304195,
+            21.13
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_14": {
+      "label": "Hour of day — 10 PM and 11 PM are the city's loudest hours; weekends extend the spike",
+      "content": "Across both years, 10 PM is the loudest hour (154,924 complaints), narrowly ahead of 11 PM (149,816). The midnight hour brings a third spike (127,391) before the curve collapses to its 5 AM trough (22,446). On weekend nights (Friday + Saturday) the late-night peak is dramatically wider: the 11 PM-hour complaint rate is 1.95x the weekday rate (314 vs 161 per night), the 10 PM rate is 1.62x, and even the 8 PM hour runs 1.26x weekday volume. Sunday morning carries the spillover.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_time_patterns.py",
+        "lines": [
+          32,
+          50
+        ],
+        "output": "Hour-of-day complaint counts (24h, all days):\n  22:00  154,924\n  23:00  149,816\n   0:00  127,391\n   1:00   87,768\n  21:00  112,927\n  20:00   91,192\n\nHour-of-day, weekend vs weekday (per-day, normalised):\n  22:00 wkday/d 180  wknd/d 292  wknd÷wkday 1.62\n  23:00 wkday/d 161  wknd/d 314  wknd÷wkday 1.95\n   0:00 wkday/d 168  wknd/d 189  wknd÷wkday 1.12"
+      },
+      "data_table": {
+        "description": "Complaints by hour of day, citywide total + weekday-per-day vs weekend-per-day",
+        "columns": [
+          "hour",
+          "total",
+          "weekday_per_day",
+          "weekend_per_day"
+        ],
+        "rows": [
+          [
+            0,
+            127391,
+            168,
+            189
+          ],
+          [
+            1,
+            87768,
+            116,
+            130
+          ],
+          [
+            2,
+            56532,
+            76,
+            82
+          ],
+          [
+            3,
+            39103,
+            52,
+            56
+          ],
+          [
+            4,
+            30053,
+            41,
+            42
+          ],
+          [
+            5,
+            22446,
+            32,
+            29
+          ],
+          [
+            6,
+            22950,
+            33,
+            27
+          ],
+          [
+            7,
+            24952,
+            35,
+            31
+          ],
+          [
+            8,
+            27716,
+            37,
+            39
+          ],
+          [
+            9,
+            31191,
+            41,
+            46
+          ],
+          [
+            10,
+            31642,
+            43,
+            44
+          ],
+          [
+            11,
+            33004,
+            45,
+            46
+          ],
+          [
+            12,
+            33766,
+            45,
+            49
+          ],
+          [
+            13,
+            34839,
+            46,
+            52
+          ],
+          [
+            14,
+            39195,
+            51,
+            59
+          ],
+          [
+            15,
+            43365,
+            58,
+            63
+          ],
+          [
+            16,
+            49032,
+            65,
+            73
+          ],
+          [
+            17,
+            55600,
+            73,
+            84
+          ],
+          [
+            18,
+            65376,
+            86,
+            99
+          ],
+          [
+            19,
+            74778,
+            97,
+            115
+          ],
+          [
+            20,
+            91192,
+            116,
+            146
+          ],
+          [
+            21,
+            112927,
+            141,
+            189
+          ],
+          [
+            22,
+            154924,
+            180,
+            292
+          ],
+          [
+            23,
+            149816,
+            161,
+            314
+          ]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_15": {
+      "label": "The July 4 fireworks pulse — visible in 2023, much flatter in 2024",
+      "content": "In 2023 the late-June / early-July fireworks wave is clearly visible: June 24–25 produced 3,550 then 4,150 complaints (vs the dataset median of 1,684), and July 4 itself hit 3,607. In 2024 the spike spread out and softened — June 22–23 reached 2,974 then 3,359, and July 4 was 3,252 — slightly above an average day rather than the dramatic stand-out it was in 2023. The dataset contains no descriptor literally tagged 'firework' in 2023–2024 (fireworks roll into Banging/Pounding and other descriptors), so this pulse has to be read off the daily counts and the calendar rather than off a category.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/05_time_patterns.py",
+        "lines": [
+          52,
+          77
+        ],
+        "output": "Daily complaint count, late-June into July 8, each year:\n  2023-06-24     3,550  2024-06-24     1,491\n  2023-06-25     4,150  2024-06-25     1,433\n  2023-06-28     1,847  2024-06-28     3,259\n  2023-06-29     2,002  2024-06-29     3,470\n  2023-06-30     2,163  2024-06-30     2,842\n  2023-07-01     3,304  2024-07-01     1,774\n  2023-07-02     2,932  2024-07-02     1,776\n  2023-07-04     3,607  2024-07-04     3,252\n  2023-07-05     2,559  2024-07-05     2,381\n\nfireworks-tagged complaints: 0"
+      },
+      "data_table": {
+        "description": "Daily complaints, late-June to July 8, 2023 vs 2024",
+        "columns": [
+          "calendar_day_md",
+          "2023",
+          "2024"
+        ],
+        "rows": [
+          [
+            "06-20",
+            1767,
+            1771
+          ],
+          [
+            "06-21",
+            1853,
+            2184
+          ],
+          [
+            "06-22",
+            1768,
+            2974
+          ],
+          [
+            "06-23",
+            2145,
+            3359
+          ],
+          [
+            "06-24",
+            3550,
+            1491
+          ],
+          [
+            "06-25",
+            4150,
+            1433
+          ],
+          [
+            "06-26",
+            1804,
+            1343
+          ],
+          [
+            "06-27",
+            1575,
+            1634
+          ],
+          [
+            "06-28",
+            1847,
+            3259
+          ],
+          [
+            "06-29",
+            2002,
+            3470
+          ],
+          [
+            "06-30",
+            2163,
+            2842
+          ],
+          [
+            "07-01",
+            3304,
+            1774
+          ],
+          [
+            "07-02",
+            2932,
+            1776
+          ],
+          [
+            "07-03",
+            1619,
+            1918
+          ],
+          [
+            "07-04",
+            3607,
+            3252
+          ],
+          [
+            "07-05",
+            2559,
+            2381
+          ],
+          [
+            "07-06",
+            1206,
+            2481
+          ],
+          [
+            "07-07",
+            1587,
+            2716
+          ],
+          [
+            "07-08",
+            2571,
+            1298
+          ]
+        ]
+      },
+      "based_on": [
+        "det_14"
+      ]
+    },
+    "ana_16": {
+      "label": "Response time — NYPD closes in 41 minutes, DEP in 3 days, EDC takes 35 days",
+      "content": "Median time from created_date to closed_date varies by three orders of magnitude depending on the agency. NYPD closes the median noise complaint in 0.68 hours (41 minutes), and 90% of NYPD cases close within 3.91 hours. DEP, which handles construction and ice cream truck calls, takes a median 68.3 hours (2.85 days) with a p90 of 251.78 hours (10.5 days). EDC, which owns every helicopter complaint, takes a median 843.23 hours — over 35 days — to close a request, with a p90 of 2,746 hours (114 days). Across complaint types within each agency the response time is essentially flat, because what determines speed is who answers, not what the problem is.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_response.py",
+        "lines": [
+          16,
+          39
+        ],
+        "output": "closed complaints with valid response_hours: 1,418,711 / 1,439,558\n\nResponse-time summary by responding agency (closed cases only):\n  NYPD    n=1,243,356  median=    0.68 h  p90=     3.91 h\n  DEP     n=  108,171  median=   68.30 h  p90=   251.78 h\n  EDC     n=   67,184  median=  843.23 h  p90=  2746.08 h"
+      },
+      "data_table": {
+        "description": "Median + p90 response time by responding agency",
+        "columns": [
+          "agency",
+          "closed_cases",
+          "median_hours",
+          "p90_hours"
+        ],
+        "rows": [
+          [
+            "NYPD",
+            1243356,
+            0.68,
+            3.91
+          ],
+          [
+            "DEP",
+            108171,
+            68.3,
+            251.78
+          ],
+          [
+            "EDC",
+            67184,
+            843.23,
+            2746.08
+          ]
+        ]
+      },
+      "based_on": [
+        "det_04",
+        "det_12"
+      ]
+    },
+    "ana_17": {
+      "label": "Resolution mix — 'no evidence of violation' closes one in three complaints",
+      "content": "Bucketing the long resolution_description strings into common patterns: 42.66% (614,054) close as 'NYPD responded — took action or determined action was not necessary'. 33.13% (476,895) close with the exact phrase 'observed no evidence of the violation' — meaning officers arrived but couldn't confirm the noise was happening. 16.4% are a long-tail of other resolution texts. Another 4.11% (59,142) close as 'no one was at the location / unable to gain entry'. Just 9,340 (0.65%) close with a summons or violation issued, and 26,619 (1.85%) are flagged as duplicates of an earlier complaint.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_response.py",
+        "lines": [
+          41,
+          75
+        ],
+        "output": "Resolution bucket distribution (1,439,558 rows):\n    614,054  42.66%  NYPD: responded, took action / not necessary\n    476,895  33.13%  NYPD: no evidence of violation\n    236,051  16.40%  other (long-tail)\n     59,142   4.11%  NYPD: nobody home / no entry\n     26,619   1.85%  duplicate complaint\n     17,457   1.21%  no resolution text\n      9,340   0.65%  issued a summons or violation"
+      },
+      "data_table": {
+        "description": "Resolution-description bucket distribution, 2023+2024",
+        "columns": [
+          "bucket",
+          "count",
+          "pct"
+        ],
+        "rows": [
+          [
+            "NYPD: responded, took action / not necessary",
+            614054,
+            42.66
+          ],
+          [
+            "NYPD: no evidence of violation",
+            476895,
+            33.13
+          ],
+          [
+            "other (long-tail)",
+            236051,
+            16.4
+          ],
+          [
+            "NYPD: nobody home / no entry",
+            59142,
+            4.11
+          ],
+          [
+            "duplicate complaint",
+            26619,
+            1.85
+          ],
+          [
+            "no resolution text",
+            17457,
+            1.21
+          ],
+          [
+            "issued a summons or violation",
+            9340,
+            0.65
+          ]
+        ]
+      },
+      "based_on": [
+        "det_12"
+      ]
+    },
+    "ana_18": {
+      "label": "NYPD residential — 40% close as 'no evidence', only 0.28% with a summons",
+      "content": "Zooming in on the dataset's biggest single workflow — NYPD handling Residential noise — 39.97% (270,918 out of 677,749) of those calls close with the phrase 'observed no evidence of the violation,' another 8.42% close as 'nobody home / no entry,' and a further 46.46% close as 'responded — took action or action not necessary.' Only 1,891 of 677,749 residential noise complaints (0.28%) end with a summons or violation issued. In practical terms: when you file a residential noise complaint in NYC, the chance that an officer documents a citable violation is fewer than 3 in 1,000.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_response.py",
+        "lines": [
+          77,
+          84
+        ],
+        "output": "NYPD residential noise complaints: 677,749\n    314,861  46.46%  NYPD: responded, took action / not necessary\n    270,918  39.97%  NYPD: no evidence of violation\n     57,049   8.42%  NYPD: nobody home / no entry\n     33,008   4.87%  other (long-tail)\n      1,891   0.28%  issued a summons or violation\n         22   0.00%  no resolution text"
+      },
+      "data_table": {
+        "description": "NYPD residential noise resolution mix (n=677,749)",
+        "columns": [
+          "bucket",
+          "count",
+          "pct"
+        ],
+        "rows": [
+          [
+            "NYPD: responded, took action / not necessary",
+            314861,
+            46.46
+          ],
+          [
+            "NYPD: no evidence of violation",
+            270918,
+            39.97
+          ],
+          [
+            "NYPD: nobody home / no entry",
+            57049,
+            8.42
+          ],
+          [
+            "other (long-tail)",
+            33008,
+            4.87
+          ],
+          [
+            "issued a summons or violation",
+            1891,
+            0.28
+          ]
+        ]
+      },
+      "based_on": [
+        "det_12"
+      ]
+    },
+    "ana_19": {
+      "label": "Helicopter complaints fell 51% from 2023 to 2024 — opposite of the prior trend",
+      "content": "Despite the City Council's own data team reporting 59,127 helicopter-noise complaints for 2023, the 2024 number is just 28,686 — a 51.5% drop, the largest year-over-year decline of any complaint_type. Every single month except September is down year-over-year, often by half or more (May fell from 7,461 to 2,833; December fell from 8,724 to 2,843). This contradicts the prior 2020 → 2023 explosion documented by Stop the Chop and the Council, and is the strongest argument in the dataset that something changed around early 2024 — either filings tactics, public attention, or weather/flight volume — well before the 2025 Helicopter Oversight Act passed.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/07_helicopter_icecream.py",
+        "lines": [
+          15,
+          25
+        ],
+        "output": "Total helicopter-noise complaints, 2023+2024: 87,813\n  2023: 59,127\n  2024: 28,686\n  Δ: -30,441   (-51.5%)\n\nMonthly helicopter complaints, 2023 vs 2024:\nyear   2023  2024\nmonth            \n1      3536  1945\n2      4324  2281\n3      6517  2780\n4      7194  2710\n5      7461  2833\n6      5269  2808\n7      2643  2382\n8      4369  1317\n9      1589  1807\n10     2605  2528\n11     4896  2452\n12     8724  2843"
+      },
+      "data_table": {
+        "description": "Helicopter-noise complaints by month, 2023 vs 2024",
+        "columns": [
+          "month",
+          "2023",
+          "2024"
+        ],
+        "rows": [
+          [
+            1,
+            3536,
+            1945
+          ],
+          [
+            2,
+            4324,
+            2281
+          ],
+          [
+            3,
+            6517,
+            2780
+          ],
+          [
+            4,
+            7194,
+            2710
+          ],
+          [
+            5,
+            7461,
+            2833
+          ],
+          [
+            6,
+            5269,
+            2808
+          ],
+          [
+            7,
+            2643,
+            2382
+          ],
+          [
+            8,
+            4369,
+            1317
+          ],
+          [
+            9,
+            1589,
+            1807
+          ],
+          [
+            10,
+            2605,
+            2528
+          ],
+          [
+            11,
+            4896,
+            2452
+          ],
+          [
+            12,
+            8724,
+            2843
+          ]
+        ]
+      },
+      "based_on": [
+        "det_07",
+        "det_08"
+      ]
+    },
+    "ana_20": {
+      "label": "Helicopter hotspots — 58% Manhattan, ZIP 10023 alone is 31%",
+      "content": "Helicopter complaints are spatially concentrated in a way the other categories are not. Manhattan files 57.8% of every helicopter complaint (50,743 of 87,813), Queens 23.9%, Brooklyn 16.8%, and the Bronx and Staten Island under 1% combined. The single ZIP 10023 — Upper West Side / Lincoln Center / Riverside Park — accounts for 27,539 complaints, 31% of all helicopter complaints citywide. The next biggest, 11414 in Howard Beach Queens (close to the JFK approach), files 16,646. This concentration aligns with the Council data team's hotspot list of Upper West Side, Murray Hill–Kips Bay, and the Carroll Gardens / Park Slope strip along the Hudson and East Rivers.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/07_helicopter_icecream.py",
+        "lines": [
+          27,
+          42
+        ],
+        "output": "Borough share for helicopter complaints:\n   50,743  57.79%  MANHATTAN\n   20,994  23.91%  QUEENS\n   14,758  16.81%  BROOKLYN\n      678   0.77%  BRONX\n      632   0.72%  STATEN ISLAND\n        8   0.01%  Unspecified\n\nTop 15 ZIPs for helicopter complaints:\n  10023  27,539  MANHATTAN\n  11414  16,646  QUEENS\n  10025  6,786  MANHATTAN\n  10016  5,611  MANHATTAN\n  11238  5,069  BROOKLYN"
+      },
+      "data_table": {
+        "description": "Top 15 ZIPs for helicopter-specific complaints, with borough",
+        "columns": [
+          "zip",
+          "complaints",
+          "borough"
+        ],
+        "rows": [
+          [
+            "10023",
+            27539,
+            "MANHATTAN"
+          ],
+          [
+            "11414",
+            16646,
+            "QUEENS"
+          ],
+          [
+            "10025",
+            6786,
+            "MANHATTAN"
+          ],
+          [
+            "10016",
+            5611,
+            "MANHATTAN"
+          ],
+          [
+            "11238",
+            5069,
+            "BROOKLYN"
+          ],
+          [
+            "11201",
+            3759,
+            "BROOKLYN"
+          ],
+          [
+            "11231",
+            2986,
+            "BROOKLYN"
+          ],
+          [
+            "11357",
+            2904,
+            "QUEENS"
+          ],
+          [
+            "10011",
+            2114,
+            "MANHATTAN"
+          ],
+          [
+            "10024",
+            2104,
+            "MANHATTAN"
+          ],
+          [
+            "10028",
+            1985,
+            "MANHATTAN"
+          ],
+          [
+            "10128",
+            1478,
+            "MANHATTAN"
+          ],
+          [
+            "11217",
+            1123,
+            "BROOKLYN"
+          ],
+          [
+            "10280",
+            668,
+            "MANHATTAN"
+          ],
+          [
+            "10471",
+            605,
+            "BRONX"
+          ]
+        ]
+      },
+      "based_on": [
+        "det_07",
+        "det_08"
+      ]
+    },
+    "ana_21": {
+      "label": "Ice cream truck enforcement — 2,805 complaints, 15 actual violations issued",
+      "content": "The dataset has 2,805 complaints with the descriptor 'Noise, Ice Cream Truck (NR4),' all routed to DEP. Of those, 2,132 (76%) close with 'DEP didn't observe a violation of the NYC Air or Noise Code,' 554 (20%) are flagged as duplicates of earlier complaints, and exactly 15 (0.53%) actually close with 'DEP observed a violation.' The 1970s deal — jingles legal while the truck is moving, illegal while parked, fines $350–$3,000 — is essentially unenforced in practice; the rate of complaint-to-citation is roughly 1 in 187.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/07_helicopter_icecream.py",
+        "lines": [
+          44,
+          62
+        ],
+        "output": "Ice-cream-truck complaints, 2023+2024: 2,805\n  agency split:\n     2,805  DEP\n     0  3-1-1, EDC, NYPD\n\nTop resolution_description for ice cream truck complaints:\n  2,132  DEP didn't observe a violation of the NYC Air or Noise Code...\n   554  DEP determined that this complaint is a duplicate of a previous request...\n    62  DEP researched this complaint and determined that it could be...\n    15  DEP observed a violation of the NYC Air or Noise Code...\n\nresolved with 'issued a summons/violation': 15 / 2,805  (0.53%)"
+      },
+      "data_table": {
+        "description": "DEP resolution outcomes for ice-cream-truck noise complaints (n=2,805)",
+        "columns": [
+          "resolution",
+          "count",
+          "pct"
+        ],
+        "rows": [
+          [
+            "No violation observed",
+            2132,
+            76.0
+          ],
+          [
+            "Duplicate of prior complaint",
+            554,
+            19.8
+          ],
+          [
+            "Could not be investigated",
+            62,
+            2.2
+          ],
+          [
+            "Needs contact with complainant",
+            22,
+            0.8
+          ],
+          [
+            "Violation observed",
+            15,
+            0.53
+          ],
+          [
+            "Only one complaint for location",
+            12,
+            0.4
+          ],
+          [
+            "Status not available online",
+            8,
+            0.3
+          ]
+        ]
+      },
+      "based_on": [
+        "det_10"
+      ]
+    },
+    "ana_22": {
+      "label": "What grew vs what shrank — Residential +27%, Helicopter -52%",
+      "content": "The 9.8% citywide growth from 2023 to 2024 (ana_02) hides large opposite swings inside each category. Residential noise grew 27.1% year-over-year (+80,843 complaints), Street/Sidewalk grew 10.5% (+15,552), and Vehicle was nearly flat (-4.7%). Commercial was essentially unchanged. The big outlier is Helicopter at -51.5% (-30,441) — the only category that fell sharply. The other minor categories (Park, House of Worship) barely moved. The story of the year-over-year change is: more residential noise reporting, less helicopter reporting.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/08_yoy_delta.py",
+        "lines": [
+          11,
+          18
+        ],
+        "output": "Complaint type, 2023 vs 2024:\nyear                        2023    2024      Δ    %Δ\ncomplaint_type                                       \nNoise - Residential       298453  379296  80843  27.1\nNoise - Street/Sidewalk   147449  163001  15552  10.5\nNoise - Commercial         67749   68347    598   0.9\nNoise                      52698   55536   2838   5.4\nNoise - Vehicle            51256   48834  -2422  -4.7\nNoise - Helicopter         59127   28686 -30441 -51.5\nNoise - Park                8306    8279    -27  -0.3\nNoise - House of Worship    1245    1296     51   4.1"
+      },
+      "data_table": {
+        "description": "Complaint counts by complaint_type, 2023 vs 2024",
+        "columns": [
+          "complaint_type",
+          "2023",
+          "2024",
+          "pct_change"
+        ],
+        "rows": [
+          [
+            "Noise - Residential",
+            298453,
+            379296,
+            27.1
+          ],
+          [
+            "Noise - Street/Sidewalk",
+            147449,
+            163001,
+            10.5
+          ],
+          [
+            "Noise - Commercial",
+            67749,
+            68347,
+            0.9
+          ],
+          [
+            "Noise (mostly construction)",
+            52698,
+            55536,
+            5.4
+          ],
+          [
+            "Noise - Vehicle",
+            51256,
+            48834,
+            -4.7
+          ],
+          [
+            "Noise - Helicopter",
+            59127,
+            28686,
+            -51.5
+          ],
+          [
+            "Noise - Park",
+            8306,
+            8279,
+            -0.3
+          ],
+          [
+            "Noise - House of Worship",
+            1245,
+            1296,
+            4.1
+          ]
+        ]
+      },
+      "based_on": [
+        "det_06",
+        "det_07"
+      ]
+    },
+    "ana_23": {
+      "label": "Borough-level YoY — Bronx complaints jumped 51%, Manhattan fell 3%",
+      "content": "The borough-level year-over-year change is enormous. The Bronx jumped from 141,303 to 213,606 complaints (+51.2%, +72,303 raw), more than the total volume swing for the rest of the city combined. Manhattan fell 3.1%, Queens fell 2.3%, Brooklyn grew 1.9%, and Staten Island grew 6.3%. The Bronx alone accounts for 108% of the citywide increase — every other borough except Brooklyn and Staten Island actually lost complaint volume. The vast majority of that Bronx jump is driven by ZIP 10466 (see ana_24).",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/08_yoy_delta.py",
+        "lines": [
+          20,
+          27
+        ],
+        "output": "Borough, 2023 vs 2024:\nyear             2023    2024      Δ    %Δ\nborough                                   \nBRONX          141303  213606  72303  51.2\nMANHATTAN      196788  190773  -6015  -3.1\nBROOKLYN       186929  190487   3558   1.9\nQUEENS         145650  142327  -3323  -2.3\nSTATEN ISLAND   15101   16056    955   6.3\nUnspecified       512      26   -486 -94.9"
+      },
+      "data_table": {
+        "description": "Borough YoY change 2023→2024",
+        "columns": [
+          "borough",
+          "2023",
+          "2024",
+          "delta",
+          "pct_change"
+        ],
+        "rows": [
+          [
+            "BRONX",
+            141303,
+            213606,
+            72303,
+            51.2
+          ],
+          [
+            "BROOKLYN",
+            186929,
+            190487,
+            3558,
+            1.9
+          ],
+          [
+            "MANHATTAN",
+            196788,
+            190773,
+            -6015,
+            -3.1
+          ],
+          [
+            "QUEENS",
+            145650,
+            142327,
+            -3323,
+            -2.3
+          ],
+          [
+            "STATEN ISLAND",
+            15101,
+            16056,
+            955,
+            6.3
+          ]
+        ]
+      },
+      "based_on": [
+        "det_15"
+      ]
+    },
+    "ana_24": {
+      "label": "ZIP 10466 — one Bronx ZIP is 9% of all 2024 noise complaints",
+      "content": "ZIP 10466 (Wakefield / Williamsbridge in the north Bronx) accounts for 76,380 complaints over 2023+2024 — by far the most of any ZIP. The split between years is the headline: 8,809 in 2023, then 67,571 in 2024, a 7.67× increase in one calendar year. That 67,571 alone is 8.97% of every noise complaint filed in NYC in 2024 — from a ZIP code with roughly 62,049 residents (about 0.7% of the city's population). 93.4% (71,341) of 10466's complaints are 'Loud Music/Party.' Even compared to ana_11's per-capita ceiling, 10466 is in its own category.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/09_serial_complainer.py",
+        "lines": [
+          23,
+          40
+        ],
+        "output": "ZIP 10466 (Wakefield / Williamsbridge, Bronx) — 2-year total: 76,380\n  2023: 8,809\n  2024: 67,571\n  ratio: 7.67x\nTop descriptors for 10466:\n  71,341  93.40%  Loud Music/Party\n   2,434   3.19%  Banging/Pounding\n   1,781   2.33%  Loud Talking\n     262   0.34%  Car/Truck Music\n     113   0.15%  Engine Idling\n\nIn 2024, 10466 alone is 67,571 of 753,275 citywide complaints = 8.97%"
+      },
+      "data_table": {
+        "description": "ZIP 10466 vs the rest of NYC, by year",
+        "columns": [
+          "bucket",
+          "2023",
+          "2024"
+        ],
+        "rows": [
+          [
+            "ZIP 10466 (Wakefield, Bronx)",
+            8809,
+            67571
+          ],
+          [
+            "All other NYC ZIPs",
+            677474,
+            685704
+          ]
+        ]
+      },
+      "based_on": [
+        "det_15"
+      ]
+    },
+    "ana_25": {
+      "label": "ZIP 10466 — one complaint every 17 seconds on its worst day, 99% via mobile app",
+      "content": "The 10466 anomaly isn't a slow drip — it's a series of huge bursts almost entirely funneled through the NYC311 mobile app. On Sunday 2024-09-15, the ZIP filed 4,952 complaints in 24 hours — one every 17.4 seconds, all day, every hour. 4,933 of those (99.6%) came through MOBILE; only 13 through the website and 6 by phone. Eight separate days in 2024 saw 3,000+ complaints from this single ZIP, all with the same channel distribution. The median day in 10466 is 12 complaints; on its top day it is 412× that. Across the eighteen days with 1,000+ complaints, the pattern is identical: an avalanche of mobile-app filings flagged 'Loud Music/Party,' suggesting an organized mass-filing or a very small group of repeat reporters rather than a real noise spike.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/09_serial_complainer.py",
+        "lines": [
+          42,
+          68
+        ],
+        "output": "10466 single-day top 10:\n  2024-09-15  total=4,952   mobile=4,933  online=  13  phone=   6\n  2024-12-16  total=4,815   mobile=4,809  online=   5  phone=   1\n  2024-12-17  total=3,957   mobile=3,949  online=   6  phone=   2\n  2024-12-31  total=3,531   mobile=3,525  online=   4  phone=   2\n  2024-12-29  total=3,510   mobile=3,503  online=   6  phone=   1\n  2024-09-23  total=3,504   mobile=3,498  online=   6  phone=   0\n  2024-11-20  total=3,224   mobile=3,215  online=   8  phone=   1\n  2024-11-19  total=3,056   mobile=3,047  online=   8  phone=   1\n\nOn 2024-09-15, 10466 logged 4,952 complaints in 24h — one every 17.4 seconds.\n\n10466 median complaints per day:    12\n10466 days above 1000 complaints:   18\n10466 days above 2000 complaints:   11\n10466 days above 3000 complaints:   8"
+      },
+      "data_table": {
+        "description": "ZIP 10466 top 10 noisiest days, by channel",
+        "columns": [
+          "date",
+          "total",
+          "mobile",
+          "online",
+          "phone"
+        ],
+        "rows": [
+          [
+            "2024-09-15",
+            4952,
+            4933,
+            13,
+            6
+          ],
+          [
+            "2024-12-16",
+            4815,
+            4809,
+            5,
+            1
+          ],
+          [
+            "2024-12-17",
+            3957,
+            3949,
+            6,
+            2
+          ],
+          [
+            "2024-12-31",
+            3531,
+            3525,
+            4,
+            2
+          ],
+          [
+            "2024-12-29",
+            3510,
+            3503,
+            6,
+            1
+          ],
+          [
+            "2024-09-23",
+            3504,
+            3498,
+            6,
+            0
+          ],
+          [
+            "2024-11-20",
+            3224,
+            3215,
+            8,
+            1
+          ],
+          [
+            "2024-11-19",
+            3056,
+            3047,
+            8,
+            1
+          ],
+          [
+            "2024-10-29",
+            2271,
+            2263,
+            8,
+            0
+          ],
+          [
+            "2024-09-16",
+            2183,
+            2175,
+            6,
+            2
+          ]
+        ]
+      },
+      "based_on": [
+        "det_05",
+        "det_15"
+      ]
+    },
+    "ana_26": {
+      "label": "ZIP 10466 full daily series, 2024",
+      "content": "Daily noise-complaint counts for ZIP 10466 across all 366 days of 2024. The series is dominated by long quiet stretches (median = 12, mean = 184.6) punctuated by 18 days at or above 1,000 complaints and 8 days at or above 3,000 — the bursts are visually and audibly obvious. The yearly total of 67,571 (8.97% of all NYC noise complaints in 2024) is almost entirely produced inside these bursts rather than spread evenly across the calendar.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/10_daily_10466.py",
+        "lines": [
+          10,
+          30
+        ],
+        "output": "days covered: 366\nmin: 2 on 2024-01-09\nmax: 4952 on 2024-09-15\nmedian: 12\nmean: 184.6\ndays >= 1000: 18\ndays >= 3000: 8\nsum (2024 total): 67,571"
+      },
+      "data_table": {
+        "columns": [
+          "date",
+          "complaints"
+        ],
+        "rows": [
+          [
+            "2024-01-01",
+            7
+          ],
+          [
+            "2024-01-02",
+            7
+          ],
+          [
+            "2024-01-03",
+            6
+          ],
+          [
+            "2024-01-04",
+            4
+          ],
+          [
+            "2024-01-05",
+            12
+          ],
+          [
+            "2024-01-06",
+            13
+          ],
+          [
+            "2024-01-07",
+            13
+          ],
+          [
+            "2024-01-08",
+            13
+          ],
+          [
+            "2024-01-09",
+            2
+          ],
+          [
+            "2024-01-10",
+            8
+          ],
+          [
+            "2024-01-11",
+            7
+          ],
+          [
+            "2024-01-12",
+            13
+          ],
+          [
+            "2024-01-13",
+            7
+          ],
+          [
+            "2024-01-14",
+            10
+          ],
+          [
+            "2024-01-15",
+            11
+          ],
+          [
+            "2024-01-16",
+            7
+          ],
+          [
+            "2024-01-17",
+            10
+          ],
+          [
+            "2024-01-18",
+            4
+          ],
+          [
+            "2024-01-19",
+            4
+          ],
+          [
+            "2024-01-20",
+            8
+          ],
+          [
+            "2024-01-21",
+            14
+          ],
+          [
+            "2024-01-22",
+            6
+          ],
+          [
+            "2024-01-23",
+            7
+          ],
+          [
+            "2024-01-24",
+            4
+          ],
+          [
+            "2024-01-25",
+            12
+          ],
+          [
+            "2024-01-26",
+            9
+          ],
+          [
+            "2024-01-27",
+            6
+          ],
+          [
+            "2024-01-28",
+            25
+          ],
+          [
+            "2024-01-29",
+            8
+          ],
+          [
+            "2024-01-30",
+            12
+          ],
+          [
+            "2024-01-31",
+            6
+          ],
+          [
+            "2024-02-01",
+            5
+          ],
+          [
+            "2024-02-02",
+            7
+          ],
+          [
+            "2024-02-03",
+            12
+          ],
+          [
+            "2024-02-04",
+            13
+          ],
+          [
+            "2024-02-05",
+            2
+          ],
+          [
+            "2024-02-06",
+            12
+          ],
+          [
+            "2024-02-07",
+            6
+          ],
+          [
+            "2024-02-08",
+            8
+          ],
+          [
+            "2024-02-09",
+            12
+          ],
+          [
+            "2024-02-10",
+            19
+          ],
+          [
+            "2024-02-11",
+            16
+          ],
+          [
+            "2024-02-12",
+            5
+          ],
+          [
+            "2024-02-13",
+            4
+          ],
+          [
+            "2024-02-14",
+            3
+          ],
+          [
+            "2024-02-15",
+            5
+          ],
+          [
+            "2024-02-16",
+            6
+          ],
+          [
+            "2024-02-17",
+            7
+          ],
+          [
+            "2024-02-18",
+            10
+          ],
+          [
+            "2024-02-19",
+            9
+          ],
+          [
+            "2024-02-20",
+            6
+          ],
+          [
+            "2024-02-21",
+            11
+          ],
+          [
+            "2024-02-22",
+            7
+          ],
+          [
+            "2024-02-23",
+            5
+          ],
+          [
+            "2024-02-24",
+            11
+          ],
+          [
+            "2024-02-25",
+            7
+          ],
+          [
+            "2024-02-26",
+            14
+          ],
+          [
+            "2024-02-27",
+            10
+          ],
+          [
+            "2024-02-28",
+            5
+          ],
+          [
+            "2024-02-29",
+            5
+          ],
+          [
+            "2024-03-01",
+            9
+          ],
+          [
+            "2024-03-02",
+            9
+          ],
+          [
+            "2024-03-03",
+            29
+          ],
+          [
+            "2024-03-04",
+            10
+          ],
+          [
+            "2024-03-05",
+            10
+          ],
+          [
+            "2024-03-06",
+            5
+          ],
+          [
+            "2024-03-07",
+            4
+          ],
+          [
+            "2024-03-08",
+            12
+          ],
+          [
+            "2024-03-09",
+            12
+          ],
+          [
+            "2024-03-10",
+            12
+          ],
+          [
+            "2024-03-11",
+            8
+          ],
+          [
+            "2024-03-12",
+            4
+          ],
+          [
+            "2024-03-13",
+            9
+          ],
+          [
+            "2024-03-14",
+            15
+          ],
+          [
+            "2024-03-15",
+            9
+          ],
+          [
+            "2024-03-16",
+            16
+          ],
+          [
+            "2024-03-17",
+            7
+          ],
+          [
+            "2024-03-18",
+            6
+          ],
+          [
+            "2024-03-19",
+            3
+          ],
+          [
+            "2024-03-20",
+            13
+          ],
+          [
+            "2024-03-21",
+            8
+          ],
+          [
+            "2024-03-22",
+            6
+          ],
+          [
+            "2024-03-23",
+            13
+          ],
+          [
+            "2024-03-24",
+            15
+          ],
+          [
+            "2024-03-25",
+            11
+          ],
+          [
+            "2024-03-26",
+            14
+          ],
+          [
+            "2024-03-27",
+            5
+          ],
+          [
+            "2024-03-28",
+            2
+          ],
+          [
+            "2024-03-29",
+            11
+          ],
+          [
+            "2024-03-30",
+            39
+          ],
+          [
+            "2024-03-31",
+            13
+          ],
+          [
+            "2024-04-01",
+            12
+          ],
+          [
+            "2024-04-02",
+            7
+          ],
+          [
+            "2024-04-03",
+            31
+          ],
+          [
+            "2024-04-04",
+            11
+          ],
+          [
+            "2024-04-05",
+            124
+          ],
+          [
+            "2024-04-06",
+            23
+          ],
+          [
+            "2024-04-07",
+            8
+          ],
+          [
+            "2024-04-08",
+            14
+          ],
+          [
+            "2024-04-09",
+            35
+          ],
+          [
+            "2024-04-10",
+            9
+          ],
+          [
+            "2024-04-11",
+            8
+          ],
+          [
+            "2024-04-12",
+            7
+          ],
+          [
+            "2024-04-13",
+            18
+          ],
+          [
+            "2024-04-14",
+            23
+          ],
+          [
+            "2024-04-15",
+            14
+          ],
+          [
+            "2024-04-16",
+            8
+          ],
+          [
+            "2024-04-17",
+            3
+          ],
+          [
+            "2024-04-18",
+            10
+          ],
+          [
+            "2024-04-19",
+            12
+          ],
+          [
+            "2024-04-20",
+            88
+          ],
+          [
+            "2024-04-21",
+            54
+          ],
+          [
+            "2024-04-22",
+            18
+          ],
+          [
+            "2024-04-23",
+            26
+          ],
+          [
+            "2024-04-24",
+            3
+          ],
+          [
+            "2024-04-25",
+            12
+          ],
+          [
+            "2024-04-26",
+            87
+          ],
+          [
+            "2024-04-27",
+            15
+          ],
+          [
+            "2024-04-28",
+            20
+          ],
+          [
+            "2024-04-29",
+            16
+          ],
+          [
+            "2024-04-30",
+            12
+          ],
+          [
+            "2024-05-01",
+            7
+          ],
+          [
+            "2024-05-02",
+            10
+          ],
+          [
+            "2024-05-03",
+            6
+          ],
+          [
+            "2024-05-04",
+            136
+          ],
+          [
+            "2024-05-05",
+            69
+          ],
+          [
+            "2024-05-06",
+            10
+          ],
+          [
+            "2024-05-07",
+            14
+          ],
+          [
+            "2024-05-08",
+            10
+          ],
+          [
+            "2024-05-09",
+            21
+          ],
+          [
+            "2024-05-10",
+            7
+          ],
+          [
+            "2024-05-11",
+            24
+          ],
+          [
+            "2024-05-12",
+            14
+          ],
+          [
+            "2024-05-13",
+            15
+          ],
+          [
+            "2024-05-14",
+            13
+          ],
+          [
+            "2024-05-15",
+            6
+          ],
+          [
+            "2024-05-16",
+            8
+          ],
+          [
+            "2024-05-17",
+            20
+          ],
+          [
+            "2024-05-18",
+            23
+          ],
+          [
+            "2024-05-19",
+            20
+          ],
+          [
+            "2024-05-20",
+            5
+          ],
+          [
+            "2024-05-21",
+            17
+          ],
+          [
+            "2024-05-22",
+            12
+          ],
+          [
+            "2024-05-23",
+            12
+          ],
+          [
+            "2024-05-24",
+            9
+          ],
+          [
+            "2024-05-25",
+            20
+          ],
+          [
+            "2024-05-26",
+            14
+          ],
+          [
+            "2024-05-27",
+            13
+          ],
+          [
+            "2024-05-28",
+            8
+          ],
+          [
+            "2024-05-29",
+            13
+          ],
+          [
+            "2024-05-30",
+            14
+          ],
+          [
+            "2024-05-31",
+            17
+          ],
+          [
+            "2024-06-01",
+            67
+          ],
+          [
+            "2024-06-02",
+            17
+          ],
+          [
+            "2024-06-03",
+            7
+          ],
+          [
+            "2024-06-04",
+            4
+          ],
+          [
+            "2024-06-05",
+            10
+          ],
+          [
+            "2024-06-06",
+            7
+          ],
+          [
+            "2024-06-07",
+            8
+          ],
+          [
+            "2024-06-08",
+            26
+          ],
+          [
+            "2024-06-09",
+            29
+          ],
+          [
+            "2024-06-10",
+            3
+          ],
+          [
+            "2024-06-11",
+            27
+          ],
+          [
+            "2024-06-12",
+            6
+          ],
+          [
+            "2024-06-13",
+            10
+          ],
+          [
+            "2024-06-14",
+            7
+          ],
+          [
+            "2024-06-15",
+            27
+          ],
+          [
+            "2024-06-16",
+            37
+          ],
+          [
+            "2024-06-17",
+            14
+          ],
+          [
+            "2024-06-18",
+            23
+          ],
+          [
+            "2024-06-19",
+            7
+          ],
+          [
+            "2024-06-20",
+            24
+          ],
+          [
+            "2024-06-21",
+            9
+          ],
+          [
+            "2024-06-22",
+            21
+          ],
+          [
+            "2024-06-23",
+            14
+          ],
+          [
+            "2024-06-24",
+            7
+          ],
+          [
+            "2024-06-25",
+            8
+          ],
+          [
+            "2024-06-26",
+            10
+          ],
+          [
+            "2024-06-27",
+            13
+          ],
+          [
+            "2024-06-28",
+            921
+          ],
+          [
+            "2024-06-29",
+            491
+          ],
+          [
+            "2024-06-30",
+            28
+          ],
+          [
+            "2024-07-01",
+            14
+          ],
+          [
+            "2024-07-02",
+            12
+          ],
+          [
+            "2024-07-03",
+            8
+          ],
+          [
+            "2024-07-04",
+            29
+          ],
+          [
+            "2024-07-05",
+            90
+          ],
+          [
+            "2024-07-06",
+            18
+          ],
+          [
+            "2024-07-07",
+            25
+          ],
+          [
+            "2024-07-08",
+            10
+          ],
+          [
+            "2024-07-09",
+            280
+          ],
+          [
+            "2024-07-10",
+            10
+          ],
+          [
+            "2024-07-11",
+            15
+          ],
+          [
+            "2024-07-12",
+            17
+          ],
+          [
+            "2024-07-13",
+            15
+          ],
+          [
+            "2024-07-14",
+            680
+          ],
+          [
+            "2024-07-15",
+            8
+          ],
+          [
+            "2024-07-16",
+            8
+          ],
+          [
+            "2024-07-17",
+            5
+          ],
+          [
+            "2024-07-18",
+            10
+          ],
+          [
+            "2024-07-19",
+            13
+          ],
+          [
+            "2024-07-20",
+            18
+          ],
+          [
+            "2024-07-21",
+            18
+          ],
+          [
+            "2024-07-22",
+            11
+          ],
+          [
+            "2024-07-23",
+            6
+          ],
+          [
+            "2024-07-24",
+            10
+          ],
+          [
+            "2024-07-25",
+            11
+          ],
+          [
+            "2024-07-26",
+            22
+          ],
+          [
+            "2024-07-27",
+            16
+          ],
+          [
+            "2024-07-28",
+            23
+          ],
+          [
+            "2024-07-29",
+            19
+          ],
+          [
+            "2024-07-30",
+            10
+          ],
+          [
+            "2024-07-31",
+            965
+          ],
+          [
+            "2024-08-01",
+            4
+          ],
+          [
+            "2024-08-02",
+            8
+          ],
+          [
+            "2024-08-03",
+            385
+          ],
+          [
+            "2024-08-04",
+            100
+          ],
+          [
+            "2024-08-05",
+            520
+          ],
+          [
+            "2024-08-06",
+            170
+          ],
+          [
+            "2024-08-07",
+            7
+          ],
+          [
+            "2024-08-08",
+            5
+          ],
+          [
+            "2024-08-09",
+            6
+          ],
+          [
+            "2024-08-10",
+            292
+          ],
+          [
+            "2024-08-11",
+            412
+          ],
+          [
+            "2024-08-12",
+            15
+          ],
+          [
+            "2024-08-13",
+            14
+          ],
+          [
+            "2024-08-14",
+            9
+          ],
+          [
+            "2024-08-15",
+            8
+          ],
+          [
+            "2024-08-16",
+            10
+          ],
+          [
+            "2024-08-17",
+            12
+          ],
+          [
+            "2024-08-18",
+            15
+          ],
+          [
+            "2024-08-19",
+            6
+          ],
+          [
+            "2024-08-20",
+            10
+          ],
+          [
+            "2024-08-21",
+            10
+          ],
+          [
+            "2024-08-22",
+            8
+          ],
+          [
+            "2024-08-23",
+            19
+          ],
+          [
+            "2024-08-24",
+            27
+          ],
+          [
+            "2024-08-25",
+            20
+          ],
+          [
+            "2024-08-26",
+            9
+          ],
+          [
+            "2024-08-27",
+            7
+          ],
+          [
+            "2024-08-28",
+            24
+          ],
+          [
+            "2024-08-29",
+            13
+          ],
+          [
+            "2024-08-30",
+            12
+          ],
+          [
+            "2024-08-31",
+            21
+          ],
+          [
+            "2024-09-01",
+            17
+          ],
+          [
+            "2024-09-02",
+            25
+          ],
+          [
+            "2024-09-03",
+            7
+          ],
+          [
+            "2024-09-04",
+            14
+          ],
+          [
+            "2024-09-05",
+            24
+          ],
+          [
+            "2024-09-06",
+            316
+          ],
+          [
+            "2024-09-07",
+            758
+          ],
+          [
+            "2024-09-08",
+            631
+          ],
+          [
+            "2024-09-09",
+            11
+          ],
+          [
+            "2024-09-10",
+            4
+          ],
+          [
+            "2024-09-11",
+            9
+          ],
+          [
+            "2024-09-12",
+            519
+          ],
+          [
+            "2024-09-13",
+            627
+          ],
+          [
+            "2024-09-14",
+            1179
+          ],
+          [
+            "2024-09-15",
+            4952
+          ],
+          [
+            "2024-09-16",
+            2183
+          ],
+          [
+            "2024-09-17",
+            9
+          ],
+          [
+            "2024-09-18",
+            10
+          ],
+          [
+            "2024-09-19",
+            12
+          ],
+          [
+            "2024-09-20",
+            8
+          ],
+          [
+            "2024-09-21",
+            33
+          ],
+          [
+            "2024-09-22",
+            1383
+          ],
+          [
+            "2024-09-23",
+            3504
+          ],
+          [
+            "2024-09-24",
+            9
+          ],
+          [
+            "2024-09-25",
+            10
+          ],
+          [
+            "2024-09-26",
+            16
+          ],
+          [
+            "2024-09-27",
+            22
+          ],
+          [
+            "2024-09-28",
+            18
+          ],
+          [
+            "2024-09-29",
+            19
+          ],
+          [
+            "2024-09-30",
+            7
+          ],
+          [
+            "2024-10-01",
+            8
+          ],
+          [
+            "2024-10-02",
+            6
+          ],
+          [
+            "2024-10-03",
+            17
+          ],
+          [
+            "2024-10-04",
+            649
+          ],
+          [
+            "2024-10-05",
+            1318
+          ],
+          [
+            "2024-10-06",
+            37
+          ],
+          [
+            "2024-10-07",
+            9
+          ],
+          [
+            "2024-10-08",
+            16
+          ],
+          [
+            "2024-10-09",
+            10
+          ],
+          [
+            "2024-10-10",
+            5
+          ],
+          [
+            "2024-10-11",
+            5
+          ],
+          [
+            "2024-10-12",
+            16
+          ],
+          [
+            "2024-10-13",
+            37
+          ],
+          [
+            "2024-10-14",
+            9
+          ],
+          [
+            "2024-10-15",
+            983
+          ],
+          [
+            "2024-10-16",
+            338
+          ],
+          [
+            "2024-10-17",
+            6
+          ],
+          [
+            "2024-10-18",
+            12
+          ],
+          [
+            "2024-10-19",
+            63
+          ],
+          [
+            "2024-10-20",
+            13
+          ],
+          [
+            "2024-10-21",
+            9
+          ],
+          [
+            "2024-10-22",
+            5
+          ],
+          [
+            "2024-10-23",
+            2
+          ],
+          [
+            "2024-10-24",
+            10
+          ],
+          [
+            "2024-10-25",
+            16
+          ],
+          [
+            "2024-10-26",
+            648
+          ],
+          [
+            "2024-10-27",
+            705
+          ],
+          [
+            "2024-10-28",
+            1638
+          ],
+          [
+            "2024-10-29",
+            2271
+          ],
+          [
+            "2024-10-30",
+            6
+          ],
+          [
+            "2024-10-31",
+            10
+          ],
+          [
+            "2024-11-01",
+            5
+          ],
+          [
+            "2024-11-02",
+            1018
+          ],
+          [
+            "2024-11-03",
+            15
+          ],
+          [
+            "2024-11-04",
+            6
+          ],
+          [
+            "2024-11-05",
+            4
+          ],
+          [
+            "2024-11-06",
+            5
+          ],
+          [
+            "2024-11-07",
+            14
+          ],
+          [
+            "2024-11-08",
+            19
+          ],
+          [
+            "2024-11-09",
+            14
+          ],
+          [
+            "2024-11-10",
+            5
+          ],
+          [
+            "2024-11-11",
+            11
+          ],
+          [
+            "2024-11-12",
+            8
+          ],
+          [
+            "2024-11-13",
+            10
+          ],
+          [
+            "2024-11-14",
+            12
+          ],
+          [
+            "2024-11-15",
+            12
+          ],
+          [
+            "2024-11-16",
+            16
+          ],
+          [
+            "2024-11-17",
+            10
+          ],
+          [
+            "2024-11-18",
+            1900
+          ],
+          [
+            "2024-11-19",
+            3056
+          ],
+          [
+            "2024-11-20",
+            3224
+          ],
+          [
+            "2024-11-21",
+            719
+          ],
+          [
+            "2024-11-22",
+            10
+          ],
+          [
+            "2024-11-23",
+            10
+          ],
+          [
+            "2024-11-24",
+            12
+          ],
+          [
+            "2024-11-25",
+            8
+          ],
+          [
+            "2024-11-26",
+            10
+          ],
+          [
+            "2024-11-27",
+            12
+          ],
+          [
+            "2024-11-28",
+            884
+          ],
+          [
+            "2024-11-29",
+            1241
+          ],
+          [
+            "2024-11-30",
+            545
+          ],
+          [
+            "2024-12-01",
+            11
+          ],
+          [
+            "2024-12-02",
+            2
+          ],
+          [
+            "2024-12-03",
+            12
+          ],
+          [
+            "2024-12-04",
+            7
+          ],
+          [
+            "2024-12-05",
+            9
+          ],
+          [
+            "2024-12-06",
+            4
+          ],
+          [
+            "2024-12-07",
+            11
+          ],
+          [
+            "2024-12-08",
+            7
+          ],
+          [
+            "2024-12-09",
+            6
+          ],
+          [
+            "2024-12-10",
+            11
+          ],
+          [
+            "2024-12-11",
+            8
+          ],
+          [
+            "2024-12-12",
+            948
+          ],
+          [
+            "2024-12-13",
+            387
+          ],
+          [
+            "2024-12-14",
+            16
+          ],
+          [
+            "2024-12-15",
+            753
+          ],
+          [
+            "2024-12-16",
+            4815
+          ],
+          [
+            "2024-12-17",
+            3957
+          ],
+          [
+            "2024-12-18",
+            28
+          ],
+          [
+            "2024-12-19",
+            11
+          ],
+          [
+            "2024-12-20",
+            14
+          ],
+          [
+            "2024-12-21",
+            15
+          ],
+          [
+            "2024-12-22",
+            15
+          ],
+          [
+            "2024-12-23",
+            7
+          ],
+          [
+            "2024-12-24",
+            12
+          ],
+          [
+            "2024-12-25",
+            15
+          ],
+          [
+            "2024-12-26",
+            10
+          ],
+          [
+            "2024-12-27",
+            4
+          ],
+          [
+            "2024-12-28",
+            613
+          ],
+          [
+            "2024-12-29",
+            3510
+          ],
+          [
+            "2024-12-30",
+            2167
+          ],
+          [
+            "2024-12-31",
+            3531
+          ]
+        ]
+      },
+      "based_on": [
+        "ana_24",
+        "ana_25"
+      ]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "311 measures who *reports* noise, not where noise actually is. A higher per-capita complaint rate in a ZIP code can reflect either more noise, more sensitivity, better internet/app access, or — as ZIP 10466's pattern suggests — a small number of high-volume repeat reporters. The dataset does not include any information about the person who filed the complaint."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Per-capita scaling uses 2020 ACS 5-year ZCTA population estimates, which approximate but do not exactly match the ZIP code boundaries the city's geocoder assigns to each complaint. The per-capita rankings are therefore approximate."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "The dataset does not contain a complaint_type or descriptor literally tagged 'firework' for the 2023–2024 period — fireworks-related complaints get folded into 'Banging/Pounding' and other generic descriptors. The July-4 pulse (ana_15) is read from the daily count and the calendar, not from a category."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "The 'NYPD: responded — took action / not necessary' bucket merges several similar resolution-description strings; the underlying texts vary. Treat the broad buckets as approximate aggregations rather than exact tallies of a single phrase."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "Press reports of '610,000' or '738,000' noise complaints in 2024 use slightly different filters from this dataset (which counts every complaint_type containing 'Noise' as filtered server-side by SODA). Our 2024 total of 753,275 is the canonical count for the filter described in the manifest."
+    }
+  ]
+}

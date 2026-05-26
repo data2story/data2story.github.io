@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "title": "What 200,000 Adverse-Event Reports Actually Say About Drugs in Early 2024",
+  "subtitle": "Reading the FDA's FAERS database as a megaphone, not a measurement",
+  "core_claim": "FAERS is less a record of what drugs do to people than a record of which drugs the world is paying attention to.",
+  "tension": "The Ozempic press narrative says one thing; the FAERS 2024 sample says the loudest signal is Mounjaro, and the loudest 'reaction' is not a reaction at all.",
+  "payoff": "After reading, the reader should know how to read FAERS headlines: as a measure of reporting behaviour first, and only secondarily as a clue to what drugs are actually doing.",
+  "items": {
+    "edt_01": {
+      "label": "The top complaint isn't medical",
+      "purpose": "hook",
+      "title": "The top complaint isn't medical",
+      "findings": ["ana_12", "ana_15"],
+      "context": ["det_03", "det_04"],
+      "triage": {
+        "ana_12": "lead",
+        "ana_15": "supporting"
+      },
+      "chart_placeholder": "ana_12",
+      "media_placeholder": "interactive",
+      "editorial_notes": "14,801 (Off label use), 11,335 (Drug ineffective), 9,356 (Death as a reaction), 3,554 (Drug-ineffective-only reports) must be exact. The interactive should let the reader scan the top-30 reactions and notice how few of them are medical events."
+    },
+    "edt_02": {
+      "label": "What FAERS is, and what its biggest numbers actually mean",
+      "purpose": "context",
+      "title": "What FAERS is, and what its biggest numbers actually mean",
+      "findings": ["ana_18", "ana_03", "ana_04"],
+      "context": ["det_01", "det_02", "det_04", "det_08"],
+      "triage": {
+        "ana_18": "supporting",
+        "ana_03": "color",
+        "ana_04": "color"
+      },
+      "chart_placeholder": "ana_18",
+      "media_placeholder": null,
+      "editorial_notes": "Time-window caveat (Jan 1 – Feb 23) and no-denominator caveat must be visible here. 52.5% (serious), 9.43% (death), 19.06% (hospitalization), 200,000 (sample size) are load-bearing."
+    },
+    "edt_03": {
+      "label": "Dupixent and Mounjaro are tied for #1",
+      "purpose": "evidence",
+      "title": "Dupixent and Mounjaro are tied for #1",
+      "findings": ["ana_06", "ana_07", "ana_08"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_06": "lead",
+        "ana_07": "supporting",
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "Dupixent 15,027 vs Mounjaro 14,908 — keep the 119-row gap visible. The role-mix point (aspirin 15.8% suspect, acetaminophen 49% suspect) is the key 'don't confuse mention with blame' frame."
+    },
+    "edt_04": {
+      "label": "The GLP-1 surge is real, but the spotlight is on the wrong drug",
+      "purpose": "turn",
+      "title": "The GLP-1 surge is real, but the spotlight is on the wrong drug",
+      "findings": ["ana_09", "ana_32"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_09": "supporting",
+        "ana_32": "lead"
+      },
+      "chart_placeholder": "ana_32",
+      "media_placeholder": null,
+      "editorial_notes": "Tirzepatide 18,035 vs semaglutide 5,425 (ratio 3.3x). Mounjaro 11.0% serious vs Ozempic 32.0% serious. Zepbound 2.5% serious / 0 deaths is the headline outlier. This is THE story — do not undersell."
+    },
+    "edt_05": {
+      "label": "Mounjaro's complaints are about the pen; Ozempic's are about the body",
+      "purpose": "evidence",
+      "title": "Mounjaro's complaints are about the pen; Ozempic's are about the body",
+      "findings": ["ana_33", "ana_34"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_33": "lead",
+        "ana_34": "supporting"
+      },
+      "chart_placeholder": "ana_34",
+      "media_placeholder": null,
+      "editorial_notes": "Use the side-by-side reaction lists explicitly. The 'Weight loss poor' AND 'Increased appetite' coexistence is the killer paragraph — it captures the class paradox in two lines."
+    },
+    "edt_06": {
+      "label": "The actual death-rate hotspots are nowhere near the headlines",
+      "purpose": "evidence",
+      "title": "The actual death-rate hotspots are nowhere near the headlines",
+      "findings": ["ana_20", "ana_16"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_20": "lead",
+        "ana_16": "supporting"
+      },
+      "chart_placeholder": "ana_20",
+      "media_placeholder": null,
+      "editorial_notes": "Methamphetamine 93.5%, alcohol 89.4%, fentanyl 71.9% — frame as overdose signature, NOT as 'these drugs kill'. Be careful: these are co-presence findings, not causation."
+    },
+    "edt_07": {
+      "label": "Who files, when, and from where",
+      "purpose": "context",
+      "title": "Who files, when, and from where",
+      "findings": ["ana_22", "ana_25", "ana_28", "ana_29", "ana_30"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_22": "supporting",
+        "ana_25": "supporting",
+        "ana_28": "color",
+        "ana_29": "lead",
+        "ana_30": "supporting"
+      },
+      "chart_placeholder": "ana_29",
+      "media_placeholder": "map",
+      "editorial_notes": "The weekday/weekend pattern (93% of reports come on weekdays) is the most visceral 'bureaucracy, not events' finding. The map of occurcountry secondary."
+    },
+    "edt_08": {
+      "label": "How to read the next FAERS headline",
+      "purpose": "close",
+      "title": "How to read the next FAERS headline",
+      "findings": ["ana_18", "ana_29"],
+      "context": ["det_04", "det_07"],
+      "triage": {
+        "ana_18": "color",
+        "ana_29": "color"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Repeat the megaphone-not-measurement frame. End on an open question / a directive, not a summary."
+    }
+  },
+  "full_triage": {
+    "ana_01": "color",
+    "ana_02": "supporting",
+    "ana_03": "color",
+    "ana_04": "color",
+    "ana_05": "cut",
+    "ana_06": "lead",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_12": "lead",
+    "ana_13": "cut",
+    "ana_14": "cut",
+    "ana_15": "supporting",
+    "ana_16": "supporting",
+    "ana_18": "supporting",
+    "ana_19": "cut",
+    "ana_20": "lead",
+    "ana_22": "supporting",
+    "ana_23": "cut",
+    "ana_25": "supporting",
+    "ana_27": "cut",
+    "ana_28": "color",
+    "ana_29": "lead",
+    "ana_30": "supporting",
+    "ana_32": "lead",
+    "ana_33": "lead",
+    "ana_34": "supporting"
+  }
+}

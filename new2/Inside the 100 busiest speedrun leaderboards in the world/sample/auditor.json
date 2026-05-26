@@ -1,0 +1,14 @@
+[
+  {
+    "type": "paragraph_data_ana_normalisation",
+    "count": 2,
+    "lines": [300, 358],
+    "note": "Two paragraphs were tagged with [ana_X, ana_Y] in editor.md but the Programmer wrote them as <p data-ana=\"ana_X\"><span data-ana=\"ana_Y\"></span>...</p>. Replaced with the canonical comma-separated form: <p data-ana=\"ana_X,ana_Y\">. Preserves all paragraph-level traceability for the Inspector without introducing empty inline spans."
+  },
+  {
+    "type": "broken_youtube_iframe_replaced_with_thumbnail_link",
+    "count": 1,
+    "lines": [346, 351],
+    "note": "des_08 originally embedded BlueSR's Silksong 1:03:41 video via <iframe>. At preview time the iframe rendered 'Error 153 — Video player configuration error' because the BlueSR channel disallows third-party embedding (this is invisible to the Detective's oEmbed check, which returned HTTP 200 with the correct title). YouTube does not expose the playable-in-embed status in the static embed HTML — the only reliable signal would be the YouTube Data API (status.embeddable) which requires an API key. Defensive fix: downloaded the public thumbnail (i.ytimg.com/vi/<id>/hqdefault.jpg, 30 KB) and replaced the iframe with a styled clickable thumbnail card that links to the canonical watch URL in a new tab. Visual identity of the run is preserved; the page no longer renders a broken player. Added a clarifying line to the caption ('the channel does not allow third-party embedding'). Updated designer.json des_08 to embed_type 'youtube_thumbnail_link' with watch_url + thumbnail_filename + thumbnail_source. Both the new <a> and <img> carry data-des=\"des_08\", preserving inspector traceability."
+  }
+]

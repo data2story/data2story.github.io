@@ -1,0 +1,127 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "The 75-year LEGO catalog is the record of a company that nearly went bankrupt selling toys to children and rebuilt itself by selling much bigger toys to adults — and the inflection shows up in the data more sharply than the company ever advertised.",
+  "items": {
+    "edt_01": {
+      "label": "The catalog the company didn't keep",
+      "purpose": "hook",
+      "title": "The catalog the company didn't keep",
+      "findings": ["ana_01"],
+      "context": ["det_01", "det_02"],
+      "triage": {
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "Open with the 'Data Is Plural surfaced this in 2016' framing. Keep the Rebrickable origin to one short paragraph — Nathan Thom, Brisbane, 2011, dark age. Do not turn it into a profile."
+    },
+    "edt_02": {
+      "label": "The first half-century (1949–1998)",
+      "purpose": "context",
+      "title": "The first half-century",
+      "findings": ["ana_02", "ana_03", "ana_07", "ana_08"],
+      "context": ["det_03"],
+      "triage": {
+        "ana_02": "supporting",
+        "ana_03": "supporting",
+        "ana_07": "color",
+        "ana_08": "color"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "image",
+      "editorial_notes": "Use 1979 Galaxy Explorer and 1984 King's Castle as the era's visual referents. Keep numbers concrete: 5 sets in 1949, 401 in 1998. Median 34 parts in 1980."
+    },
+    "edt_03": {
+      "label": "Two bets — Star Wars and Bionicle",
+      "purpose": "turn",
+      "title": "Two bets, 1999–2001",
+      "findings": ["ana_09", "ana_10"],
+      "context": ["det_04", "det_05", "det_08"],
+      "triage": {
+        "ana_09": "supporting",
+        "ana_10": "supporting"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "image",
+      "editorial_notes": "The £100M Bionicle figure is from Wikipedia; keep the qualifier 'about'. Star Wars share has been 3-7% every year — do not round to '~5%' as that loses the steadiness."
+    },
+    "edt_04": {
+      "label": "The crater, and the great recolor",
+      "purpose": "evidence",
+      "title": "The crater, and the great recolor",
+      "findings": ["ana_02", "ana_06", "ana_05"],
+      "context": ["det_06", "det_07"],
+      "triage": {
+        "ana_06": "lead",
+        "ana_02": "supporting",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "interactive",
+      "editorial_notes": "ana_06 is the LEAD finding of the whole piece — the 87% single-year drop on old Light Gray. Keep the AFOL term 'bley' visible. The 'interactive' media hint is for a year-by-year color-swatch slider showing the swap; the Designer may downgrade to a stacked-area chart if interactive is overkill, but the per-year transition is the visual."
+    },
+    "edt_05": {
+      "label": "Sets got serious",
+      "purpose": "evidence",
+      "title": "Sets got serious",
+      "findings": ["ana_03", "ana_04", "ana_17"],
+      "context": ["det_08", "det_11"],
+      "triage": {
+        "ana_03": "supporting",
+        "ana_04": "supporting",
+        "ana_17": "color"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "image",
+      "editorial_notes": "The 11,695-piece World Map and the 10,001-piece Eiffel Tower are anchor numbers. Median 34→159 = 4.7x is the headline ratio. Use the Eiffel Tower reference image (det_media_08) and the 2017 UCS Falcon image (det_media_07)."
+    },
+    "edt_06": {
+      "label": "The pink permission",
+      "purpose": "evidence",
+      "title": "The pink permission",
+      "findings": ["ana_11"],
+      "context": ["det_09"],
+      "triage": {
+        "ana_11": "supporting"
+      },
+      "chart_placeholder": "ana_11",
+      "media_placeholder": "image",
+      "editorial_notes": "The headline contrast is: 1,133 pink parts in Friends sets per year (2024) vs 7,879 in everything else. The Friends launch shifted the palette of every theme, not just the girls' aisle."
+    },
+    "edt_07": {
+      "label": "What seventy-five years tell us",
+      "purpose": "close",
+      "title": "What seventy-five years tell us",
+      "findings": ["ana_07", "ana_08", "ana_13", "ana_16"],
+      "context": ["det_10"],
+      "triage": {
+        "ana_13": "supporting",
+        "ana_16": "color",
+        "ana_07": "supporting",
+        "ana_08": "color"
+      },
+      "chart_placeholder": "ana_13",
+      "media_placeholder": "instance",
+      "editorial_notes": "End on the AFOL/community frame. The instance placeholder is a strip of the eight reference images from detective.json showing the catalog through time — Galaxy Explorer 1979, King's Castle 1984, UCS TIE 2000, Bionicle Gali 2001, UCS Falcon 2007, Friends 2013, UCS Falcon 2017, Eiffel Tower 2022."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "lead",
+    "ana_07": "supporting",
+    "ana_08": "color",
+    "ana_09": "supporting",
+    "ana_10": "supporting",
+    "ana_11": "supporting",
+    "ana_13": "supporting",
+    "ana_16": "color",
+    "ana_17": "color"
+  }
+}

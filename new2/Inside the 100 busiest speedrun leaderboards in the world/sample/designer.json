@@ -1,0 +1,341 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Data-driven media selection across all five channels (chart, image, video, audio, interactive_or_map). The dataset is analytical, so charts dominate; the teaser carries the mood; sonification gives the timeline a sonic dimension; one interactive lets the reader feel the central surprise before being told it.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {"used": true, "reason": "The dataset is mostly aggregated counts and time-series, which charts handle natively. Mix bar / line / area / Lorenz / dumbbell to avoid chart-streak fatigue."},
+      "image": {"used": true, "reason": "Three atmospheric stills carry the mood: a generated teaser of a speedrunner's setup, the detective-collected ref_livesplit screenshot of the timer tool, and the ref_gdq_cheese GDQ-stage photograph. Together they ground 'this is real labour by real people' without forcing decorative imagery."},
+      "video": {"used": true, "reason": "The teaser still is animated via image2video to give the opening scene a sense of pulse — split times ticking, chat scrolling — that a still image cannot."},
+      "audio": {"used": true, "reason": "Sonification of the 77-month verification timeline (2020-01 → 2026-05). The reader sees the line chart and can press play to hear the same series as pitched notes — the 2026-03 peak is audibly the highest. This is data-bound audio, not a decorative tone card."},
+      "interactive_or_map": {"used": true, "reason": "Guess-first interaction at the hook: the reader picks what share of last-30-day verifications came from the single busiest game, then sees the answer. The 25.2% Granny:Legacy figure is meant to be felt as a surprise, not just read."}
+    },
+    "media_blockers": [
+      {
+        "category": "video",
+        "reason": "Initial image2video call with --aspect-ratio 1:1 was rejected by google/veo-3.1-fast (HTTP 400 Invalid aspect ratio). Resubmitted with --aspect-ratio 16:9; the source teaser still is square-ish so the model will letterbox or crop.",
+        "attempted_command": "generate_video_from_image.py --image teaser_hero.png --duration 6 --aspect-ratio 1:1",
+        "fallback_des": "des_02 (the retried 16:9 generation is what the Programmer should use); if it also fails, fall back to the static teaser_hero.png alone."
+      }
+    ]
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — speedrunner's setup at night",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "model": "openai/gpt-5.4-image-2",
+        "prompt": "Cinematic over-the-shoulder photograph of a solo speedrunner's setup at night: hands holding a worn black game controller, a triple-monitor desk filling the frame, the centre monitor showing a colourful 2D platformer level mid-action, the right monitor displaying a vertical stack of split times with one currently-active row glowing yellow, the left monitor an out-of-focus chat panel. The desk surface is matte black, scattered with a half-empty coffee cup, a notebook with handwritten route notes, and a single small mechanical keyboard. Lighting is dim and moody, lit primarily by the monitors with a soft cool RGB rim light from below the desk."
+      },
+      "brief": "A first-person-perspective hero image: anonymous runner's hands on a controller, three monitors showing the game, the splits, and the chat. Dim moody lighting, dark navy + amber palette, no text legible. Sets the 'this is the work' mood for the entire piece.",
+      "rationale": "The blog argues 'this is labour, not fame'. A still image of the actual labour rig grounds that thesis better than a stock photo or chart could.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion — subtle parallax on the hero",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "model": "google/veo-3.1-fast",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "Subtle slow camera push-in toward the controller; the split-times monitor on the right gently flickers as a timer ticks; the chat panel on the left scrolls upward by one or two lines; faint dust motes drift across the warm monitor glow; no hand movement, no facial shift, gentle ambient parallax.",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Six-second loopable animation derived from the teaser still. Use as the actual teaser asset (with the still as the poster/fallback). Plays muted; autoplays once when scrolled into view.",
+      "rationale": "Image2video preserves the composition we just earned with des_01 while adding the kinetic pulse the opening needs.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Hook quiz — 'What share of last-30-day runs came from one game?'",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "A prompt at the top of the section: 'In the 30 days before this dataset was captured, 2,230 speedruns were verified across the 100 most-active leaderboards on speedrun.com. What share came from the single busiest game?' Four answer buttons: 5%, 10%, 25%, 50%.",
+        "trigger": "Reader clicks one of the four buttons.",
+        "transition": "The button they picked gets a subtle highlight (correct = green, incorrect = soft red), then the answer card fades in: '25.2% — Granny: Legacy. 561 of 2,230 verified runs in 30 days.' Below it, des_04's bar chart slides in with Granny: Legacy highlighted at the top.",
+        "payoff": "Reader feels the surprise before being told it. Anyone who guesses 5% or 10% (the obvious 'spread across 100 games' answer) discovers the concentration directly.",
+        "data_source": "ana_26"
+      },
+      "brief": "A four-option guess-first quiz that primes the central surprise of the entire piece. Track and display the reader's choice next to the reveal.",
+      "rationale": "ana_26 is the most counter-intuitive finding in the dataset and is also the lead of the hook. A passive bar chart would let the reader skim past the punch; a quiz forces engagement and makes the 25.2% land.",
+      "based_on": ["ana_26"]
+    },
+    "des_04": {
+      "label": "Top 15 games by last-30-day verifications (bar)",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_26",
+        "x": "runs_last_30d",
+        "y": "game",
+        "highlight": {"game": "Granny: Legacy"},
+        "interaction": "Hover tooltip shows exact count + share-of-30d. Granny: Legacy bar has a callout label '561 — 25.2% of all top-100 activity'.",
+        "style": {"palette": "single-amber, Granny highlighted in saturated orange-red, others muted grey-blue", "no_gridlines": true, "value_labels": "right of each bar"}
+      },
+      "brief": "Sorted horizontal bar chart, top 15 games. Granny: Legacy bar should visually dominate. Reveal this chart immediately after des_03's quiz resolves.",
+      "rationale": "The bar chart proves the quiz's reveal. Sorted, highlighted, callout-labelled — the asymmetry between Granny and the rest is the point.",
+      "based_on": ["ana_26"]
+    },
+    "des_05": {
+      "label": "Monthly verification timeline 2020-2026 (area chart)",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "area_line",
+        "data_source": "ana_25",
+        "x": "month",
+        "y": "verifications",
+        "highlight": {"months": ["2025-09", "2025-10", "2026-03"]},
+        "interaction": "Hover tooltip shows month + count + which game(s) dominated that month if known. A 'Play timeline as sound' button below the chart triggers des_06's sonification; while playing, the area chart sweeps a vertical cursor month-by-month.",
+        "style": {"palette": "single muted teal area with deeper teal accent line on top", "annotations": ["Silksong leaderboards open — Oct 2025", "All-time peak — Mar 2026 (3,151)"], "y_axis": "linear, 0-3500"}
+      },
+      "brief": "Filled area chart of monthly verifications. Two annotations: 'Silksong opens (Oct 2025)' and 'All-time peak (Mar 2026)'. Below the chart, a single play button triggers the sonification (des_06).",
+      "rationale": "The timeline IS the spine of the labour-market argument. An area chart conveys the cumulative pulse; the sonification adds embodied understanding of the magnitude of the recent ramp.",
+      "based_on": ["ana_25"]
+    },
+    "des_06": {
+      "label": "Sonification: monthly verifications as pitched notes",
+      "type": "audio",
+      "section": "edt_02",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "Hearing the 77-month sequence makes the recent ramp audibly steeper than visually obvious. The 2026-03 peak is the highest note; the 2020 plateau is the low cluster at the start.",
+        "trigger": "Click 'Play timeline as sound' button below the chart in edt_02; never autoplays.",
+        "ui_form": "chart-synced sonification — a vertical cursor sweeps the area chart in lockstep with the audio, highlighting the bar / month currently playing.",
+        "content": {
+          "filename": "timeline_sonification.wav",
+          "tool": "python_synthesis",
+          "script": "code/09_sonification.py",
+          "duration_seconds": 12.5,
+          "n_notes": 77,
+          "data_mapping": {
+            "field": "verifications",
+            "transform": "log10",
+            "scale": "C major pentatonic across 3 octaves (131-880 Hz)",
+            "pitch_range_hz": [131, 880],
+            "per_note_seconds": 0.16
+          }
+        },
+        "fallback": "If audio is muted or unsupported, the area chart alone communicates the trend; the play button is replaced with a muted-tooltip icon explaining the sonification.",
+        "novelty_note": "Generated programmatically from the exact verification series in ana_25 — every reader hears the same 77 notes mapped from the same numbers. Not a generic music bed, not a click-to-play tone card."
+      },
+      "brief": "Twelve-second WAV: one short pentatonic note per month, pitch logarithmic in verification count. Pairs with des_05's chart cursor.",
+      "rationale": "Audio earns its slot here because the dataset has a true ordered numeric sequence that maps cleanly to pitch. The reader's ear can pick out the 2026-03 peak immediately.",
+      "based_on": ["ana_25"]
+    },
+    "des_07": {
+      "label": "Silksong twin chart — weekly volume + community median time",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "twin_axis_line_and_bars",
+        "data_source": ["ana_22", "ana_24"],
+        "x": "week_start",
+        "y_left": {"field": "any_pct_submissions", "from": "ana_22", "encoding": "muted-grey bars"},
+        "y_right": {"field": "median_minutes", "from": "ana_24", "encoding": "saturated indigo line on top"},
+        "highlight": {"annotation": "Blue's 57:02 — fastest in dataset (Sweden)"},
+        "interaction": "Hover tooltip on any week shows volume + median minutes + n_runs. The annotation 'Blue's 57:02' floats over the most recent runs, with a hairline pointer to the right-axis area.",
+        "style": {"bars_opacity": 0.45, "line_width": 2.5, "y_left_label": "weekly Any% submissions", "y_right_label": "median Any% time (minutes)"}
+      },
+      "brief": "Combination chart for Silksong: greyed-back bars = weekly submission volume, foreground line = weekly median time. Annotate Blue's 57-minute personal best. The line should visibly drop from ~83 min in launch week to ~65 min by spring.",
+      "rationale": "Two findings (ana_22 volume, ana_24 median time) tell the launch story together: volume spike → settle, median time decay → plateau. A twin-axis chart is the only way to show 'community as a whole got 27% faster while submission volume fell off'.",
+      "based_on": ["ana_22", "ana_24"]
+    },
+    "des_08": {
+      "label": "Blue's 1:03:41 WR — clickable YouTube thumbnail card",
+      "type": "instance",
+      "section": "edt_03",
+      "content": {
+        "instance_ref": "inst_02",
+        "embed_type": "youtube_thumbnail_link",
+        "watch_url": "https://www.youtube.com/watch?v=QH-Oblh1yRI",
+        "thumbnail_filename": "yt_blue_thumb.jpg",
+        "thumbnail_source": "https://i.ytimg.com/vi/QH-Oblh1yRI/hqdefault.jpg",
+        "caption": "BlueSR — Hollow Knight: Silksong Any% in 1:03:41 (former world record). The dataset shows their current best at 57:02 in the version of the leaderboard captured 25 May 2026. Click the thumbnail to watch on YouTube — the channel does not allow third-party embedding."
+      },
+      "brief": "Clickable thumbnail card linking out to YouTube. Hornet character on the Silksong title screen with '1:03:41 WORLD RECORD' text; centred red play-button overlay; '@BlueSR' host tag in the bottom-right. Hover lifts the card and brightens the image.",
+      "rationale": "Original spec used an embedded iframe. The Auditor discovered at preview time that BlueSR's channel returns 'Error 153 Video player configuration error' inside the iframe (oEmbed returned 200 but actual embed is blocked). YouTube does not expose embedability via static HTML, so reactive verification is the only signal. Defensive fix: replace iframe with a thumbnail card linking to the canonical watch URL. The reader still sees the run's visual identity and can play it; the page does not show a broken player.",
+      "based_on": ["ana_23"]
+    },
+    "des_09": {
+      "label": "Granny: Legacy country bar — Slavic dominance",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_13",
+        "x": "runners",
+        "y": "country",
+        "highlight": {"countries": ["Russia", "Ukraine", "Belarus", "Kazakhstan"]},
+        "interaction": "Hover tooltip shows the runner count + share-of-Granny-runners. A grouped overlay shades the four Slavic / post-Soviet countries one colour and the rest another, with a callout '4 post-Soviet states = 770 of 1,245 runners (61.8%)'.",
+        "style": {"palette": "Slavic group in saturated red-orange; others in muted grey", "value_labels": "right of each bar", "y_axis_order": "by runner count descending"}
+      },
+      "brief": "Bar chart, 10 countries, Russia bar visibly dominant. Group-shade Russia + Ukraine + Belarus + Kazakhstan and add the 61.8% callout above the group.",
+      "rationale": "ana_13 is the single most surprising regional concentration in the dataset. The bar chart's job is to make Russia's 533 (vs the next country's 142) impossible to miss.",
+      "based_on": ["ana_13"]
+    },
+    "des_10": {
+      "label": "Granny: Legacy 16-month growth curve",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "area",
+        "data_source": "ana_31",
+        "x": "month",
+        "y": "verifications",
+        "highlight": {"months": ["2025-02", "2026-03", "2026-04"]},
+        "interaction": "Hover tooltip shows month + verifications. Annotations: 'Leaderboard opens (Feb 2025 — 1 run)' at the left, '899 runs/month (Apr 2026 peak)' at the right.",
+        "style": {"palette": "single red-orange area to match the Slavic-group colour in des_09", "x_axis": "monthly Feb 2025 → May 2026", "y_axis": "linear, 0-1000"}
+      },
+      "brief": "Single area chart, 16 monthly bars. Almost-exponential climb. Two annotations bookend the curve.",
+      "rationale": "The country bar (des_09) shows WHO. The growth curve shows WHEN. Pair them side-by-side or stack them in a single 'Granny dossier' block.",
+      "based_on": ["ana_31"]
+    },
+    "des_11": {
+      "label": "Lorenz curve of runs per runner",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "lorenz_curve",
+        "data_source": "ana_19",
+        "x": "runner_percentile",
+        "y": "cum_run_share_pct",
+        "highlight": {"points": [{"x": 5, "y": 33.7, "label": "top 5% = 33.7% of runs"}, {"x": 20, "y": 57.7, "label": "top 20% = 57.7%"}]},
+        "interaction": "Hover tooltip shows the cumulative share at any percentile. A dashed 45-degree equality line behind the actual curve for visual reference.",
+        "style": {"line_width": 2.5, "equality_line": "dashed grey", "fill_below_curve": "soft indigo with low opacity", "annotation_callouts": "two thin guide lines from the highlighted points to the axes"}
+      },
+      "brief": "Classic Lorenz curve, 0-100% on both axes. Steep convex shape with the two callout points anchored. The equality line behind makes the inequality obvious.",
+      "rationale": "ana_19's data table is already in Lorenz-curve format. The shape itself is the argument — top 5% of runners do a third of the work.",
+      "based_on": ["ana_19"]
+    },
+    "des_12": {
+      "label": "Stat callout — 92.1% are monogamists",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": {
+        "value": "92.1%",
+        "label": "of registered runners on these leaderboards have only ever speedrun ONE game",
+        "data_source": "ana_20"
+      },
+      "brief": "Large 72-96px stat. Place after the Lorenz curve so the two findings stack — the labour is concentrated AND the runners are specialists.",
+      "rationale": "92.1% is a single striking number that earns the headline treatment.",
+      "based_on": ["ana_20"]
+    },
+    "des_13": {
+      "label": "Akuretaki polyglot callout card",
+      "type": "stat_callout",
+      "section": "edt_05",
+      "content": {
+        "value": "Akuretaki",
+        "label": "Russia • 315 verified runs across 11 games • the ONLY runner in the dataset with double-digit game spread.",
+        "data_source": "ana_18"
+      },
+      "brief": "A profile-style callout card after the monogamist stat. Treats Akuretaki as the human exception that proves the rule.",
+      "rationale": "Names make data feel real. Akuretaki is the data's most extreme outlier and deserves a face (well, a name).",
+      "based_on": ["ana_18"]
+    },
+    "des_14": {
+      "label": "WR-share vs runner-share dumbbell chart by country",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "dumbbell",
+        "data_source": "ana_11",
+        "y": "country",
+        "x_left": "pct_of_runners",
+        "x_right": "pct_of_wrs",
+        "highlight": {"overperformers": ["Czech Republic", "Romania", "Brazil", "Russia"], "underperformer": ["United States"]},
+        "interaction": "Hover tooltip shows the exact pair of percentages. A short connecting line between the two dots is colour-coded: red if WR-share > runner-share (over-performing), grey if matching, blue if WR-share < runner-share.",
+        "style": {"y_axis_order": "by WR-share descending", "dot_size": "medium for runner-share, large for WR-share"}
+      },
+      "brief": "Dumbbell chart, 15 countries. For each country, two dots: 'share of runners' (left) and 'share of WRs' (right). Connecting line shows the gap. The visual pattern shows Czech Republic / Romania / Brazil / Russia 'jumping right' on the WR axis while USA 'pulls back left'.",
+      "rationale": "ana_11's data_table conveniently includes both columns. Dumbbells make over- vs under-representation immediate.",
+      "based_on": ["ana_11"]
+    },
+    "des_15": {
+      "label": "Emulator share by year (line chart)",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_15",
+        "x": "year",
+        "y": "emu_pct",
+        "highlight": {"years": [2018, 2026]},
+        "interaction": "Hover tooltip shows year + emulator% + total runs. Annotations: 'Peak 18.3% (2018)' at the top of the curve and '7.8% (so far in 2026)' at the right end.",
+        "style": {"line_width": 2.5, "palette": "single muted teal with a darker accent at the peak", "y_axis": "0-20%"}
+      },
+      "brief": "Single-line chart, 2015-2026 (12 yearly points). Clear up-then-down shape. Annotations bookend the peak and the 2026 value.",
+      "rationale": "ana_15's data has a clean arc — line chart is the right shape for the story.",
+      "based_on": ["ana_15"]
+    },
+    "des_16": {
+      "label": "Super Mario 64 platform stacked bar with emulator overlay",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "stacked_horizontal_bar",
+        "data_source": "ana_16",
+        "y": "platform",
+        "x": "runs",
+        "color": "emulated_or_native_split",
+        "highlight": {"row": "Nintendo 64", "annotation": "40.4% emulated"},
+        "interaction": "Hover tooltip per segment shows count + pct. The N64 row has two visible segments: native vs emulator. The annotation '40.4% emulated' floats above the emulator segment.",
+        "style": {"palette": {"native": "deep navy", "emulated": "warm grey-amber"}, "value_labels": "inside each segment if it fits"}
+      },
+      "brief": "Stacked horizontal bar, 4 platforms. The N64 row splits visibly into native vs emulator. The other rows are single-colour (no emulator share). The 40.4% annotation is the kicker.",
+      "rationale": "ana_16 has a per-platform emulator share. The stacked bar makes the N64 split visible at a glance.",
+      "based_on": ["ana_16"]
+    },
+    "des_17": {
+      "label": "Atmospheric: LiveSplit timer interface",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_livesplit.png",
+        "tool": "wikimedia_download",
+        "source_url": "https://upload.wikimedia.org/wikipedia/commons/3/33/LiveSplit_interface.png"
+      },
+      "brief": "Small inset image of the LiveSplit timer (already downloaded by Detective). Place beside the SM64 emulator chart or in the closing meditation. Caption: 'LiveSplit, the per-segment timing tool used by essentially every speedrunner on speedrun.com.'",
+      "rationale": "Grounds the abstract emulator/platform discussion in the actual tooling. Adds visual variety to a chart-heavy closing.",
+      "based_on": []
+    },
+    "des_18": {
+      "label": "Atmospheric: GDQ stage photo",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_gdq_cheese.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://upload.wikimedia.org/wikipedia/commons/2/28/Cheese_performing%2C_SGDQ.jpg"
+      },
+      "brief": "Detective-collected photo of speedrunner Cheese performing at Summer Games Done Quick — the canonical visual of a marathon-stage run. Use as a small inset early in the hook section or as a side image alongside the bar chart. Caption: 'Cheese performing at Summer Games Done Quick, the bi-annual marathon that contextualises everything in this dataset.'",
+      "rationale": "Connects the dataset (verified runs on speedrun.com) to the wider culture (GDQ, charity marathons). The image adds reality and atmosphere without dictating the prose.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, restrained, data-forward — like a long-form Pudding or Economist Daily Chart piece",
+    "text_visual_pattern": "visual-first hero (image2video teaser), then mostly prose-then-chart cadence with occasional stat-callout interruptions",
+    "centrepiece": "des_05 + des_06 (timeline chart with sonification) — this is the spine of the labour-market argument",
+    "anti_sameness_notes": "Avoid chart-streaks: the hook has a quiz before the bar, the timeline has audio paired, the Granny dossier pairs the country bar with the growth curve, the runners section pairs the Lorenz with stat callouts. Geography uses a dumbbell rather than a default world map (data doesn't need lat/lng). The closing uses two charts + a small reference image. No section has more than two consecutive charts without a non-chart break.",
+    "typography_notes": "Title in a heavy serif at 56-64px. Section headers in 28-32px sans-serif. Stat callouts at 72-96px. Pull-quote-style annotations on charts in italic serif. Subtle horizontal-rule section dividers in 1px medium grey. Paragraph leading at 1.55-1.65 for readability."
+  }
+}

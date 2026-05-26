@@ -1,0 +1,433 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "topic": "NYC 311 noise complaints, calendar years 2023 and 2024 (filtered from dataset erm2-nwe9)",
+    "fetched_at": "2026-05-25"
+  },
+  "items": {
+    "det_01": {
+      "label": "311 launched in 2003 — the first call was a noise complaint",
+      "content": "New York City's 311 hotline was inaugurated by Mayor Michael Bloomberg on March 9, 2003 as the non-emergency counterpart to 911, consolidating roughly 40 city call centers and hotlines into a single number. The very first call to NYC311, at 12:01 AM on launch day, was a noise complaint from Jackson Heights, Queens. Through 2023 the system had received more than 525 million inquiries from New Yorkers, 68% by phone, 28% on the web, 3% in the mobile app (launched 2013), and the remainder through text and other channels. Every row in this dataset is one of those calls, web tickets, or app submissions — each one a New Yorker formally telling the city that something is too loud.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/NYC311",
+          "title": "NYC311 — Wikipedia",
+          "facts": [
+            "Launched by Mayor Bloomberg on March 9, 2003",
+            "First-ever 311 call was a noise complaint from Jackson Heights, Queens at 12:01 AM",
+            "Through 2023: 525M+ inquiries, 68% phone, 28% web, 3% mobile app",
+            "Mobile app launched in 2013"
+          ]
+        },
+        {
+          "url": "https://www.nbcnewyork.com/news/local/can-i-claim-my-dog-as-a-dependent-most-memorable-nyc-311-calls-as-system-turns-20/4144868/",
+          "title": "'Can I claim my dog as a dependent?' NYC 311 system turns 20 — NBC New York",
+          "facts": [
+            "First-ever 311 call was for a noise complaint in Jackson Heights"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Where the data comes from — NYC Open Data dataset erm2-nwe9",
+      "content": "Every record in this file is one row from NYC Open Data's master 311 dataset, 'erm2-nwe9' ('311 Service Requests from 2010 to Present'), pulled from the Socrata Open Data API and filtered server-side to requests whose complaint_type contains the substring 'Noise', for created_date between 2023-01-01 and 2025-01-01. The publisher is NYC's Office of Technology and Innovation; the underlying records are submitted by residents and routed by 311 to the agency that owns each complaint type. The dataset is published under NYC's Open Data Terms of Use rather than a Creative Commons license, but is freely reusable. The CSV returned 44 of the 48 columns the dataset page documents (the four auto-computed polygon-region IDs are not in the SODA response for this filter).",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9",
+          "title": "311 Service Requests from 2010 to Present — NYC Open Data (erm2-nwe9)",
+          "facts": [
+            "Published by NYC Office of Technology and Innovation",
+            "Dataset covers every 311 service request city-wide from 2010 to present",
+            "SODA endpoint allows server-side filtering by complaint_type and created_date"
+          ]
+        },
+        {
+          "url": "https://opendata.cityofnewyork.us/overview/",
+          "title": "NYC Open Data — overview and terms of use",
+          "facts": [
+            "Reuse falls under NYC Open Data Terms of Use, not a Creative Commons license"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "What the law actually says — the NYC Noise Code (Local Law 113 of 2005)",
+      "content": "The legal backbone that turns 'too loud' into a 311 ticket is Local Law 113 of 2005, which rewrote the NYC Noise Code for the first time in 30 years. The code declares it 'the public policy of the city that every person is entitled to ambient sound levels that are not detrimental to life, health and enjoyment of his or her property,' and sets specific decibel and time-of-day rules for residential, commercial, manufacturing, construction, and vehicle sources. Construction is only permitted on weekdays 7 AM–6 PM unless the contractor obtains an after-hours variance from the Department of Buildings, with a Construction Noise Mitigation plan filed at DEP. The code is enforced jointly by DEP (commercial, construction, after-hours work, music venues, ice cream trucks) and NYPD (residential and street/vehicle complaints when noise is in progress).",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.nyc.gov/site/dep/environment/noise-code.page",
+          "title": "NYC DEP — Noise Code",
+          "facts": [
+            "Noise Code is established by Local Law 113 of 2005",
+            "City policy goal: reduce ambient noise to preserve public health, safety and welfare",
+            "Code helps manage noise from commercial, cultural, and manufacturing activities"
+          ]
+        },
+        {
+          "url": "https://www.nyc.gov/site/dep/environment/construction-noise-rules-regulations.page",
+          "title": "NYC DEP — Construction Noise Rules, Regulations & Forms",
+          "facts": [
+            "Construction allowed weekdays 7 AM–6 PM only",
+            "After-hours and weekend work requires a variance with a Construction Noise Mitigation plan"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Which agency handles which complaint — the routing logic behind every row",
+      "content": "Every noise complaint is automatically routed by 311 to one of three city agencies based on its complaint_type. The NYPD owns the residential, street/sidewalk, and vehicle/horn buckets — the bulk of the dataset — and dispatches a patrol unit that must physically witness the violation to issue a summons; if the noise has stopped by the time officers arrive, the request typically closes with 'observed no evidence of the violation.' The Department of Environmental Protection (DEP) handles construction, commercial, music venue, and ice cream truck complaints, sending field inspectors with sound meters during permit hours — often days later. The Department of Transportation (DOT) takes a small slice (mostly highway/bridge noise). The agency column in the data is therefore as much a story about what enforcement is even possible as about who is complaining.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://portal.311.nyc.gov/article/?kanumber=KA-02125",
+          "title": "Noise Complaints — NYC311 portal",
+          "facts": [
+            "Different complaint sub-types are routed to different agencies",
+            "NYPD handles residential, neighbor, and vehicle noise complaints",
+            "DEP handles commercial, construction, after-hours work, and ice cream truck complaints"
+          ]
+        },
+        {
+          "url": "https://helpnewyork.com/how-to-file-noise-complaint-nyc/",
+          "title": "311 Noise Complaint NYC: How to File, Which Agency Handles It (HelpNewYork 2026)",
+          "facts": [
+            "NYPD officers must witness the noise in progress to issue a violation",
+            "Many residential noise complaints close as 'observed no evidence of violation' if noise has stopped before arrival",
+            "DEP inspectors arrive on a slower cycle than NYPD patrol response"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Channel mix — the slow death of the 311 phone call",
+      "content": "Although the dataset still spans phone, online, mobile app, and 'other' submissions, the channel mix shifts every year. Across the whole city, of 525 million 311 inquiries through 2023, 68% came in by phone, 28% by web, 3% through the NYC311 mobile app, and 1% by text or other channels. The mobile app launched in 2013 but only crossed a few percent of total share a decade later. The 'open_data_channel_type' column in this dataset is therefore one of the cleanest measures of a slow-motion habit change: which New Yorkers still dial 311 when their upstairs neighbor throws a party at 2 AM, and which open the app or load 311.nyc.gov.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/NYC311",
+          "title": "NYC311 — Wikipedia",
+          "facts": [
+            "Through 2023: 68% phone, 28% web, 3% mobile app, 1% other",
+            "Mobile app launched in 2013"
+          ]
+        },
+        {
+          "url": "https://council.nyc.gov/data/311-services/",
+          "title": "311 Services — NYC Council Data Team",
+          "facts": [
+            "Phone remained the dominant channel through 2023",
+            "Web (NYC311 website) is the second-largest channel and has grown steadily over the past five years"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "What the press said about 2024 — noise as #1 complaint",
+      "content": "When New York's 311 system released its 2024 annual numbers, noise was the single largest category. FOX 5 reported that the city logged more than 738,000 noise complaints in 2024 — over 2,000 a day — of which more than 356,000 were 'within or near apartment buildings' (loud parties, TVs, music). A separate Metapress summary put the figure at over 610,000 with the residential split at 379,000+ residential, 68,300+ commercial, and 163,000+ street/sidewalk; the difference between those totals likely comes from how each source counts categories like helicopter and vehicle noise. Either way, both reports agreed on the order: residential is the dominant bucket by a wide margin, and the 19% year-over-year jump versus 2023 is the headline.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://www.fox5ny.com/news/noise-tops-nycs-311-complaints-list-2024",
+          "title": "Noise tops NYC's 311 complaints list in 2024 — FOX 5 New York",
+          "facts": [
+            "738,000+ noise complaints in 2024",
+            "356,000+ from within or near apartment buildings",
+            "More than 2,000 noise complaints per day"
+          ]
+        },
+        {
+          "url": "https://metapress.com/understanding-nycs-top-311-complaints-in-2024-noise-parking-and-more/",
+          "title": "Understanding NYC's Top 311 Complaints in 2024 — Metapress",
+          "facts": [
+            "Noise complaints reached over 610,000 in 2024",
+            "19% increase from 2023",
+            "Categories: 379,200+ residential, 68,300+ commercial, 163,000+ street and sidewalk"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Helicopter noise exploded between 2020 and 2023",
+      "content": "Helicopter noise is the only sub-category whose absolute volume has multiplied by orders of magnitude in the past four years. The NYC Council's helicopter-noise data team found that 311 complaints rose from 811 in January 2020 to 7,461 in May 2023 alone, and tallied 59,127 complaints for all of 2023. The driver was the return of tourism: in May 2023, 8,848 helicopter flights moved over NYC land or water, of which 1,929 were sightseeing tours from the Downtown Manhattan Heliport and 1,398 were tour flights from Linden, NJ. The flights that produced the most complaints per flight were non-tour rides to/from JFK and West 30th Street (0.77 complaints per flight) and tour flights from Linden (0.57 per flight). The complaint hotspots are not at the heliports themselves but along the flight paths: the Upper West Side, Central Park, Murray Hill–Kips Bay in Manhattan, and Carroll Gardens–Cobble Hill–Gowanus–Red Hook plus Prospect Heights/Park Slope in Brooklyn.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://council.nyc.gov/data/helicopter-noise-and-safety/",
+          "title": "Helicopter Noise and Safety — NYC Council Data Team",
+          "facts": [
+            "311 helicopter-noise complaints rose from 811 in January 2020 to 7,461 in May 2023",
+            "59,127 total helicopter-noise complaints in 2023",
+            "8,848 flights over NYC land/water in May 2023",
+            "Manhattan hotspots: Upper West Side, Central Park, Upper East Side, Chelsea–Hudson Yards, Murray Hill–Kips Bay",
+            "Brooklyn hotspots: Carroll Gardens–Cobble Hill–Gowanus–Red Hook, Prospect Heights/Park Slope",
+            "Non-tour flights to/from JFK and West 30th Street: 0.77 complaints per flight",
+            "Tour flights from Linden Airport: 0.57 complaints per flight"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Stop the Chop and the 2025 Helicopter Oversight Act",
+      "content": "The advocacy group Stop the Chop NY NJ has been pushing for years to ban non-essential helicopter operations at the two city-owned heliports — East 34th Street and Downtown Manhattan (renamed Downtown Skyport in April 2025). On April 24, 2025 the City Council passed the Helicopter Oversight Act (Intro 26-A), sponsored by Majority Leader Amanda Farías: starting in 2029 the two city-owned heliports may only host helicopters that meet the FAA's strictest noise standards, exempting law enforcement, emergency response, news, and film production. The bill passed two weeks after six people died when a sightseeing helicopter crashed into the Hudson River. The 2023–2024 noise data is therefore the baseline that motivated the change.",
+      "category": "related_work",
+      "sources": [
+        {
+          "url": "https://council.nyc.gov/amanda-farias/2025/04/28/majority-leader-amanda-farias-legislation-passes-nyc-council-requiring-stricter-noise-standards-for-non-essential-helicopter-flights-from-city-owned-heliports/",
+          "title": "Majority Leader Amanda Farías' Helicopter Oversight Act passes NYC Council — April 28, 2025",
+          "facts": [
+            "Intro 26-A passed City Council on April 24, 2025",
+            "Bans non-FAA-Stage-3-compliant non-essential helicopters from city-owned heliports starting 2029",
+            "Exempts law enforcement, emergency response, news gathering, film production"
+          ]
+        },
+        {
+          "url": "https://www.cbsnews.com/newyork/news/nyc-helicopter-ban-bill-passes/",
+          "title": "NYC Council passes helicopter ban bill weeks after fatal crash — CBS New York",
+          "facts": [
+            "Six people killed when a sightseeing helicopter crashed into the Hudson River, weeks before the vote",
+            "Targets sightseeing tours and luxury commuter flights at the East 34th Street and Downtown Manhattan heliports"
+          ]
+        },
+        {
+          "url": "https://stopthechopnynj.org/",
+          "title": "Stop The Chop NY NJ — homepage",
+          "facts": [
+            "Grassroots group fighting to end non-essential helicopter traffic over NYC and NJ"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Construction noise is mostly an after-hours story",
+      "content": "Construction is the sub-category where the city's own policy structure most directly shapes the complaint volume. A New York State Comptroller audit found that during 2014–June 2016, 74% of construction noise complaints stemmed from after-hours work — work performed outside the legal 7 AM–6 PM weekday window under a Department of Buildings 'after-hours variance.' The audit also found DOB did not factor 311 noise complaints or prior DEP citations into whether to grant new variances; locations with the most complaints kept receiving permits. For the 2023–2024 dataset, that means construction-noise records cluster around buildings with active variances rather than around 'illegal' construction.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.osc.ny.gov/press/releases/2017/08/nyc-construction-noise-complaints-soar",
+          "title": "NYC Construction Noise Complaints Soar — NY State Comptroller (2017 release)",
+          "facts": [
+            "74% of construction-noise complaints in audit period (Jan 2014–Jun 2016) came from after-hours work",
+            "DOB did not consider 311 complaints or DEP citations when granting after-hours variances",
+            "Most complaints came from locations with DOB-granted variances"
+          ]
+        },
+        {
+          "url": "https://www.nyc.gov/site/dep/environment/construction-noise-rules-regulations.page",
+          "title": "NYC DEP — Construction Noise Rules",
+          "facts": [
+            "Construction permitted weekdays 7 AM–6 PM only without a variance"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Ice cream truck jingles — a category where enforcement essentially does not happen",
+      "content": "One unusually specific corner of the data is the 'Ice Cream Truck' descriptor under DEP. Under a 1970s-era deal with the City Council, ice cream trucks are allowed to play their jingle while moving but not while stopped, with fines from $350 to $3,000. Gothamist reported 7,000+ Mister Softee jingle complaints over four years (through 2014) and 1,013 in the first half of 2016 alone — but only one ticket was issued. The mismatch is structural: DEP inspectors arrive days after the call, by which point the truck is gone. This dataset will let us see how big that complaint stream still is in 2023–2024 and whether DEP's resolution status has changed.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://gothamist.com/food/nyers-have-lodged-7000-ice-cream-truck-noise-complaints-in-last-4-years",
+          "title": "NYers Have Lodged 7,000+ Ice Cream Truck Noise Complaints In Last 4 Years — Gothamist",
+          "facts": [
+            "Over 7,000 ice cream truck jingle complaints filed in four years through 2014",
+            "Jingles are legal only while truck is in motion; violations fined $350–$3,000"
+          ]
+        },
+        {
+          "url": "http://gothamist.com/2016/06/28/ice_cream_jingle_madness.php",
+          "title": "NYC Filed 1,013 Ice Cream Truck Jingle Noise Complaints This Year And It's Not Even July — Gothamist (2016)",
+          "facts": [
+            "1,013 ice cream truck noise complaints in first half of 2016",
+            "Only one ticket issued"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "Who complains — gentrification, racial boundaries, and the demographics of dialling 311",
+      "content": "A widely cited 2016 study, 'Contested Boundaries: Explaining Where Ethnoracial Diversity Provokes Neighborhood Conflict' by Joscha Legewie (NYU) and Merlin Schaeffer, used 4.7 million geo-coded 311 service requests and showed that neighbor-conflict 311 complaints (noise, public drinking, blocking driveways) spike along 'fuzzy' racial/ethnic boundaries — transitional blocks between two more homogeneous communities — rather than at sharp boundaries. Subsequent journalism by Marketplace, Gothamist, BuzzFeed, and Pacific Standard documented that per-capita 311 calls in gentrifying NYC neighborhoods grew 70% faster than the city average; noise calls grew 'twice as fast in gentrifying neighborhoods as in high-income enclaves and 50 percent faster than in poor districts.' The CRITICAL caveat for any analysis: 311 measures who complains, not where noise is actually loudest, and 311 does not record the demographics of the caller.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.journals.uchicago.edu/doi/10.1086/686942",
+          "title": "Contested Boundaries: Explaining Where Ethnoracial Diversity Provokes Neighborhood Conflict — AJS 122(1), Legewie & Schaeffer 2016",
+          "facts": [
+            "Used 4.7 million geo-coded 311 service requests",
+            "Neighbor-conflict 311 complaints peak at 'fuzzy' ethnic boundaries, not sharp ones"
+          ]
+        },
+        {
+          "url": "https://psmag.com/social-justice/gentrification-increaes-noise-complaints-in-nyc/",
+          "title": "New Neighbors, New Noise Complaints — Pacific Standard",
+          "facts": [
+            "Per-capita 311 calls grew 70% faster in gentrifying NYC neighborhoods than city average",
+            "Noise calls grew twice as fast in gentrifying neighborhoods as in high-income enclaves"
+          ]
+        },
+        {
+          "url": "https://www.marketplace.org/story/2018/07/02/people-gentrifying-nyc-have-lots-of-complaints",
+          "title": "People gentrifying NYC neighborhoods have a lot of complaints — Marketplace (2018)",
+          "facts": [
+            "311 does not record the demographics of the caller, only the location of the complaint"
+          ]
+        }
+      ]
+    },
+    "det_12": {
+      "label": "The NYPD response pattern — 'observed no evidence of the violation'",
+      "content": "For residential, vehicle, and street noise the NYPD must physically observe an active violation to write a summons — and by the time officers arrive, the party is usually over. The first row in the raw CSV (case 56416252, January 1 2023, 12:00 AM, Sedgwick Avenue, Bronx) closed seventeen and a half hours later with the resolution text 'The Police Department responded to the complaint and with the information available observed no evidence of the violation at that time.' Across all NYC agencies, 'Did Not Observe'–style closures account for roughly 25% of 311 closures; the NYPD's share on residential noise specifically is higher. This dataset's resolution_description column is therefore where you read what the city actually did about each call — not just whether something was filed.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://council.nyc.gov/data/311-agency/",
+          "title": "Are City Agencies Responding to 311? — NYC Council Data Team",
+          "facts": [
+            "Across all agencies, 'Did Not Observe' resolutions account for 24.8% of 311 complaint closures"
+          ]
+        },
+        {
+          "url": "https://helpnewyork.com/how-to-file-noise-complaint-nyc/",
+          "title": "311 Noise Complaint NYC: How to File and What Actually Works (HelpNewYork 2026)",
+          "facts": [
+            "NYPD must witness noise in progress to issue a violation",
+            "Most residential complaints close as 'no violation observed' when noise stops before officers arrive"
+          ]
+        }
+      ]
+    },
+    "det_13": {
+      "label": "Why this data became politically central — the NYPD Quality of Life Division",
+      "content": "On April 9, 2025 — shortly after the period this dataset covers — Mayor Eric Adams and NYPD Commissioner Jessica Tisch launched a new NYPD Quality of Life Division ('Q-Teams') focused on noise, derelict vehicles, illegal mopeds, and other 311 complaint types. Officers received training on sound metering devices specifically for noise enforcement. The pilot improved non-emergency response times by 47 minutes on average citywide. By August 2025 Q-Teams were rolled out in every precinct in Manhattan, the Bronx, Brooklyn, Queens, and Staten Island. The 2023–2024 noise data is the pre-Q-Team baseline; future cuts of the same dataset will show whether response times shortened and 'no evidence observed' closures fell after the division stood up.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.nyc.gov/mayors-office/news/2025/04/mayor-adams-nypd-commissioner-tisch-launch-new-quality-life-division-enhance-public-safety",
+          "title": "Mayor Adams, NYPD Commissioner Tisch Launch new Quality of Life Division — NYC Mayor's Office, April 2025",
+          "facts": [
+            "Citywide initiative launched April 9, 2025",
+            "Focused on noise complaints, derelict vehicles, illegal mopeds, encampments"
+          ]
+        },
+        {
+          "url": "https://www.nyc.gov/mayors-office/news/2025/08/mayor-adams-and-nypd-commissioner-tisch-expand-quality-of-life-t0",
+          "title": "Mayor Adams Expands Quality of Life Teams to Queens — August 2025",
+          "facts": [
+            "Q-Teams improved non-emergency response times by 47 minutes citywide on average",
+            "Officers trained on sound metering devices for noise enforcement",
+            "Expanded across all five boroughs by August 2025"
+          ]
+        }
+      ]
+    },
+    "det_14": {
+      "label": "Fireworks summers — the seasonal noise signal that explains big late-June spikes",
+      "content": "Two seasonal events dominate every annual noise chart: the late-June into July-4 illegal fireworks wave, and the Memorial-Day weekend warmup. Fireworks complaints rose 2,429% during July 4–6 2020 vs. the same days in 2019 — 10,801 in three days — and summer 2020 logged 47,000+ fireworks complaints, sixty times 2019. The wave never fully receded: ~18,000 in summer 2021, ~7,000 each in summers 2022 and 2023. These appear in the dataset under complaint_type 'Noise' (the generic top-level category) with descriptor 'Banging/Pounding' or 'Fireworks'; expect a visible spike every late June, peaking on July 4, in any 2023 or 2024 chart.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.nbcnewyork.com/news/local/nearly-200-arrested-in-nyc-fireworks-crackdown-311-complaints-up-2400-this-july-4-weekend-over-last-year/2503889/",
+          "title": "195 Arrested in NYC Fireworks Crackdown as 311 Complaints Skyrocket — NBC New York",
+          "facts": [
+            "311 fireworks complaints up 2,429% during July 4–6 2020 vs 2019",
+            "10,801 complaints over July 4–6 2020"
+          ]
+        },
+        {
+          "url": "https://gothamist.com/news/see-where-new-yorkers-complain-the-most-about-july-4-fireworks",
+          "title": "See where New Yorkers complain the most about July 4 fireworks — Gothamist",
+          "facts": [
+            "June–July 2020: 47,000+ fireworks-related 311 complaints, 60x the prior year",
+            "Summer 2021: ~18,000 fireworks complaints",
+            "Summer 2022 and 2023: ~7,000 each"
+          ]
+        }
+      ]
+    },
+    "det_15": {
+      "label": "Per-capita hot spots — where complaint density is highest",
+      "content": "Several outside analyses have mapped 311 noise complaints per capita rather than per zip. A 2018 RentHop study using NYC Open Data found Hamilton Heights to be the noisiest neighborhood in the city at 0.0486 complaints per resident, with Marble Hill/Inwood (0.0481) second — both more than 10x the Upper East Side. The NYS Comptroller's longer-window analysis (2010–2015) found Washington Heights/Inwood the highest at ~82 noise complaints per 1,000 adults per year. TimeOut reported the Bronx as the loudest borough in 2025 per capita, with Wakefield and Fordham specifically. Different windows highlight different leaders, but Upper Manhattan and the Bronx consistently top the per-capita list — a pattern any per-zip or per-borough chart from this dataset should reproduce.",
+      "category": "related_work",
+      "sources": [
+        {
+          "url": "https://renthop.com/studies/nyc/upper-east-side-is-the-quietest-neighborhood-in-manhattan",
+          "title": "Upper East Side is the Quietest Neighborhood in Manhattan — RentHop study (2018)",
+          "facts": [
+            "Hamilton Heights: 0.0486 noise complaints per capita (noisiest in city, 2018)",
+            "Marble Hill/Inwood: 0.0481 per capita (second)",
+            "Both more than 10x Upper East Side"
+          ]
+        },
+        {
+          "url": "https://www.osc.ny.gov/files/reports/special-topics/pdf/health-noise-in-nyc-2018.pdf",
+          "title": "Noise in New York City Neighborhoods — NYS Comptroller (2018)",
+          "facts": [
+            "Washington Heights/Inwood: ~82 noise complaints per 1,000 adults per year (2010–2015 window)"
+          ]
+        },
+        {
+          "url": "https://www.timeout.com/newyork/news/these-are-the-loudest-neighborhoods-in-nyc-020425",
+          "title": "The Bronx ranks as the loudest neighborhood in NYC according to 311 data — TimeOut",
+          "facts": [
+            "Bronx had the highest per-capita noise-complaint rate in 2025",
+            "Wakefield and Fordham most impacted"
+          ]
+        }
+      ]
+    },
+    "det_16": {
+      "label": "What the analyst should focus on (scope suggestion)",
+      "content": "Based on the research above, the most analytically productive cuts of this dataset are: (1) the basic complaint-type breakdown — Residential vs Street/Sidewalk vs Commercial vs Vehicle vs Helicopter — since each is a different agency and a different enforcement regime; (2) the channel-shift (phone → online → app) over the 2023→2024 window; (3) NYPD vs DEP response time (created_date → closed_date) by complaint type, since NYPD's near-instant-but-often-fruitless response is the canonical complaint-about-the-complaint-system; (4) the resolution_description column to quantify how often 'observed no evidence of violation' actually shows up; (5) geography at the borough + zip level, both raw and adjusted for population, with explicit acknowledgement of the gentrification/who-complains caveat; (6) hour-of-day and day-of-week seasonality (especially Fri/Sat night), and the late-June fireworks spike; (7) helicopter complaints specifically — they should grow sharply between 2023 and 2024 if the trend the City Council found continues. Avoid demographic claims beyond geography — the file has no information about who filed.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://council.nyc.gov/data/helicopter-noise-and-safety/",
+          "title": "Helicopter Noise and Safety — NYC Council Data Team",
+          "facts": [
+            "Helicopter complaints rose from 811 in Jan 2020 to 59,127 for all of 2023"
+          ]
+        },
+        {
+          "url": "https://council.nyc.gov/data/311-agency/",
+          "title": "Are City Agencies Responding to 311? — NYC Council Data Team",
+          "facts": [
+            "'Did Not Observe' is a major NYPD closure outcome on noise complaints"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_helicopter_34th_st.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Helicopter_landing_E_34th_St_heliport_NYC.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons — author Beyond My Ken",
+      "description": "A HeliFlite executive helicopter landing at the East 34th Street Heliport in Manhattan — one of the two city-owned heliports targeted by the 2025 Helicopter Oversight Act.",
+      "relates_to": ["det_07", "det_08"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_mister_softee.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Mister_Softee_ice_cream_truck.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons — author Oleg Yunakov",
+      "description": "A Mister Softee ice cream truck. Their jingle, by law, may play only while the truck is in motion — but the dataset will show how rarely a DEP inspector ever catches one in the act.",
+      "relates_to": ["det_10"]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "ref_bedstuy_brownstone.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Bed-Stuy_20191130_-_01_-_Tompkins_btwn_Willoughby_%26_Hart.jpg",
+      "license": "CC BY-SA 4.0",
+      "source": "Wikimedia Commons — author Andre Carrotflower",
+      "description": "Tompkins Avenue between Willoughby and Hart, Bedford-Stuyvesant, Brooklyn — a typical NYC residential block where 'Loud Music/Party' calls are routed straight to the NYPD precinct.",
+      "relates_to": ["det_04", "det_11"]
+    }
+  ],
+  "instances": []
+}

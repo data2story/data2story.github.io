@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Kills Small-Plane Pilots — Fifteen Years of NTSB Findings, 2010-2024</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://cdn.jsdelivr.net/npm/vega@5.27.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.16.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.24.0"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+:root {
+  --ink: #1a1a1a;
+  --ink-soft: #444;
+  --ink-muted: #777;
+  --rule: #d9d9d4;
+  --bg: #faf8f4;
+  --bg-card: #f0ede5;
+  --accent: #d4843a;
+  --accent-dark: #a45e1f;
+  --steel: #5a6577;
+  --steel-light: #98a1b0;
+  --red: #b3344b;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Georgia, 'Source Serif Pro', serif;
+  font-size: 18px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+p { margin: 0 0 1.2rem; }
+
+a { color: var(--accent-dark); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { color: var(--ink); }
+
+.ui { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+/* ---------- Teaser ---------- */
+.teaser {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  height: 100vh;
+  min-height: 520px;
+  max-width: none;
+  overflow: hidden;
+  background: #0d0f17;
+}
+
+.teaser video, .teaser img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.teaser .teaser-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(13,15,23,0.0) 50%, rgba(13,15,23,0.55) 100%);
+  pointer-events: none;
+}
+
+.teaser .teaser-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 8vh;
+  text-align: center;
+  color: rgba(255,255,255,0.92);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* ---------- Headline ---------- */
+.headline-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem 3rem;
+  text-align: left;
+}
+
+h1.headline {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  line-height: 1.1;
+  margin: 0 0 1rem;
+  letter-spacing: -0.01em;
+}
+
+.subheadline {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin: 0 0 2rem;
+}
+
+.byline {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-top: 1px solid var(--rule);
+  padding-top: 1rem;
+}
+
+/* ---------- Sections ---------- */
+section.section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+section.section h2 {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 1.7rem;
+  margin: 3rem 0 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+section.section p {
+  font-size: 1.05rem;
+  color: var(--ink);
+}
+
+/* ---------- Stat callouts ---------- */
+.stat-triptych {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 1.5rem;
+  margin: 2rem 0 3rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  clear: both;
+}
+
+@media (max-width: 640px) {
+  .stat-triptych { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+.stat-block { text-align: left; }
+.stat-block.highlight .stat-number { color: var(--accent-dark); }
+
+.stat-number {
+  display: block;
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+
+.stat-block .stat-label {
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  margin-top: 0.6rem;
+  line-height: 1.4;
+}
+
+/* ---------- Visual container ---------- */
+.visual-container, figure.visual {
+  display: block;
+  clear: both;
+  margin: 2.5rem 0;
+  width: 100%;
+}
+
+figure.visual {
+  margin: 2.5rem 0;
+  padding: 0;
+}
+
+figure.visual img,
+figure.visual video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+figure.visual figcaption {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin-top: 0.6rem;
+  text-align: left;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.5rem;
+}
+
+/* ---------- Charts ---------- */
+.chart-container {
+  width: 100%;
+  max-width: 720px;
+  margin: 2.5rem auto;
+  display: block;
+  min-width: 0;
+}
+
+.chart-mount {
+  width: 100%;
+  min-width: 0;
+  display: block;
+}
+
+.chart-caption {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin-top: 0.6rem;
+  text-align: left;
+  border-top: 1px solid var(--rule);
+  padding-top: 0.5rem;
+}
+
+/* ---------- Map ---------- */
+#leaflet-map {
+  width: 100%;
+  height: 460px;
+  margin: 2rem 0;
+  border: 1px solid var(--rule);
+  background: #e5e8ee;
+}
+
+.map-wrap {
+  position: relative;
+  margin: 2.5rem 0;
+}
+
+.map-inset {
+  position: absolute;
+  right: 12px;
+  bottom: 28px;
+  background: rgba(250,248,244,0.96);
+  border: 1px solid var(--rule);
+  padding: 0.85rem 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  z-index: 500;
+  max-width: 260px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.map-inset .inset-title {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+}
+
+.map-inset .inset-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0.2rem;
+}
+
+.map-inset .inset-line strong {
+  font-weight: 700;
+  color: var(--accent-dark);
+}
+
+@media (max-width: 640px) {
+  .map-inset { position: static; max-width: none; margin-top: 0.8rem; }
+}
+
+/* ---------- Interactive quiz ---------- */
+.quiz-container {
+  margin: 2.5rem 0;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border-left: 3px solid var(--accent);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.quiz-question {
+  font-size: 0.98rem;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+  .quiz-options { grid-template-columns: repeat(2, 1fr); }
+}
+
+.quiz-options button {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.6rem 0.4rem;
+  background: white;
+  border: 1px solid var(--rule);
+  cursor: pointer;
+  color: var(--ink);
+  transition: background 0.15s ease, border-color 0.15s ease;
+  font-weight: 600;
+}
+
+.quiz-options button:hover { background: #f5f1e8; border-color: var(--accent); }
+.quiz-options button.selected { background: var(--accent); color: white; border-color: var(--accent-dark); }
+.quiz-options button.dimmed { opacity: 0.45; }
+
+.quiz-answer {
+  font-size: 0.95rem;
+  color: var(--ink);
+  line-height: 1.55;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--rule);
+  display: none;
+}
+.quiz-answer.show { display: block; }
+.quiz-answer strong { color: var(--accent-dark); }
+
+/* ---------- Pull quote ---------- */
+.pull-quote {
+  margin: 3rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+}
+
+.pull-quote .quote-number {
+  font-family: Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(4rem, 9vw, 6rem);
+  line-height: 1;
+  color: var(--accent-dark);
+  letter-spacing: -0.04em;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.pull-quote .quote-deck {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.005em;
+}
+
+.pull-quote blockquote {
+  font-family: Georgia, 'Source Serif Pro', serif;
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 1rem;
+  padding-left: 1.2rem;
+  border-left: 3px solid var(--accent);
+}
+
+.pull-quote .quote-attr {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ---------- References ---------- */
+.references {
+  max-width: 720px;
+  margin: 4rem auto 2rem;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.references h3 {
+  font-family: Georgia, serif;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink);
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+
+.references ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.references li {
+  margin-bottom: 0.6rem;
+  padding-left: 0;
+}
+
+.references li b { color: var(--ink); }
+
+footer.colophon {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 4rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  text-align: left;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Section fade-in ---------- */
+section.section, figure.visual, .chart-container, .visual-container {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ TEASER ============ -->
+<div class="teaser" data-des="des_teaser_motion">
+  <video data-des="des_teaser_motion" autoplay loop muted playsinline poster="assets/teaser_clouds.png">
+    <source src="assets/teaser_motion.mp4" type="video/mp4">
+  </video>
+  <div class="teaser-overlay"></div>
+  <div class="teaser-caption">NTSB Aviation Accident Database &nbsp;&middot;&nbsp; 2010–2024</div>
+</div>
+
+<!-- ============ HEADLINE ============ -->
+<div class="headline-wrap">
+  <h1 class="headline">What Kills Small-Plane Pilots</h1>
+  <div class="subheadline">Fifteen years of NTSB findings, 2010&ndash;2024. A data piece about the gap between accidents that are <em>common</em> and accidents that are <em>lethal</em>.</div>
+</div>
+
+<!-- ============ edt_01: Hook — the 95% number ============ -->
+<section class="section" data-edt="edt_01" data-det="det_06,det_09">
+  <h2>The 95% number</h2>
+
+  <p data-ana="ana_18">In the National Transportation Safety Board&rsquo;s published findings for 17,525 small-airplane accidents between 2010 and 2024, one cause-language pattern stands out from everything else. When NTSB investigators wrote that a pilot lost spatial orientation &mdash; usually inside a cloud or at night without visible horizon &mdash; the result was a fatality 95.0% of the time. That phrase shows up in only 298 of the agency&rsquo;s probable-cause reports. It carries 558 of the period&rsquo;s roughly 3,200 deaths.</p>
+
+  <p data-ana="ana_18,ana_20">Engine failure, by contrast, is the thing pilots are explicitly trained to fear. It shows up in 3,876 NTSB reports &mdash; almost a quarter of the dataset. And it is fatal 12.7% of the time. The crowd of small-aircraft accidents the public sees on local news as a &ldquo;plane went down&rdquo; is mostly forced landings into fields and trees, not these. The kind of accident that kills almost everyone aboard is rare, specific, and largely invisible to the general reader.</p>
+
+  <p data-ana="ana_04" data-det="det_09">The headline shape: 17.9% of the aircraft involved in NTSB-investigated Part-91 accidents over 15 years had at least one fatality. The other 82% killed no one. The story is in the gap between those two numbers &mdash; what makes an accident land in the 18% versus the 82%.</p>
+
+  <div class="stat-triptych" data-des="des_01_chart" data-ana="ana_18,ana_04">
+    <div class="stat-block highlight">
+      <span class="stat-number">95.0%</span>
+      <span class="stat-label">Spatial disorientation — fatality rate when NTSB cites it (298 events)</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-number">12.7%</span>
+      <span class="stat-label">Engine failure — fatality rate when NTSB cites it (3,876 events)</span>
+    </div>
+    <div class="stat-block">
+      <span class="stat-number">17,525</span>
+      <span class="stat-label">Distinct NTSB investigations in this dataset (2010–2024)</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ edt_02: What you're looking at ============ -->
+<section class="section" data-edt="edt_02" data-det="det_01,det_02">
+  <h2>What you&rsquo;re looking at</h2>
+
+  <p data-ana="ana_01" data-det="det_01">The dataset is the NTSB&rsquo;s complete public Aviation Accident Database, filtered to civil flights conducted under 14 CFR Part 91 &mdash; the regulatory regime for non-commercial small-aircraft flying, the private side of American aviation &mdash; between January 1, 2010 and December 31, 2024. Each row is the formal output of a federal accident investigation; the narratives field is the agency&rsquo;s actual probable-cause language, not a journalist&rsquo;s summary. Coverage on the structural fields a reader needs is essentially complete, and 98.5% of events have a probable-cause text attached.</p>
+
+  <p data-ana="ana_06">The fleet is overwhelmingly fixed-wing airplanes &mdash; 88% &mdash; with helicopters next at 7% and a long tail of gliders, balloons, weight-shift trikes, gyrocopters, ultralights and powered-parachutes filling out the rest. When you hear someone say &ldquo;small-plane crash,&rdquo; nine times out of ten they mean a single-engine piston airplane, often a Cessna or a Piper of a certain age.</p>
+
+  <p data-ana="ana_12" data-det="det_02">What this is <em>not</em> is commercial aviation. American airlines have flown for years on end without a passenger fatality on U.S. soil. Part 91 has not. Most of the small-plane crashes that show up in local news happen here &mdash; under a regulatory regime that more closely resembles driving a car than catching a flight on Delta, with a single pilot, no second-in-command, weather decisions made by the person flying the airplane, and a personal-flying mission in nearly three out of four cases.</p>
+
+  <div class="chart-container" data-des="des_02_chart" data-ana="ana_06">
+    <div id="chart_des_02" class="chart-mount"></div>
+    <div class="chart-caption">Aircraft category in the 17,525-event slice. Fixed-wing airplanes dominate; helicopters are a meaningful 7%; everything else is a long tail.</div>
+  </div>
+</section>
+
+<!-- ============ edt_03: Fifteen years ============ -->
+<section class="section" data-edt="edt_03" data-det="det_03">
+  <h2>Fifteen years</h2>
+
+  <p data-ana="ana_02" data-det="det_03">Across the fifteen-year window, the total number of investigated Part-91 accidents fell from 1,344 in 2010 to 1,038 in 2024 &mdash; a 22.8% drop. The share that were fatal stayed roughly flat at 15&ndash;21%, with 2024&rsquo;s 15.2% the lowest in the series. The decline is real but it is mostly fewer accidents happening, not crashes that would once have been fatal becoming survivable. The FAA&rsquo;s industry benchmark moved in the same direction &mdash; fatal accidents per 100,000 flight hours fell from 1.27 in 2001 to roughly 0.65 in 2023 &mdash; a slow grind of compounding safety improvement spread across pilots, airframes, training, and avionics.</p>
+
+  <p data-ana="ana_03">The seasonality is sneaky. Total accidents peak in July (2,113 in fifteen Julys) and bottom out in December (953) &mdash; pilots simply fly more in the summer. But the <em>share</em> of accidents that kill someone runs the opposite direction: December (22.4%), November (21.3%) and January (19.4%) are the worst three months for fatal share, exactly when daylight is short and instrument-condition weather is common. The chart that makes this work is one with months on the x-axis and two series: counts as bars, fatal share as a line. They cross.</p>
+
+  <div class="chart-container" data-des="des_03_chart" data-ana="ana_02">
+    <div id="chart_des_03" class="chart-mount"></div>
+    <div class="chart-caption">Bars: distinct Part-91 events per year. Line: percentage of those events that were fatal. The bars come down, the line stays flat.</div>
+  </div>
+</section>
+
+<!-- ============ edt_04: Common is not lethal ============ -->
+<section class="section" data-edt="edt_04" data-det="det_05,det_06">
+  <h2>Common is not lethal</h2>
+
+  <p data-ana="ana_18">If you put every probable-cause language pattern on a chart where the x-axis is &ldquo;how often does this appear in NTSB findings?&rdquo; and the y-axis is &ldquo;when it appears, how often does someone die?&rdquo;, four clusters emerge. In the upper-left &mdash; rare and almost always fatal &mdash; sit spatial disorientation (95% fatal share), structural failure or in-flight breakup (86%), controlled flight into terrain (85%), stall-spin combinations (82%), and alcohol or drug impairment (82%). In the upper-right &mdash; common and very often fatal &mdash; sit pure loss of control in-flight (1,646 events / 51% fatal) and aerodynamic stall (1,420 / 50%). In the lower-right &mdash; common but mostly survivable &mdash; sit engine failure (3,876 / 13%), landing-phase accidents (6,940 / 4%), and runway excursions (990 / less than 1%). The lower-left is empty, because the NTSB does not investigate trivial accidents.</p>
+
+  <p data-ana="ana_18,ana_19">What this shape tells you is that the things that kill GA pilots are not the things that make a runway useless. The plane that veers off the centerline at touchdown will be in the database tomorrow morning; the people in it will not. The plane that the pilot loses spatial orientation in over a cloud deck at night will be in the database, and so will the obituaries. Phase-of-flight reinforces this: landing mentions are 40% of cause-text coverage but 4% fatal, takeoff mentions 15% / 18% fatal, and maneuvering is 5% of mentions but 55% fatal. Where in a flight the airplane stops behaving as the pilot expected matters as much as why.</p>
+
+  <p data-ana="ana_18" data-det="det_06">The &ldquo;loss of control in-flight&rdquo; cluster &mdash; LOC-I in the aviation-safety acronym &mdash; is what the NTSB and the General Aviation Joint Steering Committee have spent two decades chasing on their Most Wanted Lists. The 1,646 events of straight LOC-I, plus the 1,420 aerodynamic stalls, plus the 235 stall-spins, plus the 298 spatial-disorientation cases &mdash; these patterns overlap heavily but, taken together, account for over 1,800 of the 3,165 fatal aircraft-row entries in the dataset. More than half of all deaths in fifteen years are concentrated in fewer than ten language patterns.</p>
+
+  <div class="chart-container" data-des="des_04_chart" data-ana="ana_18,ana_19" style="max-width: 880px;">
+    <div id="chart_des_04" class="chart-mount"></div>
+    <div class="chart-caption">Each bubble is one cause-language pattern from NTSB probable-cause text. Horizontal: how often the pattern appears (log scale). Vertical: how often it&rsquo;s fatal when it does. Bubble size: total deaths attributable. Hover for exact numbers.</div>
+  </div>
+</section>
+
+<!-- ============ edt_05: Into the clouds ============ -->
+<section class="section" data-edt="edt_05" data-det="det_05">
+  <h2>Into the clouds</h2>
+
+  <p data-ana="ana_15">Only 4.1% of investigated accidents &mdash; 712 events &mdash; happen in instrument meteorological conditions (clouds, fog, severely reduced visibility). But of those 712, 462 are fatal. The fatal share in IMC is 64.9%, against 15.4% in VMC. The ratio inside the dataset is 4.2&times;; the per-flight-hour ratio in the aviation-safety literature is closer to 14&times;, because most GA pilots fly almost no IMC. The accidents that happen in clouds are very nearly five times more likely to kill someone than the ones that happen in clear air.</p>
+
+  <p data-ana="ana_16" data-det="det_05">The most dangerous specific combination is the one the NTSB has been warning about for decades: a pilot flying under visual flight rules ends up in instrument conditions. Structurally &mdash; weather logged as IMC, flight plan filed as anything other than IFR &mdash; there are 336 such events in the dataset. 72.9% are fatal. With no flight plan filed at all (NONE), 275 events and a 74.5% fatal share. With a filed VFR plan, 27 events and 66.7% fatal. The 1954 University of Illinois study that found non-instrument-rated pilots lose control in 178 seconds of entering cloud is sixty years old; the data says it is still describing what happens.</p>
+
+  <p data-ana="ana_16">What the same chart shows, almost as an afterthought, is that the comparable IMC-with-IFR-plan case &mdash; instrument-rated pilot flying on an IFR plan, still in IMC &mdash; is fatal 58% of the time. Instrument flying does not make IMC safe in absolute terms. It makes it survivable enough that airline-scale operations work. The gap between IFR-in-IMC and VFR-in-IMC is the difference between a system designed for clouds and a system improvised in clouds.</p>
+
+  <div class="chart-container" data-des="des_05_chart" data-ana="ana_16">
+    <div id="chart_des_05" class="chart-mount"></div>
+    <div class="chart-caption">Fatal share among accidents, by basic weather × flight-plan-class. The bottom row (IMC) is uniformly red; the worst single cell is IMC with no flight plan filed (74.5% fatal).</div>
+  </div>
+</section>
+
+<!-- ============ edt_06: After dark ============ -->
+<section class="section" data-edt="edt_06" data-det="det_06">
+  <h2>After dark</h2>
+
+  <p data-ana="ana_17">Ninety percent of investigated accidents happen in daylight, with a 16.2% fatal share. The night sub-bucket is 6.4% of accidents (1,119 events combined) but its fatal share is 37.4% &mdash; 2.3&times; the daylight rate. Inside night, the difference between an ordinary lit-up night and a dark night without moon or ground lights is even sharper: the &ldquo;dark night&rdquo; subcategory (NDRK, 313 events) is 55.6% fatal. A &ldquo;bright&rdquo; moonlit night is 9.5% &mdash; actually safer than the daytime baseline.</p>
+
+  <p data-ana="ana_17" data-det="det_06">Dawn and dusk twilight are not worse than full daylight in fatal share (17.7% and 18.3%). The pattern that emerges is not about low ambient light per se but about the absence of visible reference outside the cockpit &mdash; exactly the conditions in which spatial disorientation occurs. Looking back at the centerpiece chart: spatial disorientation appears in 95% of cases that involve it as a fatal, and the conditions that produce it are the same conditions you see in this chart&rsquo;s worst bar.</p>
+
+  <div class="chart-container" data-des="des_06_chart" data-ana="ana_17">
+    <div id="chart_des_06" class="chart-mount"></div>
+    <div class="chart-caption">Fatal share among accidents by lighting at the time of the event. The Night-dark (no moon) condition is in amber; the gray dashed line is the daylight baseline (16.2%).</div>
+  </div>
+</section>
+
+<!-- ============ edt_07: The Alaska paradox ============ -->
+<section class="section" data-edt="edt_07" data-det="det_07">
+  <h2>The Alaska paradox</h2>
+
+  <p data-ana="ana_13">California (1,575 events), Texas (1,513), and Florida (1,385) lead the absolute counts, in roughly the order their GA fleets size them. Alaska is fourth with 1,016 events &mdash; 5.8% of the U.S. dataset, despite having less than 1% of the country&rsquo;s population. That is roughly seven to eight times the lower-48 per-capita rate, consistent with longstanding NTSB and academic findings that Alaska&rsquo;s accident rate per flight hour is approximately double the national rate.</p>
+
+  <p data-ana="ana_14" data-det="det_07">But here the data does something the Detective-stage research did not predict. Alaska&rsquo;s per-accident fatal share is only 9.6% &mdash; about half the lower-48 rate of 18.2%. Said differently: Alaska has roughly twice the rate of accidents and roughly half the rate of fatal outcomes per accident. The likely explanation, given the conditions described in the bush-flying literature, is what bush-flying communities have always understood: a lot of Alaskan GA flying is short-distance, low-altitude, low-speed work onto unimproved strips, ridges, sandbars, and water. Those crashes ruin airframes; they often spare the people inside. The state has more accidents and more survivable ones, both for the same reason.</p>
+
+  <div class="map-wrap" data-des="des_07_map" data-ana="ana_13,ana_14">
+    <div id="leaflet-map"></div>
+    <div class="map-inset">
+      <div class="inset-title">The Alaska paradox</div>
+      <div class="inset-line"><span>Alaska:</span><strong>1,016 events &middot; 9.6% fatal</strong></div>
+      <div class="inset-line"><span>Lower 48:</span><strong>16,509 events &middot; 18.2% fatal</strong></div>
+    </div>
+  </div>
+  <div class="chart-caption">U.S. state markers sized by total GA Part-91 accidents (2010-2024). Hover a state for the full numbers; Alaska&rsquo;s outline is highlighted in amber.</div>
+</section>
+
+<!-- ============ edt_08: Old planes, old patterns ============ -->
+<section class="section" data-edt="edt_08" data-det="det_04,det_08">
+  <h2>Old planes, old patterns</h2>
+
+  <p data-ana="ana_07" data-det="det_08">Three manufacturers account for half of every accident: Cessna 27.3%, Piper 16.8%, Beech 6.3%. The Cessna 172 alone, in its various dash-letter variants, accounts for over 1,800 events &mdash; a function of the airplane being the most-built civilian aircraft in history (over 44,000 produced since 1956). Fatal share within accidents, though, is highest among the high-performance singles: Beech, Cirrus, and Mooney each cluster around 26&ndash;28% fatal &mdash; well above Cessna&rsquo;s 13.8% &mdash; consistent with their faster cruise speeds and tighter handling margins.</p>
+
+  <p data-ana="ana_09" data-det="det_04">One contrast worth being careful about is the homebuilt premium. Outside research puts the experimental / amateur-built fatal accident rate per flight hour at roughly four times the certificated rate. The fatal share <em>inside</em> this dataset&rsquo;s accidents is 22.2% for homebuilts and 17.3% for factory aircraft &mdash; a 1.28&times; ratio. These are different statistics: the 4&times; per-hour ratio includes both higher accident frequency <em>and</em> higher severity-per-accident; the 1.28&times; ratio is just the severity-per-accident leg of it. Both are real, both are higher than baseline, but the headline number to use depends on the question.</p>
+
+  <div class="quiz-container" data-des="des_quiz_interactive" data-ana="ana_09">
+    <div class="quiz-question ui">Before we show the chart: NTSB safety research (SS-12/01) found experimental amateur-built aircraft had a fatal accident rate per <em>flight hour</em> about how many times that of the certificated fleet?</div>
+    <div class="quiz-options ui" id="quiz-options">
+      <button data-value="1">1&times;</button>
+      <button data-value="2">2&times;</button>
+      <button data-value="4">4&times;</button>
+      <button data-value="8">8&times;</button>
+    </div>
+    <div class="quiz-answer ui" id="quiz-answer">
+      The NTSB safety study put the per-<strong>flight-hour</strong> fatal-rate ratio at roughly <strong>4&times;</strong>. But inside this dataset, the per-<strong>accident</strong> severity ratio is only <strong>1.28&times;</strong> (22.2% fatal among homebuilt accidents vs 17.3% among factory). Both numbers are real — they answer different questions. The per-hour number tells you how much more dangerous a homebuilt is to <em>own and fly</em>; the per-accident number tells you how much more dangerous a homebuilt is <em>once an accident has already happened</em>.
+    </div>
+  </div>
+
+  <p data-ana="ana_11">The fleet itself is older than almost any other class of operational machinery in U.S. consumer life. The median aircraft in an NTSB-investigated accident in 2010&ndash;2024 is 39 years old. 46% are over forty. 27% are over fifty. New piston singles have been priced out of casual ownership since roughly 2000, and well-maintained airframes from the 1960s and 70s are still flying &mdash; and still crashing. This is not a fleet that will be turned over by attrition. The safety improvements that matter are the ones that work on what is already in the air.</p>
+
+  <div class="chart-container" data-des="des_08_chart" data-ana="ana_11,ana_09">
+    <div id="chart_des_08" class="chart-mount"></div>
+    <div class="chart-caption">Distribution of aircraft age (event year minus build year) at the time of accident. The largest single bucket is 50+ years; the median is 39.</div>
+  </div>
+</section>
+
+<!-- ============ edt_09: What it adds up to ============ -->
+<section class="section" data-edt="edt_09" data-det="det_06,det_09">
+  <h2>What it adds up to</h2>
+
+  <p data-ana="ana_19,ana_18">Three numbers do most of the work. Maneuvering: 5% of cause-text mentions, 55% fatal. Night-dark: 1.8% of accidents, 56% fatal. IMC with no IFR plan: 1.6% of accidents, 75% fatal. None of them is the kind of thing that appears in pilot conversations about engine reliability or airframe maintenance. They are about decisions &mdash; to keep flying into deteriorating visibility, to take off into a night with no moon, to follow the road at low altitude to see something on the ground. The crashes that kill people are largely the crashes the pilot chose to set up.</p>
+
+  <div class="pull-quote" data-des="des_lockhart_callout" data-ana="ana_20">
+    <span class="quote-number">16</span>
+    <div class="quote-deck ui">deaths in the single deadliest event in the dataset — the Lockhart, Texas hot-air-balloon crash, July 2016</div>
+    <blockquote>The pilot&rsquo;s pattern of poor decision-making that led to the initial launch, continued flight in fog and above clouds, and descent near or through clouds that decreased the pilot&rsquo;s ability to see and avoid obstacles.</blockquote>
+    <div class="quote-attr">NTSB probable cause &middot; event 20160730X25341</div>
+  </div>
+
+  <p data-ana="ana_20">The single deadliest event in the dataset is the July 2016 hot-air-balloon crash near Lockhart, Texas &mdash; sixteen people, on a sightseeing flight that took off in fog. The NTSB&rsquo;s published probable cause, quoted above, is a single sentence that contains most of what this analysis has found.</p>
+
+  <p>The next-most-deadly events follow similar patterns at smaller scales: an &ldquo;aggressive takeoff maneuver, which resulted in an accelerated stall and subsequent loss of control at an altitude that was too low for recovery.&rdquo; A failure &ldquo;to maintain airplane control following a reduction of thrust in the left engine during takeoff.&rdquo; A pilot&rsquo;s &ldquo;inadequate decision&rdquo; to continue. These are the federal investigators&rsquo; words, not interpretations stacked on top. They are what the database actually says.</p>
+
+  <p data-ana="ana_18" data-det="det_06,det_09">Common is not lethal and lethal is not common. Engine failures are common and survivable; spatial disorientation is rare and almost certain to kill. The story for the next decade of GA safety improvement &mdash; the one the NTSB has been writing in its Most Wanted Lists since at least 2014 &mdash; is whether anything can be done about the rare-and-lethal upper-left corner of the chart. The lower-right corner has already, slowly, given way to fewer accidents and lower per-hour rates. The upper-left is still there.</p>
+
+  <figure class="visual" data-des="des_09_close_image">
+    <img data-des="des_09_close_image" src="assets/close_horizon.png" alt="A cold pre-dawn horizon viewed from high altitude — dark navy sky above a pale violet band of light, a few high clouds, no aircraft visible.">
+    <figcaption>The upper-left is still there.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ REFERENCES ============ -->
+<div class="references">
+  <h3>References</h3>
+  <ul>
+    <li><b>Primary data</b>: <a href="https://data.ntsb.gov/avdata">NTSB Aviation Accident Database</a> — full Microsoft Access snapshot (<code>avall.zip</code>), filtered to FAR Part 91 events 2010-01-01..2024-12-31. Public domain (17 U.S.C. § 105).</li>
+    <li><b>NTSB Investigative Process</b>: <a href="https://www.ntsb.gov/investigations/process/Pages/default.aspx">ntsb.gov/investigations/process</a> — how probable-cause findings are produced.</li>
+    <li><b>FAR Part 91 definition</b>: <a href="https://www.ecfr.gov/current/title-49/subtitle-B/chapter-VIII/part-831">49 CFR Part 831 (eCFR)</a>.</li>
+    <li><b>FAA GA flight-hour benchmarks</b>: <a href="https://www.faa.gov/data_research/aviation_data_statistics/general_aviation/cy2024">FAA General Aviation and Part 135 Activity Survey, CY 2024</a>; <a href="https://www.bts.gov/content/us-general-aviationa-safety-data">BTS U.S. General Aviation Safety Data</a>; <a href="https://nbaa.org/preliminary-ntsb-statistics-show-general-aviation-accident-rate-at-20-year-low/">NBAA — 20-year low fatal rate</a>.</li>
+    <li><b>Experimental amateur-built safety</b>: NTSB Safety Study <a href="https://www.ntsb.gov/safety/safety-studies/Documents/SS1201.pdf">SS-12/01 (PDF)</a>; <a href="https://www.kitplanes.com/homebuilt-accidents-comparing-the-rates/">Kitplanes — Homebuilt Accidents: Comparing the Rates</a>.</li>
+    <li><b>VFR-into-IMC / 178 seconds</b>: <a href="https://www.aopa.org/training-and-safety/air-safety-institute/accident-analysis/vfr-into-imc/overview">AOPA Air Safety Institute — VFR into IMC overview</a>; <a href="https://generalaviationnews.com/2025/10/30/vfr-into-imc-deadly-for-ga-pilots-in-under-three-minutes/">General Aviation News (2025-10-30)</a>.</li>
+    <li><b>Loss of Control In-Flight</b>: <a href="https://www.aopa.org/training-and-safety/air-safety-institute/accident-analysis/richard-g-mcspadden-report/mcspadden-report-figure-view">AOPA Richard G. McSpadden Report</a>; <a href="https://nbaa.org/aircraft-operations/safety/2024-nbaa-top-safety-focus-areas/">NBAA 2024 Top Safety Focus Areas</a>.</li>
+    <li><b>Alaska aviation</b>: <a href="https://www.juneauempire.com/news/alaskas-aviation-average-is-deadlier-than-national-norms/">Juneau Empire — Alaska&rsquo;s aviation average is deadlier than national norms</a>; <a href="https://www.propublica.org/article/commercial-aviation-is-essential-to-life-here-its-also-home-to-a-growing-share-of-the-countrys-deadly-crashes">ProPublica (2021)</a>.</li>
+    <li><b>Cessna 172 history</b>: <a href="https://www.aopa.org/news-and-media/all-news/1995/december/pilot/cessna-172-safety-review">AOPA Cessna 172 Safety Review</a>; <a href="https://airfactsjournal.com/2016/07/whats-wrong-cessna-172-pilots/">Air Facts Journal — What&rsquo;s wrong with Cessna 172 pilots?</a></li>
+    <li><b>Tools</b>: Vega-Lite 5.16, Leaflet 1.9, OpenStreetMap tiles.</li>
+  </ul>
+</div>
+
+<footer class="colophon">
+  Generated by the Data Journalist Agent / Data2Story pipeline · Detective &rarr; Analyst &rarr; Editor &rarr; Designer &rarr; Programmer &rarr; Auditor &rarr; Inspector · 2026-05-25
+</footer>
+
+<script>
+// ============================================================
+// Data tables — copied verbatim from analyst.json data_tables
+// ============================================================
+
+// ana_06: aircraft category
+const data_ana_06 = {
+  columns: ["code", "label", "count", "pct"],
+  rows: [
+    ["AIR", "Airplane (fixed-wing)", 15555, 87.82],
+    ["HELI", "Helicopter", 1262, 7.13],
+    ["GLI", "Glider", 344, 1.94],
+    ["BALL", "Balloon", 162, 0.91],
+    ["WSFT", "Weight-shift / trike", 145, 0.82],
+    ["GYRO", "Gyrocopter", 140, 0.79],
+    ["PPAR", "Powered parachute", 81, 0.46],
+    ["ULTR", "Ultralight", 14, 0.08],
+    ["PLFT", "Powered-lift", 4, 0.02]
+  ]
+};
+
+// ana_02: annual events & fatal share
+const data_ana_02 = {
+  columns: ["year", "events", "fatal_events", "fatal_share_pct"],
+  rows: [
+    [2010, 1344, 252, 18.8],
+    [2011, 1368, 254, 18.6],
+    [2012, 1390, 256, 18.4],
+    [2013, 1140, 198, 17.4],
+    [2014, 1141, 234, 20.5],
+    [2015, 1143, 218, 19.1],
+    [2016, 1180, 185, 15.7],
+    [2017, 1150, 191, 16.6],
+    [2018, 1206, 208, 17.2],
+    [2019, 1148, 220, 19.2],
+    [2020, 1016, 184, 18.1],
+    [2021, 1076, 195, 18.1],
+    [2022, 1121, 188, 16.8],
+    [2023, 1064, 175, 16.4],
+    [2024, 1038, 158, 15.2]
+  ]
+};
+
+// ana_18: cause-pattern taxonomy (sorted curated subset)
+const data_ana_18 = {
+  columns: ["pattern", "label", "events", "fatal_events", "fatal_share_pct", "deaths"],
+  rows: [
+    ["spatial_disorientation", "Spatial disorientation", 298, 283, 95.0, 558],
+    ["structural_failure", "Structural / in-flight breakup", 97, 83, 85.6, 168],
+    ["controlled_flight_into_terrain", "CFIT", 103, 87, 84.5, 169],
+    ["stall_spin", "Stall + spin combined", 235, 193, 82.1, 313],
+    ["alcohol_drugs", "Alcohol / impairment", 161, 132, 82.0, 194],
+    ["spin", "Spin", 284, 225, 79.2, 370],
+    ["loss_of_control", "Loss of control in-flight", 1646, 843, 51.2, 1431],
+    ["stall_aerodynamic", "Aerodynamic stall", 1420, 709, 49.9, 1179],
+    ["improper_decision", "Improper decision / judgment", 329, 118, 35.9, 206],
+    ["midair_collision", "Mid-air collision", 52, 18, 34.6, 43],
+    ["wire_strike", "Wire strike / powerline", 63, 15, 23.8, 25],
+    ["icing", "Icing", 397, 82, 20.7, 149],
+    ["fuel_starvation", "Fuel starvation", 669, 92, 13.8, 128],
+    ["engine_failure", "Engine failure / loss of power", 3876, 494, 12.7, 732],
+    ["fuel_exhaustion", "Fuel exhaustion", 616, 73, 11.9, 103],
+    ["fuel_management", "Fuel mismanagement", 381, 40, 10.5, 65],
+    ["go_around", "Go-around", 617, 60, 9.7, 101],
+    ["porpoise", "Porpoise (landing bounce)", 63, 3, 4.8, 3],
+    ["hard_landing", "Hard landing", 918, 16, 1.7, 23],
+    ["runway_excursion", "Runway excursion", 990, 8, 0.8, 13]
+  ]
+};
+
+// ana_16: weather × flight-plan-class heatmap
+const data_ana_16 = {
+  columns: ["weather", "flight_plan", "events", "fatal_events", "fatal_share_pct"],
+  rows: [
+    ["VMC", "IFR", 1017, 220, 21.6],
+    ["VMC", "VFR", 970, 81, 8.4],
+    ["VMC", "NONE", 13350, 2084, 15.6],
+    ["VMC", "CVFR", 323, 55, 17.0],
+    ["IMC", "IFR", 371, 216, 58.2],
+    ["IMC", "VFR", 27, 18, 66.7],
+    ["IMC", "NONE", 275, 205, 74.5],
+    ["IMC", "CVFR", 19, 13, 68.4]
+  ]
+};
+
+// ana_17: light condition fatal share
+const data_ana_17 = {
+  columns: ["light_bucket", "events", "fatal_events", "fatal_share_pct"],
+  rows: [
+    ["Day", 15809, 2564, 16.2],
+    ["Night-regular", 785, 243, 31.0],
+    ["Night-dark (no moon)", 313, 174, 55.6],
+    ["Night-bright (moonlit)", 21, 2, 9.5],
+    ["Dusk", 392, 69, 17.6],
+    ["Dawn", 93, 17, 18.3]
+  ]
+};
+
+// ana_13: state events (top 15)
+const data_ana_13 = {
+  columns: ["state", "events", "fatal_events", "deaths", "events_share_pct", "fatal_share_pct"],
+  rows: [
+    ["CA", 1575, 322, 524, 9.0, 20.4],
+    ["TX", 1513, 259, 439, 8.6, 17.1],
+    ["FL", 1385, 245, 396, 7.9, 17.7],
+    ["AK", 1016, 98, 174, 5.8, 9.6],
+    ["AZ", 696, 108, 192, 4.0, 15.5],
+    ["CO", 561, 101, 172, 3.2, 18.0],
+    ["WA", 550, 79, 109, 3.1, 14.4],
+    ["GA", 496, 120, 196, 2.8, 24.2],
+    ["NC", 434, 71, 114, 2.5, 16.4],
+    ["ID", 419, 55, 92, 2.4, 13.1],
+    ["NY", 403, 82, 139, 2.3, 20.3],
+    ["OR", 400, 71, 109, 2.3, 17.8],
+    ["OH", 376, 68, 110, 2.1, 18.1],
+    ["PA", 373, 52, 80, 2.1, 13.9],
+    ["UT", 372, 71, 134, 2.1, 19.1]
+  ]
+};
+
+// ana_11: aircraft age histogram
+const data_ana_11 = {
+  columns: ["age_bucket", "count"],
+  rows: [
+    ["0-5", 1390],
+    ["6-10", 968],
+    ["11-20", 1909],
+    ["21-30", 832],
+    ["31-40", 1666],
+    ["41-50", 2438],
+    ["50+", 3423]
+  ]
+};
+
+// helper: convert data_table to list of objects for Vega-Lite
+function tableToValues(t) {
+  return t.rows.map(r => Object.fromEntries(t.columns.map((c, i) => [c, r[i]])));
+}
+
+// shared vega-lite config
+const baseConfig = {
+  background: "transparent",
+  font: "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif",
+  axis: { labelColor: "#444", titleColor: "#1a1a1a", titleFontWeight: 600, domainColor: "#bbb", tickColor: "#bbb", gridColor: "#ececec" },
+  view: { stroke: null },
+  range: {
+    category: ["#5a6577", "#98a1b0", "#d4843a", "#a45e1f", "#b3344b", "#6b8e7f", "#7a6b8e", "#a18a5e"]
+  }
+};
+
+// ============================================================
+// des_02: aircraft category donut
+// ============================================================
+const spec_des_02 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: "container",
+  height: 320,
+  config: baseConfig,
+  data: { values: tableToValues(data_ana_06) },
+  layer: [
+    {
+      mark: { type: "arc", innerRadius: 80, outerRadius: 130, stroke: "#faf8f4", strokeWidth: 2 },
+      encoding: {
+        theta: { field: "count", type: "quantitative" },
+        color: {
+          field: "label",
+          type: "nominal",
+          scale: { range: ["#d4843a", "#5a6577", "#98a1b0", "#b8b0a3", "#a1979a", "#8a8a8a", "#aaa", "#bbb", "#ccc"] },
+          legend: { title: null, orient: "right", labelLimit: 200 }
+        },
+        order: { field: "count", type: "quantitative", sort: "descending" },
+        tooltip: [
+          { field: "label", type: "nominal", title: "Category" },
+          { field: "count", type: "quantitative", title: "Events", format: "," },
+          { field: "pct", type: "quantitative", title: "Share %" }
+        ]
+      }
+    },
+    {
+      mark: { type: "text", fontSize: 22, fontWeight: 700, color: "#1a1a1a", baseline: "middle" },
+      encoding: { text: { value: "88%" }, x: { value: 110 }, y: { value: 150 } }
+    },
+    {
+      mark: { type: "text", fontSize: 11, color: "#444", baseline: "middle" },
+      encoding: { text: { value: "airplanes" }, x: { value: 110 }, y: { value: 175 } }
+    }
+  ]
+};
+
+// ============================================================
+// des_03: annual trend dual-axis
+// ============================================================
+const spec_des_03 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: "container",
+  height: 340,
+  config: baseConfig,
+  data: { values: tableToValues(data_ana_02) },
+  encoding: {
+    x: { field: "year", type: "ordinal", axis: { title: null, labelAngle: 0 } }
+  },
+  layer: [
+    {
+      mark: { type: "bar", color: "#98a1b0", cornerRadiusEnd: 1 },
+      encoding: {
+        y: { field: "events", type: "quantitative", axis: { title: "Investigated events", titleColor: "#5a6577", grid: false } },
+        tooltip: [
+          { field: "year", title: "Year" },
+          { field: "events", title: "Events", format: "," },
+          { field: "fatal_events", title: "Fatal events" },
+          { field: "fatal_share_pct", title: "Fatal share %" }
+        ]
+      }
+    },
+    {
+      mark: { type: "line", color: "#d4843a", strokeWidth: 3, point: { color: "#d4843a", size: 50, filled: true } },
+      encoding: {
+        y: {
+          field: "fatal_share_pct",
+          type: "quantitative",
+          axis: { title: "Fatal share (%)", titleColor: "#a45e1f", grid: false, orient: "right", labelColor: "#a45e1f" },
+          scale: { domain: [10, 25] }
+        }
+      }
+    },
+    {
+      mark: { type: "text", color: "#a45e1f", fontSize: 11, dx: -2, dy: -12, align: "right" },
+      encoding: {
+        y: { field: "fatal_share_pct", type: "quantitative", scale: { domain: [10, 25] } },
+        text: { value: " 15.2% — lowest" },
+        opacity: { condition: { test: "datum.year === 2024", value: 1 }, value: 0 }
+      }
+    }
+  ],
+  resolve: { scale: { y: "independent" } }
+};
+
+// ============================================================
+// des_04: CENTERPIECE — cause-pattern scatter
+// ============================================================
+const spec_des_04 = (() => {
+  const values = tableToValues(data_ana_18);
+  return {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    width: "container",
+    height: 540,
+    padding: { left: 8, right: 8, top: 8, bottom: 32 },
+    config: baseConfig,
+    data: { values },
+    layer: [
+      // quadrant divider — horizontal rule at 40% fatal share
+      {
+        mark: { type: "rule", color: "#d9d5c8", strokeDash: [4, 4] },
+        encoding: { y: { datum: 40, type: "quantitative", scale: { domain: [0, 100] } } }
+      },
+      // quadrant divider — vertical rule at events ≈ 400 (log midpoint)
+      {
+        mark: { type: "rule", color: "#d9d5c8", strokeDash: [4, 4] },
+        encoding: { x: { datum: 400, type: "quantitative", scale: { type: "log", domain: [40, 8000] } } }
+      },
+      // bubbles
+      {
+        mark: { type: "circle", opacity: 0.85, stroke: "#a45e1f", strokeWidth: 0.7 },
+        encoding: {
+          x: {
+            field: "events",
+            type: "quantitative",
+            scale: { type: "log", domain: [40, 8000] },
+            axis: { title: "Frequency in NTSB cause-text (log scale, events)", titleColor: "#444", values: [50, 100, 300, 1000, 3000, 7000], grid: false }
+          },
+          y: {
+            field: "fatal_share_pct",
+            type: "quantitative",
+            scale: { domain: [0, 100] },
+            axis: { title: "Fatality rate when this pattern appears (%)", titleColor: "#444", grid: true, gridColor: "#ececec" }
+          },
+          size: {
+            field: "deaths",
+            type: "quantitative",
+            scale: { range: [60, 1400] },
+            legend: { title: "Deaths", orient: "top-right", offset: 8, symbolFillColor: "#d4843a", symbolStrokeColor: "#a45e1f" }
+          },
+          color: {
+            field: "fatal_share_pct",
+            type: "quantitative",
+            scale: { range: ["#98a1b0", "#d4843a", "#b3344b"], domain: [0, 50, 100] },
+            legend: null
+          },
+          tooltip: [
+            { field: "label", type: "nominal", title: "Pattern" },
+            { field: "events", type: "quantitative", title: "Events with this language", format: "," },
+            { field: "fatal_share_pct", type: "quantitative", title: "Fatal share %" },
+            { field: "deaths", type: "quantitative", title: "Deaths attributable", format: "," }
+          ]
+        }
+      },
+      // labels for visible bubbles (deaths > 100 OR fatal_share > 50)
+      {
+        mark: { type: "text", fontSize: 10, fontWeight: 500, color: "#1a1a1a", dx: 10, dy: -10, align: "left" },
+        encoding: {
+          x: { field: "events", type: "quantitative", scale: { type: "log", domain: [40, 8000] } },
+          y: { field: "fatal_share_pct", type: "quantitative", scale: { domain: [0, 100] } },
+          text: { field: "label" },
+          opacity: {
+            condition: { test: "datum.deaths > 100 || datum.fatal_share_pct >= 50", value: 1 },
+            value: 0
+          }
+        }
+      },
+      // quadrant annotation labels
+      {
+        data: { values: [
+          { x: 60, y: 90, label: "RARE & LETHAL" },
+          { x: 5000, y: 90, label: "COMMON & LETHAL" },
+          { x: 5000, y: 5, label: "COMMON & SURVIVABLE" },
+          { x: 60, y: 5, label: "(NTSB doesn't investigate)" }
+        ]},
+        mark: { type: "text", fontSize: 10, color: "#a1979a", fontWeight: 700, opacity: 0.7, align: "center" },
+        encoding: {
+          x: { field: "x", type: "quantitative", scale: { type: "log", domain: [40, 8000] } },
+          y: { field: "y", type: "quantitative", scale: { domain: [0, 100] } },
+          text: { field: "label" }
+        }
+      }
+    ]
+  };
+})();
+
+// ============================================================
+// des_05: weather × flight-plan heatmap
+// ============================================================
+const spec_des_05 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: "container",
+  height: 240,
+  config: baseConfig,
+  data: { values: tableToValues(data_ana_16) },
+  layer: [
+    {
+      mark: { type: "rect", stroke: "#faf8f4", strokeWidth: 4 },
+      encoding: {
+        x: {
+          field: "flight_plan",
+          type: "nominal",
+          sort: ["IFR", "CVFR", "VFR", "NONE"],
+          axis: { title: "Flight plan filed", labelFontSize: 12, titlePadding: 8, orient: "top" }
+        },
+        y: {
+          field: "weather",
+          type: "nominal",
+          sort: ["VMC", "IMC"],
+          axis: { title: "Weather", labelFontSize: 12, titlePadding: 8 }
+        },
+        color: {
+          field: "fatal_share_pct",
+          type: "quantitative",
+          scale: { range: ["#fef0ec", "#f4a586", "#d4843a", "#b3344b", "#7a1a2d"], domain: [0, 20, 50, 75, 100] },
+          legend: { title: "Fatal %", orient: "right" }
+        },
+        tooltip: [
+          { field: "weather", title: "Weather" },
+          { field: "flight_plan", title: "Plan" },
+          { field: "events", title: "Events", format: "," },
+          { field: "fatal_events", title: "Fatal events" },
+          { field: "fatal_share_pct", title: "Fatal share %" }
+        ]
+      }
+    },
+    {
+      mark: { type: "text", fontSize: 14, fontWeight: 700 },
+      encoding: {
+        x: { field: "flight_plan", type: "nominal", sort: ["IFR", "CVFR", "VFR", "NONE"] },
+        y: { field: "weather", type: "nominal", sort: ["VMC", "IMC"] },
+        text: { field: "fatal_share_pct", format: ".0f" },
+        color: {
+          condition: { test: "datum.fatal_share_pct > 40", value: "#fff" },
+          value: "#1a1a1a"
+        }
+      }
+    },
+    {
+      mark: { type: "text", fontSize: 10, dy: 14 },
+      encoding: {
+        x: { field: "flight_plan", type: "nominal", sort: ["IFR", "CVFR", "VFR", "NONE"] },
+        y: { field: "weather", type: "nominal", sort: ["VMC", "IMC"] },
+        text: { field: "events", format: "," },
+        color: {
+          condition: { test: "datum.fatal_share_pct > 40", value: "rgba(255,255,255,0.85)" },
+          value: "#444"
+        }
+      }
+    }
+  ]
+};
+
+// ============================================================
+// des_06: light condition horizontal bar
+// ============================================================
+const spec_des_06 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: "container",
+  height: 280,
+  config: baseConfig,
+  data: { values: tableToValues(data_ana_17) },
+  layer: [
+    {
+      mark: { type: "bar", cornerRadiusEnd: 2 },
+      encoding: {
+        y: {
+          field: "light_bucket",
+          type: "nominal",
+          sort: { field: "fatal_share_pct", order: "descending" },
+          axis: { title: null, labelFontSize: 12 }
+        },
+        x: {
+          field: "fatal_share_pct",
+          type: "quantitative",
+          axis: { title: "Fatal share of accidents (%)", grid: false, format: ".0f" },
+          scale: { domain: [0, 60] }
+        },
+        color: {
+          condition: { test: "datum.light_bucket === 'Night-dark (no moon)'", value: "#d4843a" },
+          value: "#98a1b0"
+        },
+        tooltip: [
+          { field: "light_bucket", title: "Lighting" },
+          { field: "events", title: "Events", format: "," },
+          { field: "fatal_events", title: "Fatal events" },
+          { field: "fatal_share_pct", title: "Fatal share %" }
+        ]
+      }
+    },
+    {
+      mark: { type: "text", fontSize: 11, color: "#1a1a1a", align: "left", dx: 6 },
+      encoding: {
+        y: {
+          field: "light_bucket",
+          type: "nominal",
+          sort: { field: "fatal_share_pct", order: "descending" }
+        },
+        x: { field: "fatal_share_pct", type: "quantitative" },
+        text: { field: "fatal_share_pct", format: ".1f" }
+      }
+    },
+    {
+      mark: { type: "rule", color: "#888", strokeDash: [4, 3], strokeWidth: 1 },
+      encoding: { x: { datum: 16.2 } }
+    },
+    {
+      mark: { type: "text", color: "#666", fontSize: 10, dx: 6, dy: -10, align: "left", baseline: "bottom" },
+      encoding: {
+        x: { datum: 16.2 },
+        y: { datum: "Night-bright (moonlit)" },
+        text: { value: "Daylight baseline 16.2%" }
+      }
+    }
+  ]
+};
+
+// ============================================================
+// des_08: aircraft-age histogram
+// ============================================================
+const spec_des_08 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: "container",
+  height: 280,
+  config: baseConfig,
+  data: { values: tableToValues(data_ana_11) },
+  layer: [
+    {
+      mark: { type: "bar", cornerRadiusEnd: 2 },
+      encoding: {
+        x: { field: "age_bucket", type: "ordinal", sort: ["0-5", "6-10", "11-20", "21-30", "31-40", "41-50", "50+"], axis: { title: "Aircraft age at time of accident (years)", labelAngle: 0 } },
+        y: { field: "count", type: "quantitative", axis: { title: "Aircraft", format: "," } },
+        color: {
+          condition: { test: "datum.age_bucket === '50+'", value: "#d4843a" },
+          value: "#98a1b0"
+        },
+        tooltip: [
+          { field: "age_bucket", title: "Age bucket (yr)" },
+          { field: "count", title: "Aircraft", format: "," }
+        ]
+      }
+    },
+    {
+      mark: { type: "rule", color: "#a45e1f", strokeDash: [4, 3], strokeWidth: 1.5 },
+      encoding: { x: { datum: "31-40", band: 1.0 } }
+    },
+    {
+      mark: { type: "text", color: "#a45e1f", fontSize: 11, fontWeight: 700, dx: 2, dy: -8, align: "left" },
+      encoding: {
+        x: { datum: "31-40", band: 1.0 },
+        y: { datum: 3000 },
+        text: { value: "Median: 39 years" }
+      }
+    }
+  ]
+};
+
+// ============================================================
+// Render all charts (with error guard)
+// ============================================================
+function renderChart(elementId, spec) {
+  const el = document.getElementById(elementId);
+  if (!el) { console.warn("missing mount:", elementId); return; }
+  vegaEmbed(el, spec, { actions: false, renderer: "canvas" })
+    .catch(err => {
+      console.error("chart failed:", elementId, err);
+      el.innerHTML = '<div style="padding:1rem;color:#888;font-family:sans-serif;font-size:0.85rem;">[chart could not render — see console]</div>';
+    });
+}
+
+renderChart("chart_des_02", spec_des_02);
+renderChart("chart_des_03", spec_des_03);
+renderChart("chart_des_04", spec_des_04);
+renderChart("chart_des_05", spec_des_05);
+renderChart("chart_des_06", spec_des_06);
+renderChart("chart_des_08", spec_des_08);
+
+// ============================================================
+// Leaflet map — state markers sized by accident count
+// ============================================================
+const stateCentroids = {
+  CA: [36.778, -119.418], TX: [31.969, -99.902], FL: [27.665, -81.516],
+  AK: [63.589, -154.494], AZ: [34.049, -111.094], CO: [39.550, -105.782],
+  WA: [47.751, -120.740], GA: [32.166, -82.900], NC: [35.760, -79.019],
+  ID: [44.068, -114.742], NY: [42.166, -74.948], OR: [43.804, -120.554],
+  OH: [40.417, -82.907], PA: [41.203, -77.195], UT: [39.321, -111.094]
+};
+
+const stateRows = data_ana_13.rows.map(r => Object.fromEntries(data_ana_13.columns.map((c, i) => [c, r[i]])));
+
+const map = L.map("leaflet-map", {
+  scrollWheelZoom: false,
+  attributionControl: true
+}).setView([39.5, -98.0], 3);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  maxZoom: 7, minZoom: 3,
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// Linear radius scaling: 8-30 px from event count
+const minEv = Math.min(...stateRows.map(r => r.events));
+const maxEv = Math.max(...stateRows.map(r => r.events));
+function radiusFor(events) {
+  return 8 + (events - minEv) / (maxEv - minEv) * 22;
+}
+
+stateRows.forEach(r => {
+  const c = stateCentroids[r.state];
+  if (!c) return;
+  const isAk = r.state === "AK";
+  const marker = L.circleMarker(c, {
+    radius: radiusFor(r.events),
+    fillColor: isAk ? "#d4843a" : "#5a6577",
+    fillOpacity: 0.78,
+    color: isAk ? "#a45e1f" : "#3a4252",
+    weight: isAk ? 3 : 1.2
+  }).addTo(map);
+  marker.bindPopup(
+    `<div style="font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;font-size:13px;line-height:1.55;min-width:200px">
+       <div style="font-weight:700;font-size:14px;margin-bottom:6px">${r.state}</div>
+       <div>Events: <b>${r.events.toLocaleString()}</b></div>
+       <div>Fatal events: <b>${r.fatal_events}</b></div>
+       <div>Deaths: <b>${r.deaths}</b></div>
+       <div style="margin-top:4px;color:#777">Share of all U.S. events: ${r.events_share_pct}% &middot; Fatal share: ${r.fatal_share_pct}%</div>
+     </div>`
+  );
+  marker.bindTooltip(r.state, { permanent: false, direction: "top", offset: [0, -4] });
+});
+
+// Disable touch/drag on small screens to avoid hijacking the page scroll
+map.on("focus", () => map.scrollWheelZoom.enable());
+map.on("blur", () => map.scrollWheelZoom.disable());
+
+// ============================================================
+// Interactive quiz — homebuilt premium
+// ============================================================
+const quizBtns = document.querySelectorAll("#quiz-options button");
+const quizAnswer = document.getElementById("quiz-answer");
+quizBtns.forEach(btn => {
+  btn.addEventListener("click", () => {
+    quizBtns.forEach(b => {
+      b.classList.remove("selected");
+      if (b !== btn) b.classList.add("dimmed");
+    });
+    btn.classList.add("selected");
+    quizAnswer.classList.add("show");
+  });
+});
+
+// ============================================================
+// Section fade-in on scroll (graceful no-op on reduced-motion)
+// ============================================================
+const sections = document.querySelectorAll("section.section");
+sections.forEach(s => s.classList.add("fade-in"));
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); io.unobserve(e.target); } });
+}, { threshold: 0.08 });
+sections.forEach(s => io.observe(s));
+
+</script>
+</body>
+</html>

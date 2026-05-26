@@ -1,0 +1,8 @@
+[
+  {
+    "type": "missing_audio_data_des",
+    "count": 1,
+    "lines": [249],
+    "note": "Added data-des=\"des_10\" and data-ana=\"ana_09\" directly to the <audio> element. The wrapping .audio-container already carried both attributes, but per the Programmer rule 'every audio must have data-des' the element itself was tagged."
+  }
+]

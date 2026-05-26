@@ -1,0 +1,354 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "2016-06-01_lego-database",
+    "source": "Rebrickable",
+    "primary_csvs": [
+      "sets.csv",
+      "themes.csv",
+      "colors.csv",
+      "parts.csv",
+      "part_categories.csv",
+      "inventories.csv",
+      "inventory_parts.csv",
+      "inventory_sets.csv",
+      "minifigs.csv"
+    ]
+  },
+  "items": {
+    "det_01": {
+      "label": "Rebrickable — the fan-maintained LEGO catalog",
+      "content": "The database surfaced here is Rebrickable's daily snapshot of every recorded LEGO set, part, color, minifigure, and the set × part × color × quantity join. Rebrickable was founded in 2011 by Nathan Thom, an IT professional in Brisbane, Australia, who built it after returning from his 'dark age' (the LEGO term for the years adults stop buying bricks): he had bought two large Technic sets, wanted more, and instead wrote a database that could tell him what additional sets he could build with the parts he already owned. Rebrickable now has over a million users and indexes about 125,000 community-uploaded MOCs (My-Own-Creations) alongside the official catalog. For data journalists, what matters is that Rebrickable cross-references LEGO's official product data, BrickLink listings, and crowdsourced corrections into a single normalized schema that refreshes daily — so what looks like a static csv is actually the consolidated state of the LEGO universe as known to fans on the day it was fetched.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Rebrickable",
+          "title": "Rebrickable — Wikipedia",
+          "facts": [
+            "Rebrickable was started by Nathan Thom in 2011",
+            "Nathan Thom lives in Brisbane, Australia",
+            "Rebrickable has over one million users",
+            "It is the largest repository of custom LEGO designs (MOCs), with about 125,000 MOCs in the database"
+          ]
+        },
+        {
+          "url": "https://brickset.com/article/111720/interview-with-nathan-thom-founder-of-rebrickable",
+          "title": "Interview with Nathan Thom, founder of Rebrickable — Brickset",
+          "facts": [
+            "Nathan emerged from his dark age and bought two large Technic sets, then built a database/program to look at the inventories of all other Technic sets to find out what he could build with the parts he had",
+            "Rebrickable was founded by Nathan Thom in 2011, initially to mainly index Technic sets"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Data Is Plural — 'The LEGO-verse' (2016-06-01)",
+      "content": "This dataset was surfaced by Jeremy Singer-Vine in the 2016-06-01 edition of Data Is Plural under the entry titled 'The LEGO-verse'. The original DiP entry pointed at BrickLink, the LEGO buy/sell marketplace, which then published 'a (nearly?) complete inventory of every LEGO set and piece produced since 1949'. In the decade since, Rebrickable has become the canonical fan-maintained mirror of that catalog (it cross-references BrickLink, LEGO's own data, and community corrections) and is the source actually downloaded here. The DiP entry also flagged a 2016 academic study finding 'LEGO sets have become increasingly violent', which sits in the same ballpark as the dataset's bigger story: that the LEGO of today is a very different product from the LEGO of 1949 — with more pieces per set, more themes, more colors, and a customer base that now skews older.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.data-is-plural.com/archive/2016-06-01-edition/",
+          "title": "Data Is Plural — 2016.06.01 edition",
+          "facts": [
+            "BrickLink is a website for buying and selling LEGOs",
+            "It also happens to publish a (nearly?) complete inventory of every LEGO set and piece produced since 1949",
+            "LEGO sets have become increasingly violent, according to a recent study (Bartneck 2016)"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "The LEGO Group's first 26 years (1932–1958)",
+      "content": "The LEGO Group was founded in 1932 by Ole Kirk Christiansen, a Danish carpenter from Billund, as a maker of wooden toys; the name comes from the Danish phrase 'leg godt' meaning 'play well'. The bricks themselves came later: in 1947 LEGO became the first Danish toy manufacturer to buy a plastic injection moulding machine (it cost more than double the previous year's profit), and in 1949 the company began producing what it called 'Automatic Binding Bricks', drawing on the prior Kiddicraft Self-Locking Building Brick patented in 1947 by the Briton Hilary Fisher Page. The modern LEGO brick — with its stud-and-tube interlocking system that makes the geometry actually work — was perfected by Ole's son Godtfred Kirk Christiansen and patented in Copenhagen on 28 January 1958. This dataset's earliest sets are from 1949, the year the plastic bricks first shipped, but the brick we now think of as 'a LEGO' is really the 1958 design.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/History_of_Lego",
+          "title": "History of Lego — Wikipedia",
+          "facts": [
+            "The LEGO company was founded in 1932 by Danish carpenter Ole Kirk Christiansen",
+            "Named after Danish phrase 'leg godt' meaning 'play well'",
+            "In 1947 LEGO was the first toy manufacturer in Denmark to purchase a plastic injection moulding machine, costing more than twice the previous year's profits",
+            "In 1949 LEGO began producing bricks called 'Automatic Binding Bricks'",
+            "The modern LEGO brick design was patented in Copenhagen on 28 January 1958"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "1999 — Star Wars enters the LEGO universe",
+      "content": "In 1998, after roughly six weeks of negotiations, LEGO and Lucasfilm signed the licensing agreement that would put Star Wars into LEGO sets — the first time the LEGO Group had built a product line around someone else's intellectual property. LEGO Star Wars was announced in February 1999 at the New York International Toy Fair. The launch wildly exceeded expectations: first-year sales came in at roughly five times the company's own forecast, and the line quickly grew into one of the largest single revenue streams at the LEGO Group. Star Wars also broke a long-standing internal taboo against licensed content and opened the door for everything that followed — Harry Potter (2001), Marvel (2012), the Friends line targeted at girls (2012), Minecraft, Ninjago, and the ~hundred other licensed themes that dominate the post-2010 portion of this dataset's `themes.csv`.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.brothers-brick.com/2019/04/09/the-story-behind-the-1999-launch-of-lego-star-wars-feature/",
+          "title": "The story behind the 1999 launch of LEGO Star Wars — The Brothers Brick",
+          "facts": [
+            "In 1998, after nearly six weeks of negotiations, LEGO and Lucasfilm signed their licensing agreement",
+            "In February 1999, LEGO Star Wars was announced at the New York International Toy Fair",
+            "It marked the first time licensed characters were incorporated into the LEGO world"
+          ]
+        },
+        {
+          "url": "https://www.cnbc.com/2024/05/04/star-wars-was-the-first-lego-license-25-years-later-its-stronger-than-ever.html",
+          "title": "Star Wars was the first Lego license — 25 years later, it's stronger than ever — CNBC",
+          "facts": [
+            "First-year sales exceeded the company's initial forecast by 500 percent",
+            "Approximately 1/6 of all sales could be attributed to LEGO Star Wars products"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Bionicle — the in-house phenomenon that helped save LEGO (2001–2010)",
+      "content": "Where Star Wars was LEGO's first licensed bet, Bionicle was its biggest in-house bet. The line launched as a Christmas 2000 test market in Europe and Australasia, then went global in mid-2001, and earned the LEGO Group about £100 million in its first year — single-handedly equivalent to a significant fraction of the company's revenue at the time. Bionicle was built around a deep transmedia universe (the Matoran story arc spanning books, films, video games, and comics), which made it especially sticky for older kids who had been ageing out of LEGO. Together with Star Wars, Bionicle is credited with keeping LEGO solvent through the 2003–2004 crisis. The original line ran 2001–2010, a brief reboot ran 2015–2016, and after that the franchise was permanently retired. Bionicle is also a stress-test for the dataset's part counts: many of its specialized 'Constraction' parts are part-of-figure pieces, not classic bricks.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Bionicle",
+          "title": "Bionicle — Wikipedia",
+          "facts": [
+            "The line was launched in 2001, originally as a subsidiary of Lego's Technic series called Constraction",
+            "Bionicle premiered in North America in mid-2001 and garnered the Lego Group £100 million in its first year",
+            "It was one of the factors in saving Lego from its financial crisis of the late 1990s",
+            "It was discontinued in 2010",
+            "The theme's comeback was announced in September 2014; Lego discontinued the reboot in late 2016"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "The 2003–2004 crisis and Knudstorp's turnaround",
+      "content": "By 2003 the LEGO Group was losing roughly $1 million per day, carried about $800 million in debt, posted a 26% decline in net sales, and reported a $300 million loss — the company was, on paper, days away from bankruptcy. The cause was overextension: LEGO had spent the 1990s expanding into theme parks, clothing, video games, and a sprawling SKU catalog of ~13,000 distinct products that the company couldn't profitably manufacture. The turnaround came when 35-year-old former McKinsey consultant Jørgen Vig Knudstorp became CEO in 2004; he cut the SKU count nearly in half (to ~7,000), sold off LEGOLAND theme parks to Merlin Entertainments, killed the internal video game studio, and refocused on the core system-building product. By 2015 LEGO had overtaken Mattel to become the largest toy company in the world. The dataset reflects this story in two ways: a visible drop in new-set introductions around 2003–2005, and a sharp inflection upward in median set size after 2005 as the company leaned into adult collectors instead of chasing kid-trend SKUs.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.thestrategyinstitute.org/insights/from-bankruptcy-to-billions-legos-blueprint-for-business-transformation",
+          "title": "From Bankruptcy to Billions: Lego's Blueprint for Business Transformation — The Strategy Institute",
+          "facts": [
+            "In 2003 LEGO was losing $1 million per day",
+            "LEGO was drowning in $800 million of debt",
+            "There was a 26% decline in net sales and a $300 million loss"
+          ]
+        },
+        {
+          "url": "https://www.bcg.com/publications/2017/people-organization-jorgen-vig-knudstorp-lego-growth-culture-not-kid-stuff",
+          "title": "Growth and Culture: Jørgen Vig Knudstorp Interview — BCG",
+          "facts": [
+            "Jørgen Vig Knudstorp became CEO in 2004",
+            "He was 35 years old and a former McKinsey consultant",
+            "He reduced SKUs from 13,000 to 7,000 and sold the theme parks",
+            "By 2015 LEGO had overtaken Mattel to become the world's largest toy company"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "The 2004 'bley' palette shift — the most controversial color change in toy history",
+      "content": "In 2004 LEGO quietly retired the light gray it had used since 1954 and the dark gray it had used since 1961, replacing them with slightly bluer hues officially named Medium Stone Grey and Dark Stone Grey. At the same time, the standard brown became Reddish Brown, and several other shades were nudged. The Adult Fan of LEGO (AFOL) community — which had spent 40+ years building cities, castles, and ships in the old grays — was furious. The new colors were almost immediately nicknamed 'bluish grey', then 'bley' (or 'blay') by fans on LUGNET and BrickLink, and the name stuck. LEGO's stated reason came from Jake McKee, then community liaison: focus groups of parents and children reported that the old grays had a yellowish 'dirty' cast, and the company also wanted to apply a more disciplined process to color expansion, which until then had been ad-hoc. In November 2004 McKee published the 'Universal Colors' list of 16 solid + 6 transparent 'evergreen' colors that LEGO promised not to change without explicit stakeholder consultation. In this dataset, the bley shift is visible as the simultaneous appearance of new `id` values for the new grays / new brown around 2004 with the old ones showing a sharp drop in `num_parts` and `num_sets` thereafter.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://bukabricks.com/en/history-of-lego-colors-the-incredible-changes-they-went-under/",
+          "title": "History of LEGO Colors: The Incredible Changes They Went Under — BukaBricks",
+          "facts": [
+            "2004 was a nightmare year for AFOLs",
+            "Grays changed, brown turned to reddish brown, and pink became bright pink",
+            "Light gray was released in 1954 and dark gray in 1961"
+          ]
+        },
+        {
+          "url": "https://www.brickpile.com/articles/grey-bluish-gray-stone-grey-or-blay/",
+          "title": "Grey, Bluish Gray, Stone Grey, or Blay? — Bill Ward's Brickpile",
+          "facts": [
+            "The new colors were quickly labeled 'bluish' by the AFOL community",
+            "'Light Bluish Grey' and 'Dark Bluish Grey' were adopted by BrickLink, often abbreviated to 'bley' or 'blay'",
+            "LEGO called the new colors Medium and Dark Stone Grey",
+            "Focus groups of parents and kids found that the old gray colors had a subtle yellowish tint that appeared dirty",
+            "In November 2004 Jake McKee published a Universal Colors list of 16 solid and 6 transparent 'evergreen' colors"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Ultimate Collector Series (UCS) — the line that licensed adults",
+      "content": "In 2000 LEGO launched the Ultimate Collector Series with two Star Wars sets — the TIE Interceptor (7181, 703 parts) and X-wing Fighter (7191) — packaged in distinctive grayscale boxes to flag that they were not for the under-12 shelf. UCS was the first LEGO product line explicitly designed for adult builders: larger, more detailed, minifig-scale-but-not-minifig-focused, and several times the price of a typical set. The early 2000s saw experiments like the life-size Darth Maul bust (10018, 2001, 1868 parts) before the line settled into its signature format of giant vehicle replicas. UCS is the engine behind one of the headline patterns in this dataset: median set size grows slowly from 1949 to about 1998, then climbs steeply post-2000 as UCS-style 'adult' sets enter the catalog. By 2017 the second-generation UCS Millennium Falcon (75192) crossed 7,500 pieces; by 2022 the Eiffel Tower (10307) crossed 10,000.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.lego.com/en-us/categories/adults-welcome/article/guide-to-ucs-sets-1",
+          "title": "The Dawn of the LEGO Star Wars Ultimate Collector Series (2000–2004) — LEGO.com",
+          "facts": [
+            "The LEGO Group introduced the Ultimate Collector Series with two models in 2000: TIE Interceptor (7181) and X-wing Fighter (7191)",
+            "Both featured unique grayscale packaging to differentiate them from other LEGO Star Wars sets",
+            "In 2001 Darth Maul (10018) was released as a near-life-size bust"
+          ]
+        },
+        {
+          "url": "https://brickipedia.fandom.com/wiki/Ultimate_Collector's_Series",
+          "title": "Ultimate Collector's Series — Brickipedia",
+          "facts": [
+            "UCS sets are meant to be more detailed and aimed at older builders",
+            "They typically represent a single ship, vehicle, place or character, using as many parts as required"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "LEGO Friends (2012) — bringing girls into the catalog",
+      "content": "In 2011 only about 9% of LEGO sets purchased in the US were bought for girls; LEGO Friends, launched in January 2012 with sets like Mia's Magic Tricks (41001) and Heartlake City Café, was an explicit attempt to change that. The line used a slightly taller, more posable minifigure called a 'mini-doll', a pastel-heavy palette, and themes built around café, salon, animal-rescue, and friendship-circle play patterns. It worked commercially — the share of LEGO purchases for girls roughly tripled to 27% within a year — and was criticised politically: the activist organization Spark Movement gathered ~50,000 signatures on a Change.org petition arguing the line reinforced gendered marketing, and the Butterfly Beauty Shop in particular became shorthand for the complaint that 'LEGO for girls' meant 'looks and shopping'. In this dataset, LEGO Friends is theme_id 494 (and its sub-themes), and the line is responsible for the largest single-year jump in pastel/lavender/pink part-color combinations that the catalog has ever seen.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.npr.org/2012/01/18/145397007/gender-controversy-stacks-up-against-lego-friends",
+          "title": "Gender Controversy Stacks Up Against 'Lego Friends' — NPR",
+          "facts": [
+            "LEGO launched Friends in 2012 designed primarily for girls",
+            "Spark Movement gathered 50,000 signatures with an online petition in 2012"
+          ]
+        },
+        {
+          "url": "https://abcnews.com/blogs/business/2012/09/lego-friends-triples-sales-to-girls-despite-feminist-critique",
+          "title": "Lego Friends Triples Sales Despite Feminist Critique — ABC News",
+          "facts": [
+            "Only 9 percent of LEGO sets purchased in the US were for girls at the end of 2011",
+            "27 percent of LEGO sets purchased in the US were for girls after LEGO Friends launched"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "AFOL — the Adult Fan of LEGO community",
+      "content": "The term 'AFOL' — Adult Fan of LEGO — emerged on online LEGO forums in the late 1990s and early 2000s; it was coined by the community, not by the LEGO Group. Todd Lehman and Suzanne Rich launched LUGNET, the first major fan website, in the late 1990s; from there the community built BrickLink (the marketplace), Brickset (the catalog browser), and eventually Rebrickable (the database backing this dataset). Crucially, the LEGO Group itself did not treat adult fans as a distinct customer segment until the 2003–2004 crisis, which pushed it into 'grassroots marketing' because it could no longer afford full advertising campaigns. Out of that necessity came the AFOL Ambassador Network, the Lego Ideas crowdsourcing platform, the LUG (LEGO User Group) recognition program, and ultimately the 'Adults Welcome' marketing umbrella that now sells UCS sets, the Botanical Collection, and Modular Buildings directly to adults. The dataset itself only exists because this community decided to maintain a catalog the company never did.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Lego_fandom",
+          "title": "Lego fandom — Wikipedia",
+          "facts": [
+            "The term AFOL began gaining traction in online LEGO forums and communities in the late 1990s and early 2000s",
+            "The term originates in the community and is not created by The LEGO Group",
+            "Todd Lehman and Suzanne Rich launched LUGNET, a website for adult fans of LEGO"
+          ]
+        },
+        {
+          "url": "https://www.nationalgeographic.com/culture/article/adult-legos",
+          "title": "The inside story of how a 'band of misfits' saved Lego — National Geographic",
+          "facts": [
+            "Before the late 1990s, the company didn't think their adult fans had value",
+            "When the once-invulnerable toymaker started to flounder, LEGO was forced into grassroots marketing"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "The arms race in set size — from a 343-piece Galaxy Explorer to a 11,695-piece Art mosaic",
+      "content": "Set complexity grew steadily through the 1980s and 1990s, but really took off after 2000 with the UCS launch. Useful anchor points: in 1979 the iconic 'Classic Space' flagship Galaxy Explorer (set 928) was 343 pieces; in 1984 the King's Castle (6080) was 679 pieces; the 2000 first-wave UCS TIE Interceptor was 703 pieces; the 2002 UCS Imperial Star Destroyer (10030) was 3,116 pieces; the 2007 UCS Millennium Falcon (10179) was ~5,198 pieces; the 2017 reissue UCS Millennium Falcon (75192) was 7,541 pieces, briefly the largest set ever; the 2020 Colosseum (10276) crossed 9,000; the 2021 Titanic (10294) crossed 9,000 again at 53 inches long; the 2022 Eiffel Tower (10307) crossed 10,000 pieces and 1.5 m tall; the 2021 Art World Map (31203) is now the largest at ~11,695 pieces. None of this is necessarily good for a kid building on a carpet — but it is exactly what made adult collectors a viable revenue line.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.lego.com/en-us/categories/adults-welcome/article/biggest-lego-sets-ever-made",
+          "title": "The Top 10 Biggest LEGO sets ever — LEGO.com",
+          "facts": [
+            "The LEGO Eiffel Tower (10307) has 10,001 pieces and is almost 1.5 m (59 inches) high",
+            "The LEGO Eiffel Tower became the largest LEGO architecture set when released in November 2022",
+            "The 2017 edition UCS Millennium Falcon (75192) includes 7,541 pieces",
+            "The LEGO Art World Map is the largest LEGO set ever made at 11,695 pieces"
+          ]
+        }
+      ]
+    },
+    "det_12": {
+      "label": "Caveats and confounds for analysis",
+      "content": "Several issues to handle before running numbers: (1) Sets with `num_parts = 0` are real catalog entries, but most are promotional polybags, vintage entries with unknown part counts, or partial 'gear' entries (books, supplemental booklets). Filter `num_parts > 0` for any complexity analysis. (2) The `sets.csv` includes some non-LEGO-brand entries that LEGO has historically owned or licensed: Modulex (an architectural-modelling spinoff), Samsonite-era US sets (1961–1972, when Samsonite manufactured LEGO for the North American market), and Dacta/educational entries. These can dominate certain themes if not filtered. (3) `colors.id = -1` is `[Unknown]`, used for stickers and historical parts where the color wasn't recorded; treat as missing, not as a category. (4) `themes.parent_id` forms a hierarchical tree, but many sub-themes (e.g. 'Castle → Kingdoms', 'Star Wars → The Mandalorian') will fragment any per-theme analysis; collapse to top-level parent for first-pass charts. (5) `inventories.csv` can contain multiple versions per set — use only the latest `version` per set when computing per-set part counts from the join table.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://rebrickable.com/help/lego-database/",
+          "title": "Rebrickable Help Guide: LEGO Database — Rebrickable",
+          "facts": [
+            "The LEGO database snapshot can be used for any purpose",
+            "Sets can have multiple inventory versions",
+            "themes are hierarchical via parent_id"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_1979_space_cruiser.jpg",
+      "url": "https://cdn.rebrickable.com/media/sets/928-1.jpg",
+      "license": "Rebrickable terms — data and assets can be used for any purpose",
+      "source": "Rebrickable CDN",
+      "description": "Set 928 'Space Cruiser and Moonbase' (1979) — flagship of LEGO's golden-age Classic Space theme; 343 pieces. Reference for the pre-UCS, pre-licensed era when 343 pieces was a 'big set'.",
+      "relates_to": ["det_03", "det_11"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_1984_kings_castle.jpg",
+      "url": "https://cdn.rebrickable.com/media/sets/6080-1.jpg",
+      "license": "Rebrickable terms",
+      "source": "Rebrickable CDN",
+      "description": "Set 6080 'King's Castle' (1984) — Castle theme flagship of the 1980s; 679 pieces. Built in the old light-grey-and-dark-grey palette that was retired in 2004.",
+      "relates_to": ["det_07", "det_11"]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "ref_2000_ucs_tie.jpg",
+      "url": "https://cdn.rebrickable.com/media/sets/7181-1.jpg",
+      "license": "Rebrickable terms",
+      "source": "Rebrickable CDN",
+      "description": "Set 7181 'TIE Interceptor' (2000) — one of the two original Ultimate Collector Series launches; 703 pieces. The grayscale box was a deliberate signal that this set was not for the kids' aisle.",
+      "relates_to": ["det_04", "det_08"]
+    },
+    {
+      "id": "det_media_04",
+      "filename": "ref_2001_bionicle_gali.jpg",
+      "url": "https://cdn.rebrickable.com/media/sets/8533-1.jpg",
+      "license": "Rebrickable terms",
+      "source": "Rebrickable CDN",
+      "description": "Set 8533 'Gali' (2001) — a Toa from the original Bionicle launch wave; only 35 parts but each is a unique sculpted 'Constraction' element. Bionicle's revenue helped keep LEGO solvent through the 2003 crisis.",
+      "relates_to": ["det_05", "det_06"]
+    },
+    {
+      "id": "det_media_05",
+      "filename": "ref_2007_ucs_falcon.jpg",
+      "url": "https://cdn.rebrickable.com/media/sets/10179-1.jpg",
+      "license": "Rebrickable terms",
+      "source": "Rebrickable CDN",
+      "description": "Set 10179 'Millennium Falcon' (2007) — the first Ultimate Collector Series Falcon; 5,198 pieces. Held the title of 'largest set ever' for a decade.",
+      "relates_to": ["det_08", "det_11"]
+    },
+    {
+      "id": "det_media_06",
+      "filename": "ref_2013_friends.jpg",
+      "url": "https://cdn.rebrickable.com/media/sets/41001-1.jpg",
+      "license": "Rebrickable terms",
+      "source": "Rebrickable CDN",
+      "description": "Set 41001 'Mia's Magic Tricks' (2013) — an early LEGO Friends set in the launch wave that tripled girls' share of LEGO purchases in the US and triggered the Spark Movement petition.",
+      "relates_to": ["det_09"]
+    },
+    {
+      "id": "det_media_07",
+      "filename": "ref_2017_ucs_falcon.jpg",
+      "url": "https://cdn.rebrickable.com/media/sets/75192-1.jpg",
+      "license": "Rebrickable terms",
+      "source": "Rebrickable CDN",
+      "description": "Set 75192 'Millennium Falcon' (2017) — the second-generation UCS Falcon; 7,541 pieces. Then the largest set in LEGO history.",
+      "relates_to": ["det_08", "det_11"]
+    },
+    {
+      "id": "det_media_08",
+      "filename": "ref_2022_eiffel.jpg",
+      "url": "https://cdn.rebrickable.com/media/sets/10307-1.jpg",
+      "license": "Rebrickable terms",
+      "source": "Rebrickable CDN",
+      "description": "Set 10307 'Eiffel Tower' (2022) — 10,001 pieces, 1.5 m tall when built. The tallest LEGO set, and a totem for the 'Adults Welcome' marketing era.",
+      "relates_to": ["det_11"]
+    }
+  ],
+  "instances": []
+}

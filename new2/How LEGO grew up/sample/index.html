@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How LEGO grew up</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+<style>
+  :root {
+    --bg: #fafaf7;
+    --ink: #1a1a1a;
+    --muted: #5d5d5d;
+    --rule: #d8d6cf;
+    --lego-red: #C91A09;
+    --lego-blue: #0055BF;
+    --lego-yellow: #F2CD37;
+    --lego-tan: #E4CD9E;
+    --highlight: #fff8cc;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: Georgia, "Source Serif Pro", serif;
+    font-size: 18px;
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  main {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 24px 80px 24px;
+  }
+  /* ─── Teaser ───────────────────────────────────────────────────────── */
+  .teaser {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    max-width: none;
+    height: 70vh;
+    min-height: 420px;
+    background: #0a0a0a;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .teaser video, .teaser img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .teaser .teaser-overlay {
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+    color: rgba(255,255,255,0.55);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  /* ─── Headline ─────────────────────────────────────────────────────── */
+  .headline {
+    padding: 64px 0 24px 0;
+    text-align: center;
+  }
+  .headline h1 {
+    font-size: 56px;
+    line-height: 1.05;
+    margin: 0 0 16px 0;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  .headline .subtitle {
+    font-size: 22px;
+    font-style: italic;
+    color: var(--muted);
+    margin: 0;
+  }
+  .headline .deck {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-top: 28px;
+  }
+  /* ─── Section structure ───────────────────────────────────────────── */
+  section { margin-top: 64px; }
+  section h2 {
+    font-size: 32px;
+    line-height: 1.15;
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+  section p { margin: 0 0 22px 0; }
+  section p a { color: var(--lego-red); }
+  /* ─── Stat-callout grid ───────────────────────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin: 36px 0;
+    padding: 28px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+  }
+  @media (min-width: 700px) {
+    .stat-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  .stat-tile { text-align: left; }
+  .stat-tile .num {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.1;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .stat-tile .label {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  /* ─── Chart container ─────────────────────────────────────────────── */
+  .chart-container {
+    margin: 36px auto;
+    width: 100%;
+    max-width: 720px;
+    min-width: 0;
+    display: block;
+    clear: both;
+  }
+  .chart-container .vega-mount {
+    width: 100%;
+    min-width: 0;
+    display: block;
+  }
+  .chart-caption {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 8px;
+    text-align: left;
+  }
+  /* ─── Instance image pair ─────────────────────────────────────────── */
+  .image-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 36px 0;
+    clear: both;
+  }
+  .image-pair figure {
+    margin: 0;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 16px;
+  }
+  .image-pair img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 2px;
+  }
+  .image-pair figcaption {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 10px;
+    line-height: 1.4;
+  }
+  /* ─── Bley interactive ────────────────────────────────────────────── */
+  #des_11 {
+    margin: 48px 0;
+    padding: 56px 32px;
+    background: linear-gradient(180deg, #2c2722 0%, #221d18 100%);
+    color: #f1ece0;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    max-width: none;
+    position: relative;
+  }
+  /* soft fades on top + bottom so the section breathes into the parchment */
+  #des_11::before, #des_11::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    height: 28px;
+    pointer-events: none;
+  }
+  #des_11::before {
+    top: 0;
+    background: linear-gradient(180deg, rgba(250,250,247,0.16) 0%, rgba(250,250,247,0) 100%);
+  }
+  #des_11::after {
+    bottom: 0;
+    background: linear-gradient(0deg, rgba(250,250,247,0.10) 0%, rgba(250,250,247,0) 100%);
+  }
+  #des_11 .bley-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  #des_11 .bley-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  #des_11 .bley-year-label {
+    font-size: 88px;
+    font-weight: 600;
+    line-height: 1;
+    color: #f7f1e3;
+    font-family: system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+  #des_11 .bley-year-caption {
+    font-size: 14px;
+    color: rgba(247,241,227,0.58);
+    font-family: system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  #des_11 .bley-swatches {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    align-items: end;
+    margin-bottom: 32px;
+    min-height: 260px;
+  }
+  @media (max-width: 720px) {
+    #des_11 .bley-swatches { grid-template-columns: repeat(3, 1fr); min-height: 360px; }
+    #des_11 .bley-year-label { font-size: 64px; }
+  }
+  .bley-swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .bley-swatch .swatch-block {
+    width: 100%;
+    border-radius: 4px;
+    transition: height 0.25s ease, opacity 0.25s ease;
+    min-height: 8px;
+  }
+  .bley-swatch .swatch-name {
+    font-family: system-ui, sans-serif;
+    font-size: 12px;
+    margin-top: 10px;
+    text-align: center;
+    color: rgba(247,241,227,0.72);
+    line-height: 1.3;
+  }
+  .bley-swatch .swatch-qty {
+    font-family: system-ui, sans-serif;
+    font-size: 11px;
+    color: rgba(247,241,227,0.40);
+    margin-top: 4px;
+  }
+  #des_11 .bley-slider-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    color: rgba(247,241,227,0.55);
+  }
+  #des_11 input[type=range] {
+    flex: 1;
+    accent-color: #f7f1e3;
+  }
+  /* ─── Audio button ────────────────────────────────────────────────── */
+  .sonify-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    margin: 16px 0;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .sonify-btn {
+    background: var(--ink);
+    color: #fff;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .sonify-btn:hover { background: var(--lego-red); }
+  .sonify-btn:disabled { background: #999; cursor: not-allowed; }
+  .sonify-readout {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+    background: var(--highlight);
+    padding: 4px 10px;
+    border-radius: 3px;
+    min-width: 130px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .sonify-readout.live { opacity: 1; }
+  /* ─── Card deck closer ────────────────────────────────────────────── */
+  #des_20 {
+    margin: 48px 0;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    max-width: none;
+    padding: 36px 32px;
+    background: #f1eee5;
+  }
+  #des_20 .deck-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  #des_20 .deck-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+    font-family: system-ui, sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  #des_20 .deck-controls button {
+    background: #fff;
+    border: 1px solid var(--rule);
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 13px;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  #des_20 .deck-controls button.active {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .card-deck {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+  }
+  .deck-card {
+    background: #fff;
+    border-radius: 4px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.4s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .deck-card:hover { transform: translateY(-4px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+  .deck-card .card-img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    background: #f6f4ed;
+  }
+  .deck-card .card-body {
+    padding: 12px 14px 14px 14px;
+    font-family: system-ui, sans-serif;
+  }
+  .deck-card .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .deck-card .card-meta {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .deck-card .card-parts {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--lego-red);
+    margin-top: 6px;
+  }
+  /* ─── References ───────────────────────────────────────────────────── */
+  .references {
+    margin-top: 96px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .references h3 {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    color: var(--ink);
+    margin: 0 0 12px 0;
+  }
+  .references ul { padding-left: 20px; margin: 0 0 16px 0; }
+  .references li { margin-bottom: 6px; line-height: 1.5; }
+  .references a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--muted); }
+  /* ─── Misc ──────────────────────────────────────────────────────────── */
+  hr.rule {
+    border: 0;
+    border-top: 1px solid var(--rule);
+    margin: 64px 0;
+  }
+  /* Section-entry fade-in via CSS only */
+  section { animation: fade-in 0.6s ease both; }
+  @keyframes fade-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- TEASER                                                              -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div class="teaser" data-des="des_01,des_02">
+  <video data-des="des_02" autoplay loop muted playsinline poster="assets/teaser_hero.png">
+    <source src="assets/teaser_motion.mp4" type="video/mp4">
+    <img src="assets/teaser_hero.png" alt="Two contrasting LEGO sets: a small 1970s spaceship and the suggestion of a giant modern architectural display." data-des="des_01">
+  </video>
+  <div class="teaser-overlay">A data story from the LEGO catalog · 1949–2024</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- HEADLINE                                                            -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<header class="headline">
+  <h1>How LEGO grew up</h1>
+  <p class="subtitle">Seventy-five years of a catalog the company never kept.</p>
+  <p class="deck">A reading of every LEGO set, part, color, and minifigure from 1949 to 2024</p>
+</header>
+
+<main>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- edt_01 — The catalog the company didn't keep                        -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section data-edt="edt_01" data-det="det_01,det_02">
+  <h2>The catalog the company didn't keep</h2>
+
+  <p data-ana="ana_01" data-det="det_02">On 1 June 2016, <em>Data Is Plural</em> surfaced what its newsletter called "the LEGO-verse" — a fan-maintained inventory of every LEGO set, part, color, and minifigure ever produced since 1949. Ten years later, the canonical mirror is Rebrickable's daily snapshot: 26,872 sets, 62,462 distinct parts, 275 official colors, 16,741 minifigures, and a 1.5-million-row join table that says exactly which part appears in which color in which set in what quantity. None of this is data the LEGO Group itself publishes.</p>
+
+  <p data-det="det_01">Rebrickable was built in 2011 by Nathan Thom, a programmer in Brisbane who emerged from his "dark age" (the LEGO community's term for the years adults stop buying bricks), bought two big Technic sets, and decided he wanted to know what else he could build with the parts he had. He wrote a database. Then he made it public. Today it has over a million users.</p>
+
+  <p>What follows is a reading of seventy-five years of that database. The dataset has no opinion. But it carries the receipts on every major decision LEGO has made about its product since the year plastic injection moulding cost more than the company's profits.</p>
+
+  <div id="des_03" data-des="des_03" data-ana="ana_01" class="stat-grid">
+    <div class="stat-tile">
+      <span class="num">26,872</span>
+      <span class="label">official LEGO sets in the catalog (1949–2024)</span>
+    </div>
+    <div class="stat-tile">
+      <span class="num">62,462</span>
+      <span class="label">distinct parts ever made</span>
+    </div>
+    <div class="stat-tile">
+      <span class="num">275</span>
+      <span class="label">official colors</span>
+    </div>
+    <div class="stat-tile">
+      <span class="num">1,498,052</span>
+      <span class="label">rows in the set × part × color × quantity join</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- edt_02 — The first half-century                                     -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section data-edt="edt_02" data-det="det_03">
+  <h2>The first half-century</h2>
+
+  <p data-det="det_03">LEGO began making plastic bricks in 1949 — its first five sets are dated to that year. The bricks themselves were rough copies of a British design (the Kiddicraft Self-Locking Building Brick) that Ole Kirk Christiansen's son Godtfred refined into the stud-and-tube system patented on 28 January 1958. Everything you build with LEGO today still relies on that one 1958 patent.</p>
+
+  <p data-ana="ana_02">For five decades the catalog grew slowly. In 1949 LEGO made 5 sets. In 1969 it made 74. In 1989 it made 131. By 1998 it had reached 401 — its first 400-set year, half a century into the company's existence.</p>
+
+  <p data-ana="ana_03">Sets were also small. The median LEGO set in 1980 had 34 parts; in 1990 it had 54. The biggest set you could buy in any of those years was almost never above 1,000 pieces. A "big LEGO" in 1995 was a 477-piece building (the 95th-percentile set).</p>
+
+  <p data-ana="ana_07,ana_08">The 1970s and 1980s belonged to themes that look quaint now: Legoland, Town, Service Packs, Universal Building Set, Educational and Dacta. Castle dominated children's bedrooms in the mid-1980s; Space was the boys' aisle from the late 1970s through the early 1990s. Almost none of this was licensed — it was all LEGO's own intellectual property.</p>
+
+  <div class="chart-container">
+    <div id="des_04" data-des="des_04" data-ana="ana_02" class="vega-mount"></div>
+    <p class="chart-caption">Annual new-set introductions (sets with num_parts &gt; 0). The 2002–2007 valley is the 2003–2004 financial crisis showing up in the catalog. Source: Rebrickable / <code>sets.csv</code>.</p>
+  </div>
+
+  <div class="image-pair">
+    <figure id="des_05" data-des="des_05">
+      <img src="assets/ref_1979_space_cruiser.jpg" alt="LEGO set 928 Space Cruiser and Moonbase, 1979">
+      <figcaption>Set 928 'Space Cruiser and Moonbase' (1979). 343 parts.</figcaption>
+    </figure>
+    <figure id="des_06" data-des="des_06">
+      <img src="assets/ref_1984_kings_castle.jpg" alt="LEGO set 6080 Kings Castle, 1984">
+      <figcaption>Set 6080 'King's Castle' (1984). 679 parts — built in old Light Gray.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- edt_03 — Two bets                                                   -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section data-edt="edt_03" data-det="det_04,det_05,det_08">
+  <h2>Two bets, 1999–2001</h2>
+
+  <p data-det="det_04">In 1998, after six weeks of negotiations, LEGO and Lucasfilm signed a licensing deal. It was the first time LEGO had agreed to build a product line around someone else's characters. LEGO Star Wars launched in February 1999 — and first-year sales came in at five times the company's own forecast.</p>
+
+  <p data-ana="ana_09">The numbers in the catalog match: 13 Star Wars sets in 1999, 23 in 2000, then a steady 30 to 70 new Star Wars sets every single year through 2024. The line has been astonishingly stable as a share of LEGO's annual output — between 3% and 7% of all new sets, in every year of this century.</p>
+
+  <p data-det="det_05,det_08">At the same time, LEGO bet on a second strategy: an in-house epic franchise called Bionicle and a new "Ultimate Collector Series" of giant, expensive, deliberately adult-oriented Star Wars sets. Bionicle launched as a Christmas 2000 test market and earned the company about £100 million in its first global year. UCS launched with two grayscale-boxed sets in 2000 — the TIE Interceptor (7181, 703 pieces) and X-wing Fighter (7191).</p>
+
+  <p data-ana="ana_10">Bionicle is the clearest single-theme arc in the dataset. It launched at 46 sets a year, peaked at 63 in 2003 (during LEGO's worst financial year, which is not a coincidence), held above 30 sets a year through 2009, and then collapsed to 6 sets in 2010 before its discontinuation. A brief reboot in 2015–2016 added 50 more sets, and then the line was retired for good. Total: 468 sets — more than Castle (267) and inside spitting distance of every Marvel set ever made (337).</p>
+
+  <div class="chart-container">
+    <div id="des_07" data-des="des_07" data-ana="ana_09" class="vega-mount"></div>
+    <p class="chart-caption">Star Wars in the catalog: yellow bars are absolute set counts, the black line is share of all new sets that year. The share line stays inside 3–7% for a quarter-century.</p>
+  </div>
+
+  <div class="chart-container">
+    <div id="des_08" data-des="des_08" data-ana="ana_10" class="vega-mount"></div>
+    <p class="chart-caption">Bionicle set introductions per year — 13 active years across two product cycles.</p>
+  </div>
+
+  <div class="image-pair">
+    <figure id="des_09" data-des="des_09">
+      <img src="assets/ref_2000_ucs_tie.jpg" alt="LEGO UCS TIE Interceptor 7181, 2000">
+      <figcaption>Set 7181 'TIE Interceptor' (2000). 703 parts — one of the two original UCS launches.</figcaption>
+    </figure>
+    <figure id="des_10" data-des="des_10">
+      <img src="assets/ref_2001_bionicle_gali.jpg" alt="LEGO Bionicle Gali 8533, 2001">
+      <figcaption>Set 8533 'Gali' (2001) — a Toa from the original Bionicle launch wave.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- edt_04 — The crater and the great recolor (LEAD)                    -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section data-edt="edt_04" data-det="det_06,det_07">
+  <h2>The crater, and the great recolor</h2>
+
+  <p data-det="det_06">By 2003 the LEGO Group was losing about $1 million per day. It carried roughly $800 million in debt, posted a 26% decline in net sales, and reported a $300 million loss. The cause was overextension — theme parks, clothing, video games, a SKU catalog of 13,000 distinct products that the company could not manufacture profitably. A 35-year-old former McKinsey consultant named Jørgen Vig Knudstorp took over as CEO in 2004 and cut the SKU count nearly in half within two years.</p>
+
+  <p data-ana="ana_02">The catalog shows the crisis as a long valley. New-set introductions (filtered to sets with positive part counts) dropped from 511 in 2002 to 291 in 2007 — a 43% decline. Recovery to 500 a year did not happen until 2013, ten years after the trough.</p>
+
+  <p data-det="det_07" data-ana="ana_06">In the middle of that crisis, in 2004, LEGO did something the AFOL community would never forgive: it changed the grays. The old Light Gray that had been the structural color of every LEGO castle, train, and spaceship since 1954 was replaced with a slightly bluer "Light Bluish Gray". Dark Gray became Dark Bluish Gray. Brown became Reddish Brown. The fan community nicknamed the new shades "bley" — short for "blue-grey" — and the term stuck.</p>
+
+  <p data-ana="ana_06">The switchover in the data is brutally fast. Old Light Gray peaked at 10,388 placements in 2002 and 9,283 in 2003; in 2004 it crashed to 1,316 — an 87% same-year drop. By 2005 it was at 228, and from 2007 onwards it appears in exactly zero new sets. The new Light Bluish Gray went from 0 placements in 2002 to 6,689 in 2004 to 37,790 in 2024 — making it the second most-used color in the entire 75-year catalog, behind only Black.</p>
+
+  <p data-ana="ana_05">The same crisis-era rationalisation cut the live palette nearly in half. The number of distinct colors appearing in new sets peaked at 113 in 2004 and dropped to 64 by 2007. Knudstorp's "do less" mandate applied not just to product lines but to the box of crayons LEGO was painting with.</p>
+</section>
+
+<!-- bley interactive — full-bleed via CSS, but stays inside <main> -->
+<div id="des_11" data-des="des_11" data-ana="ana_06">
+  <div class="bley-inner">
+    <div class="bley-header">
+      <div class="bley-year-label" id="bley-year">2000</div>
+      <div class="bley-year-caption">drag the slider to watch the 2004 'bley' shift</div>
+    </div>
+    <div class="bley-swatches">
+      <div class="bley-swatch" data-name="Light Gray (old)" data-color="#9BA19D">
+        <div class="swatch-block" style="background:#9BA19D"></div>
+        <div class="swatch-name">Light Gray<br>(old)</div>
+        <div class="swatch-qty">—</div>
+      </div>
+      <div class="bley-swatch" data-name="Dark Gray (old)" data-color="#6D6E5C">
+        <div class="swatch-block" style="background:#6D6E5C"></div>
+        <div class="swatch-name">Dark Gray<br>(old)</div>
+        <div class="swatch-qty">—</div>
+      </div>
+      <div class="bley-swatch" data-name="Brown (old)" data-color="#583927">
+        <div class="swatch-block" style="background:#583927"></div>
+        <div class="swatch-name">Brown<br>(old)</div>
+        <div class="swatch-qty">—</div>
+      </div>
+      <div class="bley-swatch" data-name="Light Bluish Gray (new)" data-color="#A0A5A9">
+        <div class="swatch-block" style="background:#A0A5A9"></div>
+        <div class="swatch-name">Light Bluish Gray<br>(new)</div>
+        <div class="swatch-qty">—</div>
+      </div>
+      <div class="bley-swatch" data-name="Dark Bluish Gray (new)" data-color="#6C6E68">
+        <div class="swatch-block" style="background:#6C6E68"></div>
+        <div class="swatch-name">Dark Bluish Gray<br>(new)</div>
+        <div class="swatch-qty">—</div>
+      </div>
+      <div class="bley-swatch" data-name="Reddish Brown (new)" data-color="#582A12">
+        <div class="swatch-block" style="background:#582A12"></div>
+        <div class="swatch-name">Reddish Brown<br>(new)</div>
+        <div class="swatch-qty">—</div>
+      </div>
+    </div>
+    <div class="bley-slider-wrap">
+      <span>1995</span>
+      <input type="range" id="bley-slider" min="1995" max="2010" step="1" value="2000">
+      <span>2010</span>
+    </div>
+    <p style="font-family:system-ui,sans-serif; font-size:13px; color:rgba(247,241,227,0.55); margin-top:18px;">Each block is sized by quantity placed in that year, across all LEGO sets in <code>inventory_parts</code>.</p>
+  </div>
+</div>
+
+<section data-edt="edt_04" aria-label="palette growth chart">
+  <div class="chart-container">
+    <div id="des_12" data-des="des_12" data-ana="ana_05" class="vega-mount"></div>
+    <p class="chart-caption">Distinct colors used in new sets per year. The 2004 peak is the moment both old and new grays were in use simultaneously; the post-2007 floor reflects the deliberate cull.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- edt_05 — Sets got serious                                            -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section data-edt="edt_05" data-det="det_08,det_11">
+  <h2>Sets got serious</h2>
+
+  <p data-det="det_08,det_11">The 2000 launch of the Ultimate Collector Series was LEGO's first explicit product line for adult builders — grayscale boxes, premium prices, set sizes that the children's market would never have absorbed. The line's logic ran in only one direction: bigger.</p>
+
+  <p data-ana="ana_04">Sixteen of the twenty largest LEGO sets ever made were released in 2017 or later. The record holder is the Art World Map (31203, 2021) at 11,695 pieces. The 2022 Eiffel Tower hits 10,001 pieces and stands 1.5 metres tall. Three other 2020–2024 sets cross 9,000 pieces. The list is overwhelmingly Icons (the renamed "Creator Expert" line targeting adult builders) and UCS Star Wars.</p>
+
+  <p data-ana="ana_03">The shift is visible in the medians too. In 1980 the typical LEGO set had 34 parts; in 2020 it had 68. Then something accelerated. In 2023 the median jumped to 144.5 and in 2024 to 159 — a 4.7x increase over 1980. The 95th-percentile set went from 500 pieces in 1980 to 1,627 in 2024. LEGO is not just making a few enormous sets for the display shelf; the entire production line is moving upmarket.</p>
+
+  <p data-ana="ana_17">The new "bley" colors LEGO retconned into the catalog in 2004 are now structurally embedded in this larger-set economy. With twenty years on the books versus everything else's fifty, Light Bluish Gray is the #2 most-placed color of all time (577,174 placements) and Dark Bluish Gray is #4 (412,490). The old grays they replaced rank #10 and lower.</p>
+
+  <div class="chart-container">
+    <div id="des_13" data-des="des_13" data-ana="ana_04" class="vega-mount"></div>
+    <p class="chart-caption">Top 20 LEGO sets by piece count. Color encodes year — older sets blue, newer sets red. 16 of the 20 came out in 2017 or later.</p>
+  </div>
+
+  <div class="chart-container">
+    <div id="des_14" data-des="des_14" data-ana="ana_03" class="vega-mount"></div>
+    <p class="chart-caption">Median and 95th-percentile set size by year, log scale (sets with num_parts &gt; 0).</p>
+    <div class="sonify-controls" data-des="des_19" data-ana="ana_03">
+      <button id="sonify-btn" class="sonify-btn">▶ Play set-size sonification</button>
+      <span id="sonify-readout" class="sonify-readout">—</span>
+      <span>Each year is one tone — low pitch = small set, high pitch = big set.</span>
+    </div>
+  </div>
+
+  <div class="image-pair">
+    <figure id="des_15" data-des="des_15">
+      <img src="assets/ref_2017_ucs_falcon.jpg" alt="LEGO UCS Millennium Falcon 75192, 2017">
+      <figcaption>Set 75192 'Millennium Falcon' (2017). 7,541 parts — then the largest LEGO set ever.</figcaption>
+    </figure>
+    <figure id="des_16" data-des="des_16">
+      <img src="assets/ref_2022_eiffel.jpg" alt="LEGO Eiffel Tower 10307, 2022">
+      <figcaption>Set 10307 'Eiffel Tower' (2022). 10,001 parts. The tallest LEGO set ever.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- edt_06 — The pink permission                                         -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section data-edt="edt_06" data-det="det_09">
+  <h2>The pink permission</h2>
+
+  <p data-det="det_09">In January 2012 LEGO launched a line called Friends — its first deliberate attempt to sell construction toys to girls. The line used a slightly taller minifigure called a "mini-doll", pastel colors, and themes built around café, salon, and friendship-circle play. It tripled the share of LEGO purchases made for girls in the United States within a year, from 9% to 27%. It also triggered an activist petition called Spark Movement that collected 50,000 signatures arguing the line reinforced gendered marketing.</p>
+
+  <p data-ana="ana_11">The dataset shows something the public debate missed. Before 2012, LEGO used very little pink — the pink-and-lavender share of all new parts placed hovered below 1% across the entire history of the catalog. After Friends launched, the share rose, predictably. But the surprise is where the growth went. By 2024, Friends sets used about 1,133 pink-family parts per year. Every <em>other</em> LEGO theme combined used 7,879. The Friends launch didn't just create a "pink shelf" for girls — it changed what colors LEGO felt licensed to use in every other product, from City to Star Wars.</p>
+
+  <p>Whether that counts as a feminist victory or a feminist loss depends on which 2012 essay you found persuasive. What the dataset shows is that the permission structure shifted decisively, and it did not roll back.</p>
+
+  <div class="chart-container">
+    <div id="des_17" data-des="des_17" data-ana="ana_11" class="vega-mount"></div>
+    <p class="chart-caption">Pink, lavender, magenta and violet parts placed per year, 2005–2024. Friends sets in dark pink; every other theme combined in lavender. The catalog leaned pink after Friends, but Friends is not where most of the pink ended up.</p>
+  </div>
+
+  <figure id="des_18" data-des="des_18" style="margin: 36px 0; background:#fff; border:1px solid var(--rule); border-radius:4px; padding:16px; max-width:520px; margin-left:auto; margin-right:auto;">
+    <img src="assets/ref_2013_friends.jpg" alt="LEGO Friends set 41001 Mia's Magic Tricks, 2013" style="width:100%; max-width:100%; height:auto; display:block;">
+    <figcaption style="font-family:system-ui,sans-serif; font-size:13px; color:var(--muted); margin-top:10px;">Set 41001 'Mia's Magic Tricks' (2013) — an early LEGO Friends wave set.</figcaption>
+  </figure>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- edt_07 — Closing                                                     -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<section data-edt="edt_07" data-det="det_10">
+  <h2>What seventy-five years tell us</h2>
+
+  <p data-ana="ana_13">Six colors are still in active use in the LEGO catalog that have been there since 1949: Blue, Green, Red, Yellow, White, and Bright Green. Black joined them in 1957 and is now the most-placed color of all time, with 920,517 cumulative units across every inventory ever recorded. The other 159 colors that have ever existed have all been retired.</p>
+
+  <p data-ana="ana_16">The most-placed <em>part</em> in LEGO history is the humble Plate 1×2 (part 3023), with 165,871 placements. The top 20 parts are all basic geometry — plates, bricks, tiles, and one slope. The fancy parts make up the volume, but the bricks make up the structure.</p>
+
+  <p data-ana="ana_07,ana_08">The themes have changed completely. In 1985 the biggest play themes were Town, Castle, and Space — all of them LEGO originals. In 2024 the biggest play themes are Star Wars, City, Friends, Ninjago, Marvel, Harry Potter — and Star Wars has been a steady 4–7% of new sets every year for the last quarter-century. Most LEGO sales today are licensed, and most of the largest sets in the dataset are aimed at the same adults who came back from their "dark age" in their thirties.</p>
+
+  <p data-det="det_10">The community that maintains this catalog wasn't supposed to exist. AFOLs — Adult Fans of LEGO — emerged in late-1990s online forums (LUGNET, BrickLink, then Rebrickable), and the LEGO Group itself didn't acknowledge adult fans as a customer segment until the company nearly went bankrupt and was forced into grassroots marketing because it could no longer afford the alternative. Out of that necessity came UCS, Icons, Lego Ideas, and the "Adults Welcome" marketing umbrella that now sells 10,000-piece Eiffel Towers directly to grown-ups. The dataset is a story about LEGO. But it is also a story the community had to write itself, because nobody else was going to.</p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- des_20 — Card-deck closer (full-bleed)                              -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<div id="des_20" data-des="des_20" data-ana="ana_04">
+  <div class="deck-inner">
+    <div class="deck-controls">
+      <span>Sort the eight era-defining sets:</span>
+      <button data-sort="year" class="active">By year (1979 → 2022)</button>
+      <button data-sort="parts">By piece count</button>
+      <button data-sort="theme">By theme</button>
+    </div>
+    <div class="card-deck" id="card-deck"></div>
+  </div>
+</div>
+
+<section data-edt="edt_07" aria-label="top colors all-time chart">
+  <div class="chart-container">
+    <div id="des_21" data-des="des_21" data-ana="ana_17" class="vega-mount"></div>
+    <p class="chart-caption">Top 20 LEGO colors by total quantity placed across the catalog. Each bar is painted in that color's actual RGB hex. Black tops the list; the new 'bley' grays from 2004 already sit at #2 and #4.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<!-- References                                                          -->
+<!-- ═══════════════════════════════════════════════════════════════════ -->
+<aside class="references">
+  <h3>Data &amp; sources</h3>
+  <ul>
+    <li><strong>Primary dataset:</strong> Rebrickable LEGO catalog snapshot (sets, parts, colors, inventories, minifigs). Fetched 2026-05-25 from <a href="https://cdn.rebrickable.com/media/downloads/">cdn.rebrickable.com/media/downloads/</a>. Terms of use: "the data can be used for any purpose."</li>
+    <li><strong>Surfaced by:</strong> Jeremy Singer-Vine, "The LEGO-verse", <a href="https://www.data-is-plural.com/archive/2016-06-01-edition/"><em>Data Is Plural</em>, 1 June 2016</a>.</li>
+    <li><strong>Background — LEGO history:</strong> Wikipedia, <a href="https://en.wikipedia.org/wiki/History_of_Lego">History of Lego</a>.</li>
+    <li><strong>Star Wars partnership:</strong> Brothers Brick, <a href="https://www.brothers-brick.com/2019/04/09/the-story-behind-the-1999-launch-of-lego-star-wars-feature/">The story behind the 1999 launch of LEGO Star Wars</a> · CNBC, <a href="https://www.cnbc.com/2024/05/04/star-wars-was-the-first-lego-license-25-years-later-its-stronger-than-ever.html">Star Wars was the first Lego license — 25 years later, it's stronger than ever</a>.</li>
+    <li><strong>Bionicle:</strong> Wikipedia, <a href="https://en.wikipedia.org/wiki/Bionicle">Bionicle</a>.</li>
+    <li><strong>Jørgen Vig Knudstorp's turnaround:</strong> BCG, <a href="https://www.bcg.com/publications/2017/people-organization-jorgen-vig-knudstorp-lego-growth-culture-not-kid-stuff">Growth and Culture: Jørgen Vig Knudstorp Interview</a> · The Strategy Institute, <a href="https://www.thestrategyinstitute.org/insights/from-bankruptcy-to-billions-legos-blueprint-for-business-transformation">From Bankruptcy to Billions</a>.</li>
+    <li><strong>The 2004 'bley' palette shift:</strong> Bill Ward's Brickpile, <a href="https://www.brickpile.com/articles/grey-bluish-gray-stone-grey-or-blay/">Grey, Bluish Gray, Stone Grey, or Blay?</a> · BukaBricks, <a href="https://bukabricks.com/en/history-of-lego-colors-the-incredible-changes-they-went-under/">History of LEGO Colors</a>.</li>
+    <li><strong>Ultimate Collector Series:</strong> LEGO.com, <a href="https://www.lego.com/en-us/categories/adults-welcome/article/guide-to-ucs-sets-1">The Dawn of the LEGO Star Wars UCS (2000–2004)</a>.</li>
+    <li><strong>LEGO Friends 2012 launch:</strong> NPR, <a href="https://www.npr.org/2012/01/18/145397007/gender-controversy-stacks-up-against-lego-friends">Gender Controversy Stacks Up Against 'Lego Friends'</a> · ABC News, <a href="https://abcnews.com/blogs/business/2012/09/lego-friends-triples-sales-to-girls-despite-feminist-critique">Lego Friends Triples Sales Despite Feminist Critique</a>.</li>
+    <li><strong>AFOL community:</strong> Wikipedia, <a href="https://en.wikipedia.org/wiki/Lego_fandom">Lego fandom</a> · National Geographic, <a href="https://www.nationalgeographic.com/culture/article/adult-legos">The inside story of how a 'band of misfits' saved Lego</a>.</li>
+    <li><strong>Set images:</strong> Rebrickable CDN (<code>cdn.rebrickable.com/media/sets/</code>). Each image is captioned with its catalog set number for verification.</li>
+    <li><strong>Reproducibility:</strong> Analysis scripts under <code>code/</code>; trace any sentence to its data via <a href="viewer.html"><code>viewer.html</code></a>.</li>
+    <li><strong>Charts:</strong> Vega-Lite v5 (CDN). Audio: Web Audio API (no external file). Reference photos: Rebrickable CDN.</li>
+  </ul>
+</aside>
+
+</main>
+
+<script>
+/* ─────────────────────────────────────────────────────────────────────
+ * Chart data — inlined from analyst.json data_tables.
+ * Every number here is copied verbatim from the corresponding
+ * ana_xx.data_table; do not edit by hand.
+ * ──────────────────────────────────────────────────────────────────── */
+
+const DATA = {
+  // ana_02 — annual set introductions
+  ana_02: [
+    {year:1949,n:5},{year:1950,n:6},{year:1953,n:3},{year:1954,n:14},{year:1955,n:36},
+    {year:1956,n:16},{year:1957,n:21},{year:1958,n:61},{year:1959,n:4},{year:1960,n:2},
+    {year:1961,n:24},{year:1962,n:11},{year:1963,n:57},{year:1964,n:32},{year:1965,n:21},
+    {year:1966,n:113},{year:1967,n:26},{year:1968,n:40},{year:1969,n:74},{year:1970,n:42},
+    {year:1971,n:54},{year:1972,n:39},{year:1973,n:70},{year:1974,n:38},{year:1975,n:40},
+    {year:1976,n:75},{year:1977,n:114},{year:1978,n:76},{year:1979,n:93},{year:1980,n:110},
+    {year:1981,n:82},{year:1982,n:88},{year:1983,n:72},{year:1984,n:90},{year:1985,n:168},
+    {year:1986,n:157},{year:1987,n:233},{year:1988,n:81},{year:1989,n:131},{year:1990,n:113},
+    {year:1991,n:145},{year:1992,n:133},{year:1993,n:134},{year:1994,n:158},{year:1995,n:190},
+    {year:1996,n:187},{year:1997,n:268},{year:1998,n:401},{year:1999,n:361},{year:2000,n:348},
+    {year:2001,n:396},{year:2002,n:511},{year:2003,n:423},{year:2004,n:399},{year:2005,n:342},
+    {year:2006,n:305},{year:2007,n:291},{year:2008,n:319},{year:2009,n:419},{year:2010,n:405},
+    {year:2011,n:485},{year:2012,n:543},{year:2013,n:577},{year:2014,n:714},{year:2015,n:688},
+    {year:2016,n:717},{year:2017,n:681},{year:2018,n:708},{year:2019,n:722},{year:2020,n:738},
+    {year:2021,n:767},{year:2022,n:730},{year:2023,n:768},{year:2024,n:835}
+  ],
+
+  // ana_03 — median / p95 / max set size per year
+  ana_03: [
+    {year:1949,median:126.0,p95:170.8,max:178},{year:1958,median:10.0,p95:76.0,max:149},
+    {year:1963,median:49.0,p95:213.2,max:468},{year:1970,median:50.5,p95:217.4,max:471},
+    {year:1975,median:82.0,p95:516.5,max:596},{year:1979,median:56.0,p95:369.0,max:512},
+    {year:1980,median:34.0,p95:500.4,max:787},{year:1985,median:34.0,p95:447.2,max:1534},
+    {year:1989,median:33.0,p95:436.5,max:918},{year:1990,median:54.0,p95:556.4,max:1534},
+    {year:1995,median:42.5,p95:477.5,max:1730},{year:1999,median:32.0,p95:431.0,max:1406},
+    {year:2000,median:39.0,p95:446.6,max:2882},{year:2002,median:39.0,p95:465.5,max:3116},
+    {year:2003,median:45.0,p95:730.4,max:5255},{year:2005,median:52.5,p95:982.4,max:5462},
+    {year:2007,median:77.0,p95:1108.5,max:5198},{year:2010,median:61.0,p95:985.2,max:5200},
+    {year:2013,median:50.0,p95:756.2,max:2989},{year:2015,median:65.0,p95:806.3,max:10001},
+    {year:2017,median:86.0,p95:1008.0,max:7541},{year:2018,median:78.0,p95:912.2,max:6020},
+    {year:2019,median:70.0,p95:1172.5,max:4784},{year:2020,median:68.5,p95:1204.7,max:9036},
+    {year:2021,median:86.0,p95:1439.3,max:11695},{year:2022,median:95.0,p95:1603.8,max:10001},
+    {year:2023,median:144.5,p95:1573.6,max:6181},{year:2024,median:159.0,p95:1627.3,max:5500}
+  ],
+
+  // ana_04 — top 20 largest sets
+  ana_04: [
+    {set_num:"31203-1",name:"World Map",year:2021,theme:"LEGO Art",num_parts:11695},
+    {set_num:"10307-1",name:"Eiffel Tower",year:2022,theme:"Icons",num_parts:10001},
+    {set_num:"BIGBOX-1",name:"The Ultimate Battle for Chima",year:2015,theme:"Legends of Chima",num_parts:10001},
+    {set_num:"10294-1",name:"Titanic",year:2021,theme:"Icons",num_parts:9092},
+    {set_num:"10276-1",name:"Colosseum",year:2020,theme:"Icons",num_parts:9036},
+    {set_num:"75192-1",name:"Millennium Falcon",year:2017,theme:"UCS Star Wars",num_parts:7541},
+    {set_num:"75313-1",name:"AT-AT",year:2021,theme:"UCS Star Wars",num_parts:6785},
+    {set_num:"75331-1",name:"The Razor Crest",year:2022,theme:"UCS Star Wars",num_parts:6187},
+    {set_num:"10316-1",name:"LOTR: Rivendell",year:2023,theme:"Icons",num_parts:6181},
+    {set_num:"71799-1",name:"NINJAGO City Markets",year:2023,theme:"Ninjago",num_parts:6163},
+    {set_num:"71043-1",name:"Hogwarts Castle",year:2018,theme:"Harry Potter",num_parts:6020},
+    {set_num:"10256-1",name:"Taj Mahal (re-release)",year:2017,theme:"Creator Expert",num_parts:5923},
+    {set_num:"10189-1",name:"Taj Mahal",year:2008,theme:"Creator Expert",num_parts:5922},
+    {set_num:"10299-1",name:"Real Madrid Stadium",year:2022,theme:"Icons",num_parts:5876},
+    {set_num:"71741-1",name:"NINJAGO City Gardens",year:2021,theme:"Ninjago",num_parts:5710},
+    {set_num:"75978-1",name:"Diagon Alley",year:2020,theme:"Harry Potter",num_parts:5548},
+    {set_num:"10284-1",name:"Camp Nou — FC Barcelona",year:2021,theme:"Icons",num_parts:5509},
+    {set_num:"2000409-2",name:"Window Exploration Bag",year:2024,theme:"Serious Play",num_parts:5500},
+    {set_num:"10333-1",name:"LOTR: Barad-dûr",year:2024,theme:"Icons",num_parts:5478},
+    {set_num:"SWMP-1",name:"Star Wars / M&M Mosaic",year:2005,theme:"Star Wars",num_parts:5462}
+  ],
+
+  // ana_05 — distinct colors per year
+  ana_05: [
+    {year:1949,n:10},{year:1953,n:4},{year:1955,n:7},{year:1958,n:37},{year:1960,n:8},
+    {year:1963,n:27},{year:1968,n:9},{year:1970,n:11},{year:1975,n:11},{year:1978,n:16},
+    {year:1980,n:18},{year:1985,n:24},{year:1988,n:19},{year:1990,n:21},{year:1993,n:27},
+    {year:1995,n:33},{year:1996,n:31},{year:1998,n:52},{year:1999,n:62},{year:2000,n:71},
+    {year:2001,n:78},{year:2002,n:79},{year:2003,n:100},{year:2004,n:113},{year:2005,n:106},
+    {year:2006,n:93},{year:2007,n:64},{year:2008,n:60},{year:2009,n:59},{year:2010,n:63},
+    {year:2011,n:66},{year:2012,n:65},{year:2013,n:63},{year:2014,n:62},{year:2015,n:66},
+    {year:2016,n:68},{year:2017,n:64},{year:2018,n:67},{year:2019,n:66},{year:2020,n:73},
+    {year:2021,n:74},{year:2022,n:75},{year:2023,n:78},{year:2024,n:78}
+  ],
+
+  // ana_06 — bley shift (a long format for the chart + a lookup for the interactive)
+  ana_06: [
+    [1995, 4286,    0,  291,    0,  198,    0],
+    [1996, 4180,    0,  567,    0,  702,    0],
+    [1997, 4688,    0,  507,    0,  466,    0],
+    [1998, 5143,    0, 1797,    0,  524,    0],
+    [1999, 5649,    0, 1681,    1,  318,    0],
+    [2000, 5081,    0, 2579,    0,  625,    0],
+    [2001, 5617,    0, 2826,    0,  957,    0],
+    [2002,10388,    0, 3982,    0, 1306,    0],
+    [2003, 9283, 2072, 5257, 1769, 1312,   29],
+    [2004, 1316, 6689,  761, 4448,  365, 1065],
+    [2005,  228, 8578,  169, 7422,  231, 2315],
+    [2006,   72,10631,   61, 8119,   49, 1342],
+    [2007,    1,13959,    0,11283,    0, 1519],
+    [2008,    0,12590,    0, 9631,    0, 1880],
+    [2009,    0,12153,    0, 8406,    0, 2779],
+    [2010,    0,12811,    0, 9952,    0, 3030]
+  ],
+
+  // ana_09 — Star Wars share
+  ana_09: [
+    {year:1999,n_sw:13,n_all:384,sw_share:3.4},{year:2000,n_sw:23,n_all:408,sw_share:5.6},
+    {year:2001,n_sw:12,n_all:460,sw_share:2.6},{year:2002,n_sw:25,n_all:583,sw_share:4.3},
+    {year:2003,n_sw:27,n_all:544,sw_share:5.0},{year:2004,n_sw:24,n_all:468,sw_share:5.1},
+    {year:2005,n_sw:29,n_all:415,sw_share:7.0},{year:2006,n_sw:13,n_all:442,sw_share:2.9},
+    {year:2007,n_sw:17,n_all:481,sw_share:3.5},{year:2008,n_sw:24,n_all:463,sw_share:5.2},
+    {year:2009,n_sw:37,n_all:553,sw_share:6.7},{year:2010,n_sw:30,n_all:531,sw_share:5.6},
+    {year:2011,n_sw:33,n_all:657,sw_share:5.0},{year:2012,n_sw:43,n_all:776,sw_share:5.5},
+    {year:2013,n_sw:43,n_all:837,sw_share:5.1},{year:2014,n_sw:47,n_all:1055,sw_share:4.5},
+    {year:2015,n_sw:70,n_all:1024,sw_share:6.8},{year:2016,n_sw:64,n_all:999,sw_share:6.4},
+    {year:2017,n_sw:65,n_all:1109,sw_share:5.9},{year:2018,n_sw:69,n_all:1069,sw_share:6.5},
+    {year:2019,n_sw:57,n_all:1111,sw_share:5.1},{year:2020,n_sw:46,n_all:1121,sw_share:4.1},
+    {year:2021,n_sw:38,n_all:1233,sw_share:3.1},{year:2022,n_sw:41,n_all:1239,sw_share:3.3},
+    {year:2023,n_sw:48,n_all:1175,sw_share:4.1},{year:2024,n_sw:56,n_all:1271,sw_share:4.4}
+  ],
+
+  // ana_10 — Bionicle lifecycle
+  ana_10: [
+    {year:2001,n:46},{year:2002,n:42},{year:2003,n:63},{year:2004,n:50},{year:2005,n:44},
+    {year:2006,n:60},{year:2007,n:36},{year:2008,n:39},{year:2009,n:32},{year:2010,n:6},
+    {year:2014,n:2},{year:2015,n:28},{year:2016,n:20}
+  ],
+
+  // ana_11 — Friends vs other themes, pink palette
+  ana_11: [
+    {year:2005,friends:0,other:609},{year:2006,friends:0,other:435},{year:2007,friends:0,other:297},
+    {year:2008,friends:0,other:327},{year:2009,friends:0,other:178},{year:2010,friends:0,other:801},
+    {year:2011,friends:0,other:195},{year:2012,friends:805,other:430},{year:2013,friends:621,other:611},
+    {year:2014,friends:1138,other:1089},{year:2015,friends:1222,other:1700},{year:2016,friends:1050,other:1803},
+    {year:2017,friends:1050,other:1560},{year:2018,friends:970,other:2384},{year:2019,friends:1150,other:2671},
+    {year:2020,friends:1151,other:5081},{year:2021,friends:1550,other:4245},{year:2022,friends:1502,other:5340},
+    {year:2023,friends:1308,other:5332},{year:2024,friends:1133,other:7879}
+  ],
+
+  // ana_17 — top colors all-time
+  ana_17: [
+    {name:"Black",rgb:"#05131D",qty:920517},
+    {name:"Light Bluish Gray",rgb:"#A0A5A9",qty:577174},
+    {name:"White",rgb:"#FFFFFF",qty:549744},
+    {name:"Dark Bluish Gray",rgb:"#6C6E68",qty:412490},
+    {name:"Red",rgb:"#C91A09",qty:346081},
+    {name:"Yellow",rgb:"#F2CD37",qty:227674},
+    {name:"Blue",rgb:"#0055BF",qty:227321},
+    {name:"Tan",rgb:"#E4CD9E",qty:209378},
+    {name:"Reddish Brown",rgb:"#582A12",qty:193545},
+    {name:"Light Gray (old)",rgb:"#9BA19D",qty:105918},
+    {name:"Green",rgb:"#237841",qty:95701},
+    {name:"Dark Tan",rgb:"#958A73",qty:76921},
+    {name:"Pearl Gold",rgb:"#AA7F2E",qty:59899},
+    {name:"Orange",rgb:"#FE8A18",qty:57452},
+    {name:"Dark Blue",rgb:"#0A3463",qty:57353},
+    {name:"Trans-Clear",rgb:"#FCFCFC",qty:54954},
+    {name:"Dark Red",rgb:"#720E0F",qty:53452},
+    {name:"Lime",rgb:"#BBE90B",qty:48511},
+    {name:"Medium Nougat",rgb:"#AA7D55",qty:43473},
+    {name:"Trans-Light Blue",rgb:"#AEEFEC",qty:36248}
+  ]
+};
+
+/* Convert ana_06 wide-format rows into a column lookup the interactive can use */
+const BLEY_COLS = ["Light Gray (old)","Light Bluish Gray (new)","Dark Gray (old)","Dark Bluish Gray (new)","Brown (old)","Reddish Brown (new)"];
+const BLEY_BY_YEAR = {};
+const BLEY_MAX = {};
+DATA.ana_06.forEach(row => {
+  const [y, lgo, lbn, dgo, dbn, bo, rbn] = row;
+  BLEY_BY_YEAR[y] = {"Light Gray (old)":lgo, "Light Bluish Gray (new)":lbn,
+                    "Dark Gray (old)":dgo, "Dark Bluish Gray (new)":dbn,
+                    "Brown (old)":bo, "Reddish Brown (new)":rbn};
+});
+BLEY_COLS.forEach(c => {
+  BLEY_MAX[c] = Math.max(...DATA.ana_06.map(r => {
+    const idx = ["Light Gray (old)","Light Bluish Gray (new)","Dark Gray (old)","Dark Bluish Gray (new)","Brown (old)","Reddish Brown (new)"].indexOf(c) + 1;
+    return r[idx];
+  }));
+});
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Vega-Lite chart specs
+ * ──────────────────────────────────────────────────────────────────── */
+
+const baseConfig = {
+  background: null,
+  axis: {labelFont:"system-ui", titleFont:"system-ui", labelColor:"#5d5d5d", titleColor:"#1a1a1a",
+         grid:true, gridColor:"#eee", domain:false, ticks:false, labelFontSize:11, titleFontSize:12},
+  view: {stroke:null}
+};
+
+/* des_04 — annual set introductions line chart */
+const spec_des_04 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width: "container", height: 280,
+  data: {values: DATA.ana_02},
+  config: baseConfig,
+  layer: [
+    {mark:{type:"area", color:"#C91A09", opacity:0.18, line:{strokeWidth:2.5, color:"#C91A09"}, interpolate:"monotone"},
+     encoding:{x:{field:"year", type:"quantitative", axis:{format:"d"}, scale:{nice:false, domain:[1949,2024]}},
+               y:{field:"n", type:"quantitative", title:"sets introduced"},
+               tooltip:[{field:"year", type:"quantitative", title:"year", format:"d"},
+                        {field:"n", type:"quantitative", title:"sets"}]}},
+    {data:{values:[{year:2002}, {year:2007}]},
+     mark:{type:"rule", color:"#888", strokeWidth:1, opacity:0.5, strokeDash:[3,3]},
+     encoding:{x:{field:"year", type:"quantitative"}}},
+    {data:{values:[{year:2002,n:511,label:"2002 peak"},{year:2007,n:291,label:"2007 trough"},{year:2024,n:835,label:"2024"}]},
+     mark:{type:"text", fontSize:11, color:"#1a1a1a", dy:-12, font:"system-ui"},
+     encoding:{x:{field:"year", type:"quantitative"}, y:{field:"n", type:"quantitative"},
+               text:{field:"label"}}}
+  ]
+};
+
+/* des_07 — Star Wars share + count */
+const spec_des_07 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  width:"container", height:260,
+  data:{values: DATA.ana_09}, config: baseConfig,
+  layer:[
+    {mark:{type:"bar", color:"#F2CD37"},
+     encoding:{x:{field:"year", type:"ordinal", axis:{labelAngle:0, labelOverlap:true}},
+               y:{field:"n_sw", type:"quantitative", title:"Star Wars sets that year"},
+               tooltip:[{field:"year"},{field:"n_sw",title:"SW sets"},{field:"n_all",title:"all sets"},{field:"sw_share",title:"% share",format:".1f"}]}},
+    {mark:{type:"line", color:"#1a1a1a", strokeWidth:2.5, point:{filled:true, size:30, color:"#1a1a1a"}},
+     encoding:{x:{field:"year", type:"ordinal"},
+               y:{field:"sw_share", type:"quantitative", title:"share of all new sets (%)", scale:{zero:true}}}}
+  ],
+  resolve:{scale:{y:"independent"}}
+};
+
+/* des_08 — Bionicle lollipop */
+const spec_des_08 = {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+  width:"container", height:200,
+  data:{values: DATA.ana_10}, config: baseConfig,
+  layer:[
+    {mark:{type:"rule", color:"#0055BF", strokeWidth:2},
+     encoding:{x:{field:"year", type:"quantitative", axis:{format:"d"}, scale:{domain:[2000,2017], nice:false}},
+               y:{datum:0}, y2:{field:"n"}}},
+    {mark:{type:"point", color:"#C91A09", filled:true, size:90},
+     encoding:{x:{field:"year", type:"quantitative"},
+               y:{field:"n", type:"quantitative", title:"Bionicle sets"},
+               tooltip:[{field:"year",format:"d"},{field:"n", title:"sets"}]}}
+  ]
+};
+
+/* des_12 — palette growth */
+const spec_des_12 = {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+  width:"container", height:220,
+  data:{values: DATA.ana_05}, config: baseConfig,
+  layer:[
+    {mark:{type:"line", color:"#444", strokeWidth:2, point:{size:25, color:"#444"}, interpolate:"monotone"},
+     encoding:{x:{field:"year", type:"quantitative", axis:{format:"d"}, scale:{nice:false, domain:[1949,2024]}},
+               y:{field:"n", type:"quantitative", title:"distinct colors in new sets"},
+               tooltip:[{field:"year",format:"d"},{field:"n",title:"colors"}]}},
+    {data:{values:[{year:2004,n:113,label:"2004 peak: 113"},{year:2007,n:64,label:"2007 cull: 64"}]},
+     mark:{type:"text", fontSize:11, dy:-10, font:"system-ui", color:"#C91A09"},
+     encoding:{x:{field:"year", type:"quantitative"}, y:{field:"n", type:"quantitative"}, text:{field:"label"}}}
+  ]
+};
+
+/* des_13 — top 20 largest sets */
+const spec_des_13 = {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+  width:"container", height: 440,
+  data:{values: DATA.ana_04}, config: baseConfig,
+  mark:{type:"bar"},
+  encoding:{
+    y:{field:"name", type:"nominal", sort:"-x", title:null, axis:{labelLimit:230}},
+    x:{field:"num_parts", type:"quantitative", title:"pieces in set"},
+    color:{field:"year", type:"quantitative", scale:{scheme:"redblue", reverse:true, domain:[2005,2024]}, legend:{title:"year"}},
+    tooltip:[{field:"set_num"},{field:"name"},{field:"year"},{field:"theme"},{field:"num_parts",title:"parts"}]
+  }
+};
+
+/* des_14 — median + p95 log scale */
+const spec_des_14 = {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+  width:"container", height: 300,
+  data:{values: DATA.ana_03}, config: baseConfig,
+  transform:[{fold:["median","p95"], as:["metric","value"]}],
+  layer:[
+    {mark:{type:"line", strokeWidth:2.5, point:{size:35, filled:true}, interpolate:"monotone"},
+     encoding:{
+       x:{field:"year", type:"quantitative", scale:{nice:false, domain:[1949,2024]}, axis:{format:"d"}},
+       y:{field:"value", type:"quantitative", title:"parts per set (log scale)", scale:{type:"log"}},
+       color:{field:"metric", type:"nominal", scale:{domain:["median","p95"], range:["#0055BF","#AA7F2E"]}, legend:{title:null, orient:"top-left"}},
+       tooltip:[{field:"year",format:"d"},{field:"metric"},{field:"value",format:",.1f"}]
+     }},
+    {data:{values:[
+       {year:1980,value:34,label:"1980 median: 34"},
+       {year:2024,value:159,label:"2024 median: 159"},
+       {year:2024,value:1627,label:"2024 p95: 1,627"}
+     ]},
+     mark:{type:"text", fontSize:11, dy:-10, color:"#1a1a1a", font:"system-ui"},
+     encoding:{x:{field:"year", type:"quantitative"}, y:{field:"value", type:"quantitative"}, text:{field:"label"}}}
+  ]
+};
+
+/* des_17 — Friends vs other pink stacked area */
+const spec_des_17 = {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+  width:"container", height: 280,
+  data:{values: DATA.ana_11}, config: baseConfig,
+  transform:[{fold:["friends","other"], as:["series","value"]}],
+  mark:{type:"area", interpolate:"monotone"},
+  encoding:{
+    x:{field:"year", type:"quantitative", axis:{format:"d"}, scale:{nice:false, domain:[2005,2024]}},
+    y:{field:"value", type:"quantitative", title:"pink-family parts placed", stack:"zero"},
+    color:{field:"series", type:"nominal",
+           scale:{domain:["friends","other"], range:["#FC97AC","#E1D5ED"]},
+           legend:{title:null, labelExpr:"datum.value === 'friends' ? 'Friends sets' : 'all other themes'", orient:"top-left"}},
+    tooltip:[{field:"year",format:"d"},{field:"series"},{field:"value",title:"parts"}]
+  }
+};
+
+/* des_21 — top colors all-time */
+const spec_des_21 = {
+  $schema:"https://vega.github.io/schema/vega-lite/v5.json",
+  width:"container", height: 460,
+  data:{values: DATA.ana_17}, config: baseConfig,
+  mark:{type:"bar", stroke:"#1a1a1a", strokeWidth:0.4},
+  encoding:{
+    y:{field:"name", type:"nominal", sort:"-x", title:null, axis:{labelLimit:200}},
+    x:{field:"qty", type:"quantitative", title:"total quantity placed across all sets"},
+    color:{field:"rgb", type:"nominal", scale:null},
+    tooltip:[{field:"name"},{field:"qty",title:"placements",format:","},{field:"rgb"}]
+  }
+};
+
+/* Embed all */
+const embeds = [
+  ["#des_04", spec_des_04],
+  ["#des_07", spec_des_07],
+  ["#des_08", spec_des_08],
+  ["#des_12", spec_des_12],
+  ["#des_13", spec_des_13],
+  ["#des_14", spec_des_14],
+  ["#des_17", spec_des_17],
+  ["#des_21", spec_des_21]
+];
+
+embeds.forEach(([sel, spec]) => {
+  vegaEmbed(sel, spec, {actions:false, renderer:"svg"}).catch(console.error);
+});
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Bley interactive — year slider
+ * ──────────────────────────────────────────────────────────────────── */
+
+const bleySwatches = document.querySelectorAll("#des_11 .bley-swatch");
+const bleyYearLabel = document.getElementById("bley-year");
+const bleySlider = document.getElementById("bley-slider");
+
+function updateBley(year) {
+  const data = BLEY_BY_YEAR[year];
+  if (!data) return;
+  bleyYearLabel.textContent = year;
+  const globalMax = Math.max(...Object.values(BLEY_MAX));
+  bleySwatches.forEach(sw => {
+    const name = sw.dataset.name;
+    const qty = data[name] || 0;
+    const block = sw.querySelector(".swatch-block");
+    const qtyEl = sw.querySelector(".swatch-qty");
+    const heightPx = qty === 0 ? 6 : 20 + Math.round((qty / globalMax) * 220);
+    block.style.height = heightPx + "px";
+    block.style.opacity = qty === 0 ? 0.18 : 1;
+    qtyEl.textContent = qty.toLocaleString() + " placed";
+  });
+}
+
+bleySlider.addEventListener("input", e => updateBley(parseInt(e.target.value, 10)));
+updateBley(2000);
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Audio sonification (des_19) — median set size as triangle-wave tones
+ * ──────────────────────────────────────────────────────────────────── */
+
+const sonifyBtn = document.getElementById("sonify-btn");
+const sonifyReadout = document.getElementById("sonify-readout");
+let audioCtx = null;
+let sonifyPlaying = false;
+let sonifyTimers = [];
+
+sonifyBtn.addEventListener("click", () => {
+  if (sonifyPlaying) return;
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  sonifyPlaying = true;
+  sonifyBtn.disabled = true;
+  sonifyBtn.textContent = "▶ playing…";
+  sonifyReadout.classList.add("live");
+
+  const rows = DATA.ana_03;
+  const minVal = Math.min(...rows.map(r => r.median));
+  const maxVal = Math.max(...rows.map(r => r.median));
+  // log-scaled mapping: median 1 → 220 Hz, median 160 → 1760 Hz
+  const noteDur = 0.16; // sec per tone
+  const now = audioCtx.currentTime;
+
+  rows.forEach((row, i) => {
+    const freq = 220 * Math.pow(2, 3 * (Math.log(row.median) - Math.log(minVal)) / (Math.log(maxVal) - Math.log(minVal)));
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = "triangle";
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0, now + i * noteDur);
+    gain.gain.linearRampToValueAtTime(0.18, now + i * noteDur + 0.02);
+    gain.gain.linearRampToValueAtTime(0, now + i * noteDur + noteDur * 0.9);
+    osc.connect(gain).connect(audioCtx.destination);
+    osc.start(now + i * noteDur);
+    osc.stop(now + i * noteDur + noteDur);
+    // visual readout in lock-step with audio
+    sonifyTimers.push(setTimeout(() => {
+      sonifyReadout.textContent = row.year + " · median " + row.median;
+    }, i * noteDur * 1000));
+  });
+
+  // restore button after the last note
+  setTimeout(() => {
+    sonifyPlaying = false;
+    sonifyBtn.disabled = false;
+    sonifyBtn.textContent = "▶ Play set-size sonification";
+    sonifyReadout.classList.remove("live");
+    sonifyReadout.textContent = "—";
+    sonifyTimers = [];
+  }, rows.length * noteDur * 1000 + 400);
+});
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Card deck closer (des_20)
+ * ──────────────────────────────────────────────────────────────────── */
+
+const CARDS = [
+  {image:"ref_1979_space_cruiser.jpg",  title:"Galaxy Explorer",    set_num:"928-1",     year:1979, parts:343,   theme:"Classic Space"},
+  {image:"ref_1984_kings_castle.jpg",   title:"King's Castle",       set_num:"6080-1",    year:1984, parts:679,   theme:"Castle"},
+  {image:"ref_2000_ucs_tie.jpg",        title:"TIE Interceptor",     set_num:"7181-1",    year:2000, parts:703,   theme:"UCS Star Wars"},
+  {image:"ref_2001_bionicle_gali.jpg",  title:"Gali",                set_num:"8533-1",    year:2001, parts:35,    theme:"Bionicle"},
+  {image:"ref_2007_ucs_falcon.jpg",     title:"Millennium Falcon",   set_num:"10179-1",   year:2007, parts:5198,  theme:"UCS Star Wars"},
+  {image:"ref_2013_friends.jpg",        title:"Mia's Magic Tricks",  set_num:"41001-1",   year:2013, parts:92,    theme:"Friends"},
+  {image:"ref_2017_ucs_falcon.jpg",     title:"Millennium Falcon",   set_num:"75192-1",   year:2017, parts:7541,  theme:"UCS Star Wars"},
+  {image:"ref_2022_eiffel.jpg",         title:"Eiffel Tower",        set_num:"10307-1",   year:2022, parts:10001, theme:"Icons"}
+];
+
+const deckEl = document.getElementById("card-deck");
+const deckControls = document.querySelectorAll("#des_20 .deck-controls button");
+
+function renderDeck(sortKey) {
+  const sorted = [...CARDS].sort((a, b) => {
+    if (sortKey === "theme") return a.theme.localeCompare(b.theme);
+    if (sortKey === "parts") return b.parts - a.parts;
+    return a.year - b.year;
+  });
+  deckEl.innerHTML = sorted.map(c => `
+    <article class="deck-card" data-des="des_20" data-set-num="${c.set_num}">
+      <img class="card-img" src="assets/${c.image}" alt="${c.title} ${c.year}">
+      <div class="card-body">
+        <div class="card-title">${c.title}</div>
+        <div class="card-meta">${c.set_num} · ${c.year} · ${c.theme}</div>
+        <div class="card-parts">${c.parts.toLocaleString()} <span style="font-size:11px; color:var(--muted); font-weight:400;">parts</span></div>
+      </div>
+    </article>
+  `).join("");
+}
+
+renderDeck("year");
+deckControls.forEach(btn => {
+  btn.addEventListener("click", () => {
+    deckControls.forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderDeck(btn.dataset.sort);
+  });
+});
+</script>
+
+</body>
+</html>

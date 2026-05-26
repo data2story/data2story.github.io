@@ -1,0 +1,577 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["ga_accidents_2010_2024.csv"],
+    "rows": 17712,
+    "columns": 64,
+    "what_one_row_represents": "One aircraft involved in one NTSB-investigated FAR Part 91 aviation accident or incident — multi-aircraft events (mid-airs, ground collisions) appear as multiple rows sharing the same ev_id.",
+    "time_range": "2010-01-01 to 2024-12-31 (15 calendar years)",
+    "geographic_scope": "United States, its territories, and U.S.-registered aircraft in international waters",
+    "distinct_events": 17525,
+    "multi_aircraft_event_rows": 187
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset profile — 17,525 distinct GA accidents over 15 years",
+      "content": "The slice contains 17,712 aircraft-level rows covering 17,525 distinct NTSB-investigated events between 2010-01-01 and 2024-12-31. 187 rows belong to multi-aircraft events (the same ev_id appears more than once). Coverage is highly complete on the structural fields a journalist needs: ev_id, ev_date, ev_state, acft_make, homebuilt, damage, ev_highest_injury are all 100% populated. Two fields are entirely empty in this slice (phase_flt_spec, evacuation, med_type_flight) which is a known limitation of the CSV extract relative to the source .mdb; phase-of-flight signals are recovered from narrative text instead (see ana_22). 98.5% of events have probable-cause narrative text — exceptional coverage for a structured dataset of this size.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [27, 48],
+        "output": "rows: 17712\ncolumns: 64\nyear_range: 2010..2024\ndistinct_events (ev_id): 17525\nmulti_aircraft_event_rows: 187"
+      },
+      "based_on": ["det_01", "det_02"]
+    },
+    "ana_02": {
+      "label": "Annual accident trend — events are falling, fatal share is roughly flat",
+      "content": "Total GA accidents fell from 1,344 in 2010 to 1,038 in 2024 — a 22.8% decline over 15 years. The fatal-event share has hovered between 15% and 21% across all years with no obvious trend, suggesting the safety improvement is driven by fewer accidents overall (likely tied to declining GA flight hours and to certificated improvements in aircraft and training) rather than by survivors of crashes that would once have been fatal. 2024 (15.2% fatal share, 158 fatal events) is the lowest fatal share in the series; 2014 was the highest (20.5%).",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [52, 64],
+        "output": " ev_year  events  fatal_events  fatal_share_pct\n    2010    1344           252             18.8\n    2011    1368           254             18.6\n    2012    1390           256             18.4\n    2013    1140           198             17.4\n    2014    1141           234             20.5\n    2015    1143           218             19.1\n    2016    1180           185             15.7\n    2017    1150           191             16.6\n    2018    1206           208             17.2\n    2019    1148           220             19.2\n    2020    1016           184             18.1\n    2021    1076           195             18.1\n    2022    1121           188             16.8\n    2023    1064           175             16.4\n    2024    1038           158             15.2"
+      },
+      "data_table": {
+        "description": "Distinct GA Part-91 events and fatal events per year, 2010-2024",
+        "columns": ["year", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          [2010, 1344, 252, 18.8],
+          [2011, 1368, 254, 18.6],
+          [2012, 1390, 256, 18.4],
+          [2013, 1140, 198, 17.4],
+          [2014, 1141, 234, 20.5],
+          [2015, 1143, 218, 19.1],
+          [2016, 1180, 185, 15.7],
+          [2017, 1150, 191, 16.6],
+          [2018, 1206, 208, 17.2],
+          [2019, 1148, 220, 19.2],
+          [2020, 1016, 184, 18.1],
+          [2021, 1076, 195, 18.1],
+          [2022, 1121, 188, 16.8],
+          [2023, 1064, 175, 16.4],
+          [2024, 1038, 158, 15.2]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_03": {
+      "label": "Seasonality inversion — fewer winter accidents, but a higher share kill",
+      "content": "Accident counts peak in summer (July: 2,113 events; June: 2,017) because that is when private aviation flies the most. But the fatal share inverts: the worst three months for fatal share are December (22.4%), November (21.3%) and January (19.4%) — exactly the months when total flying is at a 15-year minimum. Two plausible drivers: shorter daylight (more night and twilight flying — see ana_19), and worse instrument-conditions weather (winter IMC, icing — see ana_17). The clean way to chart this is two overlapping series on the same months: counts as bars, fatal share as a line.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [66, 75],
+        "output": " ev_month  events  fatal_events  fatal_share_pct\n        1     925           179             19.4\n        2     940           179             19.0\n        3    1318           210             15.9\n        4    1367           229             16.8\n        5    1688           269             15.9\n        6    2017           329             16.3\n        7    2113           364             17.2\n        8    1906           327             17.2\n        9    1761           300             17.0\n       10    1485           293             19.7\n       11    1052           224             21.3\n       12     953           213             22.4"
+      },
+      "data_table": {
+        "description": "Events and fatal share by calendar month, 2010-2024 combined",
+        "columns": ["month", "month_name", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          [1, "Jan", 925, 179, 19.4],
+          [2, "Feb", 940, 179, 19.0],
+          [3, "Mar", 1318, 210, 15.9],
+          [4, "Apr", 1367, 229, 16.8],
+          [5, "May", 1688, 269, 15.9],
+          [6, "Jun", 2017, 329, 16.3],
+          [7, "Jul", 2113, 364, 17.2],
+          [8, "Aug", 1906, 327, 17.2],
+          [9, "Sep", 1761, 300, 17.0],
+          [10, "Oct", 1485, 293, 19.7],
+          [11, "Nov", 1052, 224, 21.3],
+          [12, "Dec", 953, 213, 22.4]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_04": {
+      "label": "Highest-injury distribution — 17.9% of aircraft-rows are fatal",
+      "content": "Across the 17,712 aircraft-rows, 55.1% had no injuries (9,763), 15.5% had only minor injuries (2,742), 11.3% had at least one serious injury (2,000), and 17.9% (3,165 rows) had at least one fatality. Only 0.2% (42 rows) had unknown injury status. This split is the headline statistic of the dataset: roughly one in six GA accidents leaves someone dead, and roughly half do not injure anyone at all — a much wider survival distribution than people who only see fatal-crash news coverage might guess.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [77, 81],
+        "output": "                   count    pct\nev_highest_injury              \nNONE                9763  55.12\nFATL                3165  17.87\nMINR                2742  15.48\nSERS                2000  11.29\nUNKNOWN               42   0.24"
+      },
+      "data_table": {
+        "description": "Highest injury level per aircraft-row",
+        "columns": ["highest_injury", "label", "count", "pct"],
+        "rows": [
+          ["NONE", "No injury", 9763, 55.12],
+          ["MINR", "Minor", 2742, 15.48],
+          ["SERS", "Serious", 2000, 11.29],
+          ["FATL", "Fatal", 3165, 17.87],
+          ["UNKNOWN", "Unknown", 42, 0.24]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_05": {
+      "label": "Damage distribution — 88.6% substantial, 8.9% destroyed",
+      "content": "The damage column is concentrated almost entirely on two values: 88.6% (15,700 rows) substantial and 8.9% (1,581) destroyed, with only 1.3% (235) classified minor. The bias toward 'substantial' or worse reflects the NTSB threshold for opening a formal investigation — minor damage usually does not trigger one. Destroyed-aircraft and fatal-injury rows overlap heavily but not identically: an aircraft can be destroyed without fatalities (forced landing into trees) and there are fatalities without the aircraft being fully destroyed (occupant impact, post-landing fire).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [82, 86],
+        "output": "         count    pct\ndamage               \nSUBS     15700  88.64\nDEST      1581   8.93\nMINR       235   1.33\nUNKNOWN    191   1.08\nUNK          5   0.03"
+      },
+      "data_table": {
+        "description": "Aircraft damage classification",
+        "columns": ["damage", "label", "count", "pct"],
+        "rows": [
+          ["SUBS", "Substantial", 15700, 88.64],
+          ["DEST", "Destroyed", 1581, 8.93],
+          ["MINR", "Minor", 235, 1.33],
+          ["UNKNOWN", "Unknown", 191, 1.08],
+          ["UNK", "Unknown (alt)", 5, 0.03]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_06": {
+      "label": "Aircraft-category distribution — 88% are fixed-wing airplanes",
+      "content": "The GA fleet in this slice is overwhelmingly fixed-wing airplanes: 87.8% (15,555 rows). Helicopters are 7.1% (1,262), gliders 1.9% (344), balloons 0.9% (162), weight-shift / trike 0.8% (145), gyrocopters 0.8% (140), powered parachutes 0.5% (81), ultralights and others combined < 0.2%. The story should focus on fixed-wing because of statistical mass, but the helicopter slice is large enough (~84 events per year) to deserve its own callout for readers who think of 'small aircraft accidents' as mostly heli.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [98, 102],
+        "output": "               count    pct\nacft_category              \nAIR            15555  87.82\nHELI            1262   7.13\nGLI              344   1.94\nBALL             162   0.91\nWSFT             145   0.82\nGYRO             140   0.79\nPPAR              81   0.46\nULTR              14   0.08\nPLFT               4   0.02"
+      },
+      "data_table": {
+        "description": "Aircraft category share",
+        "columns": ["code", "label", "count", "pct"],
+        "rows": [
+          ["AIR", "Airplane (fixed-wing)", 15555, 87.82],
+          ["HELI", "Helicopter", 1262, 7.13],
+          ["GLI", "Glider", 344, 1.94],
+          ["BALL", "Balloon", 162, 0.91],
+          ["WSFT", "Weight-shift / trike", 145, 0.82],
+          ["GYRO", "Gyrocopter", 140, 0.79],
+          ["PPAR", "Powered parachute", 81, 0.46],
+          ["ULTR", "Ultralight", 14, 0.08],
+          ["PLFT", "Powered-lift", 4, 0.02]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_07": {
+      "label": "Top manufacturer brands — Cessna 27%, Piper 17%, Beech 6%",
+      "content": "After normalizing the free-text acft_make column into canonical brand buckets, the three biggest manufacturers account for half of all GA Part 91 accidents in the dataset: Cessna 27.3% (4,781 events), Piper 16.8% (2,936) and Beech 6.3% (1,104). The next tier — Robinson (helicopters), Bell (helicopters), Cirrus, Mooney — each contribute 2-3%. Crucially, the per-brand fatal-share among accidents tells a different story than count: Beech and Cirrus aircraft, which include high-performance singles like the Bonanza and the SR22, each have fatal shares near 27% — well above Cessna's 13.8% — consistent with their faster cruise speeds and the energy-management challenges that come with them. Van's homebuilt kit planes (RV series) come in at 28.8% fatal share, again above the certificated-Cessna baseline.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/aircraft.py",
+        "lines": [82, 92],
+        "output": "         brand  events  fatal_events  fatal_share_pct  share_of_all_pct\n        Cessna    4781           660             13.8              27.3\n         Piper    2936           498             17.0              16.8\n         Beech    1104           308             27.9               6.3\n      Robinson     497            76             15.3               2.8\n          Bell     420            71             16.9               2.4\n        Cirrus     327            86             26.3               1.9\n        Mooney     315            83             26.3               1.8\n      Champion     185            30             16.2               1.1\n         Van's     170            49             28.8               1.0"
+      },
+      "data_table": {
+        "description": "Top 12 manufacturer brands by accident count, with fatal-share among accidents",
+        "columns": ["brand", "events", "fatal_events", "fatal_share_pct", "share_of_all_pct"],
+        "rows": [
+          ["Cessna", 4781, 660, 13.8, 27.3],
+          ["Piper", 2936, 498, 17.0, 16.8],
+          ["Beech", 1104, 308, 27.9, 6.3],
+          ["Robinson", 497, 76, 15.3, 2.8],
+          ["Bell", 420, 71, 16.9, 2.4],
+          ["Cirrus", 327, 86, 26.3, 1.9],
+          ["Mooney", 315, 83, 26.3, 1.8],
+          ["Champion", 185, 30, 16.2, 1.1],
+          ["Van's", 170, 49, 28.8, 1.0],
+          ["Aeronca", 159, 19, 11.9, 0.9],
+          ["Maule", 155, 12, 7.7, 0.9],
+          ["Schweizer", 153, 16, 10.5, 0.9]
+        ]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_08": {
+      "label": "The Cessna 172 dominates — by raw count",
+      "content": "Among Cessna accidents, the 172 family (172, 172S, 172N, 172M, 172P, 172R, plus the related 150/152 trainers) accounts for over 1,800 of the 4,781 Cessna events in the slice. The single most common acft_model_norm string is bare '172' (669 events), then 182 (216), 172S (189) and 152 (189). Among Pipers, the PA-28 family (Cherokee, Warrior, Archer, Arrow — PA28, PA-28-140, PA-28-180, PA-28-181, PA-28-161, PA-28R variants) is overwhelmingly dominant at over 800 events. This is exactly the pattern det_08 predicted: the most-built trainer and lightweight cruisers show up in the data because the fleet is heavy with them, even though their per-hour rates are low.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/aircraft.py",
+        "lines": [94, 102],
+        "output": "--- Cessna ---\n172      669\n182      216\n172S     189\n152      189\n180      171\n172N     157\n150      143\n172M     127\n140       97\n172P      92\n170B      79\n--- Piper ---\nPA28         262\nPA-18-150    127\nPA-28-140    118\nPA18          84\nPA-28-180     83\nPA-28-181     70\nPA28R         60\nPA32          59"
+      },
+      "data_table": {
+        "description": "Top 10 model strings per major brand (Cessna and Piper)",
+        "columns": ["brand", "model_string", "count"],
+        "rows": [
+          ["Cessna", "172", 669],
+          ["Cessna", "182", 216],
+          ["Cessna", "172S", 189],
+          ["Cessna", "152", 189],
+          ["Cessna", "180", 171],
+          ["Cessna", "172N", 157],
+          ["Cessna", "150", 143],
+          ["Cessna", "172M", 127],
+          ["Cessna", "140", 97],
+          ["Cessna", "172P", 92],
+          ["Piper", "PA28", 262],
+          ["Piper", "PA-18-150", 127],
+          ["Piper", "PA-28-140", 118],
+          ["Piper", "PA18", 84],
+          ["Piper", "PA-28-180", 83],
+          ["Piper", "PA-28-181", 70],
+          ["Piper", "PA28R", 60],
+          ["Piper", "PA32", 59],
+          ["Piper", "PA-28-161", 59],
+          ["Piper", "PA46", 54]
+        ]
+      },
+      "based_on": ["det_08"]
+    },
+    "ana_09": {
+      "label": "Homebuilt premium — 22% fatal share vs 17% for factory aircraft",
+      "content": "Among the 17,543 distinct events with a known homebuilt status, 2,745 (15.6%) were homebuilt and 14,798 (84.4%) were factory-certificated. The fatal share inside accidents is meaningfully higher for homebuilts: 22.2% versus 17.3% — a 1.28× ratio. This is smaller than the 4× per-flight-hour ratio the NTSB safety study (det_04) reports, but the two numbers measure different things: the NTSB's 4× ratio compares fatal accidents per 100,000 flight hours and includes the higher accident exposure of homebuilts; the 1.28× ratio here is fatal-share-conditional-on-having-an-accident, which is closer to a 'severity per crash' figure. The Editor should be explicit that the per-hour premium and the per-accident severity premium are different statistics. Even the within-accidents-severity premium of 1.28× translates to ~138 extra fatal events over the 15-year window if homebuilts had crashed at the factory rate.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/aircraft.py",
+        "lines": [110, 122],
+        "output": "homebuilt_flag  aircraft_rows  events  fatal_events  fatal_share_pct\n             N          14954   14798          2556             17.3\n             Y           2758    2745           609             22.2\nratio_homebuilt_over_factory: 1.28x"
+      },
+      "data_table": {
+        "description": "Homebuilt vs factory-certificated — accident counts and fatal share",
+        "columns": ["homebuilt", "label", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          ["N", "Factory-certificated", 14798, 2556, 17.3],
+          ["Y", "Homebuilt / experimental", 2745, 609, 22.2]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_10": {
+      "label": "Engine count — twin-engine accidents are far more fatal",
+      "content": "Single-engine aircraft account for 87.2% of the events with known engine count (15,286) and have a 16.9% fatal share. Twin-engine aircraft are only 8.0% of events (1,402) but their fatal share is 27.8% — substantially higher. The conventional GA wisdom this matches: a twin's second engine helps with continued flight after an engine failure, but it also adds energy to manage and the asymmetric thrust handling of an engine-out twin during takeoff has been a long-recognized killer. Most of the 'twin advantage' fades, and may invert, in the hands of less-current pilots.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/aircraft.py",
+        "lines": [124, 131],
+        "output": " engines  events  fatal_events  fatal_share_pct\n      -1     557           149             26.8\n       0     290            37             12.8\n       1   15286          2586             16.9\n       2    1402           390             27.8\n       3       3             0              0.0\n       4      12             3             25.0"
+      },
+      "data_table": {
+        "description": "Fatal share by engine count (excluding rare 3/6/8-engine outliers)",
+        "columns": ["engines", "label", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          [0, "0 (gliders, balloons)", 290, 37, 12.8],
+          [1, "Single engine", 15286, 2586, 16.9],
+          [2, "Twin engine", 1402, 390, 27.8],
+          [4, "Four engine", 12, 3, 25.0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_11": {
+      "label": "Aircraft age — the median crashed plane is 39 years old",
+      "content": "The median age of an aircraft involved in a GA Part-91 accident is 39 years (mean 36). 27.1% of crashed aircraft are over 50 years old; 46.4% are over 40. The single largest bucket is 50+ years (3,423 aircraft), followed by 41-50 (2,438). This is a story in itself: the U.S. GA fleet is one of the oldest classes of operational machinery in any consumer-accessible category, because GA aircraft last more or less indefinitely with maintenance and new piston singles have been priced beyond casual buyers since roughly 2000. The Editor can land this either as cause for concern (mechanical fatigue) or as cause for relief (these airframes hold up well enough that 40-year-old Cessnas are still flying).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/aircraft.py",
+        "lines": [133, 144],
+        "output": "median_age_yrs: 39\nmean_age_yrs: 36.0\npct_over_30: 59.6\npct_over_40: 46.4\npct_over_50: 27.1\nage_yrs\n0-5      1390\n6-10      968\n11-20    1909\n21-30     832\n31-40    1666\n41-50    2438\n50+      3423"
+      },
+      "data_table": {
+        "description": "Distribution of aircraft age (event year − build year) at time of accident",
+        "columns": ["age_bucket", "count"],
+        "rows": [
+          ["0-5", 1390],
+          ["6-10", 968],
+          ["11-20", 1909],
+          ["21-30", 832],
+          ["31-40", 1666],
+          ["41-50", 2438],
+          ["50+", 3423]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_12": {
+      "label": "Type of flying — personal flying dominates, instructional is safest",
+      "content": "Personal flying (PERS) is the activity in 72% of events (12,677). Its fatal share is 19.3% — close to the dataset average. The clean comparison the data forces is with instructional flying (INST): 2,734 events, but only 9.5% fatal — about half the personal-flying rate. Two readings of that gap, both true: training environments are deliberately safer (CFI on board, conservative weather minimums, restricted maneuvers); and personal flying is where pilots make the high-stakes weather-and-route decisions that lead to LOC-I and VFR-into-IMC. Air-show flying is rare (81 events) but has the highest fatal share of any meaningful category at 42.0%, consistent with low-altitude aerobatic display being among the most dangerous things you can do in a small airplane.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/aircraft.py",
+        "lines": [146, 175],
+        "output": "  flight_type  events  fatal_events  fatal_share_pct\n     Personal   12677          2441             19.3\nInstructional    2734           261              9.5\n     Business     516           103             20.0\n  Positioning     379            81             21.4\n  Flight-test     268            53             19.8\n   Other-work     254            48             18.9\n   Aerial-obs     253            55             21.7\n        Ferry     100            15             15.0\n    Skydiving      93            15             16.1\n     Air-show      81            34             42.0"
+      },
+      "data_table": {
+        "description": "Events and fatal share by type of flying",
+        "columns": ["type", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          ["Personal", 12677, 2441, 19.3],
+          ["Instructional", 2734, 261, 9.5],
+          ["Business", 516, 103, 20.0],
+          ["Positioning", 379, 81, 21.4],
+          ["Flight-test", 268, 53, 19.8],
+          ["Other-work", 254, 48, 18.9],
+          ["Aerial-obs", 253, 55, 21.7],
+          ["Ferry", 100, 15, 15.0],
+          ["Skydiving", 93, 15, 16.1],
+          ["Air-show", 81, 34, 42.0],
+          ["Banner-tow", 69, 14, 20.3],
+          ["Glider-tow", 35, 10, 28.6],
+          ["Aerial-app", 13, 5, 38.5]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_13": {
+      "label": "Top states by accidents — CA, TX, FL lead; Alaska is the surprise",
+      "content": "California (1,575), Texas (1,513) and Florida (1,385) lead the absolute counts — unsurprising given they are the three largest states by both population and registered GA aircraft. Alaska is the fourth-most-accident-prone state with 1,016 events, despite having less than 1% of U.S. population. Per-capita that puts Alaska at roughly 7-8× the lower-48 rate, consistent with det_07's hours-based 2× figure (Alaska also flies vastly more per capita). The fatal-share split is the interesting twist: see ana_14.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/geography.py",
+        "lines": [16, 28],
+        "output": "ev_state  events  fatal_events  deaths  events_share_pct  fatal_share_pct\n      CA    1575           322     524               9.0             20.4\n      TX    1513           259     439               8.6             17.1\n      FL    1385           245     396               7.9             17.7\n      AK    1016            98     174               5.8              9.6\n      AZ     696           108     192               4.0             15.5\n      CO     561           101     172               3.2             18.0\n      WA     550            79     109               3.1             14.4\n      GA     496           120     196               2.8             24.2\n      NC     434            71     114               2.5             16.4\n      ID     419            55      92               2.4             13.1\n      NY     403            82     139               2.3             20.3"
+      },
+      "data_table": {
+        "description": "Top 15 states by accident count, with fatal share and total deaths",
+        "columns": ["state", "events", "fatal_events", "deaths", "events_share_pct", "fatal_share_pct"],
+        "rows": [
+          ["CA", 1575, 322, 524, 9.0, 20.4],
+          ["TX", 1513, 259, 439, 8.6, 17.1],
+          ["FL", 1385, 245, 396, 7.9, 17.7],
+          ["AK", 1016, 98, 174, 5.8, 9.6],
+          ["AZ", 696, 108, 192, 4.0, 15.5],
+          ["CO", 561, 101, 172, 3.2, 18.0],
+          ["WA", 550, 79, 109, 3.1, 14.4],
+          ["GA", 496, 120, 196, 2.8, 24.2],
+          ["NC", 434, 71, 114, 2.5, 16.4],
+          ["ID", 419, 55, 92, 2.4, 13.1],
+          ["NY", 403, 82, 139, 2.3, 20.3],
+          ["OR", 400, 71, 109, 2.3, 17.8],
+          ["OH", 376, 68, 110, 2.1, 18.1],
+          ["PA", 373, 52, 80, 2.1, 13.9],
+          ["UT", 372, 71, 134, 2.1, 19.1]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_14": {
+      "label": "The Alaska paradox — many accidents, fewer fatal ones",
+      "content": "Alaska has 5.8% of all GA Part-91 accidents but only 9.6% of those accidents are fatal — about half the lower-48 rate of 18.2%. Said another way: the Alaska GA accident rate per flight hour is roughly 2× the U.S. average, but the per-crash fatality rate is roughly half. The likeliest explanation is that a lot of Alaskan GA flying is short-range, low-altitude, low-speed bush operation onto unimproved strips, ridges, sandbars and water; those crashes mangle airframes but do not kill the people in them at the rate that a wings-level cruise impact does. Detective det_07 lays out the structural reasons (rapid weather, unpaved strips, 'bush syndrome'); the data refines them to: yes, more accidents, but more survivable ones.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/geography.py",
+        "lines": [30, 41],
+        "output": "AK events: 1016  (5.8% of all)\nAK deaths: 174\nAK fatal_share_pct: 9.6\nRest_of_US fatal_share_pct: 18.2\nAK_vs_rest_fatal_share_ratio: 0.53x"
+      },
+      "data_table": {
+        "description": "Alaska vs the rest of the U.S. — fatal share among accidents",
+        "columns": ["region", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          ["Alaska", 1016, 98, 9.6],
+          ["Rest of U.S.", 16509, 3008, 18.2]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_15": {
+      "label": "Weather — IMC accidents are 4.2× as likely to be fatal as VMC",
+      "content": "When the weather at the time of the accident is logged as IMC (instrument meteorological conditions — clouds, low visibility), 64.9% of the resulting accidents are fatal. When it is logged as VMC, only 15.4% are. The ratio inside accidents is 4.2× — and the lower hours-denominator ratio in det_05 (14×) suggests the actual per-flight-hour danger of operating in IMC is even larger because the share of GA hours flown in IMC is small. IMC accidents are 4.1% of the slice (712 events) but contribute 462 of the 3,165 fatal events — 14.6% of all the deaths in the dataset, from 4% of the flying conditions.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/weather.py",
+        "lines": [18, 32],
+        "output": " wx  events  fatal_events  share_of_events_pct  fatal_share_pct\nIMC     712           462                  4.1             64.9\nUNK      73            39                  0.4             53.4\nUnk      80            50                  0.5             62.5\nVMC   16660          2565                 95.1             15.4\nVMC fatal_share: 15.4%\nIMC fatal_share: 64.9%\nIMC vs VMC ratio: 4.2x"
+      },
+      "data_table": {
+        "description": "Fatal share by basic weather conditions at the time of the accident",
+        "columns": ["wx_cond", "label", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          ["VMC", "Visual meteorological conditions", 16660, 2565, 15.4],
+          ["IMC", "Instrument meteorological conditions", 712, 462, 64.9],
+          ["UNK", "Unknown", 153, 89, 58.2]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_16": {
+      "label": "VFR into IMC — 73% fatality rate, the dataset's deadliest single pattern",
+      "content": "Operationalizing det_05's canonical 'VFR pilot in IMC weather' pattern as wx_cond_basic = IMC AND flt_plan_filed != IFR (i.e. the pilot was not flying under instrument-flight rules and ended up in the clouds anyway), the dataset returns 336 events with a 72.9% fatal share — by far the deadliest single combination of structured-field conditions. The breakdown within IMC weather is even more striking: with no flight plan filed (NONE) the fatal share is 74.5%, with a filed VFR plan it is 66.7%, with a filed CVFR (controlled-VFR) it is 68.4%. Pilots who did file IFR and were in IMC still had a 58.2% fatal share — instrument flying in IMC is not safe in absolute terms, it is just two orders of magnitude safer than VFR flying in IMC per flight hour.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/weather.py",
+        "lines": [34, 62],
+        "output": " vfr_into_imc  events  fatal_events  fatal_share_pct\n        False   17189          2871             16.7\n         True     336           245             72.9\nwx_class fp_class  events  fatal_events  fatal_share_pct\n     IMC     CVFR      19            13             68.4\n     IMC      IFR     371           216             58.2\n     IMC     NONE     275           205             74.5\n     IMC      VFR      27            18             66.7"
+      },
+      "data_table": {
+        "description": "Weather × flight-plan-class 2x2-ish matrix — fatal share among accidents",
+        "columns": ["weather", "flight_plan", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          ["VMC", "IFR", 1017, 220, 21.6],
+          ["VMC", "VFR", 970, 81, 8.4],
+          ["VMC", "NONE", 13350, 2084, 15.6],
+          ["VMC", "CVFR", 323, 55, 17.0],
+          ["IMC", "IFR", 371, 216, 58.2],
+          ["IMC", "VFR", 27, 18, 66.7],
+          ["IMC", "NONE", 275, 205, 74.5],
+          ["IMC", "CVFR", 19, 13, 68.4]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_17": {
+      "label": "Day vs night — night fatal share is 2.3× day, dark-night is 3.4×",
+      "content": "90% of GA Part-91 accidents happen in daylight (15,809 events), with a fatal share of 16.2%. Night accidents are 6.4% of events (1,119 once Night/Night-dark/Night-bright are combined) but their fatal share is 37.4% — 2.3× the daylight rate. The dark-night sub-bucket (NDRK, no moon / heavy cloud cover) is the worst at 55.6% fatal share over 313 events. Dawn and dusk twilight are essentially equal to daylight in fatality at 17.7%, which suggests it is the absence of visual reference, not low ambient light per se, that makes the difference.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/weather.py",
+        "lines": [64, 80],
+        "output": "       light  events  fatal_events  fatal_share_pct  share_of_events_pct\n         Day   15809          2564             16.2                 90.2\n       Night     785           243             31.0                  4.5\n        Dusk     392            69             17.6                  2.2\n  Night-dark     313           174             55.6                  1.8\n     Unknown     112            47             42.0                  0.6\n        Dawn      93            17             18.3                  0.5\nNight-bright      21             2              9.5                  0.1\nlight_coarse  events  fatal_events  fatal_share_pct\n         Day   15809          2564             16.2\n       Night    1119           419             37.4\n    Twilight     485            86             17.7"
+      },
+      "data_table": {
+        "description": "Fatal share by detailed lighting conditions and a coarse day/night/twilight bucket",
+        "columns": ["light_bucket", "events", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          ["Day", 15809, 2564, 16.2],
+          ["Night-regular", 785, 243, 31.0],
+          ["Night-dark (no moon)", 313, 174, 55.6],
+          ["Night-bright (moonlit)", 21, 2, 9.5],
+          ["Dusk", 392, 69, 17.6],
+          ["Dawn", 93, 17, 18.3]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_18": {
+      "label": "Probable-cause keyword taxonomy — what investigators actually say killed people",
+      "content": "Mining the 17,254 events with NTSB-written probable-cause text (98.5% coverage) for canonical accident-pattern keywords gives a fatality-weighted ranking that closely matches the GA-safety-literature consensus (det_06). Loss of control: 1,646 events / 51.2% fatal / 1,431 deaths. Aerodynamic stall: 1,420 / 49.9% fatal / 1,179 deaths. Engine failure: 3,876 events / 12.7% fatal / 732 deaths (very common but mostly survivable). Spatial disorientation: 298 events / 95.0% fatal / 558 deaths — the highest fatality rate of any high-volume pattern, almost always lethal. Controlled flight into terrain: 103 / 84.5% / 169. Structural failure / in-flight breakup: 97 / 85.6% / 168. Alcohol or drug impairment: 161 / 82.0% / 194. Stall-spin combined: 235 / 82.1% / 313. The pattern is consistent: rare events kill almost everyone they touch (disorientation, structural failure, alcohol), common events kill a minority (engine failure, landing accidents).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/narratives.py",
+        "lines": [30, 96],
+        "output": "                       pattern  events  events_pct  fatal_events  fatal_share_pct  deaths_sum\n                 phase_landing    6940        40.2           307              4.4         450\n                engine_failure    3876        22.5           494             12.7         732\n                 phase_takeoff    2628        15.2           471             17.9         805\n               loss_of_control    1646         9.5           843             51.2        1431\n             stall_aerodynamic    1420         8.2           709             49.9        1179\n              runway_excursion     990         5.7             8              0.8          13\n                  hard_landing     918         5.3            16              1.7          23\n             phase_maneuvering     815         4.7           449             55.1         744\n               fuel_starvation     669         3.9            92             13.8         128\n               fuel_exhaustion     616         3.6            73             11.9         103\n                         icing     397         2.3            82             20.7         149\n             improper_decision     329         1.9           118             35.9         206\n        spatial_disorientation     298         1.7           283             95.0         558\n                          spin     284         1.6           225             79.2         370\n                    stall_spin     235         1.4           193             82.1         313\n                 alcohol_drugs     161         0.9           132             82.0         194\ncontrolled_flight_into_terrain     103         0.6            87             84.5         169\n            structural_failure      97         0.6            83             85.6         168\n              midair_collision      52         0.3            18             34.6          43"
+      },
+      "data_table": {
+        "description": "Probable-cause keyword patterns, ranked by fatal-share for cause-related patterns (excluding pure phase mentions)",
+        "columns": ["pattern", "label", "events", "fatal_events", "fatal_share_pct", "deaths"],
+        "rows": [
+          ["spatial_disorientation", "Spatial disorientation", 298, 283, 95.0, 558],
+          ["structural_failure", "Structural / in-flight breakup", 97, 83, 85.6, 168],
+          ["controlled_flight_into_terrain", "CFIT", 103, 87, 84.5, 169],
+          ["stall_spin", "Stall + spin combined", 235, 193, 82.1, 313],
+          ["alcohol_drugs", "Alcohol / impairment", 161, 132, 82.0, 194],
+          ["spin", "Spin", 284, 225, 79.2, 370],
+          ["loss_of_control", "Loss of control in-flight", 1646, 843, 51.2, 1431],
+          ["stall_aerodynamic", "Aerodynamic stall", 1420, 709, 49.9, 1179],
+          ["improper_decision", "Improper decision / judgment", 329, 118, 35.9, 206],
+          ["midair_collision", "Mid-air collision", 52, 18, 34.6, 43],
+          ["wire_strike", "Wire strike / powerline", 63, 15, 23.8, 25],
+          ["icing", "Icing", 397, 82, 20.7, 149],
+          ["fuel_starvation", "Fuel starvation", 669, 92, 13.8, 128],
+          ["engine_failure", "Engine failure / loss of power", 3876, 494, 12.7, 732],
+          ["fuel_exhaustion", "Fuel exhaustion", 616, 73, 11.9, 103],
+          ["fuel_management", "Fuel mismanagement", 381, 40, 10.5, 65],
+          ["go_around", "Go-around", 617, 60, 9.7, 101],
+          ["porpoise", "Porpoise (landing bounce)", 63, 3, 4.8, 3],
+          ["hard_landing", "Hard landing", 918, 16, 1.7, 23],
+          ["runway_excursion", "Runway excursion", 990, 8, 0.8, 13]
+        ]
+      },
+      "based_on": ["det_06", "det_05"]
+    },
+    "ana_19": {
+      "label": "Phase-of-flight recovered from text — maneuvering is 55% fatal",
+      "content": "Because phase_flt_spec is empty in this slice (a known limitation, ana_caveat_01), we recover phase signals from the narrative probable-cause text. Landing-phase mentions are by far the most common (6,940 events, 40.2% of cause-text coverage) but only 4.4% fatal — most landing accidents are low-speed and survivable. Takeoff mentions: 2,628 events, 17.9% fatal. Approach: 1,149, 21.3% fatal. The standout is maneuvering: just 815 mentions, but 55.1% of them are fatal — by far the most lethal phase, consistent with the long-recognized 'maneuvering at low altitude in a stall-friendly attitude' fatal-accident pattern. Cruise mentions are surprisingly rare (265, 1.5%) — most GA accidents happen near the ground, not in steady cruise flight.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/narratives.py",
+        "lines": [104, 121],
+        "output": "phase_text_mention  events  events_pct_of_cause_text  fatal_events  fatal_share_pct\n           landing    6940                      40.2           307              4.4\n           takeoff    2628                      15.2           471             17.9\n          approach    1149                       6.7           245             21.3\n       maneuvering     815                       4.7           449             55.1\n              taxi     335                       1.9             8              2.4\n            cruise     265                       1.5            53             20.0"
+      },
+      "data_table": {
+        "description": "Phase-of-flight mentions recovered from probable-cause text",
+        "columns": ["phase", "events_with_mention", "events_pct", "fatal_events", "fatal_share_pct"],
+        "rows": [
+          ["Landing", 6940, 40.2, 307, 4.4],
+          ["Takeoff", 2628, 15.2, 471, 17.9],
+          ["Approach", 1149, 6.7, 245, 21.3],
+          ["Maneuvering", 815, 4.7, 449, 55.1],
+          ["Taxi", 335, 1.9, 8, 2.4],
+          ["Cruise", 265, 1.5, 53, 20.0]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_20": {
+      "label": "The deadliest single events — when one crash kills many",
+      "content": "The worst single event in the dataset is the 2016 Lockhart, Texas hot-air-balloon crash with 16 deaths — caused per NTSB by 'the pilot's pattern of poor decision-making' that continued the flight in fog and descended through clouds; the pilot was operating under FAA rules that did not require a medical certificate for commercial balloon pilots. Second is the 2019 Mokuleia, Hawaii skydiving-plane crash (11 deaths) caused by 'aggressive takeoff maneuver, which resulted in an accelerated stall.' Third is the 2019 ten-fatality twin-engine takeoff crash. These three events alone account for 37 deaths — a meaningful share of any single year. The narratives field is what makes them work as story material: each comes with the NTSB's own one-sentence probable-cause statement, which is more direct and credible than any reconstruction a reporter would write.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/narratives.py",
+        "lines": [123, 140],
+        "output": "         ev_id  deaths\n20160730X25341      16\n20190622X23034      11\n20190630X33829      10\n20191130X65423       9\n20220214104634       8\n20200705X32345       8\n20191002X11326       7\n20190704X21909       7\n20200731X11938       7\n20110710X31135       7"
+      },
+      "data_table": {
+        "description": "Top 10 single events by death count",
+        "columns": ["ev_id", "deaths"],
+        "rows": [
+          ["20160730X25341", 16],
+          ["20190622X23034", 11],
+          ["20190630X33829", 10],
+          ["20191130X65423", 9],
+          ["20220214104634", 8],
+          ["20200705X32345", 8],
+          ["20191002X11326", 7],
+          ["20190704X21909", 7],
+          ["20200731X11938", 7],
+          ["20110710X31135", 7]
+        ]
+      },
+      "notable_instance": {
+        "name": "Lockhart, Texas hot-air-balloon crash, 2016-07-30",
+        "value": "16 deaths — the single deadliest event in the slice",
+        "why": "The NTSB's own probable-cause sentence is unusually direct: 'the pilot's pattern of poor decision-making that led to the initial launch, continued flight in fog and above clouds, and descent near or through clouds.' It works as a verbatim quote because it is the federal investigator's actual finding, not a journalist's paraphrase."
+      },
+      "based_on": ["det_06"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "phase_flt_spec is entirely empty (0 non-null rows) in this CSV extract — the source .mdb has it, but the join used to build the slice dropped it. Phase-of-flight signals must be recovered from narr_cause text (see ana_19); the same goes for the empty evacuation and med_type_flight columns."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "acft_make is free text with capitalization and spelling variance ('CESSNA', 'Cessna', 'CESSNA AIRCRAFT', 'Textron Aviation' all map to the same manufacturer). Brand-level analyses (ana_07, ana_08) use a normalized bucket; raw counts on acft_make would understate the leaders."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "All per-accident-share statistics in this analysis (fatal share among accidents, homebuilt fatality ratio, IMC-vs-VMC ratio) are conditional on having had an accident. To get per-flight-hour risk you must combine these with an external exposure denominator from the FAA General Aviation Activity Survey (see det_03). The per-accident severity premium for homebuilts (1.28×) is meaningfully smaller than the per-hour fatal-accident-rate premium (~4×) reported in NTSB/SS-12/01."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "The 'VFR into IMC' pattern (ana_16) is defined structurally as wx_cond_basic = IMC AND flt_plan_filed != IFR. Many NTSB probable-cause narratives describe the same phenomenon with different language ('continued visual flight into instrument conditions', 'encountered deteriorating weather', 'lost visual reference'). A narrow regex (ana_21 in narratives.py) caught only 1 event because investigators use varied phrasing; the structural 336-event count is the canonical one."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "Multi-aircraft events (e.g. mid-air collisions, ground collisions) appear as multiple rows sharing the same ev_id. Where the analysis is per-event we dedupe on ev_id; where it is per-aircraft (damage, injury) we do not. Mid-air collisions specifically are 187 row-pairs / 52 distinct events in the cause-text scan."
+    },
+    {
+      "id": "ana_caveat_06",
+      "content": "Probable-cause text contains some character-encoding artifacts (“” quotes appear as garbled bytes in some rows). This does not affect keyword matching but the Designer should clean quoted excerpts before display."
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "The story of 17,525 NTSB-investigated U.S. small-plane accidents over 2010-2024 is the gap between what is common and what is lethal — engine failures show up in nearly a quarter of investigations but kill 13% of the people involved, while spatial disorientation appears in fewer than 2% and kills 95%.",
+  "tension": "Most pilots are trained to fear an engine quitting at low altitude. Most news coverage focuses on the spectacular multi-fatality crashes. Neither is what the data says you should worry most about.",
+  "payoff": "After reading, a non-pilot understands the actual geometry of small-plane risk in the United States — and that three conditions (instrument weather, night, maneuvering) explain more than half of every death in the dataset.",
+  "title": "What Kills Small-Plane Pilots",
+  "subtitle": "Fifteen years of NTSB findings, 2010-2024",
+  "items": {
+    "edt_01": {
+      "label": "Hook — the 95% number",
+      "purpose": "hook",
+      "title": "The 95% number",
+      "findings": ["ana_18", "ana_04", "ana_20"],
+      "context": ["det_06", "det_09"],
+      "triage": {
+        "ana_18": "lead",
+        "ana_04": "supporting",
+        "ana_20": "supporting"
+      },
+      "chart_placeholder": "ana_18",
+      "media_placeholder": "image",
+      "editorial_notes": "95.0% spatial disorientation fatal share must stay exact. Engine failure 12.7% must stay exact. The contrast between the two numbers is the lead."
+    },
+    "edt_02": {
+      "label": "What you're looking at",
+      "purpose": "context",
+      "title": "What you're looking at",
+      "findings": ["ana_01", "ana_06", "ana_12"],
+      "context": ["det_01", "det_02"],
+      "triage": {
+        "ana_01": "supporting",
+        "ana_06": "supporting",
+        "ana_12": "color"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "Use this section to anchor the reader: 17,525 events, fifteen years, FAR Part 91. The 98.5% probable-cause-text coverage is the unique feature that makes the rest of the piece possible — flag it."
+    },
+    "edt_03": {
+      "label": "The fifteen-year trend",
+      "purpose": "evidence",
+      "title": "Fifteen years",
+      "findings": ["ana_02", "ana_03"],
+      "context": ["det_03"],
+      "triage": {
+        "ana_02": "supporting",
+        "ana_03": "color"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": null,
+      "editorial_notes": "Pair the FAA per-100k-hour benchmark from det_03 with our dataset's accident-count trend. The seasonality inversion (counts peak summer, fatal share peaks winter) is a worth-mentioning curiosity but not the main chart of this section."
+    },
+    "edt_04": {
+      "label": "Common vs. lethal — the centerpiece",
+      "purpose": "turn",
+      "title": "Common is not lethal",
+      "findings": ["ana_18", "ana_19"],
+      "context": ["det_05", "det_06"],
+      "triage": {
+        "ana_18": "lead",
+        "ana_19": "supporting"
+      },
+      "chart_placeholder": "ana_18",
+      "media_placeholder": null,
+      "editorial_notes": "THIS is the centerpiece chart of the whole piece. Designer should encode every cause-pattern as a point on a chart with x = events_count (or log scale) and y = fatal_share_pct. Quadrant labels: rare-and-lethal (upper-left), common-and-lethal (upper-right), common-and-survivable (lower-right). Spatial disorientation should be visually highlighted as the upper-left extremum. The chart MUST include axes labeled with both dimensions clearly."
+    },
+    "edt_05": {
+      "label": "VFR into IMC",
+      "purpose": "evidence",
+      "title": "Into the clouds",
+      "findings": ["ana_15", "ana_16"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_15": "supporting",
+        "ana_16": "lead"
+      },
+      "chart_placeholder": "ana_16",
+      "media_placeholder": null,
+      "editorial_notes": "The chart should make the weather × flight-plan-class structure visible — IMC-NONE at 74.5% fatal needs to read as the dataset's most-extreme survivable-looking decision. Mention the 178-seconds factoid from det_05 in prose."
+    },
+    "edt_06": {
+      "label": "After dark",
+      "purpose": "evidence",
+      "title": "After dark",
+      "findings": ["ana_17"],
+      "context": ["det_06"],
+      "triage": {
+        "ana_17": "supporting"
+      },
+      "chart_placeholder": "ana_17",
+      "media_placeholder": null,
+      "editorial_notes": "Dark-night (NDRK) at 55.6% fatal is the bar to highlight. Designer can use a single horizontal bar chart with the lighting subcategories sorted by fatal share."
+    },
+    "edt_07": {
+      "label": "Geography & Alaska paradox",
+      "purpose": "evidence",
+      "title": "The Alaska paradox",
+      "findings": ["ana_13", "ana_14"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_13": "supporting",
+        "ana_14": "lead"
+      },
+      "chart_placeholder": "ana_13",
+      "media_placeholder": "map",
+      "editorial_notes": "A U.S. state-level choropleth (events count) with Alaska highlighted is the obvious primary visual. Pair with a small inset showing AK vs rest-of-US fatal share difference (9.6% vs 18.2%) so the paradox doesn't get buried in the choropleth's color scale."
+    },
+    "edt_08": {
+      "label": "The fleet that won't quit",
+      "purpose": "evidence",
+      "title": "Old planes, old patterns",
+      "findings": ["ana_07", "ana_09", "ana_11"],
+      "context": ["det_04", "det_08"],
+      "triage": {
+        "ana_07": "supporting",
+        "ana_09": "lead",
+        "ana_11": "color"
+      },
+      "chart_placeholder": "ana_11",
+      "media_placeholder": null,
+      "editorial_notes": "The 39-year median fleet age is the surprising statistic for general readers. Designer should make this the visual hook. The homebuilt 1.28× vs det_04's 4× distinction MUST be in the prose — it is a common misconception correction. Cessna/Piper/Beech share-of-accidents can be a sidebar stat callout."
+    },
+    "edt_09": {
+      "label": "What it adds up to",
+      "purpose": "close",
+      "title": "What it adds up to",
+      "findings": ["ana_18", "ana_19", "ana_20"],
+      "context": ["det_06", "det_09"],
+      "triage": {
+        "ana_18": "lead",
+        "ana_19": "supporting",
+        "ana_20": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "The Lockhart balloon NTSB quote MUST appear verbatim. End on the 'upper-left is still there' line. No summary, no call-to-action. Designer should consider an atmospheric image of clouds, dusk, or open sky — something that evokes the conditions discussed without showing a wreck."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "supporting",
+    "ana_03": "color",
+    "ana_04": "supporting",
+    "ana_05": "cut",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "cut",
+    "ana_09": "lead",
+    "ana_10": "cut",
+    "ana_11": "color",
+    "ana_12": "color",
+    "ana_13": "supporting",
+    "ana_14": "lead",
+    "ana_15": "supporting",
+    "ana_16": "lead",
+    "ana_17": "supporting",
+    "ana_18": "lead",
+    "ana_19": "supporting",
+    "ana_20": "supporting"
+  }
+}

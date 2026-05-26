@@ -1,0 +1,357 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "Meteorite Landings (Meteoritical Bulletin / NASA mirror)",
+    "data_dir": "D:/AI/journalist agent review/phase2/datasets/2020-07-29_meteorite-landings"
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: Meteoritical Bulletin Database, mirrored by NASA",
+      "content": "The dataset is a snapshot of the Meteoritical Bulletin Database (MBDB), maintained by the Nomenclature Committee of the Meteoritical Society. The Society was founded in 1933 and has been the authoritative registry for newly recognized meteorites since the mid-twentieth century; every accepted meteorite gets a unique name (usually a nearby place), a class, a location, and — if witnessed — a fall date. The version surfaced via Data Is Plural on 2020-07-29 is NASA's Open Data Portal mirror, which freezes the catalogue at 45,716 entries. The live MBDB has continued to grow: as of late 2025 it holds roughly 80,000 valid names plus another 6,000 provisional ones, so this snapshot represents about 57% of all meteorites known today. Treat it as 'all meteorites known to science as of about 2013', not 'all meteorites that have ever hit Earth'.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Meteoritical_Society",
+          "title": "Meteoritical Society — Wikipedia",
+          "facts": [
+            "The Meteoritical Society was established in 1933",
+            "The Society maintains the Meteoritical Bulletin as the authoritative registry of known meteorites"
+          ]
+        },
+        {
+          "url": "https://www.lpi.usra.edu/meteor/",
+          "title": "Meteoritical Bulletin Database — search interface",
+          "facts": [
+            "MBDB contains roughly 79,924 valid meteorite names plus 6,187 provisional names (per surfaced search-result summary)"
+          ]
+        },
+        {
+          "url": "https://www.data-is-plural.com/archive/2020-07-29-edition/",
+          "title": "Data Is Plural — 2020-07-29 edition",
+          "facts": [
+            "The Meteorite Landings dataset was surfaced via Data Is Plural on 2020-07-29"
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "arithmetic",
+        "formula": "45716 / 79924",
+        "result": "57.2%"
+      }
+    },
+    "det_02": {
+      "label": "Background: Fell vs. Found — the central distinction",
+      "content": "Every entry in the Meteoritical Bulletin is tagged either 'Fell' or 'Found'. A Fell is a meteorite whose descent was actually observed by a human witness — somebody saw the fireball, heard the sonic boom, and the recovered rock could be matched to that event. A Find is a meteorite that was located on the ground without anyone seeing it land. This is not a minor distinction: only about 1,107 of the 45,716 rows in this dataset are Fells, just 2.4%. Fells dominate the historical record before about 1900 because no large-scale meteorite-hunting program existed; Finds explode after 1969 when systematic recovery on Antarctic blue ice began. Almost everything else interesting about this dataset — geography, mass distribution, year coverage — is downstream of this one selection rule. The Meteoritical Society's glossary defines 'fall' as 'a meteorite that was seen while it fell to Earth and found', and 'find' as 'a meteorite that was found without seeing it fall'.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Glossary_of_meteoritics",
+          "title": "Glossary of meteoritics — Wikipedia",
+          "facts": [
+            "Fall: a meteorite that was seen while it fell to Earth and found",
+            "Find: a meteorite that was found without seeing it fall"
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "arithmetic",
+        "formula": "1107 / 45716",
+        "result": "2.42%"
+      }
+    },
+    "det_03": {
+      "label": "Background: How many meteorites actually hit Earth per year",
+      "content": "The reason Fells are so rare is not that meteorites are rare — it is that witnessing one is. Researchers estimate roughly 6,100 meteorite falls per year over the entire Earth, of which about 1,800 land on land rather than ocean. The number actually recovered and added to the Meteoritical Bulletin as observed falls is closer to 6–10 per year historically (about 7.9 per year averaged over 2007–2018), rising past 10 per year since 2020 as dashcams, doorbell cameras, and amateur fireball networks expand. So roughly 99.99% of all rocks that land on dry ground vanish into rivers, forests, and farmland without being identified.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Meteorite_fall_statistics",
+          "title": "Meteorite fall statistics — Wikipedia",
+          "facts": [
+            "Estimated 6,100 meteorite falls per year over the entire Earth, about 1,800 over land",
+            "From 2007 to 2018, 95 observed-fall reports, averaging 7.9 per year",
+            "Reported observed falls rose to more than 10 per year on average since 2020"
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "arithmetic",
+        "formula": "(7.9 obs / yr) / (1800 land falls / yr)",
+        "result": "≈0.44% — only ~1 in 230 land-falls becomes an observed fall record"
+      }
+    },
+    "det_04": {
+      "label": "Background: Where Finds come from — Antarctic blue ice",
+      "content": "The 44,609 Finds in the dataset are wildly geographically skewed, and the reason is operational, not physical: nearly all meteorites land more or less uniformly across the planet, but they only stand out in two places — Antarctic blue ice and hot deserts. The Antarctic Search for Meteorites (ANSMET), run from Case Western Reserve University since 1976, dispatches teams of 4–10 scientists for 5–7 weeks each austral summer; they ride snowmobiles spaced 30 m apart across blue-ice areas. Blue ice forms where katabatic winds blowing off the polar plateau ablate snow faster than it falls, exposing dense, blue-tinted ice in which meteorites accumulated over hundreds of thousands of years are scoured back to the surface. As of late 2022 ANSMET alone had recovered slightly more than 23,000 specimens; combined with Japanese (NIPR) and Chinese programs, well over half of all officially-named meteorites in this snapshot are from Antarctica. None of these are Fells: the rocks have been entombed in ice for millennia.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://caslabs.case.edu/ansmet/faqs/",
+          "title": "FAQs — ANSMET (Antarctic Search for Meteorites)",
+          "facts": [
+            "Teams of 4–10 explorers live for 5–7 weeks on the ice field",
+            "Snowmobiles spaced 30 m apart scan blue ice for meteorites",
+            "Blue-ice areas appear where loss of ice mass outpaces deposition, scoured by katabatic winds"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/ANSMET",
+          "title": "ANSMET — Wikipedia",
+          "facts": [
+            "As of end-2022, ANSMET had recovered slightly more than 23,000 specimens"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Interpretive hook: Hoba, the 60-ton single-piece meteorite",
+      "content": "The single heaviest row in the dataset is the Hoba meteorite, a 60,000,000-gram (60-ton) iron block in Otjozondjupa, Namibia (19.583°S, 17.917°E). It is so heavy that, since being discovered by a farmer ploughing a field in 1920, no one has ever moved it — it was declared a Namibian national monument in 1955 and is still sitting where it landed less than 80,000 years ago. Composition: roughly 84% iron, 16% nickel, trace cobalt; classified as an ataxite iron (IVB chemical class). The fact that the largest known meteorite is iron is not an accident — see det_07. Hoba's mass alone is large enough that whatever chart shows mass on a linear axis becomes useless; this row is the reason every analyst defaults to a log scale on mass(g).",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Hoba_meteorite",
+          "title": "Hoba meteorite — Wikipedia",
+          "facts": [
+            "Main mass over 60 tonnes; coordinates 19°35′33″S 17°56′01″E",
+            "Composition about 84% iron and 16% nickel with trace cobalt; ataxite iron, IVB chemical class",
+            "Discovered in 1920 by Jacobus Hermanus Brits while ploughing; declared a Namibian national monument in 1955"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Interpretive hook: Canyon Diablo and Meteor Crater",
+      "content": "The Canyon Diablo entries in the dataset (Arizona, 35.05°N, -111.03°W) are fragments of the 50-meter iron asteroid that punched out Meteor Crater (Barringer Crater) about 50,000 years ago — a 1.2 km wide, 170 m deep bowl that became the first impact structure on Earth proven to have an extraterrestrial origin. About 30 tonnes of fragments have been recovered; the largest single piece, the Holsinger Meteorite, weighs 639 kg. Canyon Diablo material is famous beyond geology: in 1953 Clair Patterson used its lead isotopes to estimate the age of Earth at 4.55 billion ± 70 million years, the value still cited in every textbook. This entry is the cleanest case in the dataset where a row links directly to a still-visible feature in the modern landscape.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Canyon_Diablo_(meteorite)",
+          "title": "Canyon Diablo (meteorite) — Wikipedia",
+          "facts": [
+            "Approximately 50 m diameter asteroid struck Arizona ~50,000 years ago, forming Meteor Crater",
+            "Iron octahedrite; about 30 tonnes recovered; largest fragment Holsinger Meteorite 639 kg",
+            "Patterson (1953) used Canyon Diablo lead isotopes to date Earth at 4.55 Gyr ± 70 Myr"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "Interpretive hook: Why the top five are all irons",
+      "content": "Sort the dataset by mass descending and you get Hoba (Namibia, 60 t), Cape York/Ahnighito (Greenland, ~31 t — actually a fragment of a larger fall), Campo del Cielo/Gancedo (Argentina, ~31 t), Canyon Diablo (Arizona, ~30 t total recovered), and Armanty (Xinjiang, 28 t). Every one is an iron meteorite. This is not random: irons survive both atmospheric entry and weathering far better than stony meteorites. Ordinary chondrites — L6, H5, LL5 — make up about 87% of all observed falls (and the bulk of this dataset by row count), but they crumble. An iron block sits intact for tens of thousands of years; a chondrite the same size shatters into pebbles and rusts away. So the mass-ranked top of the table is not a sample of what hits Earth — it is a sample of what is hard enough to still be found.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ordinary_chondrite",
+          "title": "Ordinary chondrite — Wikipedia",
+          "facts": [
+            "Ordinary chondrites comprise 87% of all meteorite finds"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Hoba_meteorite",
+          "title": "Hoba meteorite — Wikipedia",
+          "facts": [
+            "Hoba main mass over 60 tonnes; iron, IVB"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Cape_York_meteorite",
+          "title": "Cape York meteorite — Wikipedia",
+          "facts": [
+            "Cape York totals ~58 tonnes; Ahnighito alone 30,880 kg; Agpalilik ~20,140 kg"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Campo_del_Cielo",
+          "title": "Campo del Cielo — Wikipedia",
+          "facts": [
+            "Gancedo fragment 30.8 t (2016); El Chaco 28.8 t (1969); total ~100 t recovered iron"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Interpretive hook: Cape York and the Inughuit iron trade",
+      "content": "The Cape York / Innaanganeq meteorite (Greenland, ~58 t across eight fragments) entered the scientific literature in 1894 when Robert Peary, guided by Inughuit Inuit, reached the site and spent three years removing the three largest pieces, including the 30.88-ton Ahnighito ('the Tent'). He sold them to the American Museum of Natural History in New York for $40,000. But the Inughuit had been quarrying iron tools from these blocks for centuries by cold-forging — hammering chunks with stones — and trading them across the Arctic. The Cape York rows in the dataset are simultaneously a top-five-heaviest entry, a colonial-collection story, and one of the very few documented cases of a pre-industrial society sourcing iron exclusively from meteorites.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cape_York_meteorite",
+          "title": "Cape York meteorite — Wikipedia",
+          "facts": [
+            "Eight major fragments totalling ~58 tonnes; Ahnighito 30,880 kg, Agpalilik ~20,140 kg",
+            "Peary reached the site in 1894 with Inuit guides; spent three years removing the three largest fragments",
+            "Sold Ahnighito to the American Museum of Natural History for $40,000",
+            "Inughuit cold-forged the iron with stones to make tools and harpoons, traded across the Arctic"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Interpretive hook: Campo del Cielo, a 4,500-year-old crater field",
+      "content": "Campo del Cielo ('Field of Heaven' in Spanish, 'Piguem Nonralta' to the indigenous Mocoví) is a 4,200–4,700-year-old impact field in Argentina's Chaco and Santiago del Estero provinces — at least 26 craters scattered over 18.5 by 3 km. About 100 tonnes of iron fragments have been recovered, the most ever from a single fall event; the two largest, Gancedo (30.8 t, found 2016) and El Chaco (28.8 t, found 1969), are themselves global top-five meteorites. The Spanish colonial governor first commissioned an expedition in 1576 after hearing indigenous accounts; native peoples had been using the iron for weapons long before that. This makes Campo del Cielo the closest the dataset comes to a 'meteor strike caught on Earth's geological video tape' — old enough to predate writing in the region, fresh enough that the craters still exist.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Campo_del_Cielo",
+          "title": "Campo del Cielo — Wikipedia",
+          "facts": [
+            "At least 26 craters across 18.5 by 3 km in Chaco and Santiago del Estero, Argentina",
+            "Carbon-14 dating of charred wood beneath fragments gives the fall ~4,200–4,700 years ago",
+            "About 100 tonnes of iron recovered; Gancedo 30.8 t (2016) and El Chaco 28.8 t (1969)",
+            "Site officially reported in 1576; indigenous peoples used the iron long before"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Interpretive hook: Armanty, fourth-largest, now reclassified as Aletai",
+      "content": "The 28-ton Armanty meteorite in Xinjiang, China (47.85°N, 88.4°E in the dataset) is the fourth-heaviest single mass on record and sits on display outside the Xinjiang Geological and Mineral Museum in Urumqi. In 2016, additional fragments scattered across Altay Prefecture were shown to share the same parent body, and the combined fall was renamed the Aletai meteorite — total recovered mass across the field is over 74 tonnes from at least five main fragments. The dataset (frozen ~2013) still calls it Armanty, so anyone slicing by name will miss the larger story unless they cross-reference. This is a useful example of how the catalogue lags behind active meteoritics.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Aletai_meteorite",
+          "title": "Aletai meteorite — Wikipedia",
+          "facts": [
+            "Armanty is the original 28-ton Xinjiang iron, classified IIIE",
+            "In 2016 the parent meteorite was renamed Aletai after the Altay Prefecture",
+            "At least five main fragments with combined mass over 74 tonnes have been recovered"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "Background: Composition classes the analyst will see",
+      "content": "The recclass column has 466 distinct values, but they cluster into a few families. Stony meteorites are by far the most common: ordinary chondrites make up about 87% of all known meteorites and are split into H (high total iron), L (low total iron), and LL (low total iron + low metal) groups, each followed by a petrologic type 3–6 indicating how thermally metamorphosed they are (3 = pristine chondrules visible, 6 = recrystallised). So an 'L6' is a low-iron ordinary chondrite that has been heated almost to melting on its parent body; an 'H5' is a high-iron chondrite somewhat less metamorphosed. Then there are achondrites (differentiated stony — Howardites, Eucrites, Diogenites, etc.), iron meteorites (split into structural classes like octahedrite and ataxite, plus chemical groups IAB, IIIAB, IVA, IVB), and stony-irons (Pallasites, Mesosiderites). For the blog, the headline number is: when you sort the dataset by row count, ordinary chondrites dominate; sort by mass, and irons rule.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Ordinary_chondrite",
+          "title": "Ordinary chondrite — Wikipedia",
+          "facts": [
+            "Ordinary chondrites comprise 87% of all meteorite finds",
+            "H chondrites = highest total iron; L = lower total iron; LL = low total iron + low metal",
+            "Petrologic type 3 = well-preserved chondrules, indicating low metamorphism"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Glossary_of_meteoritics",
+          "title": "Glossary of meteoritics — Wikipedia",
+          "facts": [
+            "Ataxite: an iron meteorite that has no visible structures when etched",
+            "Octahedrite: the most common structural class of iron meteorites"
+          ]
+        }
+      ]
+    },
+    "det_12": {
+      "label": "Why it matters: meteorites are the only material from the early solar system we can hold",
+      "content": "Ordinary chondrites condensed roughly 4.56 billion years ago, before Earth had finished forming. Their chondrules — the millimetre-sized silicate beads that give the class its name — are the earliest known solids in the Solar System. Iron meteorites are slivers of the cores of disrupted protoplanets, the closest things to a sample of Earth's own core that humans will ever physically hold. The Canyon Diablo lead measurement that set the age of Earth (det_06) is the canonical example of how a single line in a catalogue like this turns into a textbook constant. The dataset is, in that sense, an inventory of free time-machines: 45,716 chunks of pre-Earth matter sitting in museum drawers, deserts, and Antarctic moraines.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Canyon_Diablo_(meteorite)",
+          "title": "Canyon Diablo (meteorite) — Wikipedia",
+          "facts": [
+            "Patterson (1953) used Canyon Diablo lead isotopes to date Earth at 4.55 Gyr ± 70 Myr"
+          ]
+        }
+      ]
+    },
+    "det_13": {
+      "label": "Controversy: the 'year' column has at least one impossible value",
+      "content": "The README flags a known typo: at least one row reports year=2101 (a future date), and a small number of others have year=0 or no year at all. Officially every meteorite must have a year (the year of fall for Fells, the year of recovery for Finds), but the catalogue is decades of accumulated data-entry from many curators and noise is inevitable. There are also rows dated to ~860, which are plausible — there are credible Chinese and European medieval records of fireballs and recovered stones — but anything before ~1700 should be flagged as uncertain. For analysis, year filtering should be ≤ current year and ≥ 1 (or a sensible cutoff like 800), and the analyst should report how many rows are dropped.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.lpi.usra.edu/meteor/",
+          "title": "Meteoritical Bulletin Database",
+          "facts": [
+            "Database is curated by the Nomenclature Committee; entries span medieval to present day"
+          ]
+        }
+      ]
+    },
+    "det_14": {
+      "label": "Scope suggestion: what the Analyst should focus on",
+      "content": "Based on this dataset's structure and the surrounding literature, the strongest analytic lines are (a) Fell vs. Found splits across every other axis — year, mass, recclass, geography — because that one variable explains most of the dataset's strange shape; (b) the geographic concentration of Finds on Antarctic blue ice and on hot-desert recovery zones (Sahara, Atacama, Oman) — a global map with Fells in red and Finds in blue will tell the story instantly; (c) the year histogram, with the 1969 elbow when ANSMET began driving Find counts off the chart; (d) the mass-class crossover — chondrites dominate by count, irons dominate by mass — best shown side-by-side; (e) named-top-N tables (Hoba, Cape York, Campo del Cielo, Canyon Diablo, Armanty), grounded in the famous-meteorite items above. The analyst should not waste time on per-country comparisons (16% of rows lack coordinates and the rest are operationally biased) or on mass means (the distribution is log-normal — use medians and log scales).",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Antarctic_meteorite",
+          "title": "Antarctic meteorite — Wikipedia (concept reference)",
+          "facts": [
+            "Antarctic recovery began with Japanese expeditions in 1969 and ANSMET in 1976; together with Chinese efforts, these dominate post-1970 Finds"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_hoba.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Hoba_Meteorite_sire.jpg",
+      "license": "CC BY 2.0",
+      "source": "Wikimedia Commons (author: Eugen Zibiso, via Flickr)",
+      "description": "The Hoba meteorite in situ on its Namibian visitor-centre plinth — a single ~60-ton iron block, the largest known meteorite on Earth, still sitting where it landed.",
+      "relates_to": ["det_05", "det_07"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_canyon_diablo.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/63/Canyon_Diablo_%28meteorite%29.jpg",
+      "license": "CC BY-SA",
+      "source": "Wikimedia Commons",
+      "description": "Iron-octahedrite fragment of the Canyon Diablo meteorite — the same body that punched out Meteor Crater in Arizona ~50,000 years ago.",
+      "relates_to": ["det_06"]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "ref_meteor_crater.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Barringer_Crater_aerial_photo_by_USGS.jpg",
+      "license": "Public domain (USGS)",
+      "source": "USGS aerial photograph via Wikimedia Commons",
+      "description": "Aerial view of Meteor Crater (Barringer Crater), Arizona — the impact structure made by the Canyon Diablo body.",
+      "relates_to": ["det_06"]
+    },
+    {
+      "id": "det_media_04",
+      "filename": "ref_ahnighito.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Ahnighito_AMNH%2C_34_tons_meteorite.jpg",
+      "license": "CC BY 2.0",
+      "source": "Wikimedia Commons (author: Mike Cassano)",
+      "description": "The Ahnighito fragment of the Cape York meteorite on display at the American Museum of Natural History. At ~34 t it is the largest meteorite on public museum display anywhere.",
+      "relates_to": ["det_07", "det_08"]
+    },
+    {
+      "id": "det_media_05",
+      "filename": "ref_el_chaco.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Campo_del_Cielo_meteorite%2C_El_Chaco_fragment.jpg",
+      "license": "CC BY 2.0",
+      "source": "Wikimedia Commons (author: Scheihing Edgardo)",
+      "description": "El Chaco fragment (~28.8 t) of the Campo del Cielo meteorite in Argentina's Chaco province — one of the heaviest single meteorite masses on Earth.",
+      "relates_to": ["det_07", "det_09"]
+    },
+    {
+      "id": "det_media_06",
+      "filename": "ref_antarctic_recovery.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Meteorite_Recovery_Antarctica_%28retouched%29.jpg",
+      "license": "Public domain (NASA)",
+      "source": "Wikimedia Commons (NASA / H. Raab, retouched)",
+      "description": "Researcher recovering a meteorite on Antarctic ice — the visual that explains why 60%+ of all named meteorites come from Antarctica.",
+      "relates_to": ["det_04"]
+    },
+    {
+      "id": "det_media_07",
+      "filename": "ref_alh81005.jpg",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/ALH81005%281%29.jpg",
+      "license": "Public domain (NASA)",
+      "source": "Wikimedia Commons (NASA Johnson)",
+      "description": "ALH81005 — the first meteorite recognised as lunar in origin, recovered by ANSMET in the 1981-82 field season. Sits next to a 1 cm cube for scale. Demonstrates the science yield of Antarctic finds.",
+      "relates_to": ["det_04"]
+    }
+  ],
+  "instances": []
+}

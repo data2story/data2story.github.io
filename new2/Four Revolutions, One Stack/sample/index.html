@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Four Revolutions, One Stack — Data Journalist Agent</title>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.25.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.16.3"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.24.0"></script>
+<style>
+:root {
+  --bg: #0d1116;
+  --bg-card: #131820;
+  --border: #1f262d;
+  --text: #d9dde2;
+  --text-strong: #f4f6f8;
+  --muted: #8a9098;
+  --amber: #e3b23c;
+  --red: #d04a4a;
+  --blue: #5b8bd9;
+  --green: #7fb069;
+  --violet: #a04ba0;
+  --orange: #b86b3a;
+  --teal: #5fa8a8;
+  --content-w: 720px;
+  --gap: 2.5rem;
+}
+* { box-sizing: border-box; }
+html, body { background: var(--bg); color: var(--text); margin: 0; padding: 0; }
+body {
+  font: 17px/1.7 Georgia, "Times New Roman", "Iowan Old Style", serif;
+  font-feature-settings: "kern", "liga", "tnum";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: var(--amber); text-decoration: none; border-bottom: 1px dotted var(--amber); }
+a:hover { color: var(--text-strong); border-bottom-color: var(--text-strong); }
+
+/* Layout */
+.content { max-width: var(--content-w); margin: 0 auto; padding: 0 24px; }
+.full-bleed { width: 100vw; margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw); max-width: none; }
+
+/* Teaser */
+.teaser {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  height: 100vh;
+  min-height: 540px;
+  overflow: hidden;
+  background: #000;
+}
+.teaser video, .teaser img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+.teaser-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13,17,22,0) 50%, rgba(13,17,22,0.85) 100%);
+  pointer-events: none;
+}
+.teaser-meta {
+  position: absolute;
+  bottom: 32px; left: 0; right: 0;
+  text-align: center;
+  font: 11px/1 system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* Headline block */
+.headline-block { padding: 5rem 24px 1rem; text-align: center; }
+.eyebrow {
+  font: 12px/1 system-ui, sans-serif;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 1.25rem;
+}
+h1 {
+  font: 600 56px/1.05 Georgia, serif;
+  letter-spacing: -0.01em;
+  color: var(--text-strong);
+  margin: 0 auto 1.25rem;
+  max-width: 16ch;
+}
+@media (max-width: 640px) { h1 { font-size: 38px; } }
+.subhead {
+  font: italic 19px/1.55 Georgia, serif;
+  color: var(--muted);
+  max-width: 32em;
+  margin: 0 auto;
+}
+.byline {
+  margin: 2.5rem auto 0;
+  font: 12px/1.3 system-ui, sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Sections */
+section.story {
+  padding: 3.5rem 0 1rem;
+  border-top: 1px solid var(--border);
+}
+section.story:first-of-type { border-top: none; }
+section.story h2 {
+  font: 600 32px/1.2 Georgia, serif;
+  letter-spacing: -0.005em;
+  color: var(--text-strong);
+  margin: 0 0 1.5rem;
+}
+section.story p {
+  margin: 0 0 1.3rem;
+  color: var(--text);
+}
+section.story p strong { color: var(--text-strong); }
+
+/* Visual containers */
+.visual-container, .chart-container, .video-container, .audio-container,
+.interactive-container, figure {
+  margin: var(--gap) auto;
+  display: block;
+  clear: both;
+  max-width: 100%;
+}
+.chart-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.5rem 1.25rem 1.25rem;
+}
+.chart-card.full {
+  width: 100%;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.chart-card .chart-caption {
+  margin-top: 0.75rem;
+  font: 13px/1.5 system-ui, sans-serif;
+  color: var(--muted);
+}
+.chart-mount {
+  width: 100%;
+  min-width: 0;
+  display: block;
+}
+
+/* Stat callouts */
+.stat {
+  background: var(--bg-card);
+  border-left: 4px solid var(--amber);
+  padding: 1.75rem 1.5rem;
+  margin: var(--gap) 0;
+  border-radius: 0 6px 6px 0;
+}
+.stat.red { border-left-color: var(--red); }
+.stat.blue { border-left-color: var(--blue); }
+.stat.green { border-left-color: var(--green); }
+.stat .stat-number {
+  display: block;
+  font: 600 64px/1.05 Georgia, serif;
+  color: var(--text-strong);
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 640px) { .stat .stat-number { font-size: 44px; } }
+.stat .stat-label {
+  display: block;
+  margin-top: 0.5rem;
+  font: 15px/1.5 system-ui, sans-serif;
+  color: var(--muted);
+}
+
+/* Pair charts side-by-side on wide screens */
+.chart-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  margin: var(--gap) auto;
+}
+@media (min-width: 920px) {
+  .chart-pair { grid-template-columns: 1fr 1fr; }
+}
+/* Break out of the 720px content column on wider viewports so paired charts breathe. */
+@media (min-width: 1100px) {
+  .chart-pair {
+    width: 1080px;
+    max-width: calc(100vw - 32px);
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+  .chart-card.full {
+    width: 1080px;
+    max-width: calc(100vw - 32px);
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Scrollytelling */
+.scrolly {
+  margin: var(--gap) auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+@media (min-width: 920px) {
+  .scrolly { grid-template-columns: 1.2fr 1fr; align-items: start; }
+}
+.scrolly-chart {
+  position: sticky;
+  top: 16px;
+  align-self: start;
+}
+@media (max-width: 919px) {
+  .scrolly-chart { position: static; }
+}
+.scrolly-steps { display: flex; flex-direction: column; gap: 0.75rem; }
+.scrolly-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--border);
+  border-radius: 4px;
+  padding: 1.25rem 1.25rem;
+  transition: border-left-color 250ms ease, background 250ms ease;
+}
+.scrolly-step.active { border-left-color: var(--amber); background: #181f29; }
+.scrolly-step h4 {
+  margin: 0 0 0.4rem;
+  font: 600 14px/1.2 system-ui, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--amber);
+}
+.scrolly-step h3 {
+  margin: 0 0 0.4rem;
+  font: 500 20px/1.2 Georgia, serif;
+  color: var(--text-strong);
+}
+.scrolly-step p {
+  margin: 0;
+  font: 15px/1.55 Georgia, serif;
+  color: var(--text);
+}
+
+/* Audio player */
+.audio-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.25rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.audio-block .audio-meta { flex: 1; }
+.audio-block .audio-title {
+  font: 600 14px/1.2 system-ui, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.3rem;
+}
+.audio-block .audio-caption {
+  font: 14px/1.4 Georgia, serif;
+  color: var(--muted);
+}
+.audio-block audio {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* Close block */
+section.close {
+  padding: 4rem 0 2rem;
+  border-top: 1px solid var(--border);
+}
+section.close p { color: var(--muted); }
+
+/* References */
+footer.refs {
+  margin-top: 4rem;
+  padding: 2.5rem 0 4rem;
+  border-top: 1px solid var(--border);
+}
+footer.refs h3 {
+  font: 12px/1 system-ui, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1.25rem;
+}
+footer.refs ul {
+  list-style: none;
+  margin: 0; padding: 0;
+  font: 14px/1.6 system-ui, sans-serif;
+  color: var(--muted);
+}
+footer.refs li { margin-bottom: 0.6rem; }
+
+/* Pull caveat note */
+.caveat {
+  font: italic 14px/1.55 Georgia, serif;
+  color: var(--muted);
+  border-left: 2px solid var(--border);
+  padding: 0.5rem 0 0.5rem 1rem;
+  margin: var(--gap) 0;
+}
+
+/* Inline numbers tabular */
+.num { font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- TEASER -->
+<!-- ============================================================ -->
+<div class="teaser" data-des="des_02">
+  <video data-des="des_02" autoplay loop muted playsinline poster="assets/teaser_hero.png">
+    <source src="assets/teaser_motion.mp4" type="video/mp4">
+    <img data-des="des_01" src="assets/teaser_hero.png" alt="A vertical stack of four industrial-era artifacts — coal-fired steam engine, oil derrick, hydroelectric turbine with solar panels and wind turbine blade, and a modern AI server rack — rising as one impossible composite against a smoky bronze sky.">
+  </video>
+  <div class="teaser-overlay"></div>
+  <div class="teaser-meta">Data Journalist Agent · Energy Revolutions</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- HEADLINE -->
+<!-- ============================================================ -->
+<div class="headline-block">
+  <div class="eyebrow">Energy &middot; Climate &middot; AI compute</div>
+  <h1>Four Revolutions, One Stack</h1>
+  <p class="subhead">Industrial revolutions don't replace fuels &mdash; they stack them. Each revolution added a new primary-energy source on top of the previous ones, leaving us in 2026 burning more coal than ever, while the fourth revolution adds AI training compute as a new 100-megawatt load.</p>
+  <p class="byline">A long-read on eight datasets &middot; 224 years &middot; 1,018 AI models</p>
+</div>
+
+<main class="content">
+
+<!-- ============================================================ -->
+<!-- edt_01: HOOK -->
+<!-- ============================================================ -->
+<section class="story" data-edt="edt_01" data-det="det_05">
+  <h2>Coal just had its biggest year ever</h2>
+
+  <p data-ana="ana_03">In 2024 the world burned more coal than in any prior year on record &mdash; <span class="num">45,851 TWh</span> of primary energy, up from a then-record <span class="num">42,016 TWh</span> in 2010. That is five times the volume burned at the supposed apex of the coal era, 1910, when coal accounted for 55% of all human energy use. Coal's share of the global mix has fallen since 1910. Its absolute volume has not.</p>
+
+  <p data-ana="ana_04" data-det="det_05">The same is true for the rest of the fossil family. Total fossil share peaked in 1973, the year of the OPEC oil shock, at <span class="num">81.6%</span> of all primary energy. In 2024 it sits at <span class="num">76.4%</span> &mdash; a drop of just over five percentage points across half a century. In the same window, absolute fossil consumption nearly tripled, from <span class="num">53,000 TWh</span> to <span class="num">142,000 TWh</span> per year.</p>
+
+  <p>The mental model where each industrial revolution "switched" the world to a cleaner fuel is wrong. The dataset behind this piece &mdash; eight files curated from Our World in Data, Epoch AI, the Bank of England, and the Maddison Project &mdash; tells a different story: every revolution added a fuel without retiring the previous one.</p>
+
+  <!-- Stat callout des_04 -->
+  <div class="stat" data-des="des_04" data-ana="ana_03">
+    <span class="stat-number num">45,851 TWh</span>
+    <span class="stat-label">world coal consumption, 2024 &mdash; five times the volume of 1910 (9,136 TWh), when coal supposedly peaked.</span>
+  </div>
+
+  <!-- Chart des_03: Stacked area energy mix -->
+  <div class="chart-card full" data-des="des_03" data-ana="ana_01">
+    <div id="chart-des_03" class="chart-mount"></div>
+    <div class="chart-caption">Global primary energy by source, TWh per year, 1800-2024. OWID substitution-method accounting. Each band stacks on top of the previous; the total height is world primary-energy supply.</div>
+  </div>
+
+  <p class="caveat">Numbers use Our World in Data's substitution-method primary energy: renewables and nuclear electricity are scaled up by a thermal-efficiency factor. Under the IEA/EIA physical-content convention, the renewable share would look proportionally smaller.</p>
+</section>
+
+<!-- ============================================================ -->
+<!-- edt_02: ORIGIN -->
+<!-- ============================================================ -->
+<section class="story" data-edt="edt_02" data-det="det_01,det_10">
+  <h2>The first revolution had a 300-year run-up</h2>
+
+  <p data-ana="ana_16" data-det="det_10">English coal output grew <span class="num">48-fold</span> between 1508 and 1800 &mdash; most of it before James Watt's improved steam engine reached commercial scale in 1776. The Bank of England's "Millennium of Macroeconomic Data" series, which extends back to the 13th century, shows the index rising from 8.8 (1508) to 100 (1700) to 421 (1800). The 16th- and 17th-century jumps came from domestic heating, brewing, salt-boiling, and iron-smelting demand that justified building the Newcastle coastal coal trade out of nothing.</p>
+
+  <p data-ana="ana_16" data-det="det_01">Watt's engine then layered on another 4.2x in the 18th century and a further 4.5x in the first half of the 19th. The point is not that the engine didn't matter &mdash; it mattered enormously &mdash; but that it accelerated a fuel transition that had already been running for two centuries. The first industrial revolution had a long, slow ramp behind it.</p>
+
+  <!-- Chart des_05: English coal log line -->
+  <div class="chart-card" data-des="des_05" data-ana="ana_16">
+    <div id="chart-des_05" class="chart-mount"></div>
+    <div class="chart-caption">English coal output, BoE composite index (1700 = 100), 1508-1870. Log scale. Dashed line marks James Watt's commercial steam engine (1776) &mdash; visibly placed deep into a curve that had been climbing for over two centuries.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- edt_03: EACH REVOLUTION HAD ITS OWN FUEL -->
+<!-- ============================================================ -->
+<section class="story" data-edt="edt_03" data-det="det_01,det_02,det_03,det_04">
+  <h2>Each revolution had its own new fuel</h2>
+
+  <p data-ana="ana_02" data-det="det_01">The OWID global-energy file dates each fuel's first non-zero year. Coal had already been in the record from 1800; oil enters in 1870, just as the second industrial revolution begins. Natural gas and hydropower both enter in 1890 &mdash; by the time Edison's grid was wired up, three new primary-energy sources were already in the global mix.</p>
+
+  <p data-ana="ana_02" data-det="det_03">The third revolution's fuels show up clustered at 1965: nuclear (<span class="num">71 TWh</span> that year, eleven years after Obninsk's grid connection), along with modern biofuels and other renewables. Wind crosses the threshold in 1978, solar in 1983 &mdash; both starting at essentially zero. The fourth revolution's fuels are wind, solar, and the AI-compute electricity demand they are racing to feed.</p>
+
+  <!-- Interactive scrollytelling des_06 -->
+  <div class="interactive-container" data-des="des_06" data-ana="ana_01,ana_02">
+    <div class="scrolly">
+      <div class="scrolly-chart">
+        <div class="chart-card" id="scrolly-chart-card">
+          <div id="chart-des_06" class="chart-mount"></div>
+          <div class="chart-caption" id="scrolly-caption">Scroll the steps on the right to walk through each revolution's signature fuel.</div>
+        </div>
+      </div>
+      <div class="scrolly-steps">
+        <div class="scrolly-step" data-step="0" data-revolution="1st">
+          <h4>1st &middot; 1760-1840</h4>
+          <h3>Coal &middot; steam</h3>
+          <p>Coal climbs from 97 TWh (1800) to dominant by 1900. Britain's steam-and-mechanised-textile boom, with the BoE coal index already 48x its 1508 level by the time Watt's engine reaches commercial scale.</p>
+        </div>
+        <div class="scrolly-step" data-step="1" data-revolution="2nd">
+          <h4>2nd &middot; 1870-1914</h4>
+          <h3>Oil + electricity</h3>
+          <p>Oil first appears in 1870, hydropower in 1890. Internal combustion, Bessemer steel, and the electric grid. Per-capita energy demand begins its modern climb in the industrialising world.</p>
+        </div>
+        <div class="scrolly-step" data-step="2" data-revolution="3rd">
+          <h4>3rd &middot; 1950-2000</h4>
+          <h3>Natural gas + nuclear</h3>
+          <p>Obninsk goes critical in 1954; commercial reactors follow at Shippingport in 1957. Natural gas becomes the fastest-growing fossil fuel. Moore's Law starts the compute-density curve that will define the next revolution.</p>
+        </div>
+        <div class="scrolly-step" data-step="3" data-revolution="4th">
+          <h4>4th &middot; 2010-present</h4>
+          <h3>Solar + wind + AI compute</h3>
+          <p>Renewables go from 0.65% of primary energy (2010) to 6.05% (2024). Frontier AI training compute doubles every 5.7 months. The new fuel question is whether the grid can build out fast enough.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- edt_04: FOSSIL NEVER LOST SHARE -->
+<!-- ============================================================ -->
+<section class="story" data-edt="edt_04" data-det="det_05">
+  <h2>How fossil never really lost share</h2>
+
+  <p data-ana="ana_04" data-det="det_05">Vaclav Smil has been arguing for forty years that energy transitions take decades &mdash; that new sources reach a few percent of the market within a generation, but only displace incumbents over the next two or three. The post-1973 fossil-share trajectory is the cleanest expression of his thesis. Down from <span class="num">81.6%</span> to <span class="num">76.4%</span> in 51 years is real, but it is gentle.</p>
+
+  <p data-ana="ana_03">Inside the fossil block, coal lost share to oil and gas, but kept growing in absolute terms. Coal at 2024 = <span class="num">24.6%</span> of primary energy, down from 55% in 1910 &mdash; yet 5x the volume burned in 1910. Oil went from 6 TWh in 1870 to <span class="num">55,292 TWh</span> in 2024. Natural gas, the supposed transition fuel, sits at <span class="num">41,278 TWh</span> and is still climbing. Each one displaced the rest in share only because the pie kept getting bigger.</p>
+
+  <!-- Chart des_07: Dual axis fossil -->
+  <div class="chart-card" data-des="des_07" data-ana="ana_04">
+    <div id="chart-des_07" class="chart-mount"></div>
+    <div class="chart-caption">Total fossil consumption (orange line, left axis, TWh) vs total fossil share of primary energy (blue line, right axis, %). The volume rises relentlessly; the share peaks in 1973 and barely descends.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- edt_05: CO2 RECEIPT -->
+<!-- ============================================================ -->
+<section class="story" data-edt="edt_05" data-det="det_05,det_08">
+  <h2>The CO<sub>2</sub> receipt</h2>
+
+  <p data-ana="ana_06">Annual world CO<sub>2</sub> emissions in 1750 were <span class="num">9.3 million tonnes</span>, almost entirely from English coal. In 2024 they were <span class="num">38.6 billion tonnes</span> &mdash; a multiplier of <span class="num">4,148x</span>. Every kink in the global energy mix shows up on the CO<sub>2</sub> curve, and only three modest declines are visible across the 274-year record: the 2008-09 financial crisis, a 2014-16 Chinese coal slowdown, and the pandemic dip in 2020. None of the nominal energy transitions &mdash; the rise of nuclear, the post-2010 renewables takeoff &mdash; register as a break.</p>
+
+  <p data-ana="ana_07">The intensity number does, slightly. Tonnes of CO<sub>2</sub> per TWh of non-biomass primary energy have fallen from <span class="num">345,954</span> in 1850 to <span class="num">220,221</span> in 2024 &mdash; about a 36% decline over 174 years, or 0.3% per year. Oil and gas are cleaner than coal, and the renewables wedge is effectively zero. But the rate of intensity decline is far slower than what a true energy transition would require: getting the curve to zero needs either a 95%+ intensity cut or an absolute contraction of fossil volume, and the 21st century has so far delivered neither.</p>
+
+  <p data-ana="ana_08">Cumulative responsibility for those <span class="num">1.8 trillion tonnes</span> of country-attributed CO<sub>2</sub> is even more concentrated than current flows suggest. The United States alone is <span class="num">24.1%</span> of the historical total; China is <span class="num">15.8%</span>, despite producing more annually today than the US ever has. The next tier &mdash; Russia, Germany, the UK, Japan &mdash; are all early-industrial economies whose 19th- and 20th-century emissions still dominate. India is the world's third-largest current emitter but only seventh cumulatively, because its industrial era started so recently.</p>
+
+  <!-- Chart des_08: World CO2 1750-2024 -->
+  <div class="chart-card" data-des="des_08" data-ana="ana_06">
+    <div id="chart-des_08" class="chart-mount"></div>
+    <div class="chart-caption">World annual CO<sub>2</sub> emissions, Gt/year, 1750-2024. Shaded vertical bands mark the four industrial revolutions. The curve does not break at any of them.</div>
+  </div>
+
+  <!-- Chart des_09: Top emitters bar -->
+  <div class="chart-card" data-des="des_09" data-ana="ana_08">
+    <div id="chart-des_09" class="chart-mount"></div>
+    <div class="chart-caption">Top 15 cumulative CO<sub>2</sub> emitters, 1750-2024, gigatonnes. Together they account for 76.7% of all country-attributed CO<sub>2</sub>.</div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- edt_06: RENEWABLES + WORLD WANTS MORE -->
+<!-- ============================================================ -->
+<section class="story" data-edt="edt_06" data-det="det_04">
+  <h2>Renewables are real, but the world wants more of everything</h2>
+
+  <p data-ana="ana_05" data-det="det_04">Solar and wind together produced <span class="num">11 TWh</span> of primary energy in 1990 &mdash; essentially a rounding error. In 2024 they produced <span class="num">11,275 TWh</span>, a thousand-fold increase across 34 years. The doubling has not slowed: 990 TWh (2010), 2,755 TWh (2015), 6,057 TWh (2020), 11,275 TWh (2024). Solar caught wind in 2024 and is now the world's fastest-deploying source of new electricity generation.</p>
+
+  <p data-ana="ana_09">But renewables are not the only thing growing. Per-capita energy demand is climbing almost everywhere outside the United States and Western Europe. China went from <span class="num">2,124 kWh</span> per person in 1965 to <span class="num">34,514</span> in 2024 &mdash; sixteen-fold growth, narrowly crossing the EU average for the first time. India is at <span class="num">7,813 kWh</span> per person, less than a quarter of the EU level. Africa has barely moved, from <span class="num">2,228</span> to <span class="num">4,055 kWh</span> per person in 60 years.</p>
+
+  <p data-ana="ana_09">The benchmark to keep in mind: US per-capita energy in 1965 was <span class="num">73,802 kWh</span>. China today consumes <span class="num">47%</span> of that. India 11%. Africa 5%. If the rest of the world reaches even half the US-1965 level by 2050, total global energy demand needs to roughly double again &mdash; on top of the renewables buildout. The IEA's most optimistic Renewables 2024 forecast has wind and solar PV reaching 30% of electricity generation by 2030. Electricity is roughly a quarter of total energy. The math is tight.</p>
+
+  <div class="chart-pair">
+    <div class="chart-card" data-des="des_10" data-ana="ana_05">
+      <div id="chart-des_10" class="chart-mount"></div>
+      <div class="chart-caption">Solar and wind primary-energy contribution, TWh per year, 1990-2024.</div>
+    </div>
+    <div class="chart-card" data-des="des_11" data-ana="ana_09">
+      <div id="chart-des_11" class="chart-mount"></div>
+      <div class="chart-caption">Per-capita primary-energy consumption, kWh per capita per year, 1965-2024. Click an entity name in the legend to isolate.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- edt_07: AI COMPUTE IS NEW FUEL DEMAND -->
+<!-- ============================================================ -->
+<section class="story" data-edt="edt_07" data-det="det_06,det_11">
+  <h2>AI compute is the new fuel demand</h2>
+
+  <p data-ana="ana_12" data-det="det_06">Frontier AI training compute doubled every <span class="num">19.7 months</span> from the start of machine learning in 1950 through 2009. From 2010 onwards, the doubling time collapsed to <span class="num">5.7 months</span> &mdash; a <span class="num">3.4x</span> acceleration that lines up almost exactly with Epoch AI's published headline that post-2010 compute is doubling every six months. The 17 years since 2010 contain ten orders of magnitude of growth: the maximum-compute model in 2010 used 5.4&times;10<sup>16</sup> FLOP. In 2025 it was <span class="num">5&times;10<sup>26</sup> FLOP</span> &mdash; Grok 4, from xAI.</p>
+
+  <p data-ana="ana_11">The median model has tracked along: from 1&times;10<sup>16</sup> FLOP in 2010 to 3.0&times;10<sup>24</sup> FLOP in 2024, a hundred-million-fold increase in fourteen years. This is the empirical signature of the fourth industrial revolution as a compute revolution, distinct from but parallel to the renewables buildout. It is the most dramatic single-decade growth curve of any energy-consuming workload in human history.</p>
+
+  <p data-ana="ana_15" data-det="det_11">Where is the compute coming from? Not, mostly, from the chips themselves. Moore's Law &mdash; Intel 4004 to today's 58-billion-transistor chips, a <span class="num">25-million-fold</span> density gain across 50 years &mdash; slowed to a <span class="num">26.5-month</span> doubling time after 2010, a modest deceleration from the prior <span class="num">23.5 months</span>. The post-2010 compute curve is roughly five times steeper than the per-chip transistor curve, which means the gap is being closed by parallelism and runtime: more chips deployed per training run, and longer runs.</p>
+
+  <!-- Stat callout des_14 -->
+  <div class="stat red" data-des="des_14" data-ana="ana_12">
+    <span class="stat-number num">5.7 months</span>
+    <span class="stat-label">post-2010 AI-compute doubling time &mdash; down from 19.7 months pre-2010 (3.4x acceleration). Moore's Law per-chip transistor doubling: 26.5 months.</span>
+  </div>
+
+  <div class="chart-pair">
+    <div class="chart-card" data-des="des_12" data-ana="ana_11,ana_12">
+      <div id="chart-des_12" class="chart-mount"></div>
+      <div class="chart-caption">AI training compute (FLOP, log scale) by publication year. Yellow points: maximum per year. Grey points: median per year. Trend lines show the pre/post-2010 doubling-time break.</div>
+    </div>
+    <div class="chart-card" data-des="des_13" data-ana="ana_15">
+      <div id="chart-des_13" class="chart-mount"></div>
+      <div class="chart-caption">Transistors per microprocessor, 1971-2021 (log scale). Selected named landmark chips from the OWID/Karl Rupp series.</div>
+    </div>
+  </div>
+
+  <!-- Audio des_15 -->
+  <div class="audio-block audio-container" data-des="des_15" data-ana="ana_12">
+    <div class="audio-meta">
+      <div class="audio-title">Hear the acceleration</div>
+      <div class="audio-caption">30 seconds. Opens as a slow industrial heartbeat (the pre-2010 19.7-month cadence) and accelerates into a frantic rapid pulse (the post-2010 5.7-month cadence). The cadence-switch moment is roughly aligned with 2010 on the chart above.</div>
+      <audio data-des="des_15" controls preload="metadata" src="assets/compute_pulse.mp3"></audio>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- edt_08: TRAINING RUN = TOWN POWER -->
+<!-- ============================================================ -->
+<section class="story" data-edt="edt_08" data-det="det_07">
+  <h2>A single training run draws as much power as a town</h2>
+
+  <p data-ana="ana_14">More chips and longer runs convert directly to more electricity. Maximum recorded training power draw for an AI model grew from <span class="num">2.1 kW</span> in 2015 (small academic experiments) to <span class="num">109.9 MW</span> in 2025. That is roughly a tenfold increase every four years, or doubling annually. 110 MW sustained for weeks or months is in the same league as a steel mill or a mid-sized data center, but concentrated on a single workload.</p>
+
+  <p data-ana="ana_13">The 110 MW number belongs to a specific model: Grok 3 from xAI, published 17 February 2025, at <span class="num">3.5&times;10<sup>26</sup> FLOP</span>. The other 100+ MW-scale runs in the database &mdash; Llama 4 Behemoth (44 MW), Gemini 1.0 Ultra (38 MW), Llama 3.1-405B (23 MW), GPT-4 (20 MW) &mdash; sit just below it. All are from the last three years. The very top of the compute table &mdash; Grok 4, GPT-4.5, Grok 3, GPT-5 &mdash; collectively burned roughly <span class="num">10,000 times</span> the training compute of the original GPT-4.</p>
+
+  <p data-ana="ana_13" data-det="det_07">The IEA's 2025 Energy and AI report projects global data-centre electricity demand growing from <span class="num">~415 TWh</span> in 2024 to <span class="num">~945 TWh</span> by 2030 &mdash; from 1.5% of world electricity to just under 3%, in six years. Hyperscale AI campuses now routinely contract for 100 MW+ interconnections, with some planned at gigawatt scale. Most regional grids cannot supply this without 5-10 years of transmission upgrades that have not yet been built.</p>
+
+  <div class="chart-pair">
+    <div class="chart-card" data-des="des_16" data-ana="ana_14">
+      <div id="chart-des_16" class="chart-mount"></div>
+      <div class="chart-caption">Maximum recorded training power draw per year, watts (log scale). Grok 3 highlighted at 109.9 MW (2025).</div>
+    </div>
+    <div class="chart-card" data-des="des_17" data-ana="ana_13">
+      <div id="chart-des_17" class="chart-mount"></div>
+      <div class="chart-caption">Top 15 frontier AI models by training compute, FLOP (log scale). Bar color indicates organization.</div>
+    </div>
+  </div>
+
+  <div class="chart-pair">
+    <div class="stat red" data-des="des_18" data-ana="ana_13">
+      <span class="stat-number num">110 MW</span>
+      <span class="stat-label">peak training-run power draw, 2025 (Grok 3) &mdash; sustained for weeks, that is the steady electricity demand of a town of about 80,000 people.</span>
+    </div>
+    <div class="stat blue" data-des="des_19" data-ana="ana_13">
+      <span class="stat-number num">945 TWh</span>
+      <span class="stat-label">projected global data-centre electricity demand by 2030 (IEA Energy and AI 2025), up from 415 TWh in 2024 &mdash; growing 4x faster than the rest of the grid.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- edt_09: CLOSE -->
+<!-- ============================================================ -->
+<section class="story close" data-edt="edt_09" data-det="det_05">
+  <h2>Where the four revolutions leave us</h2>
+
+  <p>Each industrial revolution found a new fuel, scaled it, and left the previous ones in place. Coal did not retire when oil arrived. Oil did not retire when gas arrived. None of them retired when nuclear, solar, or wind arrived. The fourth industrial revolution is no different. Its signature fuel is electricity-on-demand for AI training compute, and the grid is being asked to build out for that workload at the same time it is being asked to absorb a renewables wedge that is already growing as fast as anything in industrial history.</p>
+
+  <p data-det="det_05">Smil's old observation holds. The wood-to-coal-to-oil-to-gas transition took more than a century. Solar and wind have done roughly a thousand-fold expansion in 34 years and now serve 6% of primary energy. AI training compute is doubling every 5.7 months. These three curves are not parallel &mdash; they are running on entirely different clocks. The interesting question for the next ten years is whether the build-out clock can outrun the demand clock.</p>
+
+  <p>What this dataset cannot answer is whether the answer is yes. It can only show what the stack looks like so far: four revolutions, six primary fuels still in use, 76% fossil, 4,148x the CO<sub>2</sub> of 1750, and a new training run starting somewhere right now at 100-plus megawatts.</p>
+</section>
+
+</main>
+
+<!-- ============================================================ -->
+<!-- REFERENCES -->
+<!-- ============================================================ -->
+<footer class="content refs">
+  <h3>Data sources &amp; references</h3>
+  <ul>
+    <li><strong>Global energy by source, CO<sub>2</sub>, per-capita energy, GDP per capita, population</strong> &mdash; <a href="https://ourworldindata.org/">Our World in Data</a>, CC BY 4.0. Upstream: Smil (2017) <em>Energy Transitions</em>, BP/EI Statistical Review, Ember, Global Carbon Project, Maddison Project Database 2023.</li>
+    <li><strong>Notable AI models (1,018 entries, 1950-2026)</strong> &mdash; <a href="https://epoch.ai/data/notable-ai-models">Epoch AI Notable Models</a>, CC BY 4.0.</li>
+    <li><strong>Transistors per microprocessor</strong> &mdash; OWID / Karl Rupp microprocessor trend data, CC BY 4.0.</li>
+    <li><strong>English industrial production 1270-1870</strong> &mdash; <a href="https://www.bankofengland.co.uk/statistics/research-datasets">Bank of England, A Millennium of Macroeconomic Data</a>, Open Government Licence. Composite from Broadberry, Campbell et al. (2015).</li>
+    <li><strong>GDP per capita 1 AD-2022</strong> &mdash; <a href="https://www.rug.nl/ggdc/historicaldevelopment/maddison/releases/maddison-project-database-2023">Maddison Project Database 2023</a>, University of Groningen.</li>
+    <li><strong>Doubling-time benchmark</strong> &mdash; <a href="https://epoch.ai/data-insights/compute-trend-post-2010">Epoch AI &mdash; training compute doubling every six months</a>.</li>
+    <li><strong>Data-centre electricity forecast</strong> &mdash; <a href="https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai">IEA Energy and AI (2025)</a>.</li>
+    <li><strong>Substitution vs physical-content primary energy</strong> &mdash; <a href="https://ourworldindata.org/energy-substitution-method">Our World in Data &mdash; direct vs substituted primary energy</a>.</li>
+    <li><strong>Visualisation</strong> &mdash; Vega-Lite 5.16, Vega 5.25, Vega-Embed 6.24. Teaser image generated with <code>openai/gpt-5.4-image-2</code>; teaser motion with <code>google/veo-3.1-fast</code>; audio pulse with <code>google/lyria-3-clip-preview</code> via OpenRouter.</li>
+  </ul>
+</footer>
+
+<!-- ============================================================ -->
+<!-- VEGA-LITE CHART RENDERERS -->
+<!-- ============================================================ -->
+<script>
+// Helper to convert {columns, rows} into Vega-Lite-friendly array of objects.
+function toRecords(columns, rows) {
+  return rows.map(r => Object.fromEntries(columns.map((c, i) => [c, r[i]])));
+}
+
+// Common dark theme additions
+const DARK = {
+  background: "transparent",
+  view: {stroke: null},
+  axis: {
+    domainColor: "#3a4250",
+    tickColor: "#3a4250",
+    gridColor: "#1f262d",
+    labelColor: "#8a9098",
+    titleColor: "#bbb",
+    labelFont: "system-ui, sans-serif",
+    titleFont: "system-ui, sans-serif",
+    labelFontSize: 11,
+    titleFontSize: 12,
+    titlePadding: 8
+  },
+  legend: {
+    labelColor: "#bbb",
+    titleColor: "#ddd",
+    labelFont: "system-ui, sans-serif",
+    titleFont: "system-ui, sans-serif"
+  },
+  title: {color: "#ddd", font: "system-ui, sans-serif"}
+};
+
+// ----- ana_01 data (stacked area, full series) -----
+const ana01_cols = ["Year","Traditional biomass","Coal","Oil","Natural gas","Hydropower","Nuclear","Solar","Wind","Modern biofuels","Other renewables"];
+const ana01_rows = [
+  [1800,5556,97,0,0,0,0,0,0,0,0],[1810,5833,128,0,0,0,0,0,0,0,0],[1820,6111,153,0,0,0,0,0,0,0,0],
+  [1830,6389,222,0,0,0,0,0,0,0,0],[1840,6667,339,0,0,0,0,0,0,0,0],[1850,7222,569,0,0,0,0,0,0,0,0],
+  [1860,7222,925,0,0,0,0,0,0,0,0],[1870,7222,1500,6,0,0,0,0,0,0,0],[1880,6667,2469,47,0,0,0,0,0,0,0],
+  [1890,6111,3963,117,33,39,0,0,0,0,0],[1900,6111,5728,181,64,47,0,0,0,0,0],
+  [1910,6111,9136,408,156,75,0,0,0,0,0],[1920,6111,10841,956,217,178,0,0,0,0,0],
+  [1930,6667,10803,1869,547,261,0,0,0,0,0],[1940,7222,11894,3019,911,358,0,0,0,0,0],
+  [1950,7500,12603,5444,2092,925,0,0,0,0,0],[1960,8333,15457,12389,4747,1853,27,0,0,0,0],
+  [1965,8889,16031,16711,6517,2493,71,0,0,9,56],[1970,9444,17087,26685,9615,3263,219,0,0,14,80],
+  [1975,10000,18108,31280,12303,4360,925,0,0,32,116],[1980,10556,23316,34825,15212,5063,2008,0,0,46,173],
+  [1985,10833,26221,32890,17068,5773,4244,0.1,0.2,64,245],[1990,11111,25929,37907,19481,5996,5557,1.1,10.1,107,366],
+  [1995,11667,25596,39855,21035,7060,6651,1.6,22.5,119,460],[2000,12500,27456,43017,23994,7352,7169,2.9,87.2,133,578],
+  [2005,12222,35064,46225,26913,8240,7228,11.2,281.3,252,689],[2010,11667,42016,48193,31593,8933,7209,88,902,679,1182],
+  [2015,11667,43824,51242,33875,9697,6890,650,2106,941,1614],[2020,11667,41183,49737,38974,10473,6770,2117,3940,1162,2105],
+  [2021,11111,44114,52823,39872,10395,7032,2641,4521,1268,2192],[2022,11111,44927,53562,40060,10651,6583,3250,5185,1193,2379],
+  [2023,11111,45319,54839,40151,10392,6677,4027,5665,1319,2411],[2024,11111,45851,55292,41278,10861,6872,5151,6124,1367,2476]
+];
+const ana01_data = toRecords(ana01_cols, ana01_rows);
+const FUEL_ORDER = ["Traditional biomass","Coal","Oil","Natural gas","Hydropower","Nuclear","Solar","Wind","Modern biofuels","Other renewables"];
+const FUEL_COLORS = ["#7a5c3a","#2b2b2b","#5b3a29","#b86b3a","#3b6f8c","#a04ba0","#e3b23c","#7fb069","#9eaa5b","#5fa8a8"];
+
+const spec_des03 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 440,
+  data: {values: ana01_data},
+  transform: [
+    {fold: FUEL_ORDER, as: ["fuel","TWh"]}
+  ],
+  mark: {type: "area", interpolate: "monotone"},
+  encoding: {
+    x: {field: "Year", type: "quantitative", scale: {nice: false}, axis: {format: "d", tickCount: 12, title: null}},
+    y: {field: "TWh", type: "quantitative", aggregate: "sum", stack: "zero", title: "Primary energy (TWh/year)", axis: {format: "~s"}},
+    color: {field: "fuel", type: "nominal", scale: {domain: FUEL_ORDER, range: FUEL_COLORS}, legend: {title: null, orient: "top", columns: 5, labelLimit: 140, symbolSize: 100}},
+    order: {field: "fuel", sort: FUEL_ORDER},
+    tooltip: [
+      {field: "Year", type: "quantitative", format: "d"},
+      {field: "fuel", type: "nominal", title: "Source"},
+      {field: "TWh", type: "quantitative", format: ",.0f", title: "TWh"}
+    ]
+  }
+};
+
+// ----- des_06 stacked area with revolution bands -----
+const REV_BANDS = [
+  {start: 1760, end: 1840, name: "1st"},
+  {start: 1870, end: 1914, name: "2nd"},
+  {start: 1950, end: 2000, name: "3rd"},
+  {start: 2010, end: 2024, name: "4th"}
+];
+function specScrolly(activeIdx) {
+  const bandData = REV_BANDS.map((b, i) => ({...b, active: i === activeIdx ? 1 : 0}));
+  return {
+    $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+    config: DARK,
+    width: "container",
+    height: 380,
+    layer: [
+      {
+        data: {values: bandData},
+        mark: {type: "rect", opacity: 0.18},
+        encoding: {
+          x: {field: "start", type: "quantitative", scale: {domain: [1800, 2024], nice: false}},
+          x2: {field: "end"},
+          color: {condition: {test: "datum.active == 1", value: "#e3b23c"}, value: "#444b58"},
+          opacity: {condition: {test: "datum.active == 1", value: 0.35}, value: 0.10}
+        }
+      },
+      {
+        data: {values: ana01_data},
+        transform: [{fold: FUEL_ORDER, as: ["fuel","TWh"]}],
+        mark: {type: "area", interpolate: "monotone"},
+        encoding: {
+          x: {field: "Year", type: "quantitative", axis: {format: "d", tickCount: 10, title: null}, scale: {nice: false, domain: [1800, 2024]}},
+          y: {field: "TWh", type: "quantitative", aggregate: "sum", stack: "zero", title: "TWh/year", axis: {format: "~s"}},
+          color: {field: "fuel", type: "nominal", scale: {domain: FUEL_ORDER, range: FUEL_COLORS}, legend: null},
+          order: {field: "fuel", sort: FUEL_ORDER},
+          tooltip: [{field: "Year", type: "quantitative", format: "d"}, {field: "fuel"}, {field: "TWh", format: ",.0f"}]
+        }
+      },
+      {
+        data: {values: bandData},
+        mark: {type: "text", dy: -8, fontSize: 11, fontWeight: "bold", color: "#e3b23c"},
+        encoding: {
+          x: {field: "start", type: "quantitative"},
+          y: {value: 8},
+          text: {condition: {test: "datum.active == 1", field: "name"}, value: ""}
+        }
+      }
+    ]
+  };
+}
+
+// ----- ana_16 English coal -----
+const ana16_rows = [[1508,8.76],[1525,15.84],[1550,38.08],[1575,16.89],[1600,43.79],[1625,62.19],[1650,71.00],[1675,101.33],[1700,100.00],[1725,137.50],[1750,137.50],[1775,219.42],[1800,421.28],[1825,806.15],[1850,1912.75],[1870,3774.80]];
+const ana16_data = toRecords(["Year","coal_index"], ana16_rows);
+const spec_des05 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 320,
+  data: {values: ana16_data},
+  layer: [
+    {
+      mark: {type: "line", color: "#d9a05b", strokeWidth: 2.5, interpolate: "monotone"},
+      encoding: {
+        x: {field: "Year", type: "quantitative", scale: {domain: [1500, 1880], nice: false}, axis: {format: "d", tickCount: 8, title: null}},
+        y: {field: "coal_index", type: "quantitative", scale: {type: "log", base: 10}, title: "English coal output, BoE index (1700 = 100)", axis: {format: ",.0f"}},
+        tooltip: [{field: "Year", format: "d"}, {field: "coal_index", title: "Coal index", format: ",.1f"}]
+      }
+    },
+    {
+      mark: {type: "circle", color: "#e3b23c", size: 60},
+      data: {values: ana16_data},
+      encoding: {
+        x: {field: "Year", type: "quantitative"},
+        y: {field: "coal_index", type: "quantitative"},
+        opacity: {value: 0.6}
+      }
+    },
+    {
+      mark: {type: "rule", color: "#e3b23c", strokeDash: [4, 4]},
+      data: {values: [{Year: 1776}]},
+      encoding: {x: {field: "Year", type: "quantitative"}}
+    },
+    {
+      mark: {type: "text", color: "#e3b23c", fontSize: 11, dx: 6, align: "left", baseline: "top"},
+      data: {values: [{Year: 1776, label: "Watt's engine commercialised", coal_index: 5000}]},
+      encoding: {
+        x: {field: "Year", type: "quantitative"},
+        y: {field: "coal_index", type: "quantitative"},
+        text: {field: "label"}
+      }
+    }
+  ]
+};
+
+// ----- ana_04 Fossil dual-axis -----
+const ana04_rows = [[1800,97,1.72],[1850,569,7.30],[1900,5973,49.24],[1950,20139,70.50],[1970,53387,80.39],[1973,64200,81.63],[1990,83317,78.26],[2000,94467,77.25],[2010,121801,79.89],[2024,142421,76.41]];
+const ana04_data = toRecords(["Year","Fossil_TWh","Fossil_share_pct"], ana04_rows);
+const spec_des07 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 340,
+  data: {values: ana04_data},
+  resolve: {scale: {y: "independent"}},
+  layer: [
+    {
+      mark: {type: "line", color: "#b86b3a", strokeWidth: 2.5, point: {color: "#b86b3a", size: 50}},
+      encoding: {
+        x: {field: "Year", type: "quantitative", scale: {nice: false}, axis: {format: "d", tickCount: 10, title: null}},
+        y: {field: "Fossil_TWh", type: "quantitative", title: "Absolute fossil TWh/year", axis: {format: ",.0f", titleColor: "#b86b3a"}},
+        tooltip: [{field: "Year", format: "d"}, {field: "Fossil_TWh", format: ",.0f", title: "Fossil TWh"}, {field: "Fossil_share_pct", format: ".2f", title: "Share %"}]
+      }
+    },
+    {
+      mark: {type: "line", color: "#6fa8c8", strokeWidth: 2.5, strokeDash: [5,3], point: {color: "#6fa8c8", size: 50}},
+      encoding: {
+        x: {field: "Year", type: "quantitative"},
+        y: {field: "Fossil_share_pct", type: "quantitative", title: "Fossil share of primary energy, %", axis: {format: ".0f", titleColor: "#6fa8c8", orient: "right", domain: [0, 100]}},
+        tooltip: [{field: "Year", format: "d"}, {field: "Fossil_share_pct", format: ".2f", title: "Share %"}]
+      }
+    },
+    {
+      mark: {type: "rule", color: "#6fa8c8", strokeDash: [3,3], opacity: 0.5},
+      data: {values: [{Year: 1973}]},
+      encoding: {x: {field: "Year", type: "quantitative"}}
+    },
+    {
+      mark: {type: "text", color: "#6fa8c8", fontSize: 11, dx: 6, align: "left"},
+      data: {values: [{Year: 1973, label: "share peak 81.63% (1973)"}]},
+      encoding: {x: {field: "Year"}, y: {value: 30}, text: {field: "label"}}
+    }
+  ]
+};
+
+// ----- ana_06 World CO2 -----
+const ana06_rows = [[1750,0.009],[1800,0.033],[1850,0.197],[1870,0.502],[1900,1.963],[1920,3.658],[1950,5.930],[1960,9.413],[1970,14.899],[1980,19.476],[1990,22.732],[2000,25.511],[2010,33.318],[2020,35.265],[2024,38.599]];
+const ana06_data = toRecords(["Year","CO2_Gt"], ana06_rows);
+const spec_des08 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 340,
+  layer: [
+    {
+      data: {values: REV_BANDS},
+      mark: {type: "rect", opacity: 0.10, color: "#888"},
+      encoding: {
+        x: {field: "start", type: "quantitative", scale: {domain: [1750, 2024], nice: false}},
+        x2: {field: "end"}
+      }
+    },
+    {
+      data: {values: REV_BANDS},
+      mark: {type: "text", color: "#888", fontSize: 11, baseline: "top", align: "left", dx: 3, dy: 3},
+      encoding: {
+        x: {field: "start", type: "quantitative"},
+        y: {value: 6},
+        text: {field: "name"}
+      }
+    },
+    {
+      data: {values: ana06_data},
+      mark: {type: "area", line: {color: "#d04a4a", strokeWidth: 2}, color: {x1: 1, y1: 1, x2: 1, y2: 0, gradient: "linear", stops: [{offset: 0, color: "#0d1116"}, {offset: 1, color: "rgba(208,74,74,0.5)"}]}},
+      encoding: {
+        x: {field: "Year", type: "quantitative", scale: {nice: false}, axis: {format: "d", tickCount: 10, title: null}},
+        y: {field: "CO2_Gt", type: "quantitative", title: "World CO₂ emissions (Gt/year)", axis: {format: ",.1f"}},
+        tooltip: [{field: "Year", format: "d"}, {field: "CO2_Gt", title: "Gt CO2", format: ",.3f"}]
+      }
+    }
+  ]
+};
+
+// ----- ana_08 Top 15 cumulative emitters -----
+const ana08_rows = [
+  ["United States",434.9,24.12],["China",285.1,15.81],["Russia",122.8,6.81],["Germany",95.1,5.28],
+  ["United Kingdom",80.1,4.44],["Japan",69.6,3.86],["India",66.1,3.66],["France",40.0,2.22],
+  ["Canada",35.6,1.98],["Ukraine",31.2,1.73],["Poland",29.0,1.61],["Italy",26.0,1.44],
+  ["South Africa",22.8,1.27],["Mexico",22.0,1.22],["Iran",21.8,1.21]
+];
+const ana08_data = toRecords(["country","cumulative_Gt","pct_of_country_total"], ana08_rows);
+const spec_des09 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 380,
+  data: {values: ana08_data},
+  mark: {type: "bar", cornerRadiusEnd: 2},
+  encoding: {
+    y: {field: "country", type: "nominal", sort: "-x", title: null},
+    x: {field: "cumulative_Gt", type: "quantitative", title: "Cumulative CO₂ emissions, Gt (1750-2024)"},
+    color: {
+      field: "country", type: "nominal",
+      scale: {
+        domain: ["United States","China","Russia","Germany","United Kingdom","Japan","India","France","Canada","Ukraine","Poland","Italy","South Africa","Mexico","Iran"],
+        range: ["#d04a4a","#d97b4a","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378","#5a6378"]
+      },
+      legend: null
+    },
+    tooltip: [{field: "country"}, {field: "cumulative_Gt", title: "Gt", format: ",.1f"}, {field: "pct_of_country_total", title: "% of country total", format: ".2f"}]
+  }
+};
+
+// ----- ana_05 Solar + Wind area -----
+const ana05_rows = [[1990,1.1,10.1,11.2,0.01],[1995,1.6,22.5,24.1,0.02],[2000,2.9,87.2,90.2,0.07],[2005,11.2,281.3,292.5,0.21],[2010,88.3,902.1,990.4,0.65],[2015,649.5,2105.7,2755.2,1.70],[2020,2116.7,3940.2,6056.9,3.61],[2024,5150.6,6124.5,11275.0,6.05]];
+const ana05_data = toRecords(["Year","Solar_TWh","Wind_TWh","Total_TWh","Share_pct"], ana05_rows);
+const spec_des10 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 300,
+  data: {values: ana05_data},
+  transform: [{fold: ["Wind_TWh","Solar_TWh"], as: ["source","TWh"]}],
+  mark: {type: "area", interpolate: "monotone"},
+  encoding: {
+    x: {field: "Year", type: "quantitative", scale: {nice: false}, axis: {format: "d", tickCount: 8, title: null}},
+    y: {field: "TWh", type: "quantitative", aggregate: "sum", stack: "zero", title: "Solar + Wind, TWh/year"},
+    color: {field: "source", type: "nominal", scale: {domain: ["Wind_TWh","Solar_TWh"], range: ["#7fb069","#e3b23c"]}, legend: {title: null, labelExpr: "datum.value == 'Wind_TWh' ? 'Wind' : 'Solar'", orient: "top"}},
+    order: {field: "source", sort: ["Wind_TWh","Solar_TWh"]},
+    tooltip: [{field: "Year", format: "d"}, {field: "source", title: "Source"}, {field: "TWh", format: ",.0f"}]
+  }
+};
+
+// ----- ana_09 Per-capita multi-line -----
+const ana09_rows = [
+  [1965,13003,73802,25492,2124,1264,2228],[1970,15047,86028,30680,2552,1395,2700],[1975,16091,87580,33555,3324,1564,2898],
+  [1980,17540,90281,40043,4910,1773,3506],[1985,17347,86250,39041,5847,2095,3691],[1990,18430,90069,42057,7521,2424,3866],
+  [1995,17698,91915,40780,7783,2841,3923],[2000,17891,94308,42153,9295,3521,3850],[2005,19139,91519,42876,14716,4196,4045],
+  [2010,20166,83435,41552,21498,5025,4161],[2015,19761,78815,37196,26358,6147,4072],[2020,20032,72563,35620,29096,6268,3922],
+  [2022,21076,77628,35959,31236,7057,4118],[2023,21286,76327,34828,33089,7529,4089],[2024,21654,76800,35318,34514,7813,4055]
+];
+const ana09_data = toRecords(["Year","World","United States","European Union (27)","China","India","Africa"], ana09_rows);
+const ENTITY_ORDER = ["United States","European Union (27)","China","World","India","Africa"];
+const ENTITY_COLORS = ["#d04a4a","#5b8bd9","#d97b4a","#888888","#7fb069","#a04ba0"];
+const spec_des11 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 340,
+  padding: {top: 8, right: 12, bottom: 8, left: 8},
+  data: {values: ana09_data},
+  transform: [{fold: ENTITY_ORDER, as: ["entity","kWh"]}],
+  mark: {type: "line", strokeWidth: 2, interpolate: "monotone"},
+  params: [{name: "hover_entity", select: {type: "point", fields: ["entity"], on: "mouseover", clear: "mouseout"}}],
+  encoding: {
+    x: {field: "Year", type: "quantitative", scale: {nice: false}, axis: {format: "d", tickCount: 8, title: null}},
+    y: {field: "kWh", type: "quantitative", title: "kWh per capita per year"},
+    color: {field: "entity", type: "nominal", scale: {domain: ENTITY_ORDER, range: ENTITY_COLORS}, legend: {title: null, orient: "bottom", direction: "horizontal", labelLimit: 220, symbolSize: 90, rowPadding: 4, columnPadding: 12}},
+    opacity: {condition: {param: "hover_entity", value: 1.0, empty: true}, value: 0.35},
+    tooltip: [{field: "Year", format: "d"}, {field: "entity"}, {field: "kWh", format: ",.0f"}]
+  }
+};
+
+// ----- ana_11 + ana_12 AI compute scatter + trend -----
+const ana11_rows = [
+  [1950,1,4.0e1,4.0e1],[1960,2,3.6e8,7.2e8],[1980,3,4.0e10,9.0e12],[1990,2,3.0e13,9.5e13],
+  [2000,1,1.6e14,1.6e14],[2010,5,1.0e16,5.4e16],[2012,8,1.9e17,6.0e17],[2014,14,2.7e18,3.0e20],
+  [2016,16,2.0e19,6.6e21],[2018,24,1.7e18,8.7e21],[2020,33,6.2e20,3.1e23],[2022,60,1.5e22,2.7e24],
+  [2023,65,6.3e22,5.0e25],[2024,48,3.0e24,3.8e25],[2025,38,4.1e24,5.0e26]
+];
+const ana11_data = toRecords(["Year","n_models","median_FLOP","max_FLOP"], ana11_rows);
+// Build trend-line endpoints: y = 10^(slope*Year + intercept). Use known slopes from ana_12.
+// pre-2010: slope 0.1835, post-2010: slope 0.6286. Anchor each trend at the max point of an in-era year.
+function trendPoints(slope, anchorYear, anchorMax, yrs) {
+  const intercept = Math.log10(anchorMax) - slope * anchorYear;
+  return yrs.map(y => ({Year: y, fit: Math.pow(10, slope * y + intercept)}));
+}
+const ana12_pre_trend = trendPoints(0.1835, 2009, 5.0e15, [1950, 2009]);
+const ana12_post_trend = trendPoints(0.6286, 2010, 5.4e16, [2010, 2026]);
+const spec_des12 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 400,
+  padding: {top: 32, right: 24, bottom: 8, left: 8},
+  layer: [
+    {
+      data: {values: ana11_data},
+      mark: {type: "circle", color: "#888", size: 55, opacity: 0.7},
+      encoding: {
+        x: {field: "Year", type: "quantitative", scale: {nice: false, domain: [1948, 2028]}, axis: {format: "d", title: null, tickCount: 7}},
+        y: {field: "median_FLOP", type: "quantitative", scale: {type: "log", base: 10, domain: [1, 1e27]}, title: "Training compute (FLOP, log)", axis: {format: "~s", tickCount: 6}},
+        tooltip: [{field: "Year", format: "d"}, {field: "median_FLOP", title: "Median FLOP", format: ".2e"}, {field: "n_models", title: "n models"}]
+      }
+    },
+    {
+      data: {values: ana11_data},
+      mark: {type: "circle", color: "#e3b23c", size: 100, opacity: 0.9},
+      encoding: {
+        x: {field: "Year", type: "quantitative"},
+        y: {field: "max_FLOP", type: "quantitative"},
+        tooltip: [{field: "Year", format: "d"}, {field: "max_FLOP", title: "Max FLOP", format: ".2e"}, {field: "n_models", title: "n models"}]
+      }
+    },
+    {
+      data: {values: ana12_pre_trend},
+      mark: {type: "line", color: "#5b8bd9", strokeWidth: 2, opacity: 0.6, strokeDash: [4,3]},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "fit", type: "quantitative"}}
+    },
+    {
+      data: {values: ana12_post_trend},
+      mark: {type: "line", color: "#d04a4a", strokeWidth: 2, opacity: 0.85, strokeDash: [4,3]},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "fit", type: "quantitative"}}
+    },
+    {
+      data: {values: [{Year: 2025, max_FLOP: 5e26, label: "Grok 4 (5×10²⁶ FLOP)"}]},
+      mark: {type: "text", color: "#e3b23c", fontSize: 11, dx: -8, dy: -14, align: "right", baseline: "bottom"},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "max_FLOP", type: "quantitative"}, text: {field: "label"}}
+    },
+    {
+      data: {values: [{Year: 1975, fit: 1e9, label: "pre-2010: doubling 19.7 mo"}]},
+      mark: {type: "text", color: "#5b8bd9", fontSize: 11, align: "left", baseline: "middle"},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "fit", type: "quantitative"}, text: {field: "label"}}
+    },
+    {
+      data: {values: [{Year: 2012, fit: 2e23, label: "post-2010: doubling 5.7 mo"}]},
+      mark: {type: "text", color: "#d04a4a", fontSize: 11, align: "left", baseline: "middle"},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "fit", type: "quantitative"}, text: {field: "label"}}
+    }
+  ]
+};
+
+// ----- ana_15 Moore's Law line -----
+const ana15_rows = [
+  [1971,2308],[1972,3555],[1974,6098],[1979,29164],[1982,135773],[1985,273842],[1989,1207901],
+  [1992,3105900],[1995,9646616],[1999,21673921],[2000,37180264],[2002,220673400],[2005,305052800],
+  [2008,805842200],[2009,2308241000],[2011,2600000000],[2013,5000000000],[2016,8000000000],
+  [2017,19200000000],[2018,21100000000],[2019,39500000000],[2020,39500000000],[2021,58200000000]
+];
+const ana15_data = toRecords(["Year","transistors"], ana15_rows);
+const spec_des13 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 400,
+  padding: {top: 32, right: 24, bottom: 8, left: 8},
+  data: {values: ana15_data},
+  layer: [
+    {
+      mark: {type: "line", color: "#a04ba0", strokeWidth: 2, interpolate: "monotone"},
+      encoding: {
+        x: {field: "Year", type: "quantitative", scale: {nice: false, domain: [1969, 2024]}, axis: {format: "d", title: null, tickCount: 6}},
+        y: {field: "transistors", type: "quantitative", scale: {type: "log", base: 10, domain: [1e3, 1e11]}, title: "Transistors per microprocessor (log)", axis: {format: "~s", tickCount: 6}},
+        tooltip: [{field: "Year", format: "d"}, {field: "transistors", title: "Transistors", format: ",.0f"}]
+      }
+    },
+    {
+      mark: {type: "circle", color: "#a04ba0", size: 50, opacity: 0.8},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "transistors", type: "quantitative"}}
+    },
+    {
+      data: {values: [{Year: 1972, transistors: 5e8, label: "pre-2010 doubling 23.5 mo"}]},
+      mark: {type: "text", color: "#a04ba0", fontSize: 11, align: "left", baseline: "middle"},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "transistors", type: "quantitative"}, text: {field: "label"}}
+    },
+    {
+      data: {values: [{Year: 2023, transistors: 5e6, label: "post-2010 doubling 26.5 mo"}]},
+      mark: {type: "text", color: "#a04ba0", fontSize: 11, align: "right", baseline: "middle"},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "transistors", type: "quantitative"}, text: {field: "label"}}
+    }
+  ]
+};
+
+// ----- ana_14 Training power scatter -----
+const ana14_rows = [[2015,6,285,2131],[2016,7,421,37828],[2017,5,4180,32874],[2018,11,4965,209159],[2019,16,259168,944348],[2020,20,24388,5100760],[2021,34,155652,3714163],[2022,33,205764,4198431],[2023,41,101499,38423900],[2024,26,176294,22622530],[2025,9,1398719,109948700]];
+const ana14_data = toRecords(["Year","n_models","median_W","max_W"], ana14_rows);
+const spec_des16 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 360,
+  padding: {top: 24, right: 16, bottom: 8, left: 8},
+  layer: [
+    {
+      data: {values: ana14_data},
+      mark: {type: "circle", color: "#888", size: 55, opacity: 0.7},
+      encoding: {
+        x: {field: "Year", type: "quantitative", scale: {nice: false, domain: [2014, 2026]}, axis: {format: "d", title: null, values: [2015, 2017, 2019, 2021, 2023, 2025]}},
+        y: {field: "median_W", type: "quantitative", scale: {type: "log", base: 10, domain: [100, 1e9]}, title: "Training power draw (W, log)", axis: {format: "~s", tickCount: 5}},
+        tooltip: [{field: "Year", format: "d"}, {field: "median_W", title: "Median W", format: ".2e"}, {field: "n_models", title: "n models"}]
+      }
+    },
+    {
+      data: {values: ana14_data},
+      mark: {type: "circle", color: "#d04a4a", size: 100, opacity: 0.9},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "max_W", type: "quantitative"}, tooltip: [{field: "Year", format: "d"}, {field: "max_W", title: "Max W", format: ".2e"}]}
+    },
+    {
+      data: {values: [{Year: 2025, max_W: 1.10e8, label: "Grok 3 (110 MW)"}]},
+      mark: {type: "text", color: "#d04a4a", fontSize: 11, dx: -8, dy: -14, align: "right", baseline: "bottom"},
+      encoding: {x: {field: "Year", type: "quantitative"}, y: {field: "max_W", type: "quantitative"}, text: {field: "label"}}
+    }
+  ]
+};
+
+// ----- ana_13 Frontier models bar -----
+const ana13_rows = [
+  ["Grok 4","xAI","2025-07-09",5.0e26,null],["GPT-4.5","OpenAI","2025-02-27",3.8e26,null],
+  ["Grok 3","xAI","2025-02-17",3.5e26,1.1e8],["GPT-5","OpenAI","2025-08-07",6.6e25,null],
+  ["Llama 4 Behemoth (preview)","Meta AI","2025-04-05",5.18e25,4.39e7],
+  ["Gemini 1.0 Ultra","Google DeepMind","2023-12-06",5.0e25,3.84e7],
+  ["Composer 2.5","Cursor","2026-05-18",3.87e25,null],["Llama 3.1-405B","Meta AI","2024-07-23",3.8e25,2.26e7],
+  ["Claude 3.7 Sonnet","Anthropic","2025-02-24",3.35e25,null],["Grok-2","xAI","2024-08-13",2.96e25,null],
+  ["Claude 3.5 Sonnet","Anthropic","2024-06-20",2.7e25,null],["Doubao-pro","ByteDance","2024-10-28",2.5e25,null],
+  ["Composer 2","Cursor","2026-03-19",2.32e25,null],["Mistral Large 2","Mistral AI","2024-07-24",2.13e25,null],
+  ["GPT-4 (Mar 2023)","OpenAI","2023-03-15",2.1e25,1.99e7]
+];
+const ana13_data = toRecords(["model","organization","publication_date","training_FLOP","training_power_W"], ana13_rows);
+const ORG_ORDER = ["xAI","OpenAI","Anthropic","Google DeepMind","Meta AI","Mistral AI","ByteDance","Cursor"];
+const ORG_COLORS = ["#d04a4a","#5fa8a8","#b86b3a","#5b8bd9","#7fb069","#a04ba0","#d97b4a","#9eaa5b"];
+const spec_des17 = {
+  $schema: "https://vega.github.io/schema/vega-lite/v5.json",
+  config: DARK,
+  width: "container",
+  height: 420,
+  padding: {top: 8, right: 24, bottom: 8, left: 8},
+  data: {values: ana13_data},
+  mark: {type: "bar", cornerRadiusEnd: 2},
+  encoding: {
+    y: {field: "model", type: "nominal", sort: "-x", title: null, axis: {labelLimit: 170, labelFontSize: 11}},
+    x: {field: "training_FLOP", type: "quantitative", scale: {type: "log", base: 10, domain: [1e25, 1e27]}, title: "FLOP (log)", axis: {format: "~s", tickCount: 4, values: [1e25, 3e25, 1e26, 3e26, 1e27]}},
+    x2: {datum: 1e25},
+    color: {field: "organization", type: "nominal", scale: {domain: ORG_ORDER, range: ORG_COLORS}, legend: {title: null, orient: "bottom", direction: "horizontal", labelLimit: 140, symbolSize: 80, rowPadding: 4, columnPadding: 12}},
+    tooltip: [{field: "model"}, {field: "organization", title: "Org"}, {field: "publication_date", title: "Published"}, {field: "training_FLOP", title: "FLOP", format: ".2e"}, {field: "training_power_W", title: "Power (W)", format: ".2e"}]
+  }
+};
+
+// ----- RENDER ALL CHARTS -----
+const EMBED_OPTS = {actions: false, renderer: "canvas", logLevel: "warn"};
+function renderAll() {
+  vegaEmbed("#chart-des_03", spec_des03, EMBED_OPTS);
+  vegaEmbed("#chart-des_05", spec_des05, EMBED_OPTS);
+  vegaEmbed("#chart-des_07", spec_des07, EMBED_OPTS);
+  vegaEmbed("#chart-des_08", spec_des08, EMBED_OPTS);
+  vegaEmbed("#chart-des_09", spec_des09, EMBED_OPTS);
+  vegaEmbed("#chart-des_10", spec_des10, EMBED_OPTS);
+  vegaEmbed("#chart-des_11", spec_des11, EMBED_OPTS);
+  vegaEmbed("#chart-des_12", spec_des12, EMBED_OPTS);
+  vegaEmbed("#chart-des_13", spec_des13, EMBED_OPTS);
+  vegaEmbed("#chart-des_16", spec_des16, EMBED_OPTS);
+  vegaEmbed("#chart-des_17", spec_des17, EMBED_OPTS);
+
+  // Initial scrolly chart
+  vegaEmbed("#chart-des_06", specScrolly(0), EMBED_OPTS);
+}
+
+// ----- SCROLLYTELLING (IntersectionObserver) -----
+function initScrolly() {
+  const steps = document.querySelectorAll(".scrolly-step");
+  const caption = document.getElementById("scrolly-caption");
+  const captions = [
+    "1st revolution (1760-1840): coal, steam, mechanised textiles. The first 'fuel of the future'.",
+    "2nd revolution (1870-1914): oil enters in 1870, hydropower in 1890. Bessemer steel and the electric grid.",
+    "3rd revolution (1950-2000): nuclear at Obninsk (1954) and Shippingport (1957); natural gas grows fastest among fossils.",
+    "4th revolution (2010-present): solar and wind catch up; AI training compute becomes the new heavy electricity consumer."
+  ];
+  let currentIdx = -1;
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = parseInt(e.target.dataset.step, 10);
+        if (idx === currentIdx) return;
+        currentIdx = idx;
+        steps.forEach(s => s.classList.remove("active"));
+        e.target.classList.add("active");
+        vegaEmbed("#chart-des_06", specScrolly(idx), EMBED_OPTS);
+        if (caption) caption.textContent = captions[idx];
+      }
+    });
+  }, {threshold: 0.55, rootMargin: "0px 0px -30% 0px"});
+  steps.forEach(s => obs.observe(s));
+  // Activate first step initially
+  if (steps[0]) steps[0].classList.add("active");
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderAll();
+  initScrolly();
+});
+</script>
+</body>
+</html>

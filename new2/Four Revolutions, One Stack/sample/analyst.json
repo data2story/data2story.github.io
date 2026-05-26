@@ -1,0 +1,602 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": [
+      "core__global-energy-by-source.csv",
+      "core__co2-by-country.csv",
+      "core__energy-use-per-capita.csv",
+      "core__ai-notable-models.csv",
+      "core__transistors-per-chip.csv",
+      "context__uk-industrial-production-1270-1870.csv",
+      "context__gdp-per-capita-maddison.csv",
+      "context__population-1500-now.csv"
+    ],
+    "rows": "Spine 77 (energy mix); CO2 29,384; per-capita 11,225; AI 1,018; transistors 39; UK 601; GDP 21,586; population 58,824",
+    "columns": "Spine 13; CO2 4; per-capita 4; AI 47; transistors 4; UK 14; GDP 5; population 4",
+    "what_one_row_represents": "Varies by file — primarily entity-year panel rows (Entity x Year x metric).",
+    "time_range": "1270 AD (BoE English coal) -> 2026 (Epoch AI notable models)",
+    "geographic_scope": "World aggregate is primary unit on the spine file; country-level cuts available in CO2, per-capita energy, and GDP files."
+  },
+  "items": {
+    "ana_01": {
+      "label": "Global energy mix 1800-2024 — the spine stacked-area data",
+      "content": "The core__global-energy-by-source.csv file gives the world's primary-energy supply by source from 1800 through 2024, in TWh/year on the OWID substitution-method convention. In 1800 the entire global energy supply was 5,653 TWh, of which 5,556 TWh (98.3%) was traditional biomass (wood, dung, peat) and 97 TWh (1.7%) was coal — essentially the energy mix of antiquity, with coal as a thin sliver visible mainly in Britain. By 2024 the total was 186,383 TWh — a 33-fold increase over 224 years — with traditional biomass having shrunk to 11,111 TWh (6.0%) and ten distinct other sources now in play. The transformation is not one revolution but four stacked on top of each other: each new fuel was added without the previous one being retired.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_energy_mix.py",
+        "lines": [27, 36],
+        "output": "Total energy 1800: 5653 TWh\nTotal energy 1900: 12131 TWh\nTotal energy 2000: 122288 TWh\nTotal energy 2024: 186383 TWh\nMultiplier 1800 -> 2024: 33.0x"
+      },
+      "data_table": {
+        "description": "Global primary energy by source, TWh/year, every 10 years 1800-2024 (with intermediate years where transitions happen)",
+        "columns": ["Year", "Traditional biomass", "Coal", "Oil", "Natural gas", "Hydropower", "Nuclear", "Solar", "Wind", "Modern biofuels", "Other renewables"],
+        "rows": [
+          [1800, 5556, 97, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1810, 5833, 128, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1820, 6111, 153, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1830, 6389, 222, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1840, 6667, 339, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1850, 7222, 569, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1860, 7222, 925, 0, 0, 0, 0, 0, 0, 0, 0],
+          [1870, 7222, 1500, 6, 0, 0, 0, 0, 0, 0, 0],
+          [1880, 6667, 2469, 47, 0, 0, 0, 0, 0, 0, 0],
+          [1890, 6111, 3963, 117, 33, 39, 0, 0, 0, 0, 0],
+          [1900, 6111, 5728, 181, 64, 47, 0, 0, 0, 0, 0],
+          [1910, 6111, 9136, 408, 156, 75, 0, 0, 0, 0, 0],
+          [1920, 6111, 10841, 956, 217, 178, 0, 0, 0, 0, 0],
+          [1930, 6667, 10803, 1869, 547, 261, 0, 0, 0, 0, 0],
+          [1940, 7222, 11894, 3019, 911, 358, 0, 0, 0, 0, 0],
+          [1950, 7500, 12603, 5444, 2092, 925, 0, 0, 0, 0, 0],
+          [1960, 8333, 15457, 12389, 4747, 1853, 27, 0, 0, 0, 0],
+          [1965, 8889, 16031, 16711, 6517, 2493, 71, 0, 0, 9, 56],
+          [1970, 9444, 17087, 26685, 9615, 3263, 219, 0, 0, 14, 80],
+          [1975, 10000, 18108, 31280, 12303, 4360, 925, 0, 0, 32, 116],
+          [1980, 10556, 23316, 34825, 15212, 5063, 2008, 0, 0, 46, 173],
+          [1985, 10833, 26221, 32890, 17068, 5773, 4244, 0.1, 0.2, 64, 245],
+          [1990, 11111, 25929, 37907, 19481, 5996, 5557, 1.1, 10.1, 107, 366],
+          [1995, 11667, 25596, 39855, 21035, 7060, 6651, 1.6, 22.5, 119, 460],
+          [2000, 12500, 27456, 43017, 23994, 7352, 7169, 2.9, 87.2, 133, 578],
+          [2005, 12222, 35064, 46225, 26913, 8240, 7228, 11.2, 281.3, 252, 689],
+          [2010, 11667, 42016, 48193, 31593, 8933, 7209, 88, 902, 679, 1182],
+          [2015, 11667, 43824, 51242, 33875, 9697, 6890, 650, 2106, 941, 1614],
+          [2020, 11667, 41183, 49737, 38974, 10473, 6770, 2117, 3940, 1162, 2105],
+          [2021, 11111, 44114, 52823, 39872, 10395, 7032, 2641, 4521, 1268, 2192],
+          [2022, 11111, 44927, 53562, 40060, 10651, 6583, 3250, 5185, 1193, 2379],
+          [2023, 11111, 45319, 54839, 40151, 10392, 6677, 4027, 5665, 1319, 2411],
+          [2024, 11111, 45851, 55292, 41278, 10861, 6872, 5151, 6124, 1367, 2476]
+        ]
+      },
+      "based_on": ["det_05", "det_08"]
+    },
+    "ana_02": {
+      "label": "Fuel onset years — when each source first appears in the global mix",
+      "content": "The OWID series records the first year each primary-energy source registers a non-zero global contribution: coal (1800, but actually centuries earlier in England — the file just starts at 1800), oil (1870, 6 TWh), natural gas and hydropower (both 1890, 33 and 39 TWh respectively), nuclear (1965, 71 TWh — eleven years after Obninsk's grid connection), wind (1978, 0.01 TWh, essentially noise from California's first commercial turbines), and solar (1983, 0.01 TWh, from early grid-tied photovoltaic experiments). Modern biofuels and 'other renewables' (geothermal, tide, wave) both register from 1965. The clustering of new sources at 1890 (oil scaling, hydro emerging) and 1965 (nuclear, biofuels, geothermal) matches the textbook periodisation of the 2nd and 3rd industrial revolutions almost exactly.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_energy_mix.py",
+        "lines": [40, 49],
+        "output": "Traditional biomass first non-zero: 1800 (5556 TWh)\nCoal first non-zero: 1800 (97 TWh)\nOil first non-zero: 1870 (6 TWh)\nNatural gas first non-zero: 1890 (33 TWh)\nHydropower first non-zero: 1890 (39 TWh)\nNuclear first non-zero: 1965 (71 TWh)\nModern biofuels first non-zero: 1965 (9 TWh)\nOther renewables first non-zero: 1965 (56 TWh)\nWind first non-zero: 1978 (0.01 TWh)\nSolar first non-zero: 1983 (0.01 TWh)"
+      },
+      "data_table": {
+        "description": "First non-zero year and start value per fuel",
+        "columns": ["fuel", "first_year", "start_TWh"],
+        "rows": [
+          ["Traditional biomass", 1800, 5556],
+          ["Coal", 1800, 97],
+          ["Oil", 1870, 6],
+          ["Natural gas", 1890, 33],
+          ["Hydropower", 1890, 39],
+          ["Nuclear", 1965, 71],
+          ["Modern biofuels", 1965, 9],
+          ["Other renewables", 1965, 56],
+          ["Wind", 1978, 0.01],
+          ["Solar", 1983, 0.01]
+        ]
+      },
+      "based_on": ["det_01", "det_02", "det_03", "det_04"]
+    },
+    "ana_03": {
+      "label": "Coal trajectory — share peaked 1910, absolute volume still rising in 2024",
+      "content": "Coal's share of global primary energy peaked at 55.22% in 1910 — the high-water mark of the steam-and-railway era. Its share then fell as oil and gas took share, dropping to 22.45% by 2000 before partially recovering to 24.60% by 2024 (Chinese industrial growth being the dominant cause). Crucially, coal's share has fallen but its absolute consumption has not: 1910 = 9,136 TWh; 2024 = 45,851 TWh. Coal hit its absolute volume peak in 2024 — the most recent year in the dataset. Despite a century of cleaner alternatives being available, we burn five times as much coal now as at the supposed apex of the coal age. This is the empirical case for Smil's slow-transition thesis: even after a fuel loses share, displacement of absolute volume happens decades later, if at all.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_energy_mix.py",
+        "lines": [52, 61],
+        "output": "Coal peak share: 55.22% in 1910\nCoal absolute peak (TWh): 45851 in 2024\n  1800: Coal = 97 TWh (1.72%)\n  1850: Coal = 569 TWh (7.30%)\n  1900: Coal = 5728 TWh (47.22%)\n  1950: Coal = 12603 TWh (44.12%)\n  2000: Coal = 27456 TWh (22.45%)\n  2024: Coal = 45851 TWh (24.60%)"
+      },
+      "data_table": {
+        "description": "Coal volume (TWh) and share of global primary energy (%), by year",
+        "columns": ["Year", "Coal_TWh", "Coal_share_pct"],
+        "rows": [
+          [1800, 97, 1.72],
+          [1850, 569, 7.30],
+          [1860, 925, 11.36],
+          [1870, 1500, 17.16],
+          [1880, 2469, 26.92],
+          [1890, 3963, 38.41],
+          [1900, 5728, 47.22],
+          [1910, 9136, 55.22],
+          [1920, 10841, 56.41],
+          [1930, 10803, 51.81],
+          [1940, 11894, 50.86],
+          [1950, 12603, 44.12],
+          [1960, 15457, 36.07],
+          [1970, 17087, 25.73],
+          [1980, 23316, 25.43],
+          [1990, 25929, 24.36],
+          [2000, 27456, 22.45],
+          [2010, 42016, 27.56],
+          [2015, 43824, 27.08],
+          [2020, 41183, 24.55],
+          [2024, 45851, 24.60]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_04": {
+      "label": "Total fossil share peaked at 81.6% in 1973 — and is still 76% today",
+      "content": "Combining coal, oil, and natural gas: the fossil share of global primary energy peaked at 81.63% in 1973 (the year of the OPEC oil shock, when fossil energy reached its highest dominance ever in absolute share terms) and has declined only modestly to 76.41% in 2024 — a drop of just ~5 percentage points in 51 years. In absolute TWh, fossil consumption has grown from 53,387 TWh (1970) to 142,421 TWh (2024) — nearly 3x more. So although renewables and nuclear have prevented the fossil share from continuing to expand, they have not actually pushed the world's fossil consumption down: every year of the 21st century has seen more fossil burning than the year before, with the partial exception of pandemic-affected 2020.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_energy_mix.py",
+        "lines": [65, 75],
+        "output": "Peak fossil share: 81.63% in 1973\n  1970: Fossil = 53387 TWh (80.39%)\n  1990: Fossil = 83317 TWh (78.26%)\n  2000: Fossil = 94467 TWh (77.25%)\n  2010: Fossil = 121801 TWh (79.89%)\n  2024: Fossil = 142421 TWh (76.41%)"
+      },
+      "data_table": {
+        "description": "Total fossil (coal + oil + gas) TWh and share of global primary energy",
+        "columns": ["Year", "Fossil_TWh", "Fossil_share_pct"],
+        "rows": [
+          [1800, 97, 1.72],
+          [1850, 569, 7.30],
+          [1900, 5973, 49.24],
+          [1950, 20139, 70.50],
+          [1970, 53387, 80.39],
+          [1973, 64200, 81.63],
+          [1990, 83317, 78.26],
+          [2000, 94467, 77.25],
+          [2010, 121801, 79.89],
+          [2024, 142421, 76.41]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_05": {
+      "label": "Solar + wind: from 11 TWh (1990) to 11,275 TWh (2024) — a 1,000x jump",
+      "content": "Solar and wind together generated 11.2 TWh of primary energy globally in 1990 — about 0.01% of the world's energy supply. By 2024 they produced 11,275 TWh, a thousand-fold increase, and accounted for 6.05% of primary energy (about 15% of electricity, since they only show up in the electric sector). The doubling has not slowed: 2010 (990 TWh) -> 2015 (2,755 TWh) -> 2020 (6,057 TWh) -> 2024 (11,275 TWh) is a near-perfect doubling every ~5 years. Within the pair, solar caught wind in 2024 (5,151 vs 6,124 TWh) after lagging since the 1980s — solar PV is now the world's fastest-deploying source of new generation, per IEA Renewables 2024.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_energy_mix.py",
+        "lines": [79, 87],
+        "output": "  1990: Solar+Wind = 11.2 TWh (0.01% of primary)\n  2000: Solar+Wind = 90.2 TWh (0.07%)\n  2010: Solar+Wind = 990.4 TWh (0.65%)\n  2020: Solar+Wind = 6056.9 TWh (3.61%)\n  2024: Solar+Wind = 11275.0 TWh (6.05%)"
+      },
+      "data_table": {
+        "description": "Solar and wind primary-energy contribution, TWh and share",
+        "columns": ["Year", "Solar_TWh", "Wind_TWh", "Total_TWh", "Share_pct"],
+        "rows": [
+          [1990, 1.1, 10.1, 11.2, 0.01],
+          [1995, 1.6, 22.5, 24.1, 0.02],
+          [2000, 2.9, 87.2, 90.2, 0.07],
+          [2005, 11.2, 281.3, 292.5, 0.21],
+          [2010, 88.3, 902.1, 990.4, 0.65],
+          [2015, 649.5, 2105.7, 2755.2, 1.70],
+          [2020, 2116.7, 3940.2, 6056.9, 3.61],
+          [2024, 5150.6, 6124.5, 11275.0, 6.05]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_06": {
+      "label": "World CO2 emissions 1750-2024 — the 4,148x cumulative climb",
+      "content": "Annual world CO2 emissions in 1750 were 9.3 million tonnes — most of it from English coal. By 2024 the global total was 38.6 billion tonnes per year — a multiplier of 4,148x over 274 years. The acceleration tracks the energy revolutions almost cleanly: 0.03 Gt in 1800 (start of coal era), 1.96 Gt in 1900 (after the steam-railway boom), 5.93 Gt in 1950 (after WWII), 14.90 Gt in 1970 (post-war demand), and 38.60 Gt in 2024 (peak fossil consumption). Three small kinks in the curve are visible: a brief decline 2008-2009 (financial crisis), another 2014-2016 (Chinese coal slowdown), and a sharp pandemic drop in 2020 followed by a rebound. None of the structural inflection points — the rise of nuclear, the post-2010 renewables takeoff — show up as breaks in the line. The world's CO2 trajectory is dictated by absolute fossil consumption, and that has never stopped growing.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_co2.py",
+        "lines": [21, 27],
+        "output": "  1750: World CO2 = 0.009 Gt/yr\n  1800: World CO2 = 0.033 Gt/yr\n  1850: World CO2 = 0.197 Gt/yr\n  1900: World CO2 = 1.963 Gt/yr\n  1950: World CO2 = 5.930 Gt/yr\n  2000: World CO2 = 25.511 Gt/yr\n  2024: World CO2 = 38.599 Gt/yr\nWorld CO2 1750 -> 2024: 4148x"
+      },
+      "data_table": {
+        "description": "World annual CO2 emissions, Gt/yr, by decade",
+        "columns": ["Year", "CO2_Gt"],
+        "rows": [
+          [1750, 0.009],
+          [1800, 0.033],
+          [1850, 0.197],
+          [1870, 0.502],
+          [1900, 1.963],
+          [1920, 3.658],
+          [1950, 5.930],
+          [1960, 9.413],
+          [1970, 14.899],
+          [1980, 19.476],
+          [1990, 22.732],
+          [2000, 25.511],
+          [2010, 33.318],
+          [2020, 35.265],
+          [2024, 38.599]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_07": {
+      "label": "Decoupling check — CO2 per TWh non-biomass energy has fallen ~36% since 1850",
+      "content": "Dividing world CO2 emissions by world non-biomass primary energy gives the carbon intensity of modern energy: roughly 346,000 tonnes CO2 per TWh in 1850 (almost pure coal), falling to 220,000 t/TWh by 2024 — a ~36% decline over 174 years. The decline is not nothing: it reflects oil and gas being less carbon-intensive than coal, and nuclear and renewables being effectively zero. But it is decoupling at glacial pace. To zero out CO2 we need ~95%+ decline in carbon intensity OR a contraction in fossil volume, and the actual rate of intensity decline is on the order of ~0.3% per year. The 4th-revolution renewables additions are the first big step-down in the historical trend, but they are also being chased by AI-compute electricity demand that wants the additional clean capacity for itself.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/02_co2.py",
+        "lines": [32, 47],
+        "output": "Year | CO2/TWh_nonbio (t/TWh)\n  1850  345954\n  1900  326048\n  1950  281542\n  1970  261561\n  1990  238397\n  2000  232370\n  2010  236640\n  2024  220221"
+      },
+      "data_table": {
+        "description": "Tonnes CO2 per TWh of non-biomass primary energy, by year",
+        "columns": ["Year", "CO2_per_TWh_nonbiomass", "CO2_per_TWh_fossil"],
+        "rows": [
+          [1850, 345954, 345954],
+          [1900, 326048, 328626],
+          [1950, 281542, 294474],
+          [1970, 261561, 279080],
+          [1990, 238397, 272840],
+          [2000, 232370, 270056],
+          [2010, 236640, 273541],
+          [2024, 220221, 271018]
+        ]
+      },
+      "based_on": ["det_05", "det_08"]
+    },
+    "ana_08": {
+      "label": "Top 15 cumulative CO2 emitters since 1750 — US alone is 24%",
+      "content": "Summing every country's annual emissions from 1750 to 2024 produces a cumulative responsibility table that runs counter to the present-day flow ranking. The United States is the cumulative leader at 434.9 Gt (24.1% of all country-attributed CO2), more than 1.5x China's 285.1 Gt (15.8%) despite China's higher current emissions. The next tier — Russia (122.8 Gt), Germany (95.1), the United Kingdom (80.1), and Japan (69.6) — are all early-industrial economies whose 19th- and 20th-century emissions still dominate the running total. India, despite being the world's #3 current emitter, sits at 7th cumulatively (66.1 Gt, 3.66%) because its industrial era started late. Together the top 15 countries account for 76.7% of the total 1.80 trillion tonnes of cumulative country-attributed CO2 since 1750.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_co2.py",
+        "lines": [50, 64],
+        "output": "Cumulative country-attributed CO2 1750-2024: 1.80 Tt\nUnited States: 434.9 Gt (24.12%)\nChina: 285.1 Gt (15.81%)\nRussia: 122.8 Gt (6.81%)\nGermany: 95.1 Gt (5.28%)\nUnited Kingdom: 80.1 Gt (4.44%)\nJapan: 69.6 Gt (3.86%)\nIndia: 66.1 Gt (3.66%)\nFrance: 40.0 Gt (2.22%)\nCanada: 35.6 Gt (1.98%)\nUkraine: 31.2 Gt (1.73%)\nPoland: 29.0 Gt (1.61%)\nItaly: 26.0 Gt (1.44%)\nSouth Africa: 22.8 Gt (1.27%)\nMexico: 22.0 Gt (1.22%)\nIran: 21.8 Gt (1.21%)\nTop 15 share: 76.7%"
+      },
+      "data_table": {
+        "description": "Top 15 cumulative CO2 emitters, 1750-2024",
+        "columns": ["country", "cumulative_Gt", "pct_of_country_total"],
+        "rows": [
+          ["United States", 434.9, 24.12],
+          ["China", 285.1, 15.81],
+          ["Russia", 122.8, 6.81],
+          ["Germany", 95.1, 5.28],
+          ["United Kingdom", 80.1, 4.44],
+          ["Japan", 69.6, 3.86],
+          ["India", 66.1, 3.66],
+          ["France", 40.0, 2.22],
+          ["Canada", 35.6, 1.98],
+          ["Ukraine", 31.2, 1.73],
+          ["Poland", 29.0, 1.61],
+          ["Italy", 26.0, 1.44],
+          ["South Africa", 22.8, 1.27],
+          ["Mexico", 22.0, 1.22],
+          ["Iran", 21.8, 1.21]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_09": {
+      "label": "Per-capita energy: China 2024 still below US 1965",
+      "content": "Per-capita energy consumption tells the convergence story that aggregate volume hides. In 1965 the United States consumed 73,802 kWh per person; by 2024 it was 76,800 kWh — essentially flat across 60 years of population and GDP growth. China, by contrast, went from 2,124 kWh/capita in 1965 to 34,514 kWh/capita in 2024 — a 16x jump that crossed the EU average (35,318 kWh/cap in 2024) only narrowly. Crucially, China's 2024 per-capita consumption is still only 47% of the US 1965 level. India (7,813 kWh/cap in 2024) is at roughly 10% of the US 1965 level. Africa (4,055 kWh/cap in 2024) has barely moved since 1965 (2,228 kWh/cap). The world average sits at 21,654 kWh/cap in 2024, dragged up by China's industrialisation but still less than a third of US-level demand. If the rest of the world reaches even half the US per-capita level by 2050, total world energy will need to grow at a pace none of the renewables-buildout scenarios currently model.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_percap_energy.py",
+        "lines": [22, 38],
+        "output": "1965: Africa=2228, China=2124, EU(27)=25492, India=1264, US=73802, World=13003\n2024: Africa=4055, China=34514, EU(27)=35318, India=7813, US=76800, World=21654\nUS 1965 = 73802; China 2024 = 34514; China 2024 / US 1965 = 0.47x"
+      },
+      "data_table": {
+        "description": "Per-capita primary-energy consumption (kWh/capita/year), selected entities, 1965-2024",
+        "columns": ["Year", "World", "United States", "European Union (27)", "China", "India", "Africa"],
+        "rows": [
+          [1965, 13003, 73802, 25492, 2124, 1264, 2228],
+          [1970, 15047, 86028, 30680, 2552, 1395, 2700],
+          [1975, 16091, 87580, 33555, 3324, 1564, 2898],
+          [1980, 17540, 90281, 40043, 4910, 1773, 3506],
+          [1985, 17347, 86250, 39041, 5847, 2095, 3691],
+          [1990, 18430, 90069, 42057, 7521, 2424, 3866],
+          [1995, 17698, 91915, 40780, 7783, 2841, 3923],
+          [2000, 17891, 94308, 42153, 9295, 3521, 3850],
+          [2005, 19139, 91519, 42876, 14716, 4196, 4045],
+          [2010, 20166, 83435, 41552, 21498, 5025, 4161],
+          [2015, 19761, 78815, 37196, 26358, 6147, 4072],
+          [2020, 20032, 72563, 35620, 29096, 6268, 3922],
+          [2022, 21076, 77628, 35959, 31236, 7057, 4118],
+          [2023, 21286, 76327, 34828, 33089, 7529, 4089],
+          [2024, 21654, 76800, 35318, 34514, 7813, 4055]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_10": {
+      "label": "Top per-capita energy consumers 2024 — Gulf states dominate the leaderboard",
+      "content": "The 2024 top-15 per-capita energy ranking is dominated by petrostates and small island/city economies: Qatar (214,520 kWh/cap), Singapore (180,701), Iceland (159,676 — abundant geothermal/hydro), Bahrain (152,038), and the UAE (138,026) all consume more than 2x the US per-capita figure (76,800 kWh/cap). Eight of the top 15 are oil and gas producers in the Gulf, Canada, and Norway, where domestic prices are kept low and air conditioning, desalination, or LNG export industries inflate consumption. Singapore and Iceland are the outliers — Singapore because the country is essentially one large refinery and shipping hub, Iceland because cheap geothermal underwrites aluminium smelting. The US itself ranks only 15th — well below the petro-extreme end but still the highest among large economies.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_percap_energy.py",
+        "lines": [42, 51],
+        "output": "Qatar 214520; Singapore 180701; Iceland 159676; Bahrain 152038; Falkland Islands 141481; UAE 138026; Brunei 121980; US Virgin Islands 116115; Kuwait 106399; Trinidad 105988; Norway 99634; Canada 97785; Saudi Arabia 96883; Oman 84611; United States 76800"
+      },
+      "data_table": {
+        "description": "Top 15 per-capita energy consumers in 2024 (country-level)",
+        "columns": ["country", "kWh_per_capita_2024"],
+        "rows": [
+          ["Qatar", 214520],
+          ["Singapore", 180701],
+          ["Iceland", 159676],
+          ["Bahrain", 152038],
+          ["Falkland Islands", 141481],
+          ["United Arab Emirates", 138026],
+          ["Brunei", 121980],
+          ["United States Virgin Islands", 116115],
+          ["Kuwait", 106399],
+          ["Trinidad and Tobago", 105988],
+          ["Norway", 99634],
+          ["Canada", 97785],
+          ["Saudi Arabia", 96883],
+          ["Oman", 84611],
+          ["United States", 76800]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_11": {
+      "label": "AI training compute over time — median jumped 6 orders of magnitude post-2010",
+      "content": "The Epoch AI database covers 1,018 notable AI models from 1950 to 2026; 525 of them have a recorded Training Compute (FLOP) value. Median training compute by year shows almost no growth from 1950 through the mid-2000s (most models below 1e15 FLOP). Starting around 2012, the median climbs sharply — by 2024 the median model used 3.0e24 FLOP, nine orders of magnitude above the 2010 median (1e16 FLOP). The annual median rose from 1.25e22 in 2021 to 3.03e24 in 2024 — a 240x jump in three years. The maximum (frontier) trajectory is even steeper: from 5.4e16 FLOP (2010) to 5.0e26 FLOP (2025) — a ~1e10 multiplier in fifteen years.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_ai_compute.py",
+        "lines": [25, 36],
+        "output": "Models with both pub_year and Training compute: 525 of 1018\n2017: median 5.4e18, max 8.4e20\n2020: median 6.2e20, max 3.1e23\n2024: median 3.0e24, max 3.8e25\n2025: median 4.1e24, max 5.0e26"
+      },
+      "data_table": {
+        "description": "AI training compute by publication year — median and max FLOP among notable models",
+        "columns": ["Year", "n_models", "median_FLOP", "max_FLOP"],
+        "rows": [
+          [1950, 1, 4.0e1, 4.0e1],
+          [1960, 2, 3.6e8, 7.2e8],
+          [1980, 3, 4.0e10, 9.0e12],
+          [1990, 2, 3.0e13, 9.5e13],
+          [2000, 1, 1.6e14, 1.6e14],
+          [2010, 5, 1.0e16, 5.4e16],
+          [2012, 8, 1.9e17, 6.0e17],
+          [2014, 14, 2.7e18, 3.0e20],
+          [2016, 16, 2.0e19, 6.6e21],
+          [2018, 24, 1.7e18, 8.7e21],
+          [2020, 33, 6.2e20, 3.1e23],
+          [2022, 60, 1.5e22, 2.7e24],
+          [2023, 65, 6.3e22, 5.0e25],
+          [2024, 48, 3.0e24, 3.8e25],
+          [2025, 38, 4.1e24, 5.0e26]
+        ]
+      },
+      "based_on": ["det_06", "det_11"]
+    },
+    "ana_12": {
+      "label": "Doubling time: 19.7 months pre-2010, 5.7 months post-2010 — a 3.4x acceleration",
+      "content": "Fitting a log-linear trend to the year-by-year maximum training compute gives a doubling time of 19.7 months for the pre-2010 era (1950-2009, 34 years with data) and 5.7 months for the post-2010 era (2010-2026, 17 years with data) — a 3.43x acceleration, matching Epoch AI's published headline that post-2010 compute is doubling roughly every 6 months. The pre-2010 figure also matches the original OpenAI 2018 estimate (~20 months across the full history of ML before the deep-learning era). This is the empirical signature of the 4th industrial revolution as a compute revolution: an exponential trend got steeper, not a new exponential started from scratch. The pre-2010 doubling time was already faster than Moore's Law (~24 months); the post-2010 doubling time is roughly 4x faster than Moore's Law — meaning the per-chip transistor gains underneath are no longer enough to explain the curve.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_ai_compute.py",
+        "lines": [40, 53],
+        "output": "Pre-2010 (34 years): log10 slope = 0.1835/yr => doubling time = 19.7 months\nPost-2010 (17 years): log10 slope = 0.6286/yr => doubling time = 5.7 months\nAcceleration factor: 3.43x faster after 2010"
+      },
+      "data_table": {
+        "description": "Doubling time of frontier (max-per-year) training compute, pre/post 2010",
+        "columns": ["era", "years", "log10_slope_per_year", "doubling_time_months"],
+        "rows": [
+          ["pre-2010 (1950-2009)", 34, 0.1835, 19.7],
+          ["post-2010 (2010-2026)", 17, 0.6286, 5.7]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_13": {
+      "label": "Top 15 frontier AI models by training compute — xAI's Grok 4 leads at 5e26 FLOP",
+      "content": "The 15 highest-training-compute models in the Epoch AI database are all from 2023-2026, dominated by US frontier labs plus xAI. The top of the list — Grok 4 (xAI, 2025, 5.0e26 FLOP), GPT-4.5 (OpenAI, 2025, 3.8e26 FLOP), Grok 3 (xAI, 2025, 3.5e26 FLOP) — are all roughly 10,000x the training compute of GPT-4 (March 2023, 2.1e25 FLOP). Where training power draw is recorded, the frontier sits at the >10 MW scale per training run: Grok 3 at 110 MW, Llama 4 Behemoth at 44 MW, Gemini 1.0 Ultra at 38 MW, Llama 3.1-405B at 23 MW. A single Grok-3-scale training run draws as much power as a town of 80,000 people for the duration of the run.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_ai_compute.py",
+        "lines": [57, 64],
+        "output": "Grok 4 (xAI) 2025-07-09 FLOP=5.00e26\nGPT-4.5 (OpenAI) 2025-02-27 FLOP=3.80e26\nGrok 3 (xAI) 2025-02-17 FLOP=3.50e26 Pwr=1.10e8 W\nGPT-5 (OpenAI) 2025-08-07 FLOP=6.60e25\nLlama 4 Behemoth (Meta) 2025-04-05 FLOP=5.18e25 Pwr=4.39e7 W\nGemini 1.0 Ultra (Google DeepMind) 2023-12-06 FLOP=5.00e25 Pwr=3.84e7 W\nGPT-4 (OpenAI) 2023-03-15 FLOP=2.10e25 Pwr=1.99e7 W"
+      },
+      "data_table": {
+        "description": "Top 15 highest-training-compute models in the Epoch AI database",
+        "columns": ["model", "organization", "publication_date", "training_FLOP", "training_power_W"],
+        "rows": [
+          ["Grok 4", "xAI", "2025-07-09", 5.0e26, null],
+          ["GPT-4.5", "OpenAI", "2025-02-27", 3.8e26, null],
+          ["Grok 3", "xAI", "2025-02-17", 3.5e26, 1.1e8],
+          ["GPT-5", "OpenAI", "2025-08-07", 6.6e25, null],
+          ["Llama 4 Behemoth (preview)", "Meta AI", "2025-04-05", 5.18e25, 4.39e7],
+          ["Gemini 1.0 Ultra", "Google DeepMind", "2023-12-06", 5.0e25, 3.84e7],
+          ["Composer 2.5", "Cursor", "2026-05-18", 3.87e25, null],
+          ["Llama 3.1-405B", "Meta AI", "2024-07-23", 3.8e25, 2.26e7],
+          ["Claude 3.7 Sonnet", "Anthropic", "2025-02-24", 3.35e25, null],
+          ["Grok-2", "xAI", "2024-08-13", 2.96e25, null],
+          ["Claude 3.5 Sonnet", "Anthropic", "2024-06-20", 2.7e25, null],
+          ["Doubao-pro", "ByteDance", "2024-10-28", 2.5e25, null],
+          ["Composer 2", "Cursor", "2026-03-19", 2.32e25, null],
+          ["Mistral Large 2", "Mistral AI", "2024-07-24", 2.13e25, null],
+          ["GPT-4 (Mar 2023)", "OpenAI", "2023-03-15", 2.1e25, 1.99e7]
+        ]
+      },
+      "based_on": ["det_06", "det_07"]
+    },
+    "ana_14": {
+      "label": "Training power draw — frontier runs now 100+ MW, doubling annually",
+      "content": "Where power-draw is recorded (214 models out of 1018), training-run electricity demand has scaled from a few kilowatts in the mid-2010s to over 100 MW in 2025. Max training power by year: 2015 = 2.1 kW (small academic experiments); 2018 = 209 kW (BERT-era); 2020 = 5.1 MW (GPT-3 scale); 2022 = 4.2 MW; 2023 = 38.4 MW; 2025 = 109.9 MW (Grok 3). That is roughly an order of magnitude per 4 years, or doubling annually — consistent with Epoch AI's separate published finding on frontier training-run power. 100 MW for a single training run, sustained for weeks or months, is in the same league as a steel mill or a mid-sized data centre, but concentrated on one workload. The grid implication is straightforward: hyperscalers now plan for gigawatt-scale campuses, because they expect the next-gen frontier runs to use that capacity.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_ai_compute.py",
+        "lines": [68, 86],
+        "output": "Max training power by year:\n2015: 2.13e3 W\n2018: 2.09e5 W\n2020: 5.10e6 W\n2022: 4.20e6 W\n2023: 3.84e7 W\n2024: 2.26e7 W\n2025: 1.10e8 W"
+      },
+      "data_table": {
+        "description": "Max recorded training power draw (W) per publication year",
+        "columns": ["Year", "n_models", "median_W", "max_W"],
+        "rows": [
+          [2015, 6, 285, 2131],
+          [2016, 7, 421, 37828],
+          [2017, 5, 4180, 32874],
+          [2018, 11, 4965, 209159],
+          [2019, 16, 259168, 944348],
+          [2020, 20, 24388, 5100760],
+          [2021, 34, 155652, 3714163],
+          [2022, 33, 205764, 4198431],
+          [2023, 41, 101499, 38423900],
+          [2024, 26, 176294, 22622530],
+          [2025, 9, 1398719, 109948700]
+        ]
+      },
+      "based_on": ["det_06", "det_07"]
+    },
+    "ana_15": {
+      "label": "Moore's Law: transistor density grew 25 million-fold, 1971-2021",
+      "content": "The OWID transistors-per-chip file traces 39 named microprocessors from the Intel 4004 (1971, 2,308 transistors) to a 2021 frontier chip with 58.2 billion transistors — a 25-million-fold increase over 50 years. Fitting log-linear trends, the doubling time is 23.5 months pre-2010 and 26.5 months post-2010 — confirming Moore's Law has slowed modestly but not stopped. That ~10% slowdown in the per-chip curve coexists with the post-2010 acceleration in AI training compute (5.7-month doubling), which means roughly 4-5x of the AI-compute growth must be coming from parallelism (more chips per run) and longer runtimes rather than per-chip improvements. The transistors-per-chip series is well-curated but coarse: 39 points across 50 years means each step is a specific named landmark chip, not a continuous benchmark. Treat the trendline as illustrative rather than a precise per-chip-year metric.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_moore.py",
+        "lines": [17, 41],
+        "output": "1971: 2,308 transistors\n2000: 37,180,264\n2010: 2,308,241,400\n2021: 58,200,000,000\nMultiplier 1971->2021: 2.52e+07x\nPre-2010 (28 pts): doubling = 23.5 months\nPost-2010 (11 pts): doubling = 26.5 months"
+      },
+      "data_table": {
+        "description": "Selected named microprocessors: year and transistor count, 1971-2021",
+        "columns": ["Year", "transistors"],
+        "rows": [
+          [1971, 2308],
+          [1972, 3555],
+          [1974, 6098],
+          [1979, 29164],
+          [1982, 135773],
+          [1985, 273842],
+          [1989, 1207901],
+          [1992, 3105900],
+          [1995, 9646616],
+          [1999, 21673921],
+          [2000, 37180264],
+          [2002, 220673400],
+          [2005, 305052800],
+          [2008, 805842200],
+          [2009, 2308241000],
+          [2011, 2600000000],
+          [2013, 5000000000],
+          [2016, 8000000000],
+          [2017, 19200000000],
+          [2018, 21100000000],
+          [2019, 39500000000],
+          [2020, 39500000000],
+          [2021, 58200000000]
+        ]
+      },
+      "based_on": ["det_11"]
+    },
+    "ana_16": {
+      "label": "Pre-Watt English coal: already 48x its 1508 level by 1800",
+      "content": "The Bank of England industrial-production series shows English coal output (in BoE-indexed units, with 1700 = 100) grew from 8.8 in 1508 to 421.3 in 1800 — a 48x increase over the three centuries before James Watt's separate-condenser steam engine reached commercial scale. By 1700 the index was already at 100 (an 11.4x increase from 1508), entirely pre-Watt. Then 1700-1800 added another 4.2x, bringing the index to 421. The pre-Watt growth was real and large — the steam engine accelerated an existing fuel transition rather than starting one. From 1800 to 1850 the index leapt from 421 to 1,913 — a 4.5x jump in just 50 years that dwarfs the entire 300-year pre-1800 growth. The 19th-century explosion was the Watt-and-railway era; the 16th-18th-century growth was domestic heating, brewing, salt-boiling, and iron-smelting demand that justified building the coastal coal trade out of Newcastle.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_pre1800_coal.py",
+        "lines": [18, 31],
+        "output": "1508: 8.762; 1600: 43.794; 1700: 100.000; 1750: 137.500; 1800: 421.277; 1850: 1912.749; 1870: 3774.796\nstart -> 1700 multiplier: 11.4x (pre-Watt growth)\n1700 -> 1800 multiplier: 4.2x (Watt era)\nstart -> 1800 multiplier: 48.1x (full span)"
+      },
+      "data_table": {
+        "description": "English coal output, BoE index (1700 = 100), quarter-century snapshots 1508-1870",
+        "columns": ["Year", "coal_index"],
+        "rows": [
+          [1508, 8.76],
+          [1525, 15.84],
+          [1550, 38.08],
+          [1575, 16.89],
+          [1600, 43.79],
+          [1625, 62.19],
+          [1650, 71.00],
+          [1675, 101.33],
+          [1700, 100.00],
+          [1725, 137.50],
+          [1750, 137.50],
+          [1775, 219.42],
+          [1800, 421.28],
+          [1825, 806.15],
+          [1850, 1912.75],
+          [1870, 3774.80]
+        ]
+      },
+      "based_on": ["det_01", "det_10"]
+    },
+    "ana_17": {
+      "label": "UK GDP per capita — 300 years of near-stagnation, then 11x in 222 years",
+      "content": "Maddison Project Database 2023 puts UK GDP per capita at $1,697 in 1500 and $3,343 in 1800 — a 1.97x increase over 300 years (0.226% per year continuous). From 1800 to 2022 it grew to $38,407 — an 11.49x increase over 222 years (1.10% per year). The post-1800 growth rate is 4.9x the pre-1800 rate. The coupling is the central macroeconomic fact of the modern world: once Britain harnessed coal to mechanise its economy, per-capita output broke a centuries-old ceiling. World GDP per capita (Maddison aggregate, available from 1820 only) followed: $1,128 in 1820 to $16,677 in 2022, a 14.79x increase. Energy access is not the only driver of growth — institutions, education, capital accumulation all matter — but no economy in history has industrialised without dramatically scaling primary-energy consumption first.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/07_gdp_context.py",
+        "lines": [27, 50],
+        "output": "UK 1500 ($1,697) -> 1800 ($3,343): 1.97x over 300 years, 0.226%/yr continuous\nUK 1800 ($3,343) -> 2022 ($38,407): 11.49x over 222 years, 1.100%/yr continuous\nPost-1800 growth rate is 4.9x the pre-1800 rate\nWorld 1820 ($1,128) -> 2022 ($16,677): 14.79x"
+      },
+      "data_table": {
+        "description": "UK and World GDP per capita over time (Maddison Project 2023, 2011 international dollars)",
+        "columns": ["Year", "UK_gdp_pc", "World_gdp_pc"],
+        "rows": [
+          [1252, 1320, null],
+          [1500, 1697, null],
+          [1600, 1691, null],
+          [1700, 2412, null],
+          [1750, 2702, null],
+          [1800, 3343, null],
+          [1820, 3597, 1128],
+          [1850, 4332, 1301],
+          [1900, 7594, 2265],
+          [1950, 11061, 3360],
+          [1970, 17421, 5971],
+          [2000, 31946, 9904],
+          [2022, 38407, 16677]
+        ]
+      },
+      "based_on": ["det_09"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "core__global-energy-by-source.csv uses OWID's substitution-method primary-energy accounting. Renewable and nuclear shares appear LARGER under this method than under the IEA's physical-content method now used by IEA, Eurostat, the UN, and the US EIA (det_08). When citing numbers from this analysis, flag the convention; do not present them as the only legitimate framing."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "core__ai-notable-models.csv Training power draw (W) is estimated for many models — Epoch AI's Confidence column should be inspected before quoting per-model power figures. The aggregate doubling-rate finding (ana_14) is robust; specific model numbers are not."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "context__uk-industrial-production-1270-1870.csv pre-1700 numbers are scholarly reconstructions with wide uncertainty bands. The order of magnitude is reliable but specific year-on-year movements should not be over-interpreted."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "context__gdp-per-capita-maddison.csv World aggregate is only available from 1820 (regional aggregates require pre-existing country coverage that doesn't exist before 1820). Pre-1820 GDP figures shown for the UK are real per-country estimates; the 'world' line cannot start earlier."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "core__transistors-per-chip.csv is a 39-point curated list of named landmark microprocessors. The post-2010 doubling-time estimate (26.5 months) is sensitive to which chips happened to be selected for inclusion in those years. The general direction (Moore's Law has slowed modestly post-2010) is robust; the specific months-per-doubling number is not."
+    },
+    {
+      "id": "ana_caveat_06",
+      "content": "Top per-capita energy consumers in 2024 (ana_10) include several small territories (Falkland Islands, US Virgin Islands) where small absolute energy flows divided by very small populations produce extreme per-capita numbers. The substantive comparison is between sovereign states with meaningful population denominators."
+    }
+  ]
+}

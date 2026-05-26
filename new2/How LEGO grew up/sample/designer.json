@@ -1,0 +1,426 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Default to all five channels (chart, image, video, audio, interactive_or_map) with data-driven execution. Skipping any channel requires an explicit reason in media_decisions.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The story is built on 75 years of time-series and ranked data — line, stacked-area, bar, lollipop, and small-multiple charts all earn their place."
+      },
+      "image": {
+        "used": true,
+        "reason": "LEGO is a visual subject. Eight reference photos of iconic sets from 1979–2022 are already in the asset pool (downloaded by detective). One generated teaser image bookends them."
+      },
+      "video": {
+        "used": true,
+        "reason": "The teaser still becomes a slow image2video parallax to give the page a kinetic opening without leaning on costly multi-clip generation."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Data sonification of the median set size 1949–2024 — implemented in Web Audio inside the page, synced to the line chart in section 5. The reader hears the slow century-long climb and the 2023–2024 jump."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "Two interactives: (a) the centerpiece year-slider on the bley shift in section 4, and (b) a sortable card deck of iconic sets in the closer. There is no geographic dimension, so no map."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — scale contrast still",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Editorial overhead photograph of two contrasting LEGO sets side by side on a dark matte black surface. On the left, a small classic LEGO spaceship from the late 1970s — about 30 simple pieces in primary blue, white, and yellow, modest and toy-like. On the right, the suggestion of an enormous towering modern LEGO architectural display built from thousands of pieces in shades of grey, with intricate detail. The contrast in scale and complexity is the subject. Cinematic side lighting, restrained shadow, no text or logos in frame, slight grain, magazine-quality still life photography, 16:9 aspect ratio.",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Full-bleed cinematic still that frames the entire piece's question: when did LEGO sets get this big? A small 1970s spaceship on the left, the suggestion of a modern megaset on the right, restrained editorial lighting.",
+      "rationale": "Sets the central tension before any prose. No text in frame so the reader's eye is drawn directly to the scale contrast.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion — gentle parallax",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "very slow lateral camera push from the small 1970s spaceship on the left toward the looming modern megaset on the right, gentle parallax depth, restrained ambient dust motes drifting through the side light, no camera shake, no cuts, museum-catalog stillness",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Animates the teaser_hero.png with a single 5-second lateral push from the small old set toward the modern one, mirroring the page's thesis in one motion. Loops on the page; muted.",
+      "rationale": "The still image already does the comparison; image2video sells the *direction* of the change in one continuous motion.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Catalog scale — 26,872 × 62,462 × 275",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "stats": [
+          {"value": "26,872", "label": "official LEGO sets in the catalog (1949–2024)"},
+          {"value": "62,462", "label": "distinct parts ever made"},
+          {"value": "275", "label": "official colors"},
+          {"value": "1,498,052", "label": "rows in the set × part × color × quantity join"}
+        ],
+        "data_source": "ana_01"
+      },
+      "brief": "Four stat tiles in a 2×2 grid (or single row on wide displays). Big numerals, small labels. Sets the dataset's physical size as a tangible thing before any narrative claim.",
+      "rationale": "The opening paragraph names the catalog; this stat block translates that into a felt scale before the time-series charts start.",
+      "based_on": ["ana_01"]
+    },
+    "des_04": {
+      "label": "Annual set introductions — the slow burn and the crater",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_02",
+        "x": "year",
+        "y": "n_sets_with_parts",
+        "highlight_band": {"x_start": 2002, "x_end": 2007, "label": "2003–2007 crisis trough"},
+        "annotations": [
+          {"x": 1949, "y": 5, "text": "1949 — first 5 sets"},
+          {"x": 2002, "y": 511, "text": "2002 peak"},
+          {"x": 2007, "y": 291, "text": "2007 trough"},
+          {"x": 2024, "y": 835, "text": "2024"}
+        ],
+        "interaction": "Hover tooltip with year + set count",
+        "style": {"color": "#C91A09", "fill_under_line": true, "muted_grid": true, "y_axis_label": "sets introduced with num_parts > 0"}
+      },
+      "brief": "Single-series line chart from 1949 to 2024 showing the slow-burn rise, the 2002 peak, the 2007 trough, and the modern recovery. Use LEGO red (#C91A09) for the line. Light grey vertical band highlights 2002–2007. Four labeled annotation points.",
+      "rationale": "A line chart is the right primitive for a 75-year time series; the visible 'crater' between 2002 and 2007 is the central narrative event of the company's history, and showing it cleanly is more important than a fancier visual.",
+      "based_on": ["ana_02"]
+    },
+    "des_05": {
+      "label": "1979 Galaxy Explorer — era one",
+      "type": "instance",
+      "section": "edt_02",
+      "content": {
+        "instance_ref": "det_media_01",
+        "embed_type": "image",
+        "filename": "ref_1979_space_cruiser.jpg",
+        "caption": "Set 928 'Space Cruiser and Moonbase' (1979). 343 parts."
+      },
+      "brief": "A single reference image of the iconic 1979 Galaxy Explorer / Space Cruiser — anchors the era. Place inline at the right of the section text, ~280px wide.",
+      "rationale": "A real product photo is more credible than a generated one when the point is 'this is what LEGO looked like in 1979'.",
+      "based_on": []
+    },
+    "des_06": {
+      "label": "1984 King's Castle — era one",
+      "type": "instance",
+      "section": "edt_02",
+      "content": {
+        "instance_ref": "det_media_02",
+        "embed_type": "image",
+        "filename": "ref_1984_kings_castle.jpg",
+        "caption": "Set 6080 'King's Castle' (1984). 679 parts — built in old Light Gray."
+      },
+      "brief": "Reference image of the 1984 King's Castle, paired with the Galaxy Explorer image as the era-anchor pair. Foreshadows the 'old grey' that will get retired in section 4.",
+      "rationale": "Pairing the two era-defining sets visually grounds the 'first half-century' chapter and quietly plants the King's-Castle-grey idea that pays off in the bley section.",
+      "based_on": []
+    },
+    "des_07": {
+      "label": "Star Wars share of new sets per year",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "line_with_bars",
+        "data_source": "ana_09",
+        "x": "year",
+        "y_left": "n_sw",
+        "y_right": "sw_share_pct",
+        "encoding": "bars for absolute n_sw on left axis, line for sw_share_pct on right axis (3-7% band)",
+        "annotations": [
+          {"x": 1999, "y": 13, "text": "1999 — Star Wars launches at 13 sets"},
+          {"x": 2015, "y": 70, "text": "2015 — 70 sets (Force Awakens release year)"}
+        ],
+        "interaction": "Hover tooltip with year, count, and share",
+        "style": {"bar_color": "#FFCD00", "line_color": "#000000", "muted_grid": true}
+      },
+      "brief": "Dual-axis combo: yellow bars for absolute Star Wars set count, black line for share-of-total. The share line stays in a remarkably tight 3-7% band across 25 years — that's the visual surprise.",
+      "rationale": "The narrative point is the *steadiness* of share alongside growth in absolute terms. A dual-axis combo shows both at once.",
+      "based_on": ["ana_09"]
+    },
+    "des_08": {
+      "label": "Bionicle lifecycle — the half-decade peak and the fall",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "lollipop",
+        "data_source": "ana_10",
+        "x": "year",
+        "y": "n_bionicle",
+        "highlight": {"year_range": [2014, 2016], "label": "2014–2016 reboot"},
+        "interaction": "Hover for year + count",
+        "style": {"stem_color": "#0055BF", "head_color": "#C91A09", "no_gridlines": true, "x_axis_range": [2000, 2017]}
+      },
+      "brief": "Small inset lollipop chart of Bionicle set introductions per year. Blue stems with red heads — a deliberate Bionicle-ish palette without being on-the-nose. Highlights the 2014–2016 reboot as a distinct cluster.",
+      "rationale": "Bionicle has only 13 active years — a sparse, discrete time series. Lollipop is the cleanest primitive for that shape (cleaner than bars or a line).",
+      "based_on": ["ana_10"]
+    },
+    "des_09": {
+      "label": "First UCS — TIE Interceptor (2000)",
+      "type": "instance",
+      "section": "edt_03",
+      "content": {
+        "instance_ref": "det_media_03",
+        "embed_type": "image",
+        "filename": "ref_2000_ucs_tie.jpg",
+        "caption": "Set 7181 'TIE Interceptor' (2000). 703 parts — one of the two original Ultimate Collector Series launches."
+      },
+      "brief": "Reference image of the first UCS Star Wars set. Pairs with the Bionicle image below to visually represent LEGO's two parallel bets in 1999–2001.",
+      "rationale": "Real product photography again — the prose names a specific set and the reader should see it.",
+      "based_on": []
+    },
+    "des_10": {
+      "label": "First Bionicle — Gali (2001)",
+      "type": "instance",
+      "section": "edt_03",
+      "content": {
+        "instance_ref": "det_media_04",
+        "embed_type": "image",
+        "filename": "ref_2001_bionicle_gali.jpg",
+        "caption": "Set 8533 'Gali' (2001) — a Toa from the original Bionicle launch wave."
+      },
+      "brief": "Reference image of the original Bionicle Gali figure, paired with the UCS TIE image.",
+      "rationale": "Visualises the in-house bet next to the licensed bet — the two prongs of LEGO's 1999–2001 strategy.",
+      "based_on": []
+    },
+    "des_11": {
+      "label": "Bley shift interactive — drag through 2000–2010",
+      "type": "interactive",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "year_slider",
+        "data_source": "ana_06",
+        "initial_state": "Slider at year 2000. Six large colored swatches are shown across the screen, labelled with their LEGO color names: Light Gray (old), Dark Gray (old), Brown (old), Light Bluish Gray (new), Dark Bluish Gray (new), Reddish Brown (new). The 'new' swatches are visibly empty/desaturated. Below the swatches, a stacked-area chart shows the quantity placed per year for each of the six colors.",
+        "trigger": "Reader drags the year slider from 2000 to 2010",
+        "transition": "As the year advances, (a) the swatch sizes scale to the quantity placed in that year — old colors shrink, new colors grow; (b) the stacked-area chart highlights the current year with a vertical rule and an animated readout. By 2007 the three 'old' swatches collapse to zero.",
+        "payoff": "The reader feels the inflection — the abrupt 2003-2005 crossover where the new colors overtake the old in three years.",
+        "style": {"swatch_size_px_min": 24, "swatch_size_px_max": 320, "transition_ms": 200, "color_map": {"Light Gray (old)": "#9BA19D", "Dark Gray (old)": "#6D6E5C", "Brown (old)": "#583927", "Light Bluish Gray (new)": "#A0A5A9", "Dark Bluish Gray (new)": "#6C6E68", "Reddish Brown (new)": "#582A12"}}
+      },
+      "brief": "Centerpiece interactive. Six color swatches across the top, each linked to its actual LEGO RGB hex. Drag the year-slider and watch the old grays shrink to zero by 2007 while the new bleys swell. A stacked-area chart underneath provides the analytical view; the swatches provide the visceral one. The reader can stop at any year to inspect the exact transition.",
+      "rationale": "The bley shift is the single most-decisive event in the catalog and it happens fast (3 years). A year-slider makes the speed *felt*. A plain line chart would understate the abruptness because the eye is drawn to overall shape, not crossover speed.",
+      "based_on": ["ana_06"]
+    },
+    "des_12": {
+      "label": "Palette growth — number of distinct colors per year",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_05",
+        "x": "year",
+        "y": "n_unique_colors",
+        "annotations": [
+          {"x": 2004, "y": 113, "text": "2004 peak — 113 distinct colors"},
+          {"x": 2007, "y": 64, "text": "2007 — culled to 64"}
+        ],
+        "interaction": "Hover for year + count",
+        "style": {"color": "#444", "muted_grid": true, "fill_under_line": false}
+      },
+      "brief": "Smaller secondary chart showing the rise-and-cull of the palette across 75 years. Two key annotation points: the 2004 peak and the 2007 cull. Subdued grey — supports the centerpiece interactive without competing with it.",
+      "rationale": "The bley story has two halves: the swap (interactive above) and the cull (this chart). Showing both gives the section its analytical depth without a chart streak.",
+      "based_on": ["ana_05"]
+    },
+    "des_13": {
+      "label": "Top 20 largest sets — bar chart with year coloring",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_04",
+        "x": "num_parts",
+        "y": "name (sorted desc by num_parts)",
+        "color": "year (sequential blue-to-red, older=blue, newer=red)",
+        "highlight": "World Map and Eiffel Tower bars are the two longest",
+        "annotations": "Each bar labeled with set's year on the right end",
+        "interaction": "Hover for set_num + theme",
+        "style": {"bar_height_px": 22, "muted_grid": true, "y_axis_label": null}
+      },
+      "brief": "Horizontal bar chart of the 20 largest LEGO sets ever, sorted by piece count. Color encodes year (older sets dim blue, newer sets bright red) so the reader sees that the top of the list is almost entirely post-2017.",
+      "rationale": "The headline finding is that 16 of 20 are 2017+. A color-by-year encoding makes that visible without an extra chart.",
+      "based_on": ["ana_04"]
+    },
+    "des_14": {
+      "label": "Median + p95 set size per year",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "dual_line",
+        "data_source": "ana_03",
+        "x": "year",
+        "y": ["median", "p95"],
+        "annotations": [
+          {"x": 1980, "y": 34, "text": "1980 median: 34"},
+          {"x": 2024, "y": 159, "text": "2024 median: 159"},
+          {"x": 2024, "y": 1627, "text": "2024 p95: 1,627"}
+        ],
+        "interaction": "Hover for year + both values; click 'play' to trigger sonification (see des_18)",
+        "style": {"median_color": "#0055BF", "p95_color": "#AA7F2E", "muted_grid": true, "y_log_scale": true, "y_axis_label": "parts per set (log scale)"}
+      },
+      "brief": "Two lines on a log scale — median (blue) and 95th percentile (gold) — across 1949–2024. The log scale prevents the p95 from crushing the median into a flat line. Three annotation points show the headline numbers. A 'play' button on the chart triggers the median sonification (des_18) — the reader hears each year as one tone.",
+      "rationale": "Log scale is required because p95 grew much faster than median; without log they're not on the same chart. The sonification anchors here because the line is the data being sonified.",
+      "based_on": ["ana_03"]
+    },
+    "des_15": {
+      "label": "UCS Falcon 2017 — era three",
+      "type": "instance",
+      "section": "edt_05",
+      "content": {
+        "instance_ref": "det_media_07",
+        "embed_type": "image",
+        "filename": "ref_2017_ucs_falcon.jpg",
+        "caption": "Set 75192 'Millennium Falcon' (2017). 7,541 parts — then the largest LEGO set ever."
+      },
+      "brief": "Reference image of the 2017 UCS Millennium Falcon. Pairs with the Eiffel Tower image as the visual evidence for the megaset era.",
+      "rationale": "The prose names this specific set; the reader needs to see how big a 7,541-piece set actually is.",
+      "based_on": []
+    },
+    "des_16": {
+      "label": "Eiffel Tower 2022 — era three",
+      "type": "instance",
+      "section": "edt_05",
+      "content": {
+        "instance_ref": "det_media_08",
+        "embed_type": "image",
+        "filename": "ref_2022_eiffel.jpg",
+        "caption": "Set 10307 'Eiffel Tower' (2022). 10,001 parts. The tallest LEGO set ever."
+      },
+      "brief": "Reference image of the 2022 Eiffel Tower set. The visual anchor for the 'sets got serious' moment.",
+      "rationale": "Same reasoning as des_15 — the prose names the set, the reader sees it.",
+      "based_on": []
+    },
+    "des_17": {
+      "label": "Pink palette growth — Friends vs the rest",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "stacked_area",
+        "data_source": "ana_11",
+        "x": "year",
+        "y": ["friends_pink_qty", "other_themes_pink_qty"],
+        "stack_order": "friends_first",
+        "annotations": [
+          {"x": 2012, "text": "Friends launches"},
+          {"x": 2024, "text": "Other themes use 7x more pink than Friends"}
+        ],
+        "interaction": "Hover for year + each layer's value",
+        "style": {"friends_color": "#FC97AC", "other_color": "#E1D5ED", "muted_grid": true}
+      },
+      "brief": "Stacked-area chart from 2005 to 2024. Friends-pink layer in actual LEGO Pink (#FC97AC), all-other-themes layer in Lavender (#E1D5ED). The Friends layer is small but persistent; the other-themes layer is the surprise — it grows from negligible in 2011 to dominant by 2020.",
+      "rationale": "The 'spillover' finding wants both layers on the same chart so the reader can compare them. Stacked area is the right primitive for two parallel time series that sum to a total.",
+      "based_on": ["ana_11"]
+    },
+    "des_18": {
+      "label": "Friends launch image — LEGO Friends 2013",
+      "type": "instance",
+      "section": "edt_06",
+      "content": {
+        "instance_ref": "det_media_06",
+        "embed_type": "image",
+        "filename": "ref_2013_friends.jpg",
+        "caption": "Set 41001 'Mia's Magic Tricks' (2013) — an early LEGO Friends wave set."
+      },
+      "brief": "Reference image of an early LEGO Friends set. Anchors the section visually with the actual product the chart is measuring.",
+      "rationale": "Friends is a visually distinctive line (pastel palette, mini-dolls); the photo confirms what the chart is talking about.",
+      "based_on": []
+    },
+    "des_19": {
+      "label": "Median set size sonification",
+      "type": "audio",
+      "section": "edt_05",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "The median-set-size line in des_14 is the headline data shape of the whole piece — the climb you can hear is the climb the catalog took. Sonification lets the reader sense the 4.7x ratio kinaesthetically, including the abrupt 2023 jump.",
+        "trigger": "Click 'Play' button on the median set size chart (des_14). One short sine-tone per year, played left-to-right, with the year's bar highlighted as it plays. Total duration ~6 seconds.",
+        "ui_form": "chart-synced sonification — a vertical scrub line moves across the chart, year by year, while a short pure tone plays for each year's median",
+        "content": {
+          "data_mapping": {
+            "field": "median",
+            "data_source": "ana_03",
+            "mapping": "linear in log(median) → frequency in semitones; median 34 → 220 Hz (A3); median 159 → 880 Hz (A5); silent rest at the 1950–1953 outliers where median dips to 1",
+            "scale": "chromatic on A minor",
+            "waveform": "soft triangle wave (Web Audio OscillatorNode triangle, gain 0.18, 60-ms attack, 90-ms decay per note)",
+            "tempo": "8 notes/second; ~75 notes for 1949–2024; total ~6 seconds plus silences"
+          },
+          "implementation": "Pure Web Audio (no audio file) — the Programmer wires the ana_03 data_table to an array of notes and triggers them when the user clicks Play. No autoplay. Provides Mute toggle and visible scrub line. Works even when audio is disabled because the chart already exists."
+        },
+        "fallback": "If the browser blocks audio or the user mutes the page, the visible scrub line still moves across the chart so the reader sees the progression. Nothing critical is audio-only.",
+        "novelty_note": "Avoids the generic 'play this premade WAV' card — the audio is *generated live* from the same JSON data_table the chart reads, so prose, chart, and audio share one source of truth."
+      },
+      "brief": "A short, chart-synced sonification of the median-set-size series. The reader clicks Play next to the chart and hears each year's median as a soft triangle-wave tone, with a vertical scrub line moving across the chart in lockstep. Mute toggle, no autoplay.",
+      "rationale": "Sonification is the right audio form for an analytical dataset: it explains, rather than decorates. Implementing it in Web Audio (no .wav file) keeps the page lightweight and aligns audio with the same data the chart reads.",
+      "based_on": ["ana_03"]
+    },
+    "des_20": {
+      "label": "Closer — sortable card deck of iconic sets",
+      "type": "interactive",
+      "section": "edt_07",
+      "content": {
+        "interaction_type": "card_deck",
+        "data_source": "ana_04",
+        "initial_state": "Eight cards arranged in chronological order (1979, 1984, 2000, 2001, 2007, 2013, 2017, 2022). Each card shows the set's reference image (from assets/ref_*.jpg), set name, year, and piece count.",
+        "trigger": "Buttons above the deck: Sort by Year (default), Sort by Piece Count, or Sort by Theme. Clicking re-orders the cards with a 200ms slide animation.",
+        "transition": "Cards rearrange smoothly; piece-count sort makes the four post-2007 cards drift toward the right (and grow in scale to emphasize they are the giants).",
+        "payoff": "The reader can directly compare the eras and themes; the piece-count sort visually re-anchors the whole essay's thesis.",
+        "cards": [
+          {"image": "ref_1979_space_cruiser.jpg", "title": "Galaxy Explorer", "set_num": "928-1", "year": 1979, "parts": 343, "theme": "Classic Space"},
+          {"image": "ref_1984_kings_castle.jpg", "title": "King's Castle", "set_num": "6080-1", "year": 1984, "parts": 679, "theme": "Castle"},
+          {"image": "ref_2000_ucs_tie.jpg", "title": "TIE Interceptor", "set_num": "7181-1", "year": 2000, "parts": 703, "theme": "UCS Star Wars"},
+          {"image": "ref_2001_bionicle_gali.jpg", "title": "Gali", "set_num": "8533-1", "year": 2001, "parts": 35, "theme": "Bionicle"},
+          {"image": "ref_2007_ucs_falcon.jpg", "title": "Millennium Falcon", "set_num": "10179-1", "year": 2007, "parts": 5198, "theme": "UCS Star Wars"},
+          {"image": "ref_2013_friends.jpg", "title": "Mia's Magic Tricks", "set_num": "41001-1", "year": 2013, "parts": 92, "theme": "Friends"},
+          {"image": "ref_2017_ucs_falcon.jpg", "title": "Millennium Falcon", "set_num": "75192-1", "year": 2017, "parts": 7541, "theme": "UCS Star Wars"},
+          {"image": "ref_2022_eiffel.jpg", "title": "Eiffel Tower", "set_num": "10307-1", "year": 2022, "parts": 10001, "theme": "Icons"}
+        ]
+      },
+      "brief": "Closing interactive: an 8-card deck (one per era-defining set) the reader can sort three ways. Default is chronological — the same era-spine the editorial follows. Sort by piece count makes the visual gulf between 1970s and 2020s LEGO physically obvious.",
+      "rationale": "A closing interactive that lets the reader replay the whole article's argument. Card decks beat tables for visual subjects, and LEGO is the most visual subject in this dataset.",
+      "based_on": ["ana_04"]
+    },
+    "des_21": {
+      "label": "Top colors all-time — small bar chart in closer",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_17",
+        "x": "total_qty",
+        "y": "name (sorted desc)",
+        "color": "use each color's actual RGB hex from the data_table",
+        "highlight": "Black, Light Bluish Gray, White at the top",
+        "annotations": [
+          {"y": "Light Bluish Gray", "text": "← 20-year-old replacement, already #2 of all time"}
+        ],
+        "interaction": "Hover for color name + total quantity",
+        "style": {"bar_height_px": 22, "no_y_gridlines": true}
+      },
+      "brief": "Closing chart — top 20 LEGO colors ever placed, each bar painted in that color's actual RGB. Black tops the list, the two 'new bley' grays sit at #2 and #4. Closes the loop with the section 4 finding by showing where the bley shift ended up structurally.",
+      "rationale": "Showing each bar in its actual LEGO RGB is a small touch that turns a routine ranking into a palette portrait — and visually echoes the bley-interactive in section 4.",
+      "based_on": ["ana_17"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "editorial dark mode with warm reference photography offsetting the analytical charts; restrained, museum-catalog feel rather than playful-toy feel",
+    "text_visual_pattern": "alternates: text → chart → reference photo → text → interactive → text. Each section opens with prose, then breaks into either a chart or instance image.",
+    "centrepiece": "des_11 (bley shift interactive year slider)",
+    "anti_sameness_notes": "Avoid the chart-chart-chart rhythm typical of analytical blogs. Use real product photography from the dataset's own image URLs (reference media) wherever possible instead of generated decorative imagery. The audio is a live Web Audio sonification bound to the median-set-size chart, not a pre-rendered tone card. The interactive in section 4 (year slider) and section 7 (sortable card deck) bracket the analytical centre.",
+    "typography_notes": "Stat callouts at 64px in a slab-serif (e.g. Roboto Slab). Section dividers as thin LEGO-stud rows (8-pixel circles in muted gray, no logos). Pull quotes in serif italic at 24px. Body 17px / 1.6 line-height."
+  }
+}

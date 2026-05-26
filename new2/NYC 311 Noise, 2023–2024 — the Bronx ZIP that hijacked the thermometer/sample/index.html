@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYC 311 Noise, 2023–2024 — the Bronx ZIP that hijacked the thermometer</title>
+<meta name="description" content="One Bronx ZIP code accounts for nearly 9% of all 2024 NYC noise complaints, almost entirely via the mobile app. A close read of 1.44 million 311 service requests.">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://cdn.jsdelivr.net/npm/vega@5.30.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.21.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.27.0"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+  --bg: #131623;
+  --bg-card: #1c2030;
+  --fg: #ecead8;
+  --fg-muted: #9c9da7;
+  --rule: #2c2f43;
+  --accent: #e87a59;
+  --accent-soft: #4d6fb3;
+  --good: #67a37c;
+  --warn: #cbb74e;
+  --maxw: 720px;
+  --serif: Georgia, "Times New Roman", "Source Serif Pro", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img, video { max-width: 100%; height: auto; display: block; }
+a { color: var(--accent); text-decoration: none; border-bottom: 1px dotted rgba(232,122,89,0.4); }
+a:hover { border-bottom-color: var(--accent); }
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+h1 { font-size: 2.6rem; line-height: 1.15; }
+h2 { font-size: 1.55rem; line-height: 1.25; margin-top: 3rem; margin-bottom: 1rem; color: var(--fg); }
+h3 { font-size: 1.15rem; color: var(--fg-muted); }
+small, .meta { font-family: var(--sans); font-size: 0.8rem; color: var(--fg-muted); }
+p { margin: 0 0 1.1rem 0; }
+strong, b { color: var(--accent); font-weight: 600; }
+
+/* Layout */
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1.2rem;
+}
+
+/* Teaser full-bleed */
+.teaser {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  max-width: none;
+  height: min(72vh, 760px);
+  overflow: hidden;
+  background: #000;
+}
+.teaser video,
+.teaser img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.teaser::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(19,22,35,0) 40%,
+    rgba(19,22,35,0.65) 88%,
+    rgba(19,22,35,1) 100%
+  );
+  pointer-events: none;
+}
+
+/* Header */
+header.intro {
+  padding: 2.4rem 0 0.4rem;
+}
+header.intro .kicker {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+header.intro h1 { margin-bottom: 0.85rem; }
+header.intro .subhead {
+  font-family: var(--serif);
+  font-size: 1.18rem;
+  line-height: 1.5;
+  color: var(--fg-muted);
+  font-style: italic;
+  margin-bottom: 0.9rem;
+}
+header.intro .byline {
+  font-family: var(--sans);
+  font-size: 0.84rem;
+  color: var(--fg-muted);
+  border-top: 1px solid var(--rule);
+  padding-top: 0.8rem;
+  margin-top: 1.2rem;
+}
+
+/* Section */
+section {
+  padding: 0.5rem 0 0;
+}
+section + section { margin-top: 2.2rem; }
+
+/* Visual containers — all required margins */
+.chart-container,
+.visual-container,
+.video-container,
+.audio-container,
+.interactive-container,
+.map-container,
+figure {
+  margin: 2rem 0;
+  display: block;
+  clear: both;
+  width: 100%;
+}
+.chart-container { max-width: var(--maxw); margin-left: auto; margin-right: auto; }
+figure { margin: 2rem auto; padding: 0; }
+figure img { border-radius: 4px; }
+figure figcaption {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+  margin-top: 0.55rem;
+  text-align: left;
+  line-height: 1.45;
+}
+.map-container { height: 460px; max-width: var(--maxw); margin-left: auto; margin-right: auto; }
+.map-container .leaflet-container { height: 100%; width: 100%; background: #1c2030; border-radius: 4px; }
+
+/* Stat callout */
+.stat-callout {
+  margin: 2.3rem 0;
+  padding: 1.6rem 1.2rem;
+  background: var(--bg-card);
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  text-align: left;
+  display: block;
+}
+.stat-callout .stat-number {
+  display: block;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 4.4rem;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.stat-callout .stat-label {
+  display: block;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--fg);
+  margin-top: 0.6rem;
+  line-height: 1.45;
+}
+.stat-callout.huge .stat-number { font-size: 5.5rem; }
+
+/* Audio + scrubber */
+.audio-container {
+  background: var(--bg-card);
+  padding: 1.4rem 1.2rem 1.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+}
+.audio-container h4 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+.audio-container p.audio-caption {
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  color: var(--fg-muted);
+  line-height: 1.5;
+  margin: 0 0 1.1rem 0;
+}
+.scrubber-svg { width: 100%; height: 110px; display: block; }
+.scrubber-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.6rem;
+}
+.scrubber-controls button {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--accent);
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 1.1rem;
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+.scrubber-controls button:hover { background: #f08d6c; }
+.scrubber-controls button:disabled { background: var(--rule); color: var(--fg-muted); cursor: not-allowed; }
+.scrubber-controls .legend {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  color: var(--fg-muted);
+  flex: 1;
+  text-align: right;
+}
+
+/* Inline charts row */
+.chart-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+}
+@media (min-width: 880px) {
+  .chart-pair { grid-template-columns: 1.1fr 0.9fr; }
+}
+
+/* Side-by-side image + chart */
+.side-by-side {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+  margin: 2rem 0;
+}
+@media (min-width: 880px) {
+  .side-by-side { grid-template-columns: 1.4fr 1fr; }
+  .side-by-side figure { margin: 0; }
+}
+
+/* References */
+footer.refs {
+  border-top: 1px solid var(--rule);
+  margin-top: 4rem;
+  padding: 2rem 0 3rem;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  color: var(--fg-muted);
+  line-height: 1.55;
+}
+footer.refs h2 {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+}
+footer.refs ul { padding-left: 1.1rem; margin: 0 0 1.2rem 0; }
+footer.refs li { margin-bottom: 0.35rem; }
+
+/* Annotations / pull-quotes */
+.pullquote {
+  font-style: italic;
+  font-size: 1.18rem;
+  border-left: 3px solid var(--accent);
+  padding: 0.2rem 0 0.2rem 1.1rem;
+  color: var(--fg);
+  margin: 2rem 0;
+}
+
+/* Vega-lite overrides */
+.chart-container .vega-embed { width: 100%; min-width: 0; display: block; }
+.chart-container canvas, .chart-container svg { max-width: 100%; height: auto; }
+
+/* Mobile tightening */
+@media (max-width: 640px) {
+  body { font-size: 17px; }
+  h1 { font-size: 2.0rem; }
+  h2 { font-size: 1.35rem; }
+  .stat-callout .stat-number { font-size: 3.5rem; }
+  .stat-callout.huge .stat-number { font-size: 4.2rem; }
+  .teaser { height: 56vh; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== TEASER ===================== -->
+<div class="teaser" data-des="des_teaser_image">
+  <video data-des="des_teaser_video" autoplay loop muted playsinline poster="assets/teaser_hero.jpg">
+    <source src="assets/teaser_motion.mp4" type="video/mp4">
+  </video>
+  <img data-des="des_teaser_image" src="assets/teaser_hero.jpg" alt="A dense Bronx apartment block at midnight, with one window in the upper right burning noticeably brighter than every other window in the field of view." style="z-index:0;">
+</div>
+
+<!-- ===================== HEADER ===================== -->
+<div class="container">
+<header class="intro">
+  <div class="kicker">NYC 311 noise complaints &nbsp;·&nbsp; 2023–2024</div>
+  <h1>The Bronx ZIP that took over New York's noise complaints</h1>
+  <p class="subhead">Two years and 1.44 million calls to 311 — a close read of who reports what, how the city answers, and the one place that broke every chart.</p>
+  <p class="byline">Data Journalist Agent &nbsp;·&nbsp; published May 25, 2026 &nbsp;·&nbsp; source: NYC Open Data (erm2-nwe9)</p>
+</header>
+</div>
+
+<!-- ===================== MAIN ===================== -->
+<main class="container">
+
+<!-- ============ edt_01 ============ -->
+<section data-edt="edt_01" data-det="det_01,det_02">
+  <h2>Twenty years of noise</h2>
+
+  <p data-det="det_01">The first call ever placed to New York City's 311 hotline, at 12:01 AM on March 9, 2003, was a noise complaint from Jackson Heights, Queens. Twenty-one years later, in the calendar window this dataset covers, New Yorkers filed a noise complaint with 311 about every 44 seconds.</p>
+
+  <p data-ana="ana_01,ana_02">Across 2023 and 2024 the city logged 1,439,558 noise-related service requests — 686,283 in 2023 and 753,275 in 2024, a 9.8% year-over-year jump. That's the canonical count for every complaint type whose name includes "Noise." Press coverage in early 2025 reported a 19% jump; the discrepancy comes from how each outlet drew its filter on the same underlying NYC Open Data table.</p>
+
+  <p data-ana="ana_03">The typical day in 2023–2024 brought 1,684 noise complaints into 311. The quietest day was a January Monday (830 complaints, 2023-01-23). The loudest day, by a margin no other day comes close to, was a Sunday in September 2024 — 8,820 complaints in 24 hours. We'll come back to where most of them came from.</p>
+
+  <div class="chart-container" id="des_chart_01" data-des="des_chart_01" data-ana="ana_02"></div>
+</section>
+
+<!-- ============ edt_02 ============ -->
+<section data-edt="edt_02" data-det="det_04">
+  <h2>What we're actually complaining about</h2>
+
+  <p data-ana="ana_04">One complaint_type dwarfs every other: Noise – Residential, at 47.1% of all filings (677,749). Add Street/Sidewalk noise (21.6%) and Commercial (9.5%) and you've covered four out of every five complaints. Helicopter is sixth at 6.1%, Vehicle fifth at 6.9%, and a thin wedge of Park (1.2%) and House of Worship (0.18%) make up the rest.</p>
+
+  <p data-ana="ana_05"><strong>"Loud Music/Party" is 54.02% of every noise filing in NYC.</strong> That's not just a Residential thing — Loud Music/Party is 80.5% of Commercial complaints, 79.1% of Street/Sidewalk complaints, and 60.0% of Residential complaints. Banging/Pounding is a distant second at 15.5%, Loud Talking third at 8.9%. Construction descriptors (Before/After Hours; Equipment; Jack Hammering) together hit about 4.6%, and ice cream truck jingles, despite the lore, are 0.19% — barely a rounding error.</p>
+
+  <p data-ana="ana_05" data-det="det_04">The very first row in the raw file (case 56416252, 2023-01-01 12:00 AM, Sedgwick Avenue in the Bronx) is "Noise - Residential / Loud Music/Party," routed to NYPD, closed 17 hours later. That triage logic — your descriptor decides which agency owns the call, and <em>that</em> decides whether anyone shows up the same night or a month later — is the whole story.</p>
+
+  <div class="side-by-side">
+    <div class="chart-container" id="des_chart_02" data-des="des_chart_02" data-ana="ana_05"></div>
+    <figure data-des="des_asset_brownstone">
+      <img src="assets/ref_bedstuy_brownstone.jpg" alt="A residential block in Bedford-Stuyvesant, Brooklyn — Tompkins Avenue between Willoughby and Hart. A long row of brownstones with stoops, where 'Loud Music/Party' complaints are routed straight to the NYPD precinct." data-des="des_asset_brownstone">
+      <figcaption>Tompkins Avenue, Bedford-Stuyvesant. Photo: Andre Carrotflower, CC BY-SA 4.0, via Wikimedia Commons.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ edt_03 ============ -->
+<section data-edt="edt_03" data-det="det_04">
+  <h2>Three agencies, three speeds</h2>
+
+  <p data-ana="ana_06">Every noise call lands in one of three agencies. NYPD takes 86.4% (1,243,510 complaints) — everything Residential, Street/Sidewalk, Commercial, Vehicle, Park, and House of Worship. DEP takes 7.5% (108,234) — the construction-noise bucket. EDC, the city's Economic Development Corporation, which owns the heliports, takes every single Helicopter complaint, 6.1% (87,813). That handoff is not a triviality — it determines how fast anyone responds, and what the file says when it closes.</p>
+
+  <p data-ana="ana_16" data-det="det_12">NYPD's median close time on a noise complaint is <strong>41 minutes</strong> (0.68 hours). DEP's is <strong>2.85 days</strong> (68 hours). EDC's median is <strong>35 days</strong> (843 hours) — and its 90th percentile is 114 days. The three agencies operate on three different scales of time. None of them issue many violations: across the entire dataset, only 0.65% of complaints (9,340 out of 1.44 million) end with a summons or violation issued.</p>
+
+  <div class="stat-callout" data-des="des_stat_response_time" data-ana="ana_16">
+    <span class="stat-number">41 min</span>
+    <span class="stat-label">median NYPD time from complaint filed to case closed — versus 2.85 days at DEP and 35 days at EDC.</span>
+  </div>
+
+  <div class="chart-container" id="des_chart_03" data-des="des_chart_03" data-ana="ana_16"></div>
+</section>
+
+<!-- ============ edt_04 ============ -->
+<section data-edt="edt_04" data-det="det_05">
+  <h2>How the call gets made</h2>
+
+  <p data-ana="ana_07" data-det="det_05">The famous citywide 311 statistic — 68% of inquiries by phone, 28% by web, 3% by app — does not describe what New Yorkers do when they want to report noise. For noise complaints specifically, <strong>60.78% come in through the 311 website, 26.76% through the NYC311 mobile app, and just 12.46% by phone.</strong> When a New Yorker decides to do something about the music upstairs, they type rather than dial.</p>
+
+  <p data-ana="ana_08">Year-over-year that mix is moving in a counter-intuitive direction. Online complaints' share fell 15 percentage points (68.8% → 53.5%); mobile app rose 8 pp; <strong>phone calls rose 7 pp</strong>. In raw numbers, phone complaints more than doubled, 59,216 in 2023 to 120,104 in 2024. The web is losing share to both the app <em>and</em> the voice call — a result that contradicts the easy "everything is moving to the app" story you might expect.</p>
+
+  <div class="chart-container" id="des_chart_04" data-des="des_chart_04" data-ana="ana_08"></div>
+</section>
+
+<!-- ============ edt_05 ============ -->
+<section data-edt="edt_05" data-det="det_15,det_11">
+  <h2>Geography — who files</h2>
+
+  <p data-ana="ana_09" data-det="det_15">By raw count Manhattan files the most (26.9%), Brooklyn second (26.2%), Bronx third (24.7%). Scaled by population the order flips dramatically: the <strong>Bronx logs 241 noise complaints per 1,000 residents over two years</strong>, Manhattan 229, Brooklyn 138, Queens 120, and Staten Island just 63 — Staten Islanders complain less than a quarter as much as Bronx residents do, per person. That matches recent press: TimeOut named the Bronx as NYC's loudest borough in 2025 using the same per-capita measure.</p>
+
+  <p data-ana="ana_10">ZIP-level data tells the same story, sharper. The Bronx takes the #1 spot (10466), the #3 spot (10456), and ten of the top 25 ZIPs by raw complaint count. Manhattan claims #2 (10023 — Upper West Side / Lincoln Center), #4 (10031 — Hamilton Heights), and #12 (10025 — Upper West Side), nine of the top 25 overall. Brooklyn has five, Queens two.</p>
+
+  <p data-ana="ana_10" data-det="det_11">One caveat the data forces on every reader: 311 measures who <em>complains</em>, not where noise actually is. The classic 2016 study by Joscha Legewie of NYU and Merlin Schaeffer found that 311 complaints peak along "fuzzy" ethnic boundaries — transitional blocks between two more homogeneous communities — rather than at sharp ones. Subsequent journalism documented that per-capita 311 calls grow up to 70% faster in gentrifying NYC neighborhoods than the city average. None of those papers had access to the next finding.</p>
+
+  <figure class="visual-container" style="display:block; clear:both; width:100%; max-width:720px; margin:2rem auto; padding:0;">
+    <div class="chart-container" id="des_chart_05" data-des="des_chart_05" data-ana="ana_09" style="margin:0;"></div>
+    <figcaption>Borough rankings — raw count (left panel) vs per-capita (right panel). Manhattan leads the raw count, but the Bronx leads per resident.</figcaption>
+  </figure>
+
+  <figure class="visual-container" style="display:block; clear:both; width:100%; max-width:720px; margin:2rem auto; padding:0;">
+    <div class="map-container" id="des_map_05" data-des="des_map_05" data-ana="ana_09,ana_24" style="height: 520px; margin:0;"></div>
+    <figcaption>Each circle is sized by complaints per 1,000 residents. The pulsing red dot marks ZIP 10466 in the Bronx — the next section is about that one point.</figcaption>
+  </figure>
+</section>
+
+<!-- ============ edt_06 (TURN) ============ -->
+<section data-edt="edt_06" data-det="det_05,det_15">
+  <h2>One Bronx ZIP</h2>
+
+  <div class="stat-callout huge" data-des="des_stat_10466" data-ana="ana_24">
+    <span class="stat-number">8.97%</span>
+    <span class="stat-label">of every noise complaint filed in NYC in 2024 came from a single Bronx ZIP code — <strong>67,571 of 753,275, from ZIP 10466</strong>, a ~62,000-resident neighborhood (about 0.7% of the city's population).</span>
+  </div>
+
+  <p data-ana="ana_24"><strong>ZIP 10466 (Wakefield / Williamsbridge in the north Bronx) accounts for 8.97% of every noise complaint filed in NYC in 2024.</strong> A single ZIP code with roughly 62,000 residents — about 0.7% of the city's population — is responsible for nearly a tenth of the citywide noise feed. Across the two years it logged 76,380 complaints, more than 2× the second-place ZIP. Within 2024 alone its complaint volume jumped from 8,809 to 67,571 — a 7.67× year-over-year increase. 93.4% of those complaints are tagged "Loud Music/Party."</p>
+
+  <p data-ana="ana_25">The pattern of those complaints is not the steady drip you'd expect from a chronically noisy neighborhood. It's a series of avalanches. On Sunday, <strong>2024-09-15, ZIP 10466 filed 4,952 complaints in 24 hours — one every 17.4 seconds</strong>, all day, every hour. 4,933 of those (99.6%) came in through the NYC311 mobile app; only 13 through the website, and 6 by phone. Eight separate days in 2024 saw 3,000+ complaints from this single ZIP, all with the same channel signature — a giant mobile-app burst, a small handful of web and phone.</p>
+
+  <p data-ana="ana_25,ana_03">The median day in 10466 is 12 complaints. Its worst day is 412× that. This is not a neighborhood getting noisier — it's a small number of people (or a single very dedicated person) hammering the mobile app's "Submit" button hundreds of times a day, or an organized civic campaign, or both. The dataset can't tell us which, because 311 doesn't record who filed.</p>
+
+  <div class="chart-container" id="des_chart_06" data-des="des_chart_06" data-ana="ana_25"></div>
+
+  <div class="audio-container" data-des="des_audio_10466" data-ana="ana_25,ana_26">
+    <h4>Hear ZIP 10466's year</h4>
+    <p class="audio-caption">Each of 366 days of 2024 is a 45 ms FM-bell tone. Pitch and loudness scale with that day's complaint count. Most days are nearly silent (median = 12); the eight ≥3,000-complaint bursts arrive like percussive slams. The bar that pulses red is the day currently being heard.</p>
+    <svg class="scrubber-svg" id="scrubber_10466" data-des="des_audio_10466" data-ana="ana_26" viewBox="0 0 720 110" preserveAspectRatio="none" aria-label="Daily complaints for ZIP 10466, 2024"></svg>
+    <audio id="audio_10466" data-des="des_audio_10466" preload="metadata" src="assets/sonify_10466.wav"></audio>
+    <div class="scrubber-controls">
+      <button id="audio_play_btn" type="button">▶ Play 10466's 2024</button>
+      <span class="legend">low pitch = quiet day&nbsp;&nbsp;·&nbsp;&nbsp;high pitch + loud = burst day</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ edt_07 ============ -->
+<section data-edt="edt_07" data-det="det_07,det_08">
+  <h2>The helicopter surprise</h2>
+
+  <p data-ana="ana_19" data-det="det_07">Press coverage in 2024 emphasized that helicopter noise complaints had "exploded" — the NYC Council's own data team had tallied 59,127 helicopter-noise complaints in 2023, up from 811 in January 2020 alone. The data on what came next is the opposite of the trend line. <strong>Helicopter complaints fell from 59,127 in 2023 to 28,686 in 2024 — a 51.5% drop</strong>, the largest year-over-year decline of any complaint_type in the dataset. Eleven of twelve months in 2024 were down year-over-year, often by half: May fell 7,461 → 2,833; December fell 8,724 → 2,843.</p>
+
+  <p data-ana="ana_20">Geographically the helicopter complaints stay where they always were: 57.8% Manhattan, 23.9% Queens, 16.8% Brooklyn, the Bronx and Staten Island under 1% combined. <strong>ZIP 10023 — Upper West Side / Lincoln Center — alone accounts for 31% of every helicopter complaint citywide.</strong> ZIP 11414 in Howard Beach Queens, in the JFK approach corridor, is second at 16,646. The hotspot list still matches the City Council's flight-path map: Manhattan along the Hudson and East River, Brooklyn from Carroll Gardens to Park Slope, Queens at the airports.</p>
+
+  <p data-ana="ana_19" data-det="det_08">Why the 2024 drop? The dataset alone cannot answer. Public attention waned after the 2023 spike; the 2025 Helicopter Oversight Act (which doesn't take effect until 2029) had not yet passed; weather and flight volumes shift year to year. What we can say: the 2023 number that motivated the City Council's bill was a real peak, not a baseline.</p>
+
+  <div class="side-by-side">
+    <div class="chart-container" id="des_chart_07" data-des="des_chart_07" data-ana="ana_19" style="margin:0;"></div>
+    <figure data-des="des_asset_helicopter">
+      <img src="assets/ref_helicopter_34th_st.jpg" alt="A HeliFlite executive helicopter landing at the East 34th Street Heliport in Manhattan, on the East River." data-des="des_asset_helicopter">
+      <figcaption>The East 34th Street Heliport, one of the two city-owned heliports targeted by the 2025 Helicopter Oversight Act. Photo: Beyond My Ken, CC BY-SA 4.0, via Wikimedia Commons.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ edt_08 ============ -->
+<section data-edt="edt_08" data-det="det_14">
+  <h2>Sunday at 11 PM</h2>
+
+  <p data-ana="ana_13">Of every seven days, two of them — Saturday and Sunday — carry 40.75% of the city's noise complaints. <strong>Sunday alone is 21.13%</strong>, Saturday 19.62%, Friday a clear third at 13.58%. The weekend wave starts Friday evening and crests Sunday, when the previous night's parties are reported alongside that day's brunch noise.</p>
+
+  <p data-ana="ana_14">Across the 24 hours, <strong>10 PM and 11 PM are the city's loudest hours</strong> — 154,924 and 149,816 complaints over two years, respectively. On weekend nights (Fri + Sat) the 11 PM rate is 1.95× the weekday rate (314 vs 161 per night), and the 10 PM rate is 1.62×. The 5 AM trough is the quietest single hour, with 22,446 complaints across two years.</p>
+
+  <p data-ana="ana_12,ana_15" data-det="det_14">Monthly, complaints climb with the temperature: February is the quiet trough; May 2023 was the busy peak (75K); 2024 inverts this with <strong>September</strong> at the year-high (88K), driven almost entirely by the 10466 surge described above. Late June into early July shows the fireworks pulse: 4,150 complaints on 2023-06-25, 3,607 on July 4, 2023. In 2024 the late-June spike spread out (2,974–3,470 across June 22–29), and the July 4 reading was 3,252 — clearly elevated, but no longer a single dramatic spike.</p>
+
+  <div class="chart-container" id="des_chart_08" data-des="des_chart_08" data-ana="ana_14"></div>
+</section>
+
+<!-- ============ edt_09 ============ -->
+<section data-edt="edt_09" data-det="det_12,det_13,det_10">
+  <h2>What the city does about it</h2>
+
+  <div class="stat-callout" data-des="des_stat_summons" data-ana="ana_18">
+    <span class="stat-number">0.28%</span>
+    <span class="stat-label">of NYPD residential noise complaints ended with a summons or violation issued — about 1 in 360 calls.</span>
+  </div>
+
+  <p data-ana="ana_18" data-det="det_12">When an NYPD officer is dispatched on a Residential noise call, here is what happens: <strong>39.97% of cases (270,918) close with the phrase "observed no evidence of the violation."</strong> 46.46% close as "responded — took action or action not necessary." 8.42% close as "nobody home / no entry." <strong>Only 1,891 of 677,749 residential noise complaints — 0.28% — close with a summons or violation issued.</strong> Three of every thousand NYPD residential noise calls result in a documented violation. The 41-minute median response time is the city's promise; the 0.28% citation rate is the city's delivery.</p>
+
+  <p data-ana="ana_17">Aggregating across every complaint type and agency, only 0.65% of all complaints (9,340) ever produce a summons or violation. 33.13% close with "no evidence." 1.85% are flagged as duplicates of a prior complaint.</p>
+
+  <p data-ana="ana_21" data-det="det_10">The ice cream truck case is a perfect miniature. The 1970s deal — Mr. Softee may play its jingle while the truck is moving, but not while parked — carries fines from $350 to $3,000. The dataset has 2,805 ice cream truck complaints over two years, all routed to DEP. Of those, <strong>2,132 (76%) close with "DEP didn't observe a violation" and exactly 15 (0.53%) close with a violation issued.</strong> The complaint-to-citation ratio for ice cream truck noise is roughly 1 in 187. The law exists. The enforcement does not.</p>
+
+  <div class="side-by-side">
+    <div class="chart-container" id="des_chart_09" data-des="des_chart_09" data-ana="ana_18" style="margin:0;"></div>
+    <figure data-des="des_asset_softee">
+      <img src="assets/ref_mister_softee.jpg" alt="A classic blue-and-white Mister Softee ice cream truck parked at the curb." data-des="des_asset_softee">
+      <figcaption>A Mister Softee truck. The jingle is legal while the truck is moving, illegal while parked — and almost never cited. Photo: Oleg Yunakov, CC BY-SA 4.0, via Wikimedia Commons.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ edt_10 ============ -->
+<section data-edt="edt_10" data-det="det_06,det_13">
+  <h2>Year over year</h2>
+
+  <p data-ana="ana_23">The +9.8% citywide growth from 2023 to 2024 is essentially a Bronx phenomenon. <strong>The Bronx jumped 51.2% year over year (+72,303 complaints).</strong> Brooklyn grew 1.9%, Staten Island 6.3%, Manhattan fell 3.1%, and Queens fell 2.3%. The Bronx alone accounts for more than the entire citywide net increase — every other large borough except Brooklyn lost complaint volume.</p>
+
+  <p data-ana="ana_22">By complaint type, the picture is opposite swings: Residential grew 27.1% (+80,843), Street/Sidewalk grew 10.5%, Commercial was flat, Vehicle fell 5%, and Helicopter fell 51.5%. The story of the year-over-year change is two-line: residential reporting via the mobile app surged, especially in the Bronx; helicopter reporting collapsed everywhere.</p>
+
+  <p data-ana="ana_23,ana_24" data-det="det_13">If you subtract ZIP 10466 entirely, the Bronx's growth shrinks from +51% to +9.5% — about the same as the citywide rate. The "noise epidemic" headline of 2024 is, in a literal sense, one ZIP code's headline. The NYPD's new Quality of Life Division ("Q-Teams"), which rolled out in April 2025 and reached every precinct by August, is the city's response — to a phenomenon the 2023–2024 data shows is highly concentrated rather than diffuse.</p>
+
+  <div class="chart-container" id="des_chart_10" data-des="des_chart_10" data-ana="ana_23"></div>
+</section>
+
+<!-- ============ edt_11 (CLOSE) ============ -->
+<section data-edt="edt_11" data-det="det_01,det_13">
+  <h2>What the thermometer measures</h2>
+
+  <p>On March 9, 2003, the first call to 311 was a noise complaint from Jackson Heights. By 2024 the system was logging 2,058 of them per day. Each one is one New Yorker formally telling the city that something is too loud — and the city, on average, dispatching an officer in 41 minutes who then writes "observed no evidence" and goes home.</p>
+
+  <p data-det="det_13">The Q-Teams, the Helicopter Oversight Act, the headlines about a noise "epidemic" — all of them are looking at the thermometer. The data shows the thermometer is being held, on its hottest days, by one ZIP code in the Bronx tapping the mobile app's submit button every 17 seconds. 311 measures what it measures very faithfully. What it measures isn't always noise.</p>
+
+  <div class="pullquote">311 is a thermometer, not a thermostat. The reading is real. Who is holding it changes what the number means.</div>
+</section>
+
+</main>
+
+<!-- ===================== REFERENCES ===================== -->
+<div class="container">
+<footer class="refs">
+  <h2>References &amp; sources</h2>
+  <ul>
+    <li><strong>Data:</strong> <a href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9" target="_blank" rel="noopener">NYC Open Data — "311 Service Requests from 2010 to Present" (dataset erm2-nwe9)</a>. Filter: <code>complaint_type LIKE '%Noise%' AND created_date in 2023–2024</code>. Reuse under <a href="https://opendata.cityofnewyork.us/overview/" target="_blank" rel="noopener">NYC Open Data Terms of Use</a>.</li>
+    <li><strong>Population baseline:</strong> 2020 American Community Survey 5-year ZCTA population estimates, US Census Bureau (Table B01003).</li>
+  </ul>
+
+  <h2>External reporting &amp; benchmarks</h2>
+  <ul>
+    <li><a href="https://en.wikipedia.org/wiki/NYC311" target="_blank" rel="noopener">NYC311 (Wikipedia)</a> — 311 history, channel mix, first-call story.</li>
+    <li><a href="https://www.fox5ny.com/news/noise-tops-nycs-311-complaints-list-2024" target="_blank" rel="noopener">FOX 5 New York — "Noise tops NYC's 311 complaints list in 2024"</a>.</li>
+    <li><a href="https://council.nyc.gov/data/helicopter-noise-and-safety/" target="_blank" rel="noopener">NYC Council Data Team — "Helicopter Noise and Safety"</a> (2023 baseline: 59,127 complaints; hotspot maps).</li>
+    <li><a href="https://council.nyc.gov/amanda-farias/2025/04/28/majority-leader-amanda-farias-legislation-passes-nyc-council-requiring-stricter-noise-standards-for-non-essential-helicopter-flights-from-city-owned-heliports/" target="_blank" rel="noopener">NYC Council — Helicopter Oversight Act (Intro 26-A), passed April 24, 2025</a>.</li>
+    <li><a href="https://www.nyc.gov/mayors-office/news/2025/04/mayor-adams-nypd-commissioner-tisch-launch-new-quality-life-division-enhance-public-safety" target="_blank" rel="noopener">NYC Mayor's Office — NYPD Quality of Life Division launch, April 9, 2025</a>.</li>
+    <li><a href="https://www.nyc.gov/site/dep/environment/noise-code.page" target="_blank" rel="noopener">NYC DEP — Noise Code (Local Law 113 of 2005)</a>.</li>
+    <li><a href="https://www.osc.ny.gov/press/releases/2017/08/nyc-construction-noise-complaints-soar" target="_blank" rel="noopener">NYS Comptroller — "NYC Construction Noise Complaints Soar" (after-hours variances)</a>.</li>
+    <li><a href="https://www.journals.uchicago.edu/doi/10.1086/686942" target="_blank" rel="noopener">Legewie &amp; Schaeffer — "Contested Boundaries" (AJS 2016)</a> — 311 noise complaints peak along fuzzy ethnic boundaries.</li>
+    <li><a href="https://gothamist.com/food/nyers-have-lodged-7000-ice-cream-truck-noise-complaints-in-last-4-years" target="_blank" rel="noopener">Gothamist — 7,000+ ice cream truck jingle complaints (2014)</a>.</li>
+    <li><a href="https://renthop.com/studies/nyc/upper-east-side-is-the-quietest-neighborhood-in-manhattan" target="_blank" rel="noopener">RentHop 2018 study — noisiest NYC neighborhoods per capita</a>.</li>
+  </ul>
+
+  <h2>Tools</h2>
+  <ul>
+    <li>Pandas 2.2 + PyArrow for the analyst pipeline; full code at <code>code/01_profile.py</code> through <code>code/10_daily_10466.py</code> in the project folder.</li>
+    <li>Charts: <a href="https://vega.github.io/vega-lite/" target="_blank" rel="noopener">Vega-Lite 5.21</a>. Map: <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet 1.9.4</a>. Sonification synthesized with NumPy.</li>
+    <li>Pipeline: <a href="https://github.com/QinghongLin/data2story-skill" target="_blank" rel="noopener">Data Journalist Agent (Data2Story)</a>.</li>
+  </ul>
+</footer>
+</div>
+
+<!-- ===================== INLINE DATA + SCRIPTS ===================== -->
+<script>
+// =================== INLINE DATA FROM ANALYST.JSON ===================
+// Each `data_table` is mapped to a Vega-Lite values array. Column names
+// match the analyst.json data_table exactly.
+
+function tableToValues(columns, rows) {
+  return rows.map(r => Object.fromEntries(columns.map((c, i) => [c, r[i]])));
+}
+
+// ana_02 — Year totals
+const D_ana_02 = tableToValues(
+  ["year", "complaints"],
+  [[2023, 686283], [2024, 753275]]
+);
+
+// ana_05 — Top 15 descriptors
+const D_ana_05 = tableToValues(
+  ["descriptor", "count", "pct"],
+  [
+    ["Loud Music/Party", 777689, 54.02],
+    ["Banging/Pounding", 223384, 15.52],
+    ["Loud Talking", 127548, 8.86],
+    ["Other (Helicopter catch-all)", 85350, 5.93],
+    ["Car/Truck Music", 64847, 4.50],
+    ["Construction Before/After Hours", 44413, 3.09],
+    ["Engine Idling", 20461, 1.42],
+    ["Car/Truck Horn", 18397, 1.28],
+    ["Barking Dog", 16073, 1.12],
+    ["Construction Equipment", 15829, 1.10],
+    ["Loud Television", 11176, 0.78],
+    ["Alarms", 9917, 0.69],
+    ["A/C / ventilation equipment", 8458, 0.59],
+    ["Jack Hammering", 4991, 0.35],
+    ["Ice Cream Truck", 2805, 0.19]
+  ]
+);
+
+// ana_08 — Channel × year (counts)
+const D_ana_08 = tableToValues(
+  ["channel", "year", "count"],
+  [
+    ["ONLINE", 2023, 471931], ["ONLINE", 2024, 403009],
+    ["MOBILE", 2023, 155097], ["MOBILE", 2024, 230106],
+    ["PHONE",  2023, 59216],  ["PHONE",  2024, 120104]
+  ]
+);
+
+// ana_09 — Borough share + per-capita
+const D_ana_09 = tableToValues(
+  ["borough", "count", "pct", "population_2020", "per_1k_residents"],
+  [
+    ["MANHATTAN", 387561, 26.92, 1694251, 228.8],
+    ["BROOKLYN", 377416, 26.22, 2736074, 137.9],
+    ["BRONX", 354909, 24.65, 1472654, 241.0],
+    ["QUEENS", 287977, 20.00, 2405464, 119.7],
+    ["STATEN ISLAND", 31157, 2.16, 495747, 62.8]
+  ]
+);
+
+// ana_14 — Hour of day, weekday vs weekend per-day
+const D_ana_14 = tableToValues(
+  ["hour", "total", "weekday_per_day", "weekend_per_day"],
+  [
+    [0,127391,168,189],[1,87768,116,130],[2,56532,76,82],[3,39103,52,56],
+    [4,30053,41,42],[5,22446,32,29],[6,22950,33,27],[7,24952,35,31],
+    [8,27716,37,39],[9,31191,41,46],[10,31642,43,44],[11,33004,45,46],
+    [12,33766,45,49],[13,34839,46,52],[14,39195,51,59],[15,43365,58,63],
+    [16,49032,65,73],[17,55600,73,84],[18,65376,86,99],[19,74778,97,115],
+    [20,91192,116,146],[21,112927,141,189],[22,154924,180,292],[23,149816,161,314]
+  ]
+);
+
+// ana_16 — Response time by agency
+const D_ana_16 = tableToValues(
+  ["agency", "closed_cases", "median_hours", "p90_hours"],
+  [
+    ["NYPD", 1243356, 0.68, 3.91],
+    ["DEP",  108171,  68.30, 251.78],
+    ["EDC",  67184,   843.23, 2746.08]
+  ]
+);
+
+// ana_18 — NYPD residential resolutions
+const D_ana_18 = tableToValues(
+  ["bucket", "count", "pct"],
+  [
+    ["NYPD: responded, took action / not necessary", 314861, 46.46],
+    ["NYPD: no evidence of violation", 270918, 39.97],
+    ["NYPD: nobody home / no entry", 57049, 8.42],
+    ["other (long-tail)", 33008, 4.87],
+    ["issued a summons or violation", 1891, 0.28]
+  ]
+);
+
+// ana_19 — Helicopter monthly, 2023 vs 2024 — pivot to long format
+const D_ana_19 = (function () {
+  const raw = [
+    [1, 3536, 1945], [2, 4324, 2281], [3, 6517, 2780], [4, 7194, 2710],
+    [5, 7461, 2833], [6, 5269, 2808], [7, 2643, 2382], [8, 4369, 1317],
+    [9, 1589, 1807], [10, 2605, 2528], [11, 4896, 2452], [12, 8724, 2843]
+  ];
+  const out = [];
+  raw.forEach(([m, y23, y24]) => {
+    out.push({month: m, year: "2023", count: y23});
+    out.push({month: m, year: "2024", count: y24});
+  });
+  return out;
+})();
+
+// ana_23 — Borough YoY
+const D_ana_23 = tableToValues(
+  ["borough", "y2023", "y2024", "delta", "pct_change"],
+  [
+    ["BRONX", 141303, 213606, 72303, 51.2],
+    ["BROOKLYN", 186929, 190487, 3558, 1.9],
+    ["MANHATTAN", 196788, 190773, -6015, -3.1],
+    ["QUEENS", 145650, 142327, -3323, -2.3],
+    ["STATEN ISLAND", 15101, 16056, 955, 6.3]
+  ]
+);
+
+// ana_25 — Top 10 days for 10466, stacked by channel — long format
+const D_ana_25 = (function () {
+  const raw = [
+    ["2024-09-15", 4952, 4933, 13, 6],
+    ["2024-12-16", 4815, 4809, 5, 1],
+    ["2024-12-17", 3957, 3949, 6, 2],
+    ["2024-12-31", 3531, 3525, 4, 2],
+    ["2024-12-29", 3510, 3503, 6, 1],
+    ["2024-09-23", 3504, 3498, 6, 0],
+    ["2024-11-20", 3224, 3215, 8, 1],
+    ["2024-11-19", 3056, 3047, 8, 1],
+    ["2024-10-29", 2271, 2263, 8, 0],
+    ["2024-09-16", 2183, 2175, 6, 2]
+  ];
+  const out = [];
+  raw.forEach(r => {
+    out.push({date: r[0], channel: "MOBILE", count: r[2]});
+    out.push({date: r[0], channel: "ONLINE", count: r[3]});
+    out.push({date: r[0], channel: "PHONE",  count: r[4]});
+  });
+  return out;
+})();
+
+// ana_26 — Full 10466 daily series for 2024 (366 rows)
+const D_ana_26 = [
+  {date:"2024-01-01",complaints:7},
+  {date:"2024-01-02",complaints:7},
+  {date:"2024-01-03",complaints:6},
+  {date:"2024-01-04",complaints:4},
+  {date:"2024-01-05",complaints:12},
+  {date:"2024-01-06",complaints:13},
+  {date:"2024-01-07",complaints:13},
+  {date:"2024-01-08",complaints:13},
+  {date:"2024-01-09",complaints:2},
+  {date:"2024-01-10",complaints:8},
+  {date:"2024-01-11",complaints:7},
+  {date:"2024-01-12",complaints:13},
+  {date:"2024-01-13",complaints:7},
+  {date:"2024-01-14",complaints:10},
+  {date:"2024-01-15",complaints:11},
+  {date:"2024-01-16",complaints:7},
+  {date:"2024-01-17",complaints:10},
+  {date:"2024-01-18",complaints:4},
+  {date:"2024-01-19",complaints:4},
+  {date:"2024-01-20",complaints:8},
+  {date:"2024-01-21",complaints:14},
+  {date:"2024-01-22",complaints:6},
+  {date:"2024-01-23",complaints:7},
+  {date:"2024-01-24",complaints:4},
+  {date:"2024-01-25",complaints:12},
+  {date:"2024-01-26",complaints:9},
+  {date:"2024-01-27",complaints:6},
+  {date:"2024-01-28",complaints:25},
+  {date:"2024-01-29",complaints:8},
+  {date:"2024-01-30",complaints:12},
+  {date:"2024-01-31",complaints:6},
+  {date:"2024-02-01",complaints:5},
+  {date:"2024-02-02",complaints:7},
+  {date:"2024-02-03",complaints:12},
+  {date:"2024-02-04",complaints:13},
+  {date:"2024-02-05",complaints:2},
+  {date:"2024-02-06",complaints:12},
+  {date:"2024-02-07",complaints:6},
+  {date:"2024-02-08",complaints:8},
+  {date:"2024-02-09",complaints:12},
+  {date:"2024-02-10",complaints:19},
+  {date:"2024-02-11",complaints:16},
+  {date:"2024-02-12",complaints:5},
+  {date:"2024-02-13",complaints:4},
+  {date:"2024-02-14",complaints:3},
+  {date:"2024-02-15",complaints:5},
+  {date:"2024-02-16",complaints:6},
+  {date:"2024-02-17",complaints:7},
+  {date:"2024-02-18",complaints:10},
+  {date:"2024-02-19",complaints:9},
+  {date:"2024-02-20",complaints:6},
+  {date:"2024-02-21",complaints:11},
+  {date:"2024-02-22",complaints:7},
+  {date:"2024-02-23",complaints:5},
+  {date:"2024-02-24",complaints:11},
+  {date:"2024-02-25",complaints:7},
+  {date:"2024-02-26",complaints:14},
+  {date:"2024-02-27",complaints:10},
+  {date:"2024-02-28",complaints:5},
+  {date:"2024-02-29",complaints:5},
+  {date:"2024-03-01",complaints:9},
+  {date:"2024-03-02",complaints:9},
+  {date:"2024-03-03",complaints:29},
+  {date:"2024-03-04",complaints:10},
+  {date:"2024-03-05",complaints:10},
+  {date:"2024-03-06",complaints:5},
+  {date:"2024-03-07",complaints:4},
+  {date:"2024-03-08",complaints:12},
+  {date:"2024-03-09",complaints:12},
+  {date:"2024-03-10",complaints:12},
+  {date:"2024-03-11",complaints:8},
+  {date:"2024-03-12",complaints:4},
+  {date:"2024-03-13",complaints:9},
+  {date:"2024-03-14",complaints:15},
+  {date:"2024-03-15",complaints:9},
+  {date:"2024-03-16",complaints:16},
+  {date:"2024-03-17",complaints:7},
+  {date:"2024-03-18",complaints:6},
+  {date:"2024-03-19",complaints:3},
+  {date:"2024-03-20",complaints:13},
+  {date:"2024-03-21",complaints:8},
+  {date:"2024-03-22",complaints:6},
+  {date:"2024-03-23",complaints:13},
+  {date:"2024-03-24",complaints:15},
+  {date:"2024-03-25",complaints:11},
+  {date:"2024-03-26",complaints:14},
+  {date:"2024-03-27",complaints:5},
+  {date:"2024-03-28",complaints:2},
+  {date:"2024-03-29",complaints:11},
+  {date:"2024-03-30",complaints:39},
+  {date:"2024-03-31",complaints:13},
+  {date:"2024-04-01",complaints:12},
+  {date:"2024-04-02",complaints:7},
+  {date:"2024-04-03",complaints:31},
+  {date:"2024-04-04",complaints:11},
+  {date:"2024-04-05",complaints:124},
+  {date:"2024-04-06",complaints:23},
+  {date:"2024-04-07",complaints:8},
+  {date:"2024-04-08",complaints:14},
+  {date:"2024-04-09",complaints:35},
+  {date:"2024-04-10",complaints:9},
+  {date:"2024-04-11",complaints:8},
+  {date:"2024-04-12",complaints:7},
+  {date:"2024-04-13",complaints:18},
+  {date:"2024-04-14",complaints:23},
+  {date:"2024-04-15",complaints:14},
+  {date:"2024-04-16",complaints:8},
+  {date:"2024-04-17",complaints:3},
+  {date:"2024-04-18",complaints:10},
+  {date:"2024-04-19",complaints:12},
+  {date:"2024-04-20",complaints:88},
+  {date:"2024-04-21",complaints:54},
+  {date:"2024-04-22",complaints:18},
+  {date:"2024-04-23",complaints:26},
+  {date:"2024-04-24",complaints:3},
+  {date:"2024-04-25",complaints:12},
+  {date:"2024-04-26",complaints:87},
+  {date:"2024-04-27",complaints:15},
+  {date:"2024-04-28",complaints:20},
+  {date:"2024-04-29",complaints:16},
+  {date:"2024-04-30",complaints:12},
+  {date:"2024-05-01",complaints:7},
+  {date:"2024-05-02",complaints:10},
+  {date:"2024-05-03",complaints:6},
+  {date:"2024-05-04",complaints:136},
+  {date:"2024-05-05",complaints:69},
+  {date:"2024-05-06",complaints:10},
+  {date:"2024-05-07",complaints:14},
+  {date:"2024-05-08",complaints:10},
+  {date:"2024-05-09",complaints:21},
+  {date:"2024-05-10",complaints:7},
+  {date:"2024-05-11",complaints:24},
+  {date:"2024-05-12",complaints:14},
+  {date:"2024-05-13",complaints:15},
+  {date:"2024-05-14",complaints:13},
+  {date:"2024-05-15",complaints:6},
+  {date:"2024-05-16",complaints:8},
+  {date:"2024-05-17",complaints:20},
+  {date:"2024-05-18",complaints:23},
+  {date:"2024-05-19",complaints:20},
+  {date:"2024-05-20",complaints:5},
+  {date:"2024-05-21",complaints:17},
+  {date:"2024-05-22",complaints:12},
+  {date:"2024-05-23",complaints:12},
+  {date:"2024-05-24",complaints:9},
+  {date:"2024-05-25",complaints:20},
+  {date:"2024-05-26",complaints:14},
+  {date:"2024-05-27",complaints:13},
+  {date:"2024-05-28",complaints:8},
+  {date:"2024-05-29",complaints:13},
+  {date:"2024-05-30",complaints:14},
+  {date:"2024-05-31",complaints:17},
+  {date:"2024-06-01",complaints:67},
+  {date:"2024-06-02",complaints:17},
+  {date:"2024-06-03",complaints:7},
+  {date:"2024-06-04",complaints:4},
+  {date:"2024-06-05",complaints:10},
+  {date:"2024-06-06",complaints:7},
+  {date:"2024-06-07",complaints:8},
+  {date:"2024-06-08",complaints:26},
+  {date:"2024-06-09",complaints:29},
+  {date:"2024-06-10",complaints:3},
+  {date:"2024-06-11",complaints:27},
+  {date:"2024-06-12",complaints:6},
+  {date:"2024-06-13",complaints:10},
+  {date:"2024-06-14",complaints:7},
+  {date:"2024-06-15",complaints:27},
+  {date:"2024-06-16",complaints:37},
+  {date:"2024-06-17",complaints:14},
+  {date:"2024-06-18",complaints:23},
+  {date:"2024-06-19",complaints:7},
+  {date:"2024-06-20",complaints:24},
+  {date:"2024-06-21",complaints:9},
+  {date:"2024-06-22",complaints:21},
+  {date:"2024-06-23",complaints:14},
+  {date:"2024-06-24",complaints:7},
+  {date:"2024-06-25",complaints:8},
+  {date:"2024-06-26",complaints:10},
+  {date:"2024-06-27",complaints:13},
+  {date:"2024-06-28",complaints:921},
+  {date:"2024-06-29",complaints:491},
+  {date:"2024-06-30",complaints:28},
+  {date:"2024-07-01",complaints:14},
+  {date:"2024-07-02",complaints:12},
+  {date:"2024-07-03",complaints:8},
+  {date:"2024-07-04",complaints:29},
+  {date:"2024-07-05",complaints:90},
+  {date:"2024-07-06",complaints:18},
+  {date:"2024-07-07",complaints:25},
+  {date:"2024-07-08",complaints:10},
+  {date:"2024-07-09",complaints:280},
+  {date:"2024-07-10",complaints:10},
+  {date:"2024-07-11",complaints:15},
+  {date:"2024-07-12",complaints:17},
+  {date:"2024-07-13",complaints:15},
+  {date:"2024-07-14",complaints:680},
+  {date:"2024-07-15",complaints:8},
+  {date:"2024-07-16",complaints:8},
+  {date:"2024-07-17",complaints:5},
+  {date:"2024-07-18",complaints:10},
+  {date:"2024-07-19",complaints:13},
+  {date:"2024-07-20",complaints:18},
+  {date:"2024-07-21",complaints:18},
+  {date:"2024-07-22",complaints:11},
+  {date:"2024-07-23",complaints:6},
+  {date:"2024-07-24",complaints:10},
+  {date:"2024-07-25",complaints:11},
+  {date:"2024-07-26",complaints:22},
+  {date:"2024-07-27",complaints:16},
+  {date:"2024-07-28",complaints:23},
+  {date:"2024-07-29",complaints:19},
+  {date:"2024-07-30",complaints:10},
+  {date:"2024-07-31",complaints:965},
+  {date:"2024-08-01",complaints:4},
+  {date:"2024-08-02",complaints:8},
+  {date:"2024-08-03",complaints:385},
+  {date:"2024-08-04",complaints:100},
+  {date:"2024-08-05",complaints:520},
+  {date:"2024-08-06",complaints:170},
+  {date:"2024-08-07",complaints:7},
+  {date:"2024-08-08",complaints:5},
+  {date:"2024-08-09",complaints:6},
+  {date:"2024-08-10",complaints:292},
+  {date:"2024-08-11",complaints:412},
+  {date:"2024-08-12",complaints:15},
+  {date:"2024-08-13",complaints:14},
+  {date:"2024-08-14",complaints:9},
+  {date:"2024-08-15",complaints:8},
+  {date:"2024-08-16",complaints:10},
+  {date:"2024-08-17",complaints:12},
+  {date:"2024-08-18",complaints:15},
+  {date:"2024-08-19",complaints:6},
+  {date:"2024-08-20",complaints:10},
+  {date:"2024-08-21",complaints:10},
+  {date:"2024-08-22",complaints:8},
+  {date:"2024-08-23",complaints:19},
+  {date:"2024-08-24",complaints:27},
+  {date:"2024-08-25",complaints:20},
+  {date:"2024-08-26",complaints:9},
+  {date:"2024-08-27",complaints:7},
+  {date:"2024-08-28",complaints:24},
+  {date:"2024-08-29",complaints:13},
+  {date:"2024-08-30",complaints:12},
+  {date:"2024-08-31",complaints:21},
+  {date:"2024-09-01",complaints:17},
+  {date:"2024-09-02",complaints:25},
+  {date:"2024-09-03",complaints:7},
+  {date:"2024-09-04",complaints:14},
+  {date:"2024-09-05",complaints:24},
+  {date:"2024-09-06",complaints:316},
+  {date:"2024-09-07",complaints:758},
+  {date:"2024-09-08",complaints:631},
+  {date:"2024-09-09",complaints:11},
+  {date:"2024-09-10",complaints:4},
+  {date:"2024-09-11",complaints:9},
+  {date:"2024-09-12",complaints:519},
+  {date:"2024-09-13",complaints:627},
+  {date:"2024-09-14",complaints:1179},
+  {date:"2024-09-15",complaints:4952},
+  {date:"2024-09-16",complaints:2183},
+  {date:"2024-09-17",complaints:9},
+  {date:"2024-09-18",complaints:10},
+  {date:"2024-09-19",complaints:12},
+  {date:"2024-09-20",complaints:8},
+  {date:"2024-09-21",complaints:33},
+  {date:"2024-09-22",complaints:1383},
+  {date:"2024-09-23",complaints:3504},
+  {date:"2024-09-24",complaints:9},
+  {date:"2024-09-25",complaints:10},
+  {date:"2024-09-26",complaints:16},
+  {date:"2024-09-27",complaints:22},
+  {date:"2024-09-28",complaints:18},
+  {date:"2024-09-29",complaints:19},
+  {date:"2024-09-30",complaints:7},
+  {date:"2024-10-01",complaints:8},
+  {date:"2024-10-02",complaints:6},
+  {date:"2024-10-03",complaints:17},
+  {date:"2024-10-04",complaints:649},
+  {date:"2024-10-05",complaints:1318},
+  {date:"2024-10-06",complaints:37},
+  {date:"2024-10-07",complaints:9},
+  {date:"2024-10-08",complaints:16},
+  {date:"2024-10-09",complaints:10},
+  {date:"2024-10-10",complaints:5},
+  {date:"2024-10-11",complaints:5},
+  {date:"2024-10-12",complaints:16},
+  {date:"2024-10-13",complaints:37},
+  {date:"2024-10-14",complaints:9},
+  {date:"2024-10-15",complaints:983},
+  {date:"2024-10-16",complaints:338},
+  {date:"2024-10-17",complaints:6},
+  {date:"2024-10-18",complaints:12},
+  {date:"2024-10-19",complaints:63},
+  {date:"2024-10-20",complaints:13},
+  {date:"2024-10-21",complaints:9},
+  {date:"2024-10-22",complaints:5},
+  {date:"2024-10-23",complaints:2},
+  {date:"2024-10-24",complaints:10},
+  {date:"2024-10-25",complaints:16},
+  {date:"2024-10-26",complaints:648},
+  {date:"2024-10-27",complaints:705},
+  {date:"2024-10-28",complaints:1638},
+  {date:"2024-10-29",complaints:2271},
+  {date:"2024-10-30",complaints:6},
+  {date:"2024-10-31",complaints:10},
+  {date:"2024-11-01",complaints:5},
+  {date:"2024-11-02",complaints:1018},
+  {date:"2024-11-03",complaints:15},
+  {date:"2024-11-04",complaints:6},
+  {date:"2024-11-05",complaints:4},
+  {date:"2024-11-06",complaints:5},
+  {date:"2024-11-07",complaints:14},
+  {date:"2024-11-08",complaints:19},
+  {date:"2024-11-09",complaints:14},
+  {date:"2024-11-10",complaints:5},
+  {date:"2024-11-11",complaints:11},
+  {date:"2024-11-12",complaints:8},
+  {date:"2024-11-13",complaints:10},
+  {date:"2024-11-14",complaints:12},
+  {date:"2024-11-15",complaints:12},
+  {date:"2024-11-16",complaints:16},
+  {date:"2024-11-17",complaints:10},
+  {date:"2024-11-18",complaints:1900},
+  {date:"2024-11-19",complaints:3056},
+  {date:"2024-11-20",complaints:3224},
+  {date:"2024-11-21",complaints:719},
+  {date:"2024-11-22",complaints:10},
+  {date:"2024-11-23",complaints:10},
+  {date:"2024-11-24",complaints:12},
+  {date:"2024-11-25",complaints:8},
+  {date:"2024-11-26",complaints:10},
+  {date:"2024-11-27",complaints:12},
+  {date:"2024-11-28",complaints:884},
+  {date:"2024-11-29",complaints:1241},
+  {date:"2024-11-30",complaints:545},
+  {date:"2024-12-01",complaints:11},
+  {date:"2024-12-02",complaints:2},
+  {date:"2024-12-03",complaints:12},
+  {date:"2024-12-04",complaints:7},
+  {date:"2024-12-05",complaints:9},
+  {date:"2024-12-06",complaints:4},
+  {date:"2024-12-07",complaints:11},
+  {date:"2024-12-08",complaints:7},
+  {date:"2024-12-09",complaints:6},
+  {date:"2024-12-10",complaints:11},
+  {date:"2024-12-11",complaints:8},
+  {date:"2024-12-12",complaints:948},
+  {date:"2024-12-13",complaints:387},
+  {date:"2024-12-14",complaints:16},
+  {date:"2024-12-15",complaints:753},
+  {date:"2024-12-16",complaints:4815},
+  {date:"2024-12-17",complaints:3957},
+  {date:"2024-12-18",complaints:28},
+  {date:"2024-12-19",complaints:11},
+  {date:"2024-12-20",complaints:14},
+  {date:"2024-12-21",complaints:15},
+  {date:"2024-12-22",complaints:15},
+  {date:"2024-12-23",complaints:7},
+  {date:"2024-12-24",complaints:12},
+  {date:"2024-12-25",complaints:15},
+  {date:"2024-12-26",complaints:10},
+  {date:"2024-12-27",complaints:4},
+  {date:"2024-12-28",complaints:613},
+  {date:"2024-12-29",complaints:3510},
+  {date:"2024-12-30",complaints:2167},
+  {date:"2024-12-31",complaints:3531}
+];
+
+// =================== CHART SPECS ===================
+const VL_THEME = {
+  background: null,
+  config: {
+    view: {stroke: "transparent"},
+    axis: {
+      labelColor: "#9c9da7", titleColor: "#ecead8", domainColor: "#3c3f53",
+      tickColor: "#3c3f53", gridColor: "#23263a",
+      labelFont: "system-ui", titleFont: "system-ui",
+      labelFontSize: 12, titleFontSize: 13
+    },
+    legend: {
+      labelColor: "#ecead8", titleColor: "#ecead8",
+      labelFont: "system-ui", titleFont: "system-ui",
+      labelFontSize: 12
+    },
+    title: {color: "#ecead8", font: "system-ui", fontSize: 14, fontWeight: 500},
+    bar: {fill: "#4d6fb3"}
+  }
+};
+
+const ACCENT = "#e87a59";
+const COOL = "#4d6fb3";
+const GRAY = "#7f8398";
+
+// chart 01 — year totals
+const spec_01 = {
+  ...VL_THEME,
+  width: "container",
+  height: 220,
+  data: {values: D_ana_02},
+  encoding: {
+    x: {field: "year", type: "ordinal", title: null, axis: {labelAngle: 0, labelFontSize: 13}},
+    y: {field: "complaints", type: "quantitative", title: "noise complaints filed",
+        axis: {format: ",.0f", grid: false}},
+    color: {
+      field: "year", type: "nominal", legend: null,
+      scale: {domain: [2023, 2024], range: [COOL, ACCENT]}
+    }
+  },
+  layer: [
+    {mark: {type: "bar", cornerRadiusEnd: 4, tooltip: true},
+     encoding: {tooltip: [{field: "year"}, {field: "complaints", format: ",.0f"}]}},
+    {mark: {type: "text", dy: -8, color: "#ecead8", fontSize: 12, font: "system-ui"},
+     encoding: {text: {field: "complaints", type: "quantitative", format: ",.0f"}}}
+  ]
+};
+
+// chart 02 — top 15 descriptors
+const spec_02 = {
+  ...VL_THEME,
+  width: "container",
+  height: 380,
+  data: {values: D_ana_05},
+  mark: {type: "bar", cornerRadiusEnd: 3, tooltip: true},
+  encoding: {
+    y: {field: "descriptor", type: "nominal", sort: "-x", title: null,
+        axis: {labelLimit: 200}},
+    x: {field: "count", type: "quantitative", title: "complaints (2023+2024)",
+        axis: {format: ",.0f", grid: false}},
+    color: {
+      condition: {test: "datum.descriptor === 'Loud Music/Party'", value: ACCENT},
+      value: GRAY
+    },
+    tooltip: [
+      {field: "descriptor", title: "Descriptor"},
+      {field: "count", format: ",.0f"},
+      {field: "pct", format: ".2f", title: "% of all complaints"}
+    ]
+  }
+};
+
+// chart 03 — response time by agency, log scale + p90 overlay
+const spec_03 = {
+  ...VL_THEME,
+  width: "container",
+  height: 240,
+  data: {values: D_ana_16},
+  encoding: {
+    y: {field: "agency", type: "nominal",
+        sort: ["NYPD", "DEP", "EDC"], title: null,
+        axis: {labelFontSize: 13, labelPadding: 8}}
+  },
+  layer: [
+    // 1) range from median to p90 — thick semi-transparent rule per agency
+    {
+      mark: {type: "rule", color: "rgba(232,122,89,0.55)", strokeWidth: 8, opacity: 0.55, tooltip: true},
+      encoding: {
+        x: {field: "median_hours", type: "quantitative",
+            scale: {type: "log", base: 10, domain: [0.3, 3500]},
+            axis: {title: "hours from filed to closed  (log scale)",
+                   values: [1, 10, 100, 1000],
+                   format: ",.0f", grid: true, gridColor: "#23263a"}},
+        x2: {field: "p90_hours"},
+        tooltip: [
+          {field: "agency"},
+          {field: "median_hours", format: ".2f", title: "median (h)"},
+          {field: "p90_hours", format: ".2f", title: "p90 (h)"},
+          {field: "closed_cases", format: ",.0f", title: "closed cases"}
+        ]
+      }
+    },
+    // 2) median dot — solid accent
+    {
+      mark: {type: "point", filled: true, size: 260, color: ACCENT, stroke: "#ecead8", strokeWidth: 1.5},
+      encoding: {
+        x: {field: "median_hours", type: "quantitative",
+            scale: {type: "log", base: 10, domain: [0.3, 3500]}}
+      }
+    },
+    // 3) p90 dot — hollow ring
+    {
+      mark: {type: "point", filled: false, size: 260, stroke: ACCENT, strokeWidth: 2, opacity: 0.9},
+      encoding: {
+        x: {field: "p90_hours", type: "quantitative",
+            scale: {type: "log", base: 10, domain: [0.3, 3500]}}
+      }
+    },
+    // 4) "median" label above the solid dot, in human-readable units
+    {
+      mark: {type: "text", color: "#ecead8", align: "center", dy: -16, fontSize: 12, font: "system-ui", fontWeight: 600},
+      encoding: {
+        x: {field: "median_hours", type: "quantitative",
+            scale: {type: "log", base: 10, domain: [0.3, 3500]}},
+        text: {field: "median_label", type: "nominal"}
+      },
+      transform: [{
+        calculate: "datum.median_hours < 1 ? format(datum.median_hours*60, '.0f') + ' min' : (datum.median_hours < 48 ? format(datum.median_hours,'.1f') + ' h' : format(datum.median_hours/24, '.1f') + ' days')",
+        as: "median_label"
+      }]
+    },
+    // 5) "p90" label above the hollow ring
+    {
+      mark: {type: "text", color: "#9c9da7", align: "center", dy: -16, fontSize: 11, font: "system-ui"},
+      encoding: {
+        x: {field: "p90_hours", type: "quantitative",
+            scale: {type: "log", base: 10, domain: [0.3, 3500]}},
+        text: {field: "p90_label", type: "nominal"}
+      },
+      transform: [{
+        calculate: "'p90: ' + (datum.p90_hours < 1 ? format(datum.p90_hours*60, '.0f') + ' min' : (datum.p90_hours < 48 ? format(datum.p90_hours,'.1f') + ' h' : format(datum.p90_hours/24, '.0f') + ' days'))",
+        as: "p90_label"
+      }]
+    }
+  ]
+};
+
+// chart 04 — channel grouped by year
+const spec_04 = {
+  ...VL_THEME,
+  width: "container",
+  height: 280,
+  data: {values: D_ana_08},
+  mark: {type: "bar", cornerRadiusEnd: 3, tooltip: true},
+  encoding: {
+    x: {field: "channel", type: "nominal", title: null,
+        sort: ["ONLINE", "MOBILE", "PHONE"], axis: {labelAngle: 0, labelFontSize: 13}},
+    y: {field: "count", type: "quantitative", title: "complaints", axis: {format: ",.0f", grid: false}},
+    xOffset: {field: "year", sort: [2023, 2024]},
+    color: {
+      field: "year", type: "ordinal", legend: {title: null, orient: "top-right"},
+      scale: {domain: [2023, 2024], range: [COOL, ACCENT]}
+    },
+    tooltip: [
+      {field: "channel"}, {field: "year"},
+      {field: "count", format: ",.0f"}
+    ]
+  }
+};
+
+// chart 05 — borough twin bars (raw + per-capita), full content width
+const spec_05 = {
+  ...VL_THEME,
+  data: {values: D_ana_09},
+  hconcat: [
+    {
+      width: 320,
+      height: 280,
+      mark: {type: "bar", cornerRadiusEnd: 3, tooltip: true},
+      title: {text: "raw complaints (2-year total)", color: "#9c9da7", font: "system-ui", fontSize: 12, fontWeight: "normal", anchor: "start"},
+      encoding: {
+        y: {field: "borough", type: "nominal", sort: "-x", title: null,
+            axis: {labelFontSize: 12, labelLimit: 110}},
+        x: {field: "count", type: "quantitative", title: null,
+            axis: {format: ",.0f", grid: false}},
+        color: {
+          condition: {test: "datum.borough === 'MANHATTAN'", value: ACCENT},
+          value: GRAY
+        },
+        tooltip: [
+          {field: "borough"},
+          {field: "count", format: ",.0f"},
+          {field: "population_2020", format: ",.0f"},
+          {field: "per_1k_residents", format: ".1f", title: "per 1k residents"}
+        ]
+      }
+    },
+    {
+      width: 320,
+      height: 280,
+      mark: {type: "bar", cornerRadiusEnd: 3, tooltip: true},
+      title: {text: "complaints per 1,000 residents", color: "#9c9da7", font: "system-ui", fontSize: 12, fontWeight: "normal", anchor: "start"},
+      encoding: {
+        y: {field: "borough", type: "nominal", sort: {field: "per_1k_residents", order: "descending"}, title: null,
+            axis: {labelFontSize: 12, labelLimit: 110}},
+        x: {field: "per_1k_residents", type: "quantitative", title: null,
+            axis: {format: ".0f", grid: false}},
+        color: {
+          condition: {test: "datum.borough === 'BRONX'", value: ACCENT},
+          value: GRAY
+        },
+        tooltip: [
+          {field: "borough"},
+          {field: "per_1k_residents", format: ".1f", title: "per 1k residents"},
+          {field: "count", format: ",.0f"}
+        ]
+      }
+    }
+  ],
+  spacing: 32,
+  config: VL_THEME.config
+};
+
+// chart 06 — top 10 days for 10466, stacked by channel
+const spec_06 = {
+  ...VL_THEME,
+  width: "container",
+  height: 340,
+  data: {values: D_ana_25},
+  mark: {type: "bar", cornerRadiusEnd: 2, tooltip: true},
+  encoding: {
+    y: {field: "date", type: "nominal", sort: "-x", title: null,
+        axis: {labelFontSize: 12}},
+    x: {field: "count", type: "quantitative",
+        title: "complaints filed (single day)", stack: "zero",
+        axis: {format: ",.0f", grid: false}},
+    color: {
+      field: "channel", type: "nominal",
+      legend: {title: null, orient: "top"},
+      scale: {
+        domain: ["MOBILE", "ONLINE", "PHONE"],
+        range: [ACCENT, "#777a8e", "#cccccc"]
+      }
+    },
+    tooltip: [
+      {field: "date"}, {field: "channel"}, {field: "count", format: ",.0f"}
+    ]
+  }
+};
+
+// chart 07 — helicopter monthly 2023 vs 2024
+const spec_07 = {
+  ...VL_THEME,
+  width: "container",
+  height: 280,
+  data: {values: D_ana_19},
+  layer: [
+    {
+      mark: {type: "line", strokeWidth: 2, point: {size: 60, filled: true}, tooltip: true},
+      encoding: {
+        x: {field: "month", type: "ordinal", title: "month (1=Jan)",
+            axis: {labelFontSize: 12, labelAngle: 0}},
+        y: {field: "count", type: "quantitative", title: "helicopter-noise complaints",
+            axis: {format: ",.0f"}},
+        color: {
+          field: "year", type: "nominal",
+          legend: {title: null, orient: "top-right"},
+          scale: {domain: ["2023", "2024"], range: [ACCENT, COOL]}
+        },
+        tooltip: [
+          {field: "month"}, {field: "year"}, {field: "count", format: ",.0f"}
+        ]
+      }
+    }
+  ]
+};
+
+// chart 08 — hour of day, weekday vs weekend per-day
+const spec_08 = {
+  ...VL_THEME,
+  width: "container",
+  height: 260,
+  data: {
+    values: D_ana_14.flatMap(d => [
+      {hour: d.hour, series: "weekday", per_day: d.weekday_per_day},
+      {hour: d.hour, series: "weekend", per_day: d.weekend_per_day}
+    ])
+  },
+  mark: {type: "area", opacity: 0.6, interpolate: "monotone", tooltip: true},
+  encoding: {
+    x: {field: "hour", type: "quantitative", title: "hour of day",
+        axis: {values: [0,3,6,9,12,15,18,21], format: "d"}},
+    y: {field: "per_day", type: "quantitative", stack: null,
+        title: "average complaints per night"},
+    color: {
+      field: "series", type: "nominal",
+      legend: {title: null, orient: "top-right"},
+      scale: {domain: ["weekday", "weekend"], range: [COOL, ACCENT]}
+    },
+    tooltip: [
+      {field: "hour"}, {field: "series"}, {field: "per_day", format: ".0f"}
+    ]
+  }
+};
+
+// chart 09 — NYPD residential resolutions, 100% stacked single bar
+const spec_09 = {
+  ...VL_THEME,
+  width: "container",
+  height: 120,
+  data: {values: D_ana_18},
+  mark: {type: "bar", tooltip: true},
+  encoding: {
+    x: {field: "pct", type: "quantitative", stack: "zero",
+        title: "% of NYPD residential noise complaints (n=677,749)",
+        axis: {format: ".0f", grid: false}},
+    color: {
+      field: "bucket", type: "nominal",
+      legend: {title: null, orient: "bottom", labelLimit: 320, columns: 1},
+      scale: {
+        domain: [
+          "NYPD: responded, took action / not necessary",
+          "NYPD: no evidence of violation",
+          "NYPD: nobody home / no entry",
+          "other (long-tail)",
+          "issued a summons or violation"
+        ],
+        range: ["#4d6fb3", "#7f8398", "#3c3f53", "#23263a", ACCENT]
+      }
+    },
+    tooltip: [
+      {field: "bucket"}, {field: "count", format: ",.0f"}, {field: "pct", format: ".2f"}
+    ]
+  }
+};
+
+// chart 10 — borough YoY diverging
+const spec_10 = {
+  ...VL_THEME,
+  width: "container",
+  height: 220,
+  data: {values: D_ana_23},
+  encoding: {
+    y: {field: "borough", type: "nominal", sort: "-x", title: null,
+        axis: {labelFontSize: 12, labelLimit: 130}},
+    x: {field: "pct_change", type: "quantitative", title: "% change 2023 → 2024",
+        axis: {format: ".0f", grid: true}},
+    color: {
+      condition: {test: "datum.pct_change >= 0", value: ACCENT},
+      value: COOL
+    }
+  },
+  layer: [
+    {mark: {type: "bar", cornerRadiusEnd: 3, tooltip: true},
+     encoding: {
+       tooltip: [
+         {field: "borough"},
+         {field: "y2023", format: ",.0f", title: "2023"},
+         {field: "y2024", format: ",.0f", title: "2024"},
+         {field: "delta", format: ",.0f", title: "Δ"},
+         {field: "pct_change", format: ".1f", title: "% change"}
+       ]
+     }},
+    {mark: {type: "text", color: "#ecead8", align: "left", dx: 6, fontSize: 12, font: "system-ui"},
+     encoding: {text: {field: "pct_change", type: "quantitative", format: "+.1f"}}}
+  ]
+};
+
+// =================== RENDER ===================
+function render(id, spec) {
+  if (!document.getElementById(id)) return;
+  vegaEmbed("#" + id, spec, {actions: false, theme: undefined, renderer: "canvas"}).catch(console.error);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  render("des_chart_01", spec_01);
+  render("des_chart_02", spec_02);
+  render("des_chart_03", spec_03);
+  render("des_chart_04", spec_04);
+  render("des_chart_05", spec_05);
+  render("des_chart_06", spec_06);
+  render("des_chart_07", spec_07);
+  render("des_chart_08", spec_08);
+  render("des_chart_09", spec_09);
+  render("des_chart_10", spec_10);
+  initMap();
+  initSonification();
+});
+
+// =================== MAP (Leaflet, edt_05) ===================
+const BOROUGH_CENTROIDS = {
+  "MANHATTAN":      [40.7831, -73.9712],
+  "BROOKLYN":       [40.6500, -73.9500],
+  "BRONX":          [40.8448, -73.8648],
+  "QUEENS":         [40.7282, -73.7949],
+  "STATEN ISLAND":  [40.5795, -74.1502]
+};
+const ZIP_10466_CENTROID = [40.8964, -73.8456];
+
+function initMap() {
+  const el = document.getElementById("des_map_05");
+  if (!el || typeof L === "undefined") return;
+  const map = L.map("des_map_05", {
+    zoomControl: true,
+    scrollWheelZoom: false, attributionControl: true
+  });
+  L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png", {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    maxZoom: 14, minZoom: 9
+  }).addTo(map);
+
+  // Always frame all five boroughs (rough NYC bounding box, with padding so
+  // the largest circles don't get clipped at the edges).
+  map.fitBounds(L.latLngBounds([[40.50, -74.28], [40.92, -73.68]]), {padding: [24, 24]});
+
+  // Circle radius in pixels: linear with per-capita, capped so the biggest
+  // circle (Bronx ≈ 241) is ~36 px radius (≈ 72 px diameter), and the
+  // smallest (Staten Island ≈ 63) is ~12 px — well-differentiated, none
+  // overlapping their neighbour borough.
+  function radiusFor(per1k) { return Math.max(10, Math.min(36, per1k / 6.7)); }
+
+  D_ana_09.forEach(b => {
+    const c = BOROUGH_CENTROIDS[b.borough];
+    if (!c) return;
+    const r = radiusFor(b.per_1k_residents);
+    L.circleMarker(c, {
+      radius: r,
+      color: "#e87a59",
+      weight: 1.6,
+      fillColor: "#e87a59",
+      fillOpacity: 0.50
+    }).bindTooltip(
+      `<strong>${b.borough}</strong><br>` +
+      `${b.count.toLocaleString()} complaints (2023+2024)<br>` +
+      `<strong>${b.per_1k_residents.toFixed(0)}</strong> per 1k residents`,
+      {direction: "top"}
+    ).addTo(map);
+    // borough label, anchored centred and offset below the circle so it
+    // never sits on top of the marker. iconAnchor needs real numbers
+    // (not [0,0]) so the label centres horizontally on the lat/lng.
+    L.marker(c, {
+      icon: L.divIcon({
+        className: "",
+        html: `<div style="font:600 12px system-ui;color:#ecead8;text-shadow:0 1px 4px rgba(0,0,0,0.85);white-space:nowrap;text-align:center;line-height:1.25;"><div>${b.borough}</div><div style="opacity:0.8;font-weight:400;font-size:11px;">${b.per_1k_residents.toFixed(0)} per 1k</div></div>`,
+        iconSize: [120, 32],
+        iconAnchor: [60, -r - 4]
+      }),
+      interactive: false
+    }).addTo(map);
+  });
+
+  // 10466 pulsing marker (anomaly handoff)
+  const pulse = L.divIcon({
+    className: "",
+    html: '<div style="width:14px;height:14px;border-radius:50%;background:#ff5e3a;box-shadow:0 0 0 5px rgba(255,94,58,0.25),0 0 0 10px rgba(255,94,58,0.10);"></div>',
+    iconSize: [14, 14], iconAnchor: [7, 7]
+  });
+  L.marker(ZIP_10466_CENTROID, {icon: pulse}).bindPopup(
+    "<strong>ZIP 10466 → next section</strong><br>" +
+    "67,571 complaints in 2024 alone — 8.97% of NYC's total.",
+    {closeButton: false}
+  ).addTo(map);
+
+  // legend (top-right so it doesn't sit on top of Brooklyn or Staten Island)
+  const legend = L.control({position: "topright"});
+  legend.onAdd = function () {
+    const div = L.DomUtil.create("div", "");
+    div.style.cssText = "background:rgba(28,32,48,0.92);color:#ecead8;font:11px system-ui;padding:8px 12px;border-radius:4px;border:1px solid #3c3f53;line-height:1.4;margin-top:6px;";
+    const samples = [60, 140, 240];
+    let rows = '<div style="font-weight:600;margin-bottom:6px;color:#e87a59;text-transform:uppercase;letter-spacing:0.05em;font-size:10px;">complaints per 1,000 residents</div>';
+    rows += '<div style="display:flex;align-items:flex-end;gap:14px;">';
+    samples.forEach(s => {
+      const r = radiusFor(s);
+      rows += `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><span style="display:inline-block;width:${2*r}px;height:${2*r}px;border-radius:50%;background:rgba(232,122,89,0.50);border:1.6px solid #e87a59;"></span><span>${s}</span></div>`;
+    });
+    rows += '</div>';
+    div.innerHTML = rows;
+    return div;
+  };
+  legend.addTo(map);
+}
+
+// =================== SONIFICATION SCRUBBER (edt_06) ===================
+function initSonification() {
+  const svg = document.getElementById("scrubber_10466");
+  const audio = document.getElementById("audio_10466");
+  const btn = document.getElementById("audio_play_btn");
+  if (!svg || !audio || !btn || !D_ana_26 || !D_ana_26.length) return;
+
+  const W = 720, H = 110;
+  const N = D_ana_26.length;          // 366 days
+  const max = Math.max(...D_ana_26.map(d => d.complaints));   // 4952
+  const barW = W / N;
+  const ns = "http://www.w3.org/2000/svg";
+  const bars = [];
+  // baseline
+  const base = document.createElementNS(ns, "rect");
+  base.setAttribute("x", 0); base.setAttribute("y", H - 1);
+  base.setAttribute("width", W); base.setAttribute("height", 1);
+  base.setAttribute("fill", "#3c3f53");
+  svg.appendChild(base);
+  D_ana_26.forEach((d, i) => {
+    const h = (d.complaints / max) * (H - 8);
+    const r = document.createElementNS(ns, "rect");
+    r.setAttribute("x", i * barW);
+    r.setAttribute("y", H - h);
+    r.setAttribute("width", Math.max(barW - 0.4, 0.6));
+    r.setAttribute("height", h);
+    r.setAttribute("fill", "#7f8398");
+    r.setAttribute("data-day-index", i);
+    svg.appendChild(r);
+    bars.push(r);
+  });
+
+  // month grid labels (jan, apr, jul, oct)
+  const monthOffsets = [0, 90, 181, 273];   // approx
+  const monthLabels = ["Jan", "Apr", "Jul", "Oct"];
+  monthOffsets.forEach((off, k) => {
+    const t = document.createElementNS(ns, "text");
+    t.setAttribute("x", off * barW + 3);
+    t.setAttribute("y", 14);
+    t.setAttribute("fill", "#9c9da7");
+    t.setAttribute("font-family", "system-ui");
+    t.setAttribute("font-size", "11");
+    t.textContent = monthLabels[k];
+    svg.appendChild(t);
+  });
+
+  let activeIdx = -1;
+  function highlightDay(i) {
+    if (i === activeIdx || i < 0 || i >= N) return;
+    if (activeIdx >= 0) bars[activeIdx].setAttribute("fill", "#7f8398");
+    bars[i].setAttribute("fill", "#e87a59");
+    activeIdx = i;
+  }
+
+  audio.addEventListener("timeupdate", () => {
+    if (!audio.duration) return;
+    const i = Math.min(N - 1, Math.floor((audio.currentTime / audio.duration) * N));
+    highlightDay(i);
+  });
+  audio.addEventListener("ended", () => {
+    if (activeIdx >= 0) bars[activeIdx].setAttribute("fill", "#7f8398");
+    activeIdx = -1;
+    btn.textContent = "▶ Play 10466's 2024";
+  });
+
+  btn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play().then(() => { btn.textContent = "❚❚ Pause"; })
+                  .catch(() => { btn.disabled = true; btn.textContent = "audio unavailable"; });
+    } else {
+      audio.pause();
+      btn.textContent = "▶ Resume";
+    }
+  });
+
+  // click on a bar = scrub to that day
+  svg.addEventListener("click", (e) => {
+    if (!(e.target instanceof SVGRectElement)) return;
+    const i = parseInt(e.target.getAttribute("data-day-index"), 10);
+    if (!isFinite(i) || !audio.duration) return;
+    audio.currentTime = (i / N) * audio.duration;
+    highlightDay(i);
+  });
+}
+</script>
+
+</body>
+</html>

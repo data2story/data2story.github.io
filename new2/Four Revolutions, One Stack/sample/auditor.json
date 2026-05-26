@@ -1,0 +1,4 @@
+[
+  {"type": "chart_pair_breakout", "count": 3, "notes": "Added @media (min-width: 1100px) breakout for .chart-pair and .chart-card.full — paired charts (des_10+des_11, des_12+des_13, des_16+des_17) and the hero stacked area (des_03) now expand to 1080px wide on desktop instead of being squeezed into the 720px content column."},
+  {"type": "composite_chart_overflow", "count": 5, "notes": "Five Vega specs got padding adjustments and label/legend repositioning: des_11 legend moved orient bottom; des_12/des_13 heights bumped to 400 with explicit padding for top-edge labels; des_13 'post-2010' label moved to align right at the 2023 anchor instead of overflowing the 1971-2021 right edge; des_16 x-axis tick values fixed to prevent 2014/2016 collision; des_17 title shortened to 'FLOP (log)' with explicit x2 baseline to render bars on log scale."}
+]

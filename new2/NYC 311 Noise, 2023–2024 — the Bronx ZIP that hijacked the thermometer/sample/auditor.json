@@ -1,0 +1,6 @@
+[
+  {"type": "attribute_typo", "count": 2, "lines": [418, 498],
+   "note": "Two paragraphs used `data-ana2` instead of the comma-separated `data-ana` convention. Merged to `data-ana=\"ana_25,ana_03\"` (line 418) and `data-ana=\"ana_23,ana_24\"` (line 498) so the inspector can resolve both findings."},
+  {"type": "teaser_fallback", "count": 1, "lines": [314],
+   "note": "The teaser <img> was `display:none`, which removes it from the accessibility tree AND prevents it from acting as a visual fallback if the video fails to load. Replaced with `z-index:0` so the img sits behind the video and is shown only if the video cannot render — preserving the alt text for screen readers and providing a graceful degradation."}
+]

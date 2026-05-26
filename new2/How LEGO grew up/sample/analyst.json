@@ -1,0 +1,445 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0"
+  },
+  "dataset": {
+    "files": ["sets.csv", "themes.csv", "colors.csv", "parts.csv", "part_categories.csv", "inventories.csv", "inventory_parts.csv", "inventory_sets.csv", "minifigs.csv"],
+    "rows": 1656941,
+    "columns": 41,
+    "what_one_row_represents": "Depends on the file. Master entities: one official LEGO set per row in sets.csv (26,872 rows), one part in parts.csv (62,462), one official color in colors.csv (275), one minifigure in minifigs.csv (16,741), one theme in themes.csv (494). Join tables: inventories.csv (45,522, one inventory version per set) and inventory_parts.csv (1,498,052, one set × part × color × quantity cell).",
+    "time_range": "1949 – 2024 (analyses cap at 2024; raw data contains partial 2025-2027 forward announcements)",
+    "geographic_scope": "Global (LEGO is a Danish-headquartered global toy brand)"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset profile — what's in the box",
+      "content": "The catalog covers 75 years of LEGO production. The headline tables are sets.csv (26,872 sets, of which 19,651 have a positive part count — the rest are catalog stubs, polybags, books, or partial inventories), inventory_parts.csv (1,498,052 rows, the set × part × color × quantity join), parts.csv (62,462 distinct parts), and colors.csv (275 official colors). 7,221 sets (27%) have num_parts = 0 and were filtered out of complexity analyses. The earliest entries are five 1949 sets — the original Automatic Binding Bricks — and the most recent complete year is 2024 (with 1,271 set entries, of which 835 have parts). The 142 root-theme tree resolves to 470 distinct sub-themes via parent_id.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/load_and_profile.py",
+        "lines": [13, 31],
+        "output": "sets.csv: 26,872 rows / 6 cols\ninventory_parts.csv: 1,498,052 rows / 6 cols\nparts.csv: 62,462 / 4\ncolors.csv: 275 / 8\nyear min/max: 1949 / 2027\nsets with num_parts>0: 19,651"
+      },
+      "data_table": {
+        "description": "Top-level row counts per CSV",
+        "columns": ["file", "rows", "cols"],
+        "rows": [
+          ["sets.csv", 26872, 6],
+          ["themes.csv", 494, 3],
+          ["colors.csv", 275, 8],
+          ["parts.csv", 62462, 4],
+          ["part_categories.csv", 76, 2],
+          ["inventories.csv", 45522, 3],
+          ["inventory_parts.csv", 1498052, 6],
+          ["inventory_sets.csv", 4984, 3],
+          ["minifigs.csv", 16741, 4]
+        ]
+      },
+      "based_on": ["det_01", "det_12"]
+    },
+    "ana_02": {
+      "label": "Annual new-set introductions — 254x growth, with a clear 2003–2007 crater",
+      "content": "LEGO introduced 5 sets in 1949 — the year it started shipping plastic bricks at all. By 2002 the company was shipping 583 new sets a year. Then sales collapsed: introductions of sets-with-parts dropped from 511 in 2002 to 291 in 2007, a 43% decline that lines up precisely with the 2003–2004 financial crisis. Recovery was slow — set introductions did not get back to 500 per year until 2013 — but the post-crisis growth has been steep. The 2020s decade is producing >1,100 new sets per year, more than 200x the 1949 rate. (Counts in this finding include only sets with num_parts > 0; including gear, books, and polybags, 2024 added 1,271 catalog entries.)",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sets_over_time.py",
+        "lines": [21, 30],
+        "output": "1949: 5\n2002: 511 (peak pre-crisis)\n2007: 291 (trough)\n2013: 577 (back to pre-crisis level)\n2024: 835"
+      },
+      "data_table": {
+        "description": "New set introductions per year, 1949–2024 (only sets with num_parts > 0)",
+        "columns": ["year", "n_sets_with_parts"],
+        "rows": [
+          [1949, 5], [1950, 6], [1953, 3], [1954, 14], [1955, 36], [1956, 16], [1957, 21], [1958, 61], [1959, 4],
+          [1960, 2], [1961, 24], [1962, 11], [1963, 57], [1964, 32], [1965, 21], [1966, 113], [1967, 26], [1968, 40], [1969, 74],
+          [1970, 42], [1971, 54], [1972, 39], [1973, 70], [1974, 38], [1975, 40], [1976, 75], [1977, 114], [1978, 76], [1979, 93],
+          [1980, 110], [1981, 82], [1982, 88], [1983, 72], [1984, 90], [1985, 168], [1986, 157], [1987, 233], [1988, 81], [1989, 131],
+          [1990, 113], [1991, 145], [1992, 133], [1993, 134], [1994, 158], [1995, 190], [1996, 187], [1997, 268], [1998, 401], [1999, 361],
+          [2000, 348], [2001, 396], [2002, 511], [2003, 423], [2004, 399], [2005, 342], [2006, 305], [2007, 291], [2008, 319], [2009, 419],
+          [2010, 405], [2011, 485], [2012, 543], [2013, 577], [2014, 714], [2015, 688], [2016, 717], [2017, 681], [2018, 708], [2019, 722],
+          [2020, 738], [2021, 767], [2022, 730], [2023, 768], [2024, 835]
+        ]
+      },
+      "based_on": ["det_06"]
+    },
+    "ana_03": {
+      "label": "Set complexity creep — median piece count grew almost 5x in 40 years",
+      "content": "In 1980 the median LEGO set had 34 parts. In 2020 the median had grown to 68.5 — a 2x increase already. But in 2023 the median jumped to 144.5 and in 2024 to 159, a 4.7x increase over the 1980 baseline. The 95th-percentile set (a robust proxy for 'big LEGO') grew from 500 parts in 1980 to 1,627 in 2024, a 3.3x increase. The single largest set per year grew far faster: 787 parts in 1980, 5,255 in 2003 (UCS Imperial Star Destroyer 10030), 7,541 in 2017 (UCS Millennium Falcon 75192), 10,001 in 2022 (Eiffel Tower 10307), and 11,695 in 2021 (Art World Map 31203 — the all-time record). The acceleration is not gradual — the median stays under 100 through 2022 and then jumps sharply in 2023–2024, suggesting a deliberate strategic shift toward larger 'centerpiece' sets aimed at the adult collector market that grew throughout the 2010s.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sets_over_time.py",
+        "lines": [33, 41],
+        "output": "median 1980: 34.0\nmedian 1990: 54.0\nmedian 2010: 61.0\nmedian 2020: 68.5\nmedian 2024: 159.0\np95 1980: 500.4\np95 2024: 1627.3\nmax 1980: 787\nmax 2024: 5500"
+      },
+      "data_table": {
+        "description": "Median, 95th-percentile, and max set size by year (sets with num_parts > 0)",
+        "columns": ["year", "median", "p95", "max"],
+        "rows": [
+          [1949, 126.0, 170.8, 178], [1958, 10.0, 76.0, 149], [1963, 49.0, 213.2, 468],
+          [1970, 50.5, 217.4, 471], [1975, 82.0, 516.5, 596], [1979, 56.0, 369.0, 512],
+          [1980, 34.0, 500.4, 787], [1985, 34.0, 447.2, 1534], [1989, 33.0, 436.5, 918],
+          [1990, 54.0, 556.4, 1534], [1995, 42.5, 477.5, 1730], [1999, 32.0, 431.0, 1406],
+          [2000, 39.0, 446.6, 2882], [2002, 39.0, 465.5, 3116], [2003, 45.0, 730.4, 5255],
+          [2005, 52.5, 982.4, 5462], [2007, 77.0, 1108.5, 5198], [2010, 61.0, 985.2, 5200],
+          [2013, 50.0, 756.2, 2989], [2015, 65.0, 806.3, 10001], [2017, 86.0, 1008.0, 7541],
+          [2018, 78.0, 912.2, 6020], [2019, 70.0, 1172.5, 4784], [2020, 68.5, 1204.7, 9036],
+          [2021, 86.0, 1439.3, 11695], [2022, 95.0, 1603.8, 10001], [2023, 144.5, 1573.6, 6181],
+          [2024, 159.0, 1627.3, 5500]
+        ]
+      },
+      "based_on": ["det_06", "det_08", "det_11"]
+    },
+    "ana_04": {
+      "label": "Top 20 largest sets ever — the post-2017 record run",
+      "content": "Sixteen of the twenty largest LEGO sets ever made were released in 2017 or later. The record holder is the Art World Map (31203, 2021) at 11,695 pieces. The Eiffel Tower (10307, 2022) hits 10,001 pieces. Three other 2020-2024 sets cross 9,000 (Colosseum, Titanic, Diagon Alley's neighbour Hogwarts Castle is the 11th-largest at 6,020). The list is dominated by two product lines: Icons (the renamed 'Creator Expert' line targeting adult builders) and Ultimate Collector Series Star Wars sets. The only pre-2017 entries are the 2008 Taj Mahal (5,922 pieces — for a decade the largest set in the catalog) and the 2015 'Ultimate Battle for Chima' BIGBOX, a multi-set boxed promotion. Note that the 2024 'Window Exploration Bag' (5,500 pieces) is a LEGO Serious Play educational bulk-pack, not a build-a-thing set; it is included in the dataset because Rebrickable indexes all official catalog entries.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/sets_over_time.py",
+        "lines": [44, 47],
+        "output": "31203-1  World Map                                    2021  LEGO Art                  11695\n10307-1  Eiffel Tower                                 2022  Icons                     10001\nBIGBOX-1 The Ultimate Battle for Chima                2015  Legends of Chima          10001\n10294-1  Titanic                                      2021  Icons                      9092\n10276-1  Colosseum                                    2020  Icons                      9036\n75192-1  Millennium Falcon                            2017  Ultimate Collector Series  7541"
+      },
+      "data_table": {
+        "description": "Top 20 largest LEGO sets by piece count, with year and root theme",
+        "columns": ["set_num", "name", "year", "theme", "num_parts"],
+        "rows": [
+          ["31203-1", "World Map", 2021, "LEGO Art", 11695],
+          ["10307-1", "Eiffel Tower", 2022, "Icons", 10001],
+          ["BIGBOX-1", "The Ultimate Battle for Chima", 2015, "Legends of Chima", 10001],
+          ["10294-1", "Titanic", 2021, "Icons", 9092],
+          ["10276-1", "Colosseum", 2020, "Icons", 9036],
+          ["75192-1", "Millennium Falcon", 2017, "Ultimate Collector Series", 7541],
+          ["75313-1", "AT-AT", 2021, "Ultimate Collector Series", 6785],
+          ["75331-1", "The Razor Crest", 2022, "Ultimate Collector Series", 6187],
+          ["10316-1", "Lord of the Rings: Rivendell", 2023, "Icons", 6181],
+          ["71799-1", "NINJAGO City Markets", 2023, "Ninjago", 6163],
+          ["71043-1", "Hogwarts Castle", 2018, "Harry Potter", 6020],
+          ["10256-1", "Taj Mahal (re-release)", 2017, "Creator Expert", 5923],
+          ["10189-1", "Taj Mahal", 2008, "Creator Expert", 5922],
+          ["10299-1", "Real Madrid – Santiago Bernabéu Stadium", 2022, "Icons", 5876],
+          ["71741-1", "NINJAGO City Gardens", 2021, "Ninjago", 5710],
+          ["75978-1", "Diagon Alley", 2020, "Harry Potter", 5548],
+          ["10284-1", "Camp Nou - FC Barcelona", 2021, "Icons", 5509],
+          ["2000409-2", "Window Exploration Bag (Serious Play bulk-pack)", 2024, "Serious Play", 5500],
+          ["10333-1", "The Lord of the Rings: Barad-dûr", 2024, "Icons", 5478],
+          ["SWMP-1", "Star Wars / M&M Mosaic - Promo Set", 2005, "Star Wars", 5462]
+        ]
+      },
+      "based_on": ["det_08", "det_11"]
+    },
+    "ana_05": {
+      "label": "The palette expanded — then contracted",
+      "content": "The number of distinct colors appearing in inventory_parts rose from 10 in 1949 to a peak of 113 in 2004, then dropped sharply and has hovered between 60 and 78 since 2008. The peak coincides exactly with the year LEGO rationalised its palette: the 113 figure in 2004 includes both the soon-to-be-retired old grays/brown AND the new bluish replacements appearing in parallel, plus a handful of one-year experimental colors that were never used again. The mid-2000s contraction (113 → 60 in three years) is the deliberate culling that Jake McKee's 'Universal Colors' list formalized. By the 2020s the palette has stabilised at about 75 actively-used colors per year, much smaller than the 275 colors that have ever appeared in the catalog.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/colors_palette.py",
+        "lines": [33, 36],
+        "output": "1949: 10\n2004: 113 (peak)\n2007: 64\n2024: 78"
+      },
+      "data_table": {
+        "description": "Distinct colors used in inventory_parts per year",
+        "columns": ["year", "n_unique_colors"],
+        "rows": [
+          [1949, 10], [1953, 4], [1955, 7], [1958, 37], [1960, 8], [1963, 27], [1968, 9], [1970, 11],
+          [1975, 11], [1978, 16], [1980, 18], [1985, 24], [1988, 19], [1990, 21], [1993, 27],
+          [1995, 33], [1996, 31], [1998, 52], [1999, 62], [2000, 71], [2001, 78], [2002, 79],
+          [2003, 100], [2004, 113], [2005, 106], [2006, 93], [2007, 64], [2008, 60], [2009, 59],
+          [2010, 63], [2011, 66], [2012, 65], [2013, 63], [2014, 62], [2015, 66], [2016, 68],
+          [2017, 64], [2018, 67], [2019, 66], [2020, 73], [2021, 74], [2022, 75], [2023, 78], [2024, 78]
+        ]
+      },
+      "based_on": ["det_03", "det_07"]
+    },
+    "ana_06": {
+      "label": "The 2004 'bley' switchover — total replacement in three years",
+      "content": "The data shows the 2004 grey shift was decisive and fast. Old Light Gray (color_id 7) peaked at 10,388 units placed in inventory rows in 2002. In 2003 it began to be replaced: Light Bluish Gray (id 71) appeared in 2,072 places. In 2004 the new gray crossed 6,689 placements while the old gray collapsed to 1,316 — an 87% same-year drop. By 2005 old Light Gray was at 228, and from 2007 onwards it appears in zero new sets. The same pattern holds for Dark Gray (id 8, peaked at 5,257 in 2003, gone by 2007) and Brown (id 6, peaked at 1,312 in 2003, gone by 2007). The new Light Bluish Gray has since become the second-most-used color in LEGO history with 577,174 cumulative placements — only the everlasting Black (920,517) beats it. The AFOL community's 'bley' grievance was real, but the dataset reveals what the community feared: there is no going back. The new grays are now structurally embedded in every modern set.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/colors_palette.py",
+        "lines": [49, 64],
+        "output": "Light Gray (old) usage by year (peak 2002 → extinct 2007):\n  2002: 10,388\n  2003: 9,283\n  2004: 1,316  (-87%)\n  2005: 228\n  2007: 1\n  2008+: 0\nLight Bluish Gray (new) usage:\n  2003: 2,072 (debut)\n  2004: 6,689\n  2017: 30,687\n  2024: 37,790"
+      },
+      "data_table": {
+        "description": "Quantity placed per year for the six 'bley' colors (1995–2024)",
+        "columns": ["year", "Light Gray (old)", "Light Bluish Gray (new)", "Dark Gray (old)", "Dark Bluish Gray (new)", "Brown (old)", "Reddish Brown (new)"],
+        "rows": [
+          [1995, 4286, 0, 291, 0, 198, 0],
+          [1996, 4180, 0, 567, 0, 702, 0],
+          [1997, 4688, 0, 507, 0, 466, 0],
+          [1998, 5143, 0, 1797, 0, 524, 0],
+          [1999, 5649, 0, 1681, 1, 318, 0],
+          [2000, 5081, 0, 2579, 0, 625, 0],
+          [2001, 5617, 0, 2826, 0, 957, 0],
+          [2002, 10388, 0, 3982, 0, 1306, 0],
+          [2003, 9283, 2072, 5257, 1769, 1312, 29],
+          [2004, 1316, 6689, 761, 4448, 365, 1065],
+          [2005, 228, 8578, 169, 7422, 231, 2315],
+          [2006, 72, 10631, 61, 8119, 49, 1342],
+          [2007, 1, 13959, 0, 11283, 0, 1519],
+          [2008, 0, 12590, 0, 9631, 0, 1880],
+          [2010, 0, 12811, 0, 9952, 0, 3030],
+          [2014, 0, 21322, 0, 14213, 0, 6348],
+          [2017, 0, 30687, 0, 20380, 0, 7304],
+          [2020, 0, 24526, 0, 16898, 0, 9100],
+          [2022, 0, 33206, 0, 27775, 0, 11379],
+          [2024, 0, 37790, 0, 30116, 0, 20524]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_07": {
+      "label": "All-time set-count champions — Gear, Duplo, Books, then Star Wars",
+      "content": "The all-time top theme by raw set count is 'Gear' (4,805 entries), which is not a play theme at all — it is LEGO's catch-all category for branded merchandise (keychains, magnets, watches, posters, mugs). Behind that come 'Duplo' (1,404, the toddler line introduced in 1969), 'Books' (1,297, the licensed/branded book line), and 'Educational and Dacta' (1,065, the school-and-classroom kits). The first 'real LEGO' play theme is Star Wars at 994 sets — the largest single-IP theme in company history, having added at least 38 new sets every year since 2010. Notable mid-rankers: City (909), Friends (604), Ninjago (584), Creator (584), Technic (550), Bionicle (468), Castle (267), Space (333). Of the 142 distinct root themes the dataset tracks, 81 have ≤ 50 sets — most theme launches in LEGO history have been small-scale experiments that never grew.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/themes_arc.py",
+        "lines": [38, 43],
+        "output": "Gear: 4805\nDuplo: 1404\nBooks: 1297\nEducational and Dacta: 1065\nStar Wars: 994\nCity: 909\nCollectible Minifigures: 906\nTown: 678\nFriends: 604\nNinjago: 584\nCreator: 584\nTechnic: 550\nService Packs: 504\nSystem: 499\nBionicle: 468"
+      },
+      "data_table": {
+        "description": "Top 25 super-themes (rolled-up via themes.parent_id) by total set count",
+        "columns": ["theme", "n_sets"],
+        "rows": [
+          ["Gear", 4805], ["Duplo", 1404], ["Books", 1297], ["Educational and Dacta", 1065],
+          ["Star Wars", 994], ["City", 909], ["Collectible Minifigures", 906], ["Town", 678],
+          ["Friends", 604], ["Ninjago", 584], ["Creator", 584], ["Technic", 550],
+          ["Service Packs", 504], ["System", 499], ["Bionicle", 468], ["Seasonal", 467],
+          ["LEGO Brand Store", 434], ["Universal Building Set", 415], ["Super Heroes Marvel", 337],
+          ["Space", 333], ["Promotional", 284], ["Racers", 283], ["Other", 272],
+          ["Castle", 267], ["Train", 244]
+        ]
+      },
+      "based_on": ["det_04", "det_05"]
+    },
+    "ana_08": {
+      "label": "Decade-by-decade theme dominance",
+      "content": "Each decade has a different king. The 1960s belong to System (the basic-brick original product line) and Train. The 1970s belong to Legoland (the original branded-towns predecessor of City) and Universal Building Set. The 1980s mark the rise of Service Packs and the original Town theme, with Duplo and Educational/Dacta hitting their stride. In the 1990s Town is still on top but Educational and Dacta climbs to #3 — LEGO is increasingly a schools-product company in that decade. The 2000s flip the script completely: Gear (merchandise) explodes to #1, and Bionicle is the largest play theme at #3, with 412 sets in that decade alone. The 2010s and 2020s look almost identical at the top — Gear, Books, City, Collectible Minifigures, and Star Wars or Friends — reflecting both LEGO's mature licensing-heavy product strategy and the long shadow of the AFOL/UCS / Adults-Welcome era.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/themes_arc.py",
+        "lines": [46, 53],
+        "output": "1970s top: Legoland 157, UBS 72, Service Packs 62, Town 53, Train 45\n1980s top: Service Packs 259, Town 189, UBS 141, Duplo 138, Educational and Dacta 122\n1990s top: Town 338, Duplo 302, Educational and Dacta 258, UBS 186, Service Packs 176\n2000s top: Gear 784, Duplo 434, Bionicle 412, Educational and Dacta 280, Creator 253\n2010s top: Gear 2244, Books 698, Collectible Minifigures 643, Star Wars 521, City 427\n2020s top: Gear 1733, Books 496, City 296, Collectible Minifigures 257, Friends 245"
+      },
+      "data_table": {
+        "description": "Top-5 super-themes per decade (by new-set count)",
+        "columns": ["decade", "theme", "n"],
+        "rows": [
+          [1950, "System", 156], [1950, "Other", 17], [1950, "Books", 2],
+          [1960, "System", 310], [1960, "Train", 48], [1960, "Modulex", 35], [1960, "Books", 20], [1960, "Other", 8],
+          [1970, "Legoland", 157], [1970, "Universal Building Set", 72], [1970, "Service Packs", 62], [1970, "Town", 53], [1970, "Train", 45],
+          [1980, "Service Packs", 259], [1980, "Town", 189], [1980, "Universal Building Set", 141], [1980, "Duplo", 138], [1980, "Educational and Dacta", 122],
+          [1990, "Town", 338], [1990, "Duplo", 302], [1990, "Educational and Dacta", 258], [1990, "Universal Building Set", 186], [1990, "Service Packs", 176],
+          [2000, "Gear", 784], [2000, "Duplo", 434], [2000, "Bionicle", 412], [2000, "Educational and Dacta", 280], [2000, "Creator", 253],
+          [2010, "Gear", 2244], [2010, "Books", 698], [2010, "Collectible Minifigures", 643], [2010, "Star Wars", 521], [2010, "City", 427],
+          [2020, "Gear", 1733], [2020, "Books", 496], [2020, "City", 296], [2020, "Collectible Minifigures", 257], [2020, "Friends", 245]
+        ]
+      },
+      "based_on": ["det_04", "det_05", "det_09"]
+    },
+    "ana_09": {
+      "label": "Star Wars — a steady 4–7% of new sets every year since 2000",
+      "content": "Since the 1999 launch, Star Wars has been a remarkably stable share of LEGO's annual output: roughly 4–7% of new set introductions every year. The line debuted at 13 sets in 1999 (3.4% of that year's catalog), grew to 29 in 2005 (7.0% — the high water mark as a share), and has shipped 30–70 new Star Wars sets every single year through 2024. In absolute terms the line peaked in 2015 with 70 sets, coinciding with the Force Awakens theatrical release. The share has stayed remarkably steady even as LEGO has added Marvel, Harry Potter, Friends, and dozens of other licensed lines around it — Star Wars hasn't lost ground, the rest of the catalog just grew with it.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/themes_arc.py",
+        "lines": [60, 70],
+        "output": "1999: 13 of 384 (3.4%)\n2005: 29 of 415 (7.0%)\n2015: 70 of 1024 (6.8%)\n2024: 56 of 1271 (4.4%)"
+      },
+      "data_table": {
+        "description": "Star Wars sets and share of all new sets per year (1999–2024)",
+        "columns": ["year", "n_sw", "n_all", "sw_share_pct"],
+        "rows": [
+          [1999, 13, 384, 3.4], [2000, 23, 408, 5.6], [2001, 12, 460, 2.6],
+          [2002, 25, 583, 4.3], [2003, 27, 544, 5.0], [2004, 24, 468, 5.1],
+          [2005, 29, 415, 7.0], [2006, 13, 442, 2.9], [2007, 17, 481, 3.5],
+          [2008, 24, 463, 5.2], [2009, 37, 553, 6.7], [2010, 30, 531, 5.6],
+          [2011, 33, 657, 5.0], [2012, 43, 776, 5.5], [2013, 43, 837, 5.1],
+          [2014, 47, 1055, 4.5], [2015, 70, 1024, 6.8], [2016, 64, 999, 6.4],
+          [2017, 65, 1109, 5.9], [2018, 69, 1069, 6.5], [2019, 57, 1111, 5.1],
+          [2020, 46, 1121, 4.1], [2021, 38, 1233, 3.1], [2022, 41, 1239, 3.3],
+          [2023, 48, 1175, 4.1], [2024, 56, 1271, 4.4]
+        ]
+      },
+      "based_on": ["det_04"]
+    },
+    "ana_10": {
+      "label": "Bionicle — a near-decade dominance, then disappeared",
+      "content": "Bionicle's lifecycle in the catalog is exactly what its corporate story says: launched in 2001 with 46 sets in the first year, peaked at 63 sets in 2003 (during LEGO's worst financial year), held above 30 sets per year through 2009, then collapsed to 6 sets in 2010 — its final pre-discontinuation year. The 2014 announcement of the reboot shows up as 2 sets that year, then 28 in 2015 and 20 in 2016, before vanishing for good. The dataset shows 468 total Bionicle sets across both lines combined — making Bionicle, despite being a single-IP product, the 15th-most-prolific theme of all time. For context: 468 is more sets than LEGO has ever released under the Castle theme (267) and within striking distance of Marvel Super Heroes (337). The data confirms exactly what LEGO's executives credit Bionicle with: it was a real, large-revenue product for the better part of a decade.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/themes_arc.py",
+        "lines": [73, 80],
+        "output": "2001: 46\n2002: 42\n2003: 63\n2004: 50\n2005: 44\n2006: 60\n2007: 36\n2008: 39\n2009: 32\n2010: 6\n2014: 2 (reboot announcement)\n2015: 28 (reboot peak)\n2016: 20 (reboot end)\nTotal: 468 sets"
+      },
+      "data_table": {
+        "description": "Bionicle set introductions per year",
+        "columns": ["year", "n_bionicle"],
+        "rows": [
+          [2001, 46], [2002, 42], [2003, 63], [2004, 50], [2005, 44],
+          [2006, 60], [2007, 36], [2008, 39], [2009, 32], [2010, 6],
+          [2014, 2], [2015, 28], [2016, 20]
+        ]
+      },
+      "based_on": ["det_05"]
+    },
+    "ana_11": {
+      "label": "LEGO Friends and the pink-palette explosion",
+      "content": "Before 2012, LEGO used very little pink. The overall pink/lavender/magenta/violet share of all parts placed in new sets hovered below 1% for most of the dataset's history. In 2012 LEGO Friends launched with 33 sets — and pink usage in Friends sets alone was 805 part-instances in that single year, almost equal to all pink usage in every other theme combined (430). Since then, Friends has shipped 51 sets per year on average and has by itself consumed 1,000–1,500 pink parts per year — but, surprisingly, the use of pink in non-Friends themes has grown even faster, from 430 in 2012 to 7,879 in 2024 (an 18x increase). What looks like 'pink is just for girls' is actually that LEGO Friends opened a permission structure: once the pink-and-lavender palette was on the shelf, every other theme also started using it. By 2024 the pink share of all parts placed is 2.6%, three times what it was in 2011.",
+      "type": "trend",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/friends_impact.py",
+        "lines": [40, 55],
+        "output": "2011 pink share: 0.24%\n2012 pink share: 1.31% (Friends launches)\n2024 pink share: 2.62%\n\nIn 2012: 805 pink units in Friends sets vs 430 in all other themes combined.\nIn 2024: 1,133 pink units in Friends vs 7,879 in other themes."
+      },
+      "data_table": {
+        "description": "Pink/lavender/magenta/violet part placements per year, split by Friends vs other themes (2005–2024)",
+        "columns": ["year", "other_themes_pink_qty", "friends_pink_qty", "pink_share_pct_overall"],
+        "rows": [
+          [2005, 609, 0, 0.85], [2006, 435, 0, 0.60], [2007, 297, 0, 0.38],
+          [2008, 327, 0, 0.39], [2009, 178, 0, 0.22], [2010, 801, 0, 0.85],
+          [2011, 195, 0, 0.24],
+          [2012, 430, 805, 1.31], [2013, 611, 621, 1.12], [2014, 1089, 1138, 1.71],
+          [2015, 1700, 1222, 1.97], [2016, 1803, 1050, 1.79], [2017, 1560, 1050, 1.45],
+          [2018, 2384, 970, 1.94], [2019, 2671, 1150, 1.98], [2020, 5081, 1151, 2.91],
+          [2021, 4245, 1550, 2.15], [2022, 5340, 1502, 2.39], [2023, 5332, 1308, 2.17],
+          [2024, 7879, 1133, 2.62]
+        ]
+      },
+      "based_on": ["det_09"]
+    },
+    "ana_13": {
+      "label": "Color survival — six colors active for 75+ years, 159 colors retired",
+      "content": "Of the 246 colors that have appeared in at least one inventory_parts row, only 87 are still active as of 2020+. The remaining 159 — 65% of all colors that have ever existed — have been retired. The six colors still in active use that go back to the dataset's first year (1949) are Blue (id 1), Green (id 2), Red (id 4), Yellow (id 14), White (id 15), and Bright Green (id 10). Black (id 0) joined them in 1957 and has the highest total-quantity placement of any color ever (920,517 units). The most recently retired colors are an interesting mix of failed experiments: Pearl Copper (id 1063, used 2017–2019), Trans-Medium Blue (id 143, used 2001–2018), Chrome Pink (id 63, used 2001–2018), and various Speckle-Black-X variants that appeared briefly in the mid-2000s and never came back.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/colors_palette.py",
+        "lines": [38, 47],
+        "output": "Total colors observed in inventory_parts: 246\nRetired (last seen before 2020): 159 (65%)\nStill active: 87 (35%)\nColors active since 1949: Blue, Green, Red, Yellow, White, Bright Green\nBlack since 1957"
+      },
+      "data_table": {
+        "description": "Six colors active since 1949 + Black since 1957, sorted by total all-time placements",
+        "columns": ["color_id", "name", "rgb", "first_year", "last_year", "total_qty"],
+        "rows": [
+          [0, "Black", "05131D", 1957, 2024, 920517],
+          [15, "White", "FFFFFF", 1949, 2024, 549744],
+          [4, "Red", "C91A09", 1949, 2024, 346081],
+          [14, "Yellow", "F2CD37", 1949, 2024, 227674],
+          [1, "Blue", "0055BF", 1949, 2024, 227321],
+          [2, "Green", "237841", 1949, 2024, 95701],
+          [10, "Bright Green", "4B9F4A", 1949, 2024, 7032]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_16": {
+      "label": "Most-placed parts — Plate 1×2 is the king",
+      "content": "The single most-placed part in LEGO history is the Plate 1×2 (part 3023), appearing 165,871 times across all set inventories. Behind it: the round-stud Plate 1×1 (137,619), the regular Plate 1×1 (117,315), the Brick 1×2 (113,073), and the Brick 1×1 (90,021). The top 20 parts are entirely made of basic geometry — plates, bricks, tiles, slopes, and the Cheese Slope (part 54200, 64,176 placements), which is itself a 21st-century invention that has become so ubiquitous in the modern catalog that it now ranks above Brick 2×2. The 2,780 ranking — Technic Pin with Friction Ridges Lengthwise and Center Slots (71,736 placements) — is the highest-ranked Technic part and reflects the explosion of Technic, Bionicle, and Mindstorms sets after 2000.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/minifigs_parts.py",
+        "lines": [62, 67],
+        "output": "Top 5:\n3023  Plate 1 x 2: 165,871\n6141  Plate Round 1 x 1 with Solid Stud: 137,619\n3024  Plate 1 x 1: 117,315\n3004  Brick 1 x 2: 113,073\n3005  Brick 1 x 1: 90,021"
+      },
+      "data_table": {
+        "description": "Top 20 parts by total quantity across all inventories",
+        "columns": ["part_num", "name", "category", "total_qty"],
+        "rows": [
+          ["3023", "Plate 1 x 2", "Plates", 165871],
+          ["6141", "Plate Round 1 x 1 with Solid Stud", "Plates Round Curved and Dishes", 137619],
+          ["3024", "Plate 1 x 1", "Plates", 117315],
+          ["3004", "Brick 1 x 2", "Bricks", 113073],
+          ["3005", "Brick 1 x 1", "Bricks", 90021],
+          ["3710", "Plate 1 x 4", "Plates", 74381],
+          ["2780", "Technic Pin with Friction Ridges Lengthwise and Center Slots", "Technic Pins", 71736],
+          ["3069b", "Tile 1 x 2 with Groove", "Tiles", 66676],
+          ["54200", "Slope 30° 1 x 1 x 2/3 (Cheese Slope)", "Bricks Sloped", 64176],
+          ["3003", "Brick 2 x 2", "Bricks", 60910],
+          ["98138", "Tile Round 1 x 1", "Tiles Round and Curved", 60503],
+          ["3020", "Plate 2 x 4", "Plates", 59300],
+          ["3022", "Plate 2 x 2", "Plates", 56413],
+          ["3010", "Brick 1 x 4", "Bricks", 54297],
+          ["3070b", "Tile 1 x 1 with Groove", "Tiles", 50317],
+          ["3001", "Brick 2 x 4", "Bricks", 47565],
+          ["3021", "Plate 2 x 3", "Plates", 44320],
+          ["3666", "Plate 1 x 6", "Plates", 42187],
+          ["3623", "Plate 1 x 3", "Plates", 39514],
+          ["3062b", "Brick Round 1 x 1 Open Stud", "Bricks Round and Cones", 37649]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_17": {
+      "label": "Most-placed colors — Black, then the 2004 replacements",
+      "content": "The top color overall is Black at 920,517 placements — far ahead of anything else, partly because so many parts that look 'colored' are actually built on a black axle/pin. The two new 'bley' grays from 2004 have already overtaken everything else despite their twenty-year head-start handicap: Light Bluish Gray (new) is #2 at 577,174 and Dark Bluish Gray (new) is #4 at 412,490. The old Light Gray, with 50 years of catalog dominance, only ranks #10 at 105,918 — the new grays have effectively replaced it five-fold in less than two decades. White is #3 at 549,744. The classics — Red, Yellow, Blue — sit at #5, #6, #7 (346k, 228k, 227k). Notably the top 20 is dominated by what an AFOL would call 'system' colors; the fancy chrome/pearl/glitter shades that LEGO has experimented with don't crack the top 20 of all-time use.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/colors_palette.py",
+        "lines": [69, 75],
+        "output": "Top 20 colors by total quantity:\n#1  Black (id 0): 920,517\n#2  Light Bluish Gray (id 71): 577,174\n#3  White (id 15): 549,744\n#4  Dark Bluish Gray (id 72): 412,490\n#5  Red (id 4): 346,081\n#6  Yellow (id 14): 227,674\n#7  Blue (id 1): 227,321\n#8  Tan (id 19): 209,378\n#9  Reddish Brown (id 70): 193,545\n#10 Light Gray (old, id 7): 105,918"
+      },
+      "data_table": {
+        "description": "Top 20 colors by all-time quantity in inventory_parts",
+        "columns": ["color_id", "name", "rgb", "is_trans", "total_qty"],
+        "rows": [
+          [0, "Black", "05131D", false, 920517],
+          [71, "Light Bluish Gray", "A0A5A9", false, 577174],
+          [15, "White", "FFFFFF", false, 549744],
+          [72, "Dark Bluish Gray", "6C6E68", false, 412490],
+          [4, "Red", "C91A09", false, 346081],
+          [14, "Yellow", "F2CD37", false, 227674],
+          [1, "Blue", "0055BF", false, 227321],
+          [19, "Tan", "E4CD9E", false, 209378],
+          [70, "Reddish Brown", "582A12", false, 193545],
+          [7, "Light Gray", "9BA19D", false, 105918],
+          [2, "Green", "237841", false, 95701],
+          [28, "Dark Tan", "958A73", false, 76921],
+          [297, "Pearl Gold", "AA7F2E", false, 59899],
+          [25, "Orange", "FE8A18", false, 57452],
+          [272, "Dark Blue", "0A3463", false, 57353],
+          [47, "Trans-Clear", "FCFCFC", true, 54954],
+          [320, "Dark Red", "720E0F", false, 53452],
+          [27, "Lime", "BBE90B", false, 48511],
+          [84, "Medium Nougat", "AA7D55", false, 43473],
+          [41, "Trans-Light Blue", "AEEFEC", true, 36248]
+        ]
+      },
+      "based_on": ["det_07"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "Sets with num_parts = 0 (7,221 entries, 27% of catalog) are filtered out of all complexity analyses. These are typically polybags, gear/book entries, and partial inventories."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "Years 2025–2027 (about 2,100 sets) are partial/forward-announced and are excluded from time-series. The latest complete year used is 2024."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Color usage attributes each inventory_parts row to the latest inventory version of its parent set, and then to that set's release year. A set's pieces may have been first introduced earlier than its release year, especially for re-releases."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "Per-minifig year-of-introduction cannot be derived directly: minifigs.csv has no year column and the dataset has no inventory_minifigs join. We can only report aggregate counts."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "The 'Gear' super-theme (4,805 sets) is LEGO's branded-merchandise catch-all (keychains, watches, posters, books, etc.) and inflates non-play theme counts; it is not directly comparable to 'play' themes like Star Wars or City."
+    }
+  ]
+}

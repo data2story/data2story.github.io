@@ -1,0 +1,101 @@
+Pink/lavender/magenta/violet color IDs: 27
+  id                    name    rgb
+   5               Dark Pink C870A0
+  13                    Pink FC97AC
+  20            Light Violet C9CAE2
+  23        Dark Blue-Violet 2032B0
+  26                 Magenta 923978
+  29             Bright Pink E4ADC8
+  30         Medium Lavender AC78BA
+  31                Lavender E1D5ED
+  45         Trans-Dark Pink DF6695
+  63             Chrome Pink AA4D8E
+  77              Light Pink FECCCF
+ 110                  Violet 4354A3
+ 112    Medium Bluish Violet 6874CA
+ 114 Glitter Trans-Dark Pink DF6695
+ 230              Trans-Pink E4ADC8
+ 351        Medium Dark Pink F785B1
+1001           Medium Violet 9391E4
+1024        Modulex Pink Red F45C40
+1037          Modulex Violet BD7D85
+1038            Modulex Pink F785B1
+1046     Modulex Foil Violet 4B0082
+1054    Opal Trans-Dark Pink CE1D9B
+1082            Clikits Pink FE78B0
+1087              Duplo Pink FF879C
+1099      Glitter Trans-Pink E4ADC8
+1146               Warm Pink F6B7BF
+1147             Blue Violet A3A9FF
+=== ana_11 ===
+        other_themes_pink_qty  friends_pink_qty
+year                                           
+2000.0                    130                 0
+2001.0                    128                 0
+2002.0                    219                 0
+2003.0                    972                 0
+2004.0                    995                 0
+2005.0                    609                 0
+2006.0                    435                 0
+2007.0                    297                 0
+2008.0                    327                 0
+2009.0                    178                 0
+2010.0                    801                 0
+2011.0                    195                 0
+2012.0                    430               805
+2013.0                    611               621
+2014.0                   1089              1138
+2015.0                   1700              1222
+2016.0                   1803              1050
+2017.0                   1560              1050
+2018.0                   2384               970
+2019.0                   2671              1150
+2020.0                   5081              1151
+2021.0                   4245              1550
+2022.0                   5340              1502
+2023.0                   5332              1308
+2024.0                   7879              1133
+
+Overall pink share of all parts placed, per year (2005-2024):
+year
+2005.0    0.849159
+2006.0    0.599264
+2007.0    0.375560
+2008.0    0.386781
+2009.0    0.218883
+2010.0    0.845999
+2011.0    0.242203
+2012.0    1.310248
+2013.0    1.116448
+2014.0    1.705376
+2015.0    1.968393
+2016.0    1.786027
+2017.0    1.453909
+2018.0    1.943131
+2019.0    1.981456
+2020.0    2.910939
+2021.0    2.146423
+2022.0    2.390335
+2023.0    2.168404
+2024.0    2.620895
+
+Friends set count by year:
+year
+2012    33
+2013    32
+2014    48
+2015    51
+2016    48
+2017    44
+2018    52
+2019    51
+2020    58
+2021    47
+2022    40
+2023    50
+2024    50
+2025    40
+2026    36
+
+Friends total sets: 680
+Friends years: [2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026]

@@ -1,0 +1,392 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Every visual decision flows from a data finding in analyst.json. The five channels (chart, image, video, audio, interactive_or_map) are each represented, but pacing and emphasis are tuned to the story's centerpiece: ZIP 10466 (edt_06) gets the audio sonification + scrubber + stat callout combination because that is where the data is genuinely felt rather than read.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Ten distinct charts: 1.4 million rows of 311 data become legible only when aggregated. Every section has a chart driven by an analyst data_table."
+      },
+      "image": {
+        "used": true,
+        "reason": "One generated cinematic teaser still (a Bronx high-rise at night with one window lit far brighter than the others — a literal visual rhyme for the 10466 anomaly) plus three real-world Wikimedia reference images grounding the helicopter, brownstone-residential, and Mister-Softee paragraphs."
+      },
+      "video": {
+        "used": true,
+        "reason": "An image2video animation of the teaser still: subtle dolly push toward the brightly-lit window, used as the page's first scroll-into-view element. Motion is restrained so the still composition still reads."
+      },
+      "audio": {
+        "used": true,
+        "reason": "A data-bound sonification of ZIP 10466's 366-day 2024 complaint volume: each day becomes a 45 ms FM-bell pulse whose pitch and amplitude scale with that day's complaint count. The eight ≥3,000-complaint mobile-app bursts are audible as percussive slams against a near-silent baseline. This is the dataset's most surprising finding rendered into sound; readers can *hear* the spam pattern that the chart alone might not convey."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "(a) A Leaflet borough map of NYC with per-capita complaint rates as choropleth fill plus a single bright marker on 10466 that bridges into edt_06. (b) A synchronised scrubber on the 10466 daily timeline: as the sonification plays, a moving marker on the daily-volume bar chart tracks the day being heard."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_teaser_image": {
+      "label": "Teaser hero — Bronx high-rise at midnight",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.jpg",
+        "tool": "text2image",
+        "prompt": "Cinematic aerial view of a Bronx neighborhood at midnight, dense residential street with hundreds of glowing apartment windows lit yellow against deep blue night, a single brighter window on a higher floor casting a brilliant warm light into the dark, faint silhouettes of fire escapes and water towers, no people visible, editorial photojournalism, slight grain, no text in frame, 16:9",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "A dense Bronx apartment block at night, with one window in the upper right that burns noticeably brighter than every other window — a literal visual metaphor for the central finding (one ZIP code carrying 9% of all 2024 noise complaints). The image is full-bleed at the top of the page, with no overlaid text.",
+      "rationale": "The teaser image must work without explanation. A skyline at night is generic; a specific bright window inside a dense field of dim windows hints at the anomaly story before any prose is read.",
+      "based_on": []
+    },
+    "des_teaser_video": {
+      "label": "Teaser motion — slow dolly into the lit window (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "extremely subtle camera dolly push-in toward the brightly lit corner window of the high-rise, almost imperceptible motion, faint flickering of distant city windows in the background, no camera shake, cinematic editorial mood",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Six-second loopable clip: starts on the still teaser image, then slowly pushes the camera toward the brightly-lit window. Plays muted, autoplays once when scrolled into view. The page swaps in the static .jpg if video is unsupported.",
+      "rationale": "We invested in a strong composition with the still; image2video keeps the composition and adds enough motion to make the page feel alive without distracting from the headline.",
+      "based_on": []
+    },
+    "des_chart_01": {
+      "label": "Year-over-year totals — 2023 vs 2024",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "vertical_bar",
+        "data_source": "ana_02",
+        "x": "year",
+        "y": "complaints",
+        "color": "year",
+        "highlight": {"year": 2024},
+        "interaction": "hover tooltip with exact count and per-day average",
+        "style": {"palette": "two_tone_blue", "show_value_labels": true, "no_gridlines": true}
+      },
+      "brief": "Two-bar chart, one for 2023 (686,283) and one for 2024 (753,275). Both bars labeled with the exact count above the bar. Bars in a muted indigo, with 2024 a half-shade brighter to signal it's the focal year.",
+      "rationale": "The 2023→2024 comparison is the headline of the section; a two-bar chart is the most direct way to show the +9.8% step. No need for additional encoding.",
+      "based_on": ["ana_02"]
+    },
+    "des_chart_02": {
+      "label": "Top 15 descriptors — Loud Music/Party dominance",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_05",
+        "x": "count",
+        "y": "descriptor",
+        "color": "count",
+        "highlight": {"descriptor": "Loud Music/Party"},
+        "interaction": "hover tooltip with exact count + pct of all complaints",
+        "style": {"palette": "single_hue_orange", "sort_descending": true, "no_gridlines": true}
+      },
+      "brief": "Horizontal bar chart, top 15 descriptors. The 'Loud Music/Party' bar at 777,689 dwarfs every other; its bar is colored a vivid orange while the rest are a soft gray. Inline value labels on every bar so the long tail is readable.",
+      "rationale": "The dataset's single most concentrated fact (54% of every noise complaint = one descriptor) needs the longest bar in the field to dominate everything else visually.",
+      "based_on": ["ana_05"]
+    },
+    "des_chart_03": {
+      "label": "Three agencies, three speeds — median + p90 response time",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "horizontal_bar_log",
+        "data_source": "ana_16",
+        "x": "median_hours",
+        "y": "agency",
+        "color": "agency",
+        "secondary_x": "p90_hours",
+        "highlight": {"agency": "EDC"},
+        "interaction": "hover tooltip shows both median and p90 in human-readable units (minutes / days)",
+        "style": {"palette": "three_distinct", "log_x": true, "show_value_labels": true, "no_gridlines": false, "x_label": "hours from filed to closed (log scale)"}
+      },
+      "brief": "Three horizontal bars on a log x-axis: NYPD ~0.68h, DEP ~68h, EDC ~843h. Each bar shows the median; a lighter overlay extends to the p90. Annotated labels translate hours into 'minutes / days' for readability. The EDC bar is highlighted to underline that helicopter complaints take ~35 days to close.",
+      "rationale": "Linear scale would make NYPD's bar invisible. Log scale makes the three-orders-of-magnitude difference legible without exaggerating it.",
+      "based_on": ["ana_16"]
+    },
+    "des_stat_response_time": {
+      "label": "Stat callout — 41 minute median NYPD response",
+      "type": "stat_callout",
+      "section": "edt_03",
+      "content": {
+        "value": "41 min",
+        "label": "median NYPD time from complaint filed to case closed",
+        "data_source": "ana_16"
+      },
+      "brief": "Large 64-72px callout under the heading of edt_03, with the smaller line: '… 35 days for a helicopter complaint at EDC.' This compresses the speed-gradient finding into one easy-to-remember number.",
+      "rationale": "The 41-min median is one of the most quoted stats from the section; a callout makes it stick.",
+      "based_on": ["ana_16"]
+    },
+    "des_chart_04": {
+      "label": "Channel mix shift — 2023 vs 2024 by channel",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_08",
+        "x": "channel",
+        "y": "count",
+        "color": "year",
+        "highlight": {"channel": "PHONE"},
+        "interaction": "hover tooltip shows count + pct of year's total",
+        "style": {"palette": "two_tone_blue", "group_order": ["ONLINE", "MOBILE", "PHONE"], "no_gridlines": true, "show_value_labels": true}
+      },
+      "brief": "Three groups (ONLINE / MOBILE / PHONE) with two bars per group (2023 vs 2024). Online shrinks, mobile and phone both grow. The PHONE group is highlighted with a subtle outline to make the surprising +103% phone jump visible.",
+      "rationale": "Grouped bars let the reader see both the magnitude and the shift in one glance. The counter-intuitive PHONE growth is the section's twist, so it gets the visual emphasis.",
+      "based_on": ["ana_08"]
+    },
+    "des_chart_05": {
+      "label": "Borough — raw count + per-capita twin-bar",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "dual_bar_pair",
+        "data_source": "ana_09",
+        "left_panel": {"x": "count", "y": "borough", "label": "raw complaints (2-year)"},
+        "right_panel": {"x": "per_1k_residents", "y": "borough", "label": "complaints per 1,000 residents"},
+        "highlight": {"borough_left": "MANHATTAN", "borough_right": "BRONX"},
+        "interaction": "hover tooltip with population, raw count, per-capita",
+        "style": {"palette": "borough_distinct", "no_gridlines": true, "show_value_labels": true, "shared_y_axis": true}
+      },
+      "brief": "Two horizontal bar charts side-by-side. Left: raw complaint count (Manhattan tops). Right: complaints per 1,000 residents (Bronx tops). Shared y-axis so the reader can trace each borough from one side to the other and see the order flip.",
+      "rationale": "The flip from raw rank to per-capita rank is the punchline; side-by-side bars make it self-evident without extra prose.",
+      "based_on": ["ana_09"]
+    },
+    "des_map_05": {
+      "label": "Borough map — per-capita choropleth with 10466 marker",
+      "type": "interactive",
+      "section": "edt_05",
+      "content": {
+        "interaction_type": "leaflet_map",
+        "initial_state": "Light-themed NYC map zoomed to all five boroughs. Each borough shaded by per-capita complaint rate (legend: 60→241 per 1k). A single bright red marker pulses softly over ZIP 10466 in the Bronx, labelled 'ZIP 10466 → next section'.",
+        "trigger": "Hover a borough shows borough name + per-capita rate + raw count tooltip. Clicking the 10466 marker zooms in and surfaces a hint that scrolls the reader to edt_06.",
+        "transition": "Click smoothly scrolls to edt_06 anchor and triggers the 10466 chart entrance.",
+        "payoff": "Plants the 10466 anomaly visually before the prose explains it.",
+        "data_source": "ana_09",
+        "secondary_data_source": "ana_24",
+        "geo_source": "Leaflet default tile layer + inline GeoJSON for NYC borough boundaries (Programmer: use the official NYC OpenData borough boundary file, or the well-known nyc-boroughs.geojson at github.com/dwillis/nyc-maps/blob/master/boroughs/nyc-borough-boundaries.geojson)"
+      },
+      "brief": "Leaflet map of NYC. Borough polygons filled with a sequential color scale on per-capita complaint rate; legend below the map. A pulsing red dot at 10466's centroid (40.8964°N, -73.8456°W) with a tooltip 'Coming up: this one ZIP.' The map sits to the right of the twin-bar chart on wide layouts; on narrow it stacks above.",
+      "rationale": "A choropleth makes the spatial story concrete. The 10466 marker turns the map into a hand-off device to the next section's reveal.",
+      "based_on": ["ana_09", "ana_24"]
+    },
+    "des_stat_10466": {
+      "label": "Stat callout — 8.97% from one ZIP",
+      "type": "stat_callout",
+      "section": "edt_06",
+      "content": {
+        "value": "8.97%",
+        "label": "of all 2024 NYC noise complaints came from a single Bronx ZIP code",
+        "data_source": "ana_24"
+      },
+      "brief": "Massive 96px stat anchoring the top of edt_06. The sub-label is two lines, italic serif, with '67,571 of 753,275, ZIP 10466, ~62,000 residents.'",
+      "rationale": "The section is the spine of the entire piece; the number deserves the page's biggest typographic moment.",
+      "based_on": ["ana_24"]
+    },
+    "des_chart_06": {
+      "label": "ZIP 10466 — top 10 single-day bursts, stacked by channel",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "horizontal_stacked_bar",
+        "data_source": "ana_25",
+        "x": "complaints",
+        "y": "date",
+        "stack": ["mobile", "online", "phone"],
+        "color": "channel",
+        "highlight": {"date": "2024-09-15"},
+        "interaction": "hover tooltip shows date, total, channel breakdown. Click 'Play sonification' button below the chart triggers des_audio_10466 and moves a small marker over the chart in sync.",
+        "style": {"palette": {"mobile": "#d04040", "online": "#888888", "phone": "#cccccc"}, "show_value_labels": true, "no_gridlines": true}
+      },
+      "brief": "Horizontal stacked bars for the 10 noisiest single days in 10466, with each bar split into mobile / online / phone segments. The mobile slice is nearly the entire bar in every case (≥99% of complaints on every top-10 day). The top bar (2024-09-15, 4,952 complaints) is annotated with the line 'one every 17.4 seconds'.",
+      "rationale": "Stacked bars make the channel concentration (the story is mostly a mobile-app story) visible at a glance, on top of the absolute volume.",
+      "based_on": ["ana_25"]
+    },
+    "des_audio_10466": {
+      "label": "Sonification — 10466's 366 days of 2024 as percussive pulses",
+      "type": "audio",
+      "section": "edt_06",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "The chart shows magnitudes; the sound shows *rhythm*. Most days are inaudibly quiet (median = 12), then a burst day arrives like a slam. Hearing the year unfold in 16 seconds makes the spam pattern visceral in a way no static chart can.",
+        "trigger": "Click the 'Play 10466's year' button under des_chart_06. Hard rule: never autoplay.",
+        "ui_form": "chart-synced sonification — a vertical scrubber line sweeps across a small 366-day bar chart of 10466's 2024 daily counts while the audio plays. The bar currently being heard pulses red. Pause/play and a mute toggle are visible.",
+        "content": {
+          "filename": "sonify_10466.wav",
+          "tool": "python_synth",
+          "prompt": "Each day → 45 ms FM bell at a pitch logarithmically mapped from complaint count (low pitch = quiet day, high pitch = burst day), amplitude scaled by sqrt(count/5000). Silent on zero-complaint days. 22 kHz mono, 16-bit, ~16.5 seconds total.",
+          "model": "custom_python_numpy",
+          "data_mapping": {
+            "field": "daily_complaint_count_2024",
+            "scale": "log_pitch_220Hz_to_1760Hz",
+            "amplitude": "sqrt(count/5000)",
+            "tempo": "45 ms per day, 366 days = 16.47 seconds"
+          }
+        },
+        "fallback": "If audio is muted/unsupported the small 366-day bar chart is fully readable on its own; the play button shows a disabled state with the tooltip 'audio unavailable in this browser'.",
+        "novelty_note": "Not a tone card — the audio is bound 1:1 to a paired chart, and the scrubber forces the reader to see the same data they hear.",
+        "paired_chart_data_source": "ana_26"
+      },
+      "brief": "16-second percussive sonification of ZIP 10466's daily complaint volume across all of 2024. Paired with a 366-day bar chart (data from ana_26) whose bar pulses red as each day is heard. Designed to make the eight ≥3,000-complaint mobile-app bursts audible as percussive slams against a near-silent baseline.",
+      "rationale": "This dataset has 366 ordered values with extreme outliers — exactly the kind of sequence sonification adds genuine meaning to.",
+      "based_on": ["ana_25", "ana_26"]
+    },
+    "des_chart_07": {
+      "label": "Helicopter complaints — monthly, 2023 vs 2024",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_19",
+        "x": "month",
+        "y_series": ["2023", "2024"],
+        "color": "year",
+        "highlight": {"year": "2023"},
+        "interaction": "hover tooltip shows month + each year's count + delta",
+        "style": {"palette": "two_tone", "show_points": true, "no_gridlines": false, "annotation": {"month": 12, "year": "2023", "text": "Dec 2023 peak: 8,724"}}
+      },
+      "brief": "Two-line chart, x = month (Jan-Dec), y = helicopter complaints. The 2023 line is brighter and visibly higher in nearly every month; the 2024 line sits flat near 2,500. December 2023's spike to 8,724 is annotated with a small callout.",
+      "rationale": "A line chart shows the 51% YoY drop as a clear separation rather than a single number, and reveals the December anomaly that the prose mentions.",
+      "based_on": ["ana_19"]
+    },
+    "des_asset_helicopter": {
+      "label": "Reference photo — helicopter landing at East 34th Street Heliport",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_helicopter_34th_st.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Helicopter_landing_E_34th_St_heliport_NYC.jpg",
+        "license": "CC BY-SA 4.0 (author: Beyond My Ken)",
+        "model": "n/a"
+      },
+      "brief": "Editorial-style photo of a HeliFlite executive helicopter landing at East 34th Street — one of the two city-owned heliports targeted by the 2025 Helicopter Oversight Act. Placed to the right of the helicopter chart on wide layouts.",
+      "rationale": "The story isn't about helicopters in the abstract; grounding the section in a real heliport photo helps the reader picture where the noise is coming from.",
+      "based_on": []
+    },
+    "des_chart_08": {
+      "label": "Hour-of-day — weekday vs weekend, per-day rate",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_14",
+        "x": "hour",
+        "y_series": ["weekday_per_day", "weekend_per_day"],
+        "color": "series",
+        "highlight": {"hour_band": [22, 23]},
+        "interaction": "hover tooltip with hour + both series counts + ratio",
+        "style": {"palette": "two_tone_warm_cool", "fill_under": true, "no_gridlines": false, "annotation": {"hour": 23, "series": "weekend_per_day", "text": "11 PM weekend = 1.95× weekday"}}
+      },
+      "brief": "Two filled-area line chart. X-axis = hour 0..23. Weekday line sits below; weekend line peaks dramatically at 22:00–23:00. The 11 PM weekend annotation calls out the 1.95× ratio. Light orange = weekend, light blue = weekday.",
+      "rationale": "Two overlapping line/area series make the late-night weekend lift instantly visible, and the chart is the natural anchor for the section's claim that 11 PM Sunday is the loudest hour.",
+      "based_on": ["ana_14"]
+    },
+    "des_chart_09": {
+      "label": "NYPD residential resolutions — 0.28% summons rate",
+      "type": "chart",
+      "section": "edt_09",
+      "content": {
+        "chart_type": "horizontal_stacked_bar_single",
+        "data_source": "ana_18",
+        "x": "pct",
+        "y": null,
+        "color": "bucket",
+        "highlight": {"bucket": "issued a summons or violation"},
+        "interaction": "hover tooltip with bucket name, count, pct",
+        "style": {"palette": "muted_with_red_accent", "labels_on_bar": true, "no_gridlines": true}
+      },
+      "brief": "Single horizontal stacked bar (100% width) showing the five NYPD residential resolution buckets. The dominant 'no evidence' (40%) and 'responded — took action' (46%) segments are in cool grays; 'issued a summons' (0.28%) is a sliver of bright red on the far right, annotated with a callout 'one in 360 calls'.",
+      "rationale": "A 100% stacked bar makes proportional dominance immediate; the visual punch is the tiny red sliver alongside the dominant gray.",
+      "based_on": ["ana_18"]
+    },
+    "des_stat_summons": {
+      "label": "Stat callout — 0.28% summons rate",
+      "type": "stat_callout",
+      "section": "edt_09",
+      "content": {
+        "value": "0.28%",
+        "label": "of NYPD residential noise complaints ended with a summons or violation issued",
+        "data_source": "ana_18"
+      },
+      "brief": "Inline pull-quote-sized stat (60-72px): '0.28% — about 1 in 360 calls.' Sits at the top of edt_09, above the stacked-bar chart.",
+      "rationale": "The number is more quotable than the chart; the callout makes it the section's headline.",
+      "based_on": ["ana_18"]
+    },
+    "des_asset_softee": {
+      "label": "Reference photo — Mister Softee ice cream truck",
+      "type": "asset",
+      "section": "edt_09",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_mister_softee.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Mister_Softee_ice_cream_truck.jpg",
+        "license": "CC BY-SA 4.0 (author: Oleg Yunakov)",
+        "model": "n/a"
+      },
+      "brief": "Wikimedia photo of a classic blue-and-white Mister Softee ice cream truck. Placed in the second half of edt_09 alongside the paragraph about the 15 violations in 2,805 complaints.",
+      "rationale": "A real photo of the offending vehicle makes the absurdity of the 1-in-187 enforcement ratio land harder than text alone.",
+      "based_on": []
+    },
+    "des_chart_10": {
+      "label": "Borough year-over-year — diverging bar",
+      "type": "chart",
+      "section": "edt_10",
+      "content": {
+        "chart_type": "diverging_horizontal_bar",
+        "data_source": "ana_23",
+        "x": "pct_change",
+        "y": "borough",
+        "color": "sign",
+        "highlight": {"borough": "BRONX"},
+        "interaction": "hover tooltip shows 2023 count, 2024 count, delta, pct change",
+        "style": {"palette": {"positive": "#d96b3a", "negative": "#3a7ad9"}, "center_line_at": 0, "no_gridlines": false, "show_value_labels": true}
+      },
+      "brief": "Diverging horizontal bars showing each borough's 2023→2024 percent change. Bars extending right (positive) in warm orange (Bronx +51%, Staten Island +6%, Brooklyn +2%); bars extending left (negative) in cool blue (Manhattan -3%, Queens -2%). The Bronx bar is annotated with 'subtract 10466 → +9.5%'.",
+      "rationale": "A diverging bar makes the up/down split visceral and lets the +51% Bronx bar dominate, then the annotation immediately attributes most of it to ZIP 10466.",
+      "based_on": ["ana_23", "ana_24"]
+    },
+    "des_asset_brownstone": {
+      "label": "Reference photo — Bed-Stuy residential block",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_bedstuy_brownstone.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Bed-Stuy_20191130_-_01_-_Tompkins_btwn_Willoughby_%26_Hart.jpg",
+        "license": "CC BY-SA 4.0 (author: Andre Carrotflower)",
+        "model": "n/a"
+      },
+      "brief": "Wikimedia photo of Tompkins Avenue between Willoughby and Hart, Bedford-Stuyvesant, Brooklyn — a classic NYC residential block where 'Loud Music/Party' complaints originate. Sits to the right of the descriptor chart on wide layouts.",
+      "rationale": "Grounds the abstract complaint_type breakdown in a real residential streetscape.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial; deep indigo background, cream typography, one accent color (a warm coral red) reserved for the 10466 / 0.28% callouts and the helicopter chart annotation",
+    "text_visual_pattern": "visual-first hook (full-bleed teaser video + image fallback), then a strict text-then-chart pattern through edt_02–edt_05, then edt_06 (the turn) breaks the rhythm with a full-width stat callout, a stacked chart, a paired sonification scrubber, and no body text continuity, then text-then-chart resumes for edt_07–edt_10, then a quiet text-only close",
+    "centrepiece": "des_audio_10466",
+    "anti_sameness_notes": "Avoid the standard chart-card chart-card rhythm. The audio sonification is the unique visual+sonic moment and should be the only place a play button appears. No third-party sound clip embeds; no decorative ambient noise. The map and the diverging YoY bar are the only two non-bar/non-line shapes — keep the rest of the chart language deliberately restrained so the sonification scrubber and the per-capita map stand out.",
+    "typography_notes": "stat callouts at 72px-96px serif italic for emphasis; pull quotes in 22px italic with a left border; section dividers are 1px hairlines in muted indigo; charts use 14px labels and 12px tick labels for readability on mobile; teaser video is full-bleed at the top with an aspect-ratio: 16/9 wrapper to prevent layout shift"
+  }
+}

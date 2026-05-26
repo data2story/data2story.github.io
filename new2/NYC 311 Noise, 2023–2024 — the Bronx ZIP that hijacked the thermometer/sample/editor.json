@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "NYC's 311 noise data isn't a map of where the city is loud — it's a map of who picks up the phone (or, increasingly, the app), how the city answers, and what the city actually does with the answer; and within that map, a single Bronx ZIP code (10466) accounts for nearly 9% of every 2024 noise complaint, almost entirely via the mobile app.",
+  "tension": "Press coverage of 2024 noise said complaints jumped 19%, helicopter noise was 'exploding,' and the city was cracking down. The data says complaints rose 9.8%, helicopter complaints fell by half, residential complaints end with a summons 0.28% of the time, and one ZIP code in the Bronx accounts for nearly a tenth of the citywide signal.",
+  "payoff": "311 is a thermometer, not a thermostat. It records intensity faithfully — but who's holding the thermometer matters as much as the temperature, and what the city does with the reading is almost nothing.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — Twenty years of noise",
+      "purpose": "hook",
+      "title": "Twenty years of noise",
+      "findings": ["ana_01", "ana_02", "ana_03"],
+      "context": ["det_01", "det_02"],
+      "triage": {
+        "ana_01": "supporting",
+        "ana_02": "supporting",
+        "ana_03": "color"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "image",
+      "editorial_notes": "Open with the 'first 311 call was a noise complaint' fact (det_01) — that is the rhetorical anchor. State the 9.8% YoY exactly; flag that press said 19% but our filter gives 9.8%."
+    },
+    "edt_02": {
+      "label": "What we're actually complaining about",
+      "purpose": "evidence",
+      "title": "What we're actually complaining about",
+      "findings": ["ana_04", "ana_05"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_04": "supporting",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "image",
+      "editorial_notes": "The 54% Loud Music/Party number is the headline of this section — bold or callout it. Mention the first row in the raw file as a concrete anchor for the routing logic."
+    },
+    "edt_03": {
+      "label": "Three agencies, three speeds",
+      "purpose": "evidence",
+      "title": "Three agencies, three speeds",
+      "findings": ["ana_06", "ana_16"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_16": "supporting"
+      },
+      "chart_placeholder": "ana_16",
+      "media_placeholder": null,
+      "editorial_notes": "The three orders-of-magnitude response-time gradient (41 min vs 2.85 days vs 35 days) is the visual punch. Use the per-agency median and p90 from ana_16's data_table."
+    },
+    "edt_04": {
+      "label": "How the call gets made — phone is losing, then it isn't",
+      "purpose": "evidence",
+      "title": "How the call gets made",
+      "findings": ["ana_07", "ana_08"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_07": "supporting",
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": null,
+      "editorial_notes": "The contrast between the famous '68% phone' citywide stat and the actual 12% phone for noise specifically is the surprise. Frame ana_08 as 'web is losing share to both app and phone' — emphasise the doubled phone count."
+    },
+    "edt_05": {
+      "label": "Geography — Manhattan files most, the Bronx files most per person",
+      "purpose": "evidence",
+      "title": "Geography — who files",
+      "findings": ["ana_09", "ana_10"],
+      "context": ["det_15", "det_11"],
+      "triage": {
+        "ana_09": "supporting",
+        "ana_10": "supporting"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": "map",
+      "editorial_notes": "Surface ana_caveat_01 explicitly — 311 measures who complains, not where noise is — and use the Legewie/Schaeffer reference (det_11) to set up the 10466 reveal in edt_06."
+    },
+    "edt_06": {
+      "label": "The anomaly — one Bronx ZIP is 9% of all 2024 complaints",
+      "purpose": "turn",
+      "title": "One Bronx ZIP",
+      "findings": ["ana_24", "ana_25", "ana_03"],
+      "context": ["det_05", "det_15"],
+      "triage": {
+        "ana_24": "lead",
+        "ana_25": "lead",
+        "ana_03": "color"
+      },
+      "chart_placeholder": "ana_25",
+      "media_placeholder": "interactive",
+      "editorial_notes": "THIS IS THE SPINE. The 8.97% / 17.4-seconds / 99.6% mobile triplet are the three numbers the reader must remember. Acknowledge that the dataset cannot identify a single filer (caveat_01) — frame as 'either one organized push or a very small group,' not as accusation."
+    },
+    "edt_07": {
+      "label": "The helicopter surprise — complaints fell 51%",
+      "purpose": "turn",
+      "title": "The helicopter surprise",
+      "findings": ["ana_19", "ana_20", "ana_22"],
+      "context": ["det_07", "det_08"],
+      "triage": {
+        "ana_19": "supporting",
+        "ana_20": "supporting",
+        "ana_22": "color"
+      },
+      "chart_placeholder": "ana_19",
+      "media_placeholder": "image",
+      "editorial_notes": "Counter-intuitive vs press narrative — emphasise that the 2023 spike that motivated the bill was a real peak, not a baseline. Use the reference helicopter image (det_media_01)."
+    },
+    "edt_08": {
+      "label": "Time — Sunday at 11 PM",
+      "purpose": "evidence",
+      "title": "Sunday at 11 PM",
+      "findings": ["ana_13", "ana_14", "ana_12", "ana_15"],
+      "context": ["det_14"],
+      "triage": {
+        "ana_13": "supporting",
+        "ana_14": "supporting",
+        "ana_12": "color",
+        "ana_15": "color"
+      },
+      "chart_placeholder": "ana_14",
+      "media_placeholder": null,
+      "editorial_notes": "Group the temporal findings here. The headline number is the 1.95x weekend-vs-weekday ratio at 11 PM. Use 'one every 44 seconds' (derived: 1.44M / 731 days / 86400 s ≈ 1 per 43.8 s) — already used in edt_01, do not repeat."
+    },
+    "edt_09": {
+      "label": "What the city does about it — almost nothing",
+      "purpose": "evidence",
+      "title": "What the city does about it",
+      "findings": ["ana_18", "ana_17", "ana_21"],
+      "context": ["det_12", "det_13", "det_10"],
+      "triage": {
+        "ana_18": "supporting",
+        "ana_17": "supporting",
+        "ana_21": "color"
+      },
+      "chart_placeholder": "ana_18",
+      "media_placeholder": "image",
+      "editorial_notes": "The 0.28% summons rate (1,891 of 677,749) is the single most-quoted number the reader takes away. Use the Mister Softee reference image (det_media_02) for the ice cream truck paragraph."
+    },
+    "edt_10": {
+      "label": "Year over year — the Bronx ate everything",
+      "purpose": "evidence",
+      "title": "Year over year",
+      "findings": ["ana_23", "ana_22"],
+      "context": ["det_06", "det_13"],
+      "triage": {
+        "ana_23": "supporting",
+        "ana_22": "color"
+      },
+      "chart_placeholder": "ana_23",
+      "media_placeholder": null,
+      "editorial_notes": "Tie back to edt_06: the +51% Bronx growth is almost entirely the 10466 anomaly. Make that algebra explicit: subtract 10466 and the Bronx becomes 'about average.'"
+    },
+    "edt_11": {
+      "label": "Close — what the thermometer measures",
+      "purpose": "close",
+      "title": null,
+      "findings": ["ana_25"],
+      "context": ["det_01", "det_13"],
+      "triage": {
+        "ana_25": "color"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "instance",
+      "editorial_notes": "Bookend with the 2003 Jackson Heights first-call fact (det_01). End on tension, not summary — the thermostat-vs-thermometer line is the closer."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "supporting",
+    "ana_03": "color",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "supporting",
+    "ana_11": "cut",
+    "ana_12": "color",
+    "ana_13": "supporting",
+    "ana_14": "supporting",
+    "ana_15": "color",
+    "ana_16": "supporting",
+    "ana_17": "supporting",
+    "ana_18": "supporting",
+    "ana_19": "supporting",
+    "ana_20": "supporting",
+    "ana_21": "color",
+    "ana_22": "color",
+    "ana_23": "supporting",
+    "ana_24": "lead",
+    "ana_25": "lead"
+  }
+}

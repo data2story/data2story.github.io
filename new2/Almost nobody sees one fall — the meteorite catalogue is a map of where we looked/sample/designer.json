@@ -1,0 +1,300 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Use all five channels (chart, image, video, audio, interactive_or_map) but anchor every choice in the dataset's actual properties — coordinates → real map; massive heavy-tailed numeric column → sonification; iconic real photographs from Detective → reused rather than generated; one strong still → image2video for the kinetic edge.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The dataset is fundamentally quantitative — Fell/Found splits, mass distributions, decade trends, family compositions. Charts are how those land."
+      },
+      "image": {
+        "used": true,
+        "reason": "The Detective downloaded 7 real Wikimedia photographs of the named flagship meteorites. They are credible, specific, and visually striking — far stronger than any generated stand-in. We reuse them as section anchors rather than generate."
+      },
+      "video": {
+        "used": true,
+        "reason": "We have one iconic still (Hoba). image2video animates it as the teaser, adding kinetic life without losing the credibility of a real Namibian photo."
+      },
+      "audio": {
+        "used": true,
+        "reason": "The top-20 mass column is a small ranked sequence — exactly what sonification handles well. Mapping log(mass) to pitch turns the descending bar chart into a one-bar melody readers can hear while watching the bars highlight. Paired with the chart, click-to-play, never autoplay."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "84% of rows have lat/long; an interactive Leaflet map of Fells (red) over Founds (blue sample) is the centrepiece and the only way the Antarctic + desert pattern lands physically. A separate guess-first quiz in edt_01 gives the hook a participatory moment."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — Hoba meteorite still (real Wikimedia photo)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_hoba.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Hoba_Meteorite_sire.jpg",
+        "license": "CC BY 2.0 — Eugen Zibiso via Wikimedia Commons",
+        "prompt": "(real photograph — no prompt)",
+        "model": "n/a"
+      },
+      "brief": "Full-bleed hero image at the top of the page: the 60-ton Hoba iron meteorite resting in its Namibian open-air amphitheatre. Mood: weight, stillness, eighty thousand years sitting in one place. Caption underneath credits CC BY 2.0 Eugen Zibiso.",
+      "rationale": "The single heaviest row in the dataset is also the single most photographable object. Using a real photo of the named heavyweight from row 1 is more credible and more grounded than any generated cinematic.",
+      "based_on": ["ana_09", "ana_22"]
+    },
+    "des_02": {
+      "label": "Teaser motion — image2video parallax push-in on Hoba",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_hoba_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/ref_hoba.jpg",
+        "prompt": "very slow cinematic parallax push-in toward the giant iron Hoba meteorite resting in its open-air stone amphitheatre in Namibia; soft warm afternoon light, no people in frame, no camera shake, ambient dust catching the light",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Six-second clip generated from the Hoba still — slow parallax push-in. Plays muted, looped, behind the hero headline. Plain still (des_01) is the no-JS fallback.",
+      "rationale": "Image2video preserves the credibility of the real photograph while giving the teaser the kinetic edge a pure still cannot.",
+      "based_on": ["ana_09"]
+    },
+    "des_03": {
+      "label": "Big stat callout — 2.42% Fell",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "2.42%",
+        "label": "of the 45,716 named meteorites in the catalogue were ever observed falling. 1,107 of them. The other 44,609 were found later.",
+        "data_source": "ana_04"
+      },
+      "brief": "Oversized 88px stat number with a 16px-line eyebrow above it ('OBSERVED FALLS') and a one-sentence caption below. Sits to the left of the body text at the top of edt_01. Pure typographic moment — no chart bars or icons.",
+      "rationale": "The hook deserves a single number with no decoration. Anything more — a chart, a donut — softens the punch.",
+      "based_on": ["ana_04", "ana_01"]
+    },
+    "des_04": {
+      "label": "Guess-first quiz — How many were seen falling?",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Reader sees a card with the prompt: 'Of the 45,716 named meteorites in this catalogue, what fraction were ever observed falling?' and four buttons: 1 in 5, 1 in 10, 1 in 20, 1 in 50.",
+        "trigger": "Reader picks a button.",
+        "transition": "Selected button flips to highlighted, a small horizontal bar grows from 0 to 100% showing the picked value; then the actual value (1 in 41) animates in as a second darker bar with a tooltip showing 1,107 / 45,716.",
+        "payoff": "Reader sees their guess vs reality side by side. Caption reveals the true rate is roughly one fall observed every two months across the entire planet.",
+        "data_source": "ana_04"
+      },
+      "brief": "A small four-option quiz that lets the reader commit a guess before the 2.42% number is unveiled. Sits just after des_03's stat callout so readers who skim get the answer; readers who engage get the surprise.",
+      "rationale": "The finding is genuinely surprising and a guess-first interaction multiplies the impact for engaged readers. Non-interactive readers still see the stat callout.",
+      "based_on": ["ana_04"]
+    },
+    "des_05": {
+      "label": "Decade stacked-bar chart — Fell vs Found 1700-2010",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "stacked_bar",
+        "data_source": "ana_06",
+        "x": "decade",
+        "y": "count",
+        "color": "fall",
+        "stack_order": ["Fell", "Found"],
+        "color_map": {"Fell": "#e8503b", "Found": "#2f7fb8"},
+        "highlight": {"decade": 1970, "annotation": "ANSMET begins (US) — Japanese teams since 1969"},
+        "interaction": "hover tooltip with decade, Fell count, Found count, Total; the 1970 bar gets a fixed annotation arrow",
+        "style": {"y_axis_label": "Meteorites entered into the catalogue", "no_gridlines": false, "annotation_color": "#222"}
+      },
+      "brief": "Stacked-bar chart, decade on x, count on y. Fell in muted red on the bottom of each stack, Found in a saturated blue on top. The Fell stripe stays flat-ish at 50-90/decade; the Found stripe is invisible until the 1880s, then explodes after 1960. A static annotation arrow pinpoints the 1970 decade.",
+      "rationale": "The whole point of this section is the visual shape — Fell flat, Found exploding. Stacked bars make both stories readable in one image.",
+      "based_on": ["ana_06", "ana_07"]
+    },
+    "des_06": {
+      "label": "Antarctic recovery — real photo",
+      "type": "asset",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_antarctic_recovery.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Meteorite_Recovery_Antarctica_%28retouched%29.jpg",
+        "license": "Public domain (NASA / H. Raab, retouched)",
+        "prompt": "(real photograph)",
+        "model": "n/a"
+      },
+      "brief": "Half-width image right of the decade chart caption — a researcher on Antarctic ice with a meteorite. Tight crop, no logos. Sells the operational reality behind the 1970s spike.",
+      "rationale": "Pairs the chart's abstract spike with the physical reality. Reusing a NASA photo is more credible than a generated illustration.",
+      "based_on": []
+    },
+    "des_07": {
+      "label": "Centrepiece interactive map — Fells (red) over Founds (blue)",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "leaflet_map",
+        "initial_state": "Full-width world map at zoom ~1.5, dark editorial basemap. All 1,107 Fells render as 5px red circles; 2,000 sampled Founds as 2px light-blue dots underneath. The Antarctic ice and three desert belts (Sahara, Arabia, Atacama) appear as natural clusters of blue.",
+        "trigger": "Hover a marker → tooltip with name, year, mass (kg), recclass, fall type. Click a marker → bottom-left detail panel pins that meteorite. Zoom in to see individual Antarctic blue-ice fields resolve.",
+        "transition": "A small top-right legend explains red = observed Fell, blue = later Find. A toggle button lets the reader hide Founds (Fells-only mode) to reveal how scattered observed falls are vs how concentrated Finds are.",
+        "payoff": "Reader can physically see the two patterns: red dots are roughly where humans live and notice things (Europe, India, eastern US, Japan); blue dots cluster in the cold and the dry. The two are barely overlapping.",
+        "data_source": ["ana_14", "ana_15"],
+        "data_inline_paths": ["code/_fells_map.csv", "code/_founds_sample_map.csv"],
+        "library": "Leaflet 1.9 (CDN ok), CartoDB DarkMatter basemap"
+      },
+      "brief": "The page's centerpiece. ~600px tall. Two layers — Fells (red, all 1,097 geocoded ones) and a 2,000-Found sample (light blue). Toggle to hide Founds. Click markers for details. The visual sells the editorial argument in 1 second.",
+      "rationale": "The dataset has lat/long; this is the canonical use case for an interactive map and the section's editorial brief explicitly asks for one.",
+      "based_on": ["ana_14", "ana_15", "ana_16"]
+    },
+    "des_08": {
+      "label": "Log-bucket mass histogram",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_08",
+        "x": "count",
+        "y": "bucket",
+        "y_order": ["<1g", "1-10g", "10-100g", "100g-1kg", "1-10kg", "10-100kg", "100kg-1t", "1-10t", "10-100t"],
+        "highlight": {"bucket": "10-100g", "annotation": "median row sits here (32.7 g)"},
+        "interaction": "hover tooltip with exact count; the bucket containing Hoba (10-100t) gets a tiny label '60-ton Hoba lives here'",
+        "style": {"palette": "single-blue ramp by bucket order", "x_axis_label": "Meteorite count (log mass bucket)", "no_gridlines": true}
+      },
+      "brief": "Horizontal bar chart, one bar per log decade of mass. Bar lengths show row counts. The 10-100 g bar is the giant; everything to its right dwindles to slivers. Static annotation arrows mark median location and the Hoba bucket.",
+      "rationale": "Log-scale histograms read best horizontally; the 9 buckets fit cleanly stacked. Static is fine — no exploration adds anything.",
+      "based_on": ["ana_08", "ana_05"]
+    },
+    "des_09": {
+      "label": "Top 20 heaviest — leaderboard with sonification",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar_leaderboard",
+        "data_source": "ana_09",
+        "x": "mass_kg",
+        "y": "name",
+        "y_order_by": "mass_kg desc",
+        "color": "family",
+        "color_map": {"Iron meteorite": "#5f4b32", "Stony-iron": "#9b7e3f", "Ordinary chondrite": "#7a9bbf"},
+        "x_scale": "log",
+        "highlight_rule": "label each bar with mass in tonnes and (rank-19) Jilin H5 gets a callout 'first non-iron'",
+        "interaction": "hover tooltip with name, mass (kg + tonnes), recclass, fall, year, country (from lat/lon); click highlights the row in the sonification (des_10)",
+        "style": {"x_axis_label": "Recovered mass (kg, log scale)", "y_axis_label": null, "no_gridlines": true}
+      },
+      "brief": "Vertical leaderboard, top to bottom: Hoba, Cape York, Campo del Cielo, Canyon Diablo, Armanty ... Jilin. Bars coloured by family — the wall of brown irons is instantly visible. The Jilin bar at rank 19 is the only blue and gets the only annotation: 'first non-iron'.",
+      "rationale": "The story is 'wall of iron'; coloring by family forces that pattern to the foreground. Log scale prevents Hoba's 60,000 kg from crushing the lower rows visually.",
+      "based_on": ["ana_09", "ana_20", "ana_22"]
+    },
+    "des_10": {
+      "label": "Sonification — top 20 mass as 20-note marimba sequence",
+      "type": "audio",
+      "section": "edt_05",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "The top-20 mass column is a small monotone-decreasing sequence over three orders of magnitude. Mapping log(mass) to pitch turns the chart's bars into a melody — readers hear how steeply the catalogue drops from Hoba (60 t) to Vaca Muerta (3.8 t). Adds a sensory channel for the tail.",
+        "trigger": "Click 'Play the leaderboard' button under the chart in des_09. Never autoplay.",
+        "ui_form": "chart-synced sonification — each bar in des_09 briefly highlights as its tone plays; current name labelled below the play button.",
+        "content": {
+          "filename": "sonification_top20_mass.wav",
+          "tool": "text2music",
+          "prompt": "20 short marimba notes, one per beat, sonification of meteorite masses from largest to smallest: starts on a low resonant bass note (60 tonne Hoba) and steps gradually up the scale in proportion to log-mass — the descending size becomes an ascending pitch line, finishing on a bright high note. No reverb, dry intimate close-miked marimba, 90 BPM, no melody beyond the data progression, no vocals, 8 seconds total",
+          "model": "google/lyria-3-pro-preview",
+          "data_mapping": {"field": "log10(mass_kg)", "scale": "diatonic_C_major", "range_hz_approx": [165, 880], "tempo_bpm": 90, "duration_s": 8}
+        },
+        "fallback": "If audio is muted or unsupported, the chart alone communicates the leaderboard; the play button is disabled with a tooltip.",
+        "novelty_note": "Not the generic 'audio card with waveform bars' pattern — this audio is tied to a specific chart's bars and only valuable while watching them highlight."
+      },
+      "brief": "An eight-second marimba sequence that walks the top-20 leaderboard from heaviest to lightest. Each tone is timed so the bar in des_09 lights up beneath it. Sits as a single play button under the leaderboard chart.",
+      "rationale": "Sonification is the data-driven audio fit for a small ranked sequence. The dataset has no obvious sonic dimension otherwise; this is the choice that adds explanation rather than decoration.",
+      "based_on": ["ana_09"]
+    },
+    "des_11": {
+      "label": "Cape York's Ahnighito at AMNH — real photo",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_ahnighito.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/87/Ahnighito_AMNH%2C_34_tons_meteorite.jpg",
+        "license": "CC BY 2.0 — Mike Cassano via Wikimedia Commons",
+        "prompt": "(real photograph)",
+        "model": "n/a"
+      },
+      "brief": "Three-column-wide image to the right of the iron-wall paragraph in edt_05. The Ahnighito fragment of Cape York at the American Museum of Natural History — a 34-ton iron block on a steel plinth that goes down to the bedrock. Caption: 'Ahnighito — second-row entry in the catalogue, largest meteorite on public museum display anywhere.'",
+      "rationale": "Hoba is the teaser image; Ahnighito is the proof point for the iron wall. Using two different real museum specimens gives the section breadth.",
+      "based_on": ["ana_09", "ana_22"]
+    },
+    "des_12": {
+      "label": "Twin chart — family by count vs family by median mass",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "hconcat_twin_bars",
+        "data_source": ["ana_10", "ana_11"],
+        "panels": [
+          {"label": "By row count", "data_source": "ana_10", "x": "pct", "y": "family", "color": "family", "y_order_by": "pct desc"},
+          {"label": "By median mass (g, log scale)", "data_source": "ana_11", "x": "median_g", "y": "family", "color": "family", "y_order_by": "median_g desc", "x_scale": "log"}
+        ],
+        "shared_y_order": false,
+        "color_map": {"Iron meteorite": "#5f4b32", "Ordinary chondrite": "#7a9bbf", "Carbonaceous chondrite": "#4f8a7d", "HED achondrite": "#a6736f", "Stony-iron": "#9b7e3f", "Enstatite chondrite": "#9b9be8", "Lunar achondrite": "#bfb098", "Martian achondrite": "#c95d4d"},
+        "highlight_rule": "Both panels label Ordinary chondrite (top by count) and Iron meteorite (top by mass) so the flip is obvious",
+        "interaction": "synchronised highlight — hovering a family in either panel highlights it in both",
+        "style": {"panel_gap": 24, "y_axis_label": null, "no_gridlines": true}
+      },
+      "brief": "Two horizontal bar charts side by side. Left: families ranked by count (Ordinary chondrite alone fills 87% of the bar). Right: same families ranked by median mass on log scale (Iron meteorite tops out at 10,000g). Hovering any family highlights it in both panels — the rank-flip is then a single eye movement.",
+      "rationale": "The point of this section is that the same set of categories has two opposite rankings. A twin chart with synchronised highlighting makes that flip the entire visual.",
+      "based_on": ["ana_10", "ana_11", "ana_12"]
+    },
+    "des_13": {
+      "label": "Antarctic share by decade — area chart",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "stacked_area",
+        "data_source": "ana_19",
+        "x": "decade",
+        "y": "count",
+        "color": "region",
+        "stack_order": ["Antarctica", "RestOfWorld"],
+        "color_map": {"Antarctica": "#a8c9e8", "RestOfWorld": "#c97a55"},
+        "highlight_rule": "annotate the 1980 peak ('93% Antarctic') and the 2000s ('hot-desert programs catch up')",
+        "interaction": "hover tooltip with decade, Antarctica count, RestOfWorld count, Antarctica share %",
+        "style": {"y_axis_label": "Meteorites entered (geocoded only)", "no_gridlines": false, "annotation_color": "#222"}
+      },
+      "brief": "Stacked area chart, decade on x, geocoded count on y. Antarctica in icy blue at the bottom, rest of world in warm rust on top. Two annotations: 1980 (Antarctica dominates) and 2000 (deserts catch up).",
+      "rationale": "An area chart shows the share AND the absolute size simultaneously, which is what this closer needs.",
+      "based_on": ["ana_19", "ana_07"]
+    },
+    "des_14": {
+      "label": "Meteor Crater aerial — real photo close",
+      "type": "asset",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_meteor_crater.jpg",
+        "tool": "wikimedia_download",
+        "source_url": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Barringer_Crater_aerial_photo_by_USGS.jpg",
+        "license": "Public domain — USGS",
+        "prompt": "(real USGS aerial photograph)",
+        "model": "n/a"
+      },
+      "brief": "Full-width aerial photograph of Meteor Crater (Barringer Crater) in Arizona at the very end of the page. Caption: 'Meteor Crater — the only entry in this catalogue you can still see from orbit. Made by Canyon Diablo, row 4 by mass.'",
+      "rationale": "Ends the piece on the largest scale visible: a 1.2 km crater. Ties row 4 of the leaderboard to a feature that is still there in the landscape, fifty thousand years after impact.",
+      "based_on": ["ana_22"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, near-monochrome with a single warm accent (the iron-brown used for irons in the leaderboard and the rust used in the closer)",
+    "text_visual_pattern": "visual-first hero + alternating text and visual, with the map as the unambiguous centerpiece in the middle of the page",
+    "centrepiece": "des_07",
+    "anti_sameness_notes": "No chart streak — every two charts is broken up by either a real photograph (des_06, des_11, des_14) or the central map (des_07). The audio is bound to the leaderboard, not a free-floating tone card. The video is image2video on a real photo, not a generated synthetic.",
+    "typography_notes": "Hero stat (des_03) at 88px; section headlines at 32px with a hairline rule; pull quotes (if any) in 18px italic serif. The map (des_07) gets a 24px section heading and breaks out of the body column to full width."
+  }
+}

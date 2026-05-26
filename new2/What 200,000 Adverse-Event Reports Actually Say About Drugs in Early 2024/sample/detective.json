@@ -1,0 +1,199 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "openfda_faers_2024",
+    "domain": "Pharmacovigilance / drug safety surveillance",
+    "summary": "200,000-report sample of FAERS adverse-event reports received by FDA in 2024. Each report links a patient (age, sex, country) to drug(s), reaction(s), and a seriousness flag. Reports are spontaneous submissions, not an epidemiological sample, so they reflect reporting behavior as much as event rates."
+  },
+  "items": {
+    "det_01": {
+      "label": "What FAERS is and where this data comes from",
+      "content": "The FDA Adverse Event Reporting System (FAERS) is the U.S. Food and Drug Administration's central database for post-market drug safety reports. It collects voluntary reports from patients, caregivers, and clinicians via MedWatch, plus mandatory expedited reports from drug manufacturers. The system supports the FDA's post-market safety surveillance for drugs and therapeutic biologics. FAERS data is published quarterly and exposed via the OpenFDA Drug Adverse Event API at https://api.fda.gov/drug/event.json. This blog uses a roughly chronological API-paginated sample of 200,000 reports with receivedate in 2024, drawn from a full-year universe of approximately 1.32 million reports.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://open.fda.gov/data/faers/",
+          "title": "FDA Adverse Event Reporting System (FAERS) — OpenFDA",
+          "facts": [
+            "FAERS captures information on adverse event and medication error reports submitted to FDA",
+            "Supports FDA's post-marketing safety surveillance program for drug and therapeutic biologic products"
+          ]
+        },
+        {
+          "url": "https://api.fda.gov/drug/event.json",
+          "title": "OpenFDA Drug Adverse Event API endpoint",
+          "facts": [
+            "Endpoint used to fetch the 200,000-report sample with filter receivedate:[20240101 TO 20241231]"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "How a FAERS report is structured",
+      "content": "Each FAERS record describes one adverse-event report. A report names one patient (age, sex, country), one or more drugs (each tagged as Suspect, Concomitant, or Interacting in the drugcharacterization field), and one or more reactions described as standardized MedDRA Preferred Terms. The report carries a single seriousness flag (`serious`: 1=serious, 2=not serious) and sub-flags for death and hospitalization. The reporter is classified by `reporttype` — 1=Spontaneous (the typical MedWatch submission), 2=Report from study, 3=Other, 4=Not available to sender. A single safetyreportid therefore explodes into many rows: one summary row, n_drugs drug rows, and n_reactions reaction rows.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://open.fda.gov/apis/drug/event/searchable-fields/",
+          "title": "OpenFDA Drug Adverse Event — searchable fields reference",
+          "facts": [
+            "drugcharacterization codes: 1=Suspect, 2=Concomitant, 3=Interacting",
+            "reporttype codes: 1=Spontaneous, 2=Report from study, 3=Other, 4=Not available to sender",
+            "Reactions encoded as MedDRA Preferred Terms in British English"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "MedDRA: the shared vocabulary behind every reaction term",
+      "content": "Every reaction in FAERS is recorded as a MedDRA Preferred Term, a standardized medical vocabulary used by drug regulators and the pharmaceutical industry worldwide. MedDRA is hierarchical: Preferred Terms (e.g. 'Nausea', 'Drug ineffective') aggregate into System Organ Classes (e.g. 'Nervous system disorders', 'Vascular disorders'). For the FAERS reader this matters because reaction language is not free text — when 'Drug ineffective' shows up thousands of times, it is exactly the same code each time, and the same vocabulary is used by EU and Japanese regulators. This makes cross-drug and cross-country comparison clean, but it also funnels disparate clinical experiences into a finite list of terms.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6419320/",
+          "title": "Study of serious adverse drug reactions using FDA-approved drug labeling and MedDRA (BMC Bioinformatics)",
+          "facts": [
+            "MedDRA is used as the adverse event reporting terminology by many drug regulatory authorities and the pharmaceutical industry worldwide",
+            "Serious adverse drug reactions cluster in System Organ Classes such as Nervous system disorders and Vascular disorders"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Why FAERS reports are not the same as adverse-event rates",
+      "content": "FAERS is a passive surveillance system. Reporting is voluntary for patients and clinicians, and even the manufacturer-mandated reports are filtered through whoever notices and writes them up. The result is well-known structural distortions: most adverse drug reactions are never reported at all; serious events are reported more often than mild ones; and 'notoriety bias' inflates counts for any drug that has recently been in the news or under regulatory warning. Crucially, FAERS has no denominator — it does not know how many patients took each drug — so a raw report count cannot be converted into a per-patient risk. FDA itself states that FAERS is most valuable for generating hypotheses about potential safety signals, which must then be confirmed by controlled studies. Every chart in this blog should be read as 'reports submitted', not 'events that happened in the world'.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://medxdrg.com/what-are-the-limitations-of-the-faers-database",
+          "title": "What Are the Limitations of the FAERS Database?",
+          "facts": [
+            "FAERS is founded on spontaneous and voluntary reporting",
+            "Only a small fraction of adverse drug reactions are ever reported to FAERS",
+            "FAERS data cannot be used to determine causation or incidence rates"
+          ]
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8114300/",
+          "title": "Existence of Notoriety Bias in FDA Adverse Event Reporting System Database",
+          "facts": [
+            "Notoriety bias occurs where media coverage or regulatory warnings increase the likelihood of specific adverse event reporting"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "The 2024 GLP-1 story: Ozempic, Wegovy, Mounjaro flood the database",
+      "content": "The single largest story in FAERS during 2023–2024 is the explosion of reports about GLP-1 receptor agonists used for diabetes and weight loss — Ozempic and Wegovy (semaglutide, Novo Nordisk), Mounjaro and Zepbound (tirzepatide, Eli Lilly), and older entrants like Trulicity and Byetta. Press analyses of the FAERS dashboard in 2024 found that adverse-reaction reports linked to weight-loss drugs grew about 40% in six months, that roughly 46,000 of the 62,000 cumulative reports since 2018 had been filed after 2022, and that the FDA had recorded 162 deaths and roughly 10,000 'serious' reactions in the class. Tirzepatide reports outran semaglutide reports in 2023 and 2024 (about 15,000 vs 6,000 in 2023, and ~19,000 vs ~5,000 in 2024 per press accounts of the dashboard). The signature complaints are gastrointestinal — gastroparesis, ileus, intractable nausea — alongside ordinary 'Drug ineffective' filings. This is the cleanest example in the dataset of a real-world media-and-prescribing surge translating into a reporting surge.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.hmf-law.com/news/ozempic-wegovy-monjaro-162-deaths-fda/",
+          "title": "Ozempic, similar weight loss-diabetes drugs linked to 162 deaths, FDA reports",
+          "facts": [
+            "Weight loss and diabetes drugs Ozempic, Mounjaro, and Wegovy linked to at least 162 deaths since 2018",
+            "94 of the 162 deaths linked specifically to Ozempic and Wegovy",
+            "FAERS has recorded approximately 10,000 'serious' reactions to these weight loss drugs"
+          ]
+        },
+        {
+          "url": "https://www.aboutlawsuits.com/ozempic-wegovy-mounjaro-lawsuit/severe-adverse-events-linked-to-ozempic-glp1-drugs/",
+          "title": "FDA Database Reveals High Number of Severe Adverse Events Involving Ozempic, Similar GLP1 Drugs",
+          "facts": [
+            "Adverse-reaction reports linked to weight loss drugs increased about 40% in six months",
+            "62,000 reported reactions to these medications in the U.S. since 2018",
+            "46,000 of the 62,000 reports occurred after 2022",
+            "In 2024, FDA received more than 19,000 reports linked to tirzepatide versus about 5,000 for semaglutide"
+          ]
+        },
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11675942/",
+          "title": "Gastrointestinal Safety Assessment of GLP-1 Receptor Agonists in the US: FAERS Analysis",
+          "facts": [
+            "Among GLP-1 agonists, Trulicity (65,038), Byetta (48,898), and Mounjaro (30,283) had the highest cumulative adverse-event report counts",
+            "Semaglutide accounted for 26.1% of 31,439 GLP-1-related reports from Jan 2018 to Dec 2022",
+            "Ozempic showed an elevated reporting odds ratio of 2.77 (95% CI 2.69–2.85) for serious adverse events",
+            "Ozempic had the highest percentage of serious adverse events at 43.9% among GLP-1 products"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Who actually files FAERS reports — and where they live",
+      "content": "Although FAERS is a U.S. system, anyone in the world can submit a report and manufacturers must forward reports from any country where their drug is sold. In practice the U.S. dominates the submissions: it is both the country where the events most often occur (`occurcountry`) and the country of the reporter (`primarysourcecountry`). But the long tail includes many European countries, Japan, and major manufacturing hubs. The skew matters because reporting culture differs by country — Germany and Japan, for instance, push manufacturer-mediated reports through national systems that then forward to FAERS, while U.S. reports include a much larger proportion of direct consumer submissions through MedWatch. Country comparisons therefore say as much about reporting infrastructure as they do about drug safety.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://open.fda.gov/apis/drug/event/searchable-fields/",
+          "title": "OpenFDA Drug Adverse Event — searchable fields reference",
+          "facts": [
+            "occurcountry and primarysourcecountry are coded as ISO 3166-1 alpha-2",
+            "Reports include both consumer/healthcare-professional submissions and mandatory manufacturer reports"
+          ]
+        },
+        {
+          "url": "https://intuitionlabs.ai/articles/fda-adverse-event-reporting-system",
+          "title": "The FDA Adverse Event Reporting System (FAERS) Explained",
+          "facts": [
+            "Manufacturers are required to forward reports about their products from any country",
+            "Voluntary direct reports via MedWatch are concentrated in the United States"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "FAERS-driven safety signals in late 2024",
+      "content": "FDA publishes a quarterly list of 'Potential Signals of Serious Risks/New Safety Information' that were first surfaced by FAERS reports. The list for October–December 2024 includes drugs and signals such as ofatumumab (mood-disorder reports), trazodone (serotonin syndrome and drug interactions), and several others. The existence of this list is the practical answer to 'so what does FAERS actually do?': clusters of reports inside this database — sometimes only a few dozen — trigger formal FDA action, including label changes, dose warnings, and Drug Safety Communications. The fact that a drug appears on a quarterly signal list does not establish causation; it only means FDA decided the pattern was worth a closer look.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.fda.gov/drugs/fdas-adverse-event-reporting-system-faers/potential-signals-serious-risksnew-safety-information-identified-fda-adverse",
+          "title": "Potential Signals of Serious Risks/New Safety Information Identified by FAERS (FDA)",
+          "facts": [
+            "FDA publishes quarterly lists of potential safety signals identified from FAERS reports",
+            "Signal identification can trigger label changes, dose warnings, or Drug Safety Communications"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "Sampling caveat for this 200k slice of 2024",
+      "content": "The dataset in front of us is not the full FAERS 2024 universe of ~1.32 million reports. It is a 200,000-report sample, drawn chronologically through ~4-day windows of the OpenFDA API and deduplicated by safetyreportid. That means: (a) every receivedate in 2024 is represented in proportion to its API ordering, not in proportion to true volume, so monthly totals should be read as 'reports captured in our sample' rather than 'monthly FAERS volume'; (b) drugs with very long-tail counts (rare-disease therapies, recent launches) may be sparsely represented; and (c) the per-row fields are themselves a flattened summary of OpenFDA's nested JSON — secondary suspect drugs, dose, and concomitant medications other than the first few are not included. The dataset is large enough for solid relative analyses (which drugs dominate, which reactions cluster, demographic skew) and weak for rate estimation (how often does X happen per prescription).",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://open.fda.gov/apis/drug/event/",
+          "title": "OpenFDA Drug Adverse Event API documentation",
+          "facts": [
+            "Reports in 2024 totaled approximately 1.32 million across the full FAERS universe",
+            "API pagination uses skip/limit parameters; large queries must be chunked by date window"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Where the analyst should look first",
+      "content": "Based on the context above, the highest-yield directions for the analyst are: (1) the top drugs by report count — to confirm whether GLP-1 agonists really dominate as the press accounts suggest, or whether older blockbusters like Humira/adalimumab still lead; (2) reaction concentration — what fraction of all reactions come from the top 50 MedDRA terms, and how often 'Drug ineffective' shows up versus medically alarming terms; (3) seriousness by drug class — does Ozempic's reported 43.9% 'serious' rate replicate in 2024, and how does it compare to other top drugs; (4) demographic skew — sex, age band, and country of report, especially the imbalance between U.S. and non-U.S. submissions; (5) the rare-but-extreme corner — drugs whose reports are disproportionately tagged seriousnessdeath. Watch for: (a) raw blanks encoded as '2' in the seriousness sub-flag columns, which the README implies should be blank, (b) the same drug under several brand-name spellings (OZEMPIC, OZEMPIC ®, semaglutide), and (c) reports with n_drugs > 5, which are typically polypharmacy cases where attribution to any single drug is impossible.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11675942/",
+          "title": "Gastrointestinal Safety Assessment of GLP-1 Receptor Agonists — FAERS analysis (Diagnostics 2024)",
+          "facts": [
+            "Trulicity, Byetta, and Mounjaro carry the largest cumulative GLP-1 report counts",
+            "Ozempic's serious-event share has previously been reported as 43.9%"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "Why media collection was skipped",
+      "content": "This dataset is purely statistical — codes, terms, and counts of safety reports. There are no people, places, or events to photograph; the underlying patient records are confidential under HIPAA and not available to the public. Generic stock photos of pill bottles, doctors, or hospital corridors would not 'tell the reader something new' and would actively mislead by visually imputing severity to abstract codes. The detective therefore deliberately skipped reference-media collection. The designer should treat this as a chart-and-typography blog with optional illustrative drug-package iconography (treated as design ornament, not journalism).",
+      "category": "scope_suggestion",
+      "sources": []
+    }
+  },
+  "reference_media": [],
+  "instances": []
+}

@@ -1,0 +1,403 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Chart-led blog driven by tabular pharmacovigilance data. Channels are kept honest: one atmospheric image (teaser) + image2video animation; chart for every load-bearing finding; one interactive quiz where the reveal carries the story; one interactive map for geographic data; one data sonification synced to the daily-volume chart. No additional decorative images or videos — det_10 explicitly warned against generic medical stock imagery.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The dataset is structured quantitative comparisons across drugs, reactions, demographics, and time. Charts are the only honest way to show ranking and concentration."
+      },
+      "image": {
+        "used": true,
+        "reason": "One editorial still image as the page opener — a stack of medical safety reports with one glowing — sets the megaphone metaphor that frames the whole piece. Detective explicitly cautioned against generic medical imagery (det_10), so additional images are intentionally avoided."
+      },
+      "video": {
+        "used": true,
+        "reason": "image2video on the teaser still — a slow parallax push with a heartbeat-pulse of warm light from below. The motion is the only video element; it animates the page opener rather than fabricating an event."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Data sonification of the 54-day daily-volume time series (ana_29). Each day becomes a brief tone — high pitch on weekdays, drop-out on weekends — synced with the daily-volume chart so the reader sees and hears the bureaucratic rhythm simultaneously. Implemented with Web Audio API in the Programmer's HTML, not a generated WAV, so the sonification is exactly the data."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "Two interactives: (a) a guess-first quiz at edt_01 — 'which of these is the most-reported reaction?' — that turns the surprising lead into a reveal; (b) a Leaflet world map at edt_07 showing reports per occur-country with the U.S. dominance visible at a glance."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_teaser_image": {
+      "label": "Teaser hero — glowing stack of medical reports",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Editorial overhead photograph of a thick stack of paper medical safety reports sitting on a dark matte slate surface, one report at the top glowing with a soft warm orange light from below, dramatic single-source lighting from upper left, shallow depth of field, muted desaturated palette of charcoal and steel-grey with a single warm accent, top-down composition, no text or words visible anywhere in frame, no logos, no faces, conceptual photography style, 16:9 aspect",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Static fallback image of a stack of safety reports — the topmost a chest x-ray — with warm light pulsing from beneath. Used as the poster frame for the teaser video and as the no-JS fallback.",
+      "rationale": "A single atmospheric still establishes the FAERS-as-megaphone metaphor before any data appears. No people, no drugs in frame — keeps the conceptual frame clean.",
+      "based_on": []
+    },
+    "des_teaser_video": {
+      "label": "Teaser motion — image2video animated hero",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "very slow parallax push-in toward the topmost chest x-ray report, faint warm light from underneath the stack subtly pulses brighter and dimmer like a heartbeat, gentle drift of fine dust motes in the air, no camera shake, no other motion, dark editorial mood",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Six-second loopable clip — the teaser_hero still with a slow parallax push and a heartbeat-pulse of warm light from beneath the topmost report. Autoplays muted, loops; poster = teaser_hero.png so the no-JS case still shows the image.",
+      "rationale": "image2video preserves the composition we already invested in for the still and adds the kinetic feeling of a 'live' database without inventing fake content. Pulse rhythm visually echoes the weekday/weekend heartbeat sonification later in the page.",
+      "based_on": []
+    },
+    "des_01_quiz": {
+      "label": "Guess-first: which 'reaction' is most-reported?",
+      "type": "interactive",
+      "section": "edt_01",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Four large clickable cards in a 2x2 grid, each showing one candidate MedDRA term: 'Nausea', 'Death', 'Off label use', 'Headache'. The prompt above reads: 'Out of 600,000 reaction rows in FAERS 2024, which one was reported most often?'",
+        "trigger": "Reader clicks one card",
+        "transition": "All four cards flip simultaneously to reveal each term's actual count and percentage; the correct card pulses with a warm-orange glow that matches the teaser; a small caption under the grid shows whether the reader was right",
+        "payoff": "The reveal: 'Off label use — 14,801 mentions, 2.48%. The most-reported 'reaction' in FAERS is not a medical event.' A short follow-up sentence makes the connection to the rest of the piece.",
+        "data_source": "ana_12",
+        "options": [
+          {"label": "Nausea", "count": 7080, "pct": 1.18},
+          {"label": "Death", "count": 9356, "pct": 1.57},
+          {"label": "Off label use", "count": 14801, "pct": 2.48, "correct": true},
+          {"label": "Headache", "count": 5079, "pct": 0.85}
+        ]
+      },
+      "brief": "2x2 card grid quiz. Reader commits to a guess; all four cards flip to reveal counts; 'Off label use' pulses orange when revealed. Designed so even readers who get it right have to confront how non-medical the top of the list is.",
+      "rationale": "The finding is genuinely counter-intuitive. A passive bar chart would let the eye skip the surprise; a quiz makes the reader spend a moment with the wrong intuition first.",
+      "based_on": ["ana_12"]
+    },
+    "des_01_chart": {
+      "label": "Top 30 MedDRA reactions — horizontal bar",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_12",
+        "x": "rows",
+        "y": "preferred_term",
+        "color": {"field": "preferred_term", "scheme": "single_grey_with_highlight"},
+        "highlight": ["Off label use", "Drug ineffective", "Death"],
+        "interaction": "hover tooltip showing exact count and pct_of_reaction_rows; clicking a bar opens a small inline panel with that term's definition",
+        "style": {
+          "palette": "neutral grey with three warm-orange bars for highlighted non-medical/meta terms",
+          "no_gridlines": false,
+          "value_labels": "show count at the end of each bar",
+          "sort": "descending by rows"
+        }
+      },
+      "brief": "Horizontal bar chart of the top 30 reactions, sorted by frequency. Most bars are neutral grey; the three non-medical/meta terms ('Off label use', 'Drug ineffective', 'Death') are warm-orange to make the editorial point visible at a glance.",
+      "rationale": "Shows the full ranked tail so the reader can see how flat the distribution is after the top three, and how many recognisably-medical terms are nested among non-medical ones.",
+      "based_on": ["ana_12"]
+    },
+    "des_02_callouts": {
+      "label": "FAERS-at-a-glance stat strip",
+      "type": "stat_callout",
+      "section": "edt_02",
+      "content": {
+        "data_source": "ana_18",
+        "stats": [
+          {"value": "200,000", "label": "reports in this sample", "note": "Jan 1 – Feb 23, 2024 only"},
+          {"value": "52.5%", "label": "tagged serious", "note": "not a population rate"},
+          {"value": "19.1%", "label": "involve hospitalization"},
+          {"value": "9.4%", "label": "involve a death"}
+        ]
+      },
+      "brief": "Four large stat callouts in a single horizontal strip, each with a value, a label, and a short caveat-note in smaller type. Designed to anchor the 'no denominator, no rate' point with concrete numbers.",
+      "rationale": "edt_02 is pure context — no chart needed, but the reader needs the headline magnitudes before the rest of the blog lands. Stat callouts do this without bloat.",
+      "based_on": ["ana_18", "ana_02"]
+    },
+    "des_03_chart": {
+      "label": "Top 25 most-reported drugs",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_06",
+        "x": "rows",
+        "y": "drug",
+        "color": {"field": "drug", "scheme": "single_navy_with_highlight"},
+        "highlight": ["Dupixent", "Mounjaro", "Ozempic", "Zepbound"],
+        "interaction": "hover tooltip showing exact row count and percentage of all drug rows",
+        "style": {
+          "palette": "muted navy bars; Dupixent and Mounjaro in a brighter teal; Ozempic and Zepbound in warm-orange for the GLP-1 setup",
+          "value_labels": "show count at the end of each bar",
+          "sort": "descending by rows",
+          "annotations": [
+            {"y": "Mounjaro", "text": "tirzepatide", "side": "right"},
+            {"y": "Dupixent", "text": "dupilumab", "side": "right"},
+            {"y": "Ozempic", "text": "semaglutide", "side": "right"},
+            {"y": "Zepbound", "text": "tirzepatide", "side": "right"}
+          ]
+        }
+      },
+      "brief": "Horizontal bar chart of the top 25 most-reported drugs. Dupixent and Mounjaro share the top of the chart in a brighter teal; Ozempic and Zepbound carry a warm-orange that sets up the GLP-1 narrative for the next section. Generic-name annotations to the right of each bar.",
+      "rationale": "A single chart that does both jobs: it ranks the top drugs (the explicit edt_03 finding) and pre-loads the GLP-1 thread the next section unpacks.",
+      "based_on": ["ana_06"]
+    },
+    "des_04_chart": {
+      "label": "GLP-1 brand head-to-head — grouped bars",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "grouped_horizontal_bar",
+        "data_source": "ana_32",
+        "y": "brand",
+        "metric_groups": [
+          {"field": "pct_serious", "label": "% Serious", "color": "#c84a3a"},
+          {"field": "pct_hosp", "label": "% Hospitalization", "color": "#e98a2b"},
+          {"field": "pct_death", "label": "% Death", "color": "#3a3a3a"}
+        ],
+        "x_max": 100,
+        "sort_by": "n_reports",
+        "interaction": "hover tooltip showing exact percent, deaths, and report count for that brand",
+        "style": {
+          "palette": "three-color grouped bars; brand labels in a fixed left column",
+          "annotations": [
+            {"y": "Mounjaro", "text": "n=3,159 reports", "side": "right"},
+            {"y": "Ozempic", "text": "n=2,493 reports", "side": "right"},
+            {"y": "Zepbound", "text": "n=718", "side": "right"}
+          ]
+        }
+      },
+      "brief": "Eight GLP-1 brands as rows, three metrics each (Serious %, Hospitalization %, Death %) as grouped horizontal bars. Annotated with report counts so the reader can scale interpretation. Zepbound's near-zero bars make the visual point of the section.",
+      "rationale": "A grouped horizontal bar is the cleanest format for three small metrics across many brands. The visual asymmetry — Saxenda's huge serious bar at the bottom, Zepbound's nearly invisible bars at the top — does the editorial work without prose.",
+      "based_on": ["ana_32"]
+    },
+    "des_04_secondary": {
+      "label": "GLP-1 class share by molecule — donut",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "donut",
+        "data_source": "ana_09",
+        "value_field": "drug_rows",
+        "label_field": "molecule_and_brands",
+        "highlight": "Tirzepatide (Mounjaro / Zepbound)",
+        "interaction": "hover tooltip with exact rows and percentage of GLP-1 class",
+        "style": {
+          "palette": "five-color sequential — tirzepatide warm-orange, semaglutide cool blue, others greyscale",
+          "centerText": "26,170 GLP-1 drug rows  ·  3.4% of dataset"
+        }
+      },
+      "brief": "Small donut chart breaking the 26,170 GLP-1 drug rows into the five molecules. Tirzepatide visibly larger than semaglutide.",
+      "rationale": "Donut placed inline with the head-to-head chart shows the class-share story (tirzepatide 3.3x semaglutide) in one glance.",
+      "based_on": ["ana_09"]
+    },
+    "des_05_chart": {
+      "label": "Mounjaro vs Ozempic top reactions — side-by-side",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "facet_horizontal_bar",
+        "data_source": "ana_33",
+        "facet_field": "brand",
+        "facet_filter": ["Mounjaro", "Ozempic"],
+        "x": "pct_of_brand_reports",
+        "y": "reaction",
+        "color": {
+          "field": "reaction_category",
+          "categories": {
+            "device/dosing": "#e98a2b",
+            "biological": "#3a7d8d",
+            "meta": "#9a9a9a"
+          },
+          "computed_from_reaction_text": true
+        },
+        "highlight_top": 12,
+        "interaction": "hover tooltip showing count and percentage",
+        "style": {
+          "panels": 2,
+          "panel_layout": "side-by-side",
+          "per_panel_width_px": 360,
+          "sort_by": "pct_of_brand_reports descending within each facet"
+        }
+      },
+      "brief": "Two side-by-side panels (Mounjaro left, Ozempic right), each showing the brand's top 12 reactions as horizontal bars. Bars colored by category: device/dosing complaints in warm orange, biological symptoms in teal, meta terms in grey. The visual contrast — orange-dominated Mounjaro panel vs teal-dominated Ozempic panel — IS the finding.",
+      "rationale": "Side-by-side faceting reads instantly. Coloring by reaction category makes the device-vs-body story visible without prose.",
+      "based_on": ["ana_33"]
+    },
+    "des_05_lift": {
+      "label": "GLP-1 over-represented reactions — lollipop",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "lollipop",
+        "data_source": "ana_34",
+        "x": "lift",
+        "y": "reaction",
+        "highlight": ["Weight loss poor", "Increased appetite", "Hunger", "Impaired gastric emptying", "Pancreatitis"],
+        "interaction": "hover tooltip showing glp1_count, glp1_pct, overall_pct, lift",
+        "style": {
+          "sort_by": "lift descending",
+          "palette": "neutral grey lollipops with five accent-orange dots for highlighted terms",
+          "value_labels": "show lift value at the dot end"
+        }
+      },
+      "brief": "Lollipop chart of the 20 reactions most over-represented in GLP-1 reports vs the dataset average. Highlight five terms — Weight loss poor, Increased appetite, Hunger, Impaired gastric emptying, Pancreatitis — to surface the class paradox plus the known pancreatitis signal.",
+      "rationale": "Lollipop reads cleanly for lift values that range 5x to 21x. Highlights act as silent annotations.",
+      "based_on": ["ana_34"]
+    },
+    "des_06_chart": {
+      "label": "Death-rate hotspot drugs — diverging bar",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_20",
+        "x": "pct_death",
+        "y": "drug",
+        "color": {
+          "field": "drug_class",
+          "categories": {
+            "opioid_or_stimulant": "#7d2e2e",
+            "sedative_or_psychiatric": "#a85c2f",
+            "other": "#5a5a5a"
+          },
+          "computed_from_drug_name": true
+        },
+        "highlight": ["Methamphetamine", "Alcohol", "Fentanyl", "Cocaine", "Oxycodone"],
+        "interaction": "hover tooltip showing n_reports, deaths, death_pct, hosp_pct",
+        "style": {
+          "sort_by": "pct_death descending",
+          "value_labels": "show death pct at end of bar"
+        }
+      },
+      "brief": "Horizontal bar chart of the top 20 drugs by share of suspect-reports tagged with seriousnessdeath, colored by drug class. The dark-red top of the chart (methamphetamine, alcohol, fentanyl) makes the 'overdose signature, not weight-loss drugs' point visually.",
+      "rationale": "Color-by-class converts an otherwise inscrutable ranking into an instant pattern: the top of the list is overdose drugs.",
+      "based_on": ["ana_20"]
+    },
+    "des_07_chart_daily": {
+      "label": "Daily report volume — bar chart, weekend-shaded",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "vertical_bar",
+        "data_source": "ana_29",
+        "x": "date",
+        "y": "reports",
+        "color": {
+          "field": "is_weekend",
+          "categories": {"true": "#c84a3a", "false": "#3a7d8d"},
+          "computed_from_date": true
+        },
+        "interaction": "hover tooltip showing date, day-of-week, and reports",
+        "style": {
+          "annotations": [
+            {"x": "2024-01-06", "text": "Saturday: 668 reports"},
+            {"x": "2024-01-05", "text": "Friday: 6,621"}
+          ],
+          "y_axis_label": "Reports received"
+        }
+      },
+      "brief": "Vertical bar chart of all 54 days in the window. Weekday bars in teal, weekend bars in warm red — the visual rhythm IS the finding. Two annotations point at a representative Friday/Saturday cliff.",
+      "rationale": "Color-coding by day-of-week category makes the weekday/weekend rhythm visible without a faceted chart.",
+      "based_on": ["ana_29", "ana_30"]
+    },
+    "des_07_sonification": {
+      "label": "Sonification: hear the 54-day FAERS heartbeat",
+      "type": "audio",
+      "section": "edt_07",
+      "content": {
+        "audio_type": "sonification",
+        "why_audio": "The weekday/weekend pattern is a rhythmic finding. Hearing 54 short tones in 5 seconds — high pitches on weekdays, near-silence on weekends — makes the bureaucratic heartbeat physically obvious in a way a bar chart cannot.",
+        "trigger": "User clicks a small 'Play the 54-day rhythm' button below the daily-volume chart",
+        "ui_form": "chart-synced sonification — as each tone plays, the corresponding bar in the daily-volume chart pulses brighter for ~80ms",
+        "content": {
+          "implementation": "Web Audio API in the Programmer's HTML — no generated WAV. Each day maps to a 90ms sine-wave tone; pitch = 220 Hz + (reports / max_reports) * 660 Hz (so the loudest day is ~880 Hz). Weekend tones use a softer triangle wave at low volume to create audible drop-out.",
+          "duration_total_s": 5.0,
+          "data_source": "ana_29"
+        },
+        "fallback": "If the user does not click play, or audio is unsupported, the daily-volume chart alone communicates the finding via its red/teal color rhythm. No autoplay.",
+        "novelty_note": "Not a click-to-play tone card. The tones are synced bar-by-bar with a chart and the legend explains the pitch mapping so the reader knows exactly what they are hearing."
+      },
+      "brief": "Play button under the daily-volume chart. Click triggers 54 ~90ms tones, one per day, pitch-mapped to report count. Weekend days near-silent; weekday days clearly audible. Bar pulses brighter during its tone.",
+      "rationale": "The data has 54 ordered values — exactly the kind of small ranked sequence sonification handles well. Synced with the chart so the audio is interpretable rather than decorative.",
+      "based_on": ["ana_29", "ana_30"]
+    },
+    "des_07_map": {
+      "label": "Where the events occur — Leaflet world map",
+      "type": "interactive",
+      "section": "edt_07",
+      "content": {
+        "interaction_type": "leaflet_choropleth_or_circles",
+        "data_source": "ana_25",
+        "geo_field": "country_iso",
+        "value_field": "reports",
+        "style": {
+          "color_scale": "sequential teal, white→#0a3a4a, log scale",
+          "tile_provider": "CARTO Voyager (light)",
+          "default_zoom": 2,
+          "center": [25, 0]
+        },
+        "interaction": "hover/click a country to see exact report count and percentage; the U.S. is highlighted with a small static annotation: '120,528 reports — 60.3% of the sample'",
+        "scope_note": "Show only the top 15 countries plus a 'rest of world' bucket; small countries with fewer than 1000 reports are visible but not the focus."
+      },
+      "brief": "Leaflet world map (CARTO Voyager basemap), choropleth-colored by occur-country report count on a log scale. U.S. labeled with the dominant-share annotation. Hover any country for exact counts. Reader can zoom and pan.",
+      "rationale": "The data has a real ISO-3166 country code dimension. Geography is the most honest visualization for it — a non-spatial chart would lose the punchline that one country has 60% of the world's submissions.",
+      "based_on": ["ana_25", "ana_27"]
+    },
+    "des_07_sex_inline": {
+      "label": "Sex skew — inline waffle/bar",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "horizontal_stack",
+        "data_source": "ana_22",
+        "categories": ["Female", "Male", "Unknown", "Missing"],
+        "values_field": "reports",
+        "interaction": "hover tooltip showing each share's count and percent",
+        "style": {
+          "palette": "Female #c84a3a, Male #3a7d8d, Unknown #b4b4b4, Missing #e0e0e0",
+          "value_labels": "show pct in each segment",
+          "height_px": 24,
+          "annotation": "Among sex-known reports: 59.5% Female, 40.5% Male"
+        }
+      },
+      "brief": "Single thin horizontal stacked bar split into four segments by patient sex. Sized to fit inside the prose column at 24px tall. Used as an inline visual rather than a full chart.",
+      "rationale": "The sex skew is one number, not a distribution — a thin stacked bar is the lightest-weight way to show it without breaking the section's rhythm.",
+      "based_on": ["ana_22"]
+    },
+    "des_08_pullquote": {
+      "label": "Closing pull quote",
+      "type": "stat_callout",
+      "section": "edt_08",
+      "content": {
+        "value": "FAERS is a megaphone, not a measurement.",
+        "label": "the rule of thumb for every headline about an adverse-event-database surge",
+        "data_source": null
+      },
+      "brief": "Italic serif pull quote in large display type, with a smaller caption below. Used in place of a final chart — the closing section is editorial, not data-driven.",
+      "rationale": "The blog needs a sentence the reader can carry away. A pull quote at the close does this without forcing one more chart.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial — charcoal background, off-white type, warm-orange and teal accents",
+    "text_visual_pattern": "alternating: opener (image+video) → quiz → chart → stat strip → chart → chart → side-by-side chart + lollipop → diverging bar → daily-volume chart + sonification + map → pull quote close",
+    "centrepiece": "des_04_chart",
+    "anti_sameness_notes": "Lead with a reader-quiz instead of a chart so the surprise is felt before it is shown; avoid the standard 'click-to-play tone card' by binding the sonification to the chart it explains; intentionally skip extra generated images per det_10 (no generic pill-bottle stock photos).",
+    "typography_notes": "Display headings in 40px geometric sans; stat callouts at 64px with 14px caveat-notes; pull quote at 32px italic serif; body at 17px with generous leading. Section dividers are thin warm-orange rules, not horizontal lines. Charts inherit the page's dark palette — no separate chart-card backgrounds."
+  }
+}

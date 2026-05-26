@@ -1,0 +1,3 @@
+[
+  {"type": "missing_image_responsive", "count": 1, "lines": [656], "note": "Added max-width:100%; height:auto to the inline-styled Friends figure (des_18) for parity with the .image-pair img CSS rule that covers the other reference photos."}
+]

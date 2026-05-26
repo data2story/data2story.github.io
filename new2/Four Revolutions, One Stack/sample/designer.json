@@ -1,0 +1,426 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "default to all five channels (chart, image, video, audio, interactive_or_map); each channel chosen and executed in a data-driven way; skipping any channel requires an explicit reason in media_decisions",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The story is quantitative across eight rich CSVs covering 224 years and 1,018 AI models. Charts are the spine — stacked area for the energy mix, line for CO2 and per-capita energy, log scatter for AI compute, horizontal bars for rankings. Eleven distinct charts across nine sections."
+      },
+      "image": {
+        "used": true,
+        "reason": "One cinematic hero image: a vertical stack of four industrial artifacts (steam engine → oil derrick → hydroelectric turbine and solar/wind → AI server rack) representing the four revolutions piled on top of each other. Matches the editorial's stacking thesis without resorting to generic stock-photo decoration. Reused in the close."
+      },
+      "video": {
+        "used": true,
+        "reason": "Animate the hero stack with image2video to add a slow upward parallax — the reader's eye literally climbs the four revolutions. A short 5-second clip carries the metaphor better than a static still and is the most appropriate use of video for an abstract quantitative dataset."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Generated atmospheric pulse track that accelerates from a slow industrial heartbeat (representing the 19.7-month pre-2010 doubling) to a frantic rapid pulse (representing the 5.7-month post-2010 doubling). Plays under the AI-compute section as an optional play-button, paired with the log-scatter chart. Sonifies the 'doubling time collapsed' thesis without being decorative."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "Step-through scrollytelling on the stacked-area chart: four scroll-triggered steps, each highlighting one revolution's signature fuel band against a dimmed background. Reader scrolls through 1st → 4th revolution and sees the four fuels appear in sequence. No map — the data is global/temporal, not geographic."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_01": {
+      "label": "Teaser hero — four-revolution stack",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "cinematic editorial photograph: four industrial-era artifacts stacked into a single vertical column at golden-hour, low side lighting, dramatic atmospheric haze — at the base a Victorian coal-fired steam engine with brick chimney spilling thick coal smoke, mid-left a wooden oil derrick with crude pipework, mid-right a vertical hydroelectric turbine and electrical pylons, upper-mid a cluster of crystalline solar panels and a single wind turbine blade, and at the crown a modern dark server rack glowing with cyan LEDs, all built into one impossible vertical structure rising against a dusty bronze and slate-blue sky, painterly editorial vibe, no text, no people, 16:9, museum-quality composition, oil on canvas meets long-exposure photography",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Cinematic still image: the four industrial revolutions piled vertically as one impossible composite — steam engine at the base, oil derrick mid-frame, hydro/wind/solar in the middle, AI server rack on top. Dramatic moody atmosphere, golden hour light through haze. No text, no people.",
+      "rationale": "The editorial's core insight is that revolutions stack rather than substitute. The image is the visual metaphor for that thesis. Going atmospheric/painterly rather than literal-photographic avoids the generic-stock-photo trap that abstract datasets often fall into.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "Teaser motion — vertical parallax up the stack",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "slow upward camera dolly climbing the vertical industrial stack, soft drift of haze and smoke between the layers, faint cyan glow strengthening at the top server rack as the camera approaches, no text, no camera shake, single fluid motion 5 seconds, restrained ambient atmosphere",
+        "model": "google/veo-3.1-fast",
+        "duration": 5,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "Five-second clip: the camera slowly climbs the four-revolution stack from the steam-engine base to the AI-rack crown. The reader's eye is led upward through the stacked centuries. Plays muted, autoplays once when scrolled into view.",
+      "rationale": "Re-uses the strong still as the first frame and adds restrained motion. The upward dolly literalises the 'stacking' thesis and gives the page a kinetic anchor without forcing motion where the data doesn't have any.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Hero stacked area — global energy mix 1800-2024",
+      "type": "chart",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "stacked_area",
+        "data_source": "ana_01",
+        "x": "Year",
+        "y_stack": ["Traditional biomass", "Coal", "Oil", "Natural gas", "Hydropower", "Nuclear", "Solar", "Wind", "Modern biofuels", "Other renewables"],
+        "color_palette": {
+          "Traditional biomass": "#7a5c3a",
+          "Coal": "#2b2b2b",
+          "Oil": "#5b3a29",
+          "Natural gas": "#b86b3a",
+          "Hydropower": "#3b6f8c",
+          "Nuclear": "#a04ba0",
+          "Solar": "#e3b23c",
+          "Wind": "#7fb069",
+          "Modern biofuels": "#9eaa5b",
+          "Other renewables": "#5fa8a8"
+        },
+        "highlight": {"year": 2024, "marker": "world burns more coal now than ever"},
+        "interaction": "hover any year to show year + per-fuel TWh + total in a tooltip",
+        "style": {"no_gridlines": true, "y_label": "Primary energy (TWh/year)", "axis_color": "#bbb", "background": "#0d1116"}
+      },
+      "brief": "Full-width stacked area chart of all ten primary-energy sources from 1800 to 2024. Dark editorial palette — coal pitch-black, oil deep brown, gas warm orange, hydro cool blue, nuclear violet, solar amber, wind green. Hover reveals exact year-by-fuel TWh. The visual centrepiece of the entire blog.",
+      "rationale": "ana_01's data_table contains exactly the year × fuel grid this chart needs. Stacked area is the only viable visualization for 'one revolution per fuel'. Dark palette + non-rainbow fuel-specific colors avoid Vega-Lite's default look and keep the chart serious.",
+      "based_on": ["ana_01"]
+    },
+    "des_04": {
+      "label": "Stat callout — coal 2024 vs 1910",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "value": "45,851 TWh",
+        "label": "world coal consumption, 2024 — five times the volume of 1910 (9,136 TWh), when coal supposedly peaked",
+        "data_source": "ana_03"
+      },
+      "brief": "Large 64-72 px stat with a one-sentence subtitle. Positioned to the right of (or below) the hero stacked area, anchoring the editorial lead.",
+      "rationale": "ana_03 is the editor's lead finding. A stat callout is the right form: it's one comparison, not a distribution, and prose alone doesn't punch hard enough.",
+      "based_on": ["ana_03"]
+    },
+    "des_05": {
+      "label": "English coal index 1500-1870 with Watt anchor",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_16",
+        "x": "Year",
+        "y": "coal_index",
+        "y_scale": "log",
+        "annotations": [
+          {"x": 1776, "label": "James Watt's separate-condenser engine commercialised", "style": "dashed vertical line"},
+          {"x": 1700, "y": 100, "label": "index = 100 (base year)"}
+        ],
+        "highlight": [{"x": 1508, "y": 8.76, "marker": "starting point"}, {"x": 1800, "y": 421.28, "marker": "48x by 1800"}],
+        "interaction": "hover for year + index value",
+        "style": {"no_gridlines": true, "line_color": "#d9a05b", "x_range": [1500, 1870]}
+      },
+      "brief": "Single warm-amber line on log Y axis showing English coal output growing from index 8.8 (1508) to 421 (1800) to 3,774 (1870). A dashed vertical line at 1776 marks Watt — visibly placed deep into a curve that has been climbing for 250 years.",
+      "rationale": "Log scale is essential — pre-1700 values are 100x smaller than post-1800 and a linear chart would compress the early-history story into invisibility. The 1776 annotation visibly proves the 'Watt did not start this' editorial point.",
+      "based_on": ["ana_16"]
+    },
+    "des_06": {
+      "label": "Scrollytelling — four revolutions, four fuels on the stacked area",
+      "type": "interactive",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "scrollytelling",
+        "initial_state": "Stacked-area chart (same data as des_03) renders dimmed; revolution-period bands and onset-year markers appear",
+        "trigger": "Reader scrolls through four sticky steps inside this section",
+        "transition": "On each scroll-step, one revolution's period band (1760-1840 / 1870-1914 / 1950-2000 / 2010-present) brightens AND its signature fuel(s) in the stacked area pop to full opacity while the rest dim. Onset-year markers (1800 coal, 1870 oil, 1890 gas/hydro, 1965 nuclear, 1978 wind, 1983 solar) appear as small vertical lines.",
+        "payoff": "By the end the reader has watched all four revolutions add a fuel without any earlier fuel being removed — the stacking thesis demonstrated visually, not just stated.",
+        "data_source": ["ana_01", "ana_02"]
+      },
+      "brief": "Four-step IntersectionObserver scrollytelling pinned to the stacked-area chart. Each step lights up one revolution's period band and signature fuel(s) — 1st (Coal), 2nd (Oil + Hydropower), 3rd (Nuclear + Natural gas), 4th (Solar + Wind). The chart never reloads; only the highlight set changes. Mobile fallback: a tap-to-step button row beneath the chart.",
+      "rationale": "The editorial reads the hero chart four times, once per revolution. Scrollytelling lets the reader physically experience that same re-reading. Avoids placing 3+ static charts in a row and is the natural place to put the page's interactive channel.",
+      "based_on": ["ana_01", "ana_02"]
+    },
+    "des_07": {
+      "label": "Fossil share + absolute volume dual axis",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "dual_axis_line",
+        "data_source": "ana_04",
+        "x": "Year",
+        "y_left": {"field": "Fossil_TWh", "label": "Fossil TWh (absolute, left)", "color": "#b86b3a", "scale": "linear"},
+        "y_right": {"field": "Fossil_share_pct", "label": "Fossil share of primary energy, % (right)", "color": "#6fa8c8", "scale": "linear"},
+        "annotations": [
+          {"x": 1973, "label": "share peak 81.63%", "style": "dashed vertical line"}
+        ],
+        "highlight": [{"x": 2024, "marker": "76.41% share, 142,421 TWh volume"}],
+        "interaction": "hover any year for both numbers",
+        "style": {"no_gridlines": true, "background": "#0d1116"}
+      },
+      "brief": "Twin-line chart: an amber line rising relentlessly (absolute fossil TWh, climbing from 97 in 1800 to 142,421 in 2024) and a blue line that peaks at 1973 and very gently descends. Dashed vertical line at 1973 marks the share peak. The contrast between the two lines IS the finding.",
+      "rationale": "Two axes are necessary because the two stories (volume vs share) contradict each other — the chart's whole point is to show that contradiction at a glance.",
+      "based_on": ["ana_04"]
+    },
+    "des_08": {
+      "label": "World CO2 1750-2024 with revolution bands",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_06",
+        "x": "Year",
+        "y": "CO2_Gt",
+        "y_scale": "linear",
+        "annotations": [
+          {"x_range": [1760, 1840], "label": "1st", "style": "shaded band, very dim"},
+          {"x_range": [1870, 1914], "label": "2nd", "style": "shaded band, very dim"},
+          {"x_range": [1950, 2000], "label": "3rd", "style": "shaded band, very dim"},
+          {"x_range": [2010, 2024], "label": "4th", "style": "shaded band, very dim"}
+        ],
+        "highlight": [
+          {"x": 1750, "y": 0.009, "marker": "9.3 Mt"},
+          {"x": 2024, "y": 38.60, "marker": "38.6 Gt"}
+        ],
+        "interaction": "hover for year + Gt value",
+        "style": {"no_gridlines": true, "line_color": "#d04a4a", "background": "#0d1116"}
+      },
+      "brief": "Single line in muted brick-red showing world CO2 in Gt/yr from 1750 to 2024. Four thin shaded vertical bands mark the four revolutions. Endpoints labeled — 9.3 Mt → 38.6 Gt is a 4,148x rise. Curve has no visible inflection at the renewables takeoff.",
+      "rationale": "The point of the chart is precisely that the curve does not break — labeling the revolution periods makes their absence as inflection points visually obvious.",
+      "based_on": ["ana_06"]
+    },
+    "des_09": {
+      "label": "Top 15 cumulative CO2 emitters bar chart",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_08",
+        "x": "cumulative_Gt",
+        "y": "country",
+        "y_sort": "x descending",
+        "highlight": [{"country": "United States", "color": "#d04a4a"}, {"country": "China", "color": "#d97b4a"}],
+        "label_format": "%.0f Gt (%.1f%%)",
+        "interaction": "hover for exact Gt + percentage of country-attributed total",
+        "style": {"bar_color": "#5a6378", "no_gridlines": true, "background": "#0d1116"}
+      },
+      "brief": "Horizontal bar chart of the top 15 cumulative CO2 emitters from 1750 to 2024. United States bar in red (clearly the longest at 434.9 Gt), China in orange (285.1 Gt), rest in muted slate. Labels show '434.9 Gt (24.1%)' format.",
+      "rationale": "Horizontal bars handle long country names without rotation. Two colors call out the headline (US dwarfing China cumulatively) without making the chart noisy.",
+      "based_on": ["ana_08"]
+    },
+    "des_10": {
+      "label": "Solar + wind takeoff dual area",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "stacked_area",
+        "data_source": "ana_05",
+        "x": "Year",
+        "y_stack": ["Wind_TWh", "Solar_TWh"],
+        "color_palette": {"Wind_TWh": "#7fb069", "Solar_TWh": "#e3b23c"},
+        "highlight": [{"x": 2024, "marker": "11,275 TWh combined"}],
+        "interaction": "hover for both values",
+        "style": {"no_gridlines": true, "y_label": "TWh/year", "background": "#0d1116"}
+      },
+      "brief": "Small-area chart 1990-2024: wind in muted green at the bottom, solar in warm amber on top. Goes from a flat line on the bottom axis to a tall stack reaching 11,275 TWh by 2024. The solar layer visibly catches up to wind in 2024.",
+      "rationale": "Two-layer stacked area gives both the combined story (1000x growth) and the sub-story (solar catching wind) in one chart.",
+      "based_on": ["ana_05"]
+    },
+    "des_11": {
+      "label": "Per-capita energy convergence multi-line",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "multi_line",
+        "data_source": "ana_09",
+        "x": "Year",
+        "y_lines": ["United States", "European Union (27)", "China", "World", "India", "Africa"],
+        "color_palette": {
+          "United States": "#d04a4a",
+          "European Union (27)": "#5b8bd9",
+          "China": "#d97b4a",
+          "World": "#888888",
+          "India": "#7fb069",
+          "Africa": "#a04ba0"
+        },
+        "annotations": [
+          {"x": 1965, "y": 73802, "label": "US 1965 = 73,802 kWh/cap (benchmark)"},
+          {"x": 2024, "y": 34514, "label": "China 2024 = 47% of US 1965"}
+        ],
+        "interaction": "hover for entity + year + kWh/cap; click an entity name in the legend to isolate",
+        "style": {"no_gridlines": true, "y_label": "kWh per capita per year", "background": "#0d1116"}
+      },
+      "brief": "Six lines from 1965 to 2024. US is the flattish red ceiling at ~75-90k kWh/cap. China rockets from 2,124 to 34,514 (orange line crossing the EU's blue). India creeps from 1,264 to 7,813. Africa barely moves. The China vs US-1965 annotation is the editorial's verbatim point.",
+      "rationale": "Multi-line is the right form when the comparison itself is the story (convergence + divergence). Six lines is the upper bound for legibility; legend click-to-isolate covers the case where the reader wants to focus on one entity.",
+      "based_on": ["ana_09"]
+    },
+    "des_12": {
+      "label": "AI training compute log scatter with pre/post-2010 trends",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "log_scatter_with_trend",
+        "data_source": "ana_11",
+        "x": "Year",
+        "y": "max_FLOP",
+        "y_scale": "log",
+        "secondary_series": [{"field": "median_FLOP", "label": "median", "color": "#888"}],
+        "trend_lines": [
+          {"x_range": [1950, 2009], "label": "pre-2010: doubling 19.7 months", "color": "#5b8bd9"},
+          {"x_range": [2010, 2026], "label": "post-2010: doubling 5.7 months", "color": "#d04a4a"}
+        ],
+        "highlight": [{"x": 2025, "y": 5e26, "marker": "Grok 4 — 5e26 FLOP"}],
+        "interaction": "hover for year + median + max FLOP",
+        "style": {"no_gridlines": false, "y_label": "Training compute (FLOP, log scale)", "background": "#0d1116"}
+      },
+      "brief": "Log-Y scatter. Yellow points for max-FLOP-by-year, smaller grey points for median-by-year. Two trend lines: a blue one (pre-2010, gentle slope) and a red one (post-2010, steep slope). The steepness contrast IS the finding. Highlight the topmost point (Grok 4) with its name.",
+      "rationale": "Log scale is mandatory — values span 25 orders of magnitude. Two trend lines make the doubling-time acceleration immediately visible. Highlighting Grok 4 anchors the abstract curve to a real model name.",
+      "based_on": ["ana_11", "ana_12"]
+    },
+    "des_13": {
+      "label": "Moore's Law transistor density log line",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_15",
+        "x": "Year",
+        "y": "transistors",
+        "y_scale": "log",
+        "highlight": [
+          {"x": 1971, "y": 2308, "marker": "Intel 4004"},
+          {"x": 2021, "y": 5.82e10, "marker": "frontier chip 58 billion"}
+        ],
+        "annotations": [
+          {"label": "pre-2010 doubling: 23.5 months", "x": 1990, "y": 1e6, "style": "small caption"},
+          {"label": "post-2010 doubling: 26.5 months — mild slowdown", "x": 2015, "y": 1e10, "style": "small caption"}
+        ],
+        "interaction": "hover for year + transistors",
+        "style": {"no_gridlines": false, "line_color": "#a04ba0", "y_label": "Transistors per microprocessor (log)", "background": "#0d1116"}
+      },
+      "brief": "Single violet line on log Y axis showing the 25-million-fold transistor density gain from 1971 to 2021. Small captions in-chart show the pre-2010 (23.5mo) and post-2010 (26.5mo) doubling times so the reader can visually compare to the AI-compute chart above.",
+      "rationale": "Placed alongside des_12 (AI compute scatter), the Moore's-Law line shows that the post-2010 AI-compute acceleration is NOT driven by per-chip transistor gains. Same axis style as des_12 for easy visual comparison.",
+      "based_on": ["ana_15"]
+    },
+    "des_14": {
+      "label": "Stat callout — doubling-time acceleration",
+      "type": "stat_callout",
+      "section": "edt_07",
+      "content": {
+        "value": "5.7 months",
+        "label": "post-2010 AI-compute doubling time — down from 19.7 months pre-2010 (3.4x acceleration). Moore's Law: 26.5 months.",
+        "data_source": "ana_12"
+      },
+      "brief": "Three-tier stat callout. Big number 5.7 months. Subtitle two-line: '...down from 19.7 months pre-2010 (3.4x faster). Moore's Law: 26.5 months for comparison.' Positioned next to des_12.",
+      "rationale": "The doubling-time pair is the single most concrete way to communicate the AI-compute acceleration. Pairing it with the Moore's Law number (where the underlying chip curve sits) reinforces the parallelism-and-runtime explanation.",
+      "based_on": ["ana_12", "ana_15"]
+    },
+    "des_15": {
+      "label": "Audio — accelerating compute pulse",
+      "type": "audio",
+      "section": "edt_07",
+      "content": {
+        "audio_type": "generated",
+        "why_audio": "Hearing the doubling-time acceleration makes it embodied: a slow industrial heartbeat (representing the 19.7-month pre-2010 cadence) gradually accelerates into a frantic rapid pulse (5.7-month post-2010 cadence). The chart shows it; the audio lets you feel it.",
+        "trigger": "click 'play the acceleration' button below the compute chart (des_12). Never autoplay.",
+        "ui_form": "compact play button + 30-second progress bar embedded under the chart; a small annotation appears on the chart at the moment the cadence audibly switches (year 2010)",
+        "content": {
+          "filename": "compute_pulse.mp3",
+          "tool": "text2music",
+          "prompt": "30 seconds dark industrial pulse accelerating from slow heartbeat to frantic rapid beat, sparse synth pad, no vocals, atmospheric",
+          "model": "google/lyria-3-clip-preview",
+          "generation_note": "Initial attempt with lyria-3-pro-preview returned no audio chunks; fell back to lyria-3-clip-preview which succeeded. Returned bytes were MP3-encoded (192 kbps, 44.1 kHz JntStereo) so saved as .mp3.",
+          "data_mapping": {
+            "concept": "tempo encodes doubling cadence; first half = 19.7-month doubling era (slow); second half = 5.7-month era (fast)",
+            "scale": "60 BPM (start) → 240 BPM (end), with switching moment representing year 2010"
+          }
+        },
+        "fallback": "if audio is muted or unsupported, the chart and stat-callout (des_12, des_14) carry the full finding; the play button shows a small 'audio disabled' tooltip",
+        "novelty_note": "Differs from the conventional 'click-to-play tone card' — the audio is bound to the chart and to the editorial moment (year 2010 cadence switch). It plays once and is over; no looping background music."
+      },
+      "brief": "Thirty-second generated audio piece that opens as a slow industrial heartbeat and accelerates into a frantic pulse. The cadence-switch moment is timed to align with 2010 on the adjacent compute chart. Play button is small and unobtrusive; never autoplays.",
+      "rationale": "Audio earns its slot by encoding a finding (the cadence acceleration) that a static chart cannot make embodied. Audio is generated, not sampled — avoids depending on a real track that may not match.",
+      "based_on": ["ana_12"]
+    },
+    "des_16": {
+      "label": "Training power draw over time (log scatter)",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "log_scatter",
+        "data_source": "ana_14",
+        "x": "Year",
+        "y": "max_W",
+        "y_scale": "log",
+        "secondary_series": [{"field": "median_W", "label": "median", "color": "#888"}],
+        "highlight": [{"x": 2025, "y": 1.10e8, "marker": "Grok 3 — 110 MW"}],
+        "interaction": "hover for year + median power + max power",
+        "style": {"no_gridlines": false, "y_label": "Training power draw (W, log)", "background": "#0d1116"}
+      },
+      "brief": "Log-Y scatter of max-recorded training power draw per year, 2015-2026. Climbs from 2.1 kW (2015) to 110 MW (2025) — about 10x every four years. Grok 3 highlighted at the top. Median line in grey for reference.",
+      "rationale": "ana_14 is the most concrete way to communicate the grid-impact story. Log scale because the values span 5 orders of magnitude.",
+      "based_on": ["ana_14"]
+    },
+    "des_17": {
+      "label": "Top 15 frontier models by training compute (horizontal bar)",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_13",
+        "x": "training_FLOP",
+        "y": "model",
+        "y_sort": "x descending",
+        "x_scale": "log",
+        "color_by": "organization",
+        "highlight": [
+          {"model": "Grok 4", "marker": "5e26 FLOP — 10,000x GPT-4"},
+          {"model": "Grok 3", "marker": "110 MW training power"}
+        ],
+        "interaction": "hover for model + org + date + FLOP + power",
+        "style": {"no_gridlines": true, "background": "#0d1116"}
+      },
+      "brief": "Horizontal log-scale bar chart of the 15 highest-training-compute models. Each bar colored by organization (xAI, OpenAI, Anthropic, Meta, Google DeepMind, etc.). Bars span ~2e25 to 5e26 FLOP. Grok 4 at the top; GPT-4 (March 2023) at the bottom as the reference anchor.",
+      "rationale": "ana_13's data table has 15 rows × 5 cols — perfect for a horizontal bar. Coloring by organization adds the implicit story (a few labs dominate the frontier).",
+      "based_on": ["ana_13"]
+    },
+    "des_18": {
+      "label": "Stat callout — 110 MW = town of 80,000",
+      "type": "stat_callout",
+      "section": "edt_08",
+      "content": {
+        "value": "110 MW",
+        "label": "peak training-run power draw, 2025 (Grok 3) — sustained for weeks, that's the steady electricity demand of a town of about 80,000 people",
+        "data_source": "ana_13"
+      },
+      "brief": "Big-number callout. 110 MW with the town-comparison subtitle to translate megawatts into something a non-technical reader can picture.",
+      "rationale": "Watts are an abstract unit; converting to 'town of 80,000' is the journalistic translation the prose cannot do as economically.",
+      "based_on": ["ana_13"]
+    },
+    "des_19": {
+      "label": "Stat callout — IEA 945 TWh by 2030",
+      "type": "stat_callout",
+      "section": "edt_08",
+      "content": {
+        "value": "945 TWh",
+        "label": "projected global data-centre electricity demand by 2030 (IEA Energy and AI 2025) — up from 415 TWh in 2024, growing 4x faster than the rest of the grid",
+        "data_source": "ana_13"
+      },
+      "brief": "Companion stat to des_18. Translates the single-run number (110 MW) into the global aggregate (945 TWh/yr by 2030) that the grid must build for.",
+      "rationale": "Pairs the micro (one training run) with the macro (the whole sector). The 'growing 4x faster than the rest of the grid' clause is the IEA's actual headline framing.",
+      "based_on": ["ana_13"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial — slate-blue background (#0d1116), warm amber and muted brick-red accents, painterly atmospheric imagery, no rainbow palettes",
+    "text_visual_pattern": "text-first hook → hero stacked area + stat callout → text → secondary chart → scrollytelling pinned section → text → twin-line → text + two charts side-by-side → text + multi-line + small-area → text + paired log charts + stat + audio → text + bar + scatter + two stats → animated hero re-use as close",
+    "centrepiece": "des_06 (the scrollytelling on the four-revolution stacked area). The biggest interactive moment is also the heart of the editorial argument.",
+    "anti_sameness_notes": "Avoids the usual data-blog feel by (1) using a painterly composite teaser instead of stock photography, (2) committing to one consistent dark palette across every chart with semantic fuel colors instead of categorical rainbows, (3) placing the audio piece under the AI-compute chart where its acceleration directly encodes the finding, (4) building the interactive on top of the existing hero chart rather than introducing a separate quiz widget. No 3+ charts in a row without a stat, audio, or scrollytelling break.",
+    "typography_notes": "Title 56-64 px serif, body 17-18 px sans, section headers 28-32 px medium-weight. Stat callouts 56-72 px with 14 px label underneath. Pull quotes italic serif inside a 1px slate border. Code/numbers in tabular figures wherever feasible. Generous vertical spacing — at least 80 px between sections."
+  }
+}

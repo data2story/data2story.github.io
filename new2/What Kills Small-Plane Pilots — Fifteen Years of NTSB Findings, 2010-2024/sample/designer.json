@@ -1,0 +1,320 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "Data-first. The dataset is statistical-narrative — heavy on counts and shares with the NTSB's own prose as primary qualitative material — so the page leans on a strong scatter centerpiece, a choropleth map, and a single restrained image+motion teaser. Audio is intentionally omitted because the subject is fatal aviation accidents and any sonification of death counts or ATC distress audio would read as exploitative against the rest of the piece's restrained federal-document tone.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Eight different chart types across nine sections — scatter quadrant (the centerpiece), bar charts, line+bar dual encoding, heatmap matrix, sorted horizontal bars, choropleth map, histogram, and a stat-callout array. Charts carry the analytical load."
+      },
+      "image": {
+        "used": true,
+        "reason": "Two cinematic editorial stills — a dusk cloud deck for the teaser, a pre-dawn horizon for the close. Both atmospheric, no aircraft, no wreckage, no people. They frame the conditions discussed rather than illustrate them."
+      },
+      "video": {
+        "used": true,
+        "reason": "The teaser_clouds.png still has been animated via image2video (google/veo-3.1-fast, 6s, 16:9). Slow push-in through the cloud deck, gentle parallax. The motion is the kinetic complement to the chart-heavy body."
+      },
+      "audio": {
+        "used": false,
+        "reason": "Intentional omission. The dataset documents ~3,200 fatalities and the editor's tone is matter-of-fact federal-document register. Sonifying death rates as pitches, embedding ATC distress audio, or generating a 'somber atmosphere' track would all break that register and read as exploitative. The story's sonic dimension is the silence between the NTSB's clinical findings — represented by the absence of audio, not by added sound. Visual fallbacks (charts, images, quotes) carry every meaning that audio could have."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "Two interactive elements: an interactive U.S. choropleth (Leaflet) for state-level geography in edt_07, and a reader-guess interaction in edt_08 (the homebuilt-premium reveal) that asks the reader to predict before showing the actual 1.28× per-accident vs. 4× per-hour numbers."
+      }
+    },
+    "media_blockers": [
+      {
+        "category": "video",
+        "reason": "Initial image2video attempt with the words 'somber' and 'patient' in the prompt was content-filtered (status=failed). Re-ran with a neutral motion-only prompt and the second attempt succeeded.",
+        "attempted_command": "image2video teaser_clouds.png prompt='Slow cinematic dolly push-in ... patient and somber ...'",
+        "fallback_des": "des_teaser_motion (succeeded on retry)"
+      }
+    ]
+  },
+  "items": {
+    "des_teaser_image": {
+      "label": "Teaser still — dusk cloud deck",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_clouds.png",
+        "tool": "text2image",
+        "prompt": "Cinematic editorial wide-angle photograph: a low layer of overcast cloud at dusk seen from horizon altitude, dark gray-blue cumulus piling against a thin warm band of fading sunset light, faint silhouette of distant mountain ridges below the cloud base, soft atmospheric haze, no aircraft, no text, no people, no wreckage, restrained desaturated palette with one warm accent, 16:9 aspect, large negative space top half, editorial documentary tone",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "First-impression hero still. Dusk cloud deck with a warm horizon band breaking through; distant mountain silhouette grounds the scale. No aircraft in frame — the cloud layer IS the subject because the piece argues that weather is what kills GA pilots. Used as the static fallback for the animated teaser.",
+      "rationale": "An atmospheric environmental still earns the teaser slot better than a literal aircraft image would. The piece's lead finding (spatial disorientation, 95% fatal) is fundamentally about visual reference disappearing — the teaser visualizes the conditions, not the consequences.",
+      "based_on": []
+    },
+    "des_teaser_motion": {
+      "label": "Teaser motion — animated push-in",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_clouds.png",
+        "prompt": "Gentle slow cinematic push-in towards the horizon, soft drift of distant clouds, subtle parallax between cloud layers, warm horizon light gradually intensifying, peaceful and patient camera move, no shake",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first"
+      },
+      "brief": "6-second clip animating the teaser_clouds.png still. Slow dolly push toward the lit horizon band with subtle parallax between cloud layers. Plays muted-by-default with an autoplay-once-when-in-view behavior. The static PNG remains the poster frame for browsers that cannot play the MP4.",
+      "rationale": "image2video preserves the composition of an already-strong still while adding the kinetic edge a pure image lacks. The push-in motion mirrors what the piece is about: getting closer to the conditions that kill people.",
+      "based_on": []
+    },
+    "des_01_chart": {
+      "label": "Hook stat-callout triptych",
+      "type": "stat_callout",
+      "section": "edt_01",
+      "content": {
+        "values": [
+          {"value": "95.0%", "label": "Spatial disorientation — fatality rate when NTSB cites it (298 events)", "highlight": true},
+          {"value": "12.7%", "label": "Engine failure — fatality rate when NTSB cites it (3,876 events)"},
+          {"value": "17,525", "label": "Distinct NTSB investigations in this dataset (2010-2024)"}
+        ],
+        "data_source": "ana_18"
+      },
+      "brief": "Three large stat callouts arranged horizontally above the section prose. 95% is rendered at 96px in the accent color (warm amber, picked up from the teaser image); the other two are at 72px in muted gray. The 95%-vs-12.7% pairing is the lead finding rendered as bare numbers, not a chart — the chart slot for this finding belongs to the centerpiece in edt_04.",
+      "rationale": "The hook section already gets the cause-pattern scatter in edt_04. A stat-callout triptych here delivers the lead numbers immediately without giving away the chart that anchors edt_04.",
+      "based_on": ["ana_18", "ana_04"]
+    },
+    "des_02_chart": {
+      "label": "Aircraft category — fleet composition donut",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "donut",
+        "data_source": "ana_06",
+        "value_field": "count",
+        "category_field": "label",
+        "highlight": {"category": "Airplane (fixed-wing)"},
+        "interaction": "hover tooltip with exact count and percent",
+        "style": {"palette": "muted_grayscale_with_one_accent", "max_categories": 6, "merge_remainder_label": "Other"}
+      },
+      "brief": "Compact donut chart showing the 88% / 7% / 5% breakdown of aircraft categories. Fixed-wing airplanes get the accent color; helicopter, glider, balloon, weight-shift, gyrocopter merge into a single muted slice if a 6-category cap is hit. Donut not pie — donut leaves room for the center label '88% airplanes' as a baked-in caption.",
+      "rationale": "A donut is the right shape for a single-share-of-a-whole comparison and keeps this small supporting section from competing with the larger charts ahead.",
+      "based_on": ["ana_06"]
+    },
+    "des_03_chart": {
+      "label": "Fifteen-year trend — events with fatal share line",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "dual_axis_line_bar",
+        "data_source": "ana_02",
+        "x": "year",
+        "y1_bar": "events",
+        "y2_line": "fatal_share_pct",
+        "highlight": {"year": 2024, "annotation": "Lowest fatal share in the 15-year series"},
+        "interaction": "hover crosshair with both values per year",
+        "style": {"bar_color": "muted_steel", "line_color": "accent_amber", "y1_label": "Investigated events", "y2_label": "Fatal share (%)", "y2_range": [10, 25]}
+      },
+      "brief": "Dual-axis combo: bars for absolute event counts (decline from 1,344 in 2010 → 1,038 in 2024), and a line for fatal share (oscillates 15-21%). Both fit together cleanly: the bars come down, the line stays approximately flat with a dip in 2024. Annotate 2024 with 'lowest fatal share' callout.",
+      "rationale": "The chart has to communicate two simultaneous facts — accidents fell, fatal-share-among-accidents didn't move much — and a dual-axis is the cleanest encoding. The seasonality chart from ana_03 is intentionally a prose-only mention to avoid two trend charts in a row.",
+      "based_on": ["ana_02"]
+    },
+    "des_04_chart": {
+      "label": "CENTERPIECE — cause-pattern frequency × fatality scatter",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "annotated_scatter_quadrant",
+        "data_source": "ana_18",
+        "x": "events",
+        "x_scale": "log",
+        "y": "fatal_share_pct",
+        "size": "deaths",
+        "label": "label",
+        "highlight": [
+          {"pattern": "spatial_disorientation", "annotation": "95% fatal — 558 deaths from 298 events. Almost always lethal."},
+          {"pattern": "engine_failure", "annotation": "12.7% fatal — common but mostly survivable."},
+          {"pattern": "loss_of_control", "annotation": "The largest single contributor to GA fatalities."}
+        ],
+        "quadrant_labels": [
+          {"x_position": "low", "y_position": "high", "label": "RARE & LETHAL"},
+          {"x_position": "high", "y_position": "high", "label": "COMMON & LETHAL"},
+          {"x_position": "high", "y_position": "low", "label": "COMMON & SURVIVABLE"},
+          {"x_position": "low", "y_position": "low", "label": "(empty — NTSB doesn't investigate trivial accidents)"}
+        ],
+        "interaction": "hover any point shows: pattern label, event count, fatal share %, total deaths",
+        "style": {
+          "x_axis_label": "Frequency in NTSB cause-text (log scale, # of events)",
+          "y_axis_label": "Fatality rate when this pattern appears (%)",
+          "background_quadrants": "very faint diagonal tint dividing the plane into the four quadrants",
+          "point_color": "ramp by fatality share — gray → amber → red",
+          "point_label_strategy": "label every point with size > 100 deaths or fatal_share > 50%",
+          "min_size_px": 6,
+          "max_size_px": 32
+        }
+      },
+      "brief": "The single most important visual on the page. A log-x scatter of cause-pattern frequency vs fatality share. Each of the ~20 patterns from ana_18's data_table is a labeled bubble; bubble size encodes total deaths so spatial-disorientation (558 deaths from rare events) reads as proportionally as visible as engine-failure (732 deaths from very common events). Four faint background quadrants frame the reading: rare-and-lethal upper-left, common-and-lethal upper-right, common-and-survivable lower-right, empty lower-left. Annotation callouts on spatial_disorientation, engine_failure, and loss_of_control. Hover gives the full numbers. This is the chart the piece is built around.",
+      "rationale": "The editor's lead finding is the asymmetry between common and lethal — this chart IS that asymmetry, mapped onto a single 2D plane that the reader can scan in five seconds. Log scale on the x-axis is essential because the data spans 17 events (porpoise) to 6,940 (landing mentions). The four quadrants do most of the rhetorical work for free.",
+      "based_on": ["ana_18", "ana_19"]
+    },
+    "des_05_chart": {
+      "label": "Weather × flight-plan heatmap",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "heatmap_with_labels",
+        "data_source": "ana_16",
+        "x": "flight_plan",
+        "y": "weather",
+        "color": "fatal_share_pct",
+        "label_cells": true,
+        "highlight": [
+          {"weather": "IMC", "flight_plan": "NONE", "annotation": "74.5% fatal — the canonical 'VFR pilot in clouds without a plan' pattern (275 events)"}
+        ],
+        "interaction": "hover any cell shows: weather × plan, event count, fatal events, fatal share %",
+        "style": {
+          "rows_order": ["VMC", "IMC"],
+          "cols_order": ["IFR", "CVFR", "VFR", "NONE"],
+          "palette": "single-hue red, 0% → 80%, white text on dark cells",
+          "cell_label_format": "{fatal_share_pct}%\\n(n={events})"
+        }
+      },
+      "brief": "A 2×4 heatmap with weather (VMC, IMC) on the y-axis and flight-plan-class (IFR, CVFR, VFR, NONE) on the x-axis. Cells are colored by fatal share %; each cell shows both the percentage and the n. The IMC row is uniformly red (~60-75% fatal); the VMC row is uniformly cool (~10-20%). The single most-extreme cell — IMC × NONE at 74.5% — gets an annotation arrow.",
+      "rationale": "A heatmap with explicit cell labels is the right encoding because the reader needs to see both the 4× ratio between rows AND the specific worst cell. Bar charts would lose the 2D structure. The 178-second factoid lives in prose; the chart handles the data.",
+      "based_on": ["ana_16", "ana_15"]
+    },
+    "des_06_chart": {
+      "label": "Light-conditions sorted bar",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "horizontal_bar_sorted",
+        "data_source": "ana_17",
+        "x": "fatal_share_pct",
+        "y": "light_bucket",
+        "highlight": {"light_bucket": "Night-dark (no moon)"},
+        "secondary_label": "events",
+        "interaction": "hover any bar shows fatal share, event count, fatal count",
+        "style": {
+          "sort": "descending by fatal_share_pct",
+          "bar_color": "muted gray with one amber-highlighted bar for Night-dark",
+          "show_baseline_marker": {"value": 16.2, "label": "Daylight baseline"}
+        }
+      },
+      "brief": "Six horizontal bars sorted by fatal share descending: Night-dark 55.6%, Dawn 18.3%, Dusk 17.6%, Day 16.2%, Night-regular 31.0%, Night-bright 9.5%. The Night-dark bar is highlighted in amber and labeled with both percentage and event count (313). A vertical reference line marks the daylight baseline (16.2%) so the reader can see Night-dark sits ~3.4× above it.",
+      "rationale": "Horizontal sorted bar is the right shape for ranking six categories where the reader's eye should move top-to-bottom from worst to best. A reference line baseline makes the multiplier readable without computing it mentally.",
+      "based_on": ["ana_17"]
+    },
+    "des_07_map": {
+      "label": "U.S. state choropleth + Alaska callout",
+      "type": "chart",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "leaflet_choropleth",
+        "data_source": "ana_13",
+        "x": "state",
+        "y_primary": "events",
+        "y_secondary": "fatal_share_pct",
+        "library": "Leaflet.js + US-Atlas state geojson",
+        "interaction": "Click a state to show a popup with: events, fatal events, deaths, events_share_pct, fatal_share_pct. Hover a state to highlight it and update the side caption.",
+        "style": {
+          "palette": "viridis on events count, log scale because CA at 1,575 swamps low-event states",
+          "highlight_alaska": "Outline Alaska with a 3px amber stroke; pin a small inset card to the bottom-right of the map with the Alaska-paradox numbers (1,016 events / 9.6% fatal vs 18.2% lower-48)"
+        }
+      },
+      "brief": "Leaflet-driven interactive choropleth of U.S. states colored by GA accident count (log scale). Alaska is outlined in amber to draw the eye. A docked inset in the lower-right corner shows the per-side stat — 'Alaska: 1,016 events / 9.6% fatal' vs 'Lower 48: 18.2% fatal' — so the paradox does not get buried in the color scale. Map is keyboard-navigable; clicking a state opens a popup with the full row from ana_13's data_table.",
+      "rationale": "The state-level geography genuinely benefits from a map (not a bar chart) because the reader instantly absorbs that the heavy-accident states are the populated ones AND that Alaska is the unusual one. The docked inset is the only way to communicate the paradox without making the map carry two color encodings at once.",
+      "based_on": ["ana_13", "ana_14"]
+    },
+    "des_08_chart": {
+      "label": "Aircraft age histogram + homebuilt comparator",
+      "type": "chart",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "histogram_with_inset",
+        "data_source": ["ana_11", "ana_09"],
+        "main": {
+          "type": "histogram",
+          "x": "age_bucket",
+          "y": "count",
+          "x_order": ["0-5", "6-10", "11-20", "21-30", "31-40", "41-50", "50+"],
+          "highlight_bar": "50+",
+          "vertical_reference": {"value": "median 39yr", "x_position": "31-40 / 41-50 boundary"}
+        },
+        "inset": {
+          "type": "side_by_side_bar",
+          "x": "label",
+          "y": "fatal_share_pct",
+          "data_source": "ana_09",
+          "annotation": "Per-accident severity ratio is 1.28× — much smaller than the 4× per-flight-hour ratio reported by NTSB SS-12/01"
+        },
+        "interaction": "hover any age bar shows count; hover homebuilt bars shows fatal share & event count",
+        "style": {
+          "histogram_palette": "single muted steel, accent on '50+'",
+          "inset_palette": "two-bar comparison in factory-gray vs homebuilt-amber"
+        }
+      },
+      "brief": "Main chart is a histogram of aircraft ages at the time of accident — bars at 0-5, 6-10, 11-20, 21-30, 31-40, 41-50, 50+, with the 50+ bar highlighted (3,423 aircraft, the largest single bucket) and a vertical reference line at the 39-year median. A small inset in the upper-right corner shows the homebuilt-vs-factory fatal-share comparison (17.3% vs 22.2%) as two bars with a one-line annotation calling out the per-accident vs per-hour distinction explicitly.",
+      "rationale": "Aircraft age is the surprising number in this section for general readers (median 39 years). The homebuilt comparison is editorially important but lower-bandwidth — it earns an inset, not the main chart. Embedding the per-hour-vs-per-accident annotation directly into the inset is what stops readers from leaving with the wrong takeaway.",
+      "based_on": ["ana_11", "ana_09"]
+    },
+    "des_09_close_image": {
+      "label": "Closing still — pre-dawn horizon",
+      "type": "asset",
+      "section": "edt_09",
+      "content": {
+        "asset_type": "image",
+        "filename": "close_horizon.png",
+        "tool": "text2image",
+        "prompt": "Cinematic editorial wide-angle photograph: empty pre-dawn horizon line viewed from high altitude, dark navy sky above transitioning to the faintest band of cold pale-violet light at the horizon, a few high cirrus clouds catching the first hint of light, no aircraft, no people, no text, no wreckage, restrained desaturated palette, large negative space, contemplative quiet documentary tone, 16:9 aspect",
+        "model": "openai/gpt-5.4-image-2"
+      },
+      "brief": "Closing image. A cold pre-dawn horizon — the visual antithesis of the warm dusk teaser. Reads as the same airplane window on a different flight, and as a moment of stillness after the analytical density of the body. No aircraft, no wreckage, no people. The 'upper-left is still there' line in the prose is the editorial counterpart of this image.",
+      "rationale": "Bookending the piece with paired images — dusk in, dawn out — gives the body a natural visual frame. The closing image is colder in temperature than the teaser to signal that the questions raised by the data are not resolved by the data.",
+      "based_on": []
+    },
+    "des_quiz_interactive": {
+      "label": "Homebuilt-premium guess-first reveal",
+      "type": "interactive",
+      "section": "edt_08",
+      "content": {
+        "interaction_type": "reader_quiz",
+        "initial_state": "Reader sees a prompt above the homebuilt inset: 'NTSB safety research says experimental amateur-built aircraft have a per-flight-hour fatal accident rate about ___ times the certificated fleet. Guess:' with four choices (1×, 2×, 4×, 8×).",
+        "trigger": "Reader selects one option",
+        "transition": "Selected option pulses; the inset chart then animates into view showing the 17.3% vs 22.2% per-accident bars",
+        "payoff": "Reveal text: 'NTSB SS-12/01 puts the per-FLIGHT-HOUR fatal-rate ratio at ~4×. But the per-ACCIDENT severity ratio inside this dataset is only 1.28×. Both numbers are real — and they answer different questions.' The chart annotation makes the distinction permanent.",
+        "data_source": "ana_09"
+      },
+      "brief": "A one-question guess-first interaction sitting above the edt_08 inset chart. The reader picks 1×/2×/4×/8× as the homebuilt fatality premium, then sees the inset chart with the 1.28× per-accident vs 4× per-hour distinction explicitly called out. The interaction is what makes the caveat memorable — passive readers usually miss the per-hour-vs-per-accident gotcha in the prose.",
+      "rationale": "The per-accident-vs-per-hour distinction is the single most likely thing a careless reader will misremember. Forcing a guess-first commitment makes the correction unmissable. This satisfies the interactive_or_map channel requirement.",
+      "based_on": ["ana_09"]
+    },
+    "des_lockhart_callout": {
+      "label": "Lockhart NTSB-quote pull-out",
+      "type": "stat_callout",
+      "section": "edt_09",
+      "content": {
+        "value": "16",
+        "label": "deaths in the single deadliest event in the dataset — the Lockhart, Texas hot-air-balloon crash, July 2016",
+        "quote": "The pilot's pattern of poor decision-making that led to the initial launch, continued flight in fog and above clouds, and descent near or through clouds that decreased the pilot's ability to see and avoid obstacles.",
+        "quote_attribution": "NTSB probable cause, event 20160730X25341",
+        "data_source": "ana_20"
+      },
+      "brief": "A large pull-quote panel placed before the final paragraphs of edt_09. The number 16 in display type (96px), the NTSB's verbatim probable-cause sentence in italic serif at 22px, and the event identifier as a small monospace attribution. This is the climactic moment of the piece — it must feel weighty without being theatrical.",
+      "rationale": "The NTSB's own one-sentence probable cause is the strongest closing material in the dataset; pulling it into a typographic callout (rather than burying it inline) honors its weight. The number 16 is the dataset's most-extreme single-event fatality count.",
+      "based_on": ["ana_20"]
+    }
+  },
+  "page_rhythm": {
+    "tone": "restrained editorial, dark-on-light with a single warm-amber accent borrowed from the teaser's horizon band",
+    "text_visual_pattern": "Visual-leading: hero image+motion teaser → stat-callout triptych → small donut → trend dual-axis → CENTERPIECE scatter → heatmap → sorted bar → choropleth map → histogram+inset (with quiz) → pull-quote callout → closing image",
+    "centrepiece": "des_04_chart",
+    "anti_sameness_notes": "Avoid the chart-after-chart rhythm common in NTSB-style data pieces. We break visual mode three times: (1) the teaser is image+motion not chart, (2) edt_07 swaps a chart for a Leaflet map with a docked inset, (3) edt_08 fuses histogram + interactive quiz + inset chart, and (4) edt_09 closes with a quote pull-out and a horizon image rather than a final chart. No two adjacent sections use the same chart type. The scatter centerpiece does not look like the bar centerpiece of recent blogs.",
+    "typography_notes": "Display numerals 72-96px for stat callouts; section titles 28-32px; body 17-18px with comfortable line-height. Pull-quote in italic serif (Source Serif or similar) at 22-24px. Use exactly one accent color (warm amber #d4843a, eyedropped from teaser); everything else is desaturated steel grays. Section dividers as a single 1px rule, not box-borders. No emoji, no decorative icons."
+  }
+}

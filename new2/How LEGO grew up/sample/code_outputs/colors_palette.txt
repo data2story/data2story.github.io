@@ -1,0 +1,176 @@
+=== ana_05 ===
+year
+1949.0     10
+1950.0      3
+1953.0      4
+1954.0      5
+1955.0      7
+1956.0      6
+1957.0     17
+1958.0     37
+1959.0      9
+1960.0      8
+1961.0     13
+1962.0     10
+1963.0     27
+1964.0     11
+1965.0     12
+1966.0     10
+1967.0     10
+1968.0      9
+1969.0     13
+1970.0     11
+1971.0      9
+1972.0     10
+1973.0     10
+1974.0     13
+1975.0     11
+1976.0     12
+1977.0     12
+1978.0     16
+1979.0     18
+1980.0     18
+1981.0     16
+1982.0     21
+1983.0     18
+1984.0     17
+1985.0     24
+1986.0     23
+1987.0     20
+1988.0     19
+1989.0     21
+1990.0     21
+1991.0     24
+1992.0     26
+1993.0     27
+1994.0     32
+1995.0     33
+1996.0     31
+1997.0     42
+1998.0     52
+1999.0     62
+2000.0     71
+2001.0     78
+2002.0     79
+2003.0    100
+2004.0    113
+2005.0    106
+2006.0     93
+2007.0     64
+2008.0     60
+2009.0     59
+2010.0     63
+2011.0     66
+2012.0     65
+2013.0     63
+2014.0     62
+2015.0     66
+2016.0     68
+2017.0     64
+2018.0     67
+2019.0     66
+2020.0     73
+2021.0     74
+2022.0     75
+2023.0     78
+2024.0     78
+=== ana_13 ===
+Total colors observed in inventory_parts: 246
+'Retired' (last seen before 2020): 159
+
+10 oldest still-active colors:
+ color_id  first_year  last_year  n_rows                 name    rgb  is_trans  retired
+        1      1949.0     2024.0   43956                 Blue 0055BF     False    False
+        2      1949.0     2024.0   22916                Green 237841     False    False
+       10      1949.0     2024.0    7032         Bright Green 4B9F4A     False    False
+        4      1949.0     2024.0   83859                  Red C91A09     False    False
+       14      1949.0     2024.0   56737               Yellow F2CD37     False    False
+       15      1949.0     2024.0  128390                White FFFFFF     False    False
+       47      1954.0     2024.0   15113          Trans-Clear FCFCFC      True    False
+     9999      1955.0     2024.0    9323 [No Color/Any Color] 05131D     False    False
+     1135      1957.0     2021.0      31                Metal A5ADB4     False    False
+        0      1957.0     2024.0  196178                Black 05131D     False    False
+
+10 most recently retired colors (last_year):
+ color_id  first_year  last_year  n_rows                     name    rgb  is_trans  retired
+     1063      2017.0     2019.0      37             Pearl Copper B46A00     False     True
+      143      2001.0     2018.0     268        Trans-Medium Blue CFE2F7      True     True
+       63      2001.0     2018.0       5              Chrome Pink AA4D8E     False     True
+     1002      2015.0     2018.0       9 Glitter Trans-Neon Green C0F500      True     True
+      148      2001.0     2016.0     218          Pearl Dark Gray 575857     False     True
+      132      2005.0     2013.0      50     Speckle Black-Silver 05131D     False     True
+      151      2004.0     2013.0     136   Very Light Bluish Gray E6E3E0     False     True
+     1092      2008.0     2012.0       7          Metallic Copper 764D3B     False     True
+      294      2005.0     2011.0      44       Glow In Dark Trans BDC6AD      True     True
+      133      2011.0     2011.0       2       Speckle Black-Gold 05131D     False     True
+=== ana_06 ===
+color_name  Brown (old)  Dark Bluish Gray (new)  Dark Gray (old)  Light Bluish Gray (new)  Light Gray (old)  Reddish Brown (new)
+year                                                                                                                            
+1990.0              116                       0               65                        0              2603                    0
+1991.0              145                       0              191                        0              2629                    0
+1992.0              193                       0              123                        0              2755                    0
+1993.0              235                       0              185                        0              2695                    0
+1994.0              176                       0              174                        0              3029                    0
+1995.0              198                       0              291                        0              4286                    0
+1996.0              702                       0              567                        0              4180                    0
+1997.0              466                       0              507                        0              4688                    0
+1998.0              524                       0             1797                        0              5143                    0
+1999.0              318                       1             1681                        0              5649                    0
+2000.0              625                       0             2579                        0              5081                    0
+2001.0              957                       0             2826                        0              5617                    0
+2002.0             1306                       0             3982                        0             10388                    0
+2003.0             1312                    1769             5257                     2072              9283                   29
+2004.0              365                    4448              761                     6689              1316                 1065
+2005.0              231                    7422              169                     8578               228                 2315
+2006.0               49                    8119               61                    10631                72                 1342
+2007.0                0                   11283                0                    13959                 1                 1519
+2008.0                0                    9631                0                    12590                 0                 1880
+2009.0                0                    8406                0                    12153                 0                 2779
+2010.0                0                    9952                0                    12811                 0                 3030
+2011.0                0                    8783                0                    12798                 0                 3784
+2012.0                0                   10541                0                    16262                 0                 4206
+2013.0                0                   11338                0                    16020                 0                 4768
+2014.0                0                   14213                0                    21322                 0                 6348
+2015.0                0                   17641                0                    23806                 0                 5020
+2016.0                0                   19009                0                    26053                 0                 6416
+2017.0                0                   20380                0                    30687                 0                 7304
+2018.0                0                   15993                0                    25377                 0                 8454
+2019.0                0                   18785                0                    29073                 0                10318
+2020.0                0                   16898                0                    24526                 0                 9100
+2021.0                0                   18875                0                    31900                 0                10984
+2022.0                0                   27775                0                    33206                 0                11379
+2023.0                0                   26659                0                    35318                 0                14533
+2024.0                0                   30116                0                    37790                 0                20524
+=== ana_17 ===
+ color_id  total_qty              name    rgb  is_trans
+        0     920517             Black 05131D     False
+       71     577174 Light Bluish Gray A0A5A9     False
+       15     549744             White FFFFFF     False
+       72     412490  Dark Bluish Gray 6C6E68     False
+        4     346081               Red C91A09     False
+       14     227674            Yellow F2CD37     False
+        1     227321              Blue 0055BF     False
+       19     209378               Tan E4CD9E     False
+       70     193545     Reddish Brown 582A12     False
+        7     105918        Light Gray 9BA19D     False
+        2      95701             Green 237841     False
+       28      76921          Dark Tan 958A73     False
+      297      59899        Pearl Gold AA7F2E     False
+       25      57452            Orange FE8A18     False
+      272      57353         Dark Blue 0A3463     False
+       47      54954       Trans-Clear FCFCFC      True
+      320      53452          Dark Red 720E0F     False
+       27      48511              Lime BBE90B     False
+       84      43473     Medium Nougat AA7D55     False
+       41      36248  Trans-Light Blue AEEFEC      True
+=== palette_growth_decade ===
+decade
+1940.0     10
+1950.0     38
+1960.0     37
+1970.0     23
+1980.0     28
+1990.0     70
+2000.0    155
+2010.0     81
+2020.0     87

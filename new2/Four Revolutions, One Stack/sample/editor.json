@@ -1,0 +1,155 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "Industrial revolutions don't replace fuels — they stack them. Each revolution added a new primary-energy source on top of the previous ones, leaving us in 2026 burning more coal than ever, while the fourth revolution adds a new heavy electricity consumer — AI training compute — that is doubling its appetite every six months.",
+  "tension": "The standard energy-transition story implies dirty-to-clean movement. The data shows dirty-to-dirtier-plus-some-clean: the world burns more coal in 2024 than in any prior year, the fossil share has dropped only 5 percentage points in 51 years, and AI training compute is becoming the newest 100+ MW load.",
+  "payoff": "Stop calling the fourth industrial revolution the clean one. It's the one whose signature fuel is electricity-on-demand, scaling faster than any prior demand curve.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — coal had its biggest year ever",
+      "purpose": "hook",
+      "title": "Coal just had its biggest year ever",
+      "findings": ["ana_03", "ana_04", "ana_01"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_03": "lead",
+        "ana_04": "supporting",
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "image",
+      "editorial_notes": "ana_03 numbers must be exact: 45,851 TWh in 2024 vs 9,136 TWh in 1910. The 5x multiplier is the headline."
+    },
+    "edt_02": {
+      "label": "The first revolution had a 300-year run-up",
+      "purpose": "context",
+      "title": "The first revolution had a 300-year run-up",
+      "findings": ["ana_16"],
+      "context": ["det_01", "det_10"],
+      "triage": {
+        "ana_16": "supporting"
+      },
+      "chart_placeholder": "ana_16",
+      "media_placeholder": null,
+      "editorial_notes": "BoE index — note that 1700 = 100 is the indexing base, not absolute tonnes. The 48x multiplier is the punch."
+    },
+    "edt_03": {
+      "label": "Each revolution had its own new fuel",
+      "purpose": "evidence",
+      "title": "Each revolution had its own new fuel",
+      "findings": ["ana_02", "ana_01"],
+      "context": ["det_01", "det_02", "det_03", "det_04"],
+      "triage": {
+        "ana_02": "supporting",
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Designer should consider a timeline / scrollytelling treatment with revolution-period bands on the stacked area. Onset years 1800/1870/1890/1965/1978/1983 are the anchor points."
+    },
+    "edt_04": {
+      "label": "How fossil never really lost share",
+      "purpose": "evidence",
+      "title": "How fossil never really lost share",
+      "findings": ["ana_04", "ana_03"],
+      "context": ["det_05"],
+      "triage": {
+        "ana_04": "supporting",
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "81.6% (1973) vs 76.4% (2024) — keep both, exact. Smil framing is non-negotiable here."
+    },
+    "edt_05": {
+      "label": "The CO2 receipt",
+      "purpose": "turn",
+      "title": "The CO2 receipt",
+      "findings": ["ana_06", "ana_07", "ana_08"],
+      "context": ["det_05", "det_08"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_07": "color",
+        "ana_08": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "Two charts in this section: ana_06 (CO2 over time) and ana_08 (top cumulative emitters bar). 4,148x multiplier must be exact and prominent."
+    },
+    "edt_06": {
+      "label": "Renewables are real, but the world wants more of everything",
+      "purpose": "evidence",
+      "title": "Renewables are real, but the world wants more of everything",
+      "findings": ["ana_05", "ana_09"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_05": "supporting",
+        "ana_09": "supporting"
+      },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": null,
+      "editorial_notes": "Two charts in this section: ana_05 (solar+wind takeoff) and ana_09 (per-capita convergence). 'China 2024 = 47% of US 1965' must survive verbatim."
+    },
+    "edt_07": {
+      "label": "AI compute is the new fuel demand",
+      "purpose": "evidence",
+      "title": "AI compute is the new fuel demand",
+      "findings": ["ana_11", "ana_12", "ana_15"],
+      "context": ["det_06", "det_11"],
+      "triage": {
+        "ana_11": "supporting",
+        "ana_12": "supporting",
+        "ana_15": "color"
+      },
+      "chart_placeholder": "ana_11",
+      "media_placeholder": null,
+      "editorial_notes": "Two charts: ana_11 (AI compute log scatter) and ana_15 (Moore's Law). Show ana_15 alongside or under ana_11 to make the parallelism/runtime gap visible."
+    },
+    "edt_08": {
+      "label": "A single training run draws as much power as a town",
+      "purpose": "evidence",
+      "title": "A single training run draws as much power as a town",
+      "findings": ["ana_13", "ana_14"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_13": "supporting",
+        "ana_14": "supporting"
+      },
+      "chart_placeholder": "ana_14",
+      "media_placeholder": null,
+      "editorial_notes": "ana_13 (top model bar) + ana_14 (power draw trend). Grok 3 = 110 MW must be tied to its named model. The IEA 415→945 TWh figure is the bridge to the close."
+    },
+    "edt_09": {
+      "label": "Close — where the four revolutions leave us",
+      "purpose": "close",
+      "title": "Where the four revolutions leave us",
+      "findings": [],
+      "context": ["det_05"],
+      "triage": {},
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "Editorial connective tissue only. End on tension (the build-out vs demand clock question), not on summary."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "supporting",
+    "ana_03": "lead",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "color",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "cut",
+    "ana_11": "supporting",
+    "ana_12": "supporting",
+    "ana_13": "supporting",
+    "ana_14": "supporting",
+    "ana_15": "color",
+    "ana_16": "supporting",
+    "ana_17": "cut"
+  }
+}
