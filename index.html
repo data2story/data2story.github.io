@@ -138,8 +138,8 @@ body {
 
 .hero-tagline {
   font-family: 'Inter', sans-serif;
-  font-size: clamp(1rem, 2vw, 1.3rem);
-  font-weight: 400;
+  font-size: clamp(1.3rem, 2.8vw, 1.85rem);
+  font-weight: 500;
   color: var(--text);
   margin-bottom: 2rem;
 }
@@ -448,7 +448,7 @@ body {
     <img class="hero-logo" src="assets/logo4.png" alt="Data2Story logo">
 
     <h1>Data Journalist Agent</h1>
-    <div class="hero-tagline">Transforming Data into Reproducible Multimodal Story</div>
+    <div class="hero-tagline">Transforming Data into Verifiable Multimodal Stories</div>
 
     <div class="authors">
       <span><a href="https://qhlin.me/" target="_blank" rel="noopener">Kevin Qinghong Lin</a><sup>1</sup></span>
@@ -471,7 +471,7 @@ body {
     </div>
 
     <div class="actions">
-      <a class="btn" href="#" target="_blank" rel="noopener"><span class="ico">&#128196;</span> Paper</a>
+      <a class="btn" href="https://arxiv.org/abs/2606.11176" target="_blank" rel="noopener"><span class="ico">&#128196;</span> Paper</a>
       <a class="btn" href="https://github.com/QinghongLin/data2story-skill" target="_blank" rel="noopener"><span class="ico">&#128187;</span> Code</a>
       <a class="btn primary" href="#gallery"><span class="ico">&#128218;</span> Gallery</a>
     </div>
@@ -494,36 +494,26 @@ body {
 <section class="abstract-section fade-in">
   <h2>Abstract</h2>
   <p>
-    Data tells stories that shape society, and the data journalist's job is to turn raw information into a
-    story that non-expert audiences can understand and trust through to the end. A high-quality news feature
-    routinely takes a newsroom team weeks, including hunting for context, running statistics, choosing an
-    angle, and designing visuals. Recent agents are individually capable at each individual step: automated
-    data-science agents close the analysis loop, while design agents can synthesize beautiful websites.
+    Data tells stories that shape society; the data journalist's job is to turn raw information into stories
+    non-experts can trust. A high-quality news feature takes a newsroom team weeks: hunting for context,
+    running statistics, choosing an angle, and designing visuals. Recent agents handle individual steps well:
+    data-science agents close the analysis loop, while design agents synthesize beautiful websites.
     <em>But can an agent serve as a data journalist end to end?</em> We introduce <strong>Data Journalist
-    Agent (Data2Story)</strong>, a multi-agent framework that orchestrates specialised roles into a single
-    virtual newsroom. Data2Story highlights two innovations over prior approaches.
-    <strong>(i) Claims are evidence-grounded and reproducible.</strong> We introduce an "Inspector", which
-    associates the intermediate results produced by individual roles so that the numbers, angles, and assets
-    are grounded in data, code, or a reference (e.g., an external URL), so that verifiability is built into
-    the fact itself. <strong>(ii) Articles are multimodally generative.</strong> Rather than defaulting to
-    plain text and static charts, Data2Story reasons about what its readers will want to read and interact
-    with, then deploys multimodal tools so that the article fits both the data topic and the intended audience
-    (e.g., an interactive map with zoom for a geography piece, or an audio clip for a music piece), making the
-    result readable and engaging. We evaluate Data Journalist Agent on 18 articles from diverse topics and
-    publication sources, each paired with the originally published expert-written piece, along three axes:
-    <strong>(a) Human–agent angle coverage</strong>, measuring the overlap and complementarity of angles
-    between Data2Story and human-authored articles, to characterize what each side covers;
-    <strong>(b) Rubric evaluation with a human study</strong> across 53 human participants, with the rubric
-    covering visual design, narrative pacing, data transparency, claim-data alignment, and insight value;
-    <strong>(c) Computer-use agents as judges</strong>: as an automatic proxy for how real-world users
-    navigate and interact with the article, we employ computer-use agents that fully perceive the interface
-    through actions such as clicking and scrolling; and lastly, <strong>(d) Reproducibility</strong>, where a
-    coding verifier re-executes every statement against the data and checks that the claims are reproducible
-    or can be grounded in a reference. Our experimental results show that Data2Story receives favorable
-    ratings from human participants and agent judges in both rubric-based evaluation and side-by-side
-    preference. Notably, the Inspector substantially improves the transparency of data and methods, making
-    auditability explicit and measurable. We hope this work moves toward a reproducible, auditable, and
-    data-intelligent system.
+    Agent (Data2Story)</strong>, a multi-agent framework that orchestrates specialized roles into a single
+    virtual newsroom. Data2Story contributes two innovations.
+    <strong>(i) Claims are evidence-grounded:</strong> an Inspector links every number, angle, and asset back
+    to data, code, or an external reference. <strong>(ii) Articles are multimodally generative:</strong>
+    rather than defaulting to plain text and static charts, Data2Story reasons about what readers will want to
+    see, then deploys multimodal tools, such as interactive maps for geography and audio for music. We
+    evaluate Data2Story on 18 articles, each paired with the originally published expert piece, along four
+    axes: <strong>(a) human–agent angle coverage</strong>; <strong>(b) rubric evaluation</strong> with 53
+    participants across five dimensions; <strong>(c) computer-use agents as judges</strong>, a cost-saving
+    proxy for how readers navigate interactive articles; and <strong>(d) verifiability</strong>, where a
+    coding verifier re-executes statements against the data and checks claims against references. Data2Story
+    produces competitive, evidence-traceable multimedia stories, with particular strength in transparency and
+    auditability. Human articles retain an edge in editorial angle, creative design, and presentation. We
+    position Data2Story as a collaborator for journalists, enabling more evidence-based, transparent, and
+    verifiable reporting.
   </p>
 </section>
 
