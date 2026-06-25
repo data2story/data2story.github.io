@@ -2,7 +2,7 @@
   "meta": {
     "role": "detective",
     "version": "2.0",
-    "domain": "Association football / sports forecasting — the 2026 FIFA World Cup (USA/Canada/Mexico), forecast mid-tournament as of 2026-06-18.",
+    "domain": "Association football / sports forecasting — the 2026 FIFA World Cup (USA/Canada/Mexico), forecast mid-tournament as of 2026-06-24.",
     "data_origin": "A composite forecasting dataset built for the Data2Story pipeline from openfootball (match spine, CC0), martj42/international_results (~49k internationals since 1872), the FIFA World Ranking (11 Jun 2026 release), Transfermarkt squad values, and FIFA Regulations Annex C (the 495-row best-third allocation)."
   },
   "topic_profile": {
@@ -59,13 +59,13 @@
     },
     "det_04": {
       "label": "Leakage guard — a live mirror that already knows the future",
-      "content": "The historical results file is a live mirror that already contains the 2026 World Cup matches played AFTER the 2026-06-18 snapshot, through 2026-06-27. A naive model that trained on the whole file would secretly learn the very results it is meant to forecast — a textbook data-leakage failure. The honest discipline is to filter to matches dated before 2026-06-19 when fitting ratings, so the model never sees a game it is supposed to predict; the post-snapshot rows are reserved as an out-of-sample check, never as training input. Stating this guard openly is part of why the resulting numbers can be trusted.",
+      "content": "The historical results file is a live mirror that already contains the 2026 World Cup matches scheduled AFTER the 2026-06-24 snapshot, through 2026-06-27. A naive model that trained on the whole file would secretly learn the very results it is meant to forecast — a textbook data-leakage failure. The honest discipline is to filter to matches dated before 2026-06-24 when fitting ratings, so the model never sees a game it is supposed to predict; the post-snapshot rows are reserved as an out-of-sample check, never as training input. Stating this guard openly is part of why the resulting numbers can be trusted.",
       "category": "controversy",
       "sources": [
         {
           "url": "https://github.com/martj42/international_results",
           "title": "martj42/international_results (live mirror, updated through tournament)",
-          "facts": ["File includes 2026 WC results dated 2026-06-19..2026-06-27", "Models must fit only on date < 2026-06-19 to avoid leakage"]
+          "facts": ["File includes 2026 WC fixtures dated 2026-06-24..2026-06-27 not yet folded into the forecast", "Models must fit only on date < 2026-06-24 to avoid leakage"]
         }
       ]
     },
@@ -134,7 +134,7 @@
     },
     "det_favbase": {
       "label": "How often does the favourite actually win? ~23%",
-      "content": "Pre-tournament favourites have won only about 23% of men's World Cups: by FIFA's review of the previous 22 men's tournaments, the listed favourite has lifted the trophy only five times. Since 1966, when pre-tournament odds were first recorded, the shortest-priced favourite went on to win just three times — West Germany 1974, Brazil 1994 and Spain 2010. This is the external anchor the page reads the model's 30.8% against: 30.8% sits about eight points above the long-run favourite hit-rate, so the model is calling Argentina a slightly-stronger-than-usual favourite, not a certainty.",
+      "content": "Pre-tournament favourites have won only about 23% of men's World Cups: by FIFA's review of the previous 22 men's tournaments, the listed favourite has lifted the trophy only five times. Since 1966, when pre-tournament odds were first recorded, the shortest-priced favourite went on to win just three times — West Germany 1974, Brazil 1994 and Spain 2010. This is the external anchor the page reads the model's 30.3% against: 30.3% sits about seven points above the long-run favourite hit-rate, so the model is calling Argentina a slightly-stronger-than-usual favourite, not a certainty.",
       "category": "why_it_matters",
       "sources": [
         {
@@ -156,7 +156,7 @@
     }
   },
   "reference_media": [
-    {"id": "det_media_01", "filename": "flag_argentina.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Argentina.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Argentina — model's top title pick (26.3%)", "relates_to": ["det_07"]},
+    {"id": "det_media_01", "filename": "flag_argentina.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Argentina.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Argentina — model's top title pick (30.3%)", "relates_to": ["det_07"]},
     {"id": "det_media_02", "filename": "flag_spain.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Spain.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Spain — model's second pick (22.2%)", "relates_to": ["det_07"]},
     {"id": "det_media_03", "filename": "flag_france.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_France.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of France (modern tricolour) — costliest squad, third pick (14.6%)", "relates_to": ["det_05", "det_07"]},
     {"id": "det_media_04", "filename": "flag_england.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_England.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of England — fourth pick (9.8%), second-costliest squad", "relates_to": ["det_05", "det_07"]},

@@ -57,7 +57,7 @@ for t, pc in zip(co["team"], co["p_champion"]):
     champ_pub[t] = round(float(pc), 4)
 
 payload = {
-    "as_of": "2026-06-23", "elo_cutoff": elo.TODAY_CUTOFF,
+    "as_of": "2026-06-24", "elo_cutoff": elo.TODAY_CUTOFF,
     "elo": {t: round(elo_now[t], 1) for t in teams},
     "params": {"a": p["a"], "b": p["b"], "mu": p["mu_tot"]},
     "groups": GROUPS, "group_of": group_of,

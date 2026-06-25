@@ -120,7 +120,7 @@
         "caption": "The prize: the real FIFA World Cup Trophy, lifted on 19 July 2026. Photo: Wikimedia Commons (CC BY-SA 4.0).",
         "purpose": "IMMERSE"
       },
-      "brief": "In-column framed real photo of the actual trophy, right after the hook, to make the abstract 26.3% concrete. REAL photo (Detective's ref_trophy.jpg) — never an AI render of the trophy.",
+      "brief": "In-column framed real photo of the actual trophy, right after the hook, to make the abstract 30.3% concrete. REAL photo (Detective's ref_trophy.jpg) — never an AI render of the trophy.",
       "rationale": "The real-subject rule: the trophy is a specific real object, so we use a verified real photo, not a generated fake.",
       "based_on": []
     },
@@ -137,7 +137,7 @@
           "inputs": "(nSims, {team: deltaElo})",
           "at_rest": "window.WC_MODEL.DATA.championPublished"
         },
-        "initial_state": "Horizontal bar chart of the PUBLISHED champion odds for the top 14 teams (Argentina 26.3%, Spain 22.2%, France 14.6%, England 9.8%, Colombia 6.2%, Brazil 3.9%, ... ), bars in the accent colour, Argentina highlighted. A caption reads 'These are the model's published numbers. Now change one.'",
+        "initial_state": "Horizontal bar chart of the PUBLISHED champion odds for the top 14 teams (Argentina 30.3%, Spain 22.1%, France 13.7%, England 8.4%, Colombia 5.7%, Portugal 3.6%, ... ), bars in the accent colour, Argentina highlighted. A caption reads 'These are the model's published numbers. Now change one.'",
         "controls": [
           "dropdown: pick a team (default Argentina)",
           "range slider: that team's Elo delta, -150 to +150 (step 10), labelled 'weaker <-> stronger', default 0",
@@ -146,7 +146,7 @@
         ],
         "trigger": "On 'Re-run' (or debounced slider release): call window.WC_MODEL.simulate(30000, {teamName: delta}); show a brief spinner (~0.8s).",
         "transition": "Bars animate (D3 transition ~700ms) from the current distribution to the recomputed one; each bar shows its new % and a small delta chip vs the published value (e.g. 'Argentina 10.3% (-16.0)'). Re-sort bars by new probability.",
-        "payoff": "Pull Argentina down ~100 Elo and Spain overtakes it as favourite — the reader has produced the finding that the 26.3% is contingent on the model's inputs, not a fixed fact. At rest it shows the exact published odds; on interaction it shows 'your scenario vs the model'.",
+        "payoff": "Pull Argentina down ~100 Elo and Spain overtakes it as favourite — the reader has produced the finding that the 30.3% is contingent on the model's inputs, not a fixed fact. At rest it shows the exact published odds; on interaction it shows 'your scenario vs the model'.",
         "degradation": "If JS is off, a static Vega-Lite bar chart of the published champion odds (ana_01 data_table) renders in the same slot, so the section still makes its point.",
         "a11y": "Slider and dropdown keyboard-operable; button is a real <button>; bars have accessible labels."
       },
@@ -493,7 +493,7 @@
         "purpose": "IMMERSE"
       },
       "brief": "Pinned cinematic background behind the hook beat (cin_01). Migrated from cinematic_imagery_manifest.json. (A real trophy-replica photo, distinct from the real museum trophy ref_trophy.jpg.)",
-      "rationale": "The prize itself behind the 30.8% hook; real, license-clean Unsplash photo.",
+      "rationale": "The prize itself behind the 30.3% hook; real, license-clean Unsplash photo.",
       "based_on": []
     },
     "des_bg_stadium_day_aerial": {
@@ -605,7 +605,7 @@
       "based_on": []
     },
     "des_hist_favourite_chart": {
-      "label": "Argentina 30.8% vs the long-run favourite win-rate (bar)",
+      "label": "Argentina 30.3% vs the long-run favourite win-rate (bar)",
       "type": "chart",
       "section": "edt_histbase",
       "content": {
@@ -613,11 +613,11 @@
         "data_source": "ana_histbase",
         "x": "series",
         "y": "value_pct",
-        "annotation": "Argentina's model 30.8% against the ~23% long-run favourite hit-rate (+7.8pp).",
+        "annotation": "Argentina's model 30.3% against the ~23% long-run favourite hit-rate (+7.3pp).",
         "style": {"no_gridlines": true, "accent_bar": true}
       },
-      "brief": "Two-bar comparison: Argentina's 30.8% model champion odds vs the ~23% historical favourite hit-rate. Data from ana_histbase (build_historical.py).",
-      "rationale": "Anchors 'is 30.8% a lot?' against the long-run favourite base rate.",
+      "brief": "Two-bar comparison: Argentina's 30.3% model champion odds vs the ~23% historical favourite hit-rate. Data from ana_histbase (build_historical.py).",
+      "rationale": "Anchors 'is 30.3% a lot?' against the long-run favourite base rate.",
       "based_on": ["ana_histbase"]
     },
     "des_hist_champions_chart": {
@@ -633,7 +633,7 @@
         "style": {"no_gridlines": true, "sort": "descending"}
       },
       "brief": "Horizontal bar of men's World Cup titles by nation (eight winners). Data from ana_histbase (build_historical.py).",
-      "rationale": "Shows how concentrated WC success has historically been — the backdrop to a 30.8% favourite.",
+      "rationale": "Shows how concentrated WC success has historically been — the backdrop to a 30.3% favourite.",
       "based_on": ["ana_histbase"]
     },
     "des_predictor": {
@@ -644,7 +644,7 @@
         "interaction_type": "match_predictor",
         "data_source": "ana_01",
         "client_model": {"file": "code/client_model.js", "fn": "window.WC_MODEL.simulate", "at_rest": "window.WC_MODEL.DATA.championPublished"},
-        "initial_state": "Pick two of the 48 teams; the predictor returns the head-to-head win/draw/win probabilities from the same Elo->Poisson model that produces the published champion odds (Argentina 30.8% at rest).",
+        "initial_state": "Pick two of the 48 teams; the predictor returns the head-to-head win/draw/win probabilities from the same Elo->Poisson model that produces the published champion odds (Argentina 30.3% at rest).",
         "degradation": "Static published champion ladder (ana_01) if JS is off.",
         "purpose": "INFORM"
       },
@@ -742,6 +742,6 @@
     "text_visual_pattern": "Hook (mood video + trophy photo) -> the explorable centerpiece as the single visual climax in edt_02 -> alternating chart/prose beats, with real flags and a venue map/photo breaking analytical density -> small closing bar.",
     "centrepiece": "des_champ_explorable",
     "anti_sameness_notes": "Avoid the generic chart-after-chart rhythm: the page peaks on a hands-on explorable, not a static hero stat; charts vary (bar, grouped bar, diverging bar, scatter, stacked bar, plain bar) and are interleaved with real photos and a map. No purple-gradient hero, no center-everything template, no floating audio widget — the soundtrack is a small inline top control.",
-    "typography_notes": "Headline in large serif over a dark scrim on the teaser video; section titles in serif; stat emphases (26.3%) at ~56-64px in accent; captions in small system-ui muted; charts use the teal accent for the highlighted datum and muted greys elsewhere (never raw Vega palettes)."
+    "typography_notes": "Headline in large serif over a dark scrim on the teaser video; section titles in serif; stat emphases (30.3%) at ~56-64px in accent; captions in small system-ui muted; charts use the teal accent for the highlighted datum and muted greys elsewhere (never raw Vega palettes)."
   }
 }

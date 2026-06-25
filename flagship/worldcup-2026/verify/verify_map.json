@@ -1,8 +1,8 @@
 {
   "ana_01": {
     "kind": "computation",
-    "title": "Champion odds — Argentina 30.8% leads a steep ladder",
-    "claim": "As of the 2026-06-23 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.8%, ahead of Spain (24.0%), France (14.2%), England (8.0%), Colombia (4.8%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "title": "Champion odds — Argentina 30.3% leads a steep ladder",
+    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/simulate.py",
     "code_lines": [
@@ -26,40 +26,48 @@
           "J",
           1,
           2220,
-          30.8,
-          48.1
+          30.3,
+          47.1
         ],
         [
           "Spain",
           "H",
           2,
           2198,
-          24.0,
-          40.6
+          22.1,
+          37.1
         ],
         [
           "France",
           "I",
           3,
           2154,
-          14.2,
-          26.2
+          13.7,
+          25.7
         ],
         [
           "England",
           "L",
           4,
           2121,
-          8.0,
-          16.1
+          8.4,
+          16.8
         ],
         [
           "Colombia",
           "K",
           13,
-          2082,
-          4.8,
-          11.1
+          2091,
+          5.7,
+          12.6
+        ],
+        [
+          "Portugal",
+          "K",
+          5,
+          2053,
+          3.6,
+          9.3
         ],
         [
           "Brazil",
@@ -67,15 +75,15 @@
           6,
           2073,
           3.3,
-          7.8
+          7.9
         ],
         [
           "Germany",
           "E",
           10,
           2034,
-          2.5,
-          7.1
+          2.4,
+          7.2
         ],
         [
           "Netherlands",
@@ -83,15 +91,7 @@
           8,
           2038,
           2.1,
-          6.0
-        ],
-        [
-          "Portugal",
-          "K",
-          5,
-          2026,
-          1.8,
-          5.3
+          5.9
         ],
         [
           "Norway",
@@ -107,7 +107,7 @@
           7,
           2012,
           1.4,
-          4.3
+          4.2
         ],
         [
           "Japan",
@@ -115,19 +115,19 @@
           18,
           2012,
           1.3,
-          3.9
+          3.7
         ]
       ],
       "_rows_truncated": "showing 12 of 13"
     },
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.8%  reach-final  48.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  24.0%  reach-final  40.6%\nFrance         grp I  FIFA# 3  Elo 2154  champ  14.2%  reach-final  26.2%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.0%  reach-final  16.1%\nColombia       grp K  FIFA#13  Elo 2082  champ   4.8%  reach-final  11.1%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.8%\ntop1 Argentina = 30.8%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
     "run": {
       "type": "montecarlo",
       "reduced_n": 10000,
       "client_model": {
         "fn": "window.WC_MODEL.simulate",
         "returns": "{teamName: p_champion}",
-        "at_rest": "window.WC_MODEL.DATA.championPublished holds the exact 100k-sim figures (Argentina 0.3075, Spain 0.2396, ...)."
+        "at_rest": "window.WC_MODEL.DATA.championPublished holds the exact 100k-sim figures (Argentina 0.303, Spain 0.2213, ...)."
       },
       "needs_network": false
     }
@@ -135,7 +135,7 @@
   "ana_02": {
     "kind": "computation",
     "title": "Where the model fights the FIFA ranking",
-    "claim": "A results-trained Elo model re-orders the official FIFA ladder, and among the 13 real contenders the disagreements are sharp. The model's biggest upgrade is Norway, ranked 31st by FIFA but lifted to the 10th-best title chance (1.8%); next is Colombia, FIFA's 13th but the model's 5th pick at 4.8%, then Japan (FIFA 18th up to 12th) and Germany (10th up to 7th). In the other direction the model fades market darlings: Portugal drops from FIFA 5th to 9th and Morocco from 7th to 11th. At the very top the two systems agree — Argentina, Spain, France and England are 1-2-3-4 on both. Where they part ways is where a reader has the most room to argue.",
+    "claim": "A results-trained Elo model re-orders the official FIFA ladder, and among the 13 real contenders the disagreements are sharp. The model's biggest upgrade is Norway, ranked 31st by FIFA but lifted to the 10th-best title chance (1.8%); next is Colombia, FIFA's 13th but the model's 5th pick at 5.7%, then Japan (FIFA 18th up to 12th) and Germany (10th up to 8th). In the other direction the model fades market darlings: Portugal drops from FIFA 5th to 6th and Morocco from 7th to 11th. At the very top the two systems agree — Argentina, Spain, France and England are 1-2-3-4 on both. Where they part ways is where a reader has the most room to argue.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -165,7 +165,7 @@
           13,
           5,
           8,
-          4.8
+          5.7
         ],
         [
           "Japan",
@@ -177,9 +177,9 @@
         [
           "Germany",
           10,
-          7,
-          3,
-          2.5
+          8,
+          2,
+          2.4
         ],
         [
           "Mexico",
@@ -189,37 +189,37 @@
           1.1
         ],
         [
-          "Argentina",
-          1,
-          1,
-          0,
-          30.8
-        ],
-        [
-          "Spain",
-          2,
-          2,
-          0,
-          24.0
-        ],
-        [
-          "Portugal",
-          5,
-          9,
-          -4,
-          1.8
-        ],
-        [
           "Morocco",
           7,
           11,
           -4,
           1.4
+        ],
+        [
+          "Brazil",
+          6,
+          7,
+          -1,
+          3.3
+        ],
+        [
+          "Netherlands",
+          8,
+          9,
+          -1,
+          2.1
+        ],
+        [
+          "Portugal",
+          5,
+          6,
+          -1,
+          3.6
         ]
       ],
       "_rows_truncated": "showing 9 of 13"
     },
-    "expected_output": "Among the 13 teams with >=1% title chance - model rates HIGHER than FIFA rank (gap = FIFA# - model#):\n  Norway         FIFA#31 -> model#10  (+21)  champ 1.8%\n  Colombia       FIFA#13 -> model# 5  (+8)  champ 4.8%\n  Japan          FIFA#18 -> model#12  (+6)  champ 1.3%\n  Germany        FIFA#10 -> model# 7  (+3)  champ 2.5%\n  Mexico         FIFA#14 -> model#13  (+1)  champ 1.1%\nModel rates LOWER than FIFA rank:\n  Portugal       FIFA# 5 -> model# 9  (-4)  champ 1.8%\n  Morocco        FIFA# 7 -> model#11  (-4)  champ 1.4%\nColombia: FIFA #13, model #5, champ 4.8% (5th)\nNorway: FIFA #31, model #10, champ 1.8%\nPortugal: FIFA #5, model #9, champ 1.8%",
+    "expected_output": "Among the 13 teams with >=1% title chance - model rates HIGHER than FIFA rank (gap = FIFA# - model#):\n  Norway         FIFA#31 -> model#10  (+21)  champ 1.8%\n  Colombia       FIFA#13 -> model# 5  (+8)  champ 5.7%\n  Japan          FIFA#18 -> model#12  (+6)  champ 1.2%\n  Germany        FIFA#10 -> model# 8  (+2)  champ 2.4%\n  Mexico         FIFA#14 -> model#13  (+1)  champ 1.1%\nModel rates LOWER than FIFA rank:\n  Morocco        FIFA# 7 -> model#11  (-4)  champ 1.4%\n  Brazil         FIFA# 6 -> model# 7  (-1)  champ 3.3%\n  Netherlands    FIFA# 8 -> model# 9  (-1)  champ 2.1%\n  Portugal       FIFA# 5 -> model# 6  (-1)  champ 3.6%\nColombia: FIFA #13, model #5, champ 5.7% (5th)\nNorway: FIFA #31, model #10, champ 1.8%\nPortugal: FIFA #5, model #6, champ 3.6%",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -228,7 +228,7 @@
   "ana_03": {
     "kind": "computation",
     "title": "Money vs. merit — Colombia is five times cheaper than France",
-    "claim": "Squad market value and simulated success only loosely track each other. France carries the costliest squad in the tournament at €1.52bn and the model gives it a 45.5% chance of reaching the semi-finals — €33m of squad value per percentage point of that chance. Colombia's squad costs €302m, roughly a fifth of France's, yet the model still gives it a 22.1% semi-final chance, at just €14m per point — more than twice as efficient. The clearest bargains are Argentina (€12m per semi-final point) and Colombia; the most expensive by this measure are Portugal (€80m per point) and Germany (€56m). Squad price buys a strong floor, not a ticket to the last four.",
+    "claim": "Squad market value and simulated success only loosely track each other. France carries the costliest squad in the tournament at €1.52bn and the model gives it a 45.2% chance of reaching the semi-finals — €34m of squad value per percentage point of that chance. Colombia's squad costs €302m, roughly a fifth of France's, yet the model still gives it a 24.1% semi-final chance, at just €13m per point — more than twice as efficient. The clearest bargains are Argentina (€12m per semi-final point) and Colombia; the most expensive by this measure are Portugal (€51m per point) and Germany (€56m). Squad price buys a strong floor, not a ticket to the last four.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -248,55 +248,55 @@
         [
           "France",
           1520.0,
-          45.5,
-          33.4
+          45.2,
+          33.7
         ],
         [
           "England",
           1360.0,
-          35.4,
-          38.5
+          37.4,
+          36.4
         ],
         [
           "Spain",
           1220.0,
-          59.1,
-          20.6
+          54.3,
+          22.5
         ],
         [
           "Portugal",
           1010.0,
-          12.6,
-          80.2
+          19.8,
+          51.1
         ],
         [
           "Germany",
           947.0,
           17.0,
-          55.9
+          55.8
+        ],
+        [
+          "Brazil",
+          928.2,
+          19.2,
+          48.4
         ],
         [
           "Argentina",
           807.5,
-          68.1,
-          11.9
+          66.7,
+          12.1
         ],
         [
-          "Colombia",
-          302.35,
-          22.1,
-          13.7
-        ],
-        [
-          "Iran",
-          32.05,
-          2.3,
-          14.1
+          "Netherlands",
+          754.2,
+          14.9,
+          50.6
         ]
       ],
       "_rows_truncated": "showing 8 of 25 (p_reach_sf > 2%)"
     },
-    "expected_output": "Costliest squads and what the model gives them (reach-SF %):\n  France         EUR 1520.0m  SF  45.5%  = EUR   33.4m per SF-point\n  England        EUR 1360.0m  SF  35.4%  = EUR   38.5m per SF-point\n  Spain          EUR 1220.0m  SF  59.1%  = EUR   20.6m per SF-point\n  Portugal       EUR 1010.0m  SF  12.6%  = EUR   80.2m per SF-point\n  Germany        EUR  947.0m  SF  17.0%  = EUR   55.9m per SF-point\nBest value (lowest EUR per SF-point), among real contenders:\n  Argentina      EUR  807.5m  SF  68.1%  = EUR   11.9m per SF-point\n  Colombia       EUR  302.4m  SF  22.1%  = EUR   13.7m per SF-point\n  Iran           EUR   32.0m  SF   2.3%  = EUR   14.1m per SF-point\nColombia squad is 5.0x cheaper than France's yet within 23.4pp of its SF chance",
+    "expected_output": "Costliest squads and what the model gives them (reach-SF %):\n  France         EUR 1520.0m  SF  45.2%  = EUR   33.7m per SF-point\n  England        EUR 1360.0m  SF  37.4%  = EUR   36.4m per SF-point\n  Spain          EUR 1220.0m  SF  54.3%  = EUR   22.5m per SF-point\n  Portugal       EUR 1010.0m  SF  19.8%  = EUR   51.1m per SF-point\n  Germany        EUR  947.0m  SF  17.0%  = EUR   55.8m per SF-point\nBest value (lowest EUR per SF-point), among real contenders:\n  Argentina      EUR  807.5m  SF  66.7%  = EUR   12.1m per SF-point\n  Colombia       EUR  302.4m  SF  24.1%  = EUR   12.5m per SF-point\n  Iran           EUR   32.0m  SF   2.1%  = EUR   15.4m per SF-point\nColombia squad is 5.0x cheaper than France's yet within 21.1pp of its SF chance",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -305,7 +305,7 @@
   "ana_04": {
     "kind": "computation",
     "title": "The bracket is a coin-flip for three teams",
-    "claim": "Because only the top two of each group advance automatically and the eight best third-placed teams fill the rest of the new Round of 32, qualification splits the field into two worlds. Sixteen teams are already all but through (reach-R32 probability of 99% or more): Argentina, Spain, France, Brazil, Germany and others. But three teams sit on a true knife edge, with a reach-R32 probability between 40% and 60% — Senegal (55.1%), Bosnia & Herzegovina (47.9%) and DR Congo (47.1%) — for whom a single result swings the whole tournament. For those three, the model isn't predicting so much as measuring a coin toss.",
+    "claim": "Because only the top two of each group advance automatically and the eight best third-placed teams fill the rest of the new Round of 32, qualification splits the field into two worlds. Seventeen teams are already all but through (reach-R32 probability of 99% or more): Argentina, Spain, France, Brazil, Germany and others. But three teams sit on a true knife edge, with a reach-R32 probability between 40% and 60% — Senegal (55.5%), Bosnia & Herzegovina (48.0%) and DR Congo (41.4%) — for whom a single result swings the whole tournament. For those three, the model isn't predicting so much as measuring a coin toss.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -324,6 +324,13 @@
       ],
       "rows": [
         [
+          "Mexico",
+          "A",
+          100.0,
+          100.0,
+          0.0
+        ],
+        [
           "Argentina",
           "J",
           100.0,
@@ -331,51 +338,44 @@
           0.0
         ],
         [
-          "Spain",
-          "H",
+          "Switzerland",
+          "B",
           100.0,
-          95.5,
-          4.5
-        ],
-        [
-          "France",
-          "I",
-          100.0,
-          100.0,
-          0.0
-        ],
-        [
-          "Brazil",
-          "C",
-          100.0,
-          86.2,
-          13.8
+          99.2,
+          0.8
         ],
         [
           "Senegal",
           "I",
-          55.1,
-          19.0,
-          36.1
+          55.5,
+          0.0,
+          55.5
         ],
         [
           "Bosnia & Herzegovina",
           "B",
-          47.9,
-          1.3,
-          46.6
+          48.0,
+          0.8,
+          47.2
         ],
         [
           "DR Congo",
           "K",
-          47.1,
-          23.0,
-          24.1
+          41.4,
+          0.5,
+          40.8
+        ],
+        [
+          "Ghana",
+          "L",
+          67.3,
+          23.4,
+          43.8
         ]
       ],
       "_rows_truncated": "showing 7 of 48"
     },
-    "expected_output": "Reach-Round-of-32 probability (auto top-2 + best-third path):\n  Argentina      grp J  R32 100.0%  (top2 100% + 3rd-path 0%)\n  Spain          grp H  R32 100.0%  (top2 96% + 3rd-path 4%)\n  France         grp I  R32 100.0%  (top2 100% + 3rd-path 0%)\n  ...mid-table coin-flips (R32 40-60%):\n  Senegal        grp I  R32  55.1%\n  Bosnia & Herzegovina grp B  R32  47.9%\n  DR Congo       grp K  R32  47.1%\nteams essentially through (R32>=99%): 16\nteams on a knife edge (R32 40-60%): 3",
+    "expected_output": "Reach-Round-of-32 probability (auto top-2 + best-third path):\n  Argentina      grp J  R32 100.0%  (top2 100% + 3rd-path 0%)\n  Spain          grp H  R32 100.0%  (top2 95% + 3rd-path 5%)\n  France         grp I  R32 100.0%  (top2 100% + 3rd-path 0%)\n  ...mid-table coin-flips (R32 40-60%):\n  Senegal        grp I  R32  55.5%\n  Bosnia & Herzegovina grp B  R32  48.0%\n  DR Congo       grp K  R32  41.4%\nteams essentially through (R32>=99%): 17\nteams on a knife edge (R32 40-60%): 3",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -384,7 +384,7 @@
   "ana_05": {
     "kind": "computation",
     "title": "Two confederations own 95% of the title chance",
-    "claim": "The title race is geographically narrow. European (UEFA) teams hold a combined 55.6% of all championship probability and South American (CONMEBOL) teams another 39.2% — together 94.8% of the entire field's title chance. The remaining four confederations split the last 5.2% between them: North/Central America (CONCACAF) 1.9%, Asia (AFC) 1.7%, Africa (CAF) 1.6%, and Oceania (OFC) effectively 0%. Every one of the model's top six is European or South American. The 48-team field is the broadest ever, but the favourites still come from the same two continents that have won every men's World Cup.",
+    "claim": "The title race is geographically narrow. European (UEFA) teams hold a combined 55.2% of all championship probability and South American (CONMEBOL) teams another 39.7% — together 94.9% of the entire field's title chance. The remaining four confederations split the last 5.1% between them: North/Central America (CONCACAF) 1.8%, Asia (AFC) 1.6%, Africa (CAF) 1.6%, and Oceania (OFC) effectively 0%. Every one of the model's top six is European or South American. The 48-team field is the broadest ever, but the favourites still come from the same two continents that have won every men's World Cup.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -401,19 +401,19 @@
       "rows": [
         [
           "UEFA",
-          55.6
+          55.2
         ],
         [
           "CONMEBOL",
-          39.2
+          39.7
         ],
         [
           "CONCACAF",
-          1.9
+          1.8
         ],
         [
           "AFC",
-          1.7
+          1.6
         ],
         [
           "CAF",
@@ -425,7 +425,7 @@
         ]
       ]
     },
-    "expected_output": "Total championship probability by confederation:\n  UEFA       55.6%\n  CONMEBOL   39.2%\n  CONCACAF    1.9%\n  AFC         1.7%\n  CAF         1.6%\n  OFC         0.0%\nUEFA + CONMEBOL = 94.8% of all title probability\ntop-6 confederations represented in title top-6: ['CONMEBOL', 'UEFA', 'UEFA', 'UEFA', 'CONMEBOL', 'CONMEBOL']",
+    "expected_output": "Total championship probability by confederation:\n  UEFA       55.2%\n  CONMEBOL   39.7%\n  CONCACAF    1.8%\n  AFC         1.6%\n  CAF         1.6%\n  OFC         0.0%\nUEFA + CONMEBOL = 94.9% of all title probability\ntop-6 confederations represented in title top-6: ['CONMEBOL', 'UEFA', 'UEFA', 'UEFA', 'CONMEBOL', 'UEFA']",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -433,8 +433,8 @@
   },
   "ana_06": {
     "kind": "computation",
-    "title": "Why believe it — beats a naive baseline on 8,000 games, edges it on these 44",
-    "claim": "The forecast earns trust by being checked, and the check is reported honestly. On a large out-of-sample test of 8,000 historical internationals the model clearly beats a naive baseline (which just predicts the home/draw/away base rates): log-loss 0.892 versus 1.061 — about 16% lower error — and 59.4% result accuracy versus 48.7%. That is the reliable read. On the 44 games of THIS World Cup already played, the model edges the naive baseline too (log-loss 0.969 vs 1.067; accuracy 56.8% vs 52.3%), but a 44-game sample is small and upset-prone, so it neither confirms nor refutes the model on its own. The honest summary: a clear, replicable edge on the large sample; a slim, noisy edge on the games played so far.",
+    "title": "Why believe it — beats a naive baseline on 8,000 games, edges it on these 46",
+    "claim": "The forecast earns trust by being checked, and the check is reported honestly. On a large out-of-sample test of 8,000 historical internationals the model clearly beats a naive baseline (which just predicts the home/draw/away base rates): log-loss 0.899 versus 1.062 — about 15% lower error — and 58.9% result accuracy versus 48.3%. That is the reliable read. On the 46 games of THIS World Cup already played, the model edges the naive baseline too (log-loss 0.943 vs 1.061; accuracy 58.7% vs 54.3%), but a 46-game sample is small and upset-prone, so it neither confirms nor refutes the model on its own. The honest summary: a clear, replicable edge on the large sample; a slim, noisy edge on the games played so far.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -443,7 +443,7 @@
     ],
     "code": "# --- ana_06: Model health — does it beat a naive baseline? (the trust beat) ---\nprint(\"\\n=== ana_06 ===\")\nsk = summary[\"model_health\"][\"large_sample_skill\"]\nbt = summary[\"model_health\"][\"backtest_28_played\"]\nprint(f\"Large-sample skill check (n={sk['n']} historical internationals, out-of-sample):\")\nprint(f\"  model  log-loss {sk['model'][0]:.3f}  Brier {sk['model'][1]:.3f}  accuracy {sk['model'][2]*100:.1f}%\")\nprint(f\"  naive  log-loss {sk['naive'][0]:.3f}  Brier {sk['naive'][1]:.3f}  accuracy {sk['naive'][2]*100:.1f}%\")\nprint(f\"  -> model log-loss {sk['model'][0]:.3f} vs naive {sk['naive'][0]:.3f} \"\n      f\"({(1-sk['model'][0]/sk['naive'][0])*100:.1f}% better); accuracy \"\n      f\"{sk['model'][2]*100:.0f}% vs {sk['naive'][2]*100:.0f}%\")\nprint(f\"This-tournament backtest (n={bt['n']} games already played):\")\nprint(f\"  model  log-loss {bt['model'][0]:.3f}  accuracy {bt['model'][2]*100:.1f}%\")\nprint(f\"  naive  log-loss {bt['naive'][0]:.3f}  accuracy {bt['naive'][2]*100:.1f}%\")\nprint(f\"  -> on the {bt['n']} played games the model ({bt['model'][0]:.3f}) and naive ({bt['naive'][0]:.3f}) \"\n      f\"are CLOSE; n={bt['n']} is small and upset-prone, so the 8000-match check is the reliable read.\")\nprint(f\"calibration: a={summary['calibration']['a']:.4f}, b={summary['calibration']['b']:.5f}, \"\n      f\"mu_tot={summary['calibration']['mu_tot']:.3f}, n={summary['calibration']['n']}\")\n",
     "data_preview": {
-      "description": "Model vs naive baseline on the two tests: large out-of-sample (n=8000) and this-tournament backtest (n=44). Lower log-loss is better; higher accuracy is better.",
+      "description": "Model vs naive baseline on the two tests: large out-of-sample (n=8000) and this-tournament backtest (n=46). Lower log-loss is better; higher accuracy is better.",
       "columns": [
         "test",
         "n",
@@ -456,22 +456,22 @@
         [
           "Large out-of-sample (8000 internationals)",
           8000,
-          0.892,
-          1.061,
-          59.4,
-          48.7
+          0.899,
+          1.062,
+          58.9,
+          48.3
         ],
         [
-          "This World Cup so far (44 played)",
-          44,
-          0.969,
-          1.067,
-          56.8,
-          52.3
+          "This World Cup so far (46 played)",
+          46,
+          0.943,
+          1.061,
+          58.7,
+          54.3
         ]
       ]
     },
-    "expected_output": "Large-sample skill check (n=8000 historical internationals, out-of-sample):\n  model  log-loss 0.892  accuracy 59.4%\n  naive  log-loss 1.061  accuracy 48.7%\n  -> model log-loss 0.892 vs naive 1.061 (15.9% better); accuracy 59% vs 49%\nThis-tournament backtest (n=44 games already played):\n  model  log-loss 0.969  accuracy 56.8%\n  naive  log-loss 1.067  accuracy 52.3%\n  -> on the 44 played games the model (0.969) edges the naive (1.067) baseline; n=44 is still small and upset-prone",
+    "expected_output": "Large-sample skill check (n=8000 historical internationals, out-of-sample):\n  model  log-loss 0.899  accuracy 58.9%\n  naive  log-loss 1.062  accuracy 48.3%\n  -> model log-loss 0.899 vs naive 1.062 (15.3% better); accuracy 59% vs 48%\nThis-tournament backtest (n=46 games already played):\n  model  log-loss 0.943  accuracy 58.7%\n  naive  log-loss 1.061  accuracy 54.3%\n  -> on the 46 played games the model (0.943) and naive (1.061) are CLOSE; n=46 is small and upset-prone, so the 8000-match check is the reliable read.",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -563,7 +563,7 @@
   "det_04": {
     "kind": "fact",
     "title": "Leakage guard — a live mirror that already knows the future",
-    "claim": "The historical results file is a live mirror that already contains the 2026 World Cup matches played after the pre-tournament cutoff, including the group games used as an out-of-sample check. A naive model that trained on the whole file would secretly learn the very results it is meant to forecast — a textbook data-leakage failure. The honest discipline is to fit ratings only on matches dated before the 2026-06-23 forecast frontier (and to score the already-played World Cup games from the leak-free pre-tournament Elo), so the model never trains on a game it is supposed to predict; the post-cutoff rows are reserved as an out-of-sample check, never as training input. Stating this guard openly is part of why the resulting numbers can be trusted.",
+    "claim": "The historical results file is a live mirror that already contains the 2026 World Cup matches played after the pre-tournament cutoff, including the group games used as an out-of-sample check. A naive model that trained on the whole file would secretly learn the very results it is meant to forecast — a textbook data-leakage failure. The honest discipline is to fit ratings only on matches dated before the 2026-06-24 forecast frontier (and to score the already-played World Cup games from the leak-free pre-tournament Elo), so the model never trains on a game it is supposed to predict; the post-cutoff rows are reserved as an out-of-sample check, never as training input. Stating this guard openly is part of why the resulting numbers can be trusted.",
     "category": "controversy",
     "sources": [
       {
@@ -735,7 +735,7 @@
   "des_champ_explorable": {
     "kind": "computation",
     "title": "CENTERPIECE — live champion-odds explorable",
-    "claim": "As of the 2026-06-23 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.8%, ahead of Spain (24.0%), France (14.2%), England (8.0%), Colombia (4.8%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/simulate.py",
     "code_lines": [
@@ -759,40 +759,48 @@
           "J",
           1,
           2220,
-          30.8,
-          48.1
+          30.3,
+          47.1
         ],
         [
           "Spain",
           "H",
           2,
           2198,
-          24.0,
-          40.6
+          22.1,
+          37.1
         ],
         [
           "France",
           "I",
           3,
           2154,
-          14.2,
-          26.2
+          13.7,
+          25.7
         ],
         [
           "England",
           "L",
           4,
           2121,
-          8.0,
-          16.1
+          8.4,
+          16.8
         ],
         [
           "Colombia",
           "K",
           13,
-          2082,
-          4.8,
-          11.1
+          2091,
+          5.7,
+          12.6
+        ],
+        [
+          "Portugal",
+          "K",
+          5,
+          2053,
+          3.6,
+          9.3
         ],
         [
           "Brazil",
@@ -800,15 +808,15 @@
           6,
           2073,
           3.3,
-          7.8
+          7.9
         ],
         [
           "Germany",
           "E",
           10,
           2034,
-          2.5,
-          7.1
+          2.4,
+          7.2
         ],
         [
           "Netherlands",
@@ -816,15 +824,7 @@
           8,
           2038,
           2.1,
-          6.0
-        ],
-        [
-          "Portugal",
-          "K",
-          5,
-          2026,
-          1.8,
-          5.3
+          5.9
         ],
         [
           "Norway",
@@ -840,7 +840,7 @@
           7,
           2012,
           1.4,
-          4.3
+          4.2
         ],
         [
           "Japan",
@@ -848,19 +848,19 @@
           18,
           2012,
           1.3,
-          3.9
+          3.7
         ]
       ],
       "_rows_truncated": "showing 12 of 13"
     },
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.8%  reach-final  48.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  24.0%  reach-final  40.6%\nFrance         grp I  FIFA# 3  Elo 2154  champ  14.2%  reach-final  26.2%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.0%  reach-final  16.1%\nColombia       grp K  FIFA#13  Elo 2082  champ   4.8%  reach-final  11.1%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.8%\ntop1 Argentina = 30.8%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
     "run": {
       "type": "montecarlo",
       "reduced_n": 10000,
       "client_model": {
         "fn": "window.WC_MODEL.simulate",
         "returns": "{teamName: p_champion}",
-        "at_rest": "window.WC_MODEL.DATA.championPublished holds the exact 100k-sim figures (Argentina 0.3075, Spain 0.2396, ...)."
+        "at_rest": "window.WC_MODEL.DATA.championPublished holds the exact 100k-sim figures (Argentina 0.303, Spain 0.2213, ...)."
       },
       "needs_network": false
     }
@@ -868,7 +868,7 @@
   "des_champ_static": {
     "kind": "computation",
     "title": "Champion odds — static ladder (degradation + print)",
-    "claim": "As of the 2026-06-23 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.8%, ahead of Spain (24.0%), France (14.2%), England (8.0%), Colombia (4.8%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/simulate.py",
     "code_lines": [
@@ -892,40 +892,48 @@
           "J",
           1,
           2220,
-          30.8,
-          48.1
+          30.3,
+          47.1
         ],
         [
           "Spain",
           "H",
           2,
           2198,
-          24.0,
-          40.6
+          22.1,
+          37.1
         ],
         [
           "France",
           "I",
           3,
           2154,
-          14.2,
-          26.2
+          13.7,
+          25.7
         ],
         [
           "England",
           "L",
           4,
           2121,
-          8.0,
-          16.1
+          8.4,
+          16.8
         ],
         [
           "Colombia",
           "K",
           13,
-          2082,
-          4.8,
-          11.1
+          2091,
+          5.7,
+          12.6
+        ],
+        [
+          "Portugal",
+          "K",
+          5,
+          2053,
+          3.6,
+          9.3
         ],
         [
           "Brazil",
@@ -933,15 +941,15 @@
           6,
           2073,
           3.3,
-          7.8
+          7.9
         ],
         [
           "Germany",
           "E",
           10,
           2034,
-          2.5,
-          7.1
+          2.4,
+          7.2
         ],
         [
           "Netherlands",
@@ -949,15 +957,7 @@
           8,
           2038,
           2.1,
-          6.0
-        ],
-        [
-          "Portugal",
-          "K",
-          5,
-          2026,
-          1.8,
-          5.3
+          5.9
         ],
         [
           "Norway",
@@ -973,7 +973,7 @@
           7,
           2012,
           1.4,
-          4.3
+          4.2
         ],
         [
           "Japan",
@@ -981,19 +981,19 @@
           18,
           2012,
           1.3,
-          3.9
+          3.7
         ]
       ],
       "_rows_truncated": "showing 12 of 13"
     },
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.8%  reach-final  48.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  24.0%  reach-final  40.6%\nFrance         grp I  FIFA# 3  Elo 2154  champ  14.2%  reach-final  26.2%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.0%  reach-final  16.1%\nColombia       grp K  FIFA#13  Elo 2082  champ   4.8%  reach-final  11.1%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.8%\ntop1 Argentina = 30.8%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
     "run": {
       "type": "montecarlo",
       "reduced_n": 10000,
       "client_model": {
         "fn": "window.WC_MODEL.simulate",
         "returns": "{teamName: p_champion}",
-        "at_rest": "window.WC_MODEL.DATA.championPublished holds the exact 100k-sim figures (Argentina 0.3075, Spain 0.2396, ...)."
+        "at_rest": "window.WC_MODEL.DATA.championPublished holds the exact 100k-sim figures (Argentina 0.303, Spain 0.2213, ...)."
       },
       "needs_network": false
     }
@@ -1001,7 +1001,7 @@
   "des_confed_chart": {
     "kind": "computation",
     "title": "Title chance by confederation — bar",
-    "claim": "The title race is geographically narrow. European (UEFA) teams hold a combined 55.6% of all championship probability and South American (CONMEBOL) teams another 39.2% — together 94.8% of the entire field's title chance. The remaining four confederations split the last 5.2% between them: North/Central America (CONCACAF) 1.9%, Asia (AFC) 1.7%, Africa (CAF) 1.6%, and Oceania (OFC) effectively 0%. Every one of the model's top six is European or South American. The 48-team field is the broadest ever, but the favourites still come from the same two continents that have won every men's World Cup.",
+    "claim": "The title race is geographically narrow. European (UEFA) teams hold a combined 55.2% of all championship probability and South American (CONMEBOL) teams another 39.7% — together 94.9% of the entire field's title chance. The remaining four confederations split the last 5.1% between them: North/Central America (CONCACAF) 1.8%, Asia (AFC) 1.6%, Africa (CAF) 1.6%, and Oceania (OFC) effectively 0%. Every one of the model's top six is European or South American. The 48-team field is the broadest ever, but the favourites still come from the same two continents that have won every men's World Cup.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -1018,19 +1018,19 @@
       "rows": [
         [
           "UEFA",
-          55.6
+          55.2
         ],
         [
           "CONMEBOL",
-          39.2
+          39.7
         ],
         [
           "CONCACAF",
-          1.9
+          1.8
         ],
         [
           "AFC",
-          1.7
+          1.6
         ],
         [
           "CAF",
@@ -1042,7 +1042,7 @@
         ]
       ]
     },
-    "expected_output": "Total championship probability by confederation:\n  UEFA       55.6%\n  CONMEBOL   39.2%\n  CONCACAF    1.9%\n  AFC         1.7%\n  CAF         1.6%\n  OFC         0.0%\nUEFA + CONMEBOL = 94.8% of all title probability\ntop-6 confederations represented in title top-6: ['CONMEBOL', 'UEFA', 'UEFA', 'UEFA', 'CONMEBOL', 'CONMEBOL']",
+    "expected_output": "Total championship probability by confederation:\n  UEFA       55.2%\n  CONMEBOL   39.7%\n  CONCACAF    1.8%\n  AFC         1.6%\n  CAF         1.6%\n  OFC         0.0%\nUEFA + CONMEBOL = 94.9% of all title probability\ntop-6 confederations represented in title top-6: ['CONMEBOL', 'UEFA', 'UEFA', 'UEFA', 'CONMEBOL', 'UEFA']",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1051,7 +1051,7 @@
   "des_health_chart": {
     "kind": "computation",
     "title": "Model vs naive — grouped bar (the honesty beat)",
-    "claim": "The forecast earns trust by being checked, and the check is reported honestly. On a large out-of-sample test of 8,000 historical internationals the model clearly beats a naive baseline (which just predicts the home/draw/away base rates): log-loss 0.892 versus 1.061 — about 16% lower error — and 59.4% result accuracy versus 48.7%. That is the reliable read. On the 44 games of THIS World Cup already played, the model edges the naive baseline too (log-loss 0.969 vs 1.067; accuracy 56.8% vs 52.3%), but a 44-game sample is small and upset-prone, so it neither confirms nor refutes the model on its own. The honest summary: a clear, replicable edge on the large sample; a slim, noisy edge on the games played so far.",
+    "claim": "The forecast earns trust by being checked, and the check is reported honestly. On a large out-of-sample test of 8,000 historical internationals the model clearly beats a naive baseline (which just predicts the home/draw/away base rates): log-loss 0.899 versus 1.062 — about 15% lower error — and 58.9% result accuracy versus 48.3%. That is the reliable read. On the 46 games of THIS World Cup already played, the model edges the naive baseline too (log-loss 0.943 vs 1.061; accuracy 58.7% vs 54.3%), but a 46-game sample is small and upset-prone, so it neither confirms nor refutes the model on its own. The honest summary: a clear, replicable edge on the large sample; a slim, noisy edge on the games played so far.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -1060,7 +1060,7 @@
     ],
     "code": "# --- ana_06: Model health — does it beat a naive baseline? (the trust beat) ---\nprint(\"\\n=== ana_06 ===\")\nsk = summary[\"model_health\"][\"large_sample_skill\"]\nbt = summary[\"model_health\"][\"backtest_28_played\"]\nprint(f\"Large-sample skill check (n={sk['n']} historical internationals, out-of-sample):\")\nprint(f\"  model  log-loss {sk['model'][0]:.3f}  Brier {sk['model'][1]:.3f}  accuracy {sk['model'][2]*100:.1f}%\")\nprint(f\"  naive  log-loss {sk['naive'][0]:.3f}  Brier {sk['naive'][1]:.3f}  accuracy {sk['naive'][2]*100:.1f}%\")\nprint(f\"  -> model log-loss {sk['model'][0]:.3f} vs naive {sk['naive'][0]:.3f} \"\n      f\"({(1-sk['model'][0]/sk['naive'][0])*100:.1f}% better); accuracy \"\n      f\"{sk['model'][2]*100:.0f}% vs {sk['naive'][2]*100:.0f}%\")\nprint(f\"This-tournament backtest (n={bt['n']} games already played):\")\nprint(f\"  model  log-loss {bt['model'][0]:.3f}  accuracy {bt['model'][2]*100:.1f}%\")\nprint(f\"  naive  log-loss {bt['naive'][0]:.3f}  accuracy {bt['naive'][2]*100:.1f}%\")\nprint(f\"  -> on the {bt['n']} played games the model ({bt['model'][0]:.3f}) and naive ({bt['naive'][0]:.3f}) \"\n      f\"are CLOSE; n={bt['n']} is small and upset-prone, so the 8000-match check is the reliable read.\")\nprint(f\"calibration: a={summary['calibration']['a']:.4f}, b={summary['calibration']['b']:.5f}, \"\n      f\"mu_tot={summary['calibration']['mu_tot']:.3f}, n={summary['calibration']['n']}\")\n",
     "data_preview": {
-      "description": "Model vs naive baseline on the two tests: large out-of-sample (n=8000) and this-tournament backtest (n=44). Lower log-loss is better; higher accuracy is better.",
+      "description": "Model vs naive baseline on the two tests: large out-of-sample (n=8000) and this-tournament backtest (n=46). Lower log-loss is better; higher accuracy is better.",
       "columns": [
         "test",
         "n",
@@ -1073,22 +1073,22 @@
         [
           "Large out-of-sample (8000 internationals)",
           8000,
-          0.892,
-          1.061,
-          59.4,
-          48.7
+          0.899,
+          1.062,
+          58.9,
+          48.3
         ],
         [
-          "This World Cup so far (44 played)",
-          44,
-          0.969,
-          1.067,
-          56.8,
-          52.3
+          "This World Cup so far (46 played)",
+          46,
+          0.943,
+          1.061,
+          58.7,
+          54.3
         ]
       ]
     },
-    "expected_output": "Large-sample skill check (n=8000 historical internationals, out-of-sample):\n  model  log-loss 0.892  accuracy 59.4%\n  naive  log-loss 1.061  accuracy 48.7%\n  -> model log-loss 0.892 vs naive 1.061 (15.9% better); accuracy 59% vs 49%\nThis-tournament backtest (n=44 games already played):\n  model  log-loss 0.969  accuracy 56.8%\n  naive  log-loss 1.067  accuracy 52.3%\n  -> on the 44 played games the model (0.969) edges the naive (1.067) baseline; n=44 is still small and upset-prone",
+    "expected_output": "Large-sample skill check (n=8000 historical internationals, out-of-sample):\n  model  log-loss 0.899  accuracy 58.9%\n  naive  log-loss 1.062  accuracy 48.3%\n  -> model log-loss 0.899 vs naive 1.062 (15.3% better); accuracy 59% vs 48%\nThis-tournament backtest (n=46 games already played):\n  model  log-loss 0.943  accuracy 58.7%\n  naive  log-loss 1.061  accuracy 54.3%\n  -> on the 46 played games the model (0.943) and naive (1.061) are CLOSE; n=46 is small and upset-prone, so the 8000-match check is the reliable read.",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1114,7 +1114,7 @@
   "des_knife_chart": {
     "kind": "computation",
     "title": "The knife-edge — stacked qualification bar",
-    "claim": "Because only the top two of each group advance automatically and the eight best third-placed teams fill the rest of the new Round of 32, qualification splits the field into two worlds. Sixteen teams are already all but through (reach-R32 probability of 99% or more): Argentina, Spain, France, Brazil, Germany and others. But three teams sit on a true knife edge, with a reach-R32 probability between 40% and 60% — Senegal (55.1%), Bosnia & Herzegovina (47.9%) and DR Congo (47.1%) — for whom a single result swings the whole tournament. For those three, the model isn't predicting so much as measuring a coin toss.",
+    "claim": "Because only the top two of each group advance automatically and the eight best third-placed teams fill the rest of the new Round of 32, qualification splits the field into two worlds. Seventeen teams are already all but through (reach-R32 probability of 99% or more): Argentina, Spain, France, Brazil, Germany and others. But three teams sit on a true knife edge, with a reach-R32 probability between 40% and 60% — Senegal (55.5%), Bosnia & Herzegovina (48.0%) and DR Congo (41.4%) — for whom a single result swings the whole tournament. For those three, the model isn't predicting so much as measuring a coin toss.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -1133,6 +1133,13 @@
       ],
       "rows": [
         [
+          "Mexico",
+          "A",
+          100.0,
+          100.0,
+          0.0
+        ],
+        [
           "Argentina",
           "J",
           100.0,
@@ -1140,51 +1147,44 @@
           0.0
         ],
         [
-          "Spain",
-          "H",
+          "Switzerland",
+          "B",
           100.0,
-          95.5,
-          4.5
-        ],
-        [
-          "France",
-          "I",
-          100.0,
-          100.0,
-          0.0
-        ],
-        [
-          "Brazil",
-          "C",
-          100.0,
-          86.2,
-          13.8
+          99.2,
+          0.8
         ],
         [
           "Senegal",
           "I",
-          55.1,
-          19.0,
-          36.1
+          55.5,
+          0.0,
+          55.5
         ],
         [
           "Bosnia & Herzegovina",
           "B",
-          47.9,
-          1.3,
-          46.6
+          48.0,
+          0.8,
+          47.2
         ],
         [
           "DR Congo",
           "K",
-          47.1,
-          23.0,
-          24.1
+          41.4,
+          0.5,
+          40.8
+        ],
+        [
+          "Ghana",
+          "L",
+          67.3,
+          23.4,
+          43.8
         ]
       ],
       "_rows_truncated": "showing 7 of 48"
     },
-    "expected_output": "Reach-Round-of-32 probability (auto top-2 + best-third path):\n  Argentina      grp J  R32 100.0%  (top2 100% + 3rd-path 0%)\n  Spain          grp H  R32 100.0%  (top2 96% + 3rd-path 4%)\n  France         grp I  R32 100.0%  (top2 100% + 3rd-path 0%)\n  ...mid-table coin-flips (R32 40-60%):\n  Senegal        grp I  R32  55.1%\n  Bosnia & Herzegovina grp B  R32  47.9%\n  DR Congo       grp K  R32  47.1%\nteams essentially through (R32>=99%): 16\nteams on a knife edge (R32 40-60%): 3",
+    "expected_output": "Reach-Round-of-32 probability (auto top-2 + best-third path):\n  Argentina      grp J  R32 100.0%  (top2 100% + 3rd-path 0%)\n  Spain          grp H  R32 100.0%  (top2 95% + 3rd-path 5%)\n  France         grp I  R32 100.0%  (top2 100% + 3rd-path 0%)\n  ...mid-table coin-flips (R32 40-60%):\n  Senegal        grp I  R32  55.5%\n  Bosnia & Herzegovina grp B  R32  48.0%\n  DR Congo       grp K  R32  41.4%\nteams essentially through (R32>=99%): 17\nteams on a knife edge (R32 40-60%): 3",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1193,7 +1193,7 @@
   "des_money_chart": {
     "kind": "computation",
     "title": "Money vs merit — value-vs-semifinal scatter",
-    "claim": "Squad market value and simulated success only loosely track each other. France carries the costliest squad in the tournament at €1.52bn and the model gives it a 45.5% chance of reaching the semi-finals — €33m of squad value per percentage point of that chance. Colombia's squad costs €302m, roughly a fifth of France's, yet the model still gives it a 22.1% semi-final chance, at just €14m per point — more than twice as efficient. The clearest bargains are Argentina (€12m per semi-final point) and Colombia; the most expensive by this measure are Portugal (€80m per point) and Germany (€56m). Squad price buys a strong floor, not a ticket to the last four.",
+    "claim": "Squad market value and simulated success only loosely track each other. France carries the costliest squad in the tournament at €1.52bn and the model gives it a 45.2% chance of reaching the semi-finals — €34m of squad value per percentage point of that chance. Colombia's squad costs €302m, roughly a fifth of France's, yet the model still gives it a 24.1% semi-final chance, at just €13m per point — more than twice as efficient. The clearest bargains are Argentina (€12m per semi-final point) and Colombia; the most expensive by this measure are Portugal (€51m per point) and Germany (€56m). Squad price buys a strong floor, not a ticket to the last four.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -1213,55 +1213,55 @@
         [
           "France",
           1520.0,
-          45.5,
-          33.4
+          45.2,
+          33.7
         ],
         [
           "England",
           1360.0,
-          35.4,
-          38.5
+          37.4,
+          36.4
         ],
         [
           "Spain",
           1220.0,
-          59.1,
-          20.6
+          54.3,
+          22.5
         ],
         [
           "Portugal",
           1010.0,
-          12.6,
-          80.2
+          19.8,
+          51.1
         ],
         [
           "Germany",
           947.0,
           17.0,
-          55.9
+          55.8
+        ],
+        [
+          "Brazil",
+          928.2,
+          19.2,
+          48.4
         ],
         [
           "Argentina",
           807.5,
-          68.1,
-          11.9
+          66.7,
+          12.1
         ],
         [
-          "Colombia",
-          302.35,
-          22.1,
-          13.7
-        ],
-        [
-          "Iran",
-          32.05,
-          2.3,
-          14.1
+          "Netherlands",
+          754.2,
+          14.9,
+          50.6
         ]
       ],
       "_rows_truncated": "showing 8 of 25 (p_reach_sf > 2%)"
     },
-    "expected_output": "Costliest squads and what the model gives them (reach-SF %):\n  France         EUR 1520.0m  SF  45.5%  = EUR   33.4m per SF-point\n  England        EUR 1360.0m  SF  35.4%  = EUR   38.5m per SF-point\n  Spain          EUR 1220.0m  SF  59.1%  = EUR   20.6m per SF-point\n  Portugal       EUR 1010.0m  SF  12.6%  = EUR   80.2m per SF-point\n  Germany        EUR  947.0m  SF  17.0%  = EUR   55.9m per SF-point\nBest value (lowest EUR per SF-point), among real contenders:\n  Argentina      EUR  807.5m  SF  68.1%  = EUR   11.9m per SF-point\n  Colombia       EUR  302.4m  SF  22.1%  = EUR   13.7m per SF-point\n  Iran           EUR   32.0m  SF   2.3%  = EUR   14.1m per SF-point\nColombia squad is 5.0x cheaper than France's yet within 23.4pp of its SF chance",
+    "expected_output": "Costliest squads and what the model gives them (reach-SF %):\n  France         EUR 1520.0m  SF  45.2%  = EUR   33.7m per SF-point\n  England        EUR 1360.0m  SF  37.4%  = EUR   36.4m per SF-point\n  Spain          EUR 1220.0m  SF  54.3%  = EUR   22.5m per SF-point\n  Portugal       EUR 1010.0m  SF  19.8%  = EUR   51.1m per SF-point\n  Germany        EUR  947.0m  SF  17.0%  = EUR   55.8m per SF-point\nBest value (lowest EUR per SF-point), among real contenders:\n  Argentina      EUR  807.5m  SF  66.7%  = EUR   12.1m per SF-point\n  Colombia       EUR  302.4m  SF  24.1%  = EUR   12.5m per SF-point\n  Iran           EUR   32.0m  SF   2.1%  = EUR   15.4m per SF-point\nColombia squad is 5.0x cheaper than France's yet within 21.1pp of its SF chance",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1270,7 +1270,7 @@
   "des_predictor": {
     "kind": "computation",
     "title": "des_predictor",
-    "claim": "As of the 2026-06-23 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.8%, ahead of Spain (24.0%), France (14.2%), England (8.0%), Colombia (4.8%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/simulate.py",
     "code_lines": [
@@ -1294,40 +1294,48 @@
           "J",
           1,
           2220,
-          30.8,
-          48.1
+          30.3,
+          47.1
         ],
         [
           "Spain",
           "H",
           2,
           2198,
-          24.0,
-          40.6
+          22.1,
+          37.1
         ],
         [
           "France",
           "I",
           3,
           2154,
-          14.2,
-          26.2
+          13.7,
+          25.7
         ],
         [
           "England",
           "L",
           4,
           2121,
-          8.0,
-          16.1
+          8.4,
+          16.8
         ],
         [
           "Colombia",
           "K",
           13,
-          2082,
-          4.8,
-          11.1
+          2091,
+          5.7,
+          12.6
+        ],
+        [
+          "Portugal",
+          "K",
+          5,
+          2053,
+          3.6,
+          9.3
         ],
         [
           "Brazil",
@@ -1335,15 +1343,15 @@
           6,
           2073,
           3.3,
-          7.8
+          7.9
         ],
         [
           "Germany",
           "E",
           10,
           2034,
-          2.5,
-          7.1
+          2.4,
+          7.2
         ],
         [
           "Netherlands",
@@ -1351,15 +1359,7 @@
           8,
           2038,
           2.1,
-          6.0
-        ],
-        [
-          "Portugal",
-          "K",
-          5,
-          2026,
-          1.8,
-          5.3
+          5.9
         ],
         [
           "Norway",
@@ -1375,7 +1375,7 @@
           7,
           2012,
           1.4,
-          4.3
+          4.2
         ],
         [
           "Japan",
@@ -1383,19 +1383,19 @@
           18,
           2012,
           1.3,
-          3.9
+          3.7
         ]
       ],
       "_rows_truncated": "showing 12 of 13"
     },
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.8%  reach-final  48.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  24.0%  reach-final  40.6%\nFrance         grp I  FIFA# 3  Elo 2154  champ  14.2%  reach-final  26.2%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.0%  reach-final  16.1%\nColombia       grp K  FIFA#13  Elo 2082  champ   4.8%  reach-final  11.1%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.8%\ntop1 Argentina = 30.8%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
     "run": {
       "type": "montecarlo",
       "reduced_n": 10000,
       "client_model": {
         "fn": "window.WC_MODEL.simulate",
         "returns": "{teamName: p_champion}",
-        "at_rest": "window.WC_MODEL.DATA.championPublished holds the exact 100k-sim figures (Argentina 0.3075, Spain 0.2396, ...)."
+        "at_rest": "window.WC_MODEL.DATA.championPublished holds the exact 100k-sim figures (Argentina 0.303, Spain 0.2213, ...)."
       },
       "needs_network": false
     },
@@ -1404,7 +1404,7 @@
   "des_rankgap_chart": {
     "kind": "computation",
     "title": "Model vs FIFA rank — diverging bar",
-    "claim": "A results-trained Elo model re-orders the official FIFA ladder, and among the 13 real contenders the disagreements are sharp. The model's biggest upgrade is Norway, ranked 31st by FIFA but lifted to the 10th-best title chance (1.8%); next is Colombia, FIFA's 13th but the model's 5th pick at 4.8%, then Japan (FIFA 18th up to 12th) and Germany (10th up to 7th). In the other direction the model fades market darlings: Portugal drops from FIFA 5th to 9th and Morocco from 7th to 11th. At the very top the two systems agree — Argentina, Spain, France and England are 1-2-3-4 on both. Where they part ways is where a reader has the most room to argue.",
+    "claim": "A results-trained Elo model re-orders the official FIFA ladder, and among the 13 real contenders the disagreements are sharp. The model's biggest upgrade is Norway, ranked 31st by FIFA but lifted to the 10th-best title chance (1.8%); next is Colombia, FIFA's 13th but the model's 5th pick at 5.7%, then Japan (FIFA 18th up to 12th) and Germany (10th up to 8th). In the other direction the model fades market darlings: Portugal drops from FIFA 5th to 6th and Morocco from 7th to 11th. At the very top the two systems agree — Argentina, Spain, France and England are 1-2-3-4 on both. Where they part ways is where a reader has the most room to argue.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -1434,7 +1434,7 @@
           13,
           5,
           8,
-          4.8
+          5.7
         ],
         [
           "Japan",
@@ -1446,9 +1446,9 @@
         [
           "Germany",
           10,
-          7,
-          3,
-          2.5
+          8,
+          2,
+          2.4
         ],
         [
           "Mexico",
@@ -1458,37 +1458,37 @@
           1.1
         ],
         [
-          "Argentina",
-          1,
-          1,
-          0,
-          30.8
-        ],
-        [
-          "Spain",
-          2,
-          2,
-          0,
-          24.0
-        ],
-        [
-          "Portugal",
-          5,
-          9,
-          -4,
-          1.8
-        ],
-        [
           "Morocco",
           7,
           11,
           -4,
           1.4
+        ],
+        [
+          "Brazil",
+          6,
+          7,
+          -1,
+          3.3
+        ],
+        [
+          "Netherlands",
+          8,
+          9,
+          -1,
+          2.1
+        ],
+        [
+          "Portugal",
+          5,
+          6,
+          -1,
+          3.6
         ]
       ],
       "_rows_truncated": "showing 9 of 13"
     },
-    "expected_output": "Among the 13 teams with >=1% title chance - model rates HIGHER than FIFA rank (gap = FIFA# - model#):\n  Norway         FIFA#31 -> model#10  (+21)  champ 1.8%\n  Colombia       FIFA#13 -> model# 5  (+8)  champ 4.8%\n  Japan          FIFA#18 -> model#12  (+6)  champ 1.3%\n  Germany        FIFA#10 -> model# 7  (+3)  champ 2.5%\n  Mexico         FIFA#14 -> model#13  (+1)  champ 1.1%\nModel rates LOWER than FIFA rank:\n  Portugal       FIFA# 5 -> model# 9  (-4)  champ 1.8%\n  Morocco        FIFA# 7 -> model#11  (-4)  champ 1.4%\nColombia: FIFA #13, model #5, champ 4.8% (5th)\nNorway: FIFA #31, model #10, champ 1.8%\nPortugal: FIFA #5, model #9, champ 1.8%",
+    "expected_output": "Among the 13 teams with >=1% title chance - model rates HIGHER than FIFA rank (gap = FIFA# - model#):\n  Norway         FIFA#31 -> model#10  (+21)  champ 1.8%\n  Colombia       FIFA#13 -> model# 5  (+8)  champ 5.7%\n  Japan          FIFA#18 -> model#12  (+6)  champ 1.2%\n  Germany        FIFA#10 -> model# 8  (+2)  champ 2.4%\n  Mexico         FIFA#14 -> model#13  (+1)  champ 1.1%\nModel rates LOWER than FIFA rank:\n  Morocco        FIFA# 7 -> model#11  (-4)  champ 1.4%\n  Brazil         FIFA# 6 -> model# 7  (-1)  champ 3.3%\n  Netherlands    FIFA# 8 -> model# 9  (-1)  champ 2.1%\n  Portugal       FIFA# 5 -> model# 6  (-1)  champ 3.6%\nColombia: FIFA #13, model #5, champ 5.7% (5th)\nNorway: FIFA #31, model #10, champ 1.8%\nPortugal: FIFA #5, model #6, champ 3.6%",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1973,686 +1973,18 @@
         "source_title": "File:Antoine Griezmann (51100409504) (cropped).jpg"
       }
     ],
-    "photos_note": "Per-card portraits in this LOCAL build are official player portraits (assets/official/, copyrighted, publish-gated). The array above is the publishable Wikimedia swap set: each is a real, source-attributed, vlm-identity-verified photo (not AI). Licences/credits summary: sct_04.",
-    "clips": [
-      {
-        "player": "Lionel Messi",
-        "file": "assets/clips/lionel-messi.mp4",
-        "source_url": "https://giphy.com/fcbarcelona",
-        "platform": "GIPHY",
-        "channel": "FC Barcelona",
-        "attribution_text": "Career highlight via GIPHY (FC Barcelona). Free-kick at a Barça goal. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Lionel Messi",
-          "verified_title": "Lionel Messi free-kick at an FC Barcelona goal"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Kylian Mbappé",
-        "file": "assets/clips/kylian-mbappe.mp4",
-        "source_url": "https://giphy.com/psg",
-        "platform": "GIPHY",
-        "channel": "PSG",
-        "attribution_text": "Career highlight via GIPHY (PSG). Dribbling/attacking. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Kylian Mbappé",
-          "verified_title": "Kylian Mbappé dribbling/attacking for Paris Saint-Germain"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Erling Haaland",
-        "file": "assets/clips/erling-haaland.mp4",
-        "source_url": "https://giphy.com/mancity",
-        "platform": "GIPHY",
-        "channel": "Manchester City",
-        "attribution_text": "Career highlight via GIPHY (Manchester City). Goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Erling Haaland",
-          "verified_title": "Erling Haaland goal celebration for Manchester City"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Harry Kane",
-        "file": "assets/clips/harry-kane.mp4",
-        "source_url": "https://giphy.com/spursofficial",
-        "platform": "GIPHY",
-        "channel": "Tottenham Hotspur",
-        "attribution_text": "Career highlight via GIPHY (Tottenham Hotspur). Goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Harry Kane",
-          "verified_title": "Harry Kane goal celebration for Tottenham Hotspur"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Lamine Yamal",
-        "file": "assets/clips/lamine-yamal.mp4",
-        "source_url": "https://giphy.com",
-        "platform": "GIPHY",
-        "channel": "beIN / user",
-        "attribution_text": "Career highlight via GIPHY (beIN/user upload). Barça goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Lamine Yamal",
-          "verified_title": "Lamine Yamal Barça goal celebration"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Pedri",
-        "file": "assets/clips/pedri.mp4",
-        "source_url": "https://giphy.com/laliga",
-        "platform": "GIPHY",
-        "channel": "LaLiga",
-        "attribution_text": "Career highlight via GIPHY (LaLiga). In-match close-up. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Pedri",
-          "verified_title": "Pedri in-match close-up (LaLiga)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Florian Wirtz",
-        "file": "assets/clips/florian-wirtz.mp4",
-        "source_url": "https://giphy.com/bayer04",
-        "platform": "GIPHY",
-        "channel": "Bayer 04 Leverkusen",
-        "attribution_text": "Career highlight via GIPHY (Bayer 04 Leverkusen). Signature flex celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Florian Wirtz",
-          "verified_title": "Florian Wirtz signature flex celebration for Bayer 04 Leverkusen"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Rodri",
-        "file": "assets/clips/rodri.mp4",
-        "source_url": "https://giphy.com/mancity",
-        "platform": "GIPHY",
-        "channel": "Manchester City",
-        "attribution_text": "Career highlight via GIPHY (Manchester City). Celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Rodri",
-          "verified_title": "Rodri celebration for Manchester City"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Ousmane Dembélé",
-        "file": "assets/clips/ousmane-dembele.mp4",
-        "source_url": "https://giphy.com/psg",
-        "platform": "GIPHY",
-        "channel": "PSG (Ballon d'Or)",
-        "attribution_text": "Career highlight via GIPHY (PSG, Ballon d'Or). Identity-certain primary clip (the more dynamic Tenor knee-slide variant was set aside as its face-ID is context-only). Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Ousmane Dembélé",
-          "verified_title": "Ousmane Dembélé (PSG, Ballon d'Or) — identity-certain primary clip"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Vinícius Júnior",
-        "file": "assets/clips/vinicius-junior.mp4",
-        "source_url": "https://giphy.com/dazn",
-        "platform": "GIPHY",
-        "channel": "DAZN",
-        "attribution_text": "Career highlight via GIPHY (DAZN). Real Madrid match. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Vinícius Júnior",
-          "verified_title": "Vinícius Júnior in a Real Madrid match (DAZN)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Virgil van Dijk",
-        "file": "assets/clips/virgil-van-dijk.mp4",
-        "source_url": "https://giphy.com/playsports",
-        "platform": "GIPHY",
-        "channel": "Play Sports",
-        "attribution_text": "Career highlight via GIPHY (Play Sports). Liverpool goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Virgil van Dijk",
-          "verified_title": "Virgil van Dijk Liverpool goal celebration (Play Sports)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before public release"
-      },
-      {
-        "player": "Jude Bellingham",
-        "file": "assets/clips/jude-bellingham.mp4",
-        "source_url": "https://giphy.com/gifs/real-madrid-bellingham-jude-bthuCf04NdwyfP6ybE",
-        "platform": "GIPHY",
-        "channel": "(repost)",
-        "attribution_text": "Career highlight via GIPHY ((repost)). Real Madrid celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Jude Bellingham",
-          "verified_title": "Jude Bellingham celebration for Real Madrid"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Achraf Hakimi",
-        "file": "assets/clips/achraf-hakimi.mp4",
-        "source_url": "https://giphy.com/gifs/psg-inside-hakimi-achraf-achrafhakimi-ZC9TvIjAAsRxElvo9P",
-        "platform": "GIPHY",
-        "channel": "Paris Saint-Germain",
-        "attribution_text": "Career highlight via GIPHY (Paris Saint-Germain). PSG attacking run. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Achraf Hakimi",
-          "verified_title": "Achraf Hakimi for Paris Saint-Germain"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Cody Gakpo",
-        "file": "assets/clips/cody-gakpo.mp4",
-        "source_url": "https://tenor.com/view/gif-311606040064477877",
-        "platform": "Tenor",
-        "channel": "Liverpool FC",
-        "attribution_text": "Career highlight via Tenor (Liverpool FC). Liverpool goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Cody Gakpo",
-          "verified_title": "Cody Gakpo goal celebration for Liverpool FC"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Lautaro Martínez",
-        "file": "assets/clips/lautaro-martinez.mp4",
-        "source_url": "https://tenor.com/view/gif-1577279229718596365",
-        "platform": "Tenor",
-        "channel": "Inter/UCL",
-        "attribution_text": "Career highlight via Tenor (Inter/UCL). Inter / Champions League goal. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Lautaro Martínez",
-          "verified_title": "Lautaro Martínez goal for Inter (UEFA Champions League)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Memphis Depay",
-        "file": "assets/clips/memphis-depay.mp4",
-        "source_url": "https://tenor.com/view/gif-13773615",
-        "platform": "Tenor",
-        "channel": "OnsOranje (NL)",
-        "attribution_text": "Career highlight via Tenor (OnsOranje (NL)). Netherlands celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Memphis Depay",
-          "verified_title": "Memphis Depay celebration for the Netherlands (OnsOranje)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Phil Foden",
-        "file": "assets/clips/phil-foden.mp4",
-        "source_url": "https://tenor.com/view/gif-10106209961200796912",
-        "platform": "Tenor",
-        "channel": "Man City",
-        "attribution_text": "Career highlight via Tenor (Man City). Manchester City goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Phil Foden",
-          "verified_title": "Phil Foden goal celebration for Manchester City"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Rúben Dias",
-        "file": "assets/clips/ruben-dias.mp4",
-        "source_url": "https://giphy.com/gifs/Z84pqN8kXQiqvYMfb3",
-        "platform": "GIPHY",
-        "channel": "MolaTV",
-        "attribution_text": "Career highlight via GIPHY (MolaTV). Manchester City in-match moment. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Rúben Dias",
-          "verified_title": "Rúben Dias in-match moment for Manchester City (MolaTV)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Christian Pulisic",
-        "file": "assets/clips/christian-pulisic.mp4",
-        "source_url": "https://giphy.com/gifs/N8pjAaCzoVRAwuuKF2",
-        "platform": "GIPHY",
-        "channel": "UEFA Europa League",
-        "attribution_text": "Career highlight via GIPHY (UEFA Europa League). AC Milan goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Christian Pulisic",
-          "verified_title": "Christian Pulisic goal celebration for AC Milan (UEFA Europa League)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Takefusa Kubo",
-        "file": "assets/clips/takefusa-kubo.mp4",
-        "source_url": "https://tenor.com/view/gif-22892318",
-        "platform": "Tenor",
-        "channel": "NBC Sports",
-        "attribution_text": "Career highlight via Tenor (NBC Sports). Real Sociedad goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Takefusa Kubo",
-          "verified_title": "Takefusa Kubo goal celebration for Real Sociedad (NBC Sports)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Jamal Musiala",
-        "file": "assets/clips/jamal-musiala.mp4",
-        "source_url": "https://giphy.com/gifs/fcbayern-pEnURRwQiuIqdklRAw",
-        "platform": "GIPHY",
-        "channel": "FC Bayern",
-        "attribution_text": "Career highlight via GIPHY (FC Bayern). Bayern Munich goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Jamal Musiala",
-          "verified_title": "Jamal Musiala goal celebration for FC Bayern Munich"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Raphinha",
-        "file": "assets/clips/raphinha.mp4",
-        "source_url": "https://tenor.com/view/gif-4955495570982363826",
-        "platform": "Tenor",
-        "channel": "(repost)",
-        "attribution_text": "Career highlight via Tenor ((repost)). Barça goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Raphinha",
-          "verified_title": "Raphinha goal celebration for FC Barcelona"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "James Rodríguez",
-        "file": "assets/clips/james-rodriguez.mp4",
-        "source_url": "https://giphy.com/gifs/baile-gol-seleccion-colombia-james-tqtjD2kmduAFBp45Ua",
-        "platform": "GIPHY",
-        "channel": "Selección Colombia",
-        "attribution_text": "Career highlight via GIPHY (Selección Colombia). Colombia goal celebration dance. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "James Rodríguez",
-          "verified_title": "James Rodríguez goal celebration for the Colombia national team (Selección Colombia)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Antoine Griezmann",
-        "file": "assets/clips/antoine-griezmann.mp4",
-        "source_url": "https://giphy.com/gifs/atleti-atletico-madrid-de-jI2MHJe111f12NEDst",
-        "platform": "GIPHY",
-        "channel": "Atlético Madrid",
-        "attribution_text": "Career highlight via GIPHY (Atlético Madrid). Atlético Madrid celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Antoine Griezmann",
-          "verified_title": "Antoine Griezmann celebration for Atlético Madrid"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Nico Williams",
-        "file": "assets/clips/nico-williams.mp4",
-        "source_url": "https://tenor.com/view/gif-6380333625545535344",
-        "platform": "Tenor",
-        "channel": "(user)",
-        "attribution_text": "Career highlight via Tenor ((user)). Athletic Club goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Nico Williams",
-          "verified_title": "Nico Williams goal celebration for Athletic Club"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Raúl Jiménez",
-        "file": "assets/clips/raul-jimenez.mp4",
-        "source_url": "https://giphy.com/gifs/emiratesfacup-wolves-jimenez-raul-tc3LHn8Nf4vuR48uBt",
-        "platform": "GIPHY",
-        "channel": "Emirates FA Cup",
-        "attribution_text": "Career highlight via GIPHY (Emirates FA Cup). Masked 'Sin Cara' goal celebration (face hidden; identity rests on the kit + the Emirates FA Cup channel, not the face). Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Raúl Jiménez",
-          "verified_title": "Raúl Jiménez masked 'Sin Cara' goal celebration (Emirates FA Cup) — face hidden; identity established by kit + channel"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "William Saliba",
-        "file": "assets/clips/william-saliba.mp4",
-        "source_url": "https://tenor.com/view/gif-14425986984426268930",
-        "platform": "Tenor",
-        "channel": "(user)",
-        "attribution_text": "Career highlight via Tenor ((user)). Arsenal in-match moment. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "William Saliba",
-          "verified_title": "William Saliba in-match moment for Arsenal"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Toni Kroos",
-        "file": "assets/clips/toni-kroos.mp4",
-        "source_url": "https://giphy.com/gifs/jakeygif-real-madrid-kross-S4BhI5vu0j37OBKpvU",
-        "platform": "GIPHY",
-        "channel": "Real Madrid",
-        "attribution_text": "Career highlight via GIPHY (Real Madrid). Real Madrid moment. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Toni Kroos",
-          "verified_title": "Toni Kroos for Real Madrid"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Cristiano Ronaldo",
-        "file": "assets/clips/cristiano-ronaldo.mp4",
-        "source_url": "https://giphy.com/gifs/celebration-cristiano-ronaldo-al-nassr-cr7-yNyH86Nxg9HtikgIej",
-        "platform": "GIPHY",
-        "channel": "Al Nassr",
-        "attribution_text": "Career highlight via GIPHY (Al Nassr). Al Nassr goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Cristiano Ronaldo",
-          "verified_title": "Cristiano Ronaldo goal celebration for Al Nassr FC"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Bukayo Saka",
-        "file": "assets/clips/bukayo-saka.mp4",
-        "source_url": "https://tenor.com/view/gif-24273912",
-        "platform": "Tenor",
-        "channel": "Sky/PL",
-        "attribution_text": "Career highlight via Tenor (Sky/PL). Arsenal goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Bukayo Saka",
-          "verified_title": "Bukayo Saka goal celebration for Arsenal (Sky / Premier League)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Bruno Fernandes",
-        "file": "assets/clips/bruno-fernandes.mp4",
-        "source_url": "https://giphy.com/gifs/manutd-bruno-mufc-fernandes-Q3VzQlPOvK4ewyIIgn",
-        "platform": "GIPHY",
-        "channel": "Manchester United",
-        "attribution_text": "Career highlight via GIPHY (Manchester United). Manchester United celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Bruno Fernandes",
-          "verified_title": "Bruno Fernandes celebration for Manchester United"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Rodrygo",
-        "file": "assets/clips/rodrygo.mp4",
-        "source_url": "https://giphy.com/gifs/ElevenSportsBE-real-madrid-rodrygo-mWsRahNptum3TMnbSz",
-        "platform": "GIPHY",
-        "channel": "ElevenDAZN",
-        "attribution_text": "Career highlight via GIPHY (ElevenDAZN). Real Madrid goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Rodrygo",
-          "verified_title": "Rodrygo goal celebration for Real Madrid (Eleven/DAZN)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Rodrigo De Paul",
-        "file": "assets/clips/rodrigo-de-paul.mp4",
-        "source_url": "https://tenor.com/view/gif-27217509",
-        "platform": "Tenor",
-        "channel": "Argentina NT",
-        "attribution_text": "Career highlight via Tenor (Argentina NT). Argentina national-team moment. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Rodrigo De Paul",
-          "verified_title": "Rodrigo De Paul for the Argentina national team"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Dani Olmo",
-        "file": "assets/clips/dani-olmo.mp4",
-        "source_url": "https://giphy.com/gifs/RBLeipzig-rbl-olmo-dani-YEhia93346Usoubc72",
-        "platform": "GIPHY",
-        "channel": "RB Leipzig",
-        "attribution_text": "Career highlight via GIPHY (RB Leipzig). RB Leipzig goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Dani Olmo",
-          "verified_title": "Dani Olmo goal celebration for RB Leipzig"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      },
-      {
-        "player": "Youssef En-Nesyri",
-        "file": "assets/clips/youssef-en-nesyri.mp4",
-        "source_url": "https://giphy.com/gifs/ElevenSportsBE-celebration-sevilla-youssef-en-nesyri-a9niBtamuXGymZgl36",
-        "platform": "GIPHY",
-        "channel": "ElevenSportsBE",
-        "attribution_text": "Career highlight via GIPHY (ElevenSportsBE). Sevilla goal celebration. Not 2026 World Cup footage. Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Youssef En-Nesyri",
-          "verified_title": "Youssef En-Nesyri goal celebration for Sevilla (ElevenSportsBE)"
-        },
-        "disclosure": "career highlight — not 2026 World Cup footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to an official embed before publish"
-      }
-    ],
-    "clips_note": "Career-highlight clips that make a starred card's portrait come alive on hover/in-view. DECORATIVE: no per-clip data-* id, no computed number — des_ratings_grid stays runnable:false. Each clip is identity-verified (real club/highlight footage) but is NOT 2026 World Cup footage and is demo-only: license.permits_republication=false, so license each clip or swap to an official embed before any public release. Platform+channel attribution is shown on the card (in its Sources panel) and credited above."
+    "photos_note": "Per-card portraits in this LOCAL build are official player portraits (assets/official/, copyrighted, publish-gated). The array above is the publishable Wikimedia swap set: each is a real, source-attributed, vlm-identity-verified photo (not AI). Licences/credits summary: sct_04."
   },
   "des_stars_chart": {
     "kind": "computation",
     "title": "Stars vs deep run — EA overall against team reach-semifinal odds",
-    "claim": "As of the 2026-06-23 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.8%, ahead of Spain (24.0%), France (14.2%), England (8.0%), Colombia (4.8%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/ea_ratings.json + code/simulate.py",
     "code_lines": null,
     "code": "# This scatter joins two sources, one point per player:\n#   x = player EA overall -> EA Sports FC rating (CITED, not computed here; frozen in code/ea_ratings.json)\n#   y = team p_reach_sf   -> the Monte-Carlo forecast (code/simulate.py, cell_simulate; forecast_outputs/advance_probs.csv)\n# merged on each player's national team. The loose vertical scatter at high EA overall is the 'stars != deep run' point.\n# Only the y-axis and the join are ours; the x-axis values are EA's published ratings.",
     "data_preview": null,
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.8%  reach-final  48.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  24.0%  reach-final  40.6%\nFrance         grp I  FIFA# 3  Elo 2154  champ  14.2%  reach-final  26.2%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.0%  reach-final  16.1%\nColombia       grp K  FIFA#13  Elo 2082  champ   4.8%  reach-final  11.1%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.8%\ntop1 Argentina = 30.8%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
     "run": {
       "type": "ratings",
       "needs_network": false,
@@ -2663,22 +1995,22 @@
   },
   "des_trophy": {
     "kind": "media",
-    "title": "2022 World Cup final — four real clips (Argentina 3–3 France, 4–2 pens)",
+    "title": "2022 World Cup final — two real clips (Argentina 3–3 France, 4–2 pens)",
     "media_type": "video",
-    "preview": "assets/clips/wc2022-mbappe-goal.jpg",
+    "preview": "assets/clips/wc2022-mbappe-volley.jpg",
     "source_url": "https://www.youtube.com/watch?v=zhEWqfP6V_w",
     "license": "Demo only — the clip licences below do not permit republication",
     "author": "Clips via FIFA / GIPHY / Tenor; official highlights by FIFA (YouTube)",
-    "identity": "Four real clips from the 18 December 2022 World Cup final at Lusail (Argentina 3–3 France, won 4–2 on penalties): Mbappé's goal celebration (one of his final hat-trick), Messi's penalty in the final, Emiliano Martínez's extra-time save (120:00) that forced the shootout, and Messi lifting the trophy. Real footage, not AI.",
+    "identity": "Two real clips from the 18 December 2022 World Cup final at Lusail (Argentina 3–3 France, won 4–2 on penalties): Mbappé's 81st-minute open-play volley (the 2-2 equaliser off Thuram's pass; scoreboard reads ARG 2-1 FRA at 80:59) and Messi's penalty in the final. Real footage, not AI.",
     "disclosure": "2022 World Cup final footage — a light historical hook, not 2026 footage",
     "assets": [
       {
-        "name": "Mbappé's goal celebration (2022 final)",
-        "filename": "assets/clips/wc2022-mbappe-goal.jpg",
-        "source_url": "https://giphy.com/sportsmanias",
-        "license": "GIPHY terms (demo only; not licensed for republication)",
-        "attribution": "Clip via GIPHY (SportsManias). 2022 World Cup final. Confirm exact permalink before publish.",
-        "identity": "Kylian Mbappé celebrating a goal in the 2022 World Cup final (one of his final hat-trick). Real footage, not AI."
+        "name": "Mbappé's 81' volley — open play (2022 final)",
+        "filename": "assets/clips/wc2022-mbappe-volley.jpg",
+        "source_url": "https://tenor.com/view/mbappe-volley-goal-wc-gif-6079932134635891961",
+        "license": "Tenor terms (demo only; not licensed for republication)",
+        "attribution": "Clip via Tenor (uploader Ruwewaarheid). 2022 World Cup final. Confirm exact permalink/rights before publish.",
+        "identity": "Kylian Mbappé's 81st-minute open-play volley in the 2022 World Cup final — the one-two with Thuram and falling right-foot volley that made it 2-2 (scoreboard ARG 2-1 FRA at 80:59). NOT a penalty, not a celebration. Real footage, not AI."
       },
       {
         "name": "Messi's penalty in the final (2022)",
@@ -2687,43 +2019,28 @@
         "license": "Tenor terms (demo only; not licensed for republication)",
         "attribution": "Clip via Tenor (confusion_EPIC). 2022 World Cup final. Confirm exact permalink before publish.",
         "identity": "Lionel Messi scoring his penalty in the 2022 World Cup final (FIFA+ source). Real footage, not AI."
-      },
-      {
-        "name": "Emiliano Martínez's extra-time save (2022 final, 120:00)",
-        "filename": "assets/clips/wc2022-shootout.jpg",
-        "source_url": "https://tenor.com/search/emiliano-martinez-save-world-cup-gifs",
-        "license": "Tenor terms (demo only; not licensed for republication)",
-        "attribution": "Clip via Tenor (Mds_Nordic). 2022 World Cup final, 120:00. Confirm exact permalink before publish.",
-        "identity": "Emiliano Martínez's last-gasp save (ARG 3–3 FRA, 120:00) that forced the penalty shootout, 2022 final. Real footage, not AI."
-      },
-      {
-        "name": "Messi lifts the trophy (2022 final)",
-        "filename": "assets/clips/wc2022-messi-celebration.jpg",
-        "source_url": "https://tenor.com/view/messi-world-cup-gif-27313354",
-        "license": "Tenor terms (demo only; not licensed for republication)",
-        "attribution": "Clip via Tenor (LordRandel). 2022 World Cup final.",
-        "identity": "Lionel Messi raising the FIFA World Cup trophy, 2022 final. Real footage, not AI."
       }
     ],
     "clips": [
       {
         "player": "Kylian Mbappé",
-        "file": "assets/clips/wc2022-mbappe-goal.mp4",
-        "source_url": "https://giphy.com/sportsmanias",
-        "platform": "GIPHY",
-        "channel": "SportsManias",
-        "attribution_text": "2022 World Cup final: Mbappé's goal celebration. Via GIPHY (SportsManias). Demo only.",
+        "file": "assets/clips/wc2022-mbappe-volley.mp4",
+        "source_url": "https://tenor.com/view/mbappe-volley-goal-wc-gif-6079932134635891961",
+        "platform": "Tenor",
+        "channel": "Ruwewaarheid",
+        "attribution_text": "2022 World Cup final: Mbappé's 81' open-play volley (the 2-2 equaliser). Via Tenor (Ruwewaarheid). Demo only.",
         "identity": {
           "verified": true,
           "subject": "Kylian Mbappé",
-          "verified_title": "Kylian Mbappé celebrating a goal in the 2022 World Cup final"
+          "verified_title": "Kylian Mbappé's 81st-minute open-play volley in the 2022 World Cup final (2-2 equaliser)",
+          "verification_note": "Frame-checked: scoreboard reads ARG 2-1 FRA, clock 80:54–80:59 (81st minute), live open-play build-up + one-two + volley toward Martínez's net — matches the documented 81' volley off Thuram's pass (FIFA / Britannica). NOT his penalty, not a celebration. Replaced the earlier celebration clip (wc2022-mbappe-goal.mp4, now in provenance/clips/)."
         },
         "disclosure": "2022 World Cup final footage",
         "license": {
           "permits_republication": false,
           "requires_attribution": true
         },
-        "publish_note": "demo-only; license or swap to the official FIFA embed before publish; confirm exact GIPHY permalink"
+        "publish_note": "demo-only; license or swap to the official FIFA embed before publish; confirm exact Tenor permalink/rights. Source rendition: https://media.tenor.com/VGBCEEd0bPkAAAPo/mbappe-volley-goal-wc.mp4"
       },
       {
         "player": "Lionel Messi",
@@ -2743,44 +2060,6 @@
           "requires_attribution": true
         },
         "publish_note": "demo-only; license or swap to the official FIFA embed before publish; confirm exact Tenor permalink"
-      },
-      {
-        "player": "Emiliano Martínez",
-        "file": "assets/clips/wc2022-shootout.mp4",
-        "source_url": "https://tenor.com/search/emiliano-martinez-save-world-cup-gifs",
-        "platform": "Tenor",
-        "channel": "Mds_Nordic",
-        "attribution_text": "2022 World Cup final: Emiliano Martínez's extra-time save (120:00) that forced the shootout. Via Tenor (Mds_Nordic). Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Emiliano Martínez",
-          "verified_title": "Emiliano Martínez's extra-time save (ARG 3–3 FRA, 120:00) that forced the shootout, 2022 final"
-        },
-        "disclosure": "2022 World Cup final footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to the official FIFA embed before publish; confirm exact Tenor permalink"
-      },
-      {
-        "player": "Lionel Messi",
-        "file": "assets/clips/wc2022-messi-celebration.mp4",
-        "source_url": "https://tenor.com/view/messi-world-cup-gif-27313354",
-        "platform": "Tenor",
-        "channel": "LordRandel",
-        "attribution_text": "2022 World Cup final: Messi lifts the trophy. Via Tenor (LordRandel). Demo only.",
-        "identity": {
-          "verified": true,
-          "subject": "Lionel Messi",
-          "verified_title": "Lionel Messi lifting the FIFA World Cup trophy, 2022 final"
-        },
-        "disclosure": "2022 World Cup final footage",
-        "license": {
-          "permits_republication": false,
-          "requires_attribution": true
-        },
-        "publish_note": "demo-only; license or swap to the official FIFA embed before publish"
       }
     ],
     "official_highlights": {
@@ -2791,8 +2070,8 @@
       "full_shootout_url": "https://www.youtube.com/watch?v=MCWJNOfJoSM"
     },
     "publish_note": "demo-only; license each clip or swap to the official FIFA embed (https://www.youtube.com/watch?v=zhEWqfP6V_w) before publish. license.permits_republication=false on every clip.",
-    "clips_note": "Replaces the earlier trophy-only strip. The four clips run in the edt_01 '2022 final' strip in narrative order — Mbappé's goal, Messi's penalty, Martínez's save, then Messi lifting the cup as the finale — and play only on hover/in-view (reduced-motion -> poster only). DECORATIVE: no per-clip data-* id and no computed number, so the strip is not click-to-run; the surrounding 30.8%/predictor copy carries data-ana=ana_01. Each clip is identity-verified real 2022-final footage but is NOT licensed for republication. The two earlier trophy clips (wc2022-messi-trophy, wc2022-fifa-trophy) remain on disk but are no longer shown.",
-    "_note": "Was a single Wikimedia trophy photo (ref_trophy.jpg); repurposed into the 2022-final hook media entry. Mirrors the des_ratings_grid clips[] shape; the assets[] gallery is what the Verify drawer renders (galleryItems reads .assets)."
+    "clips_note": "Replaces the earlier trophy-only strip. The two clips run in the edt_01 '2022 final' strip in narrative order — Mbappé's 81' open-play volley, then Messi's penalty — and autoplay when the strip scrolls into view (reduced-motion -> poster only). DECORATIVE: no per-clip data-* id and no computed number, so the strip is not click-to-run; the surrounding 30.3%/predictor copy carries data-ana=ana_01. Each clip is identity-verified real 2022-final footage but is NOT licensed for republication. 2026-06-25: Mbappé's clip was swapped from a goal CELEBRATION (wc2022-mbappe-goal.mp4, GIPHY/SportsManias) to his 81st-minute OPEN-PLAY volley (wc2022-mbappe-volley.mp4, Tenor/Ruwewaarheid; frame-verified ARG 2-1 at 80:59). Messi's clip remains his penalty: a confirmed open-play extra-time goal clip could not be sourced with verifiable identity (every candidate was a celebration, a penalty, or 2018 footage), so per the no-degrade rule his existing penalty clip was kept rather than substituting an unverified one. The save (wc2022-shootout) and trophy-lift (wc2022-messi-celebration) clips were removed and, with the two earlier trophy clips (wc2022-messi-trophy, wc2022-fifa-trophy) and the replaced celebration (wc2022-mbappe-goal), remain on disk (provenance/clips/) but are no longer shown.",
+    "_note": "Was a single Wikimedia trophy photo (ref_trophy.jpg); repurposed into the 2022-final hook media entry. Mirrors the des_ratings_grid clips[] shape; the assets[] gallery is what the Verify drawer renders (galleryItems reads .assets). Trimmed from four clips to two (Mbappé's 81' open-play volley + Messi's penalty)."
   },
   "des_venue_map": {
     "kind": "fact",
@@ -3171,15 +2450,15 @@
   },
   "ana_histbase": {
     "kind": "computation",
-    "title": "Is 30.8% a lot? Only eight nations have ever won",
-    "claim": "So the model says Argentina, at 30.8%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.8% sits about eight points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
+    "title": "Is 30.3% a lot? Only eight nations have ever won",
+    "claim": "So the model says Argentina, at 30.3%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.3% sits about seven points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
     "cell_id": "cell_historical",
     "code_file": "code/build_historical.py",
     "code_lines": [
       52,
       117
     ],
-    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.8% vs cited ~23% favourite hit-rate -> +{30.8-23:.1f} pp above the long-run favourite\")\n",
+    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.3% vs cited ~23% favourite hit-rate -> +{30.3-23:.1f} pp above the long-run favourite\")\n",
     "data_preview": {
       "description": "Men's World Cup champions 1930-2022 (historical_wc_summary.csv) — champion label and host nation per edition; the cell merges West Germany into Germany and counts title concentration + host wins.",
       "columns": [
@@ -3226,7 +2505,7 @@
       ],
       "_rows_truncated": "showing 7 of 22"
     },
-    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.8% vs cited ~23% favourite hit-rate -> +7.8 pp above the long-run favourite",
+    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.3% vs cited ~23% favourite hit-rate -> +7.3 pp above the long-run favourite",
     "run": {
       "type": "derived",
       "needs_network": false,
@@ -3353,7 +2632,7 @@
   "det_favbase": {
     "kind": "fact",
     "title": "How often does the favourite actually win? ~23%",
-    "claim": "Pre-tournament favourites have won only about 23% of men's World Cups: by FIFA's review of the previous 22 men's tournaments, the listed favourite has lifted the trophy only five times. Since 1966, when pre-tournament odds were first recorded, the shortest-priced favourite went on to win just three times — West Germany 1974, Brazil 1994 and Spain 2010. This is the external anchor the page reads the model's 30.8% against: 30.8% sits about eight points above the long-run favourite hit-rate, so the model is calling Argentina a slightly-stronger-than-usual favourite, not a certainty.",
+    "claim": "Pre-tournament favourites have won only about 23% of men's World Cups: by FIFA's review of the previous 22 men's tournaments, the listed favourite has lifted the trophy only five times. Since 1966, when pre-tournament odds were first recorded, the shortest-priced favourite went on to win just three times — West Germany 1974, Brazil 1994 and Spain 2010. This is the external anchor the page reads the model's 30.3% against: 30.3% sits about seven points above the long-run favourite hit-rate, so the model is calling Argentina a slightly-stronger-than-usual favourite, not a certainty.",
     "category": "why_it_matters",
     "computation_ref": "ana_histbase",
     "sources": [
@@ -3501,15 +2780,15 @@
   },
   "des_hist_favourite_chart": {
     "kind": "computation",
-    "title": "Argentina 30.8% vs the long-run favourite win-rate (bar)",
-    "claim": "So the model says Argentina, at 30.8%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.8% sits about eight points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
+    "title": "Argentina 30.3% vs the long-run favourite win-rate (bar)",
+    "claim": "So the model says Argentina, at 30.3%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.3% sits about seven points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
     "cell_id": "cell_historical",
     "code_file": "code/build_historical.py",
     "code_lines": [
       52,
       117
     ],
-    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.8% vs cited ~23% favourite hit-rate -> +{30.8-23:.1f} pp above the long-run favourite\")\n",
+    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.3% vs cited ~23% favourite hit-rate -> +{30.3-23:.1f} pp above the long-run favourite\")\n",
     "data_preview": {
       "description": "Men's World Cup champions 1930-2022 (historical_wc_summary.csv) — champion label and host nation per edition; the cell merges West Germany into Germany and counts title concentration + host wins.",
       "columns": [
@@ -3556,7 +2835,7 @@
       ],
       "_rows_truncated": "showing 7 of 22"
     },
-    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.8% vs cited ~23% favourite hit-rate -> +7.8 pp above the long-run favourite",
+    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.3% vs cited ~23% favourite hit-rate -> +7.3 pp above the long-run favourite",
     "run": {
       "type": "derived",
       "needs_network": false,
@@ -3566,14 +2845,14 @@
   "des_hist_champions_chart": {
     "kind": "computation",
     "title": "Eight nations, 22 trophies — champions by nation (bar)",
-    "claim": "So the model says Argentina, at 30.8%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.8% sits about eight points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
+    "claim": "So the model says Argentina, at 30.3%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.3% sits about seven points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
     "cell_id": "cell_historical",
     "code_file": "code/build_historical.py",
     "code_lines": [
       52,
       117
     ],
-    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.8% vs cited ~23% favourite hit-rate -> +{30.8-23:.1f} pp above the long-run favourite\")\n",
+    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.3% vs cited ~23% favourite hit-rate -> +{30.3-23:.1f} pp above the long-run favourite\")\n",
     "data_preview": {
       "description": "Men's World Cup champions 1930-2022 (historical_wc_summary.csv) — champion label and host nation per edition; the cell merges West Germany into Germany and counts title concentration + host wins.",
       "columns": [
@@ -3620,7 +2899,7 @@
       ],
       "_rows_truncated": "showing 7 of 22"
     },
-    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.8% vs cited ~23% favourite hit-rate -> +7.8 pp above the long-run favourite",
+    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.3% vs cited ~23% favourite hit-rate -> +7.3 pp above the long-run favourite",
     "run": {
       "type": "derived",
       "needs_network": false,

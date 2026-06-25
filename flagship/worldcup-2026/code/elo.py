@@ -31,7 +31,7 @@ HIST = DATA / "intl_results_history.csv"
 BASE = 1500.0
 HOME_ADV = 100.0           # eloratings.net convention; applied only when not neutral
 WC_START = "2026-06-11"    # first 2026 WC match
-TODAY_CUTOFF = "2026-06-23"  # forecast frontier: train strictly before this date (refreshed 2026-06-23; was 2026-06-19)
+TODAY_CUTOFF = "2026-06-24"  # forecast frontier: train strictly before this date (refreshed 2026-06-24; was 2026-06-23)
 
 # martj42 spells two of the 48 differently from our canonical (openfootball) names.
 MARTJ42_ALIAS = {            # canonical -> martj42

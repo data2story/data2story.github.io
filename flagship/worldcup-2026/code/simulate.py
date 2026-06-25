@@ -240,7 +240,7 @@ def main(N=100000):
     sk = P.skill_check(p, frame)
     summary = {
         "n_simulations": N, "seed": SEED, "elo_cutoff": TODAY_CUTOFF,
-        "as_of": "2026-06-23", "calibration": p,
+        "as_of": "2026-06-24", "calibration": p,
         "model_health": {
             "large_sample_skill": {"model": sk["model"], "naive": sk["naive"], "n": sk["n"]},
             # all group games played so far, scored from the leak-free pre-tournament Elo

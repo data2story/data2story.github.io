@@ -100,7 +100,7 @@ def main():
                         "(trained on internationals before 2026-06-11) via the Poisson model, "
                         "at a neutral venue - identical to poisson.backtest(). No leakage: the "
                         "scorecard never uses a game's own result. 'hit' = modal outcome matched."),
-        "as_of": "2026-06-23",
+        "as_of": "2026-06-24",
     }
     (HERE / "accuracy_28.json").write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf-8")
     hits = sum(1 for r in rows if r["hit"])

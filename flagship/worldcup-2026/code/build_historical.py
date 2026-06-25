@@ -169,17 +169,17 @@ def main():
     # forecast), not from this table -- flagged as such.
     model_argentina = {
         "kind": "external_model_output",
-        "value_pct": 30.8,
+        "value_pct": 30.3,
         "team": "Argentina",
-        "as_of": "2026-06-23",
+        "as_of": "2026-06-24",
         "provenance": "Produced by the tournament Monte-Carlo (100,000 sims); "
-                      "NOT computed here. Restated only to frame the 30.8% vs ~23% "
+                      "NOT computed here. Restated only to frame the 30.3% vs ~23% "
                       "comparison.",
     }
 
     out = {
         "_about": "Historical base-rate anchor for the WC2026 blog: is the "
-                  "model's 30.8% for Argentina 'a lot'? Compares it to the "
+                  "model's 30.3% for Argentina 'a lot'? Compares it to the "
                   "long-run rate at which the pre-tournament favourite actually "
                   "wins (~23%).",
         "_provenance_legend": {
@@ -200,10 +200,10 @@ def main():
         "cited_favourite_base_rate": CITED_FAVOURITE_BASE_RATE,
         "model_headline": model_argentina,
         "framing": {
-            "argentina_model_pct": 30.8,
+            "argentina_model_pct": 30.3,
             "favourite_base_rate_pct": 23,
-            "delta_pp": round(30.8 - 23, 1),
-            "reading": "Argentina's 30.8% sits ABOVE the ~23% long-run "
+            "delta_pp": round(30.3 - 23, 1),
+            "reading": "Argentina's 30.3% sits ABOVE the ~23% long-run "
                        "favourite hit-rate -- a slightly-stronger-than-usual "
                        "favourite, not a lock.",
         },

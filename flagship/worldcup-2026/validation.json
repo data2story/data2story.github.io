@@ -1,8 +1,15 @@
 {
-  "project": "D:/AI/journalist agent review/phase2/project/worldcup_2026/blog_verify_opus48_0623_polish",
+  "project": "D:\\AI\\journalist agent review\\data2story.github.io\\flagship\\worldcup-2026",
   "counts": {
     "errors": 0,
-    "warnings": 0
+    "warnings": 1
   },
-  "issues": []
+  "issues": [
+    {
+      "severity": "warn",
+      "kind": "asset_unreferenced_pending",
+      "where": "assets/teaser_card.webm",
+      "detail": "heavy unreferenced asset (733 KB) in assets/ (unreferenced by index.html, not a live pointer) — it will be relocated to provenance/ at finalize (Stage 7 runs relocate_unreferenced.py). Informational at the contract gate; this becomes a hard error if it is STILL here after relocate runs."
+    }
+  ]
 }

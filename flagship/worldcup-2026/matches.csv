@@ -45,8 +45,8 @@ match_id,date,stage,group,home,away,home_goals,away_goals,status
 44,2026-06-22,group,J,Jordan,Algeria,1,2,played
 45,2026-06-23,group,L,England,Ghana,,,scheduled
 46,2026-06-23,group,L,Panama,Croatia,,,scheduled
-47,2026-06-23,group,K,Portugal,Uzbekistan,,,scheduled
-48,2026-06-23,group,K,Colombia,DR Congo,,,scheduled
+47,2026-06-23,group,K,Portugal,Uzbekistan,5,0,played
+48,2026-06-23,group,K,Colombia,DR Congo,1,0,played
 49,2026-06-24,group,C,Scotland,Brazil,,,scheduled
 50,2026-06-24,group,C,Morocco,Haiti,,,scheduled
 51,2026-06-24,group,B,Switzerland,Canada,,,scheduled
