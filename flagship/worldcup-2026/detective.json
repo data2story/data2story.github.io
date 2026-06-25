@@ -1,0 +1,175 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "domain": "Association football / sports forecasting — the 2026 FIFA World Cup (USA/Canada/Mexico), forecast mid-tournament as of 2026-06-18.",
+    "data_origin": "A composite forecasting dataset built for the Data2Story pipeline from openfootball (match spine, CC0), martj42/international_results (~49k internationals since 1872), the FIFA World Ranking (11 Jun 2026 release), Transfermarkt squad values, and FIFA Regulations Annex C (the 495-row best-third allocation)."
+  },
+  "topic_profile": {
+    "is_visual": true,
+    "is_computational": true,
+    "tags": ["sports", "event", "forecast", "interactive", "visual"]
+  },
+  "items": {
+    "det_01": {
+      "label": "The first 48-team World Cup and its new Round of 32",
+      "content": "2026 is the first FIFA World Cup with 48 teams instead of 32, split into 12 groups of four. The two group winners and runners-up advance automatically, and the eight best third-placed teams fill the rest of a brand-new 32-team knockout round (the Round of 32) that did not exist in any previous men's World Cup. That single format change is why a mid-tournament forecast is unusually hard: with 12 third places competing for 8 slots and the bracket keyed to which specific groups those eight come from, the knockout pairings are not fixed until the group stage ends. The tournament is hosted across the United States, Canada and Mexico and runs to a 2026-07-19 final.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_FIFA_World_Cup",
+          "title": "2026 FIFA World Cup — Wikipedia",
+          "facts": ["48 teams, 12 groups of four (first 48-team edition)", "12 group winners + 12 runners-up + 8 best third-placed teams form a new 32-team knockout round", "Hosted by USA, Canada and Mexico; final 2026-07-19"]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_knockout_stage",
+          "title": "2026 FIFA World Cup knockout stage — Wikipedia",
+          "facts": ["Round of 32 -> R16 -> QF -> SF -> Final bracket structure", "Best-third slotting follows a fixed allocation table"]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "Why the bracket is a distribution, not a diagram (FIFA Annex C)",
+      "content": "FIFA Regulations Annex C specifies, in advance, exactly which Round-of-32 slot each qualifying third-placed team fills — but the assignment depends on WHICH eight of the twelve groups produce a qualifying third. There are C(12,8) = 495 such combinations, and Annex C is literally a 495-row lookup table. Until the final group standings are known, 'who you'd play in the Round of 32' is therefore itself a probability distribution over those 495 permutations rather than a single pairing. A forecast made at the second-matchday snapshot must integrate over all of them, which is precisely what a Monte-Carlo simulation does naturally.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://digitalhub.fifa.com/m/636f5c9c6f29771f/original/FWC2026_regulations_EN.pdf",
+          "title": "FIFA World Cup 2026 Regulations (Annex C, third-placed allocation)",
+          "facts": ["Annex C maps each combination of 8 qualifying third-placed groups to specific R32 slots", "C(12,8) = 495 combinations are tabulated"]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Elo + Poisson + Monte-Carlo: a standard, transparent forecasting recipe",
+      "content": "The forecast uses a well-established three-step recipe rather than a proprietary black box. First, an Elo rating is fit on roughly a century and a half of international results (martj42's ~49k matches since 1872), giving each of the 48 teams a single strength number as of the snapshot. Second, the Elo difference between two teams is converted into expected goals via a Poisson goal model calibrated on post-2002 internationals. Third, a Monte-Carlo simulation plays out every remaining match and the full bracket tens of thousands of times, and the share of simulations a team wins becomes its championship probability. Elo-based football models in this family (FiveThirtyEight's Soccer Power Index, Eloratings.net) are the public benchmark for this kind of forecast, which is why the method earns reader trust only if it can be checked against what already happened.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://github.com/martj42/international_results",
+          "title": "martj42/international_results — international football results since 1872",
+          "facts": ["~49,000 international matches dating to 1872-11-30", "Used as the team-strength / Elo input"]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/World_Football_Elo_Ratings",
+          "title": "World Football Elo Ratings — Wikipedia",
+          "facts": ["Elo applied to football converts rating differences into win expectations", "A widely used public team-strength standard"]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Leakage guard — a live mirror that already knows the future",
+      "content": "The historical results file is a live mirror that already contains the 2026 World Cup matches played AFTER the 2026-06-18 snapshot, through 2026-06-27. A naive model that trained on the whole file would secretly learn the very results it is meant to forecast — a textbook data-leakage failure. The honest discipline is to filter to matches dated before 2026-06-19 when fitting ratings, so the model never sees a game it is supposed to predict; the post-snapshot rows are reserved as an out-of-sample check, never as training input. Stating this guard openly is part of why the resulting numbers can be trusted.",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://github.com/martj42/international_results",
+          "title": "martj42/international_results (live mirror, updated through tournament)",
+          "facts": ["File includes 2026 WC results dated 2026-06-19..2026-06-27", "Models must fit only on date < 2026-06-19 to avoid leakage"]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "Money vs. merit — the most expensive squads rarely win",
+      "content": "Squad market value (Transfermarkt) and on-pitch strength are correlated but far from identical, and World Cup history is full of expensive squads that fell short and cheaper ones that overran them. The contrast is a recurring data-journalism hook: a forecast driven by results-based Elo will systematically disagree with a ranking driven by transfer-market wages, flagging which squads the market over- or under-values relative to their simulated chance of a deep run. In this dataset France and England carry the costliest squads (well over €1bn each), yet a results-based model can still rank a cheaper side ahead of them.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.planetfootball.com/lists-and-rankings/world-cup-2026-every-squad-ranked-market-value",
+          "title": "World Cup 2026 squads ranked by market value (Transfermarkt via PlanetFootball)",
+          "facts": ["Squad market values as of 2026-06-14", "France and England squads valued above €1.3bn"]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "What history says about favourites and hosts",
+      "content": "Across the men's World Cups from 1930 to 2022, the title has been won by a small set of nations, and pre-tournament favouritism is an imperfect guide: Brazil (5 titles) and a cluster of European sides dominate the honour roll, while heavily-backed favourites have repeatedly gone out early. Two contextual facts matter for reading a 2026 forecast. First, no men's World Cup has been won by a host nation since France in 1998, so home advantage is not destiny — and this model deliberately treats every match as neutral-venue, leaving host edge out entirely. Second, an in-form mid-ranked side beating its seeding is a familiar World Cup story, which is exactly the kind of disagreement-with-the-bookmakers the model is built to surface.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://github.com/jfjelstul/worldcup",
+          "title": "Fjelstul World Cup Database",
+          "facts": ["Structured record of every men's World Cup 1930-2022 (champions, hosts, third place)", "Brazil leads with five titles"]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/FIFA_World_Cup",
+          "title": "FIFA World Cup — Wikipedia",
+          "facts": ["No host nation has won the men's World Cup since France 1998", "Eight different nations have won the men's tournament"]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "FIFA ranking vs. a results model — the headline disagreement",
+      "content": "The FIFA World Ranking (11 June 2026 release) is the official ladder, but it is a points system tuned for confederation balance and scheduling, not a pure win-prediction engine, so a results-trained Elo model routinely re-orders it. The most striking 2026 disagreement involves Colombia, ranked only 13th by FIFA yet given the model's fifth-highest title chance, and Norway, ranked 31st but carried into the top ten of deep-run probability — both rated well above their official ranking. The opposite case is Portugal, FIFA's 5th, which the model leaves outside its top six. Where a forecast and the official ranking part ways is the natural place for a reader to argue with the model.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/FIFA_Men%27s_World_Ranking",
+          "title": "FIFA Men's World Ranking — Wikipedia",
+          "facts": ["Official ranking released 11 June 2026", "Points formula weights match importance and confederation, not pure forecasting"]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "The host venues and the trophy at stake",
+      "content": "The 2026 final will be played at MetLife Stadium in East Rutherford, New Jersey, one of 16 host venues spread across the three nations; matches also run through landmark grounds such as AT&T Stadium in Arlington, Texas, and Mexico City's Estadio Azteca, the only stadium to host three different men's World Cups. The prize is the FIFA World Cup Trophy — the 36.8 cm gold figure of two players holding up the Earth, designed by Silvio Gazzaniga and first awarded in 1974 — which the winner lifts on 2026-07-19. These are the concrete, photographable stakes the abstract probabilities resolve to.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/MetLife_Stadium",
+          "title": "MetLife Stadium — Wikipedia",
+          "facts": ["Host of the 2026 FIFA World Cup final", "Located in East Rutherford, New Jersey"]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/FIFA_World_Cup_Trophy",
+          "title": "FIFA World Cup Trophy — Wikipedia",
+          "facts": ["Designed by Silvio Gazzaniga, first awarded 1974", "36.8 cm tall, 18-carat gold with a malachite base"]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Estadio_Azteca",
+          "title": "Estadio Azteca — Wikipedia",
+          "facts": ["Mexico City venue; only stadium to host three men's World Cups", "A 2026 host venue"]
+        }
+      ]
+    },
+    "det_favbase": {
+      "label": "How often does the favourite actually win? ~23%",
+      "content": "Pre-tournament favourites have won only about 23% of men's World Cups: by FIFA's review of the previous 22 men's tournaments, the listed favourite has lifted the trophy only five times. Since 1966, when pre-tournament odds were first recorded, the shortest-priced favourite went on to win just three times — West Germany 1974, Brazil 1994 and Spain 2010. This is the external anchor the page reads the model's 30.8% against: 30.8% sits about eight points above the long-run favourite hit-rate, so the model is calling Argentina a slightly-stronger-than-usual favourite, not a certainty.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/what-happened-to-the-fifa-world-cup-favourites",
+          "title": "FIFA — What happened to the FIFA World Cup favourites?",
+          "facts": [
+            "Favourites tend to win about 23% of the time, based on FIFA's review of the previous 22 men's tournaments.",
+            "The listed World Cup favourites have won the trophy only five times over the years."
+          ]
+        },
+        {
+          "url": "https://europeangaming.eu/portal/world-cup-betting-statistics/",
+          "title": "European Gaming Industry News — 50+ World Cup betting statistics: Trends & records (2026)",
+          "facts": [
+            "Since 1966, the pre-tournament favourite has won the World Cup only three times (West Germany 1974, Brazil 1994, Spain 2010)."
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [
+    {"id": "det_media_01", "filename": "flag_argentina.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Argentina.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Argentina — model's top title pick (26.3%)", "relates_to": ["det_07"]},
+    {"id": "det_media_02", "filename": "flag_spain.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Spain.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Spain — model's second pick (22.2%)", "relates_to": ["det_07"]},
+    {"id": "det_media_03", "filename": "flag_france.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_France.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of France (modern tricolour) — costliest squad, third pick (14.6%)", "relates_to": ["det_05", "det_07"]},
+    {"id": "det_media_04", "filename": "flag_england.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_England.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of England — fourth pick (9.8%), second-costliest squad", "relates_to": ["det_05", "det_07"]},
+    {"id": "det_media_05", "filename": "flag_colombia.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Colombia.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Colombia — FIFA #13 but model's #5 title pick (the headline disagreement)", "relates_to": ["det_07"]},
+    {"id": "det_media_06", "filename": "flag_brazil.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Brazil.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Brazil — five-time champions, model's #6 (3.9%)", "relates_to": ["det_06", "det_07"]},
+    {"id": "det_media_07", "filename": "flag_norway.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Norway.svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Norway — FIFA #31 yet inside the model's top ten deep-run sides", "relates_to": ["det_07"]},
+    {"id": "det_media_08", "filename": "flag_portugal.png", "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Portugal_(official).svg", "license": "Public domain", "source": "Wikimedia Commons", "description": "Flag of Portugal — FIFA #5 but left outside the model's top six", "relates_to": ["det_07"]},
+    {"id": "det_media_09", "filename": "ref_trophy.jpg", "url": "https://commons.wikimedia.org/wiki/File:FIFA_World_Cup_Trophy_at_National.jpg", "license": "CC BY-SA 4.0", "source": "Wikimedia Commons", "description": "The real FIFA World Cup Trophy (gold figure, malachite base) — the prize the probabilities resolve to. REAL photo, not AI.", "relates_to": ["det_08"]},
+    {"id": "det_media_10", "filename": "ref_metlife.jpg", "url": "https://commons.wikimedia.org/wiki/File:New_Meadowlands_Stadium_Mezz_Club.jpg", "license": "CC BY 2.0", "source": "Wikimedia Commons", "description": "MetLife Stadium interior — venue of the 2026 World Cup final (2026-07-19). REAL photo.", "relates_to": ["det_08"]},
+    {"id": "det_media_11", "filename": "ref_attstadium.jpg", "url": "https://commons.wikimedia.org/wiki/File:Arlington_June_2020_4_(AT%26T_Stadium).jpg", "license": "CC BY-SA 4.0", "source": "Wikimedia Commons", "description": "AT&T Stadium, Arlington, Texas — a 2026 host venue. REAL photo.", "relates_to": ["det_08"]},
+    {"id": "det_media_12", "filename": "ref_estadio_azteca.jpg", "url": "https://commons.wikimedia.org/wiki/File:Vista_a%C3%A9rea_del_Estadio_Azteca.jpg", "license": "CC BY 4.0", "source": "Wikimedia Commons", "description": "Estadio Azteca, Mexico City (now branded Estadio Banorte) — only ground to host three men's World Cups; a 2026 host venue. REAL photo.", "relates_to": ["det_08"]},
+    {"id": "det_media_note", "filename": null, "url": null, "license": null, "source": "note", "description": "Instances array intentionally empty: a forecast dataset has no single embeddable spotify/youtube data point that the reader 'experiences'; the experiential payoff is the live model explorable (Designer/Programmer), not a third-party embed. Real flags + trophy + venue photos supply the concrete imagery; no AI-faked trophy was generated (real-subject rule).",
+      "relates_to": ["det_08"]}
+  ],
+  "instances": []
+}

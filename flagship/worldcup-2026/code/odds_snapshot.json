@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "title": "Model vs market - 2026 World Cup outright winner",
+    "as_of_model": "2026-06-23",
+    "as_of_market": "2026-06-21",
+    "book": "DraftKings",
+    "via": "ESPN",
+    "odds_data_license": "Odds via The Odds API (display permitted); book prices cross-checked on ESPN",
+    "format": "american",
+    "assumed_book_overround": 1.12,
+    "is_live": false,
+    "is_model_input": false,
+    "leakage_note": "Market prices are display-only context; NOT fed into the forecast model.",
+    "market_staleness_note": "Model probabilities refreshed to 2026-06-23 (after matchday-2 results). The DraftKings market prices remain the 2026-06-21 snapshot (no live odds feed was re-pulled); treat the market column as ~2 days stale relative to the model.",
+    "overround_note": "Raw implied probabilities are 1/decimal. Across the full 48-team board they sum to ~112% - the bookmaker's margin - so they slightly overstate true chances. The de-vigged column divides by that assumed ~112% book.",
+    "headline": "The model's favourite (Argentina 30.75%) is the market's #4; the market's favourite is France.",
+    "responsible_gambling": {
+      "framing": "Informational only - not betting advice. Compares a statistical model with bookmaker odds for analysis.",
+      "age": "18+ (UK) / 21+ (most US states)",
+      "help_uk": "UK National Gambling Helpline 0808 8020 133 (gamcare.org.uk)",
+      "help_us": "US 1-800-GAMBLER",
+      "note": "GambleAware closed 2026-03-31; use GamCare / the National Gambling Helpline."
+    }
+  },
+  "rows": [
+    {
+      "team": "Argentina",
+      "model_pct": 30.75,
+      "model_rank": 1,
+      "market_american": "+800",
+      "market_decimal": 9.0,
+      "market_implied_raw_pct": 11.11,
+      "market_implied_devig_pct": 9.92,
+      "market_rank": 4
+    },
+    {
+      "team": "Spain",
+      "model_pct": 23.96,
+      "model_rank": 2,
+      "market_american": "+550",
+      "market_decimal": 6.5,
+      "market_implied_raw_pct": 15.38,
+      "market_implied_devig_pct": 13.73,
+      "market_rank": 2
+    },
+    {
+      "team": "France",
+      "model_pct": 14.21,
+      "model_rank": 3,
+      "market_american": "+380",
+      "market_decimal": 4.8,
+      "market_implied_raw_pct": 20.83,
+      "market_implied_devig_pct": 18.6,
+      "market_rank": 1
+    },
+    {
+      "team": "England",
+      "model_pct": 8.0,
+      "model_rank": 4,
+      "market_american": "+550",
+      "market_decimal": 6.5,
+      "market_implied_raw_pct": 15.38,
+      "market_implied_devig_pct": 13.73,
+      "market_rank": 3
+    },
+    {
+      "team": "Colombia",
+      "model_pct": 4.77,
+      "model_rank": 5,
+      "market_american": null,
+      "market_decimal": null,
+      "market_implied_raw_pct": null,
+      "market_implied_devig_pct": null,
+      "market_rank": null
+    },
+    {
+      "team": "Brazil",
+      "model_pct": 3.28,
+      "model_rank": 6,
+      "market_american": "+1200",
+      "market_decimal": 13.0,
+      "market_implied_raw_pct": 7.69,
+      "market_implied_devig_pct": 6.87,
+      "market_rank": 6
+    },
+    {
+      "team": "Germany",
+      "model_pct": 2.46,
+      "model_rank": 7,
+      "market_american": "+1300",
+      "market_decimal": 14.0,
+      "market_implied_raw_pct": 7.14,
+      "market_implied_devig_pct": 6.37,
+      "market_rank": 7
+    },
+    {
+      "team": "Netherlands",
+      "model_pct": 2.09,
+      "model_rank": 8,
+      "market_american": "+1300",
+      "market_decimal": 14.0,
+      "market_implied_raw_pct": 7.14,
+      "market_implied_devig_pct": 6.37,
+      "market_rank": 8
+    },
+    {
+      "team": "Portugal",
+      "model_pct": 1.82,
+      "model_rank": 9,
+      "market_american": "+1000",
+      "market_decimal": 11.0,
+      "market_implied_raw_pct": 9.09,
+      "market_implied_devig_pct": 8.12,
+      "market_rank": 5
+    },
+    {
+      "team": "Norway",
+      "model_pct": 1.8,
+      "model_rank": 10,
+      "market_american": "+3500",
+      "market_decimal": 36.0,
+      "market_implied_raw_pct": 2.78,
+      "market_implied_devig_pct": 2.48,
+      "market_rank": 9
+    },
+    {
+      "team": "Morocco",
+      "model_pct": 1.37,
+      "model_rank": 11,
+      "market_american": "+3500",
+      "market_decimal": 36.0,
+      "market_implied_raw_pct": 2.78,
+      "market_implied_devig_pct": 2.48,
+      "market_rank": 10
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0"
+  },
+  "core_claim": "A transparent Elo-Poisson-Monte-Carlo model makes Argentina the 26.3% favourite for the 2026 World Cup, but the reader can re-run it to watch that favourite change, see where it disagrees with the FIFA ranking, and learn to read a forecast as a contestable, fully-audited claim rather than a prophecy.",
+  "interactive_centerpiece": {
+    "section": "edt_02",
+    "based_on": "ana_01",
+    "mechanism": "explorable_recompute",
+    "reader_produces": "The headline champion odds: at rest the bars show the published 26.3%/22.2%/... ; the reader drags a team's Elo slider and re-runs the in-browser Monte-Carlo (client_model), and the champion bars recompute live (e.g. Argentina -100 Elo -> Spain becomes favourite).",
+    "client_model": {"file": "code/client_model.js", "fn": "window.WC_MODEL.simulate", "inputs": "(nSims, {team: deltaElo})", "at_rest": "window.WC_MODEL.DATA.championPublished"},
+    "placement": "at the reveal in edt_02 (immediately after the hook, before any disagreement/analysis sections) — the reader's action IS the reveal",
+    "degradation": "static published champion bar chart if JS is disabled",
+    "note": "This is the ONE earned centerpiece. ana_02-ana_05 charts are supporting visuals, not competing interactives."
+  },
+  "items": {
+    "edt_01": {
+      "label": "Hook — 26.3% on top",
+      "purpose": "hook",
+      "title": null,
+      "findings": ["ana_01"],
+      "context": ["det_01", "det_08"],
+      "triage": {"ana_01": "lead"},
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "Lead with 26.3% (Argentina) exactly; do not pre-spoil that it is fragile — that lands in edt_02 via the explorable."
+    },
+    "edt_02": {
+      "label": "Run it yourself — the explorable centerpiece",
+      "purpose": "evidence",
+      "title": "Run it yourself",
+      "findings": ["ana_01"],
+      "context": ["det_03"],
+      "triage": {"ana_01": "lead"},
+      "chart_placeholder": "ana_01",
+      "media_placeholder": "interactive",
+      "editorial_notes": "LOAD-BEARING. The explorable centerpiece (explorable_recompute via client_model). At rest show published bars (Argentina 26.3% ...); on slider+re-run, recompute live and animate. The Argentina -100 -> Spain-favourite outcome must be produced by the model, never hardcoded. Lands at the reveal."
+    },
+    "edt_03": {
+      "label": "Why believe it — the honest model-health beat",
+      "purpose": "turn",
+      "title": "Why believe it",
+      "findings": ["ana_06"],
+      "context": ["det_03", "det_04"],
+      "triage": {"ana_06": "supporting"},
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "Keep BOTH numbers visible: model beats naive on 8000 games (0.900 vs 1.062) AND ties on the 28 played (1.068 vs 1.077). The tie is the honesty beat — do not bury it in a caveat."
+    },
+    "edt_04": {
+      "label": "Where the model fights the FIFA ranking",
+      "purpose": "evidence",
+      "title": "Where the model fights the ranking",
+      "findings": ["ana_02"],
+      "context": ["det_07"],
+      "triage": {"ana_02": "supporting"},
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "image",
+      "editorial_notes": "Colombia FIFA#13->model#5 and Norway FIFA#31->model#10 are the load-bearing disagreements; ranks exact. Ties at the top (Argentina #1/#1) shown too."
+    },
+    "edt_05": {
+      "label": "Money versus merit",
+      "purpose": "evidence",
+      "title": "Money versus merit",
+      "findings": ["ana_03"],
+      "context": ["det_05"],
+      "triage": {"ana_03": "supporting"},
+      "chart_placeholder": "ana_03",
+      "media_placeholder": null,
+      "editorial_notes": "France EUR1.52bn / 44.4% SF vs Colombia EUR302m / 25.2% SF; keep the EUR-per-SF-point framing exact."
+    },
+    "edt_06": {
+      "label": "The coin still in the air — close on tension",
+      "purpose": "close",
+      "title": "The coin still in the air",
+      "findings": ["ana_04", "ana_07", "ana_05"],
+      "context": ["det_02", "det_06"],
+      "triage": {"ana_04": "supporting", "ana_07": "color", "ana_05": "supporting"},
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "End on tension: 9 knife-edge teams + the 495-permutation conditional bracket + the 94.2% UEFA/CONMEBOL concentration, closing on 'an argument you can run yourself'. No summary, no marketing language."
+    },
+    "edt_method": {
+      "label": "How the forecast is built (method band)",
+      "purpose": "evidence",
+      "title": "How the model works",
+      "findings": ["ana_01"],
+      "context": ["det_03"],
+      "triage": {"ana_01": "supporting"},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Plain-language explainer of the Elo->Poisson->Monte-Carlo recipe behind the 30.8% headline; transparency beat, no new numbers."
+    },
+    "edt_histbase": {
+      "label": "Is 30.8% a lot? — the historical-favourite anchor",
+      "purpose": "evidence",
+      "title": "Is 30.8% a lot?",
+      "findings": ["ana_01", "ana_histbase"],
+      "context": ["det_06", "det_favbase"],
+      "triage": {"ana_histbase": "supporting", "ana_01": "supporting"},
+      "chart_placeholder": "ana_histbase",
+      "media_placeholder": null,
+      "editorial_notes": "Frame the model's 30.8% against the ~23% long-run favourite hit-rate and the eight-nations / repeat-champions history. Keep +7.8pp exact."
+    },
+    "edt_predictor": {
+      "label": "Single-match predictor band",
+      "purpose": "evidence",
+      "title": "Predict any match",
+      "findings": ["ana_01", "ana_02"],
+      "context": ["det_03"],
+      "triage": {"ana_01": "supporting", "ana_02": "supporting"},
+      "chart_placeholder": "des_predictor",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The pick-two-teams predictor riding on the published champion/strength numbers; reader-driven, derived from the same model."
+    },
+    "edt_oddsmkt": {
+      "label": "Model versus the betting market",
+      "purpose": "evidence",
+      "title": "Model vs market",
+      "findings": ["ana_02"],
+      "context": ["det_07"],
+      "triage": {"ana_02": "supporting"},
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Where the model's order disagrees with the implied market/FIFA order; the disagreement is the story."
+    },
+    "edt_scorecard": {
+      "label": "Model-health scorecard band",
+      "purpose": "turn",
+      "title": "How good is the model, really?",
+      "findings": ["ana_06"],
+      "context": ["det_03", "det_04"],
+      "triage": {"ana_06": "supporting"},
+      "chart_placeholder": "ana_06",
+      "media_placeholder": null,
+      "editorial_notes": "The honest scorecard: beats naive on 8000 games (0.900 vs 1.062) but ties on the 28 played (1.068 vs 1.077). Keep both visible."
+    },
+    "edt_goals": {
+      "label": "Goals so far — golden boot and late drama",
+      "purpose": "evidence",
+      "title": "The race for the Golden Boot",
+      "findings": ["ana_goals"],
+      "context": ["sct_goals_video", "det_01"],
+      "triage": {"ana_goals": "supporting"},
+      "chart_placeholder": "ana_goals",
+      "media_placeholder": "video",
+      "editorial_notes": "Messi leads on 5; 25.9% of goals from the 76th minute on; open-play 89.2%. Highlight video is a click-through FIFA/YouTube facade (sct_goals_video), demo embed only."
+    },
+    "ratings": {
+      "label": "Player ability cards (EA Sports FC ratings)",
+      "purpose": "color",
+      "title": "The players behind the odds",
+      "findings": ["ana_01"],
+      "context": ["sct_04"],
+      "triage": {"ana_01": "color"},
+      "chart_placeholder": "des_stars_chart",
+      "media_placeholder": "image",
+      "editorial_notes": "EA Sports FC overall + six face stats are CITED third-party values (sct_04 credits), NOT our computation; only the deep-run/champion odds beside each card come from the model. Portraits are publish-gated (swap to Wikimedia before public release)."
+    },
+    "edt_shootouts": {
+      "label": "Penalty shootouts are a coin flip",
+      "purpose": "evidence",
+      "title": "When it goes to penalties",
+      "findings": ["ana_shootouts", "ana_01"],
+      "context": ["det_03"],
+      "triage": {"ana_shootouts": "supporting", "ana_01": "color"},
+      "chart_placeholder": "ana_shootouts",
+      "media_placeholder": null,
+      "editorial_notes": "Across 678 shootouts the favourite wins only 53.7%; justifies the model's Elo-term knockout shortcut. Keep p=0.06 and the 17/35 WC-finals first-shooter number exact."
+    }
+  },
+  "full_triage": {
+    "ana_01": "lead",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "color",
+    "ana_histbase": "supporting",
+    "ana_goals": "supporting",
+    "ana_shootouts": "supporting"
+  }
+}

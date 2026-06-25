@@ -1,0 +1,1446 @@
+[
+  {
+    "name": "Florian Wirtz",
+    "team": "Germany",
+    "position": "AM",
+    "age": 22,
+    "club": "Real Madrid",
+    "overall": 88,
+    "attributes": {
+      "pace": {
+        "value": 84,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 86
+      },
+      "passing": {
+        "value": 91
+      },
+      "dribbling": {
+        "value": 95
+      },
+      "defending": {
+        "value": 90
+      },
+      "physical": {
+        "value": 69
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=40724; 5 matches; 291.6 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.1496,
+    "team_p_champion": 0.0215,
+    "statsbomb_minutes": 291.6
+  },
+  {
+    "name": "Ousmane Dembélé",
+    "team": "France",
+    "position": "W",
+    "age": 28,
+    "club": "Paris Saint-Germain",
+    "overall": 86,
+    "attributes": {
+      "pace": {
+        "value": 99,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 62
+      },
+      "passing": {
+        "value": 86
+      },
+      "dribbling": {
+        "value": 99
+      },
+      "defending": {
+        "value": 79
+      },
+      "physical": {
+        "value": 70
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=5477; 5 matches; 369.1 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.4441,
+    "team_p_champion": 0.1461,
+    "statsbomb_minutes": 369.1
+  },
+  {
+    "name": "Achraf Hakimi",
+    "team": "Morocco",
+    "position": "FB",
+    "age": 27,
+    "club": "Paris Saint-Germain",
+    "overall": 86,
+    "attributes": {
+      "pace": {
+        "value": 90,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 79
+      },
+      "passing": {
+        "value": 84
+      },
+      "dribbling": {
+        "value": 66
+      },
+      "defending": {
+        "value": 99
+      },
+      "physical": {
+        "value": 90
+      }
+    },
+    "provenance": "public_index",
+    "source_refs": [
+      "International goals (datasets raw/goalscorers.csv, CC0): 6 goals for Morocco",
+      "Team squad market value (reference/squad_values.csv, Transfermarkt 2026-06-14): 447.7 EUR m — TEAM-LEVEL proxy, not player-level",
+      "Position archetype prior 'FB' (documented in ratings_methodology.md)",
+      "Height 181cm (editorial; feeds Physical)"
+    ],
+    "team_p_reach_sf": 0.1097,
+    "team_p_champion": 0.0127
+  },
+  {
+    "name": "Erling Haaland",
+    "team": "Norway",
+    "position": "ST",
+    "age": 25,
+    "club": "Manchester City",
+    "overall": 86,
+    "attributes": {
+      "pace": {
+        "value": 88,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 98
+      },
+      "passing": {
+        "value": 63
+      },
+      "dribbling": {
+        "value": 70
+      },
+      "defending": {
+        "value": 57
+      },
+      "physical": {
+        "value": 99
+      }
+    },
+    "provenance": "public_index",
+    "source_refs": [
+      "International goals (datasets raw/goalscorers.csv, CC0): 48 goals for Norway",
+      "Team squad market value (reference/squad_values.csv, Transfermarkt 2026-06-14): 589.9 EUR m — TEAM-LEVEL proxy, not player-level",
+      "Position archetype prior 'ST' (documented in ratings_methodology.md)",
+      "Height 195cm (editorial; feeds Physical)"
+    ],
+    "team_p_reach_sf": 0.131,
+    "team_p_champion": 0.0156
+  },
+  {
+    "name": "Rúben Dias",
+    "team": "Portugal",
+    "position": "CB",
+    "age": 28,
+    "club": "Manchester City",
+    "overall": 86,
+    "attributes": {
+      "pace": {
+        "value": 74,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 51
+      },
+      "passing": {
+        "value": 76
+      },
+      "dribbling": {
+        "value": 80
+      },
+      "defending": {
+        "value": 92
+      },
+      "physical": {
+        "value": 94
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=5206; 4 matches; 493.9 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.137,
+    "team_p_champion": 0.0232,
+    "statsbomb_minutes": 493.9
+  },
+  {
+    "name": "Lamine Yamal",
+    "team": "Spain",
+    "position": "W",
+    "age": 18,
+    "club": "FC Barcelona",
+    "overall": 86,
+    "attributes": {
+      "pace": {
+        "value": 94,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 75
+      },
+      "passing": {
+        "value": 95
+      },
+      "dribbling": {
+        "value": 91
+      },
+      "defending": {
+        "value": 84
+      },
+      "physical": {
+        "value": 61
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=316046; 7 matches; 517.2 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.5134,
+    "team_p_champion": 0.2219,
+    "statsbomb_minutes": 517.2
+  },
+  {
+    "name": "Vinícius Júnior",
+    "team": "Brazil",
+    "position": "W",
+    "age": 25,
+    "club": "Real Madrid",
+    "overall": 85,
+    "attributes": {
+      "pace": {
+        "value": 98,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 87
+      },
+      "passing": {
+        "value": 69
+      },
+      "dribbling": {
+        "value": 96
+      },
+      "defending": {
+        "value": 67
+      },
+      "physical": {
+        "value": 51
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: Copa America 2024 (competition_id=223, season_id=282)",
+      "player_id=18395; 3 matches; 258.5 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.2001,
+    "team_p_champion": 0.0393,
+    "statsbomb_minutes": 258.5
+  },
+  {
+    "name": "Nico Williams",
+    "team": "Spain",
+    "position": "W",
+    "age": 23,
+    "club": "Athletic Club",
+    "overall": 85,
+    "attributes": {
+      "pace": {
+        "value": 95,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 71
+      },
+      "passing": {
+        "value": 80
+      },
+      "dribbling": {
+        "value": 98
+      },
+      "defending": {
+        "value": 71
+      },
+      "physical": {
+        "value": 73
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=68574; 6 matches; 503.5 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.5134,
+    "team_p_champion": 0.2219,
+    "statsbomb_minutes": 503.5
+  },
+  {
+    "name": "Youssef En-Nesyri",
+    "team": "Morocco",
+    "position": "ST",
+    "age": 29,
+    "club": "Fenerbahçe",
+    "overall": 84,
+    "attributes": {
+      "pace": {
+        "value": 87,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 95
+      },
+      "passing": {
+        "value": 62
+      },
+      "dribbling": {
+        "value": 69
+      },
+      "defending": {
+        "value": 55
+      },
+      "physical": {
+        "value": 98
+      }
+    },
+    "provenance": "public_index",
+    "source_refs": [
+      "International goals (datasets raw/goalscorers.csv, CC0): 10 goals for Morocco",
+      "Team squad market value (reference/squad_values.csv, Transfermarkt 2026-06-14): 447.7 EUR m — TEAM-LEVEL proxy, not player-level",
+      "Position archetype prior 'ST' (documented in ratings_methodology.md)",
+      "Height 189cm (editorial; feeds Physical)"
+    ],
+    "team_p_reach_sf": 0.1097,
+    "team_p_champion": 0.0127
+  },
+  {
+    "name": "Virgil van Dijk",
+    "team": "Netherlands",
+    "position": "CB",
+    "age": 34,
+    "club": "Liverpool",
+    "overall": 84,
+    "attributes": {
+      "pace": {
+        "value": 50,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 55
+      },
+      "passing": {
+        "value": 82
+      },
+      "dribbling": {
+        "value": 50
+      },
+      "defending": {
+        "value": 94
+      },
+      "physical": {
+        "value": 96
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=3669; 6 matches; 573.2 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.1234,
+    "team_p_champion": 0.0159,
+    "statsbomb_minutes": 573.2
+  },
+  {
+    "name": "Martin Ødegaard",
+    "team": "Norway",
+    "position": "AM",
+    "age": 27,
+    "club": "Arsenal",
+    "overall": 84,
+    "attributes": {
+      "pace": {
+        "value": 79,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 90
+      },
+      "passing": {
+        "value": 92
+      },
+      "dribbling": {
+        "value": 76
+      },
+      "defending": {
+        "value": 66
+      },
+      "physical": {
+        "value": 83
+      }
+    },
+    "provenance": "public_index",
+    "source_refs": [
+      "International goals (datasets raw/goalscorers.csv, CC0): 0 goals for Norway",
+      "Team squad market value (reference/squad_values.csv, Transfermarkt 2026-06-14): 589.9 EUR m — TEAM-LEVEL proxy, not player-level",
+      "Position archetype prior 'AM' (documented in ratings_methodology.md)",
+      "Height 178cm (editorial; feeds Physical)"
+    ],
+    "team_p_reach_sf": 0.131,
+    "team_p_champion": 0.0156
+  },
+  {
+    "name": "Christian Pulisic",
+    "team": "USA",
+    "position": "W",
+    "age": 27,
+    "club": "AC Milan",
+    "overall": 84,
+    "attributes": {
+      "pace": {
+        "value": 96,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 94
+      },
+      "passing": {
+        "value": 75
+      },
+      "dribbling": {
+        "value": 78
+      },
+      "defending": {
+        "value": 62
+      },
+      "physical": {
+        "value": 78
+      }
+    },
+    "provenance": "public_index",
+    "source_refs": [
+      "International goals (datasets raw/goalscorers.csv, CC0): 17 goals for United States",
+      "Team squad market value (reference/squad_values.csv, Transfermarkt 2026-06-14): 385.6 EUR m — TEAM-LEVEL proxy, not player-level",
+      "Position archetype prior 'W' (documented in ratings_methodology.md)",
+      "Height 177cm (editorial; feeds Physical)"
+    ],
+    "team_p_reach_sf": 0.0438,
+    "team_p_champion": 0.0018
+  },
+  {
+    "name": "Raúl Jiménez",
+    "team": "Mexico",
+    "position": "ST",
+    "age": 35,
+    "club": "Fulham",
+    "overall": 83,
+    "attributes": {
+      "pace": {
+        "value": 83,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 96
+      },
+      "passing": {
+        "value": 59
+      },
+      "dribbling": {
+        "value": 67
+      },
+      "defending": {
+        "value": 53
+      },
+      "physical": {
+        "value": 95
+      }
+    },
+    "provenance": "public_index",
+    "source_refs": [
+      "International goals (datasets raw/goalscorers.csv, CC0): 24 goals for Mexico",
+      "Team squad market value (reference/squad_values.csv, Transfermarkt 2026-06-14): 191.85 EUR m — TEAM-LEVEL proxy, not player-level",
+      "Position archetype prior 'ST' (documented in ratings_methodology.md)",
+      "Height 190cm (editorial; feeds Physical)"
+    ],
+    "team_p_reach_sf": 0.1044,
+    "team_p_champion": 0.0112
+  },
+  {
+    "name": "Dani Olmo",
+    "team": "Spain",
+    "position": "AM",
+    "age": 28,
+    "club": "FC Barcelona",
+    "overall": 82,
+    "attributes": {
+      "pace": {
+        "value": 69,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 88
+      },
+      "passing": {
+        "value": 87
+      },
+      "dribbling": {
+        "value": 87
+      },
+      "defending": {
+        "value": 78
+      },
+      "physical": {
+        "value": 59
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=16532; 6 matches; 471.6 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.5134,
+    "team_p_champion": 0.2219,
+    "statsbomb_minutes": 471.6
+  },
+  {
+    "name": "Lionel Messi",
+    "team": "Argentina",
+    "position": "AM",
+    "age": 38,
+    "club": "Inter Miami CF",
+    "overall": 81,
+    "attributes": {
+      "pace": {
+        "value": 67,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 78
+      },
+      "passing": {
+        "value": 98
+      },
+      "dribbling": {
+        "value": 90
+      },
+      "defending": {
+        "value": 54
+      },
+      "physical": {
+        "value": 57
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: Copa America 2024 (competition_id=223, season_id=282)",
+      "player_id=5503; 5 matches; 476.0 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.5705,
+    "team_p_champion": 0.2631,
+    "statsbomb_minutes": 476.0
+  },
+  {
+    "name": "Kaoru Mitoma",
+    "team": "Japan",
+    "position": "W",
+    "age": 29,
+    "club": "Brighton & Hove Albion",
+    "overall": 81,
+    "attributes": {
+      "pace": {
+        "value": 92,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 91
+      },
+      "passing": {
+        "value": 73
+      },
+      "dribbling": {
+        "value": 74
+      },
+      "defending": {
+        "value": 60
+      },
+      "physical": {
+        "value": 79
+      }
+    },
+    "provenance": "public_index",
+    "source_refs": [
+      "International goals (datasets raw/goalscorers.csv, CC0): 3 goals for Japan",
+      "Team squad market value (reference/squad_values.csv, Transfermarkt 2026-06-14): 270.85 EUR m — TEAM-LEVEL proxy, not player-level",
+      "Position archetype prior 'W' (documented in ratings_methodology.md)",
+      "Height 178cm (editorial; feeds Physical)"
+    ],
+    "team_p_reach_sf": 0.1077,
+    "team_p_champion": 0.0134
+  },
+  {
+    "name": "Takefusa Kubo",
+    "team": "Japan",
+    "position": "W",
+    "age": 25,
+    "club": "Real Sociedad",
+    "overall": 81,
+    "attributes": {
+      "pace": {
+        "value": 92,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 92
+      },
+      "passing": {
+        "value": 73
+      },
+      "dribbling": {
+        "value": 74
+      },
+      "defending": {
+        "value": 60
+      },
+      "physical": {
+        "value": 76
+      }
+    },
+    "provenance": "public_index",
+    "source_refs": [
+      "International goals (datasets raw/goalscorers.csv, CC0): 11 goals for Japan",
+      "Team squad market value (reference/squad_values.csv, Transfermarkt 2026-06-14): 270.85 EUR m — TEAM-LEVEL proxy, not player-level",
+      "Position archetype prior 'W' (documented in ratings_methodology.md)",
+      "Height 173cm (editorial; feeds Physical)"
+    ],
+    "team_p_reach_sf": 0.1077,
+    "team_p_champion": 0.0134
+  },
+  {
+    "name": "William Saliba",
+    "team": "France",
+    "position": "CB",
+    "age": 25,
+    "club": "Arsenal",
+    "overall": 80,
+    "attributes": {
+      "pace": {
+        "value": 61,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 50
+      },
+      "passing": {
+        "value": 55
+      },
+      "dribbling": {
+        "value": 63
+      },
+      "defending": {
+        "value": 95
+      },
+      "physical": {
+        "value": 86
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=17592; 6 matches; 606.8 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.4441,
+    "team_p_champion": 0.1461,
+    "statsbomb_minutes": 606.8
+  },
+  {
+    "name": "Bruno Fernandes",
+    "team": "Portugal",
+    "position": "AM",
+    "age": 31,
+    "club": "Manchester United",
+    "overall": 80,
+    "attributes": {
+      "pace": {
+        "value": 80,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 69
+      },
+      "passing": {
+        "value": 94
+      },
+      "dribbling": {
+        "value": 73
+      },
+      "defending": {
+        "value": 80
+      },
+      "physical": {
+        "value": 84
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=5204; 4 matches; 440.2 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.137,
+    "team_p_champion": 0.0232,
+    "statsbomb_minutes": 440.2
+  },
+  {
+    "name": "Rodri",
+    "team": "Spain",
+    "position": "DM",
+    "age": 29,
+    "club": "Manchester City",
+    "overall": 80,
+    "attributes": {
+      "pace": {
+        "value": 58,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 58
+      },
+      "passing": {
+        "value": 79
+      },
+      "dribbling": {
+        "value": 57
+      },
+      "defending": {
+        "value": 98
+      },
+      "physical": {
+        "value": 91
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=6765; 6 matches; 563.8 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.5134,
+    "team_p_champion": 0.2219,
+    "statsbomb_minutes": 563.8
+  },
+  {
+    "name": "Cody Gakpo",
+    "team": "Netherlands",
+    "position": "W",
+    "age": 26,
+    "club": "Liverpool",
+    "overall": 79,
+    "attributes": {
+      "pace": {
+        "value": 76,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 76
+      },
+      "passing": {
+        "value": 83
+      },
+      "dribbling": {
+        "value": 84
+      },
+      "defending": {
+        "value": 73
+      },
+      "physical": {
+        "value": 80
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=20750; 6 matches; 547.4 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.1234,
+    "team_p_champion": 0.0159,
+    "statsbomb_minutes": 547.4
+  },
+  {
+    "name": "Jamal Musiala",
+    "team": "Germany",
+    "position": "AM",
+    "age": 23,
+    "club": "Bayern Munich",
+    "overall": 78,
+    "attributes": {
+      "pace": {
+        "value": 86,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 84
+      },
+      "passing": {
+        "value": 57
+      },
+      "dribbling": {
+        "value": 92
+      },
+      "defending": {
+        "value": 86
+      },
+      "physical": {
+        "value": 74
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=39565; 5 matches; 426.1 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.1496,
+    "team_p_champion": 0.0215,
+    "statsbomb_minutes": 426.1
+  },
+  {
+    "name": "Toni Kroos",
+    "team": "Germany",
+    "position": "CM",
+    "age": 36,
+    "club": "Retired (Real Madrid)",
+    "overall": 77,
+    "attributes": {
+      "pace": {
+        "value": 66,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 54
+      },
+      "passing": {
+        "value": 96
+      },
+      "dribbling": {
+        "value": 58
+      },
+      "defending": {
+        "value": 91
+      },
+      "physical": {
+        "value": 66
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=5574; 5 matches; 489.3 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.1496,
+    "team_p_champion": 0.0215,
+    "statsbomb_minutes": 489.3
+  },
+  {
+    "name": "Pedri",
+    "team": "Spain",
+    "position": "CM",
+    "age": 23,
+    "club": "FC Barcelona",
+    "overall": 76,
+    "attributes": {
+      "pace": {
+        "value": 65,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 74
+      },
+      "passing": {
+        "value": 90
+      },
+      "dribbling": {
+        "value": 53
+      },
+      "defending": {
+        "value": 96
+      },
+      "physical": {
+        "value": 53
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=30486; 4 matches; 188.7 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.5134,
+    "team_p_champion": 0.2219,
+    "statsbomb_minutes": 188.7
+  },
+  {
+    "name": "Rodrygo",
+    "team": "Brazil",
+    "position": "W",
+    "age": 25,
+    "club": "Real Madrid",
+    "overall": 75,
+    "attributes": {
+      "pace": {
+        "value": 82,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 66
+      },
+      "passing": {
+        "value": 67
+      },
+      "dribbling": {
+        "value": 83
+      },
+      "defending": {
+        "value": 82
+      },
+      "physical": {
+        "value": 62
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: Copa America 2024 (competition_id=223, season_id=282)",
+      "player_id=25104; 4 matches; 332.5 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.2001,
+    "team_p_champion": 0.0393,
+    "statsbomb_minutes": 332.5
+  },
+  {
+    "name": "Lautaro Martínez",
+    "team": "Argentina",
+    "position": "ST",
+    "age": 28,
+    "club": "Inter Milan",
+    "overall": 74,
+    "attributes": {
+      "pace": {
+        "value": 54,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 99
+      },
+      "passing": {
+        "value": 50
+      },
+      "dribbling": {
+        "value": 55
+      },
+      "defending": {
+        "value": 83
+      },
+      "physical": {
+        "value": 75
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: Copa America 2024 (competition_id=223, season_id=282)",
+      "player_id=11456; 6 matches; 224.7 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.5705,
+    "team_p_champion": 0.2631,
+    "statsbomb_minutes": 224.7
+  },
+  {
+    "name": "Raphinha",
+    "team": "Brazil",
+    "position": "W",
+    "age": 29,
+    "club": "FC Barcelona",
+    "overall": 74,
+    "attributes": {
+      "pace": {
+        "value": 73,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 82
+      },
+      "passing": {
+        "value": 53
+      },
+      "dribbling": {
+        "value": 88
+      },
+      "defending": {
+        "value": 75
+      },
+      "physical": {
+        "value": 50
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: Copa America 2024 (competition_id=223, season_id=282)",
+      "player_id=10595; 4 matches; 269.5 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.2001,
+    "team_p_champion": 0.0393,
+    "statsbomb_minutes": 269.5
+  },
+  {
+    "name": "Cristiano Ronaldo",
+    "team": "Portugal",
+    "position": "ST",
+    "age": 41,
+    "club": "Al Nassr FC",
+    "overall": 73,
+    "attributes": {
+      "pace": {
+        "value": 57,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 80
+      },
+      "passing": {
+        "value": 78
+      },
+      "dribbling": {
+        "value": 62
+      },
+      "defending": {
+        "value": 50
+      },
+      "physical": {
+        "value": 88
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=5207; 5 matches; 506.7 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.137,
+    "team_p_champion": 0.0232,
+    "statsbomb_minutes": 506.7
+  },
+  {
+    "name": "Rodrigo De Paul",
+    "team": "Argentina",
+    "position": "CM",
+    "age": 31,
+    "club": "Atlético Madrid",
+    "overall": 72,
+    "attributes": {
+      "pace": {
+        "value": 63,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 53
+      },
+      "passing": {
+        "value": 88
+      },
+      "dribbling": {
+        "value": 59
+      },
+      "defending": {
+        "value": 88
+      },
+      "physical": {
+        "value": 58
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: Copa America 2024 (competition_id=223, season_id=282)",
+      "player_id=7797; 5 matches; 637.5 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.5705,
+    "team_p_champion": 0.2631,
+    "statsbomb_minutes": 637.5
+  },
+  {
+    "name": "Memphis Depay",
+    "team": "Netherlands",
+    "position": "ST",
+    "age": 32,
+    "club": "Corinthians",
+    "overall": 72,
+    "attributes": {
+      "pace": {
+        "value": 62,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 83
+      },
+      "passing": {
+        "value": 70
+      },
+      "dribbling": {
+        "value": 71
+      },
+      "defending": {
+        "value": 65
+      },
+      "physical": {
+        "value": 63
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=2988; 6 matches; 467.9 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.1234,
+    "team_p_champion": 0.0159,
+    "statsbomb_minutes": 467.9
+  },
+  {
+    "name": "Jude Bellingham",
+    "team": "England",
+    "position": "AM",
+    "age": 22,
+    "club": "Real Madrid",
+    "overall": 71,
+    "attributes": {
+      "pace": {
+        "value": 70,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 63
+      },
+      "passing": {
+        "value": 58
+      },
+      "dribbling": {
+        "value": 86
+      },
+      "defending": {
+        "value": 87
+      },
+      "physical": {
+        "value": 82
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=30714; 7 matches; 775.6 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.3645,
+    "team_p_champion": 0.0981,
+    "statsbomb_minutes": 775.6
+  },
+  {
+    "name": "James Rodríguez",
+    "team": "Colombia",
+    "position": "AM",
+    "age": 34,
+    "club": "Club León",
+    "overall": 70,
+    "attributes": {
+      "pace": {
+        "value": 51,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 57
+      },
+      "passing": {
+        "value": 99
+      },
+      "dribbling": {
+        "value": 54
+      },
+      "defending": {
+        "value": 76
+      },
+      "physical": {
+        "value": 87
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: Copa America 2024 (competition_id=223, season_id=282)",
+      "player_id=5695; 6 matches; 466.1 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.2524,
+    "team_p_champion": 0.0621,
+    "statsbomb_minutes": 466.1
+  },
+  {
+    "name": "Bukayo Saka",
+    "team": "England",
+    "position": "W",
+    "age": 24,
+    "club": "Arsenal",
+    "overall": 70,
+    "attributes": {
+      "pace": {
+        "value": 78,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 59
+      },
+      "passing": {
+        "value": 54
+      },
+      "dribbling": {
+        "value": 82
+      },
+      "defending": {
+        "value": 63
+      },
+      "physical": {
+        "value": 71
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=22084; 7 matches; 725.0 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.3645,
+    "team_p_champion": 0.0981,
+    "statsbomb_minutes": 725.0
+  },
+  {
+    "name": "Kylian Mbappé",
+    "team": "France",
+    "position": "ST",
+    "age": 27,
+    "club": "Real Madrid",
+    "overall": 70,
+    "attributes": {
+      "pace": {
+        "value": 75,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 70
+      },
+      "passing": {
+        "value": 61
+      },
+      "dribbling": {
+        "value": 94
+      },
+      "defending": {
+        "value": 51
+      },
+      "physical": {
+        "value": 55
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=3009; 5 matches; 589.0 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.4441,
+    "team_p_champion": 0.1461,
+    "statsbomb_minutes": 589.0
+  },
+  {
+    "name": "Bernardo Silva",
+    "team": "Portugal",
+    "position": "AM",
+    "age": 31,
+    "club": "Manchester City",
+    "overall": 68,
+    "attributes": {
+      "pace": {
+        "value": 71,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 65
+      },
+      "passing": {
+        "value": 71
+      },
+      "dribbling": {
+        "value": 65
+      },
+      "defending": {
+        "value": 69
+      },
+      "physical": {
+        "value": 67
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=3193; 4 matches; 493.9 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.137,
+    "team_p_champion": 0.0232,
+    "statsbomb_minutes": 493.9
+  },
+  {
+    "name": "Harry Kane",
+    "team": "England",
+    "position": "ST",
+    "age": 32,
+    "club": "Bayern Munich",
+    "overall": 66,
+    "attributes": {
+      "pace": {
+        "value": 53,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 73
+      },
+      "passing": {
+        "value": 51
+      },
+      "dribbling": {
+        "value": 51
+      },
+      "defending": {
+        "value": 58
+      },
+      "physical": {
+        "value": 92
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=10955; 7 matches; 716.0 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.3645,
+    "team_p_champion": 0.0981,
+    "statsbomb_minutes": 716.0
+  },
+  {
+    "name": "Phil Foden",
+    "team": "England",
+    "position": "AM",
+    "age": 26,
+    "club": "Manchester City",
+    "overall": 66,
+    "attributes": {
+      "pace": {
+        "value": 55,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 61
+      },
+      "passing": {
+        "value": 66
+      },
+      "dribbling": {
+        "value": 79
+      },
+      "defending": {
+        "value": 70
+      },
+      "physical": {
+        "value": 54
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=4354; 7 matches; 676.5 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.3645,
+    "team_p_champion": 0.0981,
+    "statsbomb_minutes": 676.5
+  },
+  {
+    "name": "Antoine Griezmann",
+    "team": "France",
+    "position": "AM",
+    "age": 35,
+    "club": "Atlético Madrid",
+    "overall": 64,
+    "attributes": {
+      "pace": {
+        "value": 59,
+        "is_proxy": true
+      },
+      "shooting": {
+        "value": 67
+      },
+      "passing": {
+        "value": 65
+      },
+      "dribbling": {
+        "value": 61
+      },
+      "defending": {
+        "value": 74
+      },
+      "physical": {
+        "value": 65
+      }
+    },
+    "provenance": "statsbomb",
+    "source_refs": [
+      "StatsBomb Open Data: UEFA Euro 2024 (competition_id=55, season_id=282)",
+      "player_id=5487; 6 matches; 412.9 minutes; per-90 inputs in code/_sb_player_raw.json",
+      "Height (cm) is an editorial fact feeding the Physical aerial term; Defending & Pace blend the data signal with the documented position prior"
+    ],
+    "team_p_reach_sf": 0.4441,
+    "team_p_champion": 0.1461,
+    "statsbomb_minutes": 412.9
+  }
+]

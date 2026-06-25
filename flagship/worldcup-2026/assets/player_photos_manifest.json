@@ -1,0 +1,800 @@
+[
+  {
+    "id": "sct_pl_messi",
+    "kind": "image",
+    "label": "Lionel Messi",
+    "filename": "assets/scout_messi.jpg",
+    "subject": "Lionel Messi",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Lionel_Messi_White_House_2026_(3x4_cropped).jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "Public Domain",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo: The White House / Wikimedia Commons (Public Domain - US federal government work)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Real photograph of Lionel Messi - recognisable face and beard, dark navy suit and navy tie, gold ornament behind him (White House reception). Reused from the prior scout run."
+    },
+    "country": "Argentina"
+  },
+  {
+    "id": "sct_pl_mbappe",
+    "kind": "image",
+    "label": "Kylian Mbappé",
+    "filename": "assets/player_mbappe.jpg",
+    "subject": "Kylian Mbappé",
+    "source_url": "https://commons.wikimedia.org/wiki/File:2019-07-17_SG_Dynamo_Dresden_vs._Paris_Saint-Germain_by_Sandro_Halank%E2%80%93129_(cropped).jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Sandro Halank, CC BY-SA 4.0, via Wikimedia Commons"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Young man in a Paris Saint-Germain jersey (PSG crest + Nike swoosh visible) at a stadium - recognisable as Kylian Mbappé. Genuine match photo, not AI."
+    },
+    "country": "France"
+  },
+  {
+    "id": "sct_pl_bellingham",
+    "kind": "image",
+    "label": "Jude Bellingham",
+    "filename": "assets/player_bellingham.jpg",
+    "subject": "Jude Bellingham",
+    "source_url": "https://commons.wikimedia.org/wiki/File:25th_Laureus_World_Sports_Awards_-_Red_Carpet_-_Jude_Bellingham_-_240422_190551-2_(cropped).jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Barcex / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Young man in a black suit on the Laureus World Sports Awards red carpet ('Laureus' lettering behind) - recognisable as Jude Bellingham. Real photo."
+    },
+    "country": "England"
+  },
+  {
+    "id": "sct_pl_yamal",
+    "kind": "image",
+    "label": "Lamine Yamal",
+    "filename": "assets/player_yamal.jpg",
+    "subject": "Lamine Yamal",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Lamine_Yamal_in_2025_(cropped2).jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Biso / Wikimedia Commons (CC BY 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Player in Spain's red home kit wearing No. 19 with blond-tipped hair, dribbling - matches Lamine Yamal (Spain's No. 19). Real match photo."
+    },
+    "country": "Spain"
+  },
+  {
+    "id": "sct_pl_haaland",
+    "kind": "image",
+    "label": "Erling Haaland",
+    "filename": "assets/player_haaland.jpg",
+    "subject": "Erling Haaland",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Erling_Haaland_Morocco_v_Norway_7_June_2026-51.jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Bryan Berlin / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Blond man with slicked-back hair in Norway's white kit No. 9; jersey reads 'MAR-NOR 07.06.2026' with the Norwegian cross crest - unmistakably Erling Haaland. Real match photo."
+    },
+    "country": "Norway"
+  },
+  {
+    "id": "sct_pl_vinicius",
+    "kind": "image",
+    "label": "Vinícius Júnior",
+    "filename": "assets/player_vinicius.jpg",
+    "subject": "Vinícius Júnior",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Vin%C3%ADcius_J%C3%BAnior_Brazil_V_Morocco_13_June_2026-207_(cropped).jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Bryan Berlin / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Player in Brazil's yellow CBF kit No. 7; jersey reads 'BRASIL vs MARROCOS 13 de Junho de 2026' - recognisable as Vinícius Júnior. Real match photo."
+    },
+    "country": "Brazil"
+  },
+  {
+    "id": "sct_pl_ronaldo",
+    "kind": "image",
+    "label": "Cristiano Ronaldo",
+    "filename": "assets/player_ronaldo.jpg",
+    "subject": "Cristiano Ronaldo",
+    "source_url": "https://commons.wikimedia.org/wiki/File:2025_Cristiano_Ronaldo_(cropped).jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "Public Domain",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo: The White House / Wikimedia Commons (Public Domain - US federal government work)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Smiling man in a dark turtleneck and brown coat indoors with a manuscript wall behind (White House) - clearly Cristiano Ronaldo. Real photo."
+    },
+    "country": "Portugal"
+  },
+  {
+    "id": "sct_pl_james",
+    "kind": "image",
+    "label": "James Rodríguez",
+    "filename": "assets/player_james.jpg",
+    "subject": "James Rodríguez",
+    "source_url": "https://commons.wikimedia.org/wiki/File:James_al_natural_-_Series,_02.jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-3.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Canal 10 Gold / Wikimedia Commons (CC BY 3.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Young man smiling in an interview setting, dark combed-back hair - recognisable as James Rodríguez. Real video still."
+    },
+    "country": "Colombia"
+  },
+  {
+    "id": "sct_pl_musiala",
+    "kind": "image",
+    "label": "Jamal Musiala",
+    "filename": "assets/player_musiala.jpg",
+    "subject": "Jamal Musiala",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Jamal_Musiala_2022_(cropped).jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: ArsenalGhanaPartey (crop) / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Young man celebrating in an FC Bayern München red striped kit (Bayern crest, adidas, Telekom 'T') - recognisable as Jamal Musiala. Real photo."
+    },
+    "country": "Germany"
+  },
+  {
+    "id": "sct_pl_vandijk",
+    "kind": "image",
+    "label": "Virgil van Dijk",
+    "filename": "assets/player_vandijk.jpg",
+    "subject": "Virgil van Dijk",
+    "source_url": "https://commons.wikimedia.org/wiki/File:20160604_AUT_NED_8876_(cropped).jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-SA-3.0-AT",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Ailura / Wikimedia Commons (CC BY-SA 3.0 AT)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man with curly tied-back hair and goatee in the Netherlands' orange kit (KNVB lion crest, Nike swoosh) - recognisable as Virgil van Dijk. Real match photo."
+    },
+    "country": "Netherlands"
+  },
+  {
+    "id": "sct_pl_kane",
+    "kind": "image",
+    "label": "Harry Kane",
+    "filename": "assets/player_kane.jpg",
+    "subject": "Harry Kane",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Harry_Kane_2023.jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-2.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Number 10 (UK Prime Minister's Office) / Wikimedia Commons (CC BY 2.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Smiling man with reddish-brown hair and beard in an England (Three Lions crest) blue training top - recognisable as Harry Kane. Real photo."
+    },
+    "country": "England"
+  },
+  {
+    "id": "sct_pl_pedri",
+    "kind": "image",
+    "label": "Pedri",
+    "filename": "assets/player_pedri.jpg",
+    "subject": "Pedri",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Pedri.jpg",
+    "retrieved_at": "2026-06-21",
+    "license": {
+      "spdx": "CC-BY-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Biso / Wikimedia Commons (CC BY 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Player in Spain's red home kit wearing No. 20, dark-haired, dribbling - matches Pedri (Spain's No. 20). Real match photo."
+    },
+    "country": "Spain"
+  },
+  {
+    "id": "sct_pl_wirtz",
+    "kind": "image",
+    "label": "Florian Wirtz",
+    "filename": "assets/player_wirtz.jpg",
+    "subject": "Florian Wirtz",
+    "country": "Germany",
+    "license": {
+      "spdx": "CC0-1.0",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo: Timmy96 / Wikimedia Commons (CC0 1.0, public-domain dedication)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Young man in a red/black Liverpool FC (LFC crest, adidas) arrival jacket with AirPods - matches Florian Wirtz (now at Liverpool). Real candid photo, not AI."
+    },
+    "source_title": "File:Florian Wirtz 04012026 (3) (extracted).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_dembele",
+    "kind": "image",
+    "label": "Ousmane Dembélé",
+    "filename": "assets/player_dembele.jpg",
+    "subject": "Ousmane Dembélé",
+    "country": "France",
+    "license": {
+      "spdx": "CC-BY-SA-3.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Anton Zaytsev / soccer.ru / Wikimedia Commons (CC BY-SA 3.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Black man in France's blue home kit with short cropped hair lining up before a match - matches Ousmane Dembele. Real match photo."
+    },
+    "source_title": "File:Ousmane Dembele 2018 (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_hakimi",
+    "kind": "image",
+    "label": "Achraf Hakimi",
+    "filename": "assets/player_hakimi.jpg",
+    "subject": "Achraf Hakimi",
+    "country": "Morocco",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Bryan Berlin / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in Morocco's red/green PUMA kit (Morocco crest) with curly hair, lining up - matches Achraf Hakimi. Real match photo (Morocco v Norway, 7 June 2026)."
+    },
+    "source_title": "File:Achraf Hakimi Morocco v Norway 7 June 2026-32.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_dias",
+    "kind": "image",
+    "label": "Rúben Dias",
+    "filename": "assets/player_dias.jpg",
+    "subject": "Rúben Dias",
+    "country": "Portugal",
+    "license": {
+      "spdx": "CC-BY-2.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Web Summit (Flickr) / Wikimedia Commons (CC BY 2.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in black holding a Web Summit award on a lit stage, short dark hair and stubble - matches Ruben Dias. Real event photo."
+    },
+    "source_title": "File:Ruben Dias, 14 November 2024 (4).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_nico_williams",
+    "kind": "image",
+    "label": "Nico Williams",
+    "filename": "assets/player_nico_williams.jpg",
+    "subject": "Nico Williams",
+    "country": "Spain",
+    "license": {
+      "spdx": "CC-BY-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Biso / Wikimedia Commons (CC BY 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Black man in Spain's red home kit with blond-tipped twists - matches Nico Williams (Spain). Real match photo."
+    },
+    "source_title": "File:Spain football team in 2025 (Nico Williams).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_en_nesyri",
+    "kind": "image",
+    "label": "Youssef En-Nesyri",
+    "filename": "assets/player_en_nesyri.jpg",
+    "subject": "Youssef En-Nesyri",
+    "country": "Morocco",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Nawfel Ajari / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in Morocco's red/green PUMA kit (Morocco crest) with a fade haircut and goatee - matches Youssef En-Nesyri. Real match photo."
+    },
+    "source_title": "File:Ennesyri.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_odegaard",
+    "kind": "image",
+    "label": "Martin Ødegaard",
+    "filename": "assets/player_odegaard.jpg",
+    "subject": "Martin Ødegaard",
+    "country": "Norway",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Bryan Berlin / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Fair-haired man with light beard in a white kit - matches Martin Odegaard (Norway captain). Real match photo (Morocco v Norway, 7 June 2026)."
+    },
+    "source_title": "File:Martin Odegaard Morocco v Norway 7 June 2026-56 (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_pulisic",
+    "kind": "image",
+    "label": "Christian Pulisic",
+    "filename": "assets/player_pulisic.jpg",
+    "subject": "Christian Pulisic",
+    "country": "USA",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Bryan Berlin / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in a USA red kit (USA + Nike crest) with short curly hair and a beard - matches Christian Pulisic. Real match photo (USMNT v Belgium, Mar 2026)."
+    },
+    "source_title": "File:Christian Pulisic USMNT v Belgium Mar 28 2026-73 (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_jimenez",
+    "kind": "image",
+    "label": "Raúl Jiménez",
+    "filename": "assets/player_jimenez.jpg",
+    "subject": "Raúl Jiménez",
+    "country": "Mexico",
+    "license": {
+      "spdx": "CC-BY-SA-3.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Tirado.fj / Wikimedia Commons (CC BY-SA 3.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in Mexico's green No. 9 kit (adidas, Mexico crest) running - matches Raul Jimenez (Mexico striker). Real match photo."
+    },
+    "source_title": "File:Raul Jimenez.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_olmo",
+    "kind": "image",
+    "label": "Dani Olmo",
+    "filename": "assets/player_olmo.jpg",
+    "subject": "Dani Olmo",
+    "country": "Spain",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: M-B (crop) / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Fair-haired man in an RB Leipzig red/white striped kit (Red Bull crest) with a forearm tattoo - matches Dani Olmo (then at RB Leipzig). Real match photo."
+    },
+    "source_title": "File:Dani Olmo 2022.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_mitoma",
+    "kind": "image",
+    "label": "Kaoru Mitoma",
+    "filename": "assets/player_mitoma.jpg",
+    "subject": "Kaoru Mitoma",
+    "country": "Japan",
+    "license": {
+      "spdx": "CC-BY-3.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: AFC Bournemouth (YouTube) / Wikimedia Commons (CC BY 3.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "East-Asian man in a Brighton blue/white striped kit (American Express sponsor, Brighton crest) celebrating - matches Kaoru Mitoma (Brighton). Real video still."
+    },
+    "source_title": "File:Kaoru Mitoma 00-01-48.01.png",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_kubo",
+    "kind": "image",
+    "label": "Takefusa Kubo",
+    "filename": "assets/player_kubo.jpg",
+    "subject": "Takefusa Kubo",
+    "country": "Japan",
+    "license": {
+      "spdx": "CC-BY-3.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Real Madrid (YouTube) / Wikimedia Commons (CC BY 3.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "East-Asian young man in a black/gold adidas training top at a training ground (interview) - matches Takefusa Kubo. Real video still."
+    },
+    "source_title": "File:Takefusa Kubo 1053.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_saliba",
+    "kind": "image",
+    "label": "William Saliba",
+    "filename": "assets/player_saliba.jpg",
+    "subject": "William Saliba",
+    "country": "France",
+    "license": {
+      "spdx": "CC0-1.0",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo: Supporterheninois / Wikimedia Commons (CC0 1.0, public-domain dedication)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Mixed-race man in a dark-blue Marseille warmup top No. 2 (PUMA, OM crest, 'randstad') - matches William Saliba (on loan at Marseille). Real match photo."
+    },
+    "source_title": "File:Lens - Marseille (22-01-2022) 15.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_bruno_fernandes",
+    "kind": "image",
+    "label": "Bruno Fernandes",
+    "filename": "assets/player_bruno_fernandes.jpg",
+    "subject": "Bruno Fernandes",
+    "country": "Portugal",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Bryan Berlin / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in a Portugal maroon training jacket (PUMA + Portugal crest) with a dark beard - matches Bruno Fernandes. Real photo (USMNT v Portugal, Mar 2026)."
+    },
+    "source_title": "File:Bruno Fernandes USMNT v Portugal Mar 31 2026-27 (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_rodri",
+    "kind": "image",
+    "label": "Rodri",
+    "filename": "assets/player_rodri.jpg",
+    "subject": "Rodri",
+    "country": "Spain",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Rolandhino1 / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in Spain's grey away kit No. 16 (adidas, Spain crest) running - matches Rodri (Spain No. 16). Real match photo (Sweden v Spain, Euro 2020 qualifier)."
+    },
+    "source_title": "File:RODRI - SWE vs ESP - UEFA EURO 2020 QUALIFIERS - 2019.10.15 (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_gakpo",
+    "kind": "image",
+    "label": "Cody Gakpo",
+    "filename": "assets/player_gakpo.jpg",
+    "subject": "Cody Gakpo",
+    "country": "Netherlands",
+    "license": {
+      "spdx": "CC0-1.0",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo: Timmy96 / Wikimedia Commons (CC0 1.0, public-domain dedication)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Mixed-race man in a teal Liverpool top (Nike + LFC crest) with AirPods, arriving - matches Cody Gakpo (Liverpool). Real candid photo."
+    },
+    "source_title": "File:Cody Gakpo 06042025 (2) (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_kroos",
+    "kind": "image",
+    "label": "Toni Kroos",
+    "filename": "assets/player_kroos.jpg",
+    "subject": "Toni Kroos",
+    "country": "Germany",
+    "license": {
+      "spdx": "CC-BY-3.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Real Madrid (YouTube) / Wikimedia Commons (CC BY 3.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Fair-haired man with blue eyes in a dark zip jacket (interview) - matches Toni Kroos. Real video still."
+    },
+    "source_title": "File:Toni Kroos Real Madrid 2021.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_rodrygo",
+    "kind": "image",
+    "label": "Rodrygo",
+    "filename": "assets/player_rodrygo.jpg",
+    "subject": "Rodrygo",
+    "country": "Brazil",
+    "license": {
+      "spdx": "CC-BY-SA-2.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Junta de Andalucia (Flickr) / Wikimedia Commons (CC BY-SA 2.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Black man in a Real Madrid white kit (Emirates, adidas, RM crest) making an OK gesture while celebrating - matches Rodrygo (Real Madrid). Real match photo."
+    },
+    "source_title": "File:Rodrygo 2023 (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_lautaro_martinez",
+    "kind": "image",
+    "label": "Lautaro Martínez",
+    "filename": "assets/player_lautaro_martinez.jpg",
+    "subject": "Lautaro Martínez",
+    "country": "Argentina",
+    "license": {
+      "spdx": "CC-BY-SA-2.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Agencia de Noticias ANDES / Wikimedia Commons (CC BY-SA 2.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in Argentina's light-blue/white striped No. 9 kit (adidas, AFA crest) dribbling - matches Lautaro Martinez (Argentina striker). Real match photo."
+    },
+    "source_title": "File:Lautaro Martinez (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_raphinha",
+    "kind": "image",
+    "label": "Raphinha",
+    "filename": "assets/player_raphinha.jpg",
+    "subject": "Raphinha",
+    "country": "Brazil",
+    "license": {
+      "spdx": "CC-BY-3.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Government of Catalonia / Wikimedia Commons (CC BY 3.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Brazilian man in a yellow FC Barcelona training bib (Nike + Spotify) with tattoos and a fade - matches Raphinha (Barcelona/Brazil). Real photo."
+    },
+    "source_title": "File:Raphael Dias Belloli 2023.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_de_paul",
+    "kind": "image",
+    "label": "Rodrigo De Paul",
+    "filename": "assets/player_de_paul.jpg",
+    "subject": "Rodrigo De Paul",
+    "country": "Argentina",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Bryan Berlin / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man with bleached-blond hair, beard and neck tattoo in an Inter Miami black/pink kit (adidas, Inter Miami crest) - matches Rodrigo De Paul (Inter Miami). Real match photo."
+    },
+    "source_title": "File:Rodrigo De Paul NYCFC Miami 24 Sep 2025-018 (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_depay",
+    "kind": "image",
+    "label": "Memphis Depay",
+    "filename": "assets/player_depay.jpg",
+    "subject": "Memphis Depay",
+    "country": "Netherlands",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Joe Sins (derivative) / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Mixed-race man in an Olympique Lyonnais navy kit (adidas, OL crest, Veolia) with short hair - matches Memphis Depay (then at Lyon). Real match photo."
+    },
+    "source_title": "File:Memphis Depay 2019.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_saka",
+    "kind": "image",
+    "label": "Bukayo Saka",
+    "filename": "assets/player_saka.jpg",
+    "subject": "Bukayo Saka",
+    "country": "England",
+    "license": {
+      "spdx": "CC0-1.0",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo: Supporterheninois / Wikimedia Commons (CC0 1.0, public-domain dedication)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Black man in an Arsenal teal/green kit No. 7 (Emirates 'Fly Better', adidas, Arsenal crest) - matches Bukayo Saka (Arsenal No. 7). Real match photo."
+    },
+    "source_title": "File:RC Lens - Arsenal FC (03-10-2023) 16 (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_bernardo_silva",
+    "kind": "image",
+    "label": "Bernardo Silva",
+    "filename": "assets/player_bernardo_silva.jpg",
+    "subject": "Bernardo Silva",
+    "country": "Portugal",
+    "license": {
+      "spdx": "CC-BY-SA-3.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Anton Zaytsev / soccer.ru / Wikimedia Commons (CC BY-SA 3.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man in Portugal's white away kit No. 10 (Nike, Portugal crest) with a beard - matches Bernardo Silva. Real match photo (Portugal v Morocco, 2018)."
+    },
+    "source_title": "File:Por-Mar (9) (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_foden",
+    "kind": "image",
+    "label": "Phil Foden",
+    "filename": "assets/player_foden.jpg",
+    "subject": "Phil Foden",
+    "country": "England",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Steffen Prossdorf / Wikimedia Commons (CC BY-SA 4.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Young man with short hair and blue eyes in a pink Manchester City UEFA Champions League warmup top (City crest) - matches Phil Foden. Real match photo."
+    },
+    "source_title": "File:2023-10-04 UEFA CL RB Leipzig - Manchester City FC, Phil Foden.jpg",
+    "retrieved_at": "2026-06-22"
+  },
+  {
+    "id": "sct_pl_griezmann",
+    "kind": "image",
+    "label": "Antoine Griezmann",
+    "filename": "assets/player_griezmann.jpg",
+    "subject": "Antoine Griezmann",
+    "country": "France",
+    "license": {
+      "spdx": "CC-BY-SA-2.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Biser Todorov / Wikimedia Commons (CC BY-SA 2.0)"
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "verified_title": "Man with blond hair tied in a man-bun in France's blue No. 7 kit (Nike, FFF crest) - matches Antoine Griezmann. Real match photo."
+    },
+    "source_title": "File:Antoine Griezmann (51100409504) (cropped).jpg",
+    "retrieved_at": "2026-06-22"
+  }
+]

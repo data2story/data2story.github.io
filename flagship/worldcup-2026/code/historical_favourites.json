@@ -1,0 +1,314 @@
+{
+  "_about": "Historical base-rate anchor for the WC2026 blog: is the model's 30.8% for Argentina 'a lot'? Compares it to the long-run rate at which the pre-tournament favourite actually wins (~23%).",
+  "_provenance_legend": {
+    "computed": "Derived deterministically from historical_wc_summary.csv by build_historical.py. Reproducible -> back with a runnable verify cell.",
+    "cited": "External fact quoted from a named source. Back with a 'fact' (click-to-source) verify entry, never a cell.",
+    "external_model_output": "From the simulation, restated for framing."
+  },
+  "source_table": {
+    "path": "phase2/datasets/worldcup_2026/historical_wc_summary.csv",
+    "rows": 22,
+    "coverage": "Men's FIFA World Cups 1930-2022"
+  },
+  "computed_from_table": {
+    "num_tournaments": 22,
+    "span": {
+      "first": 1930,
+      "last": 2022
+    },
+    "distinct_champion_labels": 9,
+    "distinct_champion_nations": 8,
+    "champions_by_nation": [
+      {
+        "nation": "Brazil",
+        "titles": 5
+      },
+      {
+        "nation": "Italy",
+        "titles": 4
+      },
+      {
+        "nation": "Germany",
+        "titles": 4
+      },
+      {
+        "nation": "Argentina",
+        "titles": 3
+      },
+      {
+        "nation": "Uruguay",
+        "titles": 2
+      },
+      {
+        "nation": "France",
+        "titles": 2
+      },
+      {
+        "nation": "England",
+        "titles": 1
+      },
+      {
+        "nation": "Spain",
+        "titles": 1
+      }
+    ],
+    "top3_nations": [
+      {
+        "nation": "Brazil",
+        "titles": 5
+      },
+      {
+        "nation": "Italy",
+        "titles": 4
+      },
+      {
+        "nation": "Germany",
+        "titles": 4
+      }
+    ],
+    "top3_share": {
+      "titles": 13,
+      "of": 22,
+      "pct": 59.1
+    },
+    "repeat_champions": {
+      "count": 6,
+      "titles_held": 20,
+      "share_pct": 90.9,
+      "nations": [
+        {
+          "nation": "Brazil",
+          "titles": 5
+        },
+        {
+          "nation": "Germany",
+          "titles": 4
+        },
+        {
+          "nation": "Italy",
+          "titles": 4
+        },
+        {
+          "nation": "Argentina",
+          "titles": 3
+        },
+        {
+          "nation": "France",
+          "titles": 2
+        },
+        {
+          "nation": "Uruguay",
+          "titles": 2
+        }
+      ]
+    },
+    "host_wins": {
+      "count": 6,
+      "of": 22,
+      "pct": 27.3,
+      "instances": [
+        {
+          "year": 1930,
+          "nation": "Uruguay"
+        },
+        {
+          "year": 1934,
+          "nation": "Italy"
+        },
+        {
+          "year": 1966,
+          "nation": "England"
+        },
+        {
+          "year": 1974,
+          "nation": "West Germany"
+        },
+        {
+          "year": 1978,
+          "nation": "Argentina"
+        },
+        {
+          "year": 1998,
+          "nation": "France"
+        }
+      ]
+    },
+    "goals_per_tournament": [
+      {
+        "year": 1930,
+        "goals_total": 70,
+        "num_teams": 13,
+        "goals_per_team": 5.385
+      },
+      {
+        "year": 1934,
+        "goals_total": 70,
+        "num_teams": 16,
+        "goals_per_team": 4.375
+      },
+      {
+        "year": 1938,
+        "goals_total": 84,
+        "num_teams": 15,
+        "goals_per_team": 5.6
+      },
+      {
+        "year": 1950,
+        "goals_total": 88,
+        "num_teams": 13,
+        "goals_per_team": 6.769
+      },
+      {
+        "year": 1954,
+        "goals_total": 140,
+        "num_teams": 16,
+        "goals_per_team": 8.75
+      },
+      {
+        "year": 1958,
+        "goals_total": 126,
+        "num_teams": 16,
+        "goals_per_team": 7.875
+      },
+      {
+        "year": 1962,
+        "goals_total": 89,
+        "num_teams": 16,
+        "goals_per_team": 5.562
+      },
+      {
+        "year": 1966,
+        "goals_total": 89,
+        "num_teams": 16,
+        "goals_per_team": 5.562
+      },
+      {
+        "year": 1970,
+        "goals_total": 95,
+        "num_teams": 16,
+        "goals_per_team": 5.938
+      },
+      {
+        "year": 1974,
+        "goals_total": 97,
+        "num_teams": 16,
+        "goals_per_team": 6.062
+      },
+      {
+        "year": 1978,
+        "goals_total": 102,
+        "num_teams": 16,
+        "goals_per_team": 6.375
+      },
+      {
+        "year": 1982,
+        "goals_total": 146,
+        "num_teams": 24,
+        "goals_per_team": 6.083
+      },
+      {
+        "year": 1986,
+        "goals_total": 132,
+        "num_teams": 24,
+        "goals_per_team": 5.5
+      },
+      {
+        "year": 1990,
+        "goals_total": 115,
+        "num_teams": 24,
+        "goals_per_team": 4.792
+      },
+      {
+        "year": 1994,
+        "goals_total": 141,
+        "num_teams": 24,
+        "goals_per_team": 5.875
+      },
+      {
+        "year": 1998,
+        "goals_total": 171,
+        "num_teams": 32,
+        "goals_per_team": 5.344
+      },
+      {
+        "year": 2002,
+        "goals_total": 161,
+        "num_teams": 32,
+        "goals_per_team": 5.031
+      },
+      {
+        "year": 2006,
+        "goals_total": 147,
+        "num_teams": 32,
+        "goals_per_team": 4.594
+      },
+      {
+        "year": 2010,
+        "goals_total": 145,
+        "num_teams": 32,
+        "goals_per_team": 4.531
+      },
+      {
+        "year": 2014,
+        "goals_total": 171,
+        "num_teams": 32,
+        "goals_per_team": 5.344
+      },
+      {
+        "year": 2018,
+        "goals_total": 169,
+        "num_teams": 32,
+        "goals_per_team": 5.281
+      },
+      {
+        "year": 2022,
+        "goals_total": 172,
+        "num_teams": 32,
+        "goals_per_team": 5.375
+      }
+    ]
+  },
+  "cited_favourite_base_rate": {
+    "kind": "cited",
+    "claim": "Pre-tournament favourites have won only about 23% of men's World Cups; the listed favourites have lifted the trophy only five times in 22 editions.",
+    "value_pct": 23,
+    "favourite_wins_count": 5,
+    "of_tournaments": 22,
+    "shortest_price_favourite_wins_since_1966": {
+      "count": 3,
+      "instances": [
+        "West Germany 1974",
+        "Brazil 1994",
+        "Spain 2010"
+      ],
+      "note": "Of the editions since 1966 (when pre-tournament odds were first recorded), the SHORTEST-PRICE favourite went on to win only three times."
+    },
+    "verbatim": "Favourites tend to win about 23% of the time, based on FIFA's review of the previous 22 men's tournaments. The listed World Cup favourites have won the trophy only five times over the years.",
+    "primary_source": {
+      "publisher": "FIFA",
+      "title": "What happened to the FIFA World Cup favourites?",
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/what-happened-to-the-fifa-world-cup-favourites"
+    },
+    "secondary_source": {
+      "publisher": "European Gaming Industry News (europeangaming.eu)",
+      "title": "50+ World Cup betting statistics: Trends & records (2026)",
+      "url": "https://europeangaming.eu/portal/world-cup-betting-statistics/",
+      "note": "Independent aggregation that restates the same FIFA ~23% figure and adds the 'shortest-price favourite won only 3 times since 1966' detail."
+    },
+    "accessed": "2026-06-24",
+    "provenance": "EXTERNAL / CITED -- not derivable from historical_wc_summary.csv. Belongs in verify_map as a 'fact' entry (click-to-source), NOT as a runnable cell."
+  },
+  "model_headline": {
+    "kind": "external_model_output",
+    "value_pct": 30.8,
+    "team": "Argentina",
+    "as_of": "2026-06-23",
+    "provenance": "Produced by the tournament Monte-Carlo (100,000 sims); NOT computed here. Restated only to frame the 30.8% vs ~23% comparison."
+  },
+  "framing": {
+    "argentina_model_pct": 30.8,
+    "favourite_base_rate_pct": 23,
+    "delta_pp": 7.8,
+    "reading": "Argentina's 30.8% sits ABOVE the ~23% long-run favourite hit-rate -- a slightly-stronger-than-usual favourite, not a lock."
+  }
+}

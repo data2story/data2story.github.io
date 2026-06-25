@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "source": "shootouts.csv (martj42 international football results) + intl_results_history.csv",
+    "total_shootouts": 678,
+    "date_range": [
+      "1967-08-22",
+      "2026-06-06"
+    ],
+    "as_of": "2026-06-24",
+    "what_this_measures": "How predictable penalty shootouts are - the part of knockout football the forecast model resolves analytically (a single win-probability split) instead of simulating kick-by-kick. Each metric reports the favoured side's win rate with a 95% Wilson CI and a two-sided binomial p-value against a 50/50 coin flip."
+  },
+  "first_shooter": {
+    "won": 136,
+    "n": 256,
+    "pct": 53.1,
+    "ci95_pct": [
+      47.0,
+      59.1
+    ],
+    "p_vs_50": 0.3485
+  },
+  "favourite": {
+    "won": 364,
+    "n": 678,
+    "pct": 53.7,
+    "ci95_pct": [
+      49.9,
+      57.4
+    ],
+    "p_vs_50": 0.0598,
+    "mean_abs_elo_gap": 113.8,
+    "median_abs_elo_gap": 93.3,
+    "expected_pct_in_regulation": 65.8
+  },
+  "favourite_by_elo_gap": [
+    {
+      "min_abs_elo_gap": 0,
+      "n": 678,
+      "fav_win_pct": 53.7,
+      "fav_expected_pct_regulation": 65.8
+    },
+    {
+      "min_abs_elo_gap": 25,
+      "n": 565,
+      "fav_win_pct": 54.2,
+      "fav_expected_pct_regulation": 68.4
+    },
+    {
+      "min_abs_elo_gap": 50,
+      "n": 473,
+      "fav_win_pct": 53.3,
+      "fav_expected_pct_regulation": 70.7
+    },
+    {
+      "min_abs_elo_gap": 100,
+      "n": 321,
+      "fav_win_pct": 52.6,
+      "fav_expected_pct_regulation": 75.0
+    },
+    {
+      "min_abs_elo_gap": 150,
+      "n": 201,
+      "fav_win_pct": 55.7,
+      "fav_expected_pct_regulation": 79.1
+    }
+  ],
+  "listed_first_team": {
+    "won": 367,
+    "n": 678,
+    "pct": 54.1,
+    "ci95_pct": [
+      50.4,
+      57.8
+    ],
+    "p_vs_50": 0.0346,
+    "_caveat": "'home_team' is the listed-first side; many of these were played at neutral venues, so this is NOT a clean home-advantage estimate - read it only as a weak ordering artefact, not a venue effect."
+  },
+  "world_cup": {
+    "n": 35,
+    "date_range": [
+      "1982-07-08",
+      "2022-12-18"
+    ],
+    "editions": {
+      "1982": 1,
+      "1986": 3,
+      "1990": 4,
+      "1994": 3,
+      "1998": 3,
+      "2002": 2,
+      "2006": 4,
+      "2010": 2,
+      "2014": 4,
+      "2018": 4,
+      "2022": 5
+    },
+    "first_shooter": {
+      "won": 17,
+      "n": 35,
+      "pct": 48.6,
+      "ci95_pct": [
+        33.0,
+        64.4
+      ],
+      "p_vs_50": 1.0
+    },
+    "favourite": {
+      "won": 20,
+      "n": 35,
+      "pct": 57.1,
+      "ci95_pct": [
+        40.9,
+        72.0
+      ],
+      "p_vs_50": 0.4996
+    },
+    "examples": [
+      {
+        "date": "1990-07-04",
+        "home": "Germany",
+        "away": "England",
+        "winner": "Germany",
+        "first_shooter": "England"
+      },
+      {
+        "date": "2006-07-09",
+        "home": "Italy",
+        "away": "France",
+        "winner": "Italy",
+        "first_shooter": "Italy"
+      },
+      {
+        "date": "2022-12-18",
+        "home": "Argentina",
+        "away": "France",
+        "winner": "Argentina",
+        "first_shooter": "France"
+      }
+    ]
+  },
+  "frequency": {
+    "by_decade": {
+      "1960": 1,
+      "1970": 38,
+      "1980": 97,
+      "1990": 126,
+      "2000": 144,
+      "2010": 153,
+      "2020": 119
+    },
+    "by_year": {
+      "1967": 1,
+      "1971": 1,
+      "1972": 3,
+      "1973": 11,
+      "1974": 6,
+      "1975": 4,
+      "1976": 2,
+      "1977": 5,
+      "1979": 6,
+      "1980": 6,
+      "1981": 3,
+      "1982": 8,
+      "1983": 10,
+      "1984": 16,
+      "1985": 11,
+      "1986": 11,
+      "1987": 11,
+      "1988": 14,
+      "1989": 7,
+      "1990": 13,
+      "1991": 12,
+      "1992": 8,
+      "1993": 13,
+      "1994": 6,
+      "1995": 18,
+      "1996": 17,
+      "1997": 8,
+      "1998": 17,
+      "1999": 14,
+      "2000": 21,
+      "2001": 13,
+      "2002": 24,
+      "2003": 14,
+      "2004": 22,
+      "2005": 15,
+      "2006": 14,
+      "2007": 13,
+      "2008": 5,
+      "2009": 3,
+      "2010": 9,
+      "2011": 15,
+      "2012": 11,
+      "2013": 8,
+      "2014": 12,
+      "2015": 17,
+      "2016": 23,
+      "2017": 13,
+      "2018": 18,
+      "2019": 27,
+      "2020": 4,
+      "2021": 17,
+      "2022": 26,
+      "2023": 18,
+      "2024": 24,
+      "2025": 16,
+      "2026": 14
+    }
+  },
+  "definitions": {
+    "favourite": "Higher-Elo team, Elo computed from all internationals with date < the shootout's date using the eloratings.net rule in elo.py (importance x goal-diff multiplier, 100-pt home edge on non-neutral games). Leak-free: a shootout never informs its own favourite.",
+    "first_shooter": "Team recorded as taking the first penalty (data column; 256/677 known).",
+    "win": "Team listed in the 'winner' column (the side that advanced).",
+    "world_cup": "tournament == 'FIFA World Cup' after joining to history on date + {teams}; excludes qualifiers and non-FIFA tournaments that share the words 'World Cup'.",
+    "coin_flip_test": "two-sided exact binomial p-value vs p=0.5; CI = 95% Wilson score."
+  }
+}

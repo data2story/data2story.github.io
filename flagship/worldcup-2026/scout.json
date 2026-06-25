@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "role": "scout",
+    "version": "1.0",
+    "_doc": "Scout smoke-test run for the 2026 World Cup forecast. Bounded: 1 BGM (audio) + 1 official-anthem embed + 1 high-value player photo + 1 live-status record. Detective already covered trophy, 3 venues, and 8 nation flags, so Scout adds music, freshness, and a human emotional anchor (Messi) it did not have."
+  },
+  "items": {
+    "sct_02": {
+      "kind": "embed",
+      "label": "Official 2026 World Cup anthem 'DNA'",
+      "embed_url": "https://open.spotify.com/embed/track/40qwbrvCXsiOPh9xOupCMp",
+      "caption": "The official 2026 FIFA World Cup anthem, \"DNA\" (Andrea Bocelli, David Guetta, Megan Thee Stallion, EJAE) — playable inline via Spotify.",
+      "caption_claims": [
+        "this is the official FIFA World Cup 2026 anthem 'DNA'",
+        "the track is the official 'DNA (More Than A Game)' release on Spotify"
+      ],
+      "source_url": "https://open.spotify.com/track/40qwbrvCXsiOPh9xOupCMp",
+      "retrieved_at": "2026-06-21T02:03:30Z",
+      "license": {
+        "spdx": "All Rights Reserved",
+        "permits_republication": false,
+        "requires_attribution": false,
+        "attribution_text": "Official Spotify embed — not re-hosted; the platform player carries its own rights."
+      },
+      "identity": {
+        "method": "oembed",
+        "verified": true,
+        "verified_title": "DNA (More Than A Game). Spotify oEmbed (https://open.spotify.com/oembed?url=https://open.spotify.com/track/40qwbrvCXsiOPh9xOupCMp) returned HTTP 200, provider_name 'Spotify'.",
+        "subject": "FIFA World Cup 2026 official anthem 'DNA'"
+      },
+      "publish_note": "Embed-only / copyrighted: the official anthem 'DNA' is All Rights Reserved; shown via the official Spotify embed (the platform player carries its own streaming rights), NOT re-hosted. Publishable as-is via the Spotify iframe; if the embed is blocked or rights change, swap to a caption-only link to the official track and the 'via Spotify' attribution stays visible.",
+      "relates_to": [
+        "det_08"
+      ],
+      "purpose": "IMMERSE"
+    },
+    "sct_03": {
+      "kind": "image",
+      "label": "Lionel Messi (2026)",
+      "filename": "scout_messi.jpg",
+      "caption": "Lionel Messi, captain of model-favourite Argentina, photographed in 2026.",
+      "caption_claims": [
+        "this is Lionel Messi",
+        "Messi captains Argentina, the model's top title pick"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Lionel_Messi_White_House_2026_(3x4_cropped).jpg",
+      "retrieved_at": "2026-06-21T02:04:10Z",
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: The White House / Wikimedia Commons (Public Domain — US federal government work)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Opened the file with Read: a real photograph of Lionel Messi — recognisable face and beard, dark navy suit and navy tie, indoor setting with gold ornament behind him (White House reception). Genuine photo (Nikon Z 9 EXIF), not an AI render.",
+        "subject": "Lionel Messi"
+      },
+      "relates_to": [
+        "det_05",
+        "det_07"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_mbappe": {
+      "kind": "image",
+      "label": "Kylian Mbappé",
+      "filename": "player_mbappe.jpg",
+      "caption": "Kylian Mbappé (France) — verified real match photograph.",
+      "caption_claims": [
+        "this is Kylian Mbappé",
+        "Mbappé plays for France, a model contender"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:2019-07-17_SG_Dynamo_Dresden_vs._Paris_Saint-Germain_by_Sandro_Halank%E2%80%93129_(cropped).jpg",
+      "retrieved_at": "2026-06-21",
+      "license": {
+        "spdx": "CC-BY-SA-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Sandro Halank, CC BY-SA 4.0, via Wikimedia Commons"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Young man in a Paris Saint-Germain jersey (PSG crest + Nike swoosh visible) at a stadium - recognisable as Kylian Mbappé. Genuine match photo, not AI.",
+        "subject": "Kylian Mbappé"
+      },
+      "relates_to": [
+        "det_05",
+        "det_07"
+      ],
+      "purpose": "INFORM",
+      "_resolved": "Attribution resolved: author is Sandro Halank (confirmed against the Wikimedia Commons parent file, whose filename embeds 'by_Sandro_Halank'). Canonical credit: Sandro Halank, CC BY-SA 4.0, via Wikimedia Commons."
+    },
+    "sct_bg_stadium_floodlit": {
+      "kind": "image",
+      "label": "Stadium aerial at night (floodlit) — Levi's Stadium",
+      "filename": "assets/bg_stadium_floodlit.jpg",
+      "source_url": "https://www.pexels.com/photo/200986/",
+      "license": {
+        "spdx": "Pexels-License",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo via Pexels (Pexels License - free commercial use, no attribution required). Depicts Levi's Stadium, Santa Clara, a real 2026 World Cup host venue, at night."
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "Ultra-wide night panorama of a floodlit American football/soccer stadium (Levi's Stadium): red seating bowl, glowing green field, light towers, 'SF 49ERS'/Sony signage. Real photograph, not AI."
+      },
+      "relates_to": ["det_08"],
+      "purpose": "IMMERSE"
+    },
+    "sct_bg_stadium_night_aerial": {
+      "kind": "image",
+      "label": "Stadium aerial at night (floodlit) — Arles amphitheatre",
+      "filename": "assets/bg_stadium_night_aerial.jpg",
+      "source_url": "https://unsplash.com/photos/an-aerial-view-of-a-stadium-lit-up-at-night-e3_kWZU_2_s",
+      "license": {
+        "spdx": "Unsplash-License",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Floodlit ancient arena (Arles amphitheatre) glowing at night amid a dark city - used as a dramatic 'stadium at night' backdrop."
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "Aerial drone shot at night of a circular floodlit arena (Arles Roman amphitheatre) glowing gold, surrounded by a dark city grid. Real photograph, not AI."
+      },
+      "relates_to": ["det_08"],
+      "purpose": "IMMERSE"
+    },
+    "sct_bg_wc_stadium_atmosphere": {
+      "kind": "image",
+      "label": "SoFi Stadium before USA v Paraguay (2026 WC venue)",
+      "filename": "assets/bg_wc_stadium_atmosphere.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:2026_FIFA_World_Cup_Match_4,_United_States_v_Paraguay_(stadium_3_hours_before).jpg",
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: Alexis Doine / Wikimedia Commons (CC0 1.0 public-domain dedication). Real 2026 FIFA World Cup venue (SoFi Stadium) three hours before USA v Paraguay."
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "Interior of SoFi Stadium before a 2026 World Cup match: pristine green pitch, empty seats, the curved ribbon scoreboard reading 'FIFA WORLD CUP 2026'. Real photograph, not AI."
+      },
+      "relates_to": ["det_01", "det_08"],
+      "purpose": "IMMERSE"
+    },
+    "sct_bg_wc_match_pitch": {
+      "kind": "image",
+      "label": "Switzerland v Bosnia, a live 2026 WC match (wide, no player recognisable)",
+      "filename": "assets/bg_wc_match_pitch.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:2026_FIFA_World_Cup_Match_26,_Switzerland_v_Bosnia_and_Herzegovina.jpg",
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: Alexis Doine / Wikimedia Commons (CC0 1.0 public-domain dedication). Real 2026 FIFA World Cup match (Switzerland v Bosnia and Herzegovina) - wide stadium view, no individual player recognisable."
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "Wide panorama of a packed SoFi Stadium during a live 2026 World Cup match: full stands, tiny distant players on a green pitch, 'LOS ANGELES'/'FIFA' on the upper ring. Real photograph, not AI."
+      },
+      "relates_to": ["det_01", "det_08"],
+      "purpose": "IMMERSE"
+    },
+    "sct_bg_stadium_night_crowd": {
+      "kind": "image",
+      "label": "Packed floodlit stadium at night (Athens Olympic Stadium)",
+      "filename": "assets/bg_stadium_night_crowd.jpg",
+      "source_url": "https://www.pexels.com/photo/30651230/",
+      "license": {
+        "spdx": "Pexels-License",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo via Pexels (Pexels License - free commercial use, no attribution required). Floodlit stadium packed with crowd at night."
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "A packed floodlit stadium at night (Athens Olympic Stadium): full tiered stands of spectators, lit green pitch, sweeping cantilever roof. Real photograph, not AI."
+      },
+      "relates_to": ["det_08"],
+      "purpose": "IMMERSE"
+    },
+    "sct_bg_wc_national_fans": {
+      "kind": "image",
+      "label": "Brazil fan at the 2026 FIFA World Cup (national-team colour/emotion)",
+      "filename": "assets/bg_wc_national_fans.jpg",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Fans_at_2026_FIFA_World_Cup_by_YantsImages_04.jpg",
+      "license": {
+        "spdx": "CC-BY-SA-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: YantsImages / Wikimedia Commons (CC BY-SA 4.0). Real fan at the 2026 FIFA World Cup."
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "A young Brazil fan in a yellow cap with green-and-yellow face paint, holding a Panini-style sticker album of the Brazil squad, blue sky and stadium behind. Real photograph, not AI."
+      },
+      "relates_to": ["det_01"],
+      "purpose": "IMMERSE"
+    },
+    "sct_goals_video": {
+      "kind": "embed",
+      "label": "Highlights — Argentina 3-0 Algeria (FIFA World Cup 2026)",
+      "embed_url": "https://www.youtube.com/embed/JH_WRKTCPK4",
+      "source_url": "https://www.youtube.com/watch?v=JH_WRKTCPK4",
+      "caption": "Messi's hat-trick — Argentina 3-0 Algeria, 2026 World Cup highlights. Via FIFA / YouTube (official channel; embedded/linked, not re-hosted).",
+      "caption_claims": [
+        "this is the official FIFA highlights video for Argentina 3-0 Algeria at the 2026 World Cup",
+        "Messi scored a hat-trick in this match (16 Jun 2026)"
+      ],
+      "license": {
+        "spdx": "All Rights Reserved",
+        "permits_republication": false,
+        "requires_attribution": true,
+        "attribution_text": "Highlights via FIFA / YouTube — official channel; click-through facade, not re-hosted."
+      },
+      "identity": {
+        "method": "oembed",
+        "verified": true,
+        "verified_title": "YouTube video JH_WRKTCPK4 = 'Highlights | Argentina 3-0 Algeria | FIFA World Cup 2026' on FIFA's official channel. YouTube oEmbed returned HTTP 200 with author_name 'FIFA'.",
+        "subject": "FIFA World Cup 2026 — Argentina v Algeria highlights"
+      },
+      "publish_note": "Demo-only / embed-only: broadcast-rights-encumbered; shown via the official FIFA YouTube embed/click-through facade (which carries its own platform rights); NOT re-hosted, and the 'Highlights via FIFA / YouTube' attribution stays visible.",
+      "relates_to": ["det_01"],
+      "purpose": "INFORM"
+    },
+    "sct_04": {
+      "kind": "fact",
+      "label": "Player ratings & portraits — credits & licences",
+      "claim": "The player ability cards are EA Sports FC ratings (FC 26 base cards; Toni Kroos FC 24), reproduced for commentary/comparison and cited to EA Sports — not hand-set by us and not affiliated with or endorsed by EA Sports or FIFA; per-card source links are in each card's 'Sources'. Portraits in this build are official player portraits used for the LOCAL build only and are publish-gated: they must be swapped to the Wikimedia Commons photos (attributed per each licence) before any public release. The team deep-run and champion odds shown beside the cards come from this project's Elo-Poisson-Monte-Carlo model.",
+      "category": "credits",
+      "sources": [
+        {
+          "url": "https://www.fifplay.com/fc-26/",
+          "title": "EA Sports FC 26 player ratings (public EA FC database)",
+          "facts": [
+            "Overall + the six face stats (PAC/SHO/PAS/DRI/DEF/PHY) are EA Sports' published FC 26 values",
+            "Each card cites its specific public EA FC rating source (fifplay / futbin / futwiz / wefut / fut.gg / ea.com); Kroos uses his FC 24 card"
+          ]
+        },
+        {
+          "url": "https://commons.wikimedia.org/wiki/Category:Association_football",
+          "title": "Wikimedia Commons — player photographs (publish swap target)",
+          "facts": [
+            "Each featured player's publishable portrait is attributed per its individual licence (PD / CC BY / CC BY-SA) before public release"
+          ]
+        }
+      ],
+      "publish_note": "Player portraits in this build are LOCAL-only and publish-gated: swap to the attributed Wikimedia Commons photos before any public release. EA FC ratings are cited third-party values, reproduced for commentary/comparison.",
+      "relates_to": ["det_05", "det_07"],
+      "purpose": "INFORM"
+    }
+  },
+  "live_status": [
+    {
+      "subject": "2026 World Cup group-stage results and group leaders (matchdays 1-2, into early matchday 3)",
+      "as_of": "2026-06-21",
+      "status": "Group stage underway across USA/Canada/Mexico. Mexico clinched Group A (1-0 over South Korea, 18 Jun); USA clinched Group D (4-1 Paraguay 12 Jun, 2-0 Australia 19 Jun); Canada thrashed Qatar 6-0 and Switzerland beat Bosnia 4-1 (both 18 Jun); Brazil 3-0 Haiti (19 Jun) with Morocco topping Group C; Germany 7-1 Curacao and Netherlands 2-2 Japan (14 Jun). Display-only freshness context as of 2026-06-21; NOT a model input.",
+      "source": {
+        "url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket",
+        "title": "2026 FIFA World Cup match schedule: Fixtures, results, features — ESPN",
+        "fetched_at": "2026-06-21T02:04:32Z"
+      },
+      "data_file": "code/live_status_wc_latest.html",
+      "relates_to": [
+        "det_01",
+        "det_04"
+      ]
+    }
+  ]
+}

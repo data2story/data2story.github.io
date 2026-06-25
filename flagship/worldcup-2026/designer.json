@@ -1,0 +1,747 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "media_strategy": {
+      "selection_principle": "All five channels earn a place from the data's properties: charts carry the quantitative spine; real flag/trophy/venue photos give the abstract probabilities concrete subjects; an image2video-animated teaser supplies motion; a quiet thematic score sets the pre-match tension while reading; the explorable champion-odds recompute is the one earned interactive centerpiece, with a host-venue locator map as a light supporting geographic element.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Six findings are quantitative comparisons (a ranked ladder, a rank-gap diverging bar, a value-vs-merit scatter, a model-vs-naive grouped bar, a knife-edge stacked bar, a confederation bar). Charts carry the argument; the explorable's at-rest state is one of them."
+      },
+      "image": {
+        "used": true,
+        "reason": "Real, freely-licensed photos for the concrete real subjects the probabilities resolve to: 6 national flags (top contenders), the real FIFA World Cup Trophy, and real host-venue photos (MetLife/AT&T/Azteca). Real subjects fetched by the Detective; NO AI-faked trophy or stadium."
+      },
+      "video": {
+        "used": true,
+        "reason": "The teaser still (an atmospheric floodlit pitch) is animated with image2video into a 6s muted loop, giving the page motion without fabricating a specific real subject. INFORM is not its job; it sets the opening mood (IMMERSE)."
+      },
+      "audio": {
+        "used": true,
+        "reason": "A short instrumental thematic score (text2music) the reader can play for pre-match tension while reading; reader-controlled, never autoplay, works fully when muted. Default fallback per the audio doctrine (no real single recording belongs to a forecast dataset)."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The CENTERPIECE is an explorable that recomputes champion odds live via the Analyst's client_model (the reader produces the headline). A small Leaflet host-venue map adds the genuine three-country geography as a light supporting element, not a second centerpiece."
+      }
+    },
+    "media_blockers": []
+  },
+  "items": {
+    "des_teaser_img": {
+      "label": "Teaser — atmospheric floodlit pitch (still) [SUPERSEDED, not displayed]",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image_unused",
+        "displayed": false,
+        "filename": "teaser_hero.png",
+        "tool": "text2image",
+        "prompt": "Cinematic editorial still: an empty floodlit football pitch at night from high in an empty stadium, glowing turf, volumetric light beams, deep navy-black sky, a single warm amber accent on the centre circle, no people/logos/text/flags/trophy.",
+        "model": "openai/gpt-5.4-image-2",
+        "generated": {
+          "is_ai": true,
+          "tool": "text2image",
+          "model": "openai/gpt-5.4-image-2",
+          "disclosure": "AI-generated atmospheric still (text2image). No license/SPDX applies — it is a synthetic image, not a re-hosted real photo.",
+          "real_subject": false
+        },
+        "purpose": "IMMERSE",
+        "poster_for": "teaser_motion.mp4"
+      },
+      "brief": "SUPERSEDED stale entry: the original AI text2image teaser still + its image2video animation were retired when the animated hero cover became des_hero_video (the Messi-vs-Mbappe Kling cinemagraph, hero_v5.webm). teaser_hero.png is NOT rendered on the page (no data-des=\"des_teaser_img\" anywhere). Kept only as a build-history record; asset_type marked image_unused + displayed:false so it is no longer treated as a displayed photo. It is AI-generated, so it carries an honest generated{} disclosure block, NOT a fabricated license.",
+      "rationale": "A mood image (not a chart) earns the first screen; an abstract stadium-at-night avoids faking any real venue while setting the pre-match tension. (Retained for provenance history; replaced on-page by des_hero_video.)",
+      "based_on": []
+    },
+    "des_teaser_video": {
+      "label": "Teaser — animated floodlit pitch (image2video)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser_motion.mp4",
+        "tool": "image2video",
+        "source_image": "assets/teaser_hero.png",
+        "prompt": "very slow cinematic parallax push-in toward the centre circle, gentle drift of atmospheric haze and light particles in the floodlight beams, faint flicker of the lights, no camera shake, no people.",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first",
+        "poster": "teaser_hero.png",
+        "purpose": "IMMERSE"
+      },
+      "brief": "6-second muted, looping, playsinline clip that animates the teaser still with a slow push-in. Poster = teaser_hero.png so it degrades to the still if video fails. Headline overlays on a dark scrim.",
+      "rationale": "We already invested in a strong still; image2video preserves the composition while adding the kinetic edge a static hero lacks, and animates a non-specific scene (no real-subject risk).",
+      "based_on": []
+    },
+    "des_soundtrack": {
+      "label": "Pre-match thematic score (reader-controlled)",
+      "type": "audio",
+      "section": "edt_01",
+      "content": {
+        "audio_type": "generated_score",
+        "filename": "bg_score.mp3",
+        "tool": "text2music",
+        "model": "google/lyria-3-pro-preview",
+        "ui_form": "compact play/pause soundtrack control pinned at the very top of the article (in the opening), labelled as ambience",
+        "why_audio": "Sets the anticipatory pre-match tension while the reader works through a long analytical piece.",
+        "autoplay": false,
+        "fallback": "Page reads fully in silence; control shows a muted state and the visual experience is unaffected.",
+        "purpose": "IMMERSE"
+      },
+      "brief": "A small, section-integrated play button at the top (NOT a generic floating widget): label 'Play the pre-match score', restrained instrumental loop. Never autoplay; works when muted. Inherits the dark-editorial type.",
+      "rationale": "Audio's documented default for a dataset with no single real recording is a short thematic background score the reader can choose to play; placed at the top so it can start before reading.",
+      "based_on": []
+    },
+    "des_trophy": {
+      "label": "Real FIFA World Cup Trophy photo",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_trophy.jpg",
+        "source": "Wikimedia Commons (real photo)",
+        "source_url": "https://commons.wikimedia.org/wiki/File:FIFA_World_Cup_Trophy_at_National_Football_Museum,_Manchester_02.jpg",
+        "license": {
+          "spdx": "CC-BY-SA-4.0",
+          "permits_republication": true,
+          "requires_attribution": true,
+          "attribution_text": "Photo: Ank Kumar / Wikimedia Commons (CC BY-SA 4.0). FIFA World Cup Trophy (display replica) at the National Football Museum, Manchester."
+        },
+        "identity": {
+          "method": "vlm_view",
+          "verified": true,
+          "subject": "The real FIFA World Cup Trophy (gold, two figures holding a globe, 'FIFA WORLD CUP' on the malachite base) on a museum stand against a yellow backdrop. Real photograph, not AI."
+        },
+        "caption": "The prize: the real FIFA World Cup Trophy, lifted on 19 July 2026. Photo: Wikimedia Commons (CC BY-SA 4.0).",
+        "purpose": "IMMERSE"
+      },
+      "brief": "In-column framed real photo of the actual trophy, right after the hook, to make the abstract 26.3% concrete. REAL photo (Detective's ref_trophy.jpg) — never an AI render of the trophy.",
+      "rationale": "The real-subject rule: the trophy is a specific real object, so we use a verified real photo, not a generated fake.",
+      "based_on": []
+    },
+    "des_champ_explorable": {
+      "label": "CENTERPIECE — live champion-odds explorable",
+      "type": "interactive",
+      "section": "edt_02",
+      "content": {
+        "interaction_type": "explorable_recompute",
+        "data_source": "ana_01",
+        "client_model": {
+          "file": "code/client_model.js",
+          "fn": "window.WC_MODEL.simulate",
+          "inputs": "(nSims, {team: deltaElo})",
+          "at_rest": "window.WC_MODEL.DATA.championPublished"
+        },
+        "initial_state": "Horizontal bar chart of the PUBLISHED champion odds for the top 14 teams (Argentina 26.3%, Spain 22.2%, France 14.6%, England 9.8%, Colombia 6.2%, Brazil 3.9%, ... ), bars in the accent colour, Argentina highlighted. A caption reads 'These are the model's published numbers. Now change one.'",
+        "controls": [
+          "dropdown: pick a team (default Argentina)",
+          "range slider: that team's Elo delta, -150 to +150 (step 10), labelled 'weaker <-> stronger', default 0",
+          "button: 'Re-run 30,000 simulations'",
+          "reset link: 'back to published odds'"
+        ],
+        "trigger": "On 'Re-run' (or debounced slider release): call window.WC_MODEL.simulate(30000, {teamName: delta}); show a brief spinner (~0.8s).",
+        "transition": "Bars animate (D3 transition ~700ms) from the current distribution to the recomputed one; each bar shows its new % and a small delta chip vs the published value (e.g. 'Argentina 10.3% (-16.0)'). Re-sort bars by new probability.",
+        "payoff": "Pull Argentina down ~100 Elo and Spain overtakes it as favourite — the reader has produced the finding that the 26.3% is contingent on the model's inputs, not a fixed fact. At rest it shows the exact published odds; on interaction it shows 'your scenario vs the model'.",
+        "degradation": "If JS is off, a static Vega-Lite bar chart of the published champion odds (ana_01 data_table) renders in the same slot, so the section still makes its point.",
+        "a11y": "Slider and dropdown keyboard-operable; button is a real <button>; bars have accessible labels."
+      },
+      "brief": "The one earned centerpiece. Inline client_model.js; at rest = published odds, on interact = live Monte-Carlo recompute with animated bars and deltas. Place at the reveal in edt_02. Tag data-des + data-ana=ana_01.",
+      "rationale": "A model-derived headline almost always wants an explorable (interaction_playbook): the reader runs the actual model that made the number and watches the favourite change, which is far stronger than a passive bar chart.",
+      "based_on": [
+        "ana_01"
+      ]
+    },
+    "des_champ_static": {
+      "label": "Champion odds — static ladder (degradation + print)",
+      "type": "chart",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "horizontal_bar",
+        "data_source": "ana_01",
+        "x": "p_champion_pct",
+        "y": "team",
+        "highlight": {
+          "team": "Argentina"
+        },
+        "interaction": "hover tooltip: exact champion % and reach-final %",
+        "style": {
+          "no_gridlines": true,
+          "accent_bar": true,
+          "sort": "descending"
+        }
+      },
+      "brief": "The no-JS fallback AND the canonical at-rest view inside the explorable: 14-team descending bar chart of published champion odds, Argentina in accent. Data from ana_01 data_table.",
+      "rationale": "Guarantees the centerpiece degrades gracefully and gives the at-rest state a clean canonical chart.",
+      "based_on": [
+        "ana_01"
+      ]
+    },
+    "des_health_chart": {
+      "label": "Model vs naive — grouped bar (the honesty beat)",
+      "type": "chart",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "grouped_bar",
+        "data_source": "ana_06",
+        "x": "test",
+        "y": "log_loss",
+        "series": [
+          "model_log_loss",
+          "naive_log_loss"
+        ],
+        "annotation": "Label the 8000-game pair 'model clearly ahead' and the 28-game pair 'dead heat'. Lower is better.",
+        "interaction": "hover tooltip: exact log-loss + accuracy for model and naive",
+        "style": {
+          "no_gridlines": true,
+          "two_series_accent_vs_muted": true
+        }
+      },
+      "brief": "Two side-by-side groups (8000-game test, 28-game test), each with model vs naive log-loss bars; annotate that the model wins big on 8000 but ties on 28. Data from ana_06 data_table.",
+      "rationale": "Showing both bars together makes the honest 'sound long-run, noisy short-run' point visually, instead of hiding the tie in prose.",
+      "based_on": [
+        "ana_06"
+      ]
+    },
+    "des_rankgap_chart": {
+      "label": "Model vs FIFA rank — diverging bar",
+      "type": "chart",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "diverging_bar",
+        "data_source": "ana_02",
+        "x": "rank_gap",
+        "y": "team",
+        "highlight": {
+          "team": [
+            "Norway",
+            "Colombia",
+            "Portugal",
+            "Morocco"
+          ]
+        },
+        "annotation": "Right = model rates higher than FIFA; left = lower; zero line for agreement. Annotate Norway (+21) and Colombia (+8).",
+        "interaction": "hover tooltip: FIFA rank, model rank, champ %",
+        "style": {
+          "no_gridlines": true,
+          "diverging_two_tone": true,
+          "zero_rule": true
+        }
+      },
+      "brief": "Diverging horizontal bars for the 14 contenders, sorted by rank_gap (FIFA# - model#); positive bars one tone, negative another, zero line marked. Highlight Norway/Colombia (up) and Morocco/Portugal (down). Data from ana_02 data_table.",
+      "rationale": "A diverging bar is the natural encoding for 'who the model upgrades vs downgrades relative to the official ranking' — the section's whole argument.",
+      "based_on": [
+        "ana_02"
+      ]
+    },
+    "des_flags_strip": {
+      "label": "Real flags of the disagreement teams",
+      "type": "asset",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image_set",
+        "filenames": [
+          "flag_norway.png",
+          "flag_colombia.png",
+          "flag_portugal.png",
+          "flag_argentina.png",
+          "flag_spain.png",
+          "flag_france.png",
+          "flag_england.png",
+          "flag_brazil.png"
+        ],
+        "source": "Wikimedia Commons (real, public domain)",
+        "license": {
+          "spdx": "Public Domain",
+          "permits_republication": true,
+          "requires_attribution": false,
+          "attribution_text": "National flag images via Wikimedia Commons (Public Domain — national flags are not subject to copyright)."
+        },
+        "identity": {
+          "method": "vlm_view",
+          "verified": true,
+          "subject": "Generic — the official national flags of Norway, Colombia, Portugal, Argentina, Spain, France, England and Brazil. Real flag images, not AI."
+        },
+        "layout": "small framed flag chips inline near the diverging-bar chart, captioned with each team's FIFA# -> model# move",
+        "purpose": "INFORM"
+      },
+      "brief": "A compact strip of real national flags for the teams in the disagreement story (Norway, Colombia, Portugal as the leads), each captioned with its rank move. Real flags from the Detective; gives the names faces.",
+      "rationale": "Flags are the concrete identity of the abstract rank-gap numbers; real, public-domain images (never fabricated).",
+      "based_on": [
+        "ana_02"
+      ]
+    },
+    "des_money_chart": {
+      "label": "Money vs merit — value-vs-semifinal scatter",
+      "type": "chart",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "scatter",
+        "data_source": "ana_03",
+        "x": "squad_value_eur_m",
+        "y": "p_reach_sf_pct",
+        "label": "team",
+        "highlight": {
+          "team": [
+            "France",
+            "Colombia",
+            "Australia",
+            "Portugal"
+          ]
+        },
+        "annotation": "Up-and-left = great value (cheap, deep run); down-and-right = expensive underperformer. Label France, Colombia, Australia, Portugal.",
+        "interaction": "hover tooltip: squad value, reach-SF %, EUR per SF-point",
+        "style": {
+          "no_gridlines": false,
+          "point_labels": true
+        }
+      },
+      "brief": "Scatter of squad market value (x, EUR m) vs reach-semifinal probability (y, %), point labels on the 11 plotted teams; annotate the value gap between France (expensive) and Colombia/Australia (efficient). Data from ana_03 data_table.",
+      "rationale": "A scatter is the clearest way to show value vs merit as two axes and let the over/under-valued teams fall out spatially.",
+      "based_on": [
+        "ana_03"
+      ]
+    },
+    "des_knife_chart": {
+      "label": "The knife-edge — stacked qualification bar",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "stacked_bar",
+        "data_source": "ana_04",
+        "x": "p_reach_r32_pct",
+        "y": "team",
+        "stack": [
+          "p_advance_top2_pct",
+          "p_best_third_pct"
+        ],
+        "annotation": "Show the locked-in elite at ~100% and the knife-edge teams at 40-60%; split each bar into the auto-top-2 path and the best-third path.",
+        "interaction": "hover tooltip: reach-R32 %, top-2 path %, best-third path %",
+        "style": {
+          "no_gridlines": true,
+          "two_segment_stack": true
+        }
+      },
+      "brief": "Horizontal stacked bars: each team's reach-R32 probability split into 'finish top 2' and 'sneak through as a best third', for the locked-in elite plus the nine knife-edge teams. Data from ana_04 data_table.",
+      "rationale": "Stacking the two qualification paths shows WHY the knife-edge teams are uncertain (they lean on the best-third lottery), not just that they are.",
+      "based_on": [
+        "ana_04"
+      ]
+    },
+    "des_venue_map": {
+      "label": "Host-venue locator map (three countries)",
+      "type": "interactive",
+      "section": "edt_06",
+      "content": {
+        "interaction_type": "map",
+        "library": "leaflet",
+        "tiles": "CARTO dark (dark_all)",
+        "markers": [
+          {
+            "name": "MetLife Stadium (Final, 19 Jul 2026)",
+            "lat": 40.8135,
+            "lon": -74.0745,
+            "note": "2026 World Cup final venue",
+            "accent": true
+          },
+          {
+            "name": "AT&T Stadium, Arlington",
+            "lat": 32.7473,
+            "lon": -97.0945,
+            "note": "Host venue"
+          },
+          {
+            "name": "Estadio Azteca, Mexico City",
+            "lat": 19.3029,
+            "lon": -99.1505,
+            "note": "Only ground to host three men's World Cups"
+          }
+        ],
+        "data_source": null,
+        "purpose": "INFORM"
+      },
+      "brief": "A small dark-tiled Leaflet map (fixed ~420px height) marking three real host venues across the USA and Mexico, with the final venue in accent. Popups name each venue. Coordinates are real; not a fabricated map.",
+      "rationale": "The tournament's genuine three-country geography is a real fact worth a light locator map; it is a supporting element, distinct from the explorable centerpiece.",
+      "based_on": []
+    },
+    "des_confed_chart": {
+      "label": "Title chance by confederation — bar",
+      "type": "chart",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_05",
+        "x": "confederation",
+        "y": "p_champion_total_pct",
+        "highlight": {
+          "confederation": [
+            "UEFA",
+            "CONMEBOL"
+          ]
+        },
+        "annotation": "Annotate that UEFA + CONMEBOL = 94.2% of all title probability.",
+        "interaction": "hover tooltip: exact total %",
+        "style": {
+          "no_gridlines": true,
+          "accent_top_two": true
+        }
+      },
+      "brief": "Simple descending bar of total championship probability by confederation (UEFA 56.4%, CONMEBOL 37.9%, then the rest), top two in accent, with the 94.2% annotation. Data from ana_05 data_table.",
+      "rationale": "A small bar closes the geography point cleanly without competing with the centerpiece.",
+      "based_on": [
+        "ana_05"
+      ]
+    },
+    "des_venue_photo": {
+      "label": "Real host-venue photo (MetLife, final venue)",
+      "type": "asset",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_metlife.jpg",
+        "source": "Wikimedia Commons (real photo)",
+        "license": {
+          "spdx": "CC-BY-2.0",
+          "permits_republication": true,
+          "requires_attribution": true,
+          "attribution_text": "Photo: Wikimedia Commons (CC BY 2.0). MetLife Stadium, East Rutherford — venue of the 2026 World Cup final."
+        },
+        "identity": {
+          "method": "vlm_view",
+          "verified": true,
+          "subject": "Interior of MetLife Stadium, East Rutherford: an empty bowl with tiers of grey seats and a green field. Real photograph, not AI."
+        },
+        "caption": "MetLife Stadium, East Rutherford — venue of the 2026 final. Photo: Wikimedia Commons (CC BY 2.0).",
+        "purpose": "IMMERSE"
+      },
+      "brief": "One real photo of the final venue beside the closing geography section, framed in-column with caption. REAL photo (Detective's ref_metlife.jpg).",
+      "rationale": "Grounds the closing 'where the trophy gets decided' note in the real final venue; real subject, real photo.",
+      "based_on": []
+    },
+    "des_anthem": {
+      "label": "Official 2026 World Cup anthem 'DNA' (FIFA embed)",
+      "type": "audio",
+      "section": "edt_01",
+      "media_ref": "sct_02",
+      "content": {
+        "audio_type": "embed",
+        "embed_type": "youtube",
+        "media_ref": "sct_02",
+        "why_audio": "The official tournament anthem is the one real, experienceable piece of music tied to the 2026 World Cup; it sits beside the reader-controlled ambience score at the top as the genuine-article counterpart.",
+        "ui_form": "A small framed, click-to-play YouTube iframe in the opening, sized 16:9 and capped narrow, with a one-line caption. Never autoplay.",
+        "autoplay": false,
+        "fallback": "If the embed is blocked, the caption still names the anthem and FIFA's channel; the page reads fully without it.",
+        "purpose": "IMMERSE"
+      },
+      "brief": "A compact official-anthem element next to the soundtrack control: FIFA's own YouTube player for 'DNA' embedded verbatim from Scout (sct_02). Scout-verified embed; its license/identity live in scout.json, not duplicated here. Tag data-des=des_anthem data-sct=sct_02.",
+      "rationale": "An embed (not a re-hosted file) is the right form for a copyrighted official track: the platform player carries its own rights, and it adds the one real soundtrack a forecast dataset otherwise lacks. Referenced via media_ref to the Scout's verified sct_02.",
+      "based_on": []
+    },
+    "des_messi": {
+      "label": "Verified Lionel Messi photo (Argentina captain)",
+      "type": "asset",
+      "section": "edt_04",
+      "media_ref": "sct_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_messi.jpg",
+        "tool": "scout_fetch",
+        "media_ref": "sct_03",
+        "purpose": "INFORM"
+      },
+      "brief": "In-column framed real photo of Lionel Messi beside the FIFA-rank-vs-model section, where Argentina tops both ladders. Scout-verified, public-domain photo (sct_03) — filename copied verbatim; license/identity live in scout.json. Tag data-des=des_messi data-sct=sct_03 on both the figure and the img.",
+      "rationale": "Gives the abstract 'model's top title pick' a human face: Argentina's captain. A verified real photo (Scout's vlm-checked scout_messi.jpg), never an AI render of a real person. Referenced via media_ref to sct_03.",
+      "based_on": []
+    },
+    "des_mbappe": {
+      "label": "Verified Kylian Mbappé photo (France, hero face)",
+      "type": "asset",
+      "section": "edt_01",
+      "media_ref": "sct_mbappe",
+      "content": {
+        "asset_type": "image",
+        "filename": "player_mbappe.jpg",
+        "tool": "scout_fetch",
+        "media_ref": "sct_mbappe",
+        "purpose": "IMMERSE"
+      },
+      "brief": "Real photo of Kylian Mbappé used as the hero face. Scout-verified, CC-BY-SA-4.0 (sct_mbappe) — filename copied verbatim; licence/identity live in scout.json. Tag data-des=des_mbappe data-sct=sct_mbappe on the figure and the img.",
+      "rationale": "Puts a real, verified human face on the hero; never an AI render of a real person. Referenced via media_ref to sct_mbappe.",
+      "based_on": [],
+      "_resolved": "Attribution resolved: author is Sandro Halank (confirmed against the Wikimedia Commons parent file, whose filename embeds 'by_Sandro_Halank'). Canonical credit: Sandro Halank, CC BY-SA 4.0, via Wikimedia Commons."
+    },
+    "des_bg_trophy_gold": {
+      "label": "Cinematic background — gold World-Cup-style trophy at golden hour",
+      "type": "asset",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "assets/bg_trophy_gold.jpg",
+        "source": "Unsplash",
+        "source_url": "https://unsplash.com/photos/a-golden-soccer-trophy-sitting-on-top-of-a-field-bdJ8Kxaz-mQ",
+        "license": {
+          "spdx": "Unsplash-License",
+          "permits_republication": true,
+          "requires_attribution": false,
+          "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). A gold World-Cup-style trophy on a pitch at golden hour."
+        },
+        "identity": {"method": "vlm_view", "verified": true, "subject": "A gold FIFA-World-Cup-style trophy (two figures holding a globe, green malachite base) on pitch grass beside a goalpost at golden hour, shallow DoF. Real photograph (replica), not AI."},
+        "purpose": "IMMERSE"
+      },
+      "brief": "Pinned cinematic background behind the hook beat (cin_01). Migrated from cinematic_imagery_manifest.json. (A real trophy-replica photo, distinct from the real museum trophy ref_trophy.jpg.)",
+      "rationale": "The prize itself behind the 30.8% hook; real, license-clean Unsplash photo.",
+      "based_on": []
+    },
+    "des_bg_stadium_day_aerial": {
+      "label": "Cinematic background — daytime stadium aerial (Suncorp, Brisbane)",
+      "type": "asset",
+      "section": "edt_predictor",
+      "content": {
+        "asset_type": "image",
+        "filename": "assets/bg_stadium_day_aerial.jpg",
+        "source": "Unsplash",
+        "source_url": "https://unsplash.com/photos/aerial-photography-of-stadium-during-daytime-2rwMHOHZG2M",
+        "license": {
+          "spdx": "Unsplash-License",
+          "permits_republication": true,
+          "requires_attribution": false,
+          "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Daytime drone aerial of Suncorp Stadium, Brisbane."
+        },
+        "identity": {"method": "vlm_view", "verified": true, "subject": "Daytime aerial drone photo of a modern football stadium (Suncorp Stadium, Brisbane). Real photograph, not AI."},
+        "purpose": "IMMERSE"
+      },
+      "brief": "Pinned full-bleed cinematic scroll background behind the predictor beat (cin_02). Registered here so its provenance is verifiable from the role JSONs (migrated from cinematic_imagery_manifest.json).",
+      "rationale": "Establishing daytime stadium for the single-match predictor; real, license-clean Unsplash photo.",
+      "based_on": []
+    },
+    "des_bg_ball_pitch": {
+      "label": "Cinematic background — ball on the pitch (ground-level)",
+      "type": "asset",
+      "section": "ratings",
+      "content": {
+        "asset_type": "image",
+        "filename": "assets/bg_ball_pitch.jpg",
+        "source": "Pexels",
+        "source_url": "https://www.pexels.com/photo/46798/",
+        "license": {
+          "spdx": "Pexels-License",
+          "permits_republication": true,
+          "requires_attribution": false,
+          "attribution_text": "Photo via Pexels (Pexels License - free commercial use, no attribution required). Generic football on a pitch; no recognisable real players."
+        },
+        "identity": {"method": "vlm_view", "verified": true, "subject": "A football resting on green pitch grass with an empty grandstand and goal behind it, low ground-level angle. Generic - no players. Real photograph, not AI."},
+        "purpose": "IMMERSE"
+      },
+      "brief": "Pinned cinematic background behind the player-ratings beat (cin_04). Migrated from cinematic_imagery_manifest.json.",
+      "rationale": "The ball on the grass under the individual player ability cards; generic, real, license-clean.",
+      "based_on": []
+    },
+    "des_bg_city_nyc_goldenhour": {
+      "label": "Cinematic background — golden-hour Manhattan skyline",
+      "type": "asset",
+      "section": "edt_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "assets/bg_city_nyc_goldenhour.jpg",
+        "source": "Unsplash",
+        "source_url": "https://unsplash.com/photos/5bbqroEE_xM",
+        "license": {
+          "spdx": "Unsplash-License",
+          "permits_republication": true,
+          "requires_attribution": false,
+          "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Golden-hour Manhattan skyline (New York is a 2026 World Cup host city; the final is at nearby MetLife Stadium)."
+        },
+        "identity": {"method": "vlm_view", "verified": true, "subject": "Golden-hour Manhattan skyline (Empire State Building and Chrysler Building) over the Hudson River. Real photograph, not AI."},
+        "purpose": "IMMERSE"
+      },
+      "brief": "Calm/analytical pinned background behind the money-vs-merit beat (cin_07). Migrated from cinematic_imagery_manifest.json.",
+      "rationale": "Host-city skyline of the transfer-market money; a calm skyline so the scatter reads cleanly.",
+      "based_on": []
+    },
+    "des_bg_empty_seats_analytical": {
+      "label": "Cinematic background — empty stadium seats (calm analytical)",
+      "type": "asset",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "assets/bg_empty_seats_analytical.jpg",
+        "source": "Unsplash",
+        "source_url": "https://unsplash.com/photos/empty-stadium-seats-arranged-in-a-row-atHbrQaEzx4",
+        "license": {
+          "spdx": "Unsplash-License",
+          "permits_republication": true,
+          "requires_attribution": false,
+          "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Moody empty-stadium seating, used as a calm 'analytical' backdrop for chart-heavy beats."
+        },
+        "identity": {"method": "vlm_view", "verified": true, "subject": "Sweeping rows of empty stadium seats in high-contrast black and white, strong curved geometry, no crowd. Real photograph, not AI."},
+        "purpose": "IMMERSE"
+      },
+      "brief": "Calmest/analytical pinned background; reused behind both the why-believe (cin_08) and scorecard (cin_scorecard) beats. Migrated from cinematic_imagery_manifest.json.",
+      "rationale": "Quiet, darker analytical backdrop for the chart-heavy validation/scorecard beats.",
+      "based_on": []
+    },
+    "des_hero_video": {
+      "label": "Hero — AI cinemagraph (Messi vs Mbappe face-off)",
+      "type": "asset",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "assets/hero_v5.webm",
+        "poster": "assets/hero_v5.jpg",
+        "tool": "image2video",
+        "image_tool": "text2image google/gemini-3.1-flash-image-preview (Nano Banana 2)",
+        "model": "kwaivgi/kling-v3.0-std",
+        "prompt": "Ultra-realistic premium FIFA/ESPN/Nike-style cinematic sports poster, 16:9: a single continuous seamless face-off — Lionel Messi (Argentina kit) left, Kylian Mbappe (France kit) right; cinemagraph motion (faces held still, flags/smoke/floodlights move); seamless boomerang loop.",
+        "loop": "boomerang",
+        "disclosure": "AI-generated cinemagraph cover; the two real players' likenesses are stylised in a generated poster, faces held still (no fabricated speech/action). Disclosed in the page credits.",
+        "purpose": "IMMERSE"
+      },
+      "brief": "The animated hero cover, pinned as cinematic scene 0 (cin_00). Reuses data-des on the .teaser overlay. Migrated from verify_map (kind:generated).",
+      "rationale": "An animated cinemagraph cover earns the first screen on a visual, emotional topic; faces held still to avoid fabricating action.",
+      "based_on": []
+    },
+    "des_hist_favourite_chart": {
+      "label": "Argentina 30.8% vs the long-run favourite win-rate (bar)",
+      "type": "chart",
+      "section": "edt_histbase",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_histbase",
+        "x": "series",
+        "y": "value_pct",
+        "annotation": "Argentina's model 30.8% against the ~23% long-run favourite hit-rate (+7.8pp).",
+        "style": {"no_gridlines": true, "accent_bar": true}
+      },
+      "brief": "Two-bar comparison: Argentina's 30.8% model champion odds vs the ~23% historical favourite hit-rate. Data from ana_histbase (build_historical.py).",
+      "rationale": "Anchors 'is 30.8% a lot?' against the long-run favourite base rate.",
+      "based_on": ["ana_histbase"]
+    },
+    "des_hist_champions_chart": {
+      "label": "Eight nations, 22 trophies — champions by nation (bar)",
+      "type": "chart",
+      "section": "edt_histbase",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_histbase",
+        "x": "titles",
+        "y": "nation",
+        "annotation": "Brazil 5, Italy 4, Germany 4; top three hold 13/22 (59%).",
+        "style": {"no_gridlines": true, "sort": "descending"}
+      },
+      "brief": "Horizontal bar of men's World Cup titles by nation (eight winners). Data from ana_histbase (build_historical.py).",
+      "rationale": "Shows how concentrated WC success has historically been — the backdrop to a 30.8% favourite.",
+      "based_on": ["ana_histbase"]
+    },
+    "des_predictor": {
+      "label": "Single-match predictor (published strengths)",
+      "type": "interactive",
+      "section": "edt_predictor",
+      "content": {
+        "interaction_type": "match_predictor",
+        "data_source": "ana_01",
+        "client_model": {"file": "code/client_model.js", "fn": "window.WC_MODEL.simulate", "at_rest": "window.WC_MODEL.DATA.championPublished"},
+        "initial_state": "Pick two of the 48 teams; the predictor returns the head-to-head win/draw/win probabilities from the same Elo->Poisson model that produces the published champion odds (Argentina 30.8% at rest).",
+        "degradation": "Static published champion ladder (ana_01) if JS is off.",
+        "purpose": "INFORM"
+      },
+      "brief": "Reader-driven single-match predictor riding on the published model (ana_01 / client_model.js). Supporting interactive, distinct from the champion-odds explorable centerpiece.",
+      "rationale": "Lets the reader run any pairing through the same model that made the headline.",
+      "based_on": ["ana_01"]
+    },
+    "des_goals_goldenboot_chart": {
+      "label": "Golden-boot race — goals so far (bar)",
+      "type": "chart",
+      "section": "edt_goals",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_goals",
+        "x": "goals",
+        "y": "player",
+        "highlight": {"player": "Lionel Messi"},
+        "annotation": "Messi 5; Haaland and Mbappe 4.",
+        "style": {"no_gridlines": true, "sort": "descending"}
+      },
+      "brief": "Horizontal bar of the 2026 golden-boot leaders. Data from ana_goals (build_goals.py).",
+      "rationale": "The scoring race is the concrete human face of the goals beat.",
+      "based_on": ["ana_goals"]
+    },
+    "des_goals_byminute_chart": {
+      "label": "When 2026 goals are scored — by minute (bar)",
+      "type": "chart",
+      "section": "edt_goals",
+      "content": {
+        "chart_type": "bar",
+        "data_source": "ana_goals",
+        "x": "bucket",
+        "y": "pct",
+        "annotation": "Peak 31-45 (18.7%); 25.9% from the 76th minute on; 10.8% in stoppage time.",
+        "style": {"no_gridlines": true}
+      },
+      "brief": "Goals-by-15-minute-window bar showing the late-drama pattern. Data from ana_goals (build_goals.py).",
+      "rationale": "Visualises 'goals arrive late' — the striking pattern of the tournament so far.",
+      "based_on": ["ana_goals"]
+    },
+    "des_ratings_grid": {
+      "label": "Player ability cards grid (EA Sports FC ratings — cited)",
+      "type": "asset",
+      "section": "ratings",
+      "content": {
+        "asset_type": "data_table",
+        "data_source": null,
+        "source": "EA Sports FC 26 (cited; see sct_04)",
+        "note": "Overall + six face stats are EA's published third-party values, cited not computed; only the deep-run/champion odds beside each card come from the model.",
+        "purpose": "INFORM"
+      },
+      "brief": "Grid of EA-FC-style player ability cards. The ratings are CITED third-party values (sct_04 credits), not our computation. Tag data-des=des_ratings_grid; the cited provenance lives in sct_04 / verify_map fact entry.",
+      "rationale": "EA FC ratings give the abstract odds recognisable star faces; cited, not modelled.",
+      "based_on": []
+    },
+    "des_stars_chart": {
+      "label": "Stars vs deep run — EA overall against team reach-semifinal odds (scatter)",
+      "type": "chart",
+      "section": "ratings",
+      "content": {
+        "chart_type": "scatter",
+        "data_source": "ana_01",
+        "x": "ea_overall",
+        "y": "p_reach_sf_pct",
+        "label": "player",
+        "annotation": "Star rating (EA, cited) vs the model's team deep-run odds (ana_01). Highest EA overall: Mbappe 91.",
+        "style": {"point_labels": true}
+      },
+      "brief": "Scatter of each featured player's EA overall (x, cited from sct_04) against their team's model reach-semifinal probability (y, from ana_01). Only the y-axis odds are ours.",
+      "rationale": "Tests whether the biggest individual names sit on the deepest-running teams.",
+      "based_on": ["ana_01"]
+    },
+    "des_shootout_evaporate_chart": {
+      "label": "When penalties decide it, the favourite's edge nearly vanishes (line)",
+      "type": "chart",
+      "section": "edt_shootouts",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_shootouts",
+        "x": "min_abs_elo_gap",
+        "y": "fav_win_pct",
+        "annotation": "Favourite shootout win-rate stays ~53-56% even as the Elo gap widens, far below the 66-79% expected in regulation.",
+        "style": {"no_gridlines": true, "reference_line": 50}
+      },
+      "brief": "Line of favourite shootout win-rate vs Elo-gap threshold, against the regulation-expected line. Data from ana_shootouts (build_shootouts.py).",
+      "rationale": "Shows the favourite's normal-play edge collapsing toward a coin flip in shootouts.",
+      "based_on": ["ana_shootouts"]
+    }
+  },
+  "page_rhythm": {
+    "theme": "editorial_dark",
+    "accent": "#2bd9b4",
+    "accent_reason": "A pitch/turf-derived teal-green accent ties the dark cinematic editorial theme to the football subject without resorting to a national colour that would imply a favourite.",
+    "tone": "Premium, restrained data-journalism; dark cinematic background, serif display + serif body, system-ui for UI/labels.",
+    "text_visual_pattern": "Hook (mood video + trophy photo) -> the explorable centerpiece as the single visual climax in edt_02 -> alternating chart/prose beats, with real flags and a venue map/photo breaking analytical density -> small closing bar.",
+    "centrepiece": "des_champ_explorable",
+    "anti_sameness_notes": "Avoid the generic chart-after-chart rhythm: the page peaks on a hands-on explorable, not a static hero stat; charts vary (bar, grouped bar, diverging bar, scatter, stacked bar, plain bar) and are interleaved with real photos and a map. No purple-gradient hero, no center-everything template, no floating audio widget — the soundtrack is a small inline top control.",
+    "typography_notes": "Headline in large serif over a dark scrim on the teaser video; section titles in serif; stat emphases (26.3%) at ~56-64px in accent; captions in small system-ui muted; charts use the teal accent for the highlighted datum and muted greys elsewhere (never raw Vega palettes)."
+  }
+}

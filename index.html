@@ -435,6 +435,238 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ═══════════ Flagship Stories (dark cinematic band) ═══════════ */
+.flagship-band {
+  --fl-bg:    #12100e;
+  --fl-surf:  #1b1814;
+  --fl-ink:   #efe6d6;
+  --fl-muted: #a89a83;
+  --fl-line:  #332d23;
+  --fl-gold:  #c9a227;
+  --fl-gold-dim: #9a7d1e;
+
+  position: relative;
+  width: 100%;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(201,162,39,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 60% at 80% 100%, rgba(201,162,39,0.05) 0%, transparent 60%),
+    var(--fl-bg);
+  color: var(--fl-ink);
+  padding: 4.5rem 1.5rem 5rem;
+  border-top: 1px solid var(--fl-gold-dim);
+  border-bottom: 1px solid var(--fl-gold-dim);
+  overflow: hidden;
+}
+/* soft inner vignette to seat the band */
+.flagship-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 140px rgba(0,0,0,0.55);
+}
+.flagship-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.flagship-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+.flagship-kicker {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--fl-gold);
+  margin-bottom: 0.85rem;
+}
+.flagship-header h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--fl-ink);
+  margin-bottom: 0.7rem;
+}
+.flagship-lede {
+  font-size: clamp(0.95rem, 1.6vw, 1.08rem);
+  color: var(--fl-muted);
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.flagship-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 1.75rem;
+  /* single card shouldn't stretch ugly — cap + center */
+  max-width: 760px;
+  margin: 0 auto;
+}
+/* once 2+ cards ship, let the grid use full width */
+.flagship-grid.multi { max-width: 1180px; }
+
+.fl-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--fl-surf);
+  border: 1px solid var(--fl-line);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--fl-ink);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.fl-card:hover,
+.fl-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: var(--fl-gold-dim);
+  box-shadow: 0 22px 55px rgba(0,0,0,0.55), 0 0 26px rgba(201,162,39,0.18);
+}
+.fl-card:focus-visible {
+  outline: 2px solid var(--fl-gold);
+  outline-offset: 3px;
+}
+
+.fl-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #0c0a08;
+}
+.fl-media video,
+.fl-media img.fl-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+.fl-card:hover .fl-media video,
+.fl-card:focus-visible .fl-media video,
+.fl-card:hover .fl-media img.fl-poster,
+.fl-card:focus-visible .fl-media img.fl-poster {
+  transform: scale(1.045);
+  filter: brightness(1.08);
+}
+/* gradient scrim so the badge + edges read on bright frames */
+.fl-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(8,6,4,0.35) 0%, transparent 28%, transparent 72%, rgba(8,6,4,0.45) 100%);
+}
+
+.fl-badge {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #1a1408;
+  background: linear-gradient(135deg, #e0bd45, var(--fl-gold));
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 4px 11px;
+  border-radius: 100px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+}
+
+.fl-body {
+  padding: 1.4rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.fl-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--fl-ink);
+}
+.fl-desc {
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--fl-muted);
+}
+.fl-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+.fl-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.63rem;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  color: var(--fl-gold);
+  background: rgba(201,162,39,0.08);
+  border: 1px solid rgba(201,162,39,0.22);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.fl-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.3rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--fl-line);
+}
+.fl-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  color: var(--fl-muted);
+}
+.fl-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--fl-gold);
+}
+.fl-cta .arrow { transition: transform 0.2s ease; }
+.fl-card:hover .fl-cta .arrow,
+.fl-card:focus-visible .fl-cta .arrow { transform: translateX(4px); }
+
+@media (max-width: 720px) {
+  .flagship-band { padding: 3.25rem 1.1rem 3.75rem; }
+  .flagship-grid { grid-template-columns: 1fr; max-width: 480px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fl-card,
+  .fl-media video,
+  .fl-media img.fl-poster,
+  .fl-cta .arrow { transition: none; }
+  .fl-card:hover,
+  .fl-card:focus-visible { transform: none; }
+  .fl-card:hover .fl-media video,
+  .fl-card:hover .fl-media img.fl-poster { transform: none; filter: none; }
+}
 </style>
 </head>
 <body>
@@ -475,6 +707,20 @@ body {
       <a class="btn" href="https://github.com/QinghongLin/data2story-skill" target="_blank" rel="noopener"><span class="ico">&#128187;</span> Code</a>
       <a class="btn primary" href="#gallery"><span class="ico">&#128218;</span> Gallery</a>
     </div>
+  </div>
+</section>
+
+<!-- ═══════════ FLAGSHIP STORIES (dark cinematic band) ═══════════ -->
+<section class="flagship-band" id="flagship" aria-labelledby="flagship-title">
+  <div class="flagship-inner">
+    <div class="flagship-header fade-in">
+      <div class="flagship-kicker">&#10022; Flagship</div>
+      <h2 id="flagship-title">Flagship Stories</h2>
+      <p class="flagship-lede">
+        Our most ambitious data stories &mdash; cinematic, interactive, and auditable end to end.
+      </p>
+    </div>
+    <div class="flagship-grid" id="flagship-grid"></div>
   </div>
 </section>
 
@@ -747,6 +993,78 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<script>
+/* ── Flagship Stories ── append a new object here to add a flagship ── */
+const flagship = [
+  {
+    title: "Who Will Win the 2026 World Cup?",
+    desc: "The first 48-team World Cup, forecast end to end — an Elo-to-Monte-Carlo model that, as of 23 June, makes Argentina the favourite at just 31%, and that you can re-run, line by line, in your browser.",
+    meta: "Jun 2026 · 23k+ internationals · Elo → Poisson → Monte-Carlo",
+    badge: "Flagship",
+    dir: "flagship/worldcup-2026",
+    href: "flagship/worldcup-2026/index.html",
+    poster: "flagship/worldcup-2026/assets/hero_v5.jpg",
+    video: [
+      "flagship/worldcup-2026/assets/teaser_card.webm",
+      "flagship/worldcup-2026/assets/teaser_card.mp4"
+    ],
+    tags: ["world-cup", "forecast", "interactive", "verifiable"]
+  }
+];
+
+(function renderFlagship() {
+  const grid = document.getElementById('flagship-grid');
+  if (!grid) return;
+
+  const prefersReduced = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  grid.innerHTML = flagship.map(f => {
+    const media = prefersReduced
+      ? `<img class="fl-poster" src="${f.poster}" alt="" loading="lazy">`
+      : `<video class="fl-video" autoplay muted loop playsinline preload="none"
+                poster="${f.poster}" aria-hidden="true">
+           <source src="${f.video[0]}" type="video/webm">
+           <source src="${f.video[1]}" type="video/mp4">
+         </video>`;
+    return `
+    <a class="fl-card fade-in" href="${f.href}" aria-label="${f.title} — explore this flagship story">
+      <div class="fl-media">
+        <span class="fl-badge">&#10022; ${f.badge}</span>
+        ${media}
+      </div>
+      <div class="fl-body">
+        <h3 class="fl-title">${f.title}</h3>
+        <p class="fl-desc">${f.desc}</p>
+        <div class="fl-tags">
+          ${f.tags.map(t => `<span class="fl-tag">${t}</span>`).join('')}
+        </div>
+        <div class="fl-foot">
+          <span class="fl-meta">${f.meta}</span>
+          <span class="fl-cta">Explore <span class="arrow">&rarr;</span></span>
+        </div>
+      </div>
+    </a>`;
+  }).join('');
+
+  if (flagship.length > 1) grid.classList.add('multi');
+
+  // make freshly-rendered cards visible even before the IO observer fires,
+  // and ensure their videos start playing regardless of fade state.
+  requestAnimationFrame(() => {
+    grid.querySelectorAll('.fl-card.fade-in').forEach(el => {
+      setTimeout(() => el.classList.add('visible'), 50);
+    });
+    if (!prefersReduced) {
+      grid.querySelectorAll('video.fl-video').forEach(v => {
+        const p = v.play();
+        if (p && typeof p.catch === 'function') p.catch(() => {});
+      });
+    }
+  });
+})();
 </script>
 
 </body>

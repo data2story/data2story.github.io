@@ -1,0 +1,12 @@
+[
+  {
+    "label": "wc-latest",
+    "url": "https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket",
+    "fetched_at": "2026-06-21T02:04:32Z",
+    "as_of": "2026-06-21",
+    "content_type": "text/html;charset=UTF-8",
+    "bytes": 169241,
+    "local_path": "live_status_wc_latest.html",
+    "status": "ok"
+  }
+]

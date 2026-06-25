@@ -1,0 +1,105 @@
+{
+  "n_simulations": 100000,
+  "seed": 20260618,
+  "elo_cutoff": "2026-06-23",
+  "as_of": "2026-06-23",
+  "calibration": {
+    "a": 0.042082947669022916,
+    "b": 0.005178735320679135,
+    "mu_tot": 2.7398241475444993,
+    "n": 23315,
+    "calib_start": "2002-01-01",
+    "cutoff": "2026-06-23"
+  },
+  "model_health": {
+    "large_sample_skill": {
+      "model": [
+        0.8918368418956569,
+        0.5234505107028808,
+        0.59425
+      ],
+      "naive": [
+        1.0609039435254917,
+        0.6410900000000087,
+        0.48675
+      ],
+      "n": 8000
+    },
+    "backtest_played": {
+      "model": [
+        0.9692499312446322,
+        0.5890877620220362,
+        0.5681818181818182
+      ],
+      "naive": [
+        1.0673936588424409,
+        0.6440727272727268,
+        0.5227272727272727
+      ],
+      "n": 44
+    },
+    "backtest_28_played": {
+      "model": [
+        0.9692499312446322,
+        0.5890877620220362,
+        0.5681818181818182
+      ],
+      "naive": [
+        1.0673936588424409,
+        0.6440727272727268,
+        0.5227272727272727
+      ],
+      "n": 44
+    },
+    "note": "This-tournament backtest now covers all 44 played group games (scored from pre-WC Elo); it is still a small, upset-prone sample, so the 8000-match skill check is the reliable read."
+  },
+  "champion_top10": [
+    [
+      "Argentina",
+      0.3075
+    ],
+    [
+      "Spain",
+      0.2396
+    ],
+    [
+      "France",
+      0.1421
+    ],
+    [
+      "England",
+      0.08
+    ],
+    [
+      "Colombia",
+      0.0477
+    ],
+    [
+      "Brazil",
+      0.0328
+    ],
+    [
+      "Germany",
+      0.0246
+    ],
+    [
+      "Netherlands",
+      0.0209
+    ],
+    [
+      "Portugal",
+      0.0182
+    ],
+    [
+      "Norway",
+      0.018
+    ]
+  ],
+  "caveats": [
+    "Group ranking uses points, goal difference, goals for, then a random tiebreak; full head-to-head tiebreakers are not implemented (rarely decisive).",
+    "Knockout extra-time/penalties are modelled by an Elo win-expectation term, not simulated minute-by-minute.",
+    "All World Cup matches are treated as neutral-venue; host advantage (USA/Canada/Mexico) is not modelled.",
+    "Goals are independent Poisson; no Dixon-Coles low-score correction or red-card/injury effects.",
+    "Squad market value and FIFA rank are carried for context only; the forecast is driven by Elo."
+  ]
+}

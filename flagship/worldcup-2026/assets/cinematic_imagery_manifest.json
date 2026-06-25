@@ -1,0 +1,362 @@
+[
+  {
+    "id": "sct_bg_stadium_floodlit",
+    "file": "assets/bg_stadium_floodlit.jpg",
+    "category": "Stadium aerial at night (floodlit)",
+    "suggested_beat": "hook",
+    "orientation": "landscape",
+    "source_url": "https://www.pexels.com/photo/200986/",
+    "site": "Pexels",
+    "license": {
+      "spdx": "Pexels-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Pexels (Pexels License - free commercial use, no attribution required). Depicts Levi's Stadium, Santa Clara, a real 2026 World Cup host venue, at night."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Ultra-wide night panorama of a floodlit American football/soccer stadium (Levi's Stadium): red seating bowl, glowing green field, light towers, 'SF 49ERS'/Sony signage. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_stadium_night_aerial",
+    "file": "assets/bg_stadium_night_aerial.jpg",
+    "category": "Stadium aerial at night (floodlit)",
+    "suggested_beat": "close-map",
+    "orientation": "landscape",
+    "source_url": "https://unsplash.com/photos/an-aerial-view-of-a-stadium-lit-up-at-night-e3_kWZU_2_s",
+    "site": "Unsplash",
+    "license": {
+      "spdx": "Unsplash-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Floodlit ancient arena (Arles amphitheatre) glowing at night amid a dark city - used as a dramatic 'stadium at night' backdrop."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Aerial drone shot at night of a circular floodlit arena (Arles Roman amphitheatre) glowing gold, surrounded by a dark city grid. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "des_bg_stadium_day_aerial",
+    "file": "assets/bg_stadium_day_aerial.jpg",
+    "category": "Stadium aerial / exterior by day",
+    "suggested_beat": "predictor",
+    "orientation": "landscape",
+    "source_url": "https://unsplash.com/photos/aerial-photography-of-stadium-during-daytime-2rwMHOHZG2M",
+    "site": "Unsplash",
+    "license": {
+      "spdx": "Unsplash-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Daytime drone aerial of Suncorp Stadium, Brisbane."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Daytime aerial drone photo of a modern football stadium (Suncorp Stadium, Brisbane): full roof structure, green pitch, surrounding suburban city. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_wc_stadium_atmosphere",
+    "file": "assets/bg_wc_stadium_atmosphere.jpg",
+    "category": "Stadium aerial / exterior by day",
+    "suggested_beat": "simulator",
+    "orientation": "landscape",
+    "source_url": "https://commons.wikimedia.org/wiki/File:2026_FIFA_World_Cup_Match_4,_United_States_v_Paraguay_(stadium_3_hours_before).jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC0-1.0",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo: Alexis Doine / Wikimedia Commons (CC0 1.0 public-domain dedication). Real 2026 FIFA World Cup venue (SoFi Stadium) three hours before USA v Paraguay."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Interior of SoFi Stadium before a 2026 World Cup match: pristine green pitch, empty seats, the curved ribbon scoreboard reading 'FIFA WORLD CUP 2026'. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_wc_match_pitch",
+    "file": "assets/bg_wc_match_pitch.jpg",
+    "category": "Generic pitch action / a ball on a floodlit pitch",
+    "suggested_beat": "model-vs-rank",
+    "orientation": "landscape",
+    "source_url": "https://commons.wikimedia.org/wiki/File:2026_FIFA_World_Cup_Match_26,_Switzerland_v_Bosnia_and_Herzegovina.jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC0-1.0",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo: Alexis Doine / Wikimedia Commons (CC0 1.0 public-domain dedication). Real 2026 FIFA World Cup match (Switzerland v Bosnia and Herzegovina) - wide stadium view, no individual player recognisable."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Wide panorama of a packed SoFi Stadium during a live 2026 World Cup match: full stands, tiny distant players on a green pitch, 'LOS ANGELES'/'FIFA' on the upper ring. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "des_bg_ball_pitch",
+    "file": "assets/bg_ball_pitch.jpg",
+    "category": "Generic pitch action / a ball on a floodlit pitch",
+    "suggested_beat": "ratings",
+    "orientation": "landscape",
+    "source_url": "https://www.pexels.com/photo/46798/",
+    "site": "Pexels",
+    "license": {
+      "spdx": "Pexels-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Pexels (Pexels License - free commercial use, no attribution required). Generic football on a pitch; no recognisable real players."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "A football resting on green pitch grass with an empty grandstand and goal behind it, low ground-level angle. Generic - no players. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_wc_fans_crowd",
+    "file": "assets/bg_wc_fans_crowd.jpg",
+    "category": "Packed crowd / fans / atmosphere (color, flags in crowd)",
+    "suggested_beat": "odds",
+    "orientation": "landscape",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Fans_at_2026_FIFA_World_Cup_by_YantsImages_06.jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: YantsImages / Wikimedia Commons (CC BY-SA 4.0). Real fans at the 2026 FIFA World Cup."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Real 2026 World Cup fans in the stands holding a black-and-white Santos FC banner ('MEU CLUBE MINHA PAIXAO'), blue sky, crowd around them. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_stadium_night_crowd",
+    "file": "assets/bg_stadium_night_crowd.jpg",
+    "category": "Packed crowd / fans / atmosphere (color, flags in crowd)",
+    "suggested_beat": "odds",
+    "orientation": "landscape",
+    "source_url": "https://www.pexels.com/photo/30651230/",
+    "site": "Pexels",
+    "license": {
+      "spdx": "Pexels-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Pexels (Pexels License - free commercial use, no attribution required). Floodlit stadium packed with crowd at night."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "A packed floodlit stadium at night (Athens Olympic Stadium): full tiered stands of spectators, lit green pitch, sweeping cantilever roof. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_wc_national_fans",
+    "file": "assets/bg_wc_national_fans.jpg",
+    "category": "National-team fans / flags / face paint (color + emotion)",
+    "suggested_beat": "close-map",
+    "orientation": "landscape",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Fans_at_2026_FIFA_World_Cup_by_YantsImages_04.jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: YantsImages / Wikimedia Commons (CC BY-SA 4.0). Real fan at the 2026 FIFA World Cup."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "A young Brazil fan in a yellow cap with green-and-yellow face paint, holding a Panini-style sticker album of the Brazil squad, blue sky and stadium behind. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "des_bg_city_nyc_goldenhour",
+    "file": "assets/bg_city_nyc_goldenhour.jpg",
+    "category": "Host-city / continent imagery (USA/Canada/Mexico landmarks or skylines)",
+    "suggested_beat": "money",
+    "orientation": "landscape",
+    "source_url": "https://unsplash.com/photos/5bbqroEE_xM",
+    "site": "Unsplash",
+    "license": {
+      "spdx": "Unsplash-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Golden-hour Manhattan skyline (New York is a 2026 World Cup host city; the final is at nearby MetLife Stadium)."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Golden-hour Manhattan skyline (Empire State Building and Chrysler Building) silhouetted over the Hudson River with warm sun-glint on the water. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_city_newyork",
+    "file": "assets/bg_city_newyork.jpg",
+    "category": "Host-city / continent imagery (USA/Canada/Mexico landmarks or skylines)",
+    "suggested_beat": "money",
+    "orientation": "landscape",
+    "source_url": "https://commons.wikimedia.org/wiki/File:New_York_City_skyline.jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC-BY-2.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: William Warby / Wikimedia Commons (CC BY 2.0). New York City skyline - 2026 World Cup host region."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Daytime New York City / Manhattan skyline with skyscrapers. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_city_mexico",
+    "file": "assets/bg_city_mexico.jpg",
+    "category": "Host-city / continent imagery (USA/Canada/Mexico landmarks or skylines)",
+    "suggested_beat": "money",
+    "orientation": "landscape",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Mexico_City_skyline.jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Josh Baumgartner / Wikimedia Commons (CC BY-SA 4.0). Mexico City (Santa Fe) - 2026 World Cup host city (Estadio Azteca)."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Mexico City cityscape (Santa Fe district): elevated highway, glass office towers, urban haze. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "des_bg_tunnel",
+    "file": "assets/bg_tunnel.jpg",
+    "category": "Tunnel / locker-room / pre-match mood",
+    "suggested_beat": "predictor",
+    "orientation": "landscape",
+    "source_url": "https://unsplash.com/photos/a-dark-empty-concrete-tunnel-with-lights-overhead-eHGEczzoN50",
+    "site": "Unsplash",
+    "license": {
+      "spdx": "Unsplash-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Dark concrete tunnel used as a moody 'players' tunnel / pre-match' backdrop."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "A dark, empty concrete tunnel receding into the distance with overhead lights and strong curved perspective, high-contrast black and white. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "des_bg_trophy_gold",
+    "file": "assets/bg_trophy_gold.jpg",
+    "category": "The FIFA World Cup trophy (real, gold)",
+    "suggested_beat": "hook",
+    "orientation": "landscape",
+    "source_url": "https://unsplash.com/photos/a-golden-soccer-trophy-sitting-on-top-of-a-field-bdJ8Kxaz-mQ",
+    "site": "Unsplash",
+    "license": {
+      "spdx": "Unsplash-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). A gold World-Cup-style trophy on a pitch at golden hour."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "A gold FIFA-World-Cup-style trophy (two figures holding a globe, green malachite base) standing on pitch grass beside a goalpost at golden hour, shallow depth of field. Real photograph (replica), not AI."
+    }
+  },
+  {
+    "id": "des_bg_empty_seats_analytical",
+    "file": "assets/bg_empty_seats_analytical.jpg",
+    "category": "A calm, darker analytical backdrop (empty seats, geometry)",
+    "suggested_beat": "why-believe",
+    "orientation": "landscape",
+    "source_url": "https://unsplash.com/photos/empty-stadium-seats-arranged-in-a-row-atHbrQaEzx4",
+    "site": "Unsplash",
+    "license": {
+      "spdx": "Unsplash-License",
+      "permits_republication": true,
+      "requires_attribution": false,
+      "attribution_text": "Photo via Unsplash (Unsplash License - free commercial use, no attribution required). Moody empty-stadium seating, used as a calm 'analytical' backdrop for chart-heavy beats."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Sweeping rows of empty stadium seats in high-contrast black and white, strong curved geometry, no crowd. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_bg_celebration",
+    "file": "assets/bg_celebration.jpg",
+    "category": "Confetti / celebration / lifting-a-trophy moment",
+    "suggested_beat": "close-map",
+    "orientation": "landscape",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Corinthians_celebrate_FIFA_Club_World_Cup_win.jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC-BY-2.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Tomofumi Kitano / Wikimedia Commons (CC BY 2.0). A team celebrating a FIFA Club World Cup title on a confetti-strewn pitch."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "A winning football squad posing on a pitch under raining gold confetti with a championship banner, gold streamers across the grass. Real photograph, not AI."
+    }
+  },
+  {
+    "id": "sct_photo_fan_facepaint",
+    "file": "assets/photo_fan_facepaint.jpg",
+    "category": "National-team fans / flags / face paint (color + emotion)",
+    "suggested_beat": "close-map",
+    "orientation": "portrait",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Team_Brazil_fan_at_2026_FIFA_World_Cup_by_YantsImages.jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: YantsImages / Wikimedia Commons (CC BY-SA 4.0). Real Brazil fans at the 2026 FIFA World Cup."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "Real 2026 World Cup Brazil fans in yellow jerseys in the stands; a giant 'FIFA WORLD CUP 2026' / '#FIFAWorldCup' screen showing a Brazil supporter. Lower-half portrait photo, not AI."
+    }
+  },
+  {
+    "id": "sct_photo_trophy_real",
+    "file": "assets/ref_trophy.jpg",
+    "category": "The FIFA World Cup trophy (real, gold)",
+    "suggested_beat": "why-believe",
+    "orientation": "portrait",
+    "source_url": "https://commons.wikimedia.org/wiki/File:FIFA_World_Cup_Trophy_at_National_Football_Museum,_Manchester_02.jpg",
+    "site": "Wikimedia",
+    "license": {
+      "spdx": "CC-BY-SA-4.0",
+      "permits_republication": true,
+      "requires_attribution": true,
+      "attribution_text": "Photo: Ank Kumar / Wikimedia Commons (CC BY-SA 4.0). FIFA World Cup Trophy (display replica) at the National Football Museum, Manchester. Pre-existing project asset reused."
+    },
+    "identity": {
+      "method": "vlm_view",
+      "verified": true,
+      "subject": "The real FIFA World Cup Trophy (gold, two figures holding a globe, 'FIFA WORLD CUP' on the malachite base) on a museum stand against a yellow backdrop. Lower-half portrait photo, not AI."
+    }
+  }
+]

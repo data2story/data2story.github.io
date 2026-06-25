@@ -1,0 +1,221 @@
+{
+  "meta": {
+    "role": "cinematographer",
+    "version": "1.0",
+    "mode": "cinematic",
+    "mode_reason": "Rich, license-verified WC imagery (18-entry Scout/Designer pool: stadiums, the trophy, crowds, host-city skylines) on an emotional, visual, event-driven topic — the opt-in cinematic scroll is warranted. Backgrounds map 1:1 to the editor's narrative beats; chart-heavy beats (why-believe, money) get the calmer/analytical backdrops so the data stays primary.",
+    "theme": "Luxury gold: warm-black --bg #12100e / --surface #1b1814, --accent #c9a227 gold, Didot/Bodoni display serif. Scrims tinted to the warm-black so gold display type stays legible over every photo."
+  },
+  "scenes": {
+    "cin_01": {
+      "backs": "edt_01",
+      "order": 1,
+      "background": {
+        "kind": "image",
+        "fit": "framed",
+        "media_ref": "des_bg_trophy_gold",
+        "filename": "assets/bg_trophy_gold.jpg",
+        "treatment": "Whole-subject framed object shot (object-fit:contain over a blurred darkened cover backdrop) so the gold trophy is seen entire, not cropped; gentle ken-burns scale 1.0->1.03."
+      },
+      "transition_in": "crossfade",
+      "scrim": "radial-gradient(125% 85% at 50% 30%, rgba(18,16,14,.30), rgba(18,16,14,.62) 70%), linear-gradient(180deg, rgba(18,16,14,.55) 0%, rgba(18,16,14,.30) 40%, rgba(18,16,14,.92) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1 viewport height",
+      "purpose": "IMMERSE",
+      "credit": "Photo via Unsplash (Unsplash License - free commercial use) - a gold World-Cup-style trophy on the pitch at golden hour. Identity verified.",
+      "notes": "The hook beat sits on the prize itself: the 26.3% number and the trophy it is about."
+    },
+    "cin_02": {
+      "backs": "edt_predictor",
+      "order": 2,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "des_bg_stadium_day_aerial",
+        "filename": "assets/bg_stadium_day_aerial.jpg",
+        "treatment": "Full-bleed cover crop of a daytime stadium aerial (Suncorp Stadium, Brisbane); ken-burns scale 1.0->1.04."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.50) 0%, rgba(18,16,14,.34) 38%, rgba(18,16,14,.90) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1 viewport height",
+      "purpose": "IMMERSE",
+      "credit": "Photo via Unsplash (Unsplash License - free commercial use) - daytime aerial of Suncorp Stadium, Brisbane. Identity verified.",
+      "notes": "An establishing wide stadium for the single-match predictor: the venue any of the 48 teams could meet in."
+    },
+    "cin_03": {
+      "backs": "edt_02",
+      "order": 3,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_bg_wc_stadium_atmosphere",
+        "filename": "assets/bg_wc_stadium_atmosphere.jpg",
+        "treatment": "Full-bleed cover of SoFi Stadium interior before a 2026 WC match (the 'FIFA WORLD CUP 2026' ribbon visible); ken-burns scale 1.0->1.04."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.52) 0%, rgba(18,16,14,.36) 40%, rgba(18,16,14,.92) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1.2 viewport heights",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Alexis Doine / Wikimedia Commons (CC0 1.0) - SoFi Stadium three hours before USA v Paraguay, a real 2026 WC venue. Identity verified.",
+      "notes": "The 'run it yourself' simulator centerpiece scene: a real, empty 2026 WC stage waiting for the model to be re-run."
+    },
+    "cin_04": {
+      "backs": "ratings",
+      "order": 4,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "des_bg_ball_pitch",
+        "filename": "assets/bg_ball_pitch.jpg",
+        "treatment": "Full-bleed cover, low ground-level angle of a ball on the pitch; ken-burns scale 1.0->1.04."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.55) 0%, rgba(18,16,14,.40) 42%, rgba(18,16,14,.93) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1.4 viewport heights",
+      "purpose": "IMMERSE",
+      "credit": "Photo via Pexels (Pexels License - free commercial use) - a football on the pitch, no recognisable players. Identity verified.",
+      "notes": "The player-ratings module: the ball on the grass for the individuals scored from on-pitch actions. The rating cards sit on opaque surfaces above it."
+    },
+    "cin_05": {
+      "backs": "edt_oddsmkt",
+      "order": 5,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_bg_stadium_night_crowd",
+        "filename": "assets/bg_stadium_night_crowd.jpg",
+        "treatment": "Full-bleed cover of a packed floodlit stadium at night; ken-burns scale 1.0->1.04."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.58) 0%, rgba(18,16,14,.42) 42%, rgba(18,16,14,.93) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1.2 viewport heights",
+      "purpose": "IMMERSE",
+      "credit": "Photo via Pexels (Pexels License - free commercial use) - a packed floodlit stadium at night (Athens Olympic Stadium). Identity verified.",
+      "notes": "Model versus market: the crowd of money behind the betting odds. The odds table rides on an opaque surface over this."
+    },
+    "cin_06": {
+      "backs": "edt_04",
+      "order": 6,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_bg_wc_match_pitch",
+        "filename": "assets/bg_wc_match_pitch.jpg",
+        "treatment": "Full-bleed cover, wide panorama of a packed SoFi Stadium during a live 2026 WC match (no individual player recognisable); ken-burns scale 1.0->1.04."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.54) 0%, rgba(18,16,14,.40) 42%, rgba(18,16,14,.92) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1.2 viewport heights",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Alexis Doine / Wikimedia Commons (CC0 1.0) - Switzerland v Bosnia and Herzegovina, a real 2026 WC match (wide, no individual player). Identity verified.",
+      "notes": "Where the model fights the FIFA ranking: a live match in full swing as the model's bold calls play out."
+    },
+    "cin_07": {
+      "backs": "edt_05",
+      "order": 7,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "des_bg_city_nyc_goldenhour",
+        "filename": "assets/bg_city_nyc_goldenhour.jpg",
+        "treatment": "Calmer/analytical: full-bleed cover of a golden-hour Manhattan skyline; minimal ken-burns 1.0->1.03 so the money chart stays primary."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.56) 0%, rgba(18,16,14,.44) 44%, rgba(18,16,14,.94) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1 viewport height",
+      "purpose": "IMMERSE",
+      "credit": "Photo via Unsplash (Unsplash License - free commercial use) - golden-hour Manhattan skyline; New York is a 2026 WC host city. Identity verified.",
+      "notes": "Money versus merit (chart-heavy): the host-city skyline of the transfer-market money. A calm skyline, not a busy crowd, so the scatter chart reads cleanly."
+    },
+    "cin_08": {
+      "backs": "edt_03",
+      "order": 8,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "des_bg_empty_seats_analytical",
+        "filename": "assets/bg_empty_seats_analytical.jpg",
+        "treatment": "Calmest/analytical: full-bleed cover of sweeping empty stadium seats (high-contrast B&W geometry); minimal ken-burns 1.0->1.03 so the validation chart stays primary."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.60) 0%, rgba(18,16,14,.48) 44%, rgba(18,16,14,.94) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1 viewport height",
+      "purpose": "IMMERSE",
+      "credit": "Photo via Unsplash (Unsplash License - free commercial use) - empty stadium seating, a calm analytical backdrop for the chart-heavy beat. Identity verified.",
+      "notes": "Why believe it (chart-heavy validation): the deliberately quiet, darker analytical backdrop the recipe flags for chart-heavy beats."
+    },
+    "cin_09": {
+      "backs": "edt_06",
+      "order": 9,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_bg_stadium_night_aerial",
+        "filename": "assets/bg_stadium_night_aerial.jpg",
+        "treatment": "Full-bleed cover of a circular floodlit arena glowing gold at night, aerial; ken-burns scale 1.0->1.04. Pairs the gold glow with the gold theme for the close."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.52) 0%, rgba(18,16,14,.36) 40%, rgba(18,16,14,.92) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1.6 viewport heights",
+      "purpose": "IMMERSE",
+      "credit": "Photo via Unsplash (Unsplash License - free commercial use) - aerial of a floodlit arena (Arles amphitheatre) glowing gold at night. Identity verified.",
+      "notes": "The close ('the coin still in the air') + the Leaflet host-venue map + the MetLife final photo: a gold-lit arena from above for the finale."
+    },
+    "cin_00": {
+      "backs": "teaser",
+      "order": 0,
+      "background": {
+        "kind": "video",
+        "fit": "cover",
+        "media_ref": "des_hero_video",
+        "filename": "assets/hero_v5.webm",
+        "treatment": "The hero AI cinemagraph (Messi vs Mbappe) pinned as scene 0 behind the teaser; seamless boomerang loop, faces held still."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.45) 0%, rgba(18,16,14,.30) 40%, rgba(18,16,14,.90) 100%)",
+      "motion": "cinemagraph",
+      "scroll_span": "~1 viewport height",
+      "purpose": "IMMERSE",
+      "credit": "AI-generated cinemagraph (Nano Banana 2 image + Kling motion); the two real players' likenesses are stylised, faces held still. Disclosed in credits.",
+      "notes": "Scene 0 backs the hero/teaser: the animated face-off cover."
+    },
+    "cin_scorecard": {
+      "backs": "edt_scorecard",
+      "order": 8.5,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "des_bg_empty_seats_analytical",
+        "filename": "assets/bg_empty_seats_analytical.jpg",
+        "treatment": "Calm/analytical: full-bleed cover of sweeping empty stadium seats (high-contrast B&W geometry); minimal ken-burns so the scorecard stays primary. Same asset as cin_08 / des_bg_empty_seats_analytical."
+      },
+      "transition_in": "crossfade",
+      "scrim": "linear-gradient(180deg, rgba(18,16,14,.60) 0%, rgba(18,16,14,.48) 44%, rgba(18,16,14,.94) 100%)",
+      "motion": "ken_burns",
+      "scroll_span": "~1 viewport height",
+      "purpose": "IMMERSE",
+      "credit": "Photo via Unsplash (Unsplash License - free commercial use). Empty stadium seating; reused calm analytical backdrop. Identity verified.",
+      "notes": "Backs the model-health scorecard beat: a quiet analytical backdrop so the scorecard reads cleanly."
+    }
+  },
+  "global": {
+    "engine": "Pinned full-bleed background stage (position:fixed; inset:0; z-index:0) holding one stacked .cin-bg layer per scene. The active scene has opacity:1, the rest 0, crossfaded by a CSS transition:opacity ~1.15s on an .active class toggled by an IntersectionObserver watching each text beat (rootMargin -45% 0px -45% 0px, threshold 0 - the beat whose middle crosses the viewport middle becomes active). framed scenes add a blurred darkened cover .fill backdrop + object-fit:contain .show. The editorial column scrolls in a higher z-index layer over the backgrounds; every chart/table/card sits in an opaque .chart-card surface so it stays legible and keeps a real measured width for the responsive embedChart logic.",
+    "toggle": "A small fixed top-right button (--ui font, gold) labelled 'Cinematic: On' toggles the .cinematic-off class on <html>/<body>: ON shows the stage and the gold surfaces; OFF hides the stage and reverts surfaces to the plain luxury editorial column. State held in a JS variable, default ON (no localStorage).",
+    "reduced_motion": "Under @media (prefers-reduced-motion: reduce): drop ken-burns/parallax and the crossfade transition -> each scene's background is a static scrimmed still; the page reads fully with motion off.",
+    "performance": "Background <img> lazy-loaded (loading='lazy', decoding='async') and pre-decoded on load; crossfade is opacity/transform only (compositor), animating just the active +/-1 pair; mobile serves the same compressed JPGs at smaller render and the engine no-ops cheaply when cinematic is off. The hero .teaser video, predictor, simulator, odds table, ratings cards, audio and Leaflet map are untouched and sit above the stage.",
+    "centerpiece_scene": "cin_03 (the 'run it yourself' Monte-Carlo simulator explorable backs edt_02)"
+  },
+  "_field_notes": {
+    "beat_coverage": "All 9 narrative beats backed: edt_01, edt_predictor, edt_02, ratings, edt_oddsmkt, edt_04, edt_05, edt_03, edt_06. The teaser (hero video) and the references section are intentionally not cinematic scenes - the teaser is the existing full-bleed hero, the references are a plain footer.",
+    "verifiability": "Every media_ref resolves to a registered Designer des_ or Scout sct_ item in assets/cinematic_imagery_manifest.json; each filename is copied verbatim and the file exists on disk. Each rendered background carries data-cin + data-des/data-sct so the contract gate (validate.py Section 6) can re-check its license + identity.",
+    "chart_heavy_calm_backdrops": "edt_05 (money) -> calm golden-hour skyline; edt_03 (why-believe) -> the explicit 'calm, darker analytical' empty-seats backdrop, both with the strongest scrims, per the brief."
+  }
+}

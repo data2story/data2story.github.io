@@ -1,0 +1,324 @@
+{
+  "as_of": "2026-06-23",
+  "_about": "'Goals so far' at the 2026 World Cup: golden-boot race + goal patterns. 2026 numbers from openfootball (CC0); historical base rate from the shared goalscorers.csv. Regenerate with `py build_goals.py` (offline cache) or `--refresh`.",
+  "current_2026": {
+    "source": "openfootball worldcup.json 2026 (CC0)",
+    "source_url": "https://raw.githubusercontent.com/openfootball/worldcup.json/master/2026/worldcup.json",
+    "source_cache": "code/_of_2026_raw.json",
+    "matches_played": 46,
+    "total_matches": 104,
+    "goal_events": 139,
+    "golden_boot": {
+      "_note": "Own-goals excluded (credited to the conceding player). Ties broken alphabetically. pens+open_play = goals.",
+      "leaders": [
+        {
+          "player": "Lionel Messi",
+          "team": "Argentina",
+          "goals": 5,
+          "penalties": 0,
+          "open_play": 5
+        },
+        {
+          "player": "Erling Haaland",
+          "team": "Norway",
+          "goals": 4,
+          "penalties": 0,
+          "open_play": 4
+        },
+        {
+          "player": "Kylian Mbappé",
+          "team": "France",
+          "goals": 4,
+          "penalties": 0,
+          "open_play": 4
+        },
+        {
+          "player": "Deniz Undav",
+          "team": "Germany",
+          "goals": 3,
+          "penalties": 0,
+          "open_play": 3
+        },
+        {
+          "player": "Jonathan David",
+          "team": "Canada",
+          "goals": 3,
+          "penalties": 0,
+          "open_play": 3
+        },
+        {
+          "player": "Ayase Ueda",
+          "team": "Japan",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Brian Brobbey",
+          "team": "Netherlands",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Cody Gakpo",
+          "team": "Netherlands",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Cristiano Ronaldo",
+          "team": "Portugal",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Crysencio Summerville",
+          "team": "Netherlands",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Cyle Larin",
+          "team": "Canada",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Daichi Kamada",
+          "team": "Japan",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Elijah Just",
+          "team": "New Zealand",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Folarin Balogun",
+          "team": "USA",
+          "goals": 2,
+          "penalties": 0,
+          "open_play": 2
+        },
+        {
+          "player": "Harry Kane",
+          "team": "England",
+          "goals": 2,
+          "penalties": 1,
+          "open_play": 1
+        }
+      ]
+    },
+    "goals_by_minute": {
+      "_note": "15-minute buckets; first-half stoppage ('45+N') folds into 31-45, second-half stoppage ('90+N') into 90+. Includes penalties + own-goals (every goal event).",
+      "total": 139,
+      "buckets": [
+        {
+          "bucket": "1-15",
+          "goals": 17,
+          "pct": 12.2
+        },
+        {
+          "bucket": "16-30",
+          "goals": 20,
+          "pct": 14.4
+        },
+        {
+          "bucket": "31-45",
+          "goals": 26,
+          "pct": 18.7
+        },
+        {
+          "bucket": "46-60",
+          "goals": 21,
+          "pct": 15.1
+        },
+        {
+          "bucket": "61-75",
+          "goals": 19,
+          "pct": 13.7
+        },
+        {
+          "bucket": "76-90",
+          "goals": 21,
+          "pct": 15.1
+        },
+        {
+          "bucket": "90+",
+          "goals": 15,
+          "pct": 10.8
+        }
+      ]
+    },
+    "type_split": {
+      "open_play": {
+        "goals": 124,
+        "pct": 89.2
+      },
+      "penalty": {
+        "goals": 6,
+        "pct": 4.3
+      },
+      "own_goal": {
+        "goals": 9,
+        "pct": 6.5
+      },
+      "total": 139
+    },
+    "team_goals": {
+      "_note": "Goals scored per team; own-goals not credited to the beneficiary.",
+      "teams": [
+        {
+          "team": "Germany",
+          "goals": 9
+        },
+        {
+          "team": "Netherlands",
+          "goals": 7
+        },
+        {
+          "team": "Canada",
+          "goals": 6
+        },
+        {
+          "team": "France",
+          "goals": 6
+        },
+        {
+          "team": "Japan",
+          "goals": 6
+        },
+        {
+          "team": "Norway",
+          "goals": 6
+        },
+        {
+          "team": "Sweden",
+          "goals": 6
+        },
+        {
+          "team": "Argentina",
+          "goals": 5
+        },
+        {
+          "team": "Portugal",
+          "goals": 5
+        },
+        {
+          "team": "Switzerland",
+          "goals": 5
+        },
+        {
+          "team": "Brazil",
+          "goals": 4
+        },
+        {
+          "team": "Egypt",
+          "goals": 4
+        },
+        {
+          "team": "England",
+          "goals": 4
+        },
+        {
+          "team": "USA",
+          "goals": 4
+        },
+        {
+          "team": "Colombia",
+          "goals": 3
+        },
+        {
+          "team": "Mexico",
+          "goals": 3
+        },
+        {
+          "team": "New Zealand",
+          "goals": 3
+        },
+        {
+          "team": "Senegal",
+          "goals": 3
+        },
+        {
+          "team": "Spain",
+          "goals": 3
+        },
+        {
+          "team": "Uruguay",
+          "goals": 3
+        }
+      ]
+    }
+  },
+  "historical_base_rate": {
+    "source_file": "phase2/datasets/worldcup_2026/raw/goalscorers.csv",
+    "n_goal_events": 47676,
+    "date_range": [
+      "1916-07-02",
+      "2026-06-17"
+    ],
+    "minute_distribution": [
+      {
+        "bucket": "1-15",
+        "goals": 6143,
+        "pct": 13.0
+      },
+      {
+        "bucket": "16-30",
+        "goals": 6954,
+        "pct": 14.7
+      },
+      {
+        "bucket": "31-45",
+        "goals": 7976,
+        "pct": 16.8
+      },
+      {
+        "bucket": "46-60",
+        "goals": 7863,
+        "pct": 16.6
+      },
+      {
+        "bucket": "61-75",
+        "goals": 8049,
+        "pct": 17.0
+      },
+      {
+        "bucket": "76-90",
+        "goals": 10179,
+        "pct": 21.5
+      },
+      {
+        "bucket": "90+",
+        "goals": 256,
+        "pct": 0.5
+      }
+    ],
+    "type_split": {
+      "open_play": {
+        "goals": 43496,
+        "pct": 91.2
+      },
+      "penalty": {
+        "goals": 3253,
+        "pct": 6.8
+      },
+      "own_goal": {
+        "goals": 927,
+        "pct": 1.9
+      },
+      "total": 47676
+    },
+    "_note": "Long-run base rate over all recorded international goals; shown as context next to the 2026 numbers, NOT mixed in."
+  }
+}

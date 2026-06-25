@@ -1,0 +1,22 @@
+{
+  "hero": {
+    "file": "assets/hero_v2.webm",
+    "mp4": "assets/hero_v2_web.mp4",
+    "poster": "assets/hero_v2.jpg",
+    "kind": "ai_composite_still_with_camera_motion",
+    "image": {
+      "tool": "openrouter-text2image (generate_image.py)",
+      "model": "google/gemini-3.1-flash-image-preview (Nano Banana 2)",
+      "prompt_file": "assets/_hero_v2_candidates/candidate_a2_v2.txt",
+      "subject": "AI likenesses of Lionel Messi (left) and Kylian Mbappe (right) in a two-champions face-off composition",
+      "ip": "AI-generated composite; depicts likenesses of real public figures; not a real photograph or real footage"
+    },
+    "motion": {
+      "tool": "ffmpeg",
+      "technique": "Ken-Burns push-in + forward/reverse boomerang on the single AI still (NOT AI-generated video)",
+      "note": "Google Veo declined to animate the real-athlete faces, so motion is a camera move on the still."
+    },
+    "spec": "1376x768, 8s seamless loop, muted",
+    "_superseded": "Replaces the old toggle hero (a copyrighted FIFA broadcast clip plus an earlier generic AI clip); those assets were deleted. Provenance for the current hero lives in the Verify map entry des_hero_video and in assets/_hero_v2_candidates/candidate_a2_v2.txt."
+  }
+}

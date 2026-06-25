@@ -1,0 +1,84 @@
+{
+ "_about": "Maps each stable cell-id in verify/worldcup_forecast.ipynb to what it computes and which blog claims (analyst.json ana_* / detective.json det_*) it substantiates. 'backs' for ana_* is derived from each claim's calculation.file: simulate.py->cell_simulate, story_findings.py->cell_findings, build_odds_snapshot.py->cell_odds, poisson.py->cell_poisson, elo.py->cell_elo, build_ratings.py->cell_ratings. det_04 (leakage guard) and det_03 (Elo+Poisson+MC recipe) are attached by hand as noted.",
+ "cell_intro": {
+  "computes": "Title, data provenance, leakage-guard explanation, and the single-N run instructions (markdown only).",
+  "backs": [],
+  "needs_network": false
+ },
+ "cell_setup": {
+  "computes": "Resolves DATA_DIR, sets SEED=20260618 and N=100000, loads the raw inputs (teams/matches/bracket_rules + published forecast_outputs), and asserts every required file exists; establishes the leakage frontier TODAY_CUTOFF=2026-06-23.",
+  "backs": [
+   "det_04"
+  ],
+  "needs_network": false
+ },
+ "cell_elo": {
+  "computes": "Fits world-football Elo from intl_results_history.csv under the leakage filter (date < 2026-06-23) and cross-checks the 48 reproduced ratings against the published champion_odds.csv elo column (exact).",
+  "backs": [
+   "det_03"
+  ],
+  "needs_network": false
+ },
+ "cell_poisson": {
+  "computes": "Calibrates the Poisson goal model (Elo diff -> expected goals: supremacy=a+b*de, mu_tot) on 2002+ internationals and asserts a/b/mu_tot/n match forecast_summary.json exactly.",
+  "backs": [
+   "det_03"
+  ],
+  "needs_network": false
+ },
+ "cell_simulate": {
+  "computes": "Runs the N=100000 Monte-Carlo at SEED (28 remaining group games + full bracket incl. the 495-row FIFA Annex C best-thirds table), produces champion + advance probabilities, and asserts an exact match to the published champion_odds.csv (Argentina 0.3075, sum 1.000, 13 teams >=1%).",
+  "backs": [
+   "ana_01"
+  ],
+  "needs_network": false
+ },
+ "cell_findings": {
+  "computes": "Derives the journalism findings from the reproduced forecast tables: rank-gap vs FIFA (ana_02), money-vs-merit EUR/SF-point (ana_03), knife-edge reach-R32 (ana_04), confederation breakdown (ana_05), model-vs-naive health check on 8000 internationals + 44 played (ana_06), and the 495-combination conditional bracket (ana_07); prints match analyst.json verbatim.",
+  "backs": [
+   "ana_02",
+   "ana_03",
+   "ana_04",
+   "ana_05",
+   "ana_06",
+   "ana_07"
+  ],
+  "needs_network": false
+ },
+ "cell_historical": {
+  "computes": "Re-derives the historical base-rate facts from historical_wc_summary.csv (22 men's World Cups 1930-2022): 9 champion labels -> 8 merged nations, top-3 hold 13/22 (59%), 6 repeat champions hold 20/22, host wins 6/22 (27%); asserts the reproduced counts match historical_favourites.json. The ~23% favourite hit-rate (det_favbase) is CITED, not computed here.",
+  "backs": [
+   "ana_histbase"
+  ],
+  "needs_network": false
+ },
+ "cell_goals": {
+  "computes": "Re-derives the 2026 goal patterns from the openfootball cache (n=139 over 46 played matches): golden-boot leaders (Messi 5), goals-by-minute buckets (76th-min-on = 25.9%, stoppage 10.8%), and the open-play/penalty/own-goal split (89.2/4.3/6.5%); asserts vs goals_2026.json.",
+  "backs": [
+   "ana_goals"
+  ],
+  "needs_network": false
+ },
+ "cell_shootouts": {
+  "computes": "Re-derives penalty-shootout predictability from the inlined (won,n) counts over 678 international shootouts: favourite wins 53.7%, the Elo-gap ladder, 95% Wilson CI and the exact two-sided binomial p vs 50% (stdlib only); asserts vs shootouts_stats.json. The leak-free Elo favourite per shootout is the full job in build_shootouts.py.",
+  "backs": [
+   "ana_shootouts"
+  ],
+  "needs_network": false
+ },
+ "cell_odds": {
+  "computes": "Re-expresses the bookmaker de-vig: American->decimal->raw implied %, then divides by the stated ~112% overround for a de-vigged model-vs-market table; cross-checks against the published code/odds_snapshot.json (exact).",
+  "backs": [],
+  "needs_network": false
+ },
+ "cell_ratings": {
+  "computes": "Player ability ratings (build_ratings.py): shows the real StatsBomb Open Data fetch+aggregation logic (network) and always loads the frozen audit artifacts code/ratings.json + code/_sb_player_raw.json so an offline reader can inspect the exact published cards; live fetch wrapped in try/except.",
+  "backs": [],
+  "needs_network": true
+ },
+ "cell_close": {
+  "computes": "Provenance summary table (finding -> reproducing cell -> source script -> source data) and the dataset licenses (markdown only).",
+  "backs": [],
+  "needs_network": false
+ }
+}
