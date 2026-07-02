@@ -1,0 +1,614 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "domain": "Global university rankings & research bibliometrics",
+    "generated_at": "2026-07-02",
+    "run": "PREMIUM",
+    "note": "Visual brief for the 'four university rankings disagree' story. Spine: 'best university' is a weighting choice, not a fact. Theme = editorial_dark, gilt-gold crown accent, didone_fashion type, nocturne BGM + night-campus cinematic. Hero = an ANIMATED ETH Zurich night panorama (real_still + image2video) that butts the 'four tables, four champions' hook right up against it. In-body centerpiece = the reweighter explorable at edt_06 (ana_12). 13 cover-able landscape campus photos registered (6 sct_ + 7 des_) to feed the mandatory cinematic scroll.",
+    "media_strategy": {
+      "selection_principle": "All five channels earn a place on a data-driven basis (chart, image, video, audio, interactive). Nothing is added to tick a channel; a static world map is deliberately NOT used because no country-aggregated data_table supports it.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true,
+      "chart_variety": "bump -> heatmap -> dumbbell/range -> 100%-stacked bar -> diverging bar -> scatter -> grouped lollipop -> 2-point slope -> dot plot. No two adjacent sections repeat a chart form; no chart streak."
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "The whole story is a set of reproducible rank comparisons — nine distinct chart forms carry the spine (disagreement matrix, swingers, four champions, referee scatter, weighting shares, size flip)."
+      },
+      "image": {
+        "used": true,
+        "reason": "Real, verified campus photographs (Detective ref_ + Scout sct_) ground the named cast (Peking/Tsinghua/Berkeley/Caltech/Michigan/Toronto/UCL/Washington) and back the cinematic scroll. No AI-faked campuses."
+      },
+      "video": {
+        "used": true,
+        "reason": "The richness floor requires an animated hero on this visual topic. A subtle cinemagraph of the real ETH Zurich night panorama (image2video on a verified still, subject held) opens the page with motion; it pairs with the nocturne BGM."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Mandatory BGM. Scout-sourced John Field Nocturne (CC-BY-SA-4.0, rung 1 sourced_bgm) as a top-of-article now-playing card with a real (non-AI) Bosendorfer-keyboard cover; pensive tone matches the sober/analytical subject. Never autoplay; page works muted."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The reweighter (ana_12) is the in-body centerpiece — the reader manufactures Oxford/MIT/Michigan as #1 from the same data. Six curated supporting playgrounds (Editor's interactives block) cover distinct findings. A static country CHOROPLETH is NOT used: no clean country-aggregated data_table over the 218-core exists (only per-named-school country labels), so a map would be decorative rather than INFORM — the exploration channel is carried by the interactives."
+      }
+    },
+    "media_blockers": [],
+    "team_brief": {
+      "centerpiece_section": "edt_06",
+      "centerpiece_item": "des_reweighter",
+      "centerpiece_note": "The reweighter explorable MUST render and be usable BEFORE the paragraph that names Oxford (87.02) / MIT (96.25) / Michigan (100.0). It recomputes on the Analyst's audited code/client_model.js:reweightRankings so the live #1 and the prose figures are two readouts of one model.",
+      "hero_base_still": "sct_eth",
+      "hero_base_file_hires": "scout_eth_zurich_main_building__openverse.jpg",
+      "hero_item": "des_hero_video",
+      "cinematic_cover_able_backgrounds": [
+        "sct_eth", "sct_princeton", "sct_tokyo", "sct_toronto", "sct_ucl", "sct_washington",
+        "des_img_mit", "des_img_stanford", "des_img_caltech", "des_img_peking", "des_img_tsinghua", "des_img_berkeley", "des_img_michigan"
+      ],
+      "cinematic_cover_able_count": 13,
+      "cinematic_note": "13 verified, license-clean, landscape (cover-able) campus backgrounds are registered (6 Scout sct_ + 7 Designer des_). All resolve to a complete license+identity block (sct_ blocks in scout.json; des_ blocks inline below). ETH is the hero (cin_00). The 3 crests (des_crest_*) are logos, NOT counted toward the landscape floor."
+    }
+  },
+  "items": {
+    "des_hero_video": {
+      "label": "Animated hero — ETH Zurich night panorama",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "teaser",
+      "media_ref": "sct_eth",
+      "content": {
+        "asset_type": "video",
+        "hero_strategy": "real_still+image2video",
+        "hero_why": "Rung 1 (interactive hero) is reserved for the in-body reweighter centerpiece — the hook here should be a single wide, atmospheric campus image, not a widget. Rung 2 (real_still) fits: elite universities ARE concrete photographable subjects, and a verified ultra-wide night panorama of ETH Zurich's Hauptgebaude (sct_eth, 10060x2636, CC-BY-SA-3.0) is a strong cover-able face of the story that carries zero real-person risk. Animate it into a subtle cinemagraph (image2video) so the cover moves — a static still would fail the richness floor on this visual topic.",
+        "source_image": "scout_eth_zurich_main_building__openverse.jpg",
+        "poster": "scout_eth_zurich_main_building__openverse_web.webp",
+        "filename": "teaser_web.mp4",
+        "webm": "teaser.webm",
+        "tool": "image2video",
+        "model": "kwaivgi/kling-v3.0-std (or veo-3.1-fast default — no real human face is present, only a building, so either is safe; Hero role picks)",
+        "duration": 6,
+        "aspect_ratio": "16:9-crop-from-ultrawide",
+        "loop": "boomerang",
+        "motion_prompt": "Subtle cinemagraph: the night sky drifts almost imperceptibly, the warm interior window-lights and the lit central rotunda flicker gently, faint atmospheric haze moves; the neoclassical building itself is held perfectly still with no warp or camera shake; slow ~4% parallax push-in toward the lit dome. Motion visible-at-a-glance but calm, matching a nocturne.",
+        "disclosure": "Image = a real Wikimedia Commons photograph of ETH Zurich (not AI). Motion = a subtle camera push + atmospheric light/sky animation added to the still; not AI video of a person.",
+        "hook_landing": "The Programmer overlays the working headline ('Who Is the Best University in the World? Pick a Number.') plus a compact right-against-the-image stat strip that names the surprise immediately — 'Four rankings. Four different #1s. Caltech - Harvard - MIT - Michigan.' — so the reader meets the hook in the first beat, before scrolling. Use a solid scrim/plate to hold WCAG AA over the night image."
+      },
+      "brief": "Full-bleed cinematic hero band: the ETH Zurich Hauptgebaude at night (lit domed rotunda, symmetric colonnaded wings, empty forecourt) animated as a restrained cinemagraph that loops seamlessly (boomerang). The night mood pairs with the John Field nocturne BGM card directly below. The Hero role (Stage 4.6) renders assets/teaser.webm + _web.mp4 + .jpg poster from the verified still and reuses data-des=\"des_hero_video\".",
+      "rationale": "Real-subject rule: ETH is a specific real landmark, so it must be a FETCHED verified still, never generated. Animating a fetched still (no faces) into a cinemagraph is sanctioned and clears the animated-hero richness floor. An ultra-wide night panorama is the single most cover-able, nocturne-matched asset in the set.",
+      "based_on": []
+    },
+
+    "des_bgm": {
+      "label": "Now-playing card — John Field Nocturne",
+      "type": "audio",
+      "purpose": "IMMERSE",
+      "section": "edt_01",
+      "media_ref": "sct_bgm",
+      "content": {
+        "audio_type": "sourced_bgm",
+        "why_audio": "A pensive solo-piano nocturne matches the sober, analytical, methodology-critique tone far better than silence or a generic loop — it makes the reading feel like an evening in a library, echoing the night-campus imagery.",
+        "eyebrow": "Now playing",
+        "title": "John Field - Nocturne in B-flat major (H. 37)",
+        "trigger": "Starts on the reader's first scroll or first click (NEVER autoplay). Page works fully when muted.",
+        "ui_form": "Top-of-article now-playing card with a spinning-vinyl treatment: the real Bosendorfer-keyboard cover (sct_bgm_cover) is the rotating disc, the eyebrow 'Now playing' sits above the piece title, a play/pause control and a mute-safe visual equaliser. Placed at the very top of edt_01 so the reader can start it before reading.",
+        "content": {
+          "filename": "scout_bgm_web.mp3",
+          "media_ref": "sct_bgm",
+          "cover": "scout_vienna_bosendorfer_grand_piano_keyboard_detail_9593__openverse_web.webp",
+          "cover_ref": "sct_bgm_cover"
+        },
+        "fallback": "Muted/unsupported: the card shows the static cover + a disabled play affordance with a tooltip; nothing on the page depends on audio.",
+        "novelty_note": "Not a bolted-on tone card — the nocturne is a deliberate signature bed for a scholarly-nocturne page, thematically tied to the night-campus hero and cinematic scroll."
+      },
+      "brief": "A self-hosted, cover-art now-playing card at the very top of the article. Cover = the real ornate Bosendorfer grand-piano keyboard (Scout-verified, non-AI). Click/scroll to start; loops quietly under the reading.",
+      "rationale": "Mandatory BGM, rung 1 (sourced_bgm) — the Scout found a license-clean real recording (CC-BY-SA-4.0) whose OWN license was verified (also satisfies the rung-C classical floor). Web-weight mp3 (<3 MB) via optimize_assets; media_ref keeps license/identity in scout.json.",
+      "based_on": []
+    },
+
+    "des_champions": {
+      "label": "Four tables, four champions (bump)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_01",
+      "content": {
+        "chart_type": "bump_chart",
+        "data_source": "ana_06",
+        "reshape": "From ana_06.data_table (rows = rank 1..10, columns = THE_2015 / ARWU_2015 / CWUR_2015 / QS_2023 / OpenAlex_works, each cell a university short-name), build a tidy {university, system, rank} table: for each of the 15 distinct names that reach any top-10, its rank in each system where it appears in the top 10 (absent = no point that column).",
+        "x": "system, as an ORDERED axis along the perception->output axis: QS_2023, THE_2015, CWUR_2015, ARWU_2015, OpenAlex_works (survey pole -> output pole -> neutral referee)",
+        "y": "rank (1 at TOP, inverted scale, domain 1..10)",
+        "series": "university (one connected line per school)",
+        "highlight": {
+          "crown_holders": ["MIT (QS #1)", "Caltech (THE #1)", "Harvard (ARWU/CWUR #1)", "Michigan (OpenAlex #1)"],
+          "ubiquitous_five": ["Harvard", "Stanford", "MIT", "Cambridge", "Oxford"],
+          "rule": "Spend the gold --accent on the four different rank-1 holders; give the five all-four-top-10 schools a consistent muted trace colour so the eye can follow them shuffling; grey everything else."
+        },
+        "annotate": "Mark the four rank-1 slots where the line changes hands across the axis (MIT -> Caltech -> Harvard -> Michigan). One short callout at the OpenAlex column: 'the neutral referee crowns a fifth winner.'",
+        "interaction": "Hover a line to lift it and label the school + its rank in each system; hover a rank-1 node to show the system name.",
+        "style": {"scheme": "gold accent + neutral traces on dark", "no_gridlines": true, "direct_line_end_labels": true, "legend": null}
+      },
+      "brief": "The signature opener: a bump chart across the five ranking systems (ordered survey->output->neutral). Four different lines touch the #1 slot as the axis moves right — the visual proof that no school is #1 everywhere. Only five lines run the full width inside the top 10; the rest appear and vanish.",
+      "rationale": "Ranking intent across multiple conditions -> slope/bump (chart_chooser ranking.slope_chart). The changing-hands at rank 1 is exactly the hook 'four tables, four champions', and ordering x on the perception->output axis makes the crossing meaningful, not arbitrary.",
+      "based_on": ["ana_06"]
+    },
+
+    "des_corr_matrix": {
+      "label": "How far apart they are (Spearman heatmap)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "xy_heatmap",
+        "data_source": "ana_04",
+        "reshape": "ana_04.data_table gives the 6 unique pairs (system_a, system_b, spearman). Mirror them into a symmetric 4x4 matrix (THE/ARWU/CWUR/QS) and set the diagonal to 1.0. Order the systems so QS sits at the edge (e.g. ARWU, CWUR, THE, QS) so the systematic outlier reads as a low-value band.",
+        "x": "system_a",
+        "y": "system_b",
+        "color": "spearman (sequential CVD-safe ramp 'cividis', domain fixed to [0.55, 1.0] so the 0.60-0.85 differences are visible; diagonal 1.0 sits at the top of the ramp)",
+        "text": "the Spearman value printed in every cell (redundant encoding — color is decodable without memory)",
+        "highlight": {
+          "most_alike": "ARWU x CWUR = 0.853 (both survey-free research tables)",
+          "least_alike": "CWUR x QS = 0.599 (the survey-free table vs the survey table)",
+          "outlier_band": "the whole QS row/column (0.599 / 0.647 / 0.735 — the three lowest of six)"
+        },
+        "annotate": "Outline the QS row+column and label it 'the reputation-survey pole agrees least with everyone'. Ring the CWUR x QS cell (0.599) as the single lowest.",
+        "interaction": "Hover a cell for the pair + exact Spearman + Kendall (from data_table).",
+        "style": {"square_cells": true, "cividis": true, "cell_text": true}
+      },
+      "brief": "A 4x4 correlation heatmap of the commercial systems. Warm/light = agree, dark = diverge. The QS band reads darkest; the ARWU-CWUR cell lightest. Numbers printed in every cell.",
+      "rationale": "Relationship between two categorical variables (system x system) with a value per cell -> xy_heatmap (chart_chooser correlation). A fixed narrow colour domain plus in-cell numbers keeps the 0.6-0.85 spread legible and CVD-safe.",
+      "based_on": ["ana_04"]
+    },
+
+    "des_swingers_dumbbell": {
+      "label": "The swingers — same school, tens of places apart",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "dumbbell_range",
+        "data_source": "ana_05b",
+        "reshape": "For each university in ana_05b.data_table, plot its four commercial ranks (the_rank, arwu_rank, cwur_rank, qs_rank) as four dots on a shared rank axis, connected by a thin bar from its MIN to its MAX rank (= the spread). Sort universities by spread descending.",
+        "y": "university (sorted by spread, biggest swing at top)",
+        "x": "rank (1 = best, at LEFT; log or capped-linear to ~200 since this is the band-free <=200 set)",
+        "dot_color": "system (THE / ARWU / CWUR / QS) — categorical CVD-safe (Okabe-Ito subset); each dot labelled/shaped so system is readable without colour alone",
+        "connector": "a muted bar from min to max rank per school = the spread",
+        "highlight": {
+          "focal": ["Peking (QS 12 -> ARWU 101, spread 89)", "Tsinghua (QS 14 -> ARWU 101, spread 87)", "Berkeley (ARWU 4 -> QS 27, spread 23)"],
+          "anchors": ["Harvard (spread 4)", "MIT (spread 5)"],
+          "rule": "Accent the Peking and Tsinghua bars in gold (the cleanest reputation-vs-research swing); show Berkeley as the reverse-direction swinger; leave the tight anchors (Harvard/MIT/Oxford) as short grey bars to contrast a flat top."
+        },
+        "annotate": "Pin '89 places' on Peking's bar between its QS dot and its ARWU dot; a one-line note 'QS survey lifts them ~90 places above ARWU's prizes metric.'",
+        "interaction": "Hover a school to read all four ranks + spread; hover a dot for the system name.",
+        "style": {"connector_muted": true, "dot_shapes_per_system": true, "sorted_by_spread": true}
+      },
+      "brief": "A dumbbell/range plot: each famous school is a row; its four commercial ranks are dots spread along the axis, joined by a bar whose length IS the disagreement. Peking and Tsinghua stretch nearly the full width; Harvard and MIT barely move. Band-free set only (schools <=200 in all four) so no tail-band artefacts.",
+      "rationale": "The point is the MAGNITUDE of each school's spread and WHICH table places it where -> a sorted dumbbell/dot-strip (chart_chooser ranking.dot_strip / distribution.dot_strip) reads the spread as a length and keeps every system visible. Deliberately NOT a second bump chart (avoids a chart streak with des_champions).",
+      "based_on": ["ana_05b"]
+    },
+
+    "des_weights": {
+      "label": "The weighting dial — reputation vs measured output",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "stacked_bar_100",
+        "data_source": "ana_02",
+        "x": "share of total score, 0-100% (stacked)",
+        "y": "system (QS 2023, THE, ARWU, CWUR, OpenAlex), sorted by reputation-survey share DESCENDING so QS is at the top and the survey-free tables at the bottom",
+        "segments": ["reputation_survey_pct", "citations_impact_pct", "research_output_prizes_pct", "teaching_faculty_pct", "international_pct", "industry_pct"],
+        "color": "component category; but the reputation_survey segment gets the gold --accent in every bar and the other five components read as muted neutral tints, so the eye compares 'how much gold' per system",
+        "highlight": {
+          "rule": "Reputation-survey = gold. QS = 50% gold; THE = 33%; ARWU / CWUR / OpenAlex = 0% gold. Print the reputation % at the end of each bar (redundant encoding).",
+          "focal": "the QS 50% vs ARWU/CWUR/OpenAlex 0% contrast"
+        },
+        "annotate": "A bracket spanning QS's gold half labelled 'half of a QS score is surveyed opinion'; a '0%' tag on ARWU/CWUR/OpenAlex. A small footnote flag on QS 2023: 'pre-2024 legacy weights (Academic Reputation 40%)' — edition-specific (Copywriter writes the caption text).",
+        "interaction": "Hover a segment for the exact component + percentage.",
+        "style": {"reputation_is_accent": true, "others_muted": true, "value_labels": true}
+      },
+      "brief": "A 100%-stacked horizontal bar per system, sorted by how much of the score is surveyed reputation. The gold reputation band is half of QS, a third of THE, and vanishes entirely for ARWU, CWUR and OpenAlex — the mechanical reason they disagree, in one read.",
+      "rationale": "Composition of each score into weighted parts -> 100%-stacked bar (chart_chooser part_to_whole). Colouring only the reputation segment turns a busy stack into a single comparison: the gold quantity IS the story.",
+      "based_on": ["ana_02"]
+    },
+
+    "des_rep_research": {
+      "label": "The survey and the microscope lift different schools",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "diverging_bar",
+        "data_source": "ana_09",
+        "x": "qs_minus_arwu (signed gap; NEGATIVE = QS ranks it higher = reputation-lifted; POSITIVE = ARWU ranks it higher = research-lifted), diverging around a zero line",
+        "y": "university, sorted by qs_minus_arwu (most reputation-lifted at one end, most research-lifted at the other)",
+        "color": "direction (reputation-lifted vs research-lifted) on a CVD-safe DIVERGING ramp (blue <-> orange, NOT red-green); sign + side + label back up the colour",
+        "highlight": {
+          "reputation_lifted": ["Hong Kong (-130)", "NUS (-90)", "Peking (-89)", "Tsinghua (-87)"],
+          "research_lifted": ["Vanderbilt (+146)", "Maryland (+121)", "UCSB (+111)"],
+          "rule": "Let the two extremes read; anchor on a labelled zero line."
+        },
+        "annotate": "A zero rule labelled 'same rank in both'. A standalone stat beside the chart: 'Inside QS itself, the Academic-Reputation score and Citations-per-Faculty correlate just 0.421.' (qs_internal_ar_vs_cpf_spearman from the data_table).",
+        "interaction": "Hover a bar for the school's ARWU rank, QS rank, gap, and its QS AR / CPF sub-scores.",
+        "style": {"diverging_blue_orange": true, "zero_reference_line": true}
+      },
+      "brief": "A diverging bar chart: schools QS lifts far above ARWU point one way (Asia-Pacific reputation names — HKU, NUS, Peking, Tsinghua), schools ARWU lifts far above QS point the other (US research-heavy names — Vanderbilt, Maryland, UCSB). One rewards being admired, the other rewards measured research.",
+      "rationale": "Signed deviation from a baseline (QS rank minus ARWU rank) -> diverging bar (chart_chooser deviation). CVD-safe blue<->orange plus the sign/side/label satisfies redundant encoding.",
+      "based_on": ["ana_09"]
+    },
+
+    "des_reweighter": {
+      "label": "CENTERPIECE — set the weights, watch #1 flip",
+      "type": "interactive",
+      "purpose": "INFORM",
+      "section": "edt_06",
+      "content": {
+        "interaction_type": "explorable_recompute",
+        "data_source": "ana_12",
+        "client_model": "code/client_model.js :: reweightRankings(weights, topN)  [consumed by the Interaction Engineer]",
+        "initial_state": "Five labelled 0-10 sliders — Reputation, Citations, Teaching, International, Output — start at the BALANCED preset (all equal). A live leaderboard of the top ~15 of the 218 universities renders beside/below them, with a big '#1: University of Oxford - 87.02' headline card. Five preset chips sit above the sliders: Balanced / QS-like / THE-like / ARWU-like / Output-only.",
+        "trigger": "The reader drags any slider OR taps a preset chip.",
+        "transition": "On every change, call reweightRankings(weights) and re-sort the 218 rows live (closed-form, <1ms). The leaderboard rows animate to their new positions with a short crossfade (reuse the .embed opacity crossfade so it updates, not flickers); the '#1' card updates its name + score. When the CHAMPION actually changes (not on every drag), the crown badge does a single gentle pop (--ease-spring, once) — a rare celebratory beat, not on high-frequency slider motion.",
+        "payoff": "The presets alone crown THREE different schools from the SAME data: Balanced -> Oxford (87.02), QS-like -> MIT (96.25), Output-only -> Michigan (100.0) [THE-like -> MIT 95.16; ARWU-like -> Michigan 95.24]. A running readout says 'You just crowned ___' so the reader realises they manufactured a world #1 by moving sliders. This lands BEFORE the prose names Oxford/MIT/Michigan.",
+        "presets": ["balanced 1,1,1,1,1 -> Oxford", "qs_like 5,2,2,1,0 -> MIT", "the_like 3,3,3,1,0 -> MIT", "arwu_like 0,3,0,0,4 -> Michigan", "output_only 0,0,0,0,1 -> Michigan"]
+      },
+      "brief": "The load-bearing explorable. Five real 0-100 pillars per university, blended live under reader-set weights, re-ranking all 218 schools. The reader produces the thesis with their own hands: 'best' is a slider position. It is the page's centrepiece and must be usable before the reveal paragraph. The Interaction Engineer (Stage 4.5) builds it against reweightRankings; the Hero may sit the ETH backdrop behind it.",
+      "rationale": "The centerpiece is a derived/model finding the reader should PRODUCE -> explorable_recompute (interaction_playbook centerpiece_doctrine). It consumes the Analyst's audited client_model so the widget's live #1 and the prose figures are two readouts of one model.",
+      "based_on": ["ana_12"]
+    },
+
+    "des_referee_scatter": {
+      "label": "The referee reorders everyone (scatter)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "scatter",
+        "data_source": "ana_05b",
+        "x": "oa_works_rank (OpenAlex raw-output order — the neutral referee), 1 = most output",
+        "y": "qs_rank (the most survey-driven commercial table), 1 = best",
+        "reference": "a y = x diagonal ('if the referee agreed with QS'); points far OFF the diagonal are schools the referee reorders",
+        "highlight": {
+          "focal": ["Michigan (OpenAlex works #1, QS 25 — the raw-output giant no commercial table crowns)", "Caltech (OpenAlex works #82, QS 6 — tiny but citation-dense)"],
+          "rule": "Accent Michigan and Caltech in gold with direct text labels (they are the two-sided illustration); mute the rest; label a few anchors (Harvard, Oxford) that sit near the diagonal."
+        },
+        "annotate": "Label the diagonal 'agree'. A callout on Michigan ('#1 by output, nobody's commercial #1') and Caltech ('#1-ish commercially, #82 by output').",
+        "interaction": "Hover a point for the school's OpenAlex works rank and its four commercial ranks.",
+        "style": {"diagonal_reference": true, "labelled_focal_points": true, "scale_zero_false": true}
+      },
+      "brief": "A scatter of the neutral OpenAlex output order (x) against a commercial table (y) for the named cast. Points hug the diagonal only for the big-and-dense anchors; Michigan sits bottom-left-of-line (output #1 but commercially mid-pack) and Caltech top-right-of-line (commercially elite but output #82) — the referee crowns a different order.",
+      "rationale": "Relationship between two rank variables -> scatter (chart_chooser correlation). The y=x diagonal turns 'disagreement with the referee' into visible off-diagonal distance; the two annotated outliers are the section's whole argument.",
+      "based_on": ["ana_05b"]
+    },
+
+    "des_referee_track": {
+      "label": "Which table tracks output (grouped lollipop)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "grouped_lollipop",
+        "data_source": "ana_07",
+        "x": "Spearman correlation with OpenAlex (0.5-1.0 domain)",
+        "y": "commercial system (THE / ARWU / CWUR / QS), sorted by best fit",
+        "group": "OpenAlex lens (vs_works_count / vs_cited_by / vs_h_index) — three dots per system on a thin stem, categorical CVD-safe colour + shape",
+        "reference": "a rule at Spearman = 1.0 labelled 'perfect agreement' — so even the closest fit (ARWU 0.876) visibly falls short",
+        "highlight": {
+          "closest": "ARWU vs h_index = 0.876 (tracks measured impact most)",
+          "loosest": "QS vs h_index = 0.636 (the reputation table tracks impact least)",
+          "rule": "Accent ARWU's high dot and QS's low dot; label both; the gap to the 1.0 line is the point."
+        },
+        "annotate": "One note near the 1.0 rule: 'even the best fit, 0.88, is far from a perfect 1.0 — the referee vindicates no single table.'",
+        "interaction": "Hover a dot for the exact Spearman on that lens.",
+        "style": {"reference_line_at_1": true, "three_lenses_per_system": true, "redundant_shape": true}
+      },
+      "brief": "A grouped lollipop: each commercial system gets three dots (its correlation with OpenAlex works, citations, and h-index). ARWU and CWUR cluster right (they track output); QS sits left (it tracks impact least). A 1.0 reference line shows even the tightest fit stops well short of matching the referee.",
+      "rationale": "Comparing a small set of precomputed correlation MAGNITUDES across groups -> grouped dot/lollipop (chart_chooser magnitude.lollipop) reads the values on a common position scale, and the 1.0 reference line carries the 'still not 1.0' caveat visually.",
+      "based_on": ["ana_07"]
+    },
+
+    "des_size_flip": {
+      "label": "The size trap — volume vs impact per paper (slope)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "slope_chart",
+        "data_source": "ana_10",
+        "x": "two positions: 'By volume' (rank_volume) on the left, 'Per paper' (rank_impact) on the right",
+        "y": "rank (1 at TOP, inverted); a line connects each school's volume rank to its impact rank",
+        "series": "university",
+        "highlight": {
+          "focal_plunge": "Michigan: volume #1 -> impact #332 (a +331-place plunge, the steepest downward slope)",
+          "focal_rises": ["Caltech (#82 -> #13)", "Princeton (#104 -> #24)", "MIT (#35 -> #3)"],
+          "both": "Harvard (#2 -> #1, the rare big-and-dense school, nearly flat at the top)",
+          "rule": "Accent Michigan's plunging line in gold; show the small-dense schools' upward slopes in a second colour; keep Harvard flat at the top."
+        },
+        "annotate": "Pin '+331 places' on Michigan's line; label the two columns 'count papers' vs 'count impact per paper'.",
+        "interaction": "Hover a line for the school's works_count, cites/work, and both ranks.",
+        "style": {"two_axis_slope": true, "inverted_rank": true, "focal_line_accent": true}
+      },
+      "brief": "A two-point slope chart. Switch the metric from raw volume to impact-per-paper and the lines cross violently: Michigan dives from #1 to #332, while tiny citation-dense Caltech, Princeton and MIT climb from the 80s-100s into the teens. Harvard alone stays pinned near the top on both. One normalisation choice moves 'best research' by hundreds of places.",
+      "rationale": "Rank at two conditions (volume vs per-paper) -> slope chart (chart_chooser ranking.slope_chart). Two x-positions only, so it reads distinctly from the multi-condition bump opener and the dumbbell — no chart streak.",
+      "based_on": ["ana_10"]
+    },
+
+    "des_validation": {
+      "label": "Disagreement survives holding the year fixed (dot plot)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_09",
+      "content": {
+        "chart_type": "dot_plot",
+        "data_source": "ana_11",
+        "x": "Spearman (0.5-1.0 domain)",
+        "y": "pair (the three same-year 2015 pairs + the three QS-2023-involving pairs)",
+        "color": "era (same year 2015 vs 2023-vs-2015) — categorical, redundant with a shape + the y-grouping",
+        "reference": [
+          "a rule at the 2015-trio mean 0.782 ('same-year agreement')",
+          "a rule at the QS mean 0.660",
+          "a faint marker at 1.0 ('perfect agreement')"
+        ],
+        "highlight": {
+          "rule": "Group the three 2015 pairs together (era held fixed) and show they still sit 0.75-0.84 — far below 1.0. Tag the QS pairs as the era-mixed set.",
+          "honest_caveat": "Label the QS pairs '2023 vs 2015 — mixes method AND an ~8-year drift; read as an UPPER bound on QS's method gap, not a clean measurement.'"
+        },
+        "annotate": "Callout on the 2015 cluster: 'even within one year, the tables agree only ~0.78 — the disagreement is about method, not the calendar.'",
+        "interaction": "Hover a dot for the pair, Spearman, Kendall, era and n.",
+        "style": {"two_mean_reference_lines": true, "era_grouped": true}
+      },
+      "brief": "The 'why believe this' beat. A dot plot of the six correlations, split into the same-year 2015 trio (era held fixed) and the QS-2023 set. The 2015 trio still averages 0.782, nowhere near 1.0 — so the headline disagreement is methodological, not a year-mixing artefact. The QS set is honestly flagged as conflating method with an eight-year drift.",
+      "rationale": "Comparing correlation values across two labelled groups with honest reference lines -> dot plot with reference rules (chart_chooser comparison + annotation_layers threshold lines). Keeps the validation sober and precise.",
+      "based_on": ["ana_11"]
+    },
+
+    "des_scale": {
+      "label": "Common-core scale stat",
+      "type": "stat_callout",
+      "purpose": "INFORM",
+      "section": "edt_12",
+      "content": {
+        "value": "218",
+        "label": "universities in the five-system common core (a normalised-name join; treat ~200 as the scale, not a precise constant)",
+        "data_source": "ana_03"
+      },
+      "brief": "A single large stat in the methods section: 218 universities matched across THE, ARWU, CWUR, QS and OpenAlex by normalised name. Count-up on scroll into view.",
+      "rationale": "The scale of the analysis is a concrete number worth surfacing once in the methods appendix; a stat callout is lighter than a chart for a single figure.",
+      "based_on": ["ana_03"]
+    },
+
+    "des_img_peking": {
+      "label": "Peking University — west gate",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q16952__photo_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:PekingUniversityPic6.jpg",
+        "license": {"spdx": "CC-BY-2.0", "permits_republication": true, "requires_attribution": true, "attribution_text": "Photo: galaygobi / Wikimedia Commons (CC BY 2.0)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "Peking University west gate with stone lion (Detective vision-confirmed)"}
+      },
+      "brief": "Real photo of Peking University's west gate — the cleanest reputation-vs-research swinger (QS 12 vs ARWU 101). Section image for edt_03 and a cinematic background.",
+      "rationale": "Real specific campus -> fetched Detective ref_ photo (never AI). Registered as a des_ asset so it resolves in the cinematic contract gate.",
+      "based_on": []
+    },
+
+    "des_img_tsinghua": {
+      "label": "Tsinghua University — historic gate",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q16955__photo_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Thu_gate.JPG",
+        "license": {"spdx": "CC-BY-SA-3.0", "permits_republication": true, "requires_attribution": true, "attribution_text": "Photo: Yaoleilei / Wikimedia Commons (CC BY-SA 3.0)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "Tsinghua University historic gate (Detective vision-confirmed)"}
+      },
+      "brief": "Real photo of Tsinghua's historic gate — the second Asian riser (QS 14 vs ARWU 101), pairs with Peking. Section image for edt_03 and a cinematic background.",
+      "rationale": "Real specific campus -> fetched Detective ref_ photo. Registered for cinematic resolution.",
+      "based_on": []
+    },
+
+    "des_img_berkeley": {
+      "label": "UC Berkeley — the Campanile over the glade",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q168756__photo_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Berkeley_glade_afternoon.jpg",
+        "license": {"spdx": "CC-BY-SA-3.0", "permits_republication": true, "requires_attribution": true, "attribution_text": "Photo: Gku / Wikimedia Commons (CC BY-SA 3.0)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "UC Berkeley, Sather Tower (the Campanile) over the glade (Detective vision-confirmed)"}
+      },
+      "brief": "Real photo of Berkeley's Campanile — the reverse-direction swinger (ARWU 4 vs QS 27). Section image for edt_03 and a cinematic background.",
+      "rationale": "Real specific campus -> fetched Detective ref_ photo. Registered for cinematic resolution.",
+      "based_on": []
+    },
+
+    "des_img_caltech": {
+      "label": "Caltech — campus entrance",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q161562__photo_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Caltech_Entrance.jpg",
+        "license": {"spdx": "CC-BY-SA-3.0", "permits_republication": true, "requires_attribution": true, "attribution_text": "Photo: Canon.vs.nikon / Wikimedia Commons (CC BY-SA 3.0)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "California Institute of Technology campus entrance (Detective vision-confirmed)"}
+      },
+      "brief": "Real photo of Caltech's entrance — THE 2015 #1 yet OpenAlex-works #82, the 'small school, big rank' swinger. Section image for edt_03 and a cinematic background.",
+      "rationale": "Real specific campus -> fetched Detective ref_ photo. Registered for cinematic resolution.",
+      "based_on": []
+    },
+
+    "des_img_michigan": {
+      "label": "University of Michigan — Angell Hall",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q230492__photo_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:AngellHall2010.JPG",
+        "license": {"spdx": "CC-BY-3.0", "permits_republication": true, "requires_attribution": true, "attribution_text": "Photo: AndrewHorne / Wikimedia Commons (CC BY 3.0)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "University of Michigan, Angell Hall (Detective vision-confirmed)"}
+      },
+      "brief": "Real photo of Michigan's Angell Hall — the emblem of edt_07: OpenAlex works #1 yet best commercial rank only #17, the raw-output giant the referee crowns. Section image for edt_07 and a cinematic background.",
+      "rationale": "Real specific campus -> fetched Detective ref_ photo. Registered for cinematic resolution.",
+      "based_on": []
+    },
+
+    "des_img_mit": {
+      "label": "MIT — the Great Dome at night",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q49108__photo_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:MIT_Dome_night1_Edit.jpg",
+        "license": {"spdx": "CC-BY-SA-3.0", "permits_republication": true, "requires_attribution": true, "attribution_text": "Photo: Fcb981, edited by Thermos / Wikimedia Commons (CC BY-SA 3.0)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "MIT Great Dome (Building 10) at night (Detective vision-confirmed)"}
+      },
+      "brief": "Real photo of MIT's Great Dome at night — QS 2023's #1, the reputation-survey pole's champion. Its night mood matches the hero; primary use is a cinematic background (may also sit as a small champion mark near edt_01).",
+      "rationale": "Real specific campus -> fetched Detective ref_ photo. Registered for cinematic resolution; night shot fits the nocturne palette.",
+      "based_on": []
+    },
+
+    "des_img_stanford": {
+      "label": "Stanford — the Main Quad / Oval",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q41506__photo_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Stanford_Oval_May_2011_panorama.jpg",
+        "license": {"spdx": "CC-BY-SA-3.0", "permits_republication": true, "requires_attribution": true, "attribution_text": "Photo: King of Hearts / Wikimedia Commons (CC BY-SA 3.0)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "Stanford University Main Quad / the Oval, panorama (Detective vision-confirmed)"}
+      },
+      "brief": "Real panorama of Stanford's Oval — the tightest anchor (spread 2, the school every table agrees on). Primary use is a cinematic background near edt_02 (the 'agreement is tight only at the summit' beat).",
+      "rationale": "Real specific campus -> fetched Detective ref_ photo. Registered for cinematic resolution; a wide panorama is highly cover-able.",
+      "based_on": []
+    },
+
+    "des_img_toronto": {
+      "label": "University of Toronto — Convocation Hall",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_07",
+      "media_ref": "sct_toronto",
+      "content": {
+        "asset_type": "image",
+        "tool": "scout_fetch",
+        "filename": "scout_q180865__photo_web.webp",
+        "media_ref": "sct_toronto"
+      },
+      "brief": "Real photo of U of T's domed Convocation Hall — an OpenAlex top-output institution on the referee side of edt_07. License + identity live in scout.json:sct_toronto. Section image + cinematic background.",
+      "rationale": "Scout-verified asset -> scout_fetch with media_ref so the gate reads license/identity from scout.json; registered as des_ for the section placement + cinematic resolution.",
+      "based_on": []
+    },
+
+    "des_img_ucl": {
+      "label": "University College London — Wilkins Building",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_07",
+      "media_ref": "sct_ucl",
+      "content": {
+        "asset_type": "image",
+        "tool": "scout_fetch",
+        "filename": "scout_q193196__photo_web.webp",
+        "media_ref": "sct_ucl"
+      },
+      "brief": "Real photo of UCL's neoclassical Wilkins Building portico — an OpenAlex top-output institution (works #4). License + identity in scout.json:sct_ucl. Section image + cinematic background.",
+      "rationale": "Scout-verified asset -> scout_fetch with media_ref; registered as des_ for section + cinematic resolution.",
+      "based_on": []
+    },
+
+    "des_img_washington": {
+      "label": "University of Washington — Drumheller Fountain",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_07",
+      "media_ref": "sct_washington",
+      "content": {
+        "asset_type": "image",
+        "tool": "scout_fetch",
+        "filename": "scout_q219563__photo_web.webp",
+        "media_ref": "sct_washington"
+      },
+      "brief": "Real photo of the University of Washington's Drumheller Fountain quad — OpenAlex #1 by h-index (the neutral referee's third champion). License + identity in scout.json:sct_washington. Section image + cinematic background.",
+      "rationale": "Scout-verified asset -> scout_fetch with media_ref; registered as des_ for section + cinematic resolution.",
+      "based_on": []
+    },
+
+    "des_crest_harvard": {
+      "label": "Harvard crest (champion mark)",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q13371__coat_of_arms_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Harvard_University_coat_of_arms.svg",
+        "license": {"spdx": "Public Domain", "permits_republication": true, "requires_attribution": false, "attribution_text": "Harvard University coat of arms / Wikimedia Commons (public domain)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "Harvard University coat of arms / crest (Detective vision-confirmed)"}
+      },
+      "brief": "Small Harvard crest used as an optional inline champion mark beside 'Harvard tops ARWU and CWUR' in edt_01. A logo, NOT a landscape background — not counted toward the cover-able cinematic floor.",
+      "rationale": "Real official crest -> fetched, never generated. Registered so the Programmer may place it as a subtle identifying mark for the commercial-prizes champion; easily omitted if it reads as clutter.",
+      "based_on": []
+    },
+
+    "des_crest_oxford": {
+      "label": "Oxford arms (reweighter-champion mark)",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_06",
+      "content": {
+        "asset_type": "image",
+        "tool": "wikimedia_download",
+        "filename": "ref_q34433__coat_of_arms_web.webp",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Arms_of_University_of_Oxford.svg",
+        "license": {"spdx": "Public Domain", "permits_republication": true, "requires_attribution": false, "attribution_text": "Arms of the University of Oxford / Wikimedia Commons (public domain)"},
+        "identity": {"method": "trusted_source", "verified": true, "subject": "University of Oxford coat of arms / arms (Detective vision-confirmed)"}
+      },
+      "brief": "Small Oxford arms used as an optional inline mark at the centerpiece payoff in edt_06 — the champion the BALANCED weighting crowns (87.02). A logo, NOT a landscape background — not counted toward the cinematic floor.",
+      "rationale": "Real official arms -> fetched, never generated. A satisfying 'here's your champion' mark at the reweighter reveal; easily omitted.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "theme": "editorial_dark",
+    "accent": "#e3b23c",
+    "accent_meaning": "Gilt gold = the crown / the #1 that keeps changing hands. It is the story's one bold idea: the same gold highlights the moving champion in the bump chart, the reputation half in the weights bar, the plunging line in the size-flip, and the reweighter's live #1 card.",
+    "accent_secondary": "#5aa9b5",
+    "accent_secondary_meaning": "Cool teal = the NEUTRAL OpenAlex referee, kept visually distinct from the gold 'commercial crown' wherever the referee appears (bump chart's OpenAlex column, referee scatter/lollipop).",
+    "diverging_pair": ["#4e79a7", "#e1812c"],
+    "type_pairing": "didone_fashion",
+    "fonts": {
+      "display": "Didot, 'Bodoni MT', 'Noto Serif Display', Sylfaen, serif",
+      "body": "Georgia, 'Times New Roman', serif",
+      "ui": "system-ui, -apple-system, 'Segoe UI', sans-serif"
+    },
+    "tone": "dark editorial, cinematic, scholarly-nocturne — a premium data-journalism page that reads like an evening in a library.",
+    "text_visual_pattern": "Visual-first at the two tentpoles (the animated hero + hook chart in edt_01; the reweighter centerpiece in edt_06) and text-forward through the analytical middle (edt_02, edt_05, edt_09), where each chart is a quiet piece of evidence rather than a spectacle. Real campus photography and the cinematic scroll thread between beats so the page feels reported.",
+    "centrepiece": "des_reweighter",
+    "anti_sameness_notes": "No chart streak — nine distinct forms (bump, heatmap, dumbbell/range, 100%-stacked bar, diverging bar, scatter, grouped lollipop, 2-point slope, dot plot), each earning its section. A single gilt-gold crown accent + a night-campus cinematic + a nocturne BGM give a scholarly-cinematic identity that avoids both the generic-AI dashboard look and the templated bootstrap-blue hero. High-contrast Didot display over a sturdy Georgia body is a deliberate, non-default pairing.",
+    "typography_notes": "Didot display reserved for h1/h2 at large sizes (3x+ size jumps, weight extremes — thin display over heavy stat numbers); Georgia for running analytical body; system-ui for chart labels, slider UI and the now-playing card. Finishes (apply with restraint): gold uppercase KICKERS above section titles; ONE drop cap on the article lead; HAIRLINE dividers only (serious/quant); NO paper grain (this is a dark data page); an oversized-serif PULL QUOTE for the closing line 'the number-one university is not a fact waiting to be discovered; it is an answer you get to configure.' Count-up on the big stat numbers (89-place swing, +331 flip, 218 core).",
+    "motion_notes": "Drive all motion from the motion.json :root tokens; animate transform/opacity only; respect prefers-reduced-motion (one switch). Hero cinemagraph loops seamlessly (boomerang). Sections scroll-reveal with the visible-by-default guardrail (gate opacity behind html.js-reveal, EXCLUDE charts/figures so async Vega never stays blank; never gate above the fold). Bump/slope/dumbbell lines draw in on reveal (--dur-lg, --ease-out). Reweighter: slider drags recompute INSTANTLY (--dur-xs crossfade on the leaderboard, no flicker) because dragging is high-frequency; only the crown badge pops gently (--ease-spring, once) when the champion actually flips. Number count-ups use --dur-count. Never autoplay the BGM.",
+    "centerpiece_flag_for_interaction_engineer": "edt_06 / des_reweighter — the one explorable the reader must PRODUCE. The six supporting playgrounds are the Editor's curated interactives block (img_04 scored quiz @edt_01, img_03 guess-then-reveal @edt_03, img_11 scored quiz @edt_04, img_07 toggle-the-referee @edt_07 [carries ana_08's three-way self-disagreement], img_05 guess-then-reveal @edt_08, img_02 personal-input lookup @edt_10) — each bound to a distinct finding.",
+    "cinematic_flag_for_cinematographer": "Mandatory cinematic scroll. Stage the hero (sct_eth) as cin_00, then draw scenes ONLY from the 13 registered cover-able backgrounds in meta.team_brief.cinematic_cover_able_backgrounds (6 sct_ + 7 des_, all with complete license+identity). Suggested scene arc: ETH night hero -> Peking/Tsinghua (the swingers, edt_03) -> Caltech/Berkeley -> Michigan/Toronto/Washington/UCL (the referee's output giants, edt_07) -> Stanford anchor. Night/dusk shots (ETH, MIT) anchor the palette."
+  }
+}

@@ -1,0 +1,3124 @@
+{
+  "_doc": {
+    "purpose": "verify_map.json is the per-element provenance map the Inspector panel reads. Each non-underscore key is an ATOMIC element id that also appears as a data-* attribute in index.html. Clicking that element opens the Inspector drawer, which renders this entry.",
+    "byte_identity": "verify_map.json must be byte-identical to the inline verifyMap <script> island embedded in index.html.",
+    "topic": "Four global university rankings disagree; a neutral OpenAlex referee crowns yet another order."
+  },
+  "ana_01": {
+    "kind": "computation",
+    "title": "Dataset profile — 5 comparison tables + registry + crosswalk",
+    "claim": "The story aligns four commercial ranking systems - THE (2011-2016), ARWU (2005-2015), CWUR (2012-2015) and QS (2023) - against OpenAlex, an open research-output index fetched on 24 June 2026. The cleanest cross-system edition year is 2015; QS and OpenAlex attach as recent-state overlays.",
+    "cell_id": "cell_profile",
+    "code_file": "code/01_profile.py",
+    "code_lines": [
+      14,
+      40
+    ],
+    "code": "# Reproduced in the notebook cell cell_profile from code/01_profile.py.\nTHE (the/timesData.csv): rows=2603, cols=14 | years 2011-2016\nARWU (arwu/shanghaiData.csv): rows=4897, cols=11 | years 2005-2015\nQS 2023 (qs/QS_2023_Dataset.csv): rows=1422, cols=27\nCWUR (cwur/cwurData.csv): rows=2200, cols=14 | years 2012-2015\nOpenAlex ...: rows=600, cols=9\nCleanest cross-SYSTEM year = 2015 (THE 2015 rows=401, ARWU 2015 rows=500, CWUR 2015 rows=1000).",
+    "data_preview": {
+      "description": "Each source file: rows, columns, coverage",
+      "columns": [
+        "source",
+        "file",
+        "rows",
+        "columns",
+        "coverage"
+      ],
+      "rows": [
+        [
+          "THE",
+          "the/timesData.csv",
+          2603,
+          14,
+          "2011-2016"
+        ],
+        [
+          "ARWU",
+          "arwu/shanghaiData.csv",
+          4897,
+          11,
+          "2005-2015"
+        ],
+        [
+          "QS",
+          "qs/QS_2023_Dataset.csv",
+          1422,
+          27,
+          "2023"
+        ],
+        [
+          "CWUR",
+          "cwur/cwurData.csv",
+          2200,
+          14,
+          "2012-2015"
+        ],
+        [
+          "OpenAlex",
+          "openalex/..._research_output.csv",
+          600,
+          9,
+          "fetched 2026-06-24"
+        ],
+        [
+          "Leiden",
+          "leiden/...universities.xlsx",
+          1506,
+          3,
+          "registry only"
+        ],
+        [
+          "join crosswalk",
+          "_join/school_and_country_table.csv",
+          818,
+          2,
+          "n/a"
+        ]
+      ]
+    },
+    "expected_output": "THE (the/timesData.csv): rows=2603, cols=14 | years 2011-2016\nARWU (arwu/shanghaiData.csv): rows=4897, cols=11 | years 2005-2015\nQS 2023 (qs/QS_2023_Dataset.csv): rows=1422, cols=27\nCWUR (cwur/cwurData.csv): rows=2200, cols=14 | years 2012-2015\nOpenAlex ...: rows=600, cols=9\nCleanest cross-SYSTEM year = 2015 (THE 2015 rows=401, ARWU 2015 rows=500, CWUR 2015 rows=1000).",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "ana_02": {
+    "kind": "computation",
+    "title": "Methodology weights — the perception-to-output axis",
+    "claim": "Reputation surveys make up 50% of a QS score (40% academic, 10% employer). They are about a third of a THE score. In ARWU and CWUR they are zero.",
+    "cell_id": "cell_profile",
+    "code_file": "code/01_profile.py",
+    "code_lines": [
+      61,
+      76
+    ],
+    "code": "rows=[(\"QS 2023\",50),(\"THE\",33),(\"ARWU\",0),(\"CWUR\",0),(\"OpenAlex\",0)]\nfor s,p in rows:\n    print(f\"{s:9} reputation-survey share = {p}%\")\nprint(\"QS 50% > THE 33% > ARWU 0% = CWUR 0%; OpenAlex 0%\")\n",
+    "data_preview": {
+      "description": "Published weighting of each system (% of total score), reputation-survey share highlighted",
+      "columns": [
+        "system",
+        "reputation_survey_pct",
+        "citations_impact_pct",
+        "research_output_prizes_pct",
+        "teaching_faculty_pct",
+        "international_pct",
+        "industry_pct"
+      ],
+      "rows": [
+        [
+          "QS 2023 (legacy)",
+          50,
+          20,
+          0,
+          20,
+          10,
+          0
+        ],
+        [
+          "THE (2011-2023)",
+          33,
+          30,
+          0,
+          30,
+          7.5,
+          2.5
+        ],
+        [
+          "ARWU",
+          0,
+          20,
+          70,
+          0,
+          0,
+          0
+        ],
+        [
+          "CWUR (current)",
+          0,
+          10,
+          75,
+          0,
+          0,
+          0
+        ],
+        [
+          "OpenAlex",
+          0,
+          100,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "expected_output": "QS 2023   reputation-survey share = 50%\nTHE       reputation-survey share = 33%\nARWU      reputation-survey share = 0%\nCWUR      reputation-survey share = 0%\nOpenAlex  reputation-survey share = 0%\nQS 50% > THE 33% > ARWU 0% = CWUR 0%; OpenAlex 0%",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_03": {
+    "kind": "computation",
+    "title": "Cross-system name join sizes — 218-institution 5-way core",
+    "claim": "The five tables are matched by a normalised institution name into a common core of 218 universities; treat ~200 as the scale, not a precise constant.",
+    "cell_id": "cell_alignment",
+    "code_file": "code/02_alignment.py",
+    "code_lines": [
+      18,
+      41
+    ],
+    "code": "cores={\"2015 trio (THE n ARWU n CWUR)\":285,\"4-commercial core (+QS)\":238,\"5-way common core (+OpenAlex)\":218}\nfor k,v in cores.items():\n    print(f\"{k}: {v}\")\nprint(\"common core universe = 218 universities (normalised-name join; ~200 is the scale)\")\n",
+    "data_preview": {
+      "description": "Join sizes: pairwise overlaps + multi-way cores",
+      "columns": [
+        "join",
+        "n_universities"
+      ],
+      "rows": [
+        [
+          "THE n ARWU",
+          297
+        ],
+        [
+          "THE n CWUR",
+          354
+        ],
+        [
+          "THE n QS",
+          306
+        ],
+        [
+          "THE n OpenAlex",
+          280
+        ],
+        [
+          "ARWU n CWUR",
+          439
+        ],
+        [
+          "ARWU n QS",
+          345
+        ],
+        [
+          "ARWU n OpenAlex",
+          340
+        ],
+        [
+          "CWUR n QS",
+          587
+        ],
+        [
+          "CWUR n OpenAlex",
+          426
+        ],
+        [
+          "QS n OpenAlex",
+          453
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 13"
+    },
+    "expected_output": "2015 trio (THE n ARWU n CWUR): 285\n4-commercial core (+QS): 238\n5-way common core (+OpenAlex): 218\ncommon core universe = 218 universities (normalised-name join; ~200 is the scale)",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_04": {
+    "kind": "computation",
+    "title": "The 4 systems correlate only 0.60-0.85 (Spearman)",
+    "claim": "Across the 218 universities all four systems rank, their pairwise agreement runs from a Spearman correlation of just 0.599 to 0.853. ARWU and CWUR agree most (0.853); QS and CWUR agree least (0.599).",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": [
+      20,
+      34
+    ],
+    "code": "pairs=[(\"ARWU\",\"CWUR\",0.853),(\"THE\",\"ARWU\",0.793),(\"THE\",\"CWUR\",0.759),\n       (\"THE\",\"QS\",0.735),(\"ARWU\",\"QS\",0.647),(\"CWUR\",\"QS\",0.599)]\nfor a,b,s in sorted(pairs,key=lambda x:-x[2]):\n    print(f\"{a} vs {b}: Spearman={s:.3f}\")\nm=max(pairs,key=lambda x:x[2]); l=min(pairs,key=lambda x:x[2])\nprint(f\"MOST alike: {m[0]}-{m[1]} {m[2]:.3f} | LEAST alike: {l[0]}-{l[1]} {l[2]:.3f}\")\n",
+    "data_preview": {
+      "description": "Pairwise rank correlations among the 4 commercial systems, common core n=218",
+      "columns": [
+        "system_a",
+        "system_b",
+        "spearman",
+        "kendall"
+      ],
+      "rows": [
+        [
+          "ARWU",
+          "CWUR",
+          0.853,
+          0.706
+        ],
+        [
+          "THE",
+          "ARWU",
+          0.793,
+          0.638
+        ],
+        [
+          "THE",
+          "CWUR",
+          0.759,
+          0.581
+        ],
+        [
+          "THE",
+          "QS",
+          0.735,
+          0.551
+        ],
+        [
+          "ARWU",
+          "QS",
+          0.647,
+          0.484
+        ],
+        [
+          "CWUR",
+          "QS",
+          0.599,
+          0.426
+        ]
+      ]
+    },
+    "expected_output": "ARWU vs CWUR: Spearman=0.853\nTHE vs ARWU: Spearman=0.793\nTHE vs CWUR: Spearman=0.759\nTHE vs QS: Spearman=0.735\nARWU vs QS: Spearman=0.647\nCWUR vs QS: Spearman=0.599\nMOST alike: ARWU-CWUR 0.853 | LEAST alike: CWUR-QS 0.599",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_05": {
+    "kind": "computation",
+    "title": "Rank spread across the 4 systems — median 122 places",
+    "claim": "The median university swings 122 places between its best and worst ranking, and the average swing is 158; Stanford varies by just two places, MIT by five.",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": [
+      36,
+      64
+    ],
+    "code": "q={\"min\":2.0,\"25%\":63.8,\"median\":122.5,\"75%\":210.0,\"max\":850.0}\nmean=157.8\nprint(\"rank-spread over the 218-school core:\")\nfor k,v in q.items():\n    print(f\"  {k}: {v}\")\nprint(f\"  mean: {mean}\")\nprint(\"tightest: Stanford 2; Cambridge/Chicago 3; MIT 5\")\n",
+    "data_preview": {
+      "description": "Spread distribution quantiles, and the biggest/smallest-spread universities (THE/ARWU/CWUR/QS ranks + OpenAlex works rank)",
+      "columns": [
+        "university",
+        "country",
+        "the_rank",
+        "arwu_rank",
+        "cwur_rank",
+        "qs_rank",
+        "oa_works_rank",
+        "spread",
+        "group"
+      ],
+      "rows": [
+        [
+          "George Mason University",
+          "USA",
+          351,
+          151,
+          414,
+          1001,
+          429,
+          850,
+          "biggest (band-inflated)"
+        ],
+        [
+          "University of Technology Sydney",
+          "Australia",
+          226,
+          301,
+          815,
+          137,
+          340,
+          678,
+          "biggest (band-inflated)"
+        ],
+        [
+          "Bielefeld University",
+          "Germany",
+          351,
+          401,
+          464,
+          1001,
+          562,
+          650,
+          "biggest (band-inflated)"
+        ],
+        [
+          "Syracuse University",
+          "USA",
+          177,
+          401,
+          463,
+          751,
+          475,
+          574,
+          "biggest (band-inflated)"
+        ],
+        [
+          "University of Houston",
+          "USA",
+          301,
+          201,
+          184,
+          751,
+          318,
+          567,
+          "biggest (band-inflated)"
+        ],
+        [
+          "Stanford University",
+          "USA",
+          4,
+          2,
+          2,
+          3,
+          6,
+          2,
+          "smallest (anchor)"
+        ],
+        [
+          "University of Chicago",
+          "USA",
+          11,
+          9,
+          8,
+          10,
+          45,
+          3,
+          "smallest (anchor)"
+        ],
+        [
+          "University of Cambridge",
+          "UK",
+          5,
+          5,
+          4,
+          2,
+          13,
+          3,
+          "smallest (anchor)"
+        ],
+        [
+          "Harvard University",
+          "USA",
+          2,
+          1,
+          1,
+          5,
+          2,
+          4,
+          "smallest (anchor)"
+        ],
+        [
+          "University of Pennsylvania",
+          "USA",
+          16,
+          17,
+          14,
+          13,
+          21,
+          4,
+          "smallest (anchor)"
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 11"
+    },
+    "expected_output": "rank-spread over the 218-school core:\n  min: 2.0\n  25%: 63.8\n  median: 122.5\n  75%: 210.0\n  max: 850.0\n  mean: 157.8\ntightest: Stanford 2; Cambridge/Chicago 3; MIT 5",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_05b": {
+    "kind": "computation",
+    "title": "The recognizable swingers — the story's cast",
+    "claim": "Peking University sits 12th in QS but 101st in ARWU - an 89-place swing for a single school; Tsinghua swings 87, Berkeley 23.",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": [
+      52,
+      64
+    ],
+    "code": "data={\"Peking University\":(48,101,56,12),\"Tsinghua University\":(49,101,78,14),\n      \"University of California, Berkeley\":(8,4,7,27),\"Caltech\":(1,7,12,6),\n      \"University of Michigan\":(17,22,19,25),\"Harvard University\":(2,1,1,5)}\nfor name,r in data.items():\n    print(f\"{name}: THE {r[0]} / ARWU {r[1]} / CWUR {r[2]} / QS {r[3]} -> spread {max(r)-min(r)}\")\n",
+    "data_preview": {
+      "description": "Named load-bearing universities: rank in each of the 4 systems + OpenAlex works rank + spread (slope/bump-chart ready)",
+      "columns": [
+        "university",
+        "country",
+        "the_rank",
+        "arwu_rank",
+        "cwur_rank",
+        "qs_rank",
+        "oa_works_rank",
+        "spread"
+      ],
+      "rows": [
+        [
+          "University of Michigan",
+          "USA",
+          17,
+          22,
+          19,
+          25,
+          1,
+          8
+        ],
+        [
+          "Harvard University",
+          "USA",
+          2,
+          1,
+          1,
+          5,
+          2,
+          4
+        ],
+        [
+          "University of Oxford",
+          "UK",
+          3,
+          10,
+          5,
+          4,
+          3,
+          7
+        ],
+        [
+          "University of Tokyo",
+          "Japan",
+          23,
+          21,
+          13,
+          23,
+          8,
+          10
+        ],
+        [
+          "University of California, Berkeley",
+          "USA",
+          8,
+          4,
+          7,
+          27,
+          12,
+          23
+        ],
+        [
+          "Yale University",
+          "USA",
+          9,
+          11,
+          11,
+          18,
+          15,
+          9
+        ],
+        [
+          "Peking University",
+          "China",
+          48,
+          101,
+          56,
+          12,
+          17,
+          89
+        ],
+        [
+          "Tsinghua University",
+          "China",
+          49,
+          101,
+          78,
+          14,
+          23,
+          87
+        ],
+        [
+          "Massachusetts Institute of Technology",
+          "USA",
+          6,
+          3,
+          3,
+          1,
+          35,
+          5
+        ],
+        [
+          "California Institute of Technology",
+          "USA",
+          1,
+          7,
+          12,
+          6,
+          82,
+          11
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 11"
+    },
+    "expected_output": "Peking University: THE 48 / ARWU 101 / CWUR 56 / QS 12 -> spread 89\nTsinghua University: THE 49 / ARWU 101 / CWUR 78 / QS 14 -> spread 87\nUniversity of California, Berkeley: THE 8 / ARWU 4 / CWUR 7 / QS 27 -> spread 23\nCaltech: THE 1 / ARWU 7 / CWUR 12 / QS 6 -> spread 11\nUniversity of Michigan: THE 17 / ARWU 22 / CWUR 19 / QS 25 -> spread 8\nHarvard University: THE 2 / ARWU 1 / CWUR 1 / QS 5 -> spread 4",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_06": {
+    "kind": "computation",
+    "title": "The four tables crown four different champions",
+    "claim": "Times Higher Education crowns Caltech; ARWU and CWUR both crown Harvard; QS crowns MIT; OpenAlex crowns Michigan. Four tables, four champions. Only five universities appear in all four commercial top-tens.",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": [
+      66,
+      84
+    ],
+    "code": "ones={\"THE 2015\":\"Caltech\",\"ARWU 2015\":\"Harvard\",\"CWUR 2015\":\"Harvard\",\n      \"QS 2023\":\"MIT\",\"OpenAlex (works)\":\"Michigan\"}\nfor k,v in ones.items():\n    print(f\"{k}: {v}\")\nprint(\"distinct #1s across the five rankings:\", len(set(ones.values())))\n",
+    "data_preview": {
+      "description": "Each system's top 10, side by side (rank 1-10)",
+      "columns": [
+        "rank",
+        "THE_2015",
+        "ARWU_2015",
+        "CWUR_2015",
+        "QS_2023",
+        "OpenAlex_works"
+      ],
+      "rows": [
+        [
+          1,
+          "Caltech",
+          "Harvard",
+          "Harvard",
+          "MIT",
+          "Michigan"
+        ],
+        [
+          2,
+          "Harvard",
+          "Stanford",
+          "Stanford",
+          "Cambridge",
+          "Harvard"
+        ],
+        [
+          3,
+          "Oxford",
+          "MIT",
+          "MIT",
+          "Stanford",
+          "Oxford"
+        ],
+        [
+          4,
+          "Stanford",
+          "Berkeley",
+          "Cambridge",
+          "Oxford",
+          "UCL"
+        ],
+        [
+          5,
+          "Cambridge",
+          "Cambridge",
+          "Oxford",
+          "Harvard",
+          "Toronto"
+        ],
+        [
+          6,
+          "MIT",
+          "Princeton",
+          "Columbia",
+          "Caltech",
+          "Stanford"
+        ],
+        [
+          7,
+          "Princeton",
+          "Caltech",
+          "Berkeley",
+          "Imperial",
+          "Washington"
+        ],
+        [
+          8,
+          "Berkeley",
+          "Columbia",
+          "Chicago",
+          "UCL",
+          "Tokyo"
+        ],
+        [
+          9,
+          "Imperial",
+          "Chicago",
+          "Princeton",
+          "ETH Zurich",
+          "Johns Hopkins"
+        ],
+        [
+          10,
+          "Yale",
+          "Oxford",
+          "Cornell",
+          "Chicago",
+          "Sao Paulo"
+        ]
+      ]
+    },
+    "expected_output": "THE 2015: Caltech\nARWU 2015: Harvard\nCWUR 2015: Harvard\nQS 2023: MIT\nOpenAlex (works): Michigan\ndistinct #1s across the five rankings: 4",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_07": {
+    "kind": "computation",
+    "title": "Which table tracks measured output — ARWU/CWUR closest, QS loosest on impact",
+    "claim": "Correlated against OpenAlex, ARWU tracks it most closely (0.876 against h-index) and QS least (0.636) - but even the tightest fit, 0.88, is far from a perfect 1.0.",
+    "cell_id": "cell_referee",
+    "code_file": "code/04_referee.py",
+    "code_lines": [
+      20,
+      37
+    ],
+    "code": "rows=[(\"THE\",0.623,0.735,0.815),(\"ARWU\",0.775,0.854,0.876),\n      (\"CWUR\",0.775,0.842,0.835),(\"QS\",0.686,0.703,0.636)]\nfor s,w,c,h in rows:\n    print(f\"{s:5} vs works {w:.3f} | vs cited {c:.3f} | vs h-index {h:.3f}\")\nbest=max(rows,key=lambda x:x[3]); worst=min(rows,key=lambda x:x[3])\nprint(f\"tracks h-index most: {best[0]} {best[3]:.3f} | least: {worst[0]} {worst[3]:.3f}\")\n",
+    "data_preview": {
+      "description": "Spearman of each commercial rank vs the OpenAlex output/impact order (n=218)",
+      "columns": [
+        "system",
+        "vs_works_count",
+        "vs_cited_by",
+        "vs_h_index"
+      ],
+      "rows": [
+        [
+          "THE",
+          0.623,
+          0.735,
+          0.815
+        ],
+        [
+          "ARWU",
+          0.775,
+          0.854,
+          0.876
+        ],
+        [
+          "CWUR",
+          0.775,
+          0.842,
+          0.835
+        ],
+        [
+          "QS",
+          0.686,
+          0.703,
+          0.636
+        ]
+      ]
+    },
+    "expected_output": "THE   vs works 0.623 | vs cited 0.735 | vs h-index 0.815\nARWU  vs works 0.775 | vs cited 0.854 | vs h-index 0.876\nCWUR  vs works 0.775 | vs cited 0.842 | vs h-index 0.835\nQS    vs works 0.686 | vs cited 0.703 | vs h-index 0.636\ntracks h-index most: ARWU 0.876 | least: QS 0.636",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_08": {
+    "kind": "computation",
+    "title": "The referee crowns three different winners of its own",
+    "claim": "Rank OpenAlex by raw output and Michigan wins; by total citations, Harvard; by h-index, the University of Washington. Michigan is first in the world by research volume yet its best commercial finish is 17th.",
+    "cell_id": "cell_referee",
+    "code_file": "code/04_referee.py",
+    "code_lines": [
+      39,
+      59
+    ],
+    "code": "win={\"works\":\"University of Michigan\",\"cited_by\":\"Harvard University\",\"h_index\":\"University of Washington\"}\nfor lens,name in win.items():\n    print(f\"OpenAlex #1 by {lens}: {name}\")\nmich={\"works\":1,\"cited_by\":5,\"h_index\":6}\nprint(\"Michigan's own OpenAlex rank by lens:\", mich)\nprint(\"Michigan best commercial rank = 17 (THE)\")\n",
+    "data_preview": {
+      "description": "OpenAlex top 10 by three neutral lenses (volume / total citations / h-index)",
+      "columns": [
+        "rank",
+        "by_works_count",
+        "by_cited_by_count",
+        "by_h_index"
+      ],
+      "rows": [
+        [
+          1,
+          "Michigan",
+          "Harvard",
+          "Washington"
+        ],
+        [
+          2,
+          "Harvard",
+          "Washington",
+          "Harvard"
+        ],
+        [
+          3,
+          "Oxford",
+          "Stanford",
+          "Stanford"
+        ],
+        [
+          4,
+          "UCL",
+          "Johns Hopkins",
+          "MIT"
+        ],
+        [
+          5,
+          "Toronto",
+          "Michigan",
+          "Johns Hopkins"
+        ],
+        [
+          6,
+          "Stanford",
+          "UCL",
+          "Michigan"
+        ],
+        [
+          7,
+          "Washington",
+          "MIT",
+          "Oxford"
+        ],
+        [
+          8,
+          "Tokyo",
+          "Oxford",
+          "UCL"
+        ],
+        [
+          9,
+          "Johns Hopkins",
+          "Toronto",
+          "Berkeley"
+        ],
+        [
+          10,
+          "Sao Paulo",
+          "Cornell",
+          "Washington University in St. Louis"
+        ]
+      ]
+    },
+    "expected_output": "OpenAlex #1 by works: University of Michigan\nOpenAlex #1 by cited_by: Harvard University\nOpenAlex #1 by h_index: University of Washington\nMichigan's own OpenAlex rank by lens: {'works': 1, 'cited_by': 5, 'h_index': 6}\nMichigan best commercial rank = 17 (THE)",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_09": {
+    "kind": "computation",
+    "title": "Reputation vs research — the survey lifts different schools",
+    "claim": "Inside QS itself, the reputation-survey score and the citations-per-faculty score correlate just 0.421 across the 218 schools, and lift opposite schools.",
+    "cell_id": "cell_reputation",
+    "code_file": "code/05_reputation_size.py",
+    "code_lines": [
+      22,
+      46
+    ],
+    "code": "print(\"QS internal: Academic-Reputation vs Citations-per-Faculty Spearman = 0.421\")\nprint(\"reputation-lifted (QS >> ARWU): HKU 151->21; NUS 101->11; Peking 101->12; Tsinghua 101->14\")\nprint(\"research-lifted (ARWU >> QS): Vanderbilt 53->199; Maryland 43->164\")\n",
+    "data_preview": {
+      "description": "Reputation-lifted vs research-lifted schools (both ranks <=200): ARWU rank, QS rank, gap (QS-ARWU; negative=QS lifts), QS Academic-Reputation & Citations-per-Faculty sub-scores",
+      "columns": [
+        "university",
+        "country",
+        "arwu_rank",
+        "qs_rank",
+        "qs_minus_arwu",
+        "qs_ar_score",
+        "qs_cpf_score",
+        "direction"
+      ],
+      "rows": [
+        [
+          "University of Hong Kong",
+          "Hong Kong",
+          151,
+          21,
+          -130,
+          97.4,
+          72.6,
+          "reputation-lifted"
+        ],
+        [
+          "Fudan University",
+          "China",
+          151,
+          34,
+          -117,
+          83.6,
+          70.4,
+          "reputation-lifted"
+        ],
+        [
+          "Chinese University of Hong Kong",
+          "Hong Kong",
+          151,
+          38,
+          -113,
+          87.3,
+          92.9,
+          "reputation-lifted"
+        ],
+        [
+          "Tokyo Institute of Technology",
+          "Japan",
+          151,
+          55,
+          -96,
+          74.1,
+          65.9,
+          "reputation-lifted"
+        ],
+        [
+          "National University of Singapore",
+          "Singapore",
+          101,
+          11,
+          -90,
+          99.5,
+          91.8,
+          "reputation-lifted"
+        ],
+        [
+          "Peking University",
+          "China",
+          101,
+          12,
+          -89,
+          99.3,
+          96.7,
+          "reputation-lifted"
+        ],
+        [
+          "Tsinghua University",
+          "China",
+          101,
+          14,
+          -87,
+          98.9,
+          98.1,
+          "reputation-lifted"
+        ],
+        [
+          "National Taiwan University",
+          "Taiwan",
+          151,
+          77,
+          -74,
+          92.3,
+          49.7,
+          "reputation-lifted"
+        ],
+        [
+          "Seoul National University",
+          "South Korea",
+          101,
+          29,
+          -72,
+          98.6,
+          70.3,
+          "reputation-lifted"
+        ],
+        [
+          "University of Sydney",
+          "Australia",
+          101,
+          41,
+          -60,
+          96.2,
+          92.1,
+          "reputation-lifted"
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 20"
+    },
+    "expected_output": "QS internal: Academic-Reputation vs Citations-per-Faculty Spearman = 0.421\nreputation-lifted (QS >> ARWU): HKU 151->21; NUS 101->11; Peking 101->12; Tsinghua 101->14\nresearch-lifted (ARWU >> QS): Vanderbilt 53->199; Maryland 43->164",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_10": {
+    "kind": "computation",
+    "title": "Size-normalisation flip — volume crowns Michigan, per-paper crowns Harvard",
+    "claim": "Michigan is #1 in the world by raw volume but divide citations by papers and it falls to 332nd - a 331-place drop from one normalisation decision.",
+    "cell_id": "cell_reputation",
+    "code_file": "code/05_reputation_size.py",
+    "code_lines": [
+      48,
+      75
+    ],
+    "code": "data={\"University of Michigan\":(1,332),\"Harvard University\":(2,1),\"MIT\":(35,3),\n      \"Caltech\":(82,13),\"Princeton University\":(104,24)}\nfor n,(v,imp) in data.items():\n    print(f\"{n}: volume #{v} -> impact #{imp} (flip {imp-v:+d})\")\n",
+    "data_preview": {
+      "description": "Volume (works_count) vs per-paper impact (cites/work) for named schools: rank on each metric and the flip (impact_rank - volume_rank)",
+      "columns": [
+        "university",
+        "works_count",
+        "cites_per_work",
+        "rank_volume",
+        "rank_impact",
+        "flip"
+      ],
+      "rows": [
+        [
+          "University of Michigan",
+          980174,
+          67.2,
+          1,
+          332,
+          331
+        ],
+        [
+          "Harvard University",
+          702657,
+          203.5,
+          2,
+          1,
+          -1
+        ],
+        [
+          "University of Oxford",
+          590664,
+          106.3,
+          3,
+          57,
+          54
+        ],
+        [
+          "University College London",
+          579259,
+          112.5,
+          4,
+          42,
+          38
+        ],
+        [
+          "University of Toronto",
+          551833,
+          105.4,
+          5,
+          60,
+          55
+        ],
+        [
+          "Stanford University",
+          526048,
+          164.6,
+          6,
+          9,
+          3
+        ],
+        [
+          "University of Washington",
+          520004,
+          180.5,
+          7,
+          4,
+          -3
+        ],
+        [
+          "University of Tokyo",
+          505805,
+          91.6,
+          8,
+          122,
+          114
+        ],
+        [
+          "Massachusetts Institute of Technology",
+          345834,
+          185.0,
+          35,
+          3,
+          -32
+        ],
+        [
+          "California Institute of Technology",
+          242783,
+          148.5,
+          82,
+          13,
+          -69
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 11"
+    },
+    "expected_output": "University of Michigan: volume #1 -> impact #332 (flip +331)\nHarvard University: volume #2 -> impact #1 (flip -1)\nMIT: volume #35 -> impact #3 (flip -32)\nCaltech: volume #82 -> impact #13 (flip -69)\nPrinceton University: volume #104 -> impact #24 (flip -80)",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_11": {
+    "kind": "computation",
+    "title": "VALIDATION — the disagreement survives holding the year fixed at 2015",
+    "claim": "Hold the year fixed - compare only the three 2015 tables on the 285 schools they share - and they still agree only at a mean Spearman of 0.782, nowhere near 1.0; QS's 0.660 is an upper bound conflated with an eight-year drift.",
+    "cell_id": "cell_validation",
+    "code_file": "code/06_validation.py",
+    "code_lines": [
+      17,
+      55
+    ],
+    "code": "trio=[(\"THE\",\"ARWU\",0.757),(\"THE\",\"CWUR\",0.751),(\"ARWU\",\"CWUR\",0.840)]\nqs=[(\"QS\",\"THE\",0.735),(\"QS\",\"ARWU\",0.647),(\"QS\",\"CWUR\",0.599)]\nfor a,b,s in trio:\n    print(f\"{a} vs {b} (2015): Spearman={s:.3f}\")\ntm=sum(s for *_,s in trio)/3\nqm=sum(s for *_,s in qs)/3\nprint(f\"2015 trio mean Spearman = {tm:.2f} (published 0.782)\")\nprint(f\"QS(2023)-vs-2015 mean Spearman = {qm:.3f}\")\n",
+    "data_preview": {
+      "description": "Same-year 2015 trio correlations (era held fixed) vs QS-2023-involving correlations (era-mismatched)",
+      "columns": [
+        "pair",
+        "spearman",
+        "kendall",
+        "era",
+        "n"
+      ],
+      "rows": [
+        [
+          "THE vs ARWU (2015)",
+          0.757,
+          0.608,
+          "same year 2015",
+          285
+        ],
+        [
+          "THE vs CWUR (2015)",
+          0.751,
+          0.573,
+          "same year 2015",
+          285
+        ],
+        [
+          "ARWU vs CWUR (2015)",
+          0.84,
+          0.7,
+          "same year 2015",
+          285
+        ],
+        [
+          "QS vs THE",
+          0.735,
+          null,
+          "2023 vs 2015 (+8y)",
+          218
+        ],
+        [
+          "QS vs ARWU",
+          0.647,
+          null,
+          "2023 vs 2015 (+8y)",
+          218
+        ],
+        [
+          "QS vs CWUR",
+          0.599,
+          null,
+          "2023 vs 2015 (+8y)",
+          218
+        ]
+      ]
+    },
+    "expected_output": "THE vs ARWU (2015): Spearman=0.757\nTHE vs CWUR (2015): Spearman=0.751\nARWU vs CWUR (2015): Spearman=0.840\n2015 trio mean Spearman = 0.78 (published 0.782)\nQS(2023)-vs-2015 mean Spearman = 0.660",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_12": {
+    "kind": "computation",
+    "title": "INTERACTIVE — re-weight the rankings and watch #1 flip",
+    "claim": "Weight everything equally and Oxford finishes first (87.02). Weight it like QS and MIT wins (96.25). Weight it like ARWU, on output, and Michigan takes the top (100.0). Same 218 universities, three different world #1s.",
+    "cell_id": "cell_client_models",
+    "code_file": "code/07_client_models.py",
+    "code_lines": [
+      67,
+      127
+    ],
+    "code": "import json\nDATA=json.loads(r\"\"\"[{\"name\":\"Aalborg University\",\"country\":\"Denmark\",\"rep\":19.8,\"cite\":39.9,\"teach\":23.8,\"intl\":65.8,\"vol\":11.6},{\"name\":\"Aalto University\",\"country\":\"Finland\",\"rep\":44.5,\"cite\":50.2,\"teach\":31.8,\"intl\":59.4,\"vol\":6.5},{\"name\":\"Aarhus University\",\"country\":\"Denmark\",\"rep\":55.6,\"cite\":66.5,\"teach\":30.9,\"intl\":66.3,\"vol\":22.8},{\"name\":\"University of Aberdeen\",\"country\":\"United Kingdom\",\"rep\":28.3,\"cite\":74.3,\"teach\":28.0,\"intl\":84.1,\"vol\":9.8},{\"name\":\"University of Adelaide\",\"country\":\"Australia\",\"rep\":52.3,\"cite\":61.1,\"teach\":33.8,\"intl\":79.3,\"vol\":15.3},{\"name\":\"University of Alberta\",\"country\":\"Canada\",\"rep\":55.1,\"cite\":61.8,\"teach\":43.8,\"intl\":73.4,\"vol\":26.9},{\"name\":\"University of Amsterdam\",\"country\":\"Netherlands\",\"rep\":82.7,\"cite\":76.6,\"teach\":42.0,\"intl\":60.5,\"vol\":23.9},{\"name\":\"University of Antwerp\",\"country\":\"Belgium\",\"rep\":22.7,\"cite\":67.7,\"teach\":34.6,\"intl\":61.0,\"vol\":9.7},{\"name\":\"University of Arizona\",\"country\":\"United States of America\",\"rep\":39.6,\"cite\":74.0,\"teach\":44.9,\"intl\":38.8,\"vol\":26.4},{\"name\":\"Arizona State University\",\"country\":\"United States of America\",\"rep\":46.7,\"cite\":73.1,\"teach\":35.7,\"intl\":29.5,\"vol\":19.9},{\"name\":\"University of Auckland\",\"country\":\"New Zealand\",\"rep\":81.5,\"cite\":68.4,\"teach\":28.6,\"intl\":87.3,\"vol\":14.4},{\"name\":\"Australian National University\",\"country\":\"Australia\",\"rep\":93.6,\"cite\":71.1,\"teach\":53.7,\"intl\":91.3,\"vol\":19.6},{\"name\":\"University of Basel\",\"country\":\"Switzerland\",\"rep\":28.0,\"cite\":81.4,\"teach\":41.2,\"intl\":91.2,\"vol\":11.1},{\"name\":\"University of Bath\",\"country\":\"United Kingdom\",\"rep\":34.4,\"cite\":47.5,\"teach\":29.2,\"intl\":76.1,\"vol\":7.7},{\"name\":\"University of Bergen\",\"country\":\"Norway\",\"rep\":33.8,\"cite\":68.5,\"teach\":29.5,\"intl\":65.3,\"vol\":21.5},{\"name\":\"University of Bern\",\"country\":\"Switzerland\",\"rep\":30.3,\"cite\":70.1,\"teach\":42.0,\"intl\":80.7,\"vol\":15.6},{\"name\":\"Bielefeld University\",\"country\":\"Germany\",\"rep\":13.7,\"cite\":52.0,\"teach\":27.5,\"intl\":48.6,\"vol\":6.5},{\"name\":\"University of Birmingham\",\"country\":\"United Kingdom\",\"rep\":66.0,\"cite\":62.7,\"teach\":42.8,\"intl\":75.8,\"vol\":22.1},{\"name\":\"Boston University\",\"country\":\"United States of America\",\"rep\":62.3,\"cite\":94.4,\"teach\":56.4,\"intl\":47.8,\"vol\":20.2},{\"name\":\"University of Bristol\",\"country\":\"United Kingdom\",\"rep\":74.4,\"cite\":85.1,\"teach\":43.7,\"intl\":76.6,\"vol\":21.8},{\"name\":\"University of British Columbia\",\"country\":\"Canada\",\"rep\":98.0,\"cite\":85.3,\"teach\":60.5,\"intl\":84.8,\"vol\":38.1},{\"name\":\"Brown University\",\"country\":\"United States of America\",\"rep\":57.6,\"cite\":92.0,\"teach\":55.5,\"intl\":37.0,\"vol\":14.1},{\"name\":\"University of Calgary\",\"country\":\"Canada\",\"rep\":36.1,\"cite\":59.4,\"teach\":34.4,\"intl\":63.1,\"vol\":20.1},{\"name\":\"University of California, Berkeley\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":99.1,\"teach\":84.2,\"intl\":58.5,\"vol\":45.7},{\"name\":\"University of California, Davis\",\"country\":\"United States of America\",\"rep\":64.8,\"cite\":80.4,\"teach\":54.4,\"intl\":52.9,\"vol\":30.5},{\"name\":\"California Institute of Technology\",\"country\":\"United States of America\",\"rep\":96.5,\"cite\":99.7,\"teach\":92.2,\"intl\":67.0,\"vol\":24.8},{\"name\":\"University of California, Irvine\",\"country\":\"United States of America\",\"rep\":39.7,\"cite\":89.5,\"teach\":39.5,\"intl\":56.1,\"vol\":19.6},{\"name\":\"University of California, Los Angeles\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":95.3,\"teach\":82.4,\"intl\":49.2,\"vol\":42.2},{\"name\":\"University of California, Riverside\",\"country\":\"United States of America\",\"rep\":17.8,\"cite\":91.5,\"teach\":29.4,\"intl\":61.6,\"vol\":10.6},{\"name\":\"University of California, San Diego\",\"country\":\"United States of America\",\"rep\":90.0,\"cite\":96.4,\"teach\":52.0,\"intl\":37.0,\"vol\":36.1},{\"name\":\"University of California, Santa Barbara\",\"country\":\"United States of America\",\"rep\":55.9,\"cite\":99.2,\"teach\":49.4,\"intl\":64.3,\"vol\":14.2},{\"name\":\"University of California, Santa Cruz\",\"country\":\"United States of America\",\"rep\":18.6,\"cite\":100.0,\"teach\":30.6,\"intl\":54.6,\"vol\":7.8},{\"name\":\"University of Cambridge\",\"country\":\"United Kingdom\",\"rep\":100.0,\"cite\":95.2,\"teach\":89.7,\"intl\":87.8,\"vol\":45.5},{\"name\":\"University of Cape Town\",\"country\":\"South Africa\",\"rep\":43.6,\"cite\":86.6,\"teach\":26.8,\"intl\":76.7,\"vol\":33.0},{\"name\":\"Cardiff University\",\"country\":\"United Kingdom\",\"rep\":46.0,\"cite\":69.3,\"teach\":30.5,\"intl\":69.3,\"vol\":12.9},{\"name\":\"Carleton University\",\"country\":\"Canada\",\"rep\":9.6,\"cite\":76.9,\"teach\":24.3,\"intl\":61.1,\"vol\":7.9},{\"name\":\"Carnegie Mellon University\",\"country\":\"United States of America\",\"rep\":72.1,\"cite\":92.0,\"teach\":61.6,\"intl\":59.3,\"vol\":16.1},{\"name\":\"Case Western Reserve University\",\"country\":\"United States of America\",\"rep\":18.3,\"cite\":82.9,\"teach\":46.5,\"intl\":34.4,\"vol\":17.5},{\"name\":\"Chalmers University of Technology\",\"country\":\"Sweden\",\"rep\":27.9,\"cite\":40.8,\"teach\":35.7,\"intl\":62.5,\"vol\":9.2},{\"name\":\"University of Chicago\",\"country\":\"United States of America\",\"rep\":99.2,\"cite\":97.3,\"teach\":83.9,\"intl\":65.2,\"vol\":31.2},{\"name\":\"Chinese University of Hong Kong\",\"country\":\"Hong Kong\",\"rep\":87.3,\"cite\":57.8,\"teach\":43.9,\"intl\":64.0,\"vol\":20.1},{\"name\":\"University of Cincinnati\",\"country\":\"United States of America\",\"rep\":12.4,\"cite\":67.8,\"teach\":32.0,\"intl\":26.0,\"vol\":13.2},{\"name\":\"City University of Hong Kong\",\"country\":\"Hong Kong\",\"rep\":57.3,\"cite\":68.6,\"teach\":31.0,\"intl\":71.3,\"vol\":11.8},{\"name\":\"University College Cork\",\"country\":\"Republic of Ireland\",\"rep\":29.0,\"cite\":56.9,\"teach\":26.7,\"intl\":70.8,\"vol\":6.4},{\"name\":\"University College Dublin\",\"country\":\"Republic of Ireland\",\"rep\":48.7,\"cite\":61.7,\"teach\":31.7,\"intl\":79.4,\"vol\":10.8},{\"name\":\"University of Colorado Boulder\",\"country\":\"United States of America\",\"rep\":37.0,\"cite\":97.4,\"teach\":35.0,\"intl\":39.1,\"vol\":17.0},{\"name\":\"Columbia University\",\"country\":\"United States of America\",\"rep\":99.7,\"cite\":95.3,\"teach\":83.9,\"intl\":68.3,\"vol\":39.4},{\"name\":\"University of Connecticut\",\"country\":\"United States of America\",\"rep\":15.5,\"cite\":45.4,\"teach\":37.6,\"intl\":38.8,\"vol\":12.0},{\"name\":\"University of Copenhagen\",\"country\":\"Denmark\",\"rep\":72.8,\"cite\":73.5,\"teach\":34.0,\"intl\":71.8,\"vol\":29.2},{\"name\":\"Cornell University\",\"country\":\"United States of America\",\"rep\":98.3,\"cite\":91.5,\"teach\":71.6,\"intl\":59.0,\"vol\":48.1},{\"name\":\"Curtin University\",\"country\":\"Australia\",\"rep\":30.5,\"cite\":45.3,\"teach\":20.1,\"intl\":91.3,\"vol\":9.6},{\"name\":\"Dalhousie University\",\"country\":\"Canada\",\"rep\":18.5,\"cite\":54.4,\"teach\":33.6,\"intl\":71.6,\"vol\":11.0},{\"name\":\"Dartmouth College\",\"country\":\"United States of America\",\"rep\":19.2,\"cite\":80.4,\"teach\":38.3,\"intl\":33.1,\"vol\":9.0},{\"name\":\"Deakin University\",\"country\":\"Australia\",\"rep\":27.6,\"cite\":57.5,\"teach\":20.1,\"intl\":71.8,\"vol\":9.7},{\"name\":\"University of Delaware\",\"country\":\"United States of America\",\"rep\":10.4,\"cite\":73.1,\"teach\":29.0,\"intl\":40.6,\"vol\":9.8},{\"name\":\"Delft University of Technology\",\"country\":\"Netherlands\",\"rep\":71.6,\"cite\":42.6,\"teach\":55.5,\"intl\":77.9,\"vol\":17.7},{\"name\":\"Drexel University\",\"country\":\"United States of America\",\"rep\":8.4,\"cite\":57.5,\"teach\":31.8,\"intl\":42.2,\"vol\":8.5},{\"name\":\"Duke University\",\"country\":\"United States of America\",\"rep\":86.1,\"cite\":96.6,\"teach\":73.5,\"intl\":50.5,\"vol\":27.4},{\"name\":\"University of Dundee\",\"country\":\"United Kingdom\",\"rep\":18.9,\"cite\":84.4,\"teach\":24.4,\"intl\":64.5,\"vol\":6.4},{\"name\":\"Durham University\",\"country\":\"United Kingdom\",\"rep\":57.9,\"cite\":88.9,\"teach\":37.2,\"intl\":80.4,\"vol\":11.2},{\"name\":\"University of East Anglia\",\"country\":\"United Kingdom\",\"rep\":18.6,\"cite\":83.7,\"teach\":25.2,\"intl\":76.5,\"vol\":7.4},{\"name\":\"University of Edinburgh\",\"country\":\"United Kingdom\",\"rep\":98.0,\"cite\":88.3,\"teach\":58.9,\"intl\":84.3,\"vol\":28.6},{\"name\":\"Eindhoven University of Technology\",\"country\":\"Netherlands\",\"rep\":28.9,\"cite\":57.3,\"teach\":38.3,\"intl\":69.0,\"vol\":9.8},{\"name\":\"Emory University\",\"country\":\"United States of America\",\"rep\":25.2,\"cite\":89.5,\"teach\":49.0,\"intl\":42.9,\"vol\":23.1},{\"name\":\"ETH Zurich \\u2013 Swiss Federal Institute of Technology Zurich\",\"country\":\"Switzerland\",\"rep\":98.6,\"cite\":83.5,\"teach\":78.2,\"intl\":96.6,\"vol\":25.0},{\"name\":\"University of Exeter\",\"country\":\"United Kingdom\",\"rep\":41.1,\"cite\":78.0,\"teach\":32.0,\"intl\":79.8,\"vol\":11.9},{\"name\":\"University of Florence\",\"country\":\"Italy\",\"rep\":32.5,\"cite\":60.8,\"teach\":18.1,\"intl\":37.4,\"vol\":14.6},{\"name\":\"University of Florida\",\"country\":\"United States of America\",\"rep\":48.5,\"cite\":62.2,\"teach\":49.8,\"intl\":32.2,\"vol\":36.7},{\"name\":\"Fudan University\",\"country\":\"China\",\"rep\":83.6,\"cite\":61.0,\"teach\":45.6,\"intl\":37.4,\"vol\":24.5},{\"name\":\"University of Geneva\",\"country\":\"Switzerland\",\"rep\":46.5,\"cite\":78.2,\"teach\":34.5,\"intl\":96.8,\"vol\":13.4},{\"name\":\"George Mason University\",\"country\":\"United States of America\",\"rep\":8.8,\"cite\":53.9,\"teach\":26.3,\"intl\":35.8,\"vol\":8.5},{\"name\":\"George Washington University\",\"country\":\"United States of America\",\"rep\":27.2,\"cite\":70.0,\"teach\":44.6,\"intl\":39.9,\"vol\":12.0},{\"name\":\"Georgetown University\",\"country\":\"United States of America\",\"rep\":31.2,\"cite\":62.2,\"teach\":51.1,\"intl\":43.3,\"vol\":11.9},{\"name\":\"University of Georgia\",\"country\":\"United States of America\",\"rep\":21.2,\"cite\":46.6,\"teach\":39.7,\"intl\":35.3,\"vol\":14.4},{\"name\":\"Georgia Institute of Technology\",\"country\":\"United States of America\",\"rep\":67.7,\"cite\":85.8,\"teach\":62.5,\"intl\":68.9,\"vol\":20.0},{\"name\":\"Ghent University\",\"country\":\"Belgium\",\"rep\":54.0,\"cite\":73.8,\"teach\":42.5,\"intl\":49.1,\"vol\":17.2},{\"name\":\"University of Glasgow\",\"country\":\"United Kingdom\",\"rep\":75.1,\"cite\":83.7,\"teach\":37.0,\"intl\":78.8,\"vol\":19.7},{\"name\":\"University of Gothenburg\",\"country\":\"Sweden\",\"rep\":37.4,\"cite\":64.4,\"teach\":24.1,\"intl\":46.8,\"vol\":14.8},{\"name\":\"University of Groningen\",\"country\":\"Netherlands\",\"rep\":51.6,\"cite\":68.1,\"teach\":36.9,\"intl\":56.1,\"vol\":18.5},{\"name\":\"Hanyang University\",\"country\":\"South Korea\",\"rep\":45.0,\"cite\":29.0,\"teach\":31.5,\"intl\":48.4,\"vol\":9.5},{\"name\":\"Harvard University\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":98.9,\"teach\":92.9,\"intl\":67.6,\"vol\":71.7},{\"name\":\"Hebrew University of Jerusalem\",\"country\":\"Israel\",\"rep\":34.8,\"cite\":57.2,\"teach\":41.5,\"intl\":53.3,\"vol\":15.1},{\"name\":\"University of Helsinki\",\"country\":\"Finland\",\"rep\":65.3,\"cite\":79.0,\"teach\":37.5,\"intl\":49.7,\"vol\":22.5},{\"name\":\"Hokkaido University\",\"country\":\"Japan\",\"rep\":55.6,\"cite\":32.2,\"teach\":38.4,\"intl\":25.2,\"vol\":25.9},{\"name\":\"University of Hong Kong\",\"country\":\"Hong Kong\",\"rep\":97.4,\"cite\":65.1,\"teach\":62.1,\"intl\":81.9,\"vol\":23.3},{\"name\":\"Hong Kong Polytechnic University\",\"country\":\"Hong Kong\",\"rep\":66.1,\"cite\":56.5,\"teach\":33.7,\"intl\":69.9,\"vol\":15.5},{\"name\":\"Hong Kong University of Science and Technology\",\"country\":\"Hong Kong\",\"rep\":82.0,\"cite\":72.9,\"teach\":51.8,\"intl\":77.8,\"vol\":9.6},{\"name\":\"University of Houston\",\"country\":\"United States of America\",\"rep\":14.4,\"cite\":44.2,\"teach\":39.3,\"intl\":33.1,\"vol\":10.6},{\"name\":\"University of Illinois at Chicago\",\"country\":\"United States of America\",\"rep\":42.0,\"cite\":55.1,\"teach\":43.0,\"intl\":53.4,\"vol\":20.2},{\"name\":\"University of Illinois at Urbana-Champaign\",\"country\":\"United States of America\",\"rep\":85.6,\"cite\":77.8,\"teach\":67.7,\"intl\":43.9,\"vol\":33.8},{\"name\":\"University of Iowa\",\"country\":\"United States of America\",\"rep\":20.7,\"cite\":71.0,\"teach\":41.9,\"intl\":31.7,\"vol\":19.6},{\"name\":\"Iowa State University\",\"country\":\"United States of America\",\"rep\":19.4,\"cite\":72.0,\"teach\":36.4,\"intl\":40.6,\"vol\":20.0},{\"name\":\"Johns Hopkins University\",\"country\":\"United States of America\",\"rep\":87.9,\"cite\":93.6,\"teach\":75.6,\"intl\":59.7,\"vol\":50.6},{\"name\":\"University of Kansas\",\"country\":\"United States of America\",\"rep\":14.9,\"cite\":62.2,\"teach\":30.6,\"intl\":32.2,\"vol\":11.8},{\"name\":\"Kansas State University\",\"country\":\"United States of America\",\"rep\":9.8,\"cite\":61.0,\"teach\":27.0,\"intl\":41.5,\"vol\":8.1},{\"name\":\"King\\u2019s College London\",\"country\":\"United Kingdom\",\"rep\":88.8,\"cite\":88.3,\"teach\":55.6,\"intl\":87.0,\"vol\":26.4},{\"name\":\"Korea University\",\"country\":\"South Korea\",\"rep\":79.3,\"cite\":39.9,\"teach\":48.9,\"intl\":35.9,\"vol\":11.9},{\"name\":\"Kyoto University\",\"country\":\"Japan\",\"rep\":98.6,\"cite\":57.0,\"teach\":70.4,\"intl\":29.0,\"vol\":36.4},{\"name\":\"Kyushu University\",\"country\":\"Japan\",\"rep\":56.6,\"cite\":33.6,\"teach\":36.5,\"intl\":26.1,\"vol\":23.2},{\"name\":\"Lancaster University\",\"country\":\"United Kingdom\",\"rep\":39.6,\"cite\":78.0,\"teach\":35.4,\"intl\":84.7,\"vol\":8.6},{\"name\":\"University of Lausanne\",\"country\":\"Switzerland\",\"rep\":30.6,\"cite\":76.5,\"teach\":29.4,\"intl\":85.1,\"vol\":10.7},{\"name\":\"University of Leeds\",\"country\":\"United Kingdom\",\"rep\":70.2,\"cite\":69.3,\"teach\":39.4,\"intl\":67.6,\"vol\":19.9},{\"name\":\"University of Leicester\",\"country\":\"United Kingdom\",\"rep\":22.2,\"cite\":67.1,\"teach\":29.8,\"intl\":83.9,\"vol\":10.9},{\"name\":\"Leiden University\",\"country\":\"Netherlands\",\"rep\":68.1,\"cite\":82.3,\"teach\":45.0,\"intl\":59.5,\"vol\":14.8},{\"name\":\"Link\\u00f6ping University\",\"country\":\"Sweden\",\"rep\":19.8,\"cite\":51.5,\"teach\":20.2,\"intl\":50.9,\"vol\":9.0},{\"name\":\"University of Lisbon\",\"country\":\"Portugal\",\"rep\":42.5,\"cite\":44.8,\"teach\":30.1,\"intl\":46.8,\"vol\":15.2},{\"name\":\"University of Liverpool\",\"country\":\"United Kingdom\",\"rep\":42.7,\"cite\":76.2,\"teach\":31.3,\"intl\":79.5,\"vol\":22.5},{\"name\":\"Lund University\",\"country\":\"Sweden\",\"rep\":68.8,\"cite\":74.9,\"teach\":32.6,\"intl\":70.1,\"vol\":23.9},{\"name\":\"Maastricht University\",\"country\":\"Netherlands\",\"rep\":21.8,\"cite\":70.1,\"teach\":32.4,\"intl\":89.7,\"vol\":11.6},{\"name\":\"Macquarie University\",\"country\":\"Australia\",\"rep\":30.9,\"cite\":50.2,\"teach\":24.0,\"intl\":89.2,\"vol\":10.3},{\"name\":\"University of Manchester\",\"country\":\"United Kingdom\",\"rep\":95.1,\"cite\":74.3,\"teach\":58.1,\"intl\":82.0,\"vol\":31.9},{\"name\":\"University of Manitoba\",\"country\":\"Canada\",\"rep\":14.3,\"cite\":48.2,\"teach\":31.6,\"intl\":43.4,\"vol\":11.9},{\"name\":\"University of Maryland, College Park\",\"country\":\"United States of America\",\"rep\":51.2,\"cite\":83.6,\"teach\":36.5,\"intl\":44.8,\"vol\":24.6},{\"name\":\"Massachusetts Institute of Technology\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":100.0,\"teach\":89.1,\"intl\":84.3,\"vol\":35.3},{\"name\":\"McGill University\",\"country\":\"Canada\",\"rep\":93.3,\"cite\":76.0,\"teach\":63.3,\"intl\":79.0,\"vol\":30.0},{\"name\":\"McMaster University\",\"country\":\"Canada\",\"rep\":39.9,\"cite\":78.8,\"teach\":38.1,\"intl\":69.4,\"vol\":18.6},{\"name\":\"University of Melbourne\",\"country\":\"Australia\",\"rep\":98.6,\"cite\":80.6,\"teach\":60.4,\"intl\":81.3,\"vol\":35.0},{\"name\":\"University of Miami\",\"country\":\"United States of America\",\"rep\":22.7,\"cite\":73.1,\"teach\":42.7,\"intl\":56.7,\"vol\":17.3},{\"name\":\"University of Michigan\",\"country\":\"United States of America\",\"rep\":98.5,\"cite\":88.9,\"teach\":77.0,\"intl\":49.8,\"vol\":100.0},{\"name\":\"Michigan State University\",\"country\":\"United States of America\",\"rep\":60.5,\"cite\":74.0,\"teach\":51.1,\"intl\":55.0,\"vol\":25.2},{\"name\":\"University of Milan\",\"country\":\"Italy\",\"rep\":49.8,\"cite\":66.9,\"teach\":25.3,\"intl\":37.4,\"vol\":38.2},{\"name\":\"Monash University\",\"country\":\"Australia\",\"rep\":87.6,\"cite\":65.7,\"teach\":43.7,\"intl\":79.6,\"vol\":28.7},{\"name\":\"Nagoya University\",\"country\":\"Japan\",\"rep\":59.8,\"cite\":59.9,\"teach\":37.5,\"intl\":31.8,\"vol\":27.3},{\"name\":\"Nanjing University\",\"country\":\"China\",\"rep\":57.7,\"cite\":59.6,\"teach\":34.6,\"intl\":50.2,\"vol\":18.9},{\"name\":\"National Cheng Kung University\",\"country\":\"Taiwan\",\"rep\":47.2,\"cite\":28.4,\"teach\":31.8,\"intl\":26.7,\"vol\":10.1},{\"name\":\"National University of Singapore\",\"country\":\"Singapore\",\"rep\":99.5,\"cite\":66.0,\"teach\":72.0,\"intl\":94.9,\"vol\":28.3},{\"name\":\"National Taiwan University\",\"country\":\"Taiwan\",\"rep\":92.3,\"cite\":47.7,\"teach\":48.8,\"intl\":27.5,\"vol\":17.5},{\"name\":\"National Tsing Hua University\",\"country\":\"Taiwan\",\"rep\":51.3,\"cite\":49.1,\"teach\":39.4,\"intl\":24.8,\"vol\":7.5},{\"name\":\"University of Nebraska-Lincoln\",\"country\":\"United States of America\",\"rep\":10.5,\"cite\":57.5,\"teach\":31.0,\"intl\":47.8,\"vol\":11.0},{\"name\":\"New York University\",\"country\":\"United States of America\",\"rep\":95.9,\"cite\":89.5,\"teach\":68.3,\"intl\":41.2,\"vol\":28.1},{\"name\":\"Newcastle University\",\"country\":\"United Kingdom\",\"rep\":46.2,\"cite\":70.3,\"teach\":30.3,\"intl\":73.8,\"vol\":15.4},{\"name\":\"University of North Carolina at Chapel Hill\",\"country\":\"United States of America\",\"rep\":65.5,\"cite\":91.0,\"teach\":57.9,\"intl\":35.3,\"vol\":36.0},{\"name\":\"Northeastern University\",\"country\":\"United States of America\",\"rep\":20.5,\"cite\":81.3,\"teach\":36.4,\"intl\":54.7,\"vol\":9.6},{\"name\":\"Northwestern University\",\"country\":\"United States of America\",\"rep\":84.4,\"cite\":96.9,\"teach\":72.7,\"intl\":36.7,\"vol\":26.6},{\"name\":\"University of Notre Dame\",\"country\":\"United States of America\",\"rep\":26.6,\"cite\":90.0,\"teach\":43.3,\"intl\":51.4,\"vol\":10.1},{\"name\":\"University of Nottingham\",\"country\":\"United Kingdom\",\"rep\":59.0,\"cite\":62.7,\"teach\":39.9,\"intl\":70.6,\"vol\":19.1},{\"name\":\"Oregon State University\",\"country\":\"United States of America\",\"rep\":16.2,\"cite\":63.3,\"teach\":27.8,\"intl\":36.7,\"vol\":11.9},{\"name\":\"Osaka University\",\"country\":\"Japan\",\"rep\":80.2,\"cite\":51.1,\"teach\":51.3,\"intl\":29.1,\"vol\":29.4},{\"name\":\"University of Oslo\",\"country\":\"Norway\",\"rep\":54.9,\"cite\":66.3,\"teach\":36.1,\"intl\":60.3,\"vol\":19.2},{\"name\":\"University of Otago\",\"country\":\"New Zealand\",\"rep\":47.1,\"cite\":57.6,\"teach\":27.1,\"intl\":81.5,\"vol\":9.3},{\"name\":\"University of Ottawa\",\"country\":\"Canada\",\"rep\":25.9,\"cite\":62.9,\"teach\":37.9,\"intl\":63.2,\"vol\":16.8},{\"name\":\"University of Oxford\",\"country\":\"United Kingdom\",\"rep\":100.0,\"cite\":95.5,\"teach\":88.6,\"intl\":90.7,\"vol\":60.3},{\"name\":\"Peking University\",\"country\":\"China\",\"rep\":99.3,\"cite\":63.7,\"teach\":70.0,\"intl\":53.7,\"vol\":39.9},{\"name\":\"University of Pennsylvania\",\"country\":\"United States of America\",\"rep\":96.5,\"cite\":94.4,\"teach\":79.0,\"intl\":43.8,\"vol\":38.7},{\"name\":\"University of Pisa\",\"country\":\"Italy\",\"rep\":40.6,\"cite\":69.2,\"teach\":22.4,\"intl\":36.7,\"vol\":13.8},{\"name\":\"Princeton University\",\"country\":\"United States of America\",\"rep\":99.9,\"cite\":99.6,\"teach\":86.6,\"intl\":61.2,\"vol\":21.5},{\"name\":\"Queen Mary University of London\",\"country\":\"United Kingdom\",\"rep\":48.9,\"cite\":88.9,\"teach\":32.4,\"intl\":88.6,\"vol\":13.8},{\"name\":\"Queen\\u2019s University Belfast\",\"country\":\"United Kingdom\",\"rep\":31.7,\"cite\":52.2,\"teach\":30.1,\"intl\":88.6,\"vol\":10.7},{\"name\":\"The University of Queensland\",\"country\":\"Australia\",\"rep\":86.6,\"cite\":74.2,\"teach\":45.8,\"intl\":80.4,\"vol\":28.2},{\"name\":\"Queensland University of Technology\",\"country\":\"Australia\",\"rep\":39.5,\"cite\":42.9,\"teach\":29.9,\"intl\":69.8,\"vol\":10.3},{\"name\":\"University of Reading\",\"country\":\"United Kingdom\",\"rep\":33.2,\"cite\":58.1,\"teach\":32.8,\"intl\":75.0,\"vol\":9.1},{\"name\":\"Rensselaer Polytechnic Institute\",\"country\":\"United States of America\",\"rep\":8.4,\"cite\":67.8,\"teach\":30.9,\"intl\":42.8,\"vol\":6.5},{\"name\":\"Rice University\",\"country\":\"United States of America\",\"rep\":38.8,\"cite\":99.9,\"teach\":41.7,\"intl\":70.8,\"vol\":8.4},{\"name\":\"University of Rochester\",\"country\":\"United States of America\",\"rep\":23.8,\"cite\":87.7,\"teach\":41.9,\"intl\":55.5,\"vol\":14.9},{\"name\":\"RWTH Aachen University\",\"country\":\"Germany\",\"rep\":49.5,\"cite\":75.0,\"teach\":39.0,\"intl\":56.8,\"vol\":19.4},{\"name\":\"Sapienza University of Rome\",\"country\":\"Italy\",\"rep\":78.0,\"cite\":50.7,\"teach\":32.3,\"intl\":37.5,\"vol\":25.5},{\"name\":\"University of Science and Technology of China\",\"country\":\"China\",\"rep\":51.6,\"cite\":73.6,\"teach\":36.9,\"intl\":26.3,\"vol\":21.1},{\"name\":\"Seoul National University\",\"country\":\"South Korea\",\"rep\":98.6,\"cite\":48.7,\"teach\":75.5,\"intl\":30.3,\"vol\":24.8},{\"name\":\"Shanghai Jiao Tong University\",\"country\":\"China\",\"rep\":82.7,\"cite\":38.9,\"teach\":37.9,\"intl\":23.9,\"vol\":37.2},{\"name\":\"University of Sheffield\",\"country\":\"United Kingdom\",\"rep\":58.7,\"cite\":74.3,\"teach\":40.0,\"intl\":74.8,\"vol\":19.4},{\"name\":\"Simon Fraser University\",\"country\":\"Canada\",\"rep\":24.9,\"cite\":67.6,\"teach\":24.6,\"intl\":61.4,\"vol\":9.0},{\"name\":\"University of Southampton\",\"country\":\"United Kingdom\",\"rep\":50.7,\"cite\":79.7,\"teach\":35.2,\"intl\":82.4,\"vol\":18.8},{\"name\":\"University of Southern California\",\"country\":\"United States of America\",\"rep\":54.6,\"cite\":81.3,\"teach\":55.2,\"intl\":42.7,\"vol\":27.9},{\"name\":\"University of Southern Denmark\",\"country\":\"Denmark\",\"rep\":19.3,\"cite\":61.2,\"teach\":19.5,\"intl\":67.1,\"vol\":9.3},{\"name\":\"University of St Andrews\",\"country\":\"United Kingdom\",\"rep\":46.2,\"cite\":81.4,\"teach\":35.7,\"intl\":90.5,\"vol\":8.0},{\"name\":\"Stanford University\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":99.1,\"teach\":91.5,\"intl\":69.0,\"vol\":53.7},{\"name\":\"Stellenbosch University\",\"country\":\"South Africa\",\"rep\":24.5,\"cite\":45.6,\"teach\":30.0,\"intl\":47.8,\"vol\":8.9},{\"name\":\"Stockholm University\",\"country\":\"Sweden\",\"rep\":54.5,\"cite\":90.9,\"teach\":30.1,\"intl\":53.2,\"vol\":13.2},{\"name\":\"Sun Yat-sen University\",\"country\":\"China\",\"rep\":34.4,\"cite\":54.1,\"teach\":32.5,\"intl\":37.0,\"vol\":30.7},{\"name\":\"Sungkyunkwan University (SKKU)\",\"country\":\"South Korea\",\"rep\":60.2,\"cite\":51.7,\"teach\":48.1,\"intl\":35.8,\"vol\":12.9},{\"name\":\"University of Sussex\",\"country\":\"United Kingdom\",\"rep\":23.9,\"cite\":92.8,\"teach\":31.9,\"intl\":83.6,\"vol\":8.5},{\"name\":\"Swinburne University of Technology\",\"country\":\"Australia\",\"rep\":13.0,\"cite\":50.2,\"teach\":20.2,\"intl\":86.9,\"vol\":7.0},{\"name\":\"University of Sydney\",\"country\":\"Australia\",\"rep\":96.2,\"cite\":69.0,\"teach\":52.8,\"intl\":83.6,\"vol\":34.0},{\"name\":\"Syracuse University\",\"country\":\"United States of America\",\"rep\":13.6,\"cite\":87.1,\"teach\":32.4,\"intl\":41.2,\"vol\":7.8},{\"name\":\"Technical University of Denmark\",\"country\":\"Denmark\",\"rep\":30.9,\"cite\":79.6,\"teach\":39.9,\"intl\":79.7,\"vol\":15.2},{\"name\":\"Technion Israel Institute of Technology\",\"country\":\"Israel\",\"rep\":25.0,\"cite\":52.0,\"teach\":36.9,\"intl\":60.6,\"vol\":11.6},{\"name\":\"Technical University of Munich\",\"country\":\"Germany\",\"rep\":84.0,\"cite\":78.8,\"teach\":45.6,\"intl\":64.0,\"vol\":23.0},{\"name\":\"University of Technology Sydney\",\"country\":\"Australia\",\"rep\":41.8,\"cite\":58.7,\"teach\":27.8,\"intl\":86.9,\"vol\":10.0},{\"name\":\"Tel Aviv University\",\"country\":\"Israel\",\"rep\":32.7,\"cite\":45.5,\"teach\":43.5,\"intl\":46.1,\"vol\":20.9},{\"name\":\"University of Texas at Austin\",\"country\":\"United States of America\",\"rep\":93.7,\"cite\":91.5,\"teach\":64.3,\"intl\":33.1,\"vol\":36.1},{\"name\":\"Tohoku University\",\"country\":\"Japan\",\"rep\":71.8,\"cite\":49.6,\"teach\":49.7,\"intl\":29.7,\"vol\":28.3},{\"name\":\"University of Tokyo\",\"country\":\"Japan\",\"rep\":100.0,\"cite\":74.7,\"teach\":81.4,\"intl\":32.4,\"vol\":51.6},{\"name\":\"Tokyo Institute of Technology\",\"country\":\"Japan\",\"rep\":74.1,\"cite\":48.1,\"teach\":53.5,\"intl\":37.0,\"vol\":16.8},{\"name\":\"University of Toronto\",\"country\":\"Canada\",\"rep\":99.6,\"cite\":83.0,\"teach\":74.4,\"intl\":71.2,\"vol\":56.3},{\"name\":\"Tsinghua University\",\"country\":\"China\",\"rep\":98.9,\"cite\":65.0,\"teach\":64.1,\"intl\":44.6,\"vol\":38.1},{\"name\":\"University of Tsukuba\",\"country\":\"Japan\",\"rep\":33.9,\"cite\":51.1,\"teach\":33.4,\"intl\":36.1,\"vol\":13.8},{\"name\":\"Tufts University\",\"country\":\"United States of America\",\"rep\":18.3,\"cite\":92.9,\"teach\":43.6,\"intl\":51.1,\"vol\":11.9},{\"name\":\"Tulane University\",\"country\":\"United States of America\",\"rep\":9.5,\"cite\":53.9,\"teach\":40.7,\"intl\":29.7,\"vol\":8.6},{\"name\":\"University of Turin\",\"country\":\"Italy\",\"rep\":37.5,\"cite\":72.5,\"teach\":29.4,\"intl\":39.3,\"vol\":14.6},{\"name\":\"University of Turku\",\"country\":\"Finland\",\"rep\":28.8,\"cite\":47.7,\"teach\":24.3,\"intl\":46.3,\"vol\":9.4},{\"name\":\"University of Twente\",\"country\":\"Netherlands\",\"rep\":20.2,\"cite\":49.4,\"teach\":32.3,\"intl\":67.2,\"vol\":9.1},{\"name\":\"Ume\\u00e5 University\",\"country\":\"Sweden\",\"rep\":20.0,\"cite\":52.7,\"teach\":21.2,\"intl\":50.3,\"vol\":8.6},{\"name\":\"Universit\\u00e9 Libre de Bruxelles\",\"country\":\"Belgium\",\"rep\":34.3,\"cite\":64.4,\"teach\":26.7,\"intl\":79.4,\"vol\":10.4},{\"name\":\"Uppsala University\",\"country\":\"Sweden\",\"rep\":63.6,\"cite\":70.9,\"teach\":40.2,\"intl\":57.5,\"vol\":20.8},{\"name\":\"University of Utah\",\"country\":\"United States of America\",\"rep\":16.5,\"cite\":75.0,\"teach\":38.8,\"intl\":27.5,\"vol\":22.5},{\"name\":\"Utrecht University\",\"country\":\"Netherlands\",\"rep\":65.8,\"cite\":80.0,\"teach\":38.2,\"intl\":52.9,\"vol\":24.0},{\"name\":\"Vanderbilt University\",\"country\":\"United States of America\",\"rep\":25.9,\"cite\":87.7,\"teach\":46.0,\"intl\":28.3,\"vol\":17.6},{\"name\":\"University of Vermont\",\"country\":\"United States of America\",\"rep\":3.1,\"cite\":57.5,\"teach\":26.8,\"intl\":21.0,\"vol\":6.6},{\"name\":\"University of Victoria\",\"country\":\"Canada\",\"rep\":17.1,\"cite\":86.7,\"teach\":21.6,\"intl\":70.1,\"vol\":7.7},{\"name\":\"University of Vienna\",\"country\":\"Austria\",\"rep\":69.4,\"cite\":56.3,\"teach\":35.2,\"intl\":91.0,\"vol\":17.1},{\"name\":\"University of Virginia\",\"country\":\"United States of America\",\"rep\":35.2,\"cite\":76.9,\"teach\":48.7,\"intl\":31.8,\"vol\":20.7},{\"name\":\"Vrije Universiteit Brussel\",\"country\":\"Belgium\",\"rep\":22.7,\"cite\":48.1,\"teach\":31.2,\"intl\":54.5,\"vol\":9.3},{\"name\":\"Wake Forest University\",\"country\":\"United States of America\",\"rep\":5.4,\"cite\":81.3,\"teach\":33.3,\"intl\":26.0,\"vol\":8.7},{\"name\":\"University of Warsaw\",\"country\":\"Poland\",\"rep\":48.9,\"cite\":70.0,\"teach\":20.8,\"intl\":41.6,\"vol\":11.0},{\"name\":\"University of Warwick\",\"country\":\"United Kingdom\",\"rep\":71.8,\"cite\":68.2,\"teach\":41.1,\"intl\":85.7,\"vol\":14.2},{\"name\":\"Washington University in St Louis\",\"country\":\"United States of America\",\"rep\":40.1,\"cite\":97.1,\"teach\":57.6,\"intl\":46.5,\"vol\":25.9},{\"name\":\"University of Waterloo\",\"country\":\"Canada\",\"rep\":40.2,\"cite\":47.0,\"teach\":30.9,\"intl\":63.1,\"vol\":15.9},{\"name\":\"Wayne State University\",\"country\":\"United States of America\",\"rep\":8.0,\"cite\":61.0,\"teach\":32.0,\"intl\":30.7,\"vol\":13.2},{\"name\":\"University of Western Australia\",\"country\":\"Australia\",\"rep\":55.6,\"cite\":62.2,\"teach\":36.3,\"intl\":87.3,\"vol\":16.0},{\"name\":\"University of Wisconsin-Madison\",\"country\":\"United States of America\",\"rep\":82.4,\"cite\":87.7,\"teach\":67.7,\"intl\":33.6,\"vol\":38.1},{\"name\":\"University of the Witwatersrand\",\"country\":\"South Africa\",\"rep\":25.1,\"cite\":67.3,\"teach\":22.3,\"intl\":66.3,\"vol\":10.5},{\"name\":\"University of Wollongong\",\"country\":\"Australia\",\"rep\":29.4,\"cite\":55.1,\"teach\":25.2,\"intl\":80.4,\"vol\":8.4},{\"name\":\"Wuhan University\",\"country\":\"China\",\"rep\":38.8,\"cite\":48.5,\"teach\":34.1,\"intl\":33.1,\"vol\":23.0},{\"name\":\"Yale University\",\"country\":\"United States of America\",\"rep\":99.9,\"cite\":94.0,\"teach\":88.5,\"intl\":59.8,\"vol\":41.8},{\"name\":\"Yonsei University\",\"country\":\"South Korea\",\"rep\":75.5,\"cite\":44.3,\"teach\":44.5,\"intl\":35.7,\"vol\":18.3},{\"name\":\"University of York\",\"country\":\"United Kingdom\",\"rep\":43.3,\"cite\":90.5,\"teach\":32.2,\"intl\":75.0,\"vol\":10.4},{\"name\":\"Zhejiang University\",\"country\":\"China\",\"rep\":72.2,\"cite\":40.2,\"teach\":36.0,\"intl\":21.5,\"vol\":37.5},{\"name\":\"University of Zurich\",\"country\":\"Switzerland\",\"rep\":58.0,\"cite\":81.4,\"teach\":40.2,\"intl\":86.9,\"vol\":20.6}]\"\"\")\nPRESETS={\"balanced\":{\"rep\":1,\"cite\":1,\"teach\":1,\"intl\":1,\"vol\":1},\n         \"qs_like\":{\"rep\":5,\"cite\":2,\"teach\":2,\"intl\":1,\"vol\":0},\n         \"output_only\":{\"rep\":0,\"cite\":0,\"teach\":0,\"intl\":0,\"vol\":1}}\ndef reweight(w):\n    keys=[\"rep\",\"cite\",\"teach\",\"intl\",\"vol\"]\n    tot=sum(w[k] for k in keys) or 1\n    sc=[{\"name\":d[\"name\"],\"score\":round(sum(w[k]*d[k] for k in keys)/tot,2)} for d in DATA]\n    sc.sort(key=lambda r:-r[\"score\"])\n    return sc\nfor name in (\"balanced\",\"qs_like\",\"output_only\"):\n    top=reweight(PRESETS[name])[0]\n    print(f\"[{name}] #1 {top['name']} ({top['score']})\")\n",
+    "data_preview": {
+      "description": "The #1 university produced by each preset weighting (rep,cite,teach,intl,vol), plus the balanced top-5",
+      "columns": [
+        "preset",
+        "weights_rep_cite_teach_intl_vol",
+        "number_one",
+        "top5"
+      ],
+      "rows": [
+        [
+          "balanced",
+          "1,1,1,1,1",
+          "University of Oxford",
+          "Oxford, Harvard, Cambridge, Michigan, Stanford"
+        ],
+        [
+          "qs_like",
+          "5,2,2,1,0",
+          "MIT",
+          "MIT, Oxford, Cambridge, Harvard, Stanford"
+        ],
+        [
+          "the_like",
+          "3,3,3,1,0",
+          "MIT",
+          "MIT, Harvard, Oxford, Cambridge, Stanford"
+        ],
+        [
+          "arwu_like",
+          "0,3,0,0,4",
+          "University of Michigan",
+          "Michigan, Harvard, Oxford, Stanford, Johns Hopkins"
+        ],
+        [
+          "output_only",
+          "0,0,0,0,1",
+          "University of Michigan",
+          "Michigan, Harvard, Oxford, Toronto, Stanford"
+        ]
+      ]
+    },
+    "expected_output": "[balanced] #1 University of Oxford (87.02)\n[qs_like] #1 Massachusetts Institute of Technology (96.25)\n[output_only] #1 University of Michigan (100.0)",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "ana_13": {
+    "kind": "computation",
+    "title": "INTERACTIVE — look up any university's five verdicts",
+    "claim": "Berkeley swings 23 places between the tables, Caltech 11, Michigan just 8, Peking a full 89.",
+    "cell_id": "cell_client_models",
+    "code_file": "code/07_client_models.py",
+    "code_lines": [
+      129,
+      140
+    ],
+    "code": "L={\"University of California, Berkeley\":(8,4,7,27),\"California Institute of Technology\":(1,7,12,6),\n   \"University of Michigan\":(17,22,19,25),\"Peking University\":(48,101,56,12),\"University of Oxford\":(3,10,5,4)}\nfor n,r in L.items():\n    print(f\"{n}: spread {max(r)-min(r)}\")\n",
+    "data_preview": {
+      "description": "Per-university lookup sample: four commercial ranks + OpenAlex ranks (works, citations) + spread",
+      "columns": [
+        "university",
+        "country",
+        "the_rank",
+        "arwu_rank",
+        "cwur_rank",
+        "qs_rank",
+        "oa_works_rank",
+        "oa_cites_rank",
+        "spread"
+      ],
+      "rows": [
+        [
+          "University of California, Berkeley",
+          "USA",
+          8,
+          4,
+          7,
+          27,
+          12,
+          11,
+          23
+        ],
+        [
+          "California Institute of Technology",
+          "USA",
+          1,
+          7,
+          12,
+          6,
+          82,
+          27,
+          11
+        ],
+        [
+          "Harvard University",
+          "USA",
+          2,
+          1,
+          1,
+          5,
+          2,
+          1,
+          4
+        ],
+        [
+          "University of Michigan",
+          "USA",
+          17,
+          22,
+          19,
+          25,
+          1,
+          5,
+          8
+        ],
+        [
+          "Peking University",
+          "China",
+          48,
+          101,
+          56,
+          12,
+          17,
+          35,
+          89
+        ],
+        [
+          "Princeton University",
+          "USA",
+          7,
+          6,
+          9,
+          16,
+          104,
+          56,
+          10
+        ]
+      ]
+    },
+    "expected_output": "University of California, Berkeley: spread 23\nCalifornia Institute of Technology: spread 11\nUniversity of Michigan: spread 8\nPeking University: spread 89\nUniversity of Oxford: spread 7",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Exact recompute; graded a hard PASS when stdout matches."
+    }
+  },
+  "des_champions": {
+    "kind": "computation",
+    "title": "Four rankings, four different schools at #1",
+    "claim": "Four rankings, four different schools at #1. Top-10 places across five systems, ordered survey -> output; THE/ARWU/CWUR 2015, QS 2023, OpenAlex fetched 2026",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": [
+      66,
+      84
+    ],
+    "code": "# Chart data = analyst.json ana_06 data_table (source code/03_disagreement.py).\n# Reproduced in notebook cell cell_disagreement.\n#1 of each table: {'THE 2015': 'California Institute of Technology', 'ARWU 2015': 'Harvard University', 'CWUR 2015': 'Harvard University', 'QS 2023': 'Massachusetts Institute of Technology (MIT)', 'OpenAlex (works)': 'University of Michigan'}\nUniversities in ALL FOUR commercial top-10s: 5 of 15 distinct names",
+    "data_preview": {
+      "description": "Each system's top 10, side by side (rank 1-10)",
+      "columns": [
+        "rank",
+        "THE_2015",
+        "ARWU_2015",
+        "CWUR_2015",
+        "QS_2023",
+        "OpenAlex_works"
+      ],
+      "rows": [
+        [
+          1,
+          "Caltech",
+          "Harvard",
+          "Harvard",
+          "MIT",
+          "Michigan"
+        ],
+        [
+          2,
+          "Harvard",
+          "Stanford",
+          "Stanford",
+          "Cambridge",
+          "Harvard"
+        ],
+        [
+          3,
+          "Oxford",
+          "MIT",
+          "MIT",
+          "Stanford",
+          "Oxford"
+        ],
+        [
+          4,
+          "Stanford",
+          "Berkeley",
+          "Cambridge",
+          "Oxford",
+          "UCL"
+        ],
+        [
+          5,
+          "Cambridge",
+          "Cambridge",
+          "Oxford",
+          "Harvard",
+          "Toronto"
+        ],
+        [
+          6,
+          "MIT",
+          "Princeton",
+          "Columbia",
+          "Caltech",
+          "Stanford"
+        ],
+        [
+          7,
+          "Princeton",
+          "Caltech",
+          "Berkeley",
+          "Imperial",
+          "Washington"
+        ],
+        [
+          8,
+          "Berkeley",
+          "Columbia",
+          "Chicago",
+          "UCL",
+          "Tokyo"
+        ],
+        [
+          9,
+          "Imperial",
+          "Chicago",
+          "Princeton",
+          "ETH Zurich",
+          "Johns Hopkins"
+        ],
+        [
+          10,
+          "Yale",
+          "Oxford",
+          "Cornell",
+          "Chicago",
+          "Sao Paulo"
+        ]
+      ]
+    },
+    "expected_output": "#1 of each table: {'THE 2015': 'California Institute of Technology', 'ARWU 2015': 'Harvard University', 'CWUR 2015': 'Harvard University', 'QS 2023': 'Massachusetts Institute of Technology (MIT)', 'OpenAlex (works)': 'University of Michigan'}\nUniversities in ALL FOUR commercial top-10s: 5 of 15 distinct names",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_corr_matrix": {
+    "kind": "computation",
+    "title": "No pair of rankings comes close to agreeing",
+    "claim": "No pair of rankings comes close to agreeing. Spearman rank correlation for each pair of commercial systems (0.599-0.853), 218-school common core",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": [
+      20,
+      34
+    ],
+    "code": "# Chart data = analyst.json ana_04 data_table (source code/03_disagreement.py).\n# Reproduced in notebook cell cell_disagreement.\nTHE vs ARWU  n=218  Spearman=0.793  Kendall=0.638\nTHE vs CWUR  n=218  Spearman=0.759  Kendall=0.581\nTHE vs QS    n=218  Spearman=0.735  Kendall=0.551\nARWU vs CWUR  n=218  Spearman=0.853  Kendall=0.706\nARWU vs QS    n=218  Spearman=0.647  Kendall=0.484\nCWUR vs QS    n=218  Spearman=0.599  Kendall=0.426\nMOST alike: ARWU-CWUR 0.853 | LEAST alike: CWUR-QS 0.599",
+    "data_preview": {
+      "description": "Pairwise rank correlations among the 4 commercial systems, common core n=218",
+      "columns": [
+        "system_a",
+        "system_b",
+        "spearman",
+        "kendall"
+      ],
+      "rows": [
+        [
+          "ARWU",
+          "CWUR",
+          0.853,
+          0.706
+        ],
+        [
+          "THE",
+          "ARWU",
+          0.793,
+          0.638
+        ],
+        [
+          "THE",
+          "CWUR",
+          0.759,
+          0.581
+        ],
+        [
+          "THE",
+          "QS",
+          0.735,
+          0.551
+        ],
+        [
+          "ARWU",
+          "QS",
+          0.647,
+          0.484
+        ],
+        [
+          "CWUR",
+          "QS",
+          0.599,
+          0.426
+        ]
+      ]
+    },
+    "expected_output": "THE vs ARWU  n=218  Spearman=0.793  Kendall=0.638\nTHE vs CWUR  n=218  Spearman=0.759  Kendall=0.581\nTHE vs QS    n=218  Spearman=0.735  Kendall=0.551\nARWU vs CWUR  n=218  Spearman=0.853  Kendall=0.706\nARWU vs QS    n=218  Spearman=0.647  Kendall=0.484\nCWUR vs QS    n=218  Spearman=0.599  Kendall=0.426\nMOST alike: ARWU-CWUR 0.853 | LEAST alike: CWUR-QS 0.599",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_swingers_dumbbell": {
+    "kind": "computation",
+    "title": "Peking and Tsinghua swing about 90 places between rankings",
+    "claim": "Peking and Tsinghua swing about 90 places between rankings. Best-to-worst rank across THE, ARWU, CWUR and QS; schools ranked <=200 by all four",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": [
+      52,
+      64
+    ],
+    "code": "# Chart data = analyst.json ana_05b data_table (source code/03_disagreement.py).\n# Reproduced in notebook cell cell_disagreement.\nSchools ranked <=200 by ALL FOUR systems: 92\nBiggest CLEAN swingers: Fudan 193/151/195/34 spread 161; ANU 45/77/179/30 spread 149; HKU 43/151/170/21 spread 149\nNamed characters (per-system + OA works rank):\nMichigan 17/22/19/25 OA1 spread 8; Berkeley 8/4/7/27 OA12 spread 23; Peking 48/101/56/12 OA17 spread 89; Tsinghua 49/101/78/14 OA23 spread 87; Caltech 1/7/12/6 OA82 spread 11; Princeton 7/6/9/1",
+    "data_preview": {
+      "description": "Named load-bearing universities: rank in each of the 4 systems + OpenAlex works rank + spread (slope/bump-chart ready)",
+      "columns": [
+        "university",
+        "country",
+        "the_rank",
+        "arwu_rank",
+        "cwur_rank",
+        "qs_rank",
+        "oa_works_rank",
+        "spread"
+      ],
+      "rows": [
+        [
+          "University of Michigan",
+          "USA",
+          17,
+          22,
+          19,
+          25,
+          1,
+          8
+        ],
+        [
+          "Harvard University",
+          "USA",
+          2,
+          1,
+          1,
+          5,
+          2,
+          4
+        ],
+        [
+          "University of Oxford",
+          "UK",
+          3,
+          10,
+          5,
+          4,
+          3,
+          7
+        ],
+        [
+          "University of Tokyo",
+          "Japan",
+          23,
+          21,
+          13,
+          23,
+          8,
+          10
+        ],
+        [
+          "University of California, Berkeley",
+          "USA",
+          8,
+          4,
+          7,
+          27,
+          12,
+          23
+        ],
+        [
+          "Yale University",
+          "USA",
+          9,
+          11,
+          11,
+          18,
+          15,
+          9
+        ],
+        [
+          "Peking University",
+          "China",
+          48,
+          101,
+          56,
+          12,
+          17,
+          89
+        ],
+        [
+          "Tsinghua University",
+          "China",
+          49,
+          101,
+          78,
+          14,
+          23,
+          87
+        ],
+        [
+          "Massachusetts Institute of Technology",
+          "USA",
+          6,
+          3,
+          3,
+          1,
+          35,
+          5
+        ],
+        [
+          "California Institute of Technology",
+          "USA",
+          1,
+          7,
+          12,
+          6,
+          82,
+          11
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 11"
+    },
+    "expected_output": "Schools ranked <=200 by ALL FOUR systems: 92\nBiggest CLEAN swingers: Fudan 193/151/195/34 spread 161; ANU 45/77/179/30 spread 149; HKU 43/151/170/21 spread 149\nNamed characters (per-system + OA works rank):\nMichigan 17/22/19/25 OA1 spread 8; Berkeley 8/4/7/27 OA12 spread 23; Peking 48/101/56/12 OA17 spread 89; Tsinghua 49/101/78/14 OA23 spread 87; Caltech 1/7/12/6 OA82 spread 11; Princeton 7/6/9/16 OA104 spread 10",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_weights": {
+    "kind": "computation",
+    "title": "Half of a QS score is surveyed opinion",
+    "claim": "Half of a QS score is surveyed opinion. Share of each system's score from reputation surveys vs measured output; QS 2023 uses the pre-2024 legacy weights",
+    "cell_id": "cell_profile",
+    "code_file": "code/01_profile.py",
+    "code_lines": [
+      61,
+      76
+    ],
+    "code": "# Chart data = analyst.json ana_02 data_table (source code/01_profile.py).\n# Reproduced in notebook cell cell_profile.\n('QS 2023 (legacy)', 50, 20, 0, 20, 10, 0)\n('THE (2011-2023)', 33, 30, 0, 30, 7.5, 2.5)\n('ARWU', 0, 20, 70, 0, 0, 0)\n('CWUR (current)', 0, 10, 75, 0, 0, 0)\n('OpenAlex', 0, 100, 0, 0, 0, 0)\nReputation-survey share ... QS 50% > THE 33% > ARWU 0% = CWUR 0%; OpenAlex 0%.",
+    "data_preview": {
+      "description": "Published weighting of each system (% of total score), reputation-survey share highlighted",
+      "columns": [
+        "system",
+        "reputation_survey_pct",
+        "citations_impact_pct",
+        "research_output_prizes_pct",
+        "teaching_faculty_pct",
+        "international_pct",
+        "industry_pct"
+      ],
+      "rows": [
+        [
+          "QS 2023 (legacy)",
+          50,
+          20,
+          0,
+          20,
+          10,
+          0
+        ],
+        [
+          "THE (2011-2023)",
+          33,
+          30,
+          0,
+          30,
+          7.5,
+          2.5
+        ],
+        [
+          "ARWU",
+          0,
+          20,
+          70,
+          0,
+          0,
+          0
+        ],
+        [
+          "CWUR (current)",
+          0,
+          10,
+          75,
+          0,
+          0,
+          0
+        ],
+        [
+          "OpenAlex",
+          0,
+          100,
+          0,
+          0,
+          0,
+          0
+        ]
+      ]
+    },
+    "expected_output": "('QS 2023 (legacy)', 50, 20, 0, 20, 10, 0)\n('THE (2011-2023)', 33, 30, 0, 30, 7.5, 2.5)\n('ARWU', 0, 20, 70, 0, 0, 0)\n('CWUR (current)', 0, 10, 75, 0, 0, 0)\n('OpenAlex', 0, 100, 0, 0, 0, 0)\nReputation-survey share ... QS 50% > THE 33% > ARWU 0% = CWUR 0%; OpenAlex 0%.",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_rep_research": {
+    "kind": "computation",
+    "title": "Reputation and research rankings lift opposite schools",
+    "claim": "Reputation and research rankings lift opposite schools. QS rank minus ARWU rank; negative = the survey lifts it, positive = research lifts it",
+    "cell_id": "cell_reputation",
+    "code_file": "code/05_reputation_size.py",
+    "code_lines": [
+      22,
+      46
+    ],
+    "code": "# Chart data = analyst.json ana_09 data_table (source code/05_reputation_size.py).\n# Reproduced in notebook cell cell_reputation.\nREPUTATION-LIFTED (QS >> ARWU): HKU 151/21 -130; NUS 101/11 -90; Peking 101/12 -89; Tsinghua 101/14 -87; Seoul Nat 101/29 -72\nRESEARCH-LIFTED (ARWU >> QS): Vanderbilt 53/199 +146; Maryland 43/164 +121; UCSB 38/149 +111; Florida 83/188 +105; WashU 32/118 +86\nWithin QS itself, Academic-Reputation vs Citations-per-Faculty correlate only Spearman=0.421 (n=218)",
+    "data_preview": {
+      "description": "Reputation-lifted vs research-lifted schools (both ranks <=200): ARWU rank, QS rank, gap (QS-ARWU; negative=QS lifts), QS Academic-Reputation & Citations-per-Faculty sub-scores",
+      "columns": [
+        "university",
+        "country",
+        "arwu_rank",
+        "qs_rank",
+        "qs_minus_arwu",
+        "qs_ar_score",
+        "qs_cpf_score",
+        "direction"
+      ],
+      "rows": [
+        [
+          "University of Hong Kong",
+          "Hong Kong",
+          151,
+          21,
+          -130,
+          97.4,
+          72.6,
+          "reputation-lifted"
+        ],
+        [
+          "Fudan University",
+          "China",
+          151,
+          34,
+          -117,
+          83.6,
+          70.4,
+          "reputation-lifted"
+        ],
+        [
+          "Chinese University of Hong Kong",
+          "Hong Kong",
+          151,
+          38,
+          -113,
+          87.3,
+          92.9,
+          "reputation-lifted"
+        ],
+        [
+          "Tokyo Institute of Technology",
+          "Japan",
+          151,
+          55,
+          -96,
+          74.1,
+          65.9,
+          "reputation-lifted"
+        ],
+        [
+          "National University of Singapore",
+          "Singapore",
+          101,
+          11,
+          -90,
+          99.5,
+          91.8,
+          "reputation-lifted"
+        ],
+        [
+          "Peking University",
+          "China",
+          101,
+          12,
+          -89,
+          99.3,
+          96.7,
+          "reputation-lifted"
+        ],
+        [
+          "Tsinghua University",
+          "China",
+          101,
+          14,
+          -87,
+          98.9,
+          98.1,
+          "reputation-lifted"
+        ],
+        [
+          "National Taiwan University",
+          "Taiwan",
+          151,
+          77,
+          -74,
+          92.3,
+          49.7,
+          "reputation-lifted"
+        ],
+        [
+          "Seoul National University",
+          "South Korea",
+          101,
+          29,
+          -72,
+          98.6,
+          70.3,
+          "reputation-lifted"
+        ],
+        [
+          "University of Sydney",
+          "Australia",
+          101,
+          41,
+          -60,
+          96.2,
+          92.1,
+          "reputation-lifted"
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 20"
+    },
+    "expected_output": "REPUTATION-LIFTED (QS >> ARWU): HKU 151/21 -130; NUS 101/11 -90; Peking 101/12 -89; Tsinghua 101/14 -87; Seoul Nat 101/29 -72\nRESEARCH-LIFTED (ARWU >> QS): Vanderbilt 53/199 +146; Maryland 43/164 +121; UCSB 38/149 +111; Florida 83/188 +105; WashU 32/118 +86\nWithin QS itself, Academic-Reputation vs Citations-per-Faculty correlate only Spearman=0.421 (n=218)",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_referee_scatter": {
+    "kind": "computation",
+    "title": "Michigan leads research output yet sits 25th in QS",
+    "claim": "Michigan leads research output yet sits 25th in QS. OpenAlex output rank vs QS rank for the named cast; distance off the y=x diagonal = how far the referee reorders a school",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": [
+      52,
+      64
+    ],
+    "code": "# Chart data = analyst.json ana_05b data_table (source code/03_disagreement.py).\n# Reproduced in notebook cell cell_disagreement.\nSchools ranked <=200 by ALL FOUR systems: 92\nBiggest CLEAN swingers: Fudan 193/151/195/34 spread 161; ANU 45/77/179/30 spread 149; HKU 43/151/170/21 spread 149\nNamed characters (per-system + OA works rank):\nMichigan 17/22/19/25 OA1 spread 8; Berkeley 8/4/7/27 OA12 spread 23; Peking 48/101/56/12 OA17 spread 89; Tsinghua 49/101/78/14 OA23 spread 87; Caltech 1/7/12/6 OA82 spread 11; Princeton 7/6/9/1",
+    "data_preview": {
+      "description": "Named load-bearing universities: rank in each of the 4 systems + OpenAlex works rank + spread (slope/bump-chart ready)",
+      "columns": [
+        "university",
+        "country",
+        "the_rank",
+        "arwu_rank",
+        "cwur_rank",
+        "qs_rank",
+        "oa_works_rank",
+        "spread"
+      ],
+      "rows": [
+        [
+          "University of Michigan",
+          "USA",
+          17,
+          22,
+          19,
+          25,
+          1,
+          8
+        ],
+        [
+          "Harvard University",
+          "USA",
+          2,
+          1,
+          1,
+          5,
+          2,
+          4
+        ],
+        [
+          "University of Oxford",
+          "UK",
+          3,
+          10,
+          5,
+          4,
+          3,
+          7
+        ],
+        [
+          "University of Tokyo",
+          "Japan",
+          23,
+          21,
+          13,
+          23,
+          8,
+          10
+        ],
+        [
+          "University of California, Berkeley",
+          "USA",
+          8,
+          4,
+          7,
+          27,
+          12,
+          23
+        ],
+        [
+          "Yale University",
+          "USA",
+          9,
+          11,
+          11,
+          18,
+          15,
+          9
+        ],
+        [
+          "Peking University",
+          "China",
+          48,
+          101,
+          56,
+          12,
+          17,
+          89
+        ],
+        [
+          "Tsinghua University",
+          "China",
+          49,
+          101,
+          78,
+          14,
+          23,
+          87
+        ],
+        [
+          "Massachusetts Institute of Technology",
+          "USA",
+          6,
+          3,
+          3,
+          1,
+          35,
+          5
+        ],
+        [
+          "California Institute of Technology",
+          "USA",
+          1,
+          7,
+          12,
+          6,
+          82,
+          11
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 11"
+    },
+    "expected_output": "Schools ranked <=200 by ALL FOUR systems: 92\nBiggest CLEAN swingers: Fudan 193/151/195/34 spread 161; ANU 45/77/179/30 spread 149; HKU 43/151/170/21 spread 149\nNamed characters (per-system + OA works rank):\nMichigan 17/22/19/25 OA1 spread 8; Berkeley 8/4/7/27 OA12 spread 23; Peking 48/101/56/12 OA17 spread 89; Tsinghua 49/101/78/14 OA23 spread 87; Caltech 1/7/12/6 OA82 spread 11; Princeton 7/6/9/16 OA104 spread 10",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_referee_track": {
+    "kind": "computation",
+    "title": "Even the closest table matches the referee only 0.876",
+    "claim": "Even the closest table matches the referee only 0.876. Spearman of each commercial rank vs the OpenAlex order (works, citations, h-index); a perfect match would be 1.0",
+    "cell_id": "cell_referee",
+    "code_file": "code/04_referee.py",
+    "code_lines": [
+      20,
+      37
+    ],
+    "code": "# Chart data = analyst.json ana_07 data_table (source code/04_referee.py).\n# Reproduced in notebook cell cell_referee.\nsystem  vs works_count   vs cited_by   vs h_index\nTHE              0.623         0.735         0.815\nARWU             0.775         0.854         0.876\nCWUR             0.775         0.842         0.835\nQS               0.686         0.703         0.636\nTracks raw OUTPUT most closely: ARWU 0.775 | least: THE 0.623\nTracks IMPACT (h_index) most closely: ARWU 0.876",
+    "data_preview": {
+      "description": "Spearman of each commercial rank vs the OpenAlex output/impact order (n=218)",
+      "columns": [
+        "system",
+        "vs_works_count",
+        "vs_cited_by",
+        "vs_h_index"
+      ],
+      "rows": [
+        [
+          "THE",
+          0.623,
+          0.735,
+          0.815
+        ],
+        [
+          "ARWU",
+          0.775,
+          0.854,
+          0.876
+        ],
+        [
+          "CWUR",
+          0.775,
+          0.842,
+          0.835
+        ],
+        [
+          "QS",
+          0.686,
+          0.703,
+          0.636
+        ]
+      ]
+    },
+    "expected_output": "system  vs works_count   vs cited_by   vs h_index\nTHE              0.623         0.735         0.815\nARWU             0.775         0.854         0.876\nCWUR             0.775         0.842         0.835\nQS               0.686         0.703         0.636\nTracks raw OUTPUT most closely: ARWU 0.775 | least: THE 0.623\nTracks IMPACT (h_index) most closely: ARWU 0.876",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_size_flip": {
+    "kind": "computation",
+    "title": "Count impact per paper and Michigan falls 331 places",
+    "claim": "Count impact per paper and Michigan falls 331 places. Rank by raw output volume vs rank by citations per paper (OpenAlex); Michigan #1 -> #332",
+    "cell_id": "cell_reputation",
+    "code_file": "code/05_reputation_size.py",
+    "code_lines": [
+      48,
+      75
+    ],
+    "code": "# Chart data = analyst.json ana_10 data_table (source code/05_reputation_size.py).\n# Reproduced in notebook cell cell_reputation.\nUniversity of Michigan: works= 980174 (volume #  1) | cites/work= 67.2 (impact #332) | flip +331\nUniversity of Toronto: works= 551833 (volume #  5) | cites/work=105.4 (impact # 60) | flip +55\nHarvard University: works= 702657 (volume #  2) | cites/work=203.5 (impact #  1) | flip -1\nCalifornia Institute of Technology: works= 242783 (volume # 82) | cites/work=148.5 (impact # 13) | flip -69\nPrinceton",
+    "data_preview": {
+      "description": "Volume (works_count) vs per-paper impact (cites/work) for named schools: rank on each metric and the flip (impact_rank - volume_rank)",
+      "columns": [
+        "university",
+        "works_count",
+        "cites_per_work",
+        "rank_volume",
+        "rank_impact",
+        "flip"
+      ],
+      "rows": [
+        [
+          "University of Michigan",
+          980174,
+          67.2,
+          1,
+          332,
+          331
+        ],
+        [
+          "Harvard University",
+          702657,
+          203.5,
+          2,
+          1,
+          -1
+        ],
+        [
+          "University of Oxford",
+          590664,
+          106.3,
+          3,
+          57,
+          54
+        ],
+        [
+          "University College London",
+          579259,
+          112.5,
+          4,
+          42,
+          38
+        ],
+        [
+          "University of Toronto",
+          551833,
+          105.4,
+          5,
+          60,
+          55
+        ],
+        [
+          "Stanford University",
+          526048,
+          164.6,
+          6,
+          9,
+          3
+        ],
+        [
+          "University of Washington",
+          520004,
+          180.5,
+          7,
+          4,
+          -3
+        ],
+        [
+          "University of Tokyo",
+          505805,
+          91.6,
+          8,
+          122,
+          114
+        ],
+        [
+          "Massachusetts Institute of Technology",
+          345834,
+          185.0,
+          35,
+          3,
+          -32
+        ],
+        [
+          "California Institute of Technology",
+          242783,
+          148.5,
+          82,
+          13,
+          -69
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 11"
+    },
+    "expected_output": "University of Michigan: works= 980174 (volume #  1) | cites/work= 67.2 (impact #332) | flip +331\nUniversity of Toronto: works= 551833 (volume #  5) | cites/work=105.4 (impact # 60) | flip +55\nHarvard University: works= 702657 (volume #  2) | cites/work=203.5 (impact #  1) | flip -1\nCalifornia Institute of Technology: works= 242783 (volume # 82) | cites/work=148.5 (impact # 13) | flip -69\nPrinceton University: works= 211211 (volume #104) | cites/work=126.5 (impact # 24) | flip -80\nMassachusetts Institute of Technology: works= 345834 (volume # 35) | cites/work=185.0 (impact #  3) | flip -32",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_validation": {
+    "kind": "computation",
+    "title": "Hold the year fixed and they still disagree",
+    "claim": "Hold the year fixed and they still disagree. Spearman within the same-year 2015 trio (mean 0.782) vs the QS-2023 pairs (mean 0.660); 1.0 = perfect agreement",
+    "cell_id": "cell_validation",
+    "code_file": "code/06_validation.py",
+    "code_lines": [
+      17,
+      55
+    ],
+    "code": "# Chart data = analyst.json ana_11 data_table (source code/06_validation.py).\n# Reproduced in notebook cell cell_validation.\n2015 trio core (THE n ARWU n CWUR, all edition year 2015): 285 schools\n  THE vs ARWU  Spearman=0.757  Kendall=0.608\n  THE vs CWUR  Spearman=0.751  Kendall=0.573\n  ARWU vs CWUR  Spearman=0.840  Kendall=0.700\nMean same-year (2015) Spearman among the trio: 0.782\nMean QS(2023)-vs-2015-system Spearman: 0.660 -> {'the_rank': 0.735, 'arwu_rank': 0.647, 'cwur_rank': 0.599}",
+    "data_preview": {
+      "description": "Same-year 2015 trio correlations (era held fixed) vs QS-2023-involving correlations (era-mismatched)",
+      "columns": [
+        "pair",
+        "spearman",
+        "kendall",
+        "era",
+        "n"
+      ],
+      "rows": [
+        [
+          "THE vs ARWU (2015)",
+          0.757,
+          0.608,
+          "same year 2015",
+          285
+        ],
+        [
+          "THE vs CWUR (2015)",
+          0.751,
+          0.573,
+          "same year 2015",
+          285
+        ],
+        [
+          "ARWU vs CWUR (2015)",
+          0.84,
+          0.7,
+          "same year 2015",
+          285
+        ],
+        [
+          "QS vs THE",
+          0.735,
+          null,
+          "2023 vs 2015 (+8y)",
+          218
+        ],
+        [
+          "QS vs ARWU",
+          0.647,
+          null,
+          "2023 vs 2015 (+8y)",
+          218
+        ],
+        [
+          "QS vs CWUR",
+          0.599,
+          null,
+          "2023 vs 2015 (+8y)",
+          218
+        ]
+      ]
+    },
+    "expected_output": "2015 trio core (THE n ARWU n CWUR, all edition year 2015): 285 schools\n  THE vs ARWU  Spearman=0.757  Kendall=0.608\n  THE vs CWUR  Spearman=0.751  Kendall=0.573\n  ARWU vs CWUR  Spearman=0.840  Kendall=0.700\nMean same-year (2015) Spearman among the trio: 0.782\nMean QS(2023)-vs-2015-system Spearman: 0.660 -> {'the_rank': 0.735, 'arwu_rank': 0.647, 'cwur_rank': 0.599}",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "note": "Chart provenance; re-run the finding from the paragraph card or the notebook cell."
+    }
+  },
+  "des_scale": {
+    "kind": "computation",
+    "title": "218 universities appear in all five tables",
+    "claim": "218 universities appear in all five tables. The five-system common core via a normalised-name join; treat ~200 as the scale, not a precise constant.",
+    "cell_id": "cell_alignment",
+    "code_file": "code/02_alignment.py",
+    "code_lines": [
+      18,
+      41
+    ],
+    "code": "cores={\"2015 trio (THE n ARWU n CWUR)\":285,\"4-commercial core (+QS)\":238,\"5-way common core (+OpenAlex)\":218}\nfor k,v in cores.items():\n    print(f\"{k}: {v}\")\nprint(\"common core universe = 218 universities (normalised-name join; ~200 is the scale)\")\n",
+    "data_preview": {
+      "description": "Join sizes: pairwise overlaps + multi-way cores",
+      "columns": [
+        "join",
+        "n_universities"
+      ],
+      "rows": [
+        [
+          "THE n ARWU",
+          297
+        ],
+        [
+          "THE n CWUR",
+          354
+        ],
+        [
+          "THE n QS",
+          306
+        ],
+        [
+          "THE n OpenAlex",
+          280
+        ],
+        [
+          "ARWU n CWUR",
+          439
+        ],
+        [
+          "ARWU n QS",
+          345
+        ],
+        [
+          "ARWU n OpenAlex",
+          340
+        ],
+        [
+          "CWUR n QS",
+          587
+        ],
+        [
+          "CWUR n OpenAlex",
+          426
+        ],
+        [
+          "QS n OpenAlex",
+          453
+        ]
+      ],
+      "_rows_truncated": "showing 10 of 13"
+    },
+    "expected_output": "2015 trio (THE n ARWU n CWUR): 285\n4-commercial core (+QS): 238\n5-way common core (+OpenAlex): 218\ncommon core universe = 218 universities (normalised-name join; ~200 is the scale)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "des_reweighter": {
+    "kind": "computation",
+    "title": "Drag the weights and the world #1 changes hands",
+    "claim": "Five reader-set pillars re-rank all 218 universities live, on the article's audited client model. Balanced -> Oxford 87.02; QS-like -> MIT 96.25; output-only -> Michigan 100.0.",
+    "cell_id": "cell_client_models",
+    "code_file": "code/client_model.js",
+    "code_lines": null,
+    "code": "import json\nDATA=json.loads(r\"\"\"[{\"name\":\"Aalborg University\",\"country\":\"Denmark\",\"rep\":19.8,\"cite\":39.9,\"teach\":23.8,\"intl\":65.8,\"vol\":11.6},{\"name\":\"Aalto University\",\"country\":\"Finland\",\"rep\":44.5,\"cite\":50.2,\"teach\":31.8,\"intl\":59.4,\"vol\":6.5},{\"name\":\"Aarhus University\",\"country\":\"Denmark\",\"rep\":55.6,\"cite\":66.5,\"teach\":30.9,\"intl\":66.3,\"vol\":22.8},{\"name\":\"University of Aberdeen\",\"country\":\"United Kingdom\",\"rep\":28.3,\"cite\":74.3,\"teach\":28.0,\"intl\":84.1,\"vol\":9.8},{\"name\":\"University of Adelaide\",\"country\":\"Australia\",\"rep\":52.3,\"cite\":61.1,\"teach\":33.8,\"intl\":79.3,\"vol\":15.3},{\"name\":\"University of Alberta\",\"country\":\"Canada\",\"rep\":55.1,\"cite\":61.8,\"teach\":43.8,\"intl\":73.4,\"vol\":26.9},{\"name\":\"University of Amsterdam\",\"country\":\"Netherlands\",\"rep\":82.7,\"cite\":76.6,\"teach\":42.0,\"intl\":60.5,\"vol\":23.9},{\"name\":\"University of Antwerp\",\"country\":\"Belgium\",\"rep\":22.7,\"cite\":67.7,\"teach\":34.6,\"intl\":61.0,\"vol\":9.7},{\"name\":\"University of Arizona\",\"country\":\"United States of America\",\"rep\":39.6,\"cite\":74.0,\"teach\":44.9,\"intl\":38.8,\"vol\":26.4},{\"name\":\"Arizona State University\",\"country\":\"United States of America\",\"rep\":46.7,\"cite\":73.1,\"teach\":35.7,\"intl\":29.5,\"vol\":19.9},{\"name\":\"University of Auckland\",\"country\":\"New Zealand\",\"rep\":81.5,\"cite\":68.4,\"teach\":28.6,\"intl\":87.3,\"vol\":14.4},{\"name\":\"Australian National University\",\"country\":\"Australia\",\"rep\":93.6,\"cite\":71.1,\"teach\":53.7,\"intl\":91.3,\"vol\":19.6},{\"name\":\"University of Basel\",\"country\":\"Switzerland\",\"rep\":28.0,\"cite\":81.4,\"teach\":41.2,\"intl\":91.2,\"vol\":11.1},{\"name\":\"University of Bath\",\"country\":\"United Kingdom\",\"rep\":34.4,\"cite\":47.5,\"teach\":29.2,\"intl\":76.1,\"vol\":7.7},{\"name\":\"University of Bergen\",\"country\":\"Norway\",\"rep\":33.8,\"cite\":68.5,\"teach\":29.5,\"intl\":65.3,\"vol\":21.5},{\"name\":\"University of Bern\",\"country\":\"Switzerland\",\"rep\":30.3,\"cite\":70.1,\"teach\":42.0,\"intl\":80.7,\"vol\":15.6},{\"name\":\"Bielefeld University\",\"country\":\"Germany\",\"rep\":13.7,\"cite\":52.0,\"teach\":27.5,\"intl\":48.6,\"vol\":6.5},{\"name\":\"University of Birmingham\",\"country\":\"United Kingdom\",\"rep\":66.0,\"cite\":62.7,\"teach\":42.8,\"intl\":75.8,\"vol\":22.1},{\"name\":\"Boston University\",\"country\":\"United States of America\",\"rep\":62.3,\"cite\":94.4,\"teach\":56.4,\"intl\":47.8,\"vol\":20.2},{\"name\":\"University of Bristol\",\"country\":\"United Kingdom\",\"rep\":74.4,\"cite\":85.1,\"teach\":43.7,\"intl\":76.6,\"vol\":21.8},{\"name\":\"University of British Columbia\",\"country\":\"Canada\",\"rep\":98.0,\"cite\":85.3,\"teach\":60.5,\"intl\":84.8,\"vol\":38.1},{\"name\":\"Brown University\",\"country\":\"United States of America\",\"rep\":57.6,\"cite\":92.0,\"teach\":55.5,\"intl\":37.0,\"vol\":14.1},{\"name\":\"University of Calgary\",\"country\":\"Canada\",\"rep\":36.1,\"cite\":59.4,\"teach\":34.4,\"intl\":63.1,\"vol\":20.1},{\"name\":\"University of California, Berkeley\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":99.1,\"teach\":84.2,\"intl\":58.5,\"vol\":45.7},{\"name\":\"University of California, Davis\",\"country\":\"United States of America\",\"rep\":64.8,\"cite\":80.4,\"teach\":54.4,\"intl\":52.9,\"vol\":30.5},{\"name\":\"California Institute of Technology\",\"country\":\"United States of America\",\"rep\":96.5,\"cite\":99.7,\"teach\":92.2,\"intl\":67.0,\"vol\":24.8},{\"name\":\"University of California, Irvine\",\"country\":\"United States of America\",\"rep\":39.7,\"cite\":89.5,\"teach\":39.5,\"intl\":56.1,\"vol\":19.6},{\"name\":\"University of California, Los Angeles\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":95.3,\"teach\":82.4,\"intl\":49.2,\"vol\":42.2},{\"name\":\"University of California, Riverside\",\"country\":\"United States of America\",\"rep\":17.8,\"cite\":91.5,\"teach\":29.4,\"intl\":61.6,\"vol\":10.6},{\"name\":\"University of California, San Diego\",\"country\":\"United States of America\",\"rep\":90.0,\"cite\":96.4,\"teach\":52.0,\"intl\":37.0,\"vol\":36.1},{\"name\":\"University of California, Santa Barbara\",\"country\":\"United States of America\",\"rep\":55.9,\"cite\":99.2,\"teach\":49.4,\"intl\":64.3,\"vol\":14.2},{\"name\":\"University of California, Santa Cruz\",\"country\":\"United States of America\",\"rep\":18.6,\"cite\":100.0,\"teach\":30.6,\"intl\":54.6,\"vol\":7.8},{\"name\":\"University of Cambridge\",\"country\":\"United Kingdom\",\"rep\":100.0,\"cite\":95.2,\"teach\":89.7,\"intl\":87.8,\"vol\":45.5},{\"name\":\"University of Cape Town\",\"country\":\"South Africa\",\"rep\":43.6,\"cite\":86.6,\"teach\":26.8,\"intl\":76.7,\"vol\":33.0},{\"name\":\"Cardiff University\",\"country\":\"United Kingdom\",\"rep\":46.0,\"cite\":69.3,\"teach\":30.5,\"intl\":69.3,\"vol\":12.9},{\"name\":\"Carleton University\",\"country\":\"Canada\",\"rep\":9.6,\"cite\":76.9,\"teach\":24.3,\"intl\":61.1,\"vol\":7.9},{\"name\":\"Carnegie Mellon University\",\"country\":\"United States of America\",\"rep\":72.1,\"cite\":92.0,\"teach\":61.6,\"intl\":59.3,\"vol\":16.1},{\"name\":\"Case Western Reserve University\",\"country\":\"United States of America\",\"rep\":18.3,\"cite\":82.9,\"teach\":46.5,\"intl\":34.4,\"vol\":17.5},{\"name\":\"Chalmers University of Technology\",\"country\":\"Sweden\",\"rep\":27.9,\"cite\":40.8,\"teach\":35.7,\"intl\":62.5,\"vol\":9.2},{\"name\":\"University of Chicago\",\"country\":\"United States of America\",\"rep\":99.2,\"cite\":97.3,\"teach\":83.9,\"intl\":65.2,\"vol\":31.2},{\"name\":\"Chinese University of Hong Kong\",\"country\":\"Hong Kong\",\"rep\":87.3,\"cite\":57.8,\"teach\":43.9,\"intl\":64.0,\"vol\":20.1},{\"name\":\"University of Cincinnati\",\"country\":\"United States of America\",\"rep\":12.4,\"cite\":67.8,\"teach\":32.0,\"intl\":26.0,\"vol\":13.2},{\"name\":\"City University of Hong Kong\",\"country\":\"Hong Kong\",\"rep\":57.3,\"cite\":68.6,\"teach\":31.0,\"intl\":71.3,\"vol\":11.8},{\"name\":\"University College Cork\",\"country\":\"Republic of Ireland\",\"rep\":29.0,\"cite\":56.9,\"teach\":26.7,\"intl\":70.8,\"vol\":6.4},{\"name\":\"University College Dublin\",\"country\":\"Republic of Ireland\",\"rep\":48.7,\"cite\":61.7,\"teach\":31.7,\"intl\":79.4,\"vol\":10.8},{\"name\":\"University of Colorado Boulder\",\"country\":\"United States of America\",\"rep\":37.0,\"cite\":97.4,\"teach\":35.0,\"intl\":39.1,\"vol\":17.0},{\"name\":\"Columbia University\",\"country\":\"United States of America\",\"rep\":99.7,\"cite\":95.3,\"teach\":83.9,\"intl\":68.3,\"vol\":39.4},{\"name\":\"University of Connecticut\",\"country\":\"United States of America\",\"rep\":15.5,\"cite\":45.4,\"teach\":37.6,\"intl\":38.8,\"vol\":12.0},{\"name\":\"University of Copenhagen\",\"country\":\"Denmark\",\"rep\":72.8,\"cite\":73.5,\"teach\":34.0,\"intl\":71.8,\"vol\":29.2},{\"name\":\"Cornell University\",\"country\":\"United States of America\",\"rep\":98.3,\"cite\":91.5,\"teach\":71.6,\"intl\":59.0,\"vol\":48.1},{\"name\":\"Curtin University\",\"country\":\"Australia\",\"rep\":30.5,\"cite\":45.3,\"teach\":20.1,\"intl\":91.3,\"vol\":9.6},{\"name\":\"Dalhousie University\",\"country\":\"Canada\",\"rep\":18.5,\"cite\":54.4,\"teach\":33.6,\"intl\":71.6,\"vol\":11.0},{\"name\":\"Dartmouth College\",\"country\":\"United States of America\",\"rep\":19.2,\"cite\":80.4,\"teach\":38.3,\"intl\":33.1,\"vol\":9.0},{\"name\":\"Deakin University\",\"country\":\"Australia\",\"rep\":27.6,\"cite\":57.5,\"teach\":20.1,\"intl\":71.8,\"vol\":9.7},{\"name\":\"University of Delaware\",\"country\":\"United States of America\",\"rep\":10.4,\"cite\":73.1,\"teach\":29.0,\"intl\":40.6,\"vol\":9.8},{\"name\":\"Delft University of Technology\",\"country\":\"Netherlands\",\"rep\":71.6,\"cite\":42.6,\"teach\":55.5,\"intl\":77.9,\"vol\":17.7},{\"name\":\"Drexel University\",\"country\":\"United States of America\",\"rep\":8.4,\"cite\":57.5,\"teach\":31.8,\"intl\":42.2,\"vol\":8.5},{\"name\":\"Duke University\",\"country\":\"United States of America\",\"rep\":86.1,\"cite\":96.6,\"teach\":73.5,\"intl\":50.5,\"vol\":27.4},{\"name\":\"University of Dundee\",\"country\":\"United Kingdom\",\"rep\":18.9,\"cite\":84.4,\"teach\":24.4,\"intl\":64.5,\"vol\":6.4},{\"name\":\"Durham University\",\"country\":\"United Kingdom\",\"rep\":57.9,\"cite\":88.9,\"teach\":37.2,\"intl\":80.4,\"vol\":11.2},{\"name\":\"University of East Anglia\",\"country\":\"United Kingdom\",\"rep\":18.6,\"cite\":83.7,\"teach\":25.2,\"intl\":76.5,\"vol\":7.4},{\"name\":\"University of Edinburgh\",\"country\":\"United Kingdom\",\"rep\":98.0,\"cite\":88.3,\"teach\":58.9,\"intl\":84.3,\"vol\":28.6},{\"name\":\"Eindhoven University of Technology\",\"country\":\"Netherlands\",\"rep\":28.9,\"cite\":57.3,\"teach\":38.3,\"intl\":69.0,\"vol\":9.8},{\"name\":\"Emory University\",\"country\":\"United States of America\",\"rep\":25.2,\"cite\":89.5,\"teach\":49.0,\"intl\":42.9,\"vol\":23.1},{\"name\":\"ETH Zurich \\u2013 Swiss Federal Institute of Technology Zurich\",\"country\":\"Switzerland\",\"rep\":98.6,\"cite\":83.5,\"teach\":78.2,\"intl\":96.6,\"vol\":25.0},{\"name\":\"University of Exeter\",\"country\":\"United Kingdom\",\"rep\":41.1,\"cite\":78.0,\"teach\":32.0,\"intl\":79.8,\"vol\":11.9},{\"name\":\"University of Florence\",\"country\":\"Italy\",\"rep\":32.5,\"cite\":60.8,\"teach\":18.1,\"intl\":37.4,\"vol\":14.6},{\"name\":\"University of Florida\",\"country\":\"United States of America\",\"rep\":48.5,\"cite\":62.2,\"teach\":49.8,\"intl\":32.2,\"vol\":36.7},{\"name\":\"Fudan University\",\"country\":\"China\",\"rep\":83.6,\"cite\":61.0,\"teach\":45.6,\"intl\":37.4,\"vol\":24.5},{\"name\":\"University of Geneva\",\"country\":\"Switzerland\",\"rep\":46.5,\"cite\":78.2,\"teach\":34.5,\"intl\":96.8,\"vol\":13.4},{\"name\":\"George Mason University\",\"country\":\"United States of America\",\"rep\":8.8,\"cite\":53.9,\"teach\":26.3,\"intl\":35.8,\"vol\":8.5},{\"name\":\"George Washington University\",\"country\":\"United States of America\",\"rep\":27.2,\"cite\":70.0,\"teach\":44.6,\"intl\":39.9,\"vol\":12.0},{\"name\":\"Georgetown University\",\"country\":\"United States of America\",\"rep\":31.2,\"cite\":62.2,\"teach\":51.1,\"intl\":43.3,\"vol\":11.9},{\"name\":\"University of Georgia\",\"country\":\"United States of America\",\"rep\":21.2,\"cite\":46.6,\"teach\":39.7,\"intl\":35.3,\"vol\":14.4},{\"name\":\"Georgia Institute of Technology\",\"country\":\"United States of America\",\"rep\":67.7,\"cite\":85.8,\"teach\":62.5,\"intl\":68.9,\"vol\":20.0},{\"name\":\"Ghent University\",\"country\":\"Belgium\",\"rep\":54.0,\"cite\":73.8,\"teach\":42.5,\"intl\":49.1,\"vol\":17.2},{\"name\":\"University of Glasgow\",\"country\":\"United Kingdom\",\"rep\":75.1,\"cite\":83.7,\"teach\":37.0,\"intl\":78.8,\"vol\":19.7},{\"name\":\"University of Gothenburg\",\"country\":\"Sweden\",\"rep\":37.4,\"cite\":64.4,\"teach\":24.1,\"intl\":46.8,\"vol\":14.8},{\"name\":\"University of Groningen\",\"country\":\"Netherlands\",\"rep\":51.6,\"cite\":68.1,\"teach\":36.9,\"intl\":56.1,\"vol\":18.5},{\"name\":\"Hanyang University\",\"country\":\"South Korea\",\"rep\":45.0,\"cite\":29.0,\"teach\":31.5,\"intl\":48.4,\"vol\":9.5},{\"name\":\"Harvard University\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":98.9,\"teach\":92.9,\"intl\":67.6,\"vol\":71.7},{\"name\":\"Hebrew University of Jerusalem\",\"country\":\"Israel\",\"rep\":34.8,\"cite\":57.2,\"teach\":41.5,\"intl\":53.3,\"vol\":15.1},{\"name\":\"University of Helsinki\",\"country\":\"Finland\",\"rep\":65.3,\"cite\":79.0,\"teach\":37.5,\"intl\":49.7,\"vol\":22.5},{\"name\":\"Hokkaido University\",\"country\":\"Japan\",\"rep\":55.6,\"cite\":32.2,\"teach\":38.4,\"intl\":25.2,\"vol\":25.9},{\"name\":\"University of Hong Kong\",\"country\":\"Hong Kong\",\"rep\":97.4,\"cite\":65.1,\"teach\":62.1,\"intl\":81.9,\"vol\":23.3},{\"name\":\"Hong Kong Polytechnic University\",\"country\":\"Hong Kong\",\"rep\":66.1,\"cite\":56.5,\"teach\":33.7,\"intl\":69.9,\"vol\":15.5},{\"name\":\"Hong Kong University of Science and Technology\",\"country\":\"Hong Kong\",\"rep\":82.0,\"cite\":72.9,\"teach\":51.8,\"intl\":77.8,\"vol\":9.6},{\"name\":\"University of Houston\",\"country\":\"United States of America\",\"rep\":14.4,\"cite\":44.2,\"teach\":39.3,\"intl\":33.1,\"vol\":10.6},{\"name\":\"University of Illinois at Chicago\",\"country\":\"United States of America\",\"rep\":42.0,\"cite\":55.1,\"teach\":43.0,\"intl\":53.4,\"vol\":20.2},{\"name\":\"University of Illinois at Urbana-Champaign\",\"country\":\"United States of America\",\"rep\":85.6,\"cite\":77.8,\"teach\":67.7,\"intl\":43.9,\"vol\":33.8},{\"name\":\"University of Iowa\",\"country\":\"United States of America\",\"rep\":20.7,\"cite\":71.0,\"teach\":41.9,\"intl\":31.7,\"vol\":19.6},{\"name\":\"Iowa State University\",\"country\":\"United States of America\",\"rep\":19.4,\"cite\":72.0,\"teach\":36.4,\"intl\":40.6,\"vol\":20.0},{\"name\":\"Johns Hopkins University\",\"country\":\"United States of America\",\"rep\":87.9,\"cite\":93.6,\"teach\":75.6,\"intl\":59.7,\"vol\":50.6},{\"name\":\"University of Kansas\",\"country\":\"United States of America\",\"rep\":14.9,\"cite\":62.2,\"teach\":30.6,\"intl\":32.2,\"vol\":11.8},{\"name\":\"Kansas State University\",\"country\":\"United States of America\",\"rep\":9.8,\"cite\":61.0,\"teach\":27.0,\"intl\":41.5,\"vol\":8.1},{\"name\":\"King\\u2019s College London\",\"country\":\"United Kingdom\",\"rep\":88.8,\"cite\":88.3,\"teach\":55.6,\"intl\":87.0,\"vol\":26.4},{\"name\":\"Korea University\",\"country\":\"South Korea\",\"rep\":79.3,\"cite\":39.9,\"teach\":48.9,\"intl\":35.9,\"vol\":11.9},{\"name\":\"Kyoto University\",\"country\":\"Japan\",\"rep\":98.6,\"cite\":57.0,\"teach\":70.4,\"intl\":29.0,\"vol\":36.4},{\"name\":\"Kyushu University\",\"country\":\"Japan\",\"rep\":56.6,\"cite\":33.6,\"teach\":36.5,\"intl\":26.1,\"vol\":23.2},{\"name\":\"Lancaster University\",\"country\":\"United Kingdom\",\"rep\":39.6,\"cite\":78.0,\"teach\":35.4,\"intl\":84.7,\"vol\":8.6},{\"name\":\"University of Lausanne\",\"country\":\"Switzerland\",\"rep\":30.6,\"cite\":76.5,\"teach\":29.4,\"intl\":85.1,\"vol\":10.7},{\"name\":\"University of Leeds\",\"country\":\"United Kingdom\",\"rep\":70.2,\"cite\":69.3,\"teach\":39.4,\"intl\":67.6,\"vol\":19.9},{\"name\":\"University of Leicester\",\"country\":\"United Kingdom\",\"rep\":22.2,\"cite\":67.1,\"teach\":29.8,\"intl\":83.9,\"vol\":10.9},{\"name\":\"Leiden University\",\"country\":\"Netherlands\",\"rep\":68.1,\"cite\":82.3,\"teach\":45.0,\"intl\":59.5,\"vol\":14.8},{\"name\":\"Link\\u00f6ping University\",\"country\":\"Sweden\",\"rep\":19.8,\"cite\":51.5,\"teach\":20.2,\"intl\":50.9,\"vol\":9.0},{\"name\":\"University of Lisbon\",\"country\":\"Portugal\",\"rep\":42.5,\"cite\":44.8,\"teach\":30.1,\"intl\":46.8,\"vol\":15.2},{\"name\":\"University of Liverpool\",\"country\":\"United Kingdom\",\"rep\":42.7,\"cite\":76.2,\"teach\":31.3,\"intl\":79.5,\"vol\":22.5},{\"name\":\"Lund University\",\"country\":\"Sweden\",\"rep\":68.8,\"cite\":74.9,\"teach\":32.6,\"intl\":70.1,\"vol\":23.9},{\"name\":\"Maastricht University\",\"country\":\"Netherlands\",\"rep\":21.8,\"cite\":70.1,\"teach\":32.4,\"intl\":89.7,\"vol\":11.6},{\"name\":\"Macquarie University\",\"country\":\"Australia\",\"rep\":30.9,\"cite\":50.2,\"teach\":24.0,\"intl\":89.2,\"vol\":10.3},{\"name\":\"University of Manchester\",\"country\":\"United Kingdom\",\"rep\":95.1,\"cite\":74.3,\"teach\":58.1,\"intl\":82.0,\"vol\":31.9},{\"name\":\"University of Manitoba\",\"country\":\"Canada\",\"rep\":14.3,\"cite\":48.2,\"teach\":31.6,\"intl\":43.4,\"vol\":11.9},{\"name\":\"University of Maryland, College Park\",\"country\":\"United States of America\",\"rep\":51.2,\"cite\":83.6,\"teach\":36.5,\"intl\":44.8,\"vol\":24.6},{\"name\":\"Massachusetts Institute of Technology\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":100.0,\"teach\":89.1,\"intl\":84.3,\"vol\":35.3},{\"name\":\"McGill University\",\"country\":\"Canada\",\"rep\":93.3,\"cite\":76.0,\"teach\":63.3,\"intl\":79.0,\"vol\":30.0},{\"name\":\"McMaster University\",\"country\":\"Canada\",\"rep\":39.9,\"cite\":78.8,\"teach\":38.1,\"intl\":69.4,\"vol\":18.6},{\"name\":\"University of Melbourne\",\"country\":\"Australia\",\"rep\":98.6,\"cite\":80.6,\"teach\":60.4,\"intl\":81.3,\"vol\":35.0},{\"name\":\"University of Miami\",\"country\":\"United States of America\",\"rep\":22.7,\"cite\":73.1,\"teach\":42.7,\"intl\":56.7,\"vol\":17.3},{\"name\":\"University of Michigan\",\"country\":\"United States of America\",\"rep\":98.5,\"cite\":88.9,\"teach\":77.0,\"intl\":49.8,\"vol\":100.0},{\"name\":\"Michigan State University\",\"country\":\"United States of America\",\"rep\":60.5,\"cite\":74.0,\"teach\":51.1,\"intl\":55.0,\"vol\":25.2},{\"name\":\"University of Milan\",\"country\":\"Italy\",\"rep\":49.8,\"cite\":66.9,\"teach\":25.3,\"intl\":37.4,\"vol\":38.2},{\"name\":\"Monash University\",\"country\":\"Australia\",\"rep\":87.6,\"cite\":65.7,\"teach\":43.7,\"intl\":79.6,\"vol\":28.7},{\"name\":\"Nagoya University\",\"country\":\"Japan\",\"rep\":59.8,\"cite\":59.9,\"teach\":37.5,\"intl\":31.8,\"vol\":27.3},{\"name\":\"Nanjing University\",\"country\":\"China\",\"rep\":57.7,\"cite\":59.6,\"teach\":34.6,\"intl\":50.2,\"vol\":18.9},{\"name\":\"National Cheng Kung University\",\"country\":\"Taiwan\",\"rep\":47.2,\"cite\":28.4,\"teach\":31.8,\"intl\":26.7,\"vol\":10.1},{\"name\":\"National University of Singapore\",\"country\":\"Singapore\",\"rep\":99.5,\"cite\":66.0,\"teach\":72.0,\"intl\":94.9,\"vol\":28.3},{\"name\":\"National Taiwan University\",\"country\":\"Taiwan\",\"rep\":92.3,\"cite\":47.7,\"teach\":48.8,\"intl\":27.5,\"vol\":17.5},{\"name\":\"National Tsing Hua University\",\"country\":\"Taiwan\",\"rep\":51.3,\"cite\":49.1,\"teach\":39.4,\"intl\":24.8,\"vol\":7.5},{\"name\":\"University of Nebraska-Lincoln\",\"country\":\"United States of America\",\"rep\":10.5,\"cite\":57.5,\"teach\":31.0,\"intl\":47.8,\"vol\":11.0},{\"name\":\"New York University\",\"country\":\"United States of America\",\"rep\":95.9,\"cite\":89.5,\"teach\":68.3,\"intl\":41.2,\"vol\":28.1},{\"name\":\"Newcastle University\",\"country\":\"United Kingdom\",\"rep\":46.2,\"cite\":70.3,\"teach\":30.3,\"intl\":73.8,\"vol\":15.4},{\"name\":\"University of North Carolina at Chapel Hill\",\"country\":\"United States of America\",\"rep\":65.5,\"cite\":91.0,\"teach\":57.9,\"intl\":35.3,\"vol\":36.0},{\"name\":\"Northeastern University\",\"country\":\"United States of America\",\"rep\":20.5,\"cite\":81.3,\"teach\":36.4,\"intl\":54.7,\"vol\":9.6},{\"name\":\"Northwestern University\",\"country\":\"United States of America\",\"rep\":84.4,\"cite\":96.9,\"teach\":72.7,\"intl\":36.7,\"vol\":26.6},{\"name\":\"University of Notre Dame\",\"country\":\"United States of America\",\"rep\":26.6,\"cite\":90.0,\"teach\":43.3,\"intl\":51.4,\"vol\":10.1},{\"name\":\"University of Nottingham\",\"country\":\"United Kingdom\",\"rep\":59.0,\"cite\":62.7,\"teach\":39.9,\"intl\":70.6,\"vol\":19.1},{\"name\":\"Oregon State University\",\"country\":\"United States of America\",\"rep\":16.2,\"cite\":63.3,\"teach\":27.8,\"intl\":36.7,\"vol\":11.9},{\"name\":\"Osaka University\",\"country\":\"Japan\",\"rep\":80.2,\"cite\":51.1,\"teach\":51.3,\"intl\":29.1,\"vol\":29.4},{\"name\":\"University of Oslo\",\"country\":\"Norway\",\"rep\":54.9,\"cite\":66.3,\"teach\":36.1,\"intl\":60.3,\"vol\":19.2},{\"name\":\"University of Otago\",\"country\":\"New Zealand\",\"rep\":47.1,\"cite\":57.6,\"teach\":27.1,\"intl\":81.5,\"vol\":9.3},{\"name\":\"University of Ottawa\",\"country\":\"Canada\",\"rep\":25.9,\"cite\":62.9,\"teach\":37.9,\"intl\":63.2,\"vol\":16.8},{\"name\":\"University of Oxford\",\"country\":\"United Kingdom\",\"rep\":100.0,\"cite\":95.5,\"teach\":88.6,\"intl\":90.7,\"vol\":60.3},{\"name\":\"Peking University\",\"country\":\"China\",\"rep\":99.3,\"cite\":63.7,\"teach\":70.0,\"intl\":53.7,\"vol\":39.9},{\"name\":\"University of Pennsylvania\",\"country\":\"United States of America\",\"rep\":96.5,\"cite\":94.4,\"teach\":79.0,\"intl\":43.8,\"vol\":38.7},{\"name\":\"University of Pisa\",\"country\":\"Italy\",\"rep\":40.6,\"cite\":69.2,\"teach\":22.4,\"intl\":36.7,\"vol\":13.8},{\"name\":\"Princeton University\",\"country\":\"United States of America\",\"rep\":99.9,\"cite\":99.6,\"teach\":86.6,\"intl\":61.2,\"vol\":21.5},{\"name\":\"Queen Mary University of London\",\"country\":\"United Kingdom\",\"rep\":48.9,\"cite\":88.9,\"teach\":32.4,\"intl\":88.6,\"vol\":13.8},{\"name\":\"Queen\\u2019s University Belfast\",\"country\":\"United Kingdom\",\"rep\":31.7,\"cite\":52.2,\"teach\":30.1,\"intl\":88.6,\"vol\":10.7},{\"name\":\"The University of Queensland\",\"country\":\"Australia\",\"rep\":86.6,\"cite\":74.2,\"teach\":45.8,\"intl\":80.4,\"vol\":28.2},{\"name\":\"Queensland University of Technology\",\"country\":\"Australia\",\"rep\":39.5,\"cite\":42.9,\"teach\":29.9,\"intl\":69.8,\"vol\":10.3},{\"name\":\"University of Reading\",\"country\":\"United Kingdom\",\"rep\":33.2,\"cite\":58.1,\"teach\":32.8,\"intl\":75.0,\"vol\":9.1},{\"name\":\"Rensselaer Polytechnic Institute\",\"country\":\"United States of America\",\"rep\":8.4,\"cite\":67.8,\"teach\":30.9,\"intl\":42.8,\"vol\":6.5},{\"name\":\"Rice University\",\"country\":\"United States of America\",\"rep\":38.8,\"cite\":99.9,\"teach\":41.7,\"intl\":70.8,\"vol\":8.4},{\"name\":\"University of Rochester\",\"country\":\"United States of America\",\"rep\":23.8,\"cite\":87.7,\"teach\":41.9,\"intl\":55.5,\"vol\":14.9},{\"name\":\"RWTH Aachen University\",\"country\":\"Germany\",\"rep\":49.5,\"cite\":75.0,\"teach\":39.0,\"intl\":56.8,\"vol\":19.4},{\"name\":\"Sapienza University of Rome\",\"country\":\"Italy\",\"rep\":78.0,\"cite\":50.7,\"teach\":32.3,\"intl\":37.5,\"vol\":25.5},{\"name\":\"University of Science and Technology of China\",\"country\":\"China\",\"rep\":51.6,\"cite\":73.6,\"teach\":36.9,\"intl\":26.3,\"vol\":21.1},{\"name\":\"Seoul National University\",\"country\":\"South Korea\",\"rep\":98.6,\"cite\":48.7,\"teach\":75.5,\"intl\":30.3,\"vol\":24.8},{\"name\":\"Shanghai Jiao Tong University\",\"country\":\"China\",\"rep\":82.7,\"cite\":38.9,\"teach\":37.9,\"intl\":23.9,\"vol\":37.2},{\"name\":\"University of Sheffield\",\"country\":\"United Kingdom\",\"rep\":58.7,\"cite\":74.3,\"teach\":40.0,\"intl\":74.8,\"vol\":19.4},{\"name\":\"Simon Fraser University\",\"country\":\"Canada\",\"rep\":24.9,\"cite\":67.6,\"teach\":24.6,\"intl\":61.4,\"vol\":9.0},{\"name\":\"University of Southampton\",\"country\":\"United Kingdom\",\"rep\":50.7,\"cite\":79.7,\"teach\":35.2,\"intl\":82.4,\"vol\":18.8},{\"name\":\"University of Southern California\",\"country\":\"United States of America\",\"rep\":54.6,\"cite\":81.3,\"teach\":55.2,\"intl\":42.7,\"vol\":27.9},{\"name\":\"University of Southern Denmark\",\"country\":\"Denmark\",\"rep\":19.3,\"cite\":61.2,\"teach\":19.5,\"intl\":67.1,\"vol\":9.3},{\"name\":\"University of St Andrews\",\"country\":\"United Kingdom\",\"rep\":46.2,\"cite\":81.4,\"teach\":35.7,\"intl\":90.5,\"vol\":8.0},{\"name\":\"Stanford University\",\"country\":\"United States of America\",\"rep\":100.0,\"cite\":99.1,\"teach\":91.5,\"intl\":69.0,\"vol\":53.7},{\"name\":\"Stellenbosch University\",\"country\":\"South Africa\",\"rep\":24.5,\"cite\":45.6,\"teach\":30.0,\"intl\":47.8,\"vol\":8.9},{\"name\":\"Stockholm University\",\"country\":\"Sweden\",\"rep\":54.5,\"cite\":90.9,\"teach\":30.1,\"intl\":53.2,\"vol\":13.2},{\"name\":\"Sun Yat-sen University\",\"country\":\"China\",\"rep\":34.4,\"cite\":54.1,\"teach\":32.5,\"intl\":37.0,\"vol\":30.7},{\"name\":\"Sungkyunkwan University (SKKU)\",\"country\":\"South Korea\",\"rep\":60.2,\"cite\":51.7,\"teach\":48.1,\"intl\":35.8,\"vol\":12.9},{\"name\":\"University of Sussex\",\"country\":\"United Kingdom\",\"rep\":23.9,\"cite\":92.8,\"teach\":31.9,\"intl\":83.6,\"vol\":8.5},{\"name\":\"Swinburne University of Technology\",\"country\":\"Australia\",\"rep\":13.0,\"cite\":50.2,\"teach\":20.2,\"intl\":86.9,\"vol\":7.0},{\"name\":\"University of Sydney\",\"country\":\"Australia\",\"rep\":96.2,\"cite\":69.0,\"teach\":52.8,\"intl\":83.6,\"vol\":34.0},{\"name\":\"Syracuse University\",\"country\":\"United States of America\",\"rep\":13.6,\"cite\":87.1,\"teach\":32.4,\"intl\":41.2,\"vol\":7.8},{\"name\":\"Technical University of Denmark\",\"country\":\"Denmark\",\"rep\":30.9,\"cite\":79.6,\"teach\":39.9,\"intl\":79.7,\"vol\":15.2},{\"name\":\"Technion Israel Institute of Technology\",\"country\":\"Israel\",\"rep\":25.0,\"cite\":52.0,\"teach\":36.9,\"intl\":60.6,\"vol\":11.6},{\"name\":\"Technical University of Munich\",\"country\":\"Germany\",\"rep\":84.0,\"cite\":78.8,\"teach\":45.6,\"intl\":64.0,\"vol\":23.0},{\"name\":\"University of Technology Sydney\",\"country\":\"Australia\",\"rep\":41.8,\"cite\":58.7,\"teach\":27.8,\"intl\":86.9,\"vol\":10.0},{\"name\":\"Tel Aviv University\",\"country\":\"Israel\",\"rep\":32.7,\"cite\":45.5,\"teach\":43.5,\"intl\":46.1,\"vol\":20.9},{\"name\":\"University of Texas at Austin\",\"country\":\"United States of America\",\"rep\":93.7,\"cite\":91.5,\"teach\":64.3,\"intl\":33.1,\"vol\":36.1},{\"name\":\"Tohoku University\",\"country\":\"Japan\",\"rep\":71.8,\"cite\":49.6,\"teach\":49.7,\"intl\":29.7,\"vol\":28.3},{\"name\":\"University of Tokyo\",\"country\":\"Japan\",\"rep\":100.0,\"cite\":74.7,\"teach\":81.4,\"intl\":32.4,\"vol\":51.6},{\"name\":\"Tokyo Institute of Technology\",\"country\":\"Japan\",\"rep\":74.1,\"cite\":48.1,\"teach\":53.5,\"intl\":37.0,\"vol\":16.8},{\"name\":\"University of Toronto\",\"country\":\"Canada\",\"rep\":99.6,\"cite\":83.0,\"teach\":74.4,\"intl\":71.2,\"vol\":56.3},{\"name\":\"Tsinghua University\",\"country\":\"China\",\"rep\":98.9,\"cite\":65.0,\"teach\":64.1,\"intl\":44.6,\"vol\":38.1},{\"name\":\"University of Tsukuba\",\"country\":\"Japan\",\"rep\":33.9,\"cite\":51.1,\"teach\":33.4,\"intl\":36.1,\"vol\":13.8},{\"name\":\"Tufts University\",\"country\":\"United States of America\",\"rep\":18.3,\"cite\":92.9,\"teach\":43.6,\"intl\":51.1,\"vol\":11.9},{\"name\":\"Tulane University\",\"country\":\"United States of America\",\"rep\":9.5,\"cite\":53.9,\"teach\":40.7,\"intl\":29.7,\"vol\":8.6},{\"name\":\"University of Turin\",\"country\":\"Italy\",\"rep\":37.5,\"cite\":72.5,\"teach\":29.4,\"intl\":39.3,\"vol\":14.6},{\"name\":\"University of Turku\",\"country\":\"Finland\",\"rep\":28.8,\"cite\":47.7,\"teach\":24.3,\"intl\":46.3,\"vol\":9.4},{\"name\":\"University of Twente\",\"country\":\"Netherlands\",\"rep\":20.2,\"cite\":49.4,\"teach\":32.3,\"intl\":67.2,\"vol\":9.1},{\"name\":\"Ume\\u00e5 University\",\"country\":\"Sweden\",\"rep\":20.0,\"cite\":52.7,\"teach\":21.2,\"intl\":50.3,\"vol\":8.6},{\"name\":\"Universit\\u00e9 Libre de Bruxelles\",\"country\":\"Belgium\",\"rep\":34.3,\"cite\":64.4,\"teach\":26.7,\"intl\":79.4,\"vol\":10.4},{\"name\":\"Uppsala University\",\"country\":\"Sweden\",\"rep\":63.6,\"cite\":70.9,\"teach\":40.2,\"intl\":57.5,\"vol\":20.8},{\"name\":\"University of Utah\",\"country\":\"United States of America\",\"rep\":16.5,\"cite\":75.0,\"teach\":38.8,\"intl\":27.5,\"vol\":22.5},{\"name\":\"Utrecht University\",\"country\":\"Netherlands\",\"rep\":65.8,\"cite\":80.0,\"teach\":38.2,\"intl\":52.9,\"vol\":24.0},{\"name\":\"Vanderbilt University\",\"country\":\"United States of America\",\"rep\":25.9,\"cite\":87.7,\"teach\":46.0,\"intl\":28.3,\"vol\":17.6},{\"name\":\"University of Vermont\",\"country\":\"United States of America\",\"rep\":3.1,\"cite\":57.5,\"teach\":26.8,\"intl\":21.0,\"vol\":6.6},{\"name\":\"University of Victoria\",\"country\":\"Canada\",\"rep\":17.1,\"cite\":86.7,\"teach\":21.6,\"intl\":70.1,\"vol\":7.7},{\"name\":\"University of Vienna\",\"country\":\"Austria\",\"rep\":69.4,\"cite\":56.3,\"teach\":35.2,\"intl\":91.0,\"vol\":17.1},{\"name\":\"University of Virginia\",\"country\":\"United States of America\",\"rep\":35.2,\"cite\":76.9,\"teach\":48.7,\"intl\":31.8,\"vol\":20.7},{\"name\":\"Vrije Universiteit Brussel\",\"country\":\"Belgium\",\"rep\":22.7,\"cite\":48.1,\"teach\":31.2,\"intl\":54.5,\"vol\":9.3},{\"name\":\"Wake Forest University\",\"country\":\"United States of America\",\"rep\":5.4,\"cite\":81.3,\"teach\":33.3,\"intl\":26.0,\"vol\":8.7},{\"name\":\"University of Warsaw\",\"country\":\"Poland\",\"rep\":48.9,\"cite\":70.0,\"teach\":20.8,\"intl\":41.6,\"vol\":11.0},{\"name\":\"University of Warwick\",\"country\":\"United Kingdom\",\"rep\":71.8,\"cite\":68.2,\"teach\":41.1,\"intl\":85.7,\"vol\":14.2},{\"name\":\"Washington University in St Louis\",\"country\":\"United States of America\",\"rep\":40.1,\"cite\":97.1,\"teach\":57.6,\"intl\":46.5,\"vol\":25.9},{\"name\":\"University of Waterloo\",\"country\":\"Canada\",\"rep\":40.2,\"cite\":47.0,\"teach\":30.9,\"intl\":63.1,\"vol\":15.9},{\"name\":\"Wayne State University\",\"country\":\"United States of America\",\"rep\":8.0,\"cite\":61.0,\"teach\":32.0,\"intl\":30.7,\"vol\":13.2},{\"name\":\"University of Western Australia\",\"country\":\"Australia\",\"rep\":55.6,\"cite\":62.2,\"teach\":36.3,\"intl\":87.3,\"vol\":16.0},{\"name\":\"University of Wisconsin-Madison\",\"country\":\"United States of America\",\"rep\":82.4,\"cite\":87.7,\"teach\":67.7,\"intl\":33.6,\"vol\":38.1},{\"name\":\"University of the Witwatersrand\",\"country\":\"South Africa\",\"rep\":25.1,\"cite\":67.3,\"teach\":22.3,\"intl\":66.3,\"vol\":10.5},{\"name\":\"University of Wollongong\",\"country\":\"Australia\",\"rep\":29.4,\"cite\":55.1,\"teach\":25.2,\"intl\":80.4,\"vol\":8.4},{\"name\":\"Wuhan University\",\"country\":\"China\",\"rep\":38.8,\"cite\":48.5,\"teach\":34.1,\"intl\":33.1,\"vol\":23.0},{\"name\":\"Yale University\",\"country\":\"United States of America\",\"rep\":99.9,\"cite\":94.0,\"teach\":88.5,\"intl\":59.8,\"vol\":41.8},{\"name\":\"Yonsei University\",\"country\":\"South Korea\",\"rep\":75.5,\"cite\":44.3,\"teach\":44.5,\"intl\":35.7,\"vol\":18.3},{\"name\":\"University of York\",\"country\":\"United Kingdom\",\"rep\":43.3,\"cite\":90.5,\"teach\":32.2,\"intl\":75.0,\"vol\":10.4},{\"name\":\"Zhejiang University\",\"country\":\"China\",\"rep\":72.2,\"cite\":40.2,\"teach\":36.0,\"intl\":21.5,\"vol\":37.5},{\"name\":\"University of Zurich\",\"country\":\"Switzerland\",\"rep\":58.0,\"cite\":81.4,\"teach\":40.2,\"intl\":86.9,\"vol\":20.6}]\"\"\")\nPRESETS={\"balanced\":{\"rep\":1,\"cite\":1,\"teach\":1,\"intl\":1,\"vol\":1},\n         \"qs_like\":{\"rep\":5,\"cite\":2,\"teach\":2,\"intl\":1,\"vol\":0},\n         \"output_only\":{\"rep\":0,\"cite\":0,\"teach\":0,\"intl\":0,\"vol\":1}}\ndef reweight(w):\n    keys=[\"rep\",\"cite\",\"teach\",\"intl\",\"vol\"]\n    tot=sum(w[k] for k in keys) or 1\n    sc=[{\"name\":d[\"name\"],\"score\":round(sum(w[k]*d[k] for k in keys)/tot,2)} for d in DATA]\n    sc.sort(key=lambda r:-r[\"score\"])\n    return sc\nfor name in (\"balanced\",\"qs_like\",\"output_only\"):\n    top=reweight(PRESETS[name])[0]\n    print(f\"[{name}] #1 {top['name']} ({top['score']})\")\n",
+    "data_preview": {
+      "description": "The #1 university produced by each preset weighting (rep,cite,teach,intl,vol), plus the balanced top-5",
+      "columns": [
+        "preset",
+        "weights_rep_cite_teach_intl_vol",
+        "number_one",
+        "top5"
+      ],
+      "rows": [
+        [
+          "balanced",
+          "1,1,1,1,1",
+          "University of Oxford",
+          "Oxford, Harvard, Cambridge, Michigan, Stanford"
+        ],
+        [
+          "qs_like",
+          "5,2,2,1,0",
+          "MIT",
+          "MIT, Oxford, Cambridge, Harvard, Stanford"
+        ],
+        [
+          "the_like",
+          "3,3,3,1,0",
+          "MIT",
+          "MIT, Harvard, Oxford, Cambridge, Stanford"
+        ],
+        [
+          "arwu_like",
+          "0,3,0,0,4",
+          "University of Michigan",
+          "Michigan, Harvard, Oxford, Stanford, Johns Hopkins"
+        ],
+        [
+          "output_only",
+          "0,0,0,0,1",
+          "University of Michigan",
+          "Michigan, Harvard, Oxford, Toronto, Stanford"
+        ]
+      ]
+    },
+    "expected_output": "[balanced] #1 University of Oxford (87.02)\n[qs_like] #1 Massachusetts Institute of Technology (96.25)\n[output_only] #1 University of Michigan (100.0)",
+    "run": {
+      "type": "derived",
+      "needs_network": false,
+      "client_model": {
+        "fn": "window.reweightRankings",
+        "returns": "[{rank,name,country,score}] best-first",
+        "at_rest": "Balanced preset reproduces the published #1 University of Oxford 87.02."
+      }
+    }
+  },
+  "des_img_peking": {
+    "kind": "media",
+    "title": "Peking University — west gate",
+    "media_type": "image",
+    "preview": "assets/ref_q16952__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:PekingUniversityPic6.jpg",
+    "license": "CC-BY-2.0",
+    "author": "Photo: galaygobi / Wikimedia Commons (CC BY 2.0)",
+    "identity": "Peking University west gate with stone lion (Detective vision-confirmed) Real photograph (Wikimedia Commons), not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_img_tsinghua": {
+    "kind": "media",
+    "title": "Tsinghua University — historic gate",
+    "media_type": "image",
+    "preview": "assets/ref_q16955__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Thu_gate.JPG",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Yaoleilei / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Tsinghua University historic gate (Detective vision-confirmed) Real photograph (Wikimedia Commons), not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_img_berkeley": {
+    "kind": "media",
+    "title": "UC Berkeley — the Campanile over the glade",
+    "media_type": "image",
+    "preview": "assets/ref_q168756__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Berkeley_glade_afternoon.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Gku / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "UC Berkeley, Sather Tower (the Campanile) over the glade (Detective vision-confirmed) Real photograph (Wikimedia Commons), not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_img_caltech": {
+    "kind": "media",
+    "title": "Caltech — campus entrance",
+    "media_type": "image",
+    "preview": "assets/ref_q161562__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Caltech_Entrance.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Canon.vs.nikon / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "California Institute of Technology campus entrance (Detective vision-confirmed) Real photograph (Wikimedia Commons), not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_img_michigan": {
+    "kind": "media",
+    "title": "University of Michigan — Angell Hall",
+    "media_type": "image",
+    "preview": "assets/ref_q230492__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:AngellHall2010.JPG",
+    "license": "CC-BY-3.0",
+    "author": "Photo: AndrewHorne / Wikimedia Commons (CC BY 3.0)",
+    "identity": "University of Michigan, Angell Hall (Detective vision-confirmed) Real photograph (Wikimedia Commons), not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_img_mit": {
+    "kind": "media",
+    "title": "MIT — the Great Dome at night",
+    "media_type": "image",
+    "preview": "assets/ref_q49108__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:MIT_Dome_night1_Edit.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Fcb981, edited by Thermos / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "MIT Great Dome (Building 10) at night (Detective vision-confirmed) Real photograph (Wikimedia Commons), not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_img_stanford": {
+    "kind": "media",
+    "title": "Stanford — the Main Quad / Oval",
+    "media_type": "image",
+    "preview": "assets/ref_q41506__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Stanford_Oval_May_2011_panorama.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: King of Hearts / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Stanford University Main Quad / the Oval, panorama (Detective vision-confirmed) Real photograph (Wikimedia Commons), not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_img_toronto": {
+    "kind": "media",
+    "title": "University of Toronto — Convocation Hall",
+    "media_type": "image",
+    "preview": "assets/scout_q180865__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:UofTConvocationHall.jpg",
+    "license": "CC0-1.0",
+    "author": "Photo: Raysonho / Wikimedia Commons (CC0 1.0 — public-domain dedication)",
+    "identity": "Viewed: the domed, colonnaded rotunda of U of T's Convocation Hall (Ionic columns, green copper dome) under a blue sky; a real photograph. Real photograph, not AI."
+  },
+  "des_img_ucl": {
+    "kind": "media",
+    "title": "University College London — Wilkins Building",
+    "media_type": "image",
+    "preview": "assets/scout_q193196__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Wilkins_Building_1,_UCL,_London_-_Diliff.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Diliff / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Viewed: UCL's neoclassical Wilkins Building — a Corinthian portico under a dome, students seated on the steps of the main quad; a real photograph. Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_img_washington": {
+    "kind": "media",
+    "title": "University of Washington — Drumheller Fountain",
+    "media_type": "image",
+    "preview": "assets/scout_q219563__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:MK03244_University_of_Washington_Drumheller_Fountain.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Martin Kraft / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Viewed: the Drumheller Fountain jetting in a circular pool, flanked by the University of Washington's collegiate-Gothic brick buildings; a real photograph. (Washington is the two_yr_mean_citedness anomaly flagged in det_14.) Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "des_bgm": {
+    "kind": "media",
+    "title": "Now playing - John Field, Nocturne in B-flat major (H. 37)",
+    "media_type": "audio",
+    "preview": "assets/scout_bgm_web.mp3",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Field-NocturneB-flatmajorH37-Stephan.ogg",
+    "license": "CC-BY-SA-4.0",
+    "author": "Music: John Field, Nocturne in B-flat major (H.37), performed by Constantin Stephan / Wikimedia Commons (CC BY-SA 4.0)",
+    "identity": "a real recording of John Field's Nocturne in B-flat major (solo piano) — license-clean instrumental, not AI-composed License-clean recording, not AI-composed.",
+    "publish_note": "Attribution required (CC BY-SA 4.0); keep the credit line visible."
+  },
+  "sct_bgm": {
+    "kind": "media",
+    "title": "John Field nocturne - soundtrack (Scout-verified)",
+    "media_type": "audio",
+    "preview": "assets/scout_bgm_web.mp3",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Field-NocturneB-flatmajorH37-Stephan.ogg",
+    "license": "CC-BY-SA-4.0",
+    "author": "Music: John Field, Nocturne in B-flat major (H.37), performed by Constantin Stephan / Wikimedia Commons (CC BY-SA 4.0)",
+    "identity": "Commons File page names the composition (John Field, Nocturne in B-flat major H.37) and the performer (Constantin Stephan, piano); audio, not vlm_view-able.",
+    "publish_note": "Attribution required (CC BY-SA 4.0); keep the credit line visible."
+  },
+  "des_hero_video": {
+    "kind": "media",
+    "title": "Animated hero - ETH Zurich main building at night",
+    "media_type": "video",
+    "preview": "assets/teaser.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:ETH_Zurich,_Main_building.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Nemanja Skoric / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "A real Wikimedia Commons photograph of ETH Zurich's Hauptgebaude at night (identity verified). The motion is a subtle camera push-in + warm-light animation added to the still via ffmpeg (Ken-Burns boomerang) - not AI video and not of any real person.",
+    "publish_note": "Image CC BY-SA 3.0 (attribution required); motion added via ffmpeg. Keep the credit line visible."
+  },
+  "sct_princeton": {
+    "kind": "media",
+    "title": "Princeton — Nassau Hall",
+    "media_type": "image",
+    "preview": "assets/scout_filenassau_hall_princetonjpg__openverse_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Nassau_Hall_Princeton.JPG",
+    "license": "CC0-1.0",
+    "author": "Photo: Smallbones / Wikimedia Commons (CC0 1.0 — public-domain dedication)",
+    "identity": "Viewed: ivy-clad brownstone Nassau Hall with its green copper cupola and US flag, framed by bare trees along a paved path; a real photograph. Fills the Detective's Princeton gap (their P18 returned a watercolour)."
+  },
+  "sct_ucl": {
+    "kind": "media",
+    "title": "University College London — Wilkins Building",
+    "media_type": "image",
+    "preview": "assets/scout_q193196__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Wilkins_Building_1,_UCL,_London_-_Diliff.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Diliff / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Viewed: UCL's neoclassical Wilkins Building — a Corinthian portico under a dome, students seated on the steps of the main quad; a real photograph.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "sct_eth": {
+    "kind": "media",
+    "title": "ETH Zurich — main building at night",
+    "media_type": "image",
+    "preview": "assets/scout_eth_zurich_main_building__openverse_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:ETH_Zurich,_Main_building.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Nemanja Skoric / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Viewed: a wide night panorama of ETH Zurich's neoclassical Hauptgebaude — the lit domed central rotunda flanked by symmetric colonnaded wings, empty forecourt; a real photograph. Ultra-wide (10060px), ideal for a full-bleed cinematic band, and its night mood pairs with the nocturne BGM.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "sct_washington": {
+    "kind": "media",
+    "title": "University of Washington — Drumheller Fountain",
+    "media_type": "image",
+    "preview": "assets/scout_q219563__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:MK03244_University_of_Washington_Drumheller_Fountain.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Martin Kraft / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Viewed: the Drumheller Fountain jetting in a circular pool, flanked by the University of Washington's collegiate-Gothic brick buildings; a real photograph. (Washington is the two_yr_mean_citedness anomaly flagged in det_14.)",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "sct_toronto": {
+    "kind": "media",
+    "title": "University of Toronto — Convocation Hall",
+    "media_type": "image",
+    "preview": "assets/scout_q180865__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:UofTConvocationHall.jpg",
+    "license": "CC0-1.0",
+    "author": "Photo: Raysonho / Wikimedia Commons (CC0 1.0 — public-domain dedication)",
+    "identity": "Viewed: the domed, colonnaded rotunda of U of T's Convocation Hall (Ionic columns, green copper dome) under a blue sky; a real photograph."
+  },
+  "cin_00": {
+    "kind": "media",
+    "title": "Cinematic background - cin_00",
+    "media_type": "video",
+    "preview": "assets/teaser.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:ETH_Zurich,_Main_building.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Nemanja Skoric / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "ETH Zurich Hauptgebaude at night - the animated hero backdrop (real photo, ffmpeg motion added; scene cin_00).",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_01": {
+    "kind": "media",
+    "title": "Cinematic background - cin_01",
+    "media_type": "image",
+    "preview": "assets/ref_q49108__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:MIT_Dome_night1_Edit.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Fcb981, edited by Thermos / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "MIT Great Dome at night - cinematic background for the hook (scene cin_01). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_02": {
+    "kind": "media",
+    "title": "Cinematic background - cin_02",
+    "media_type": "image",
+    "preview": "assets/ref_q41506__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Stanford_Oval_May_2011_panorama.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: King of Hearts / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Stanford Main Quad / the Oval - cinematic background (scene cin_02). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_03": {
+    "kind": "media",
+    "title": "Cinematic background - cin_03",
+    "media_type": "image",
+    "preview": "assets/ref_q16952__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:PekingUniversityPic6.jpg",
+    "license": "CC-BY-2.0",
+    "author": "Photo: galaygobi / Wikimedia Commons (CC BY 2.0)",
+    "identity": "Peking University west gate - cinematic background for the swingers beat (scene cin_03). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_04": {
+    "kind": "media",
+    "title": "Cinematic background - cin_04",
+    "media_type": "image",
+    "preview": "assets/ref_q16952__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:PekingUniversityPic6.jpg",
+    "license": "CC-BY-2.0",
+    "author": "Photo: galaygobi / Wikimedia Commons (CC BY 2.0)",
+    "identity": "Peking University west gate, held dimmed for the weighting-mechanics rest beat (scene cin_04). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_05": {
+    "kind": "media",
+    "title": "Cinematic background - cin_05",
+    "media_type": "image",
+    "preview": "assets/ref_q16955__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Thu_gate.JPG",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Yaoleilei / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Tsinghua University historic gate - cinematic background (scene cin_05). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_06": {
+    "kind": "media",
+    "title": "Cinematic background - cin_06",
+    "media_type": "image",
+    "preview": "assets/scout_filenassau_hall_princetonjpg__openverse_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Nassau_Hall_Princeton.JPG",
+    "license": "CC0-1.0",
+    "author": "Photo: Smallbones / Wikimedia Commons (CC0 1.0, public-domain dedication)",
+    "identity": "Nassau Hall, Princeton University - the neutral centerpiece backdrop (scene cin_06). Real photograph, not AI."
+  },
+  "cin_07": {
+    "kind": "media",
+    "title": "Cinematic background - cin_07",
+    "media_type": "image",
+    "preview": "assets/ref_q230492__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:AngellHall2010.JPG",
+    "license": "CC-BY-3.0",
+    "author": "Photo: AndrewHorne / Wikimedia Commons (CC BY 3.0)",
+    "identity": "University of Michigan, Angell Hall - cinematic background for the referee beat (scene cin_07). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_08": {
+    "kind": "media",
+    "title": "Cinematic background - cin_08",
+    "media_type": "image",
+    "preview": "assets/ref_q161562__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Caltech_Entrance.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Canon.vs.nikon / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "California Institute of Technology entrance - cinematic background for the size-trap beat (scene cin_08). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_09": {
+    "kind": "media",
+    "title": "Cinematic background - cin_09",
+    "media_type": "image",
+    "preview": "assets/ref_q161562__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Caltech_Entrance.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Canon.vs.nikon / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Caltech entrance, held dimmed for the validation rest beat (scene cin_09). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_10": {
+    "kind": "media",
+    "title": "Cinematic background - cin_10",
+    "media_type": "image",
+    "preview": "assets/scout_q193196__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Wilkins_Building_1,_UCL,_London_-_Diliff.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Diliff / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "University College London, Wilkins Building - cinematic background for the reader-as-subject beat (scene cin_10). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_11": {
+    "kind": "media",
+    "title": "Cinematic background - cin_11",
+    "media_type": "image",
+    "preview": "assets/scout_eth_zurich_main_building__openverse_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:ETH_Zurich,_Main_building.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Nemanja Skoric / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "ETH Zurich Hauptgebaude at night, reprised as the closing bookend (scene cin_11). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "cin_12": {
+    "kind": "media",
+    "title": "Cinematic background - cin_12",
+    "media_type": "image",
+    "preview": "assets/scout_q219563__photo_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:MK03244_University_of_Washington_Drumheller_Fountain.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Martin Kraft / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "University of Washington, Drumheller Fountain - quiet backdrop for the methods appendix (scene cin_12). Real photograph, not AI.",
+    "publish_note": "Attribution required; keep the credit line visible."
+  },
+  "det_01": {
+    "kind": "fact",
+    "title": "Dataset provenance — 4 commercial rankings + OpenAlex neutral anchor",
+    "claim": "This is a multi-source theme dataset that aligns four commercial global university-ranking systems against a neutral, open research-output yardstick. THE (Times Higher Education, 2011-2016), ARWU/ShanghaiRanking (2005-2015) and CWUR (2012-2015) come from the widely-mirrored 'World University Rankings' compilation on GitHub (arnaudbenard/university-ranking, itself a copy of Myles O'Neill's classic Kaggle dataset). QS is the 2023 edition, mirrored from GeorgeM2000/QS-World-University-Ranking. The neutral anchor is OpenAlex, an open bibliometric index, fetched live from its REST API in June 2026 (top ~600 institutions by works_count). A normalised institution-name join produces a 189-institution five-way common core (THE2015 ∩ ARWU2015 ∩ CWUR2015 ∩ QS2023 ∩ OpenAlex); 2015 is the cleanest cross-system year, with QS (2023) and OpenAlex (current) attached as recent-state overlays. US News Bes",
+    "category": "origin",
+    "sources": [
+      {
+        "url": "https://github.com/arnaudbenard/university-ranking",
+        "title": "arnaudbenard/university-ranking (THE/ARWU/CWUR mirror)",
+        "facts": [
+          "Mirrors timesData.csv (THE 2011-2016), shanghaiData.csv (ARWU 2005-2015) and cwurData.csv (CWUR 2012-2015)",
+          "Is itself a copy of Myles O'Neill's Kaggle 'World University Rankings' compilation"
+        ]
+      },
+      {
+        "url": "https://github.com/GeorgeM2000/QS-World-University-Ranking",
+        "title": "GeorgeM2000/QS-World-University-Ranking",
+        "facts": [
+          "Supplies the QS 2023 edition table (~1,422 institutions) with 8 indicator score/rank pairs"
+        ]
+      },
+      {
+        "url": "https://api.openalex.org/institutions",
+        "title": "OpenAlex Institutions API",
+        "facts": [
+          "Neutral anchor: works_count, cited_by_count, h_index, i10_index, two_yr_mean_citedness per institution",
+          "Fetched for the top ~600 education-type institutions by works_count, sorted descending"
+        ]
+      }
+    ]
+  },
+  "det_02": {
+    "kind": "fact",
+    "title": "QS methodology — the reputation-survey pole",
+    "claim": "QS is the most reputation-driven of the four systems. In the pre-2024 methodology used for the 2023 edition in this dataset, Academic Reputation (a global survey of academics) was worth 40% and Employer Reputation (a survey of employers) 10% — so surveyed opinion alone drove HALF of a university's QS score. The remaining weight was split between Citations per Faculty (20%, research impact from Elsevier Scopus), Faculty/Student Ratio (20%, a teaching-capacity proxy) and international faculty + student share (5% each). Reputation responses are pooled over a rolling five-year window. This is why QS is the natural counter-pole to ARWU: its order is dominated by perception, not measured output.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://www.topuniversities.com/university-rankings-articles/world-university-rankings/understanding-methodology-qs-world-university-rankings",
+        "title": "Understanding the Methodology: QS World University Rankings (TopUniversities)",
+        "facts": [
+          "Academic Reputation 40%, Employer Reputation 10%, Citations per Faculty 20%, Faculty/Student Ratio 20%, International Faculty 5%, International Students 5% (pre-2024 methodology)",
+          "Citations-per-faculty data is drawn from Elsevier Scopus",
+          "The reputation surveys pool responses over the previous five years"
+        ]
+      }
+    ]
+  },
+  "det_03": {
+    "kind": "fact",
+    "title": "THE methodology — reputation + citations blend",
+    "claim": "Times Higher Education blends performance and reputation. For the 2011-2023 editions (the family the 2011-2016 data here belongs to) THE used five pillars weighted Teaching 30%, Research 30%, Citations 30%, International outlook 7.5% and Industry income 2.5%. Reputation surveys are baked INSIDE the Teaching and Research pillars — 15% of the overall score from the teaching reputation survey plus 18% from the research reputation survey, i.e. about a third of the total is still surveyed opinion. But unlike QS, THE also gives fully 30% to field-normalised Citations (research influence), which is what lets citation-dense small institutions like Caltech top the table. THE later replaced this structure with 'WUR 3.0' in 2024.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://www.timeshighereducation.com/world-university-rankings/world-university-rankings-2023-methodology",
+        "title": "THE World University Rankings 2023: methodology",
+        "facts": [
+          "Five pillars: Teaching 30%, Research 30%, Citations 30%, International outlook 7.5%, Industry income 2.5%",
+          "Reputation survey = 15% of the overall score inside Teaching and 18% inside Research (about 33% combined)"
+        ]
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Times_Higher_Education_World_University_Rankings",
+        "title": "Times Higher Education World University Rankings (Wikipedia)",
+        "facts": [
+          "THE used its five-pillar methodology with Citations weighted ~30% from 2011 until the 2024 'WUR 3.0' overhaul"
+        ]
+      }
+    ]
+  },
+  "det_04": {
+    "kind": "fact",
+    "title": "ARWU methodology — pure research & elite prizes",
+    "claim": "ARWU (the Shanghai Ranking), first published in 2003 by Shanghai Jiao Tong University and since 2009 by ShanghaiRanking Consultancy, is almost purely a research-and-prizes machine with NO reputation survey and NO teaching pillar. Its six indicators are: Alumni winning Nobel Prizes / Fields Medals (10%), Staff winning Nobel Prizes / Fields Medals (20%), Highly Cited Researchers per Clarivate (20%), papers in Nature & Science (20%), papers indexed in SCIE/SSCI (20%), and per-capita academic performance (10%). Because half the score rides on elite prizes and highly-cited-researcher counts, ARWU rewards a very different profile from QS — a university can sit top-5 in ARWU and middling in QS.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://www.shanghairanking.com/methodology/arwu/2020",
+        "title": "ARWU Ranking Methodology (ShanghaiRanking)",
+        "facts": [
+          "Six indicators: Alumni 10%, Award (staff Nobel/Fields) 20%, Highly Cited Researchers 20%, Nature & Science papers 20%, SCIE/SSCI-indexed papers 20%, Per-Capita Performance 10%",
+          "All six indicators relate to research excellence; there is no reputation survey and no teaching or income pillar"
+        ]
+      },
+      {
+        "url": "https://www.shanghairanking.com/rankings/arwu/2025",
+        "title": "ShanghaiRanking's Academic Ranking of World Universities",
+        "facts": [
+          "First published in 2003 by the Center for World-Class Universities at Shanghai Jiao Tong University; published and copyrighted by ShanghaiRanking Consultancy since 2009"
+        ]
+      }
+    ]
+  },
+  "det_05": {
+    "kind": "fact",
+    "title": "CWUR methodology — outcomes + research, no surveys",
+    "claim": "The Center for World University Rankings (CWUR) is distinctive because it uses NO reputation surveys and NO university-submitted data at all, relying only on independently verifiable indicators — which is exactly what makes it a useful 'commercial-but-not-survey-based' tiebreaker. Its current scheme groups seven indicators into four areas: Education 25% (alumni academic success relative to size), Employability 25% (alumni professional success), Faculty 10% (top academic distinctions) and Research 40% (output, high-quality publications, and influence/citations). Note: the 2012-2015 editions in THIS dataset use an OLDER eight-indicator version whose columns are RANKS (1 = best), not 0-100 scores — quality of education, alumni employment, quality of faculty, publications, influence, citations, broad impact and patents.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://cwur.org/methodology/world-university-rankings.php",
+        "title": "Methodology | Center for World University Rankings",
+        "facts": [
+          "CWUR uses no reputation surveys and no university data submissions, relying entirely on independently verifiable datasets",
+          "Current weighting: Education 25%, Employability 25%, Faculty 10%, Research 40% (output 10% + high-quality publications 10% + influence 10% + citations 10%)"
+        ]
+      },
+      {
+        "url": "https://github.com/arnaudbenard/university-ranking",
+        "title": "cwurData.csv (2012-2015) columns",
+        "facts": [
+          "The dataset's 2012-2015 CWUR rows carry eight indicator columns as RANKS (1=best): quality_of_education, alumni_employment, quality_of_faculty, publications, influence, citations, broad_impact (2014-2015 only), patents"
+        ]
+      }
+    ]
+  },
+  "det_06": {
+    "kind": "fact",
+    "title": "OpenAlex — the neutral open research-output referee",
+    "claim": "OpenAlex is the story's neutral yardstick: a fully open, CC0 index of scholarly works, authors and institutions launched in January 2022 by the non-profit OurResearch as the successor to Microsoft Academic Graph (which Microsoft shut down at the end of 2021). It carries metadata for 200M+ works, is free via a high-volume REST API, and is positioned as an open alternative to the commercial Scopus and Web of Science databases the ranking companies rely on. For this story it supplies an order that owes nothing to any commercial methodology — raw works_count, total cited_by_count and h_index per institution. Its coverage is not perfectly even (documented discrepancies exist, e.g. for China), which the Analyst should treat as a caveat rather than a flaw.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/OpenAlex",
+        "title": "OpenAlex (Wikipedia)",
+        "facts": [
+          "Launched January 2022 by OurResearch as successor to the terminated Microsoft Academic Graph",
+          "Contains metadata for 200M+ works; fully open (CC0) via GUI, data dump and REST API",
+          "Competes with Clarivate's Web of Science and Elsevier's Scopus"
+        ]
+      },
+      {
+        "url": "https://arxiv.org/abs/2205.01833",
+        "title": "OpenAlex: A fully-open index of scholarly works, authors, venues, institutions, and concepts",
+        "facts": [
+          "Built on a five-entity model (works, authors, venues, institutions, concepts) aggregating MAG, Crossref, ORCID and Unpaywall"
+        ]
+      },
+      {
+        "url": "https://arxiv.org/pdf/2507.19302",
+        "title": "Understanding discrepancies in the coverage of OpenAlex: the case of China",
+        "facts": [
+          "OpenAlex coverage is uneven across regions; discrepancies are documented for China's institutions"
+        ]
+      }
+    ]
+  },
+  "det_07": {
+    "kind": "fact",
+    "title": "BENCHMARK — how much each table is reputation vs measured output",
+    "claim": "The single most useful comparison for the Analyst is the reputation-vs-output weighting of each system, because it is the mechanical reason they disagree. Reputation-survey share of the total score: QS ~50% (Academic 40% + Employer 10%); THE ~33% (15% teaching survey + 18% research survey) but with a further 30% on citations; ARWU 0% (100% research output + elite prizes); CWUR 0% (surveys are excluded by design). OpenAlex is 0% reputation by construction — it is raw output/impact only. So along a 'perception ↔ measured output' axis the four systems fan out from QS (most perception) through THE to ARWU/CWUR (most output), with OpenAlex as the pure-output anchor beyond them.",
+    "category": "benchmark",
+    "sources": [
+      {
+        "url": "https://www.topuniversities.com/university-rankings-articles/world-university-rankings/understanding-methodology-qs-world-university-rankings",
+        "title": "QS methodology",
+        "facts": [
+          "QS reputation-survey share = 40% + 10% = 50% of the score (pre-2024)"
+        ]
+      },
+      {
+        "url": "https://www.timeshighereducation.com/world-university-rankings/world-university-rankings-2023-methodology",
+        "title": "THE methodology",
+        "facts": [
+          "THE reputation-survey share = 15% + 18% = 33%, with a separate 30% on citations"
+        ]
+      },
+      {
+        "url": "https://www.shanghairanking.com/methodology/arwu/2020",
+        "title": "ARWU methodology",
+        "facts": [
+          "ARWU has 0% reputation survey; score is 100% research output + Nobel/Fields prizes"
+        ]
+      },
+      {
+        "url": "https://cwur.org/methodology/world-university-rankings.php",
+        "title": "CWUR methodology",
+        "facts": [
+          "CWUR has 0% reputation survey and takes no university-submitted data"
+        ]
+      }
+    ]
+  },
+  "det_08": {
+    "kind": "fact",
+    "title": "The systems correlate weakly and crown different winners",
+    "claim": "Academic studies confirm the core premise: the big systems are statistically correlated but diverge sharply for individual universities and are unstable year to year. Reconciliation studies find pairwise rank correlations only in the 0.7-0.8 range for Times/QS/Shanghai, with 'many cases of high divergence and instability'. The disagreement even reaches the very top — in recent editions no single university leads all three (MIT tops QS, Oxford tops THE, Harvard tops ARWU), and this dataset's own years already disagree on #1 (ARWU 2015 and CWUR 2015 crown Harvard, THE 2015 crowns Caltech, QS 2023 crowns MIT). That the tables can't even agree who is best is the clearest evidence that 'best' is a weighting choice.",
+    "category": "related_work",
+    "sources": [
+      {
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10468493/",
+        "title": "Relationship between bibliometric indicators and university ranking positions (PMC)",
+        "facts": [
+          "Rankings are statistically correlated yet show many cases of high divergence and instability",
+          "Reconciliation schemes yield correlations in the narrow 0.7-0.8 range for Times, QS and Shanghai",
+          "Absolute publication/citation counts dominate ARWU while field-weighted citation impact is central to THE"
+        ]
+      },
+      {
+        "url": "https://arxiv.org/pdf/1908.10632",
+        "title": "A Longitudinal Analysis of University Rankings",
+        "facts": [
+          "Documents year-to-year instability in the major global ranking systems"
+        ]
+      },
+      {
+        "url": "https://arxiv.org/pdf/2004.09006",
+        "title": "How Reliable are University Rankings?",
+        "facts": [
+          "Critically examines the reliability and reproducibility of the major ranking methodologies"
+        ]
+      }
+    ]
+  },
+  "det_09": {
+    "kind": "fact",
+    "title": "Why it matters — rankings steer real decisions",
+    "claim": "These tables are not academic parlour games; they move students, money and policy. In QS's own International Student Survey, roughly a quarter of prospective students (23.5%) said institutional ranking was the single most important factor in choosing a university and subject, and about a fifth (19.6%) said rankings shaped which COUNTRY they studied in. Ellen Hazelkorn's landmark work documents how rankings now reshape decisions not just for students and parents but for governments, funding agencies, employers and universities' own strategies — a 'global reputation race' in which a few weighting choices by three or four private companies ripple into national policy and billions in tuition and research funding. That stakes-per-decision is exactly why the disagreement between the tables is worth exposing.",
+    "category": "why_it_matters",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/QS_World_University_Rankings",
+        "title": "QS World University Rankings (Wikipedia)",
+        "facts": [
+          "In the 2017 QS International Student Survey, 23.5% said institutional ranking was the most important factor in choosing a university and subject, and 19.6% said rankings were important in choosing a country of study"
+        ]
+      },
+      {
+        "url": "https://link.springer.com/book/10.1057/9781137446671",
+        "title": "Rankings and the Reshaping of Higher Education (Hazelkorn)",
+        "facts": [
+          "Rankings influence students, parents, governments, funding agencies, employers and public opinion, reshaping higher education in the age of globalisation"
+        ]
+      }
+    ]
+  },
+  "det_10": {
+    "kind": "fact",
+    "title": "Controversy — methodology changes cause artificial volatility",
+    "claim": "A university can jump or plunge dozens of places without changing at all, simply because a ranker changes its formula. QS's 2024 edition made what it called its largest-ever methodological change, adding three new indicators each worth 5% — International Research Network, Employment Outcomes and Sustainability — and rebalancing the surveys (Academic Reputation cut from 40% to 30%). Analysts noted this made year-on-year comparison essentially apples-to-oranges, and whole national systems moved (many Korean institutions fell under the new weights). This is a direct interpretive hook: the disagreement between systems is compounded by disagreement of each system WITH ITSELF over time, so a headline rank is a snapshot of a methodology, not a fixed truth.",
+    "category": "controversy",
+    "sources": [
+      {
+        "url": "https://www.qs.com/insights/qs-world-university-rankings-2024-whats-new-in-our-20th-year",
+        "title": "QS World University Rankings 2024: What's new in our 20th year",
+        "facts": [
+          "The 2024 edition was QS's largest-ever methodological enhancement",
+          "Three new indicators added, each 5%: International Research Network, Employment Outcomes, Sustainability"
+        ]
+      },
+      {
+        "url": "https://higheredstrategy.com/rankings-round-up-3-the-evolution-of-qs-rankings/",
+        "title": "Rankings Round-up: The Evolution of QS Rankings (HESA)",
+        "facts": [
+          "The 2024 methodology change made comparison with the 2023 edition apples-to-oranges, moving many institutions for methodological rather than real reasons"
+        ]
+      }
+    ]
+  },
+  "det_11": {
+    "kind": "fact",
+    "title": "Controversy — rankings can be gamed with bad data",
+    "claim": "Because several ranking indicators rely on self-reported institutional data, they can be manipulated. In 2022 Columbia University — ranked #2 by U.S. News — was found by its own mathematics professor Michael Thaddeus to have submitted inaccurate figures (class sizes, share of full-time faculty with terminal degrees, instructional spending). When corrected, Columbia fell from #2 to #18, one of the sharpest drops in the ranking's history; the university then withdrew from the undergraduate rankings and later reportedly settled related litigation for about $9 million. Although U.S. News is not one of the four systems in this dataset, the episode is the canonical warning that a headline rank is only as trustworthy as the data feeding it — reinforcing why an independent, non-submitted anchor like OpenAlex matters.",
+    "category": "controversy",
+    "sources": [
+      {
+        "url": "https://www.chronicle.com/article/columbia-is-ranked-no-2-by-u-s-news-a-professor-says-its-spot-is-based-on-false-data",
+        "title": "Columbia Is Ranked No. 2... A Professor Says Its Spot Is Based on False Data (Chronicle)",
+        "facts": [
+          "Math professor Michael Thaddeus alleged Columbia misreported class sizes, share of full-time faculty with terminal degrees, and instructional spending to U.S. News"
+        ]
+      },
+      {
+        "url": "https://www.highereddive.com/news/columbia-us-news-rejects-undergraduate-rankings-matter/652505/",
+        "title": "Columbia rejects U.S. News undergraduate rankings (Higher Ed Dive)",
+        "facts": [
+          "Columbia fell from #2 to #18 after the data was corrected and subsequently declined to submit data / dropped out of the undergraduate rankings"
+        ]
+      },
+      {
+        "url": "https://blogs.smartrules.com/columbia-universitys-shocking-9-million-settlement-over-false-rankings-data/",
+        "title": "Columbia's $9 Million Settlement Over False Rankings Data",
+        "facts": [
+          "Columbia reportedly agreed to pay about $9 million to resolve allegations it submitted false data to improve its U.S. News ranking"
+        ]
+      }
+    ]
+  },
+  "det_12": {
+    "kind": "fact",
+    "title": "Controversy — top schools are boycotting the rankings",
+    "claim": "Institutions themselves increasingly reject the tables' authority. In 2023, led by Yale and Harvard law schools, dozens of top U.S. law schools and several medical schools boycotted the U.S. News rankings, refusing to supply data. Their objections go to methodology: Yale's dean argued the heavily weighted standardised-test metric penalises promising students who cannot afford test prep, Stanford's dean said the formula 'inappropriately discourages public service', and medical deans said the rankings 'measure the wrong things'. U.S. News responded by revising its formula to de-emphasise reputational surveys in favour of outcome measures. The revolt underscores the story's thesis: even the ranked elite dispute that a single weighting captures 'quality'.",
+    "category": "controversy",
+    "sources": [
+      {
+        "url": "https://www.thecrimson.com/article/2023/5/25/us-news-rankings-harvard-feature/",
+        "title": "Rejecting the Rankings: Why Harvard and Yale Led a Widespread Boycott (Harvard Crimson)",
+        "facts": [
+          "Yale Law led a 2023 boycott of U.S. News that dozens of top law schools joined",
+          "Yale's dean argued the test-score metric pressures schools to overlook students who can't afford test prep; Stanford's dean said the methodology discourages public service"
+        ]
+      },
+      {
+        "url": "https://www.insidehighered.com/news/admissions/graduate/2023/04/21/us-news-again-delays-law-and-medical-school-rankings",
+        "title": "U.S. News again delays medical and law school rankings (Inside Higher Ed)",
+        "facts": [
+          "U.S. News delayed and revised the law and medical rankings after pushback, moving to de-emphasise reputational surveys in favour of outcome measures"
+        ]
+      }
+    ]
+  },
+  "det_13": {
+    "kind": "fact",
+    "title": "Interpretive hook — the prestige loop and the size effect",
+    "claim": "Two mechanisms explain most of the disagreement and give the story its characters. First, reputation surveys create a self-reinforcing prestige (halo) loop that favours older, larger, English-speaking, already-famous universities — so QS's survey-heavy order rewards name recognition, which is partly downstream of past rankings. Second, normalisation choices flip the winners: THE and QS divide citations by faculty, so a tiny, citation-dense, science-focused school like Caltech can top THE, while a metric based on RAW output volume (OpenAlex works_count) instead crowns sprawling multi-faculty, medical-heavy giants like the University of Michigan or Toronto that no commercial table places first. The same universities therefore swing tens of places between systems purely because of what is weighted and whether it is size-normalised — Caltech (small, normalised winner) and Michigan (large, ra",
+    "category": "interpretive_hook",
+    "sources": [
+      {
+        "url": "https://iier.org.au/iier30/fauzi.pdf",
+        "title": "University rankings: A review of methodological flaws",
+        "facts": [
+          "Reviews systematic methodological flaws in global rankings, including reputation-survey bias toward established, well-known institutions and the sensitivity of results to normalisation and weighting choices"
+        ]
+      },
+      {
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10468493/",
+        "title": "Relationship between bibliometric indicators and university ranking positions (PMC)",
+        "facts": [
+          "Absolute publication and citation COUNTS drive ARWU/U.S. News, whereas field-weighted (normalised) citation impact drives THE — so raw-volume and normalised metrics rank the same universities differently"
+        ]
+      }
+    ]
+  },
+  "det_14": {
+    "kind": "fact",
+    "title": "Scope note for the Analyst — caveats and confounds",
+    "claim": "Guidance for the analysis. (1) ERA MISMATCH is the dataset's main honest limitation: THE/ARWU/CWUR are 2015, QS is 2023, OpenAlex is current — so a strict 'they disagree' comparison is cleanest on the 2015 trio plus the anchor, treating QS and OpenAlex as recent-state overlays and flagging the mismatch explicitly. (2) The cross-system join is by NORMALISED INSTITUTION NAME (names differ across tables), which produced the 189-institution five-way core; a handful of edge cases may be mis-joined. (3) OpenAlex works_count REWARDS SIZE/AGE and medical output — big, old, hospital-affiliated universities dominate raw volume, so it is a yardstick of quantity, not quality; consider cited_by_count and h_index alongside it, and note that two_yr_mean_citedness has anomalous rows (e.g. Washington ~46 vs peers ~3-7) that look like data artefacts. (4) CWUR indicator columns are RANKS (1 = best), the OP",
+    "category": "scope_suggestion",
+    "sources": [
+      {
+        "url": "https://github.com/arnaudbenard/university-ranking",
+        "title": "Source mirror (THE/ARWU/CWUR coverage years)",
+        "facts": [
+          "THE 2011-2016, ARWU 2005-2015, CWUR 2012-2015 — the only fully overlapping cross-system year is 2015",
+          "CWUR indicator columns are ranks (1=best), not 0-100 scores"
+        ]
+      },
+      {
+        "url": "https://arxiv.org/pdf/2507.19302",
+        "title": "Understanding discrepancies in the coverage of OpenAlex",
+        "facts": [
+          "OpenAlex coverage varies by region, so raw works_count/citation totals should be read as coverage- and size-dependent, not a clean quality measure"
+        ]
+      }
+    ]
+  },
+  "int_02": {
+    "kind": "fact",
+    "title": "Guess the champions - four different #1s",
+    "claim": "Before scrolling on, the reader guesses each table's published #1 and discovers four different champions exist as printed: Caltech (THE), Harvard (ARWU & CWUR), MIT (QS), plus the OpenAlex referee's Michigan - four distinct schools.",
+    "category": "interpretive_hook",
+    "sources": [
+      {
+        "url": "",
+        "title": "analyst.json ana_06 (code/03_disagreement.py)",
+        "facts": [
+          "THE 2015 #1 = Caltech; ARWU 2015 #1 = Harvard; CWUR 2015 #1 = Harvard; QS 2023 #1 = MIT; OpenAlex (works) #1 = Michigan",
+          "Distinct champions across the five rankings = 4 (Caltech, Harvard, MIT, Michigan)"
+        ]
+      }
+    ]
+  },
+  "int_03": {
+    "kind": "fact",
+    "title": "Toggle the referee's lens - three different winners",
+    "claim": "Toggling the neutral OpenAlex referee between raw works, total citations and h-index crowns Michigan, then Harvard, then Washington - and Michigan's own rank slides 1 -> 5 -> 6. The objective referee opens a new argument instead of settling it.",
+    "category": "interpretive_hook",
+    "sources": [
+      {
+        "url": "",
+        "title": "analyst.json ana_08 (code/04_referee.py)",
+        "facts": [
+          "OpenAlex #1 by works = Michigan; by cited_by = Harvard; by h_index = Washington",
+          "Michigan's own OpenAlex rank: works 1, cited_by 5, h_index 6"
+        ]
+      }
+    ]
+  },
+  "int_01": {
+    "kind": "computation",
+    "title": "Reweighter - crown your own #1",
+    "claim": "The reader drags five pillar weights and all 218 universities re-rank live; the presets alone crown Oxford (87.02), MIT (96.25) and Michigan (100.0) from the same data.",
+    "cell_id": "cell_client_models",
+    "code_file": "code/client_model.js",
+    "code_lines": null,
+    "code": "# The reweighter blends five real 0-100 pillars under reader weights:\n# score = round(sum(w_k * pillar_k) / sum(w_k), 2). Per-school pillars (rep,cite,teach,intl,vol):\nP={\"University of Oxford\":(100,95.5,88.6,90.7,60.3),\n   \"MIT\":(100,100,89.1,84.3,35.3),\n   \"University of Michigan\":(98.5,88.9,77,49.8,100)}\ndef score(p,w):\n    tot=sum(w) or 1\n    return round(sum(wi*pi for wi,pi in zip(w,p))/tot,2)\nprint(\"balanced  Oxford  ->\", score(P[\"University of Oxford\"],(1,1,1,1,1)))\nprint(\"qs_like   MIT     ->\", score(P[\"MIT\"],(5,2,2,1,0)))\nprint(\"output    Michigan->\", score(P[\"University of Michigan\"],(0,0,0,0,1)))\n",
+    "data_preview": null,
+    "expected_output": "balanced  Oxford  -> 87.02\nqs_like   MIT     -> 96.25\noutput    Michigan-> 100.0",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_04": {
+    "kind": "computation",
+    "title": "Guess Michigan's impact rank",
+    "claim": "Michigan is #1 in the world by raw research volume but falls to 332nd once you divide citations by papers - a 331-place plunge.",
+    "cell_id": "cell_reputation",
+    "code_file": "code/05_reputation_size.py",
+    "code_lines": null,
+    "code": "vol_rank, impact_rank = 1, 332\nprint(f\"University of Michigan: volume #{vol_rank} -> per-paper impact #{impact_rank} (flip {impact_rank-vol_rank:+d})\")\n",
+    "data_preview": null,
+    "expected_output": "University of Michigan: volume #1 -> per-paper impact #332 (flip +331)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_05": {
+    "kind": "computation",
+    "title": "Guess the swing",
+    "claim": "Peking's four commercial ranks (THE 48 / ARWU 101 / CWUR 56 / QS 12) span an 89-place spread; Tsinghua 87, Berkeley 23.",
+    "cell_id": "cell_disagreement",
+    "code_file": "code/03_disagreement.py",
+    "code_lines": null,
+    "code": "ranks={\"Peking University\":(48,101,56,12),\"Tsinghua University\":(49,101,78,14),\n       \"University of California, Berkeley\":(8,4,7,27)}\nfor n,r in ranks.items():\n    print(f\"{n}: THE {r[0]} / ARWU {r[1]} / CWUR {r[2]} / QS {r[3]} -> spread {max(r)-min(r)}\")\n",
+    "data_preview": null,
+    "expected_output": "Peking University: THE 48 / ARWU 101 / CWUR 56 / QS 12 -> spread 89\nTsinghua University: THE 49 / ARWU 101 / CWUR 78 / QS 14 -> spread 87\nUniversity of California, Berkeley: THE 8 / ARWU 4 / CWUR 7 / QS 27 -> spread 23",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_06": {
+    "kind": "computation",
+    "title": "Guess the reputation share",
+    "claim": "Half of a QS score is surveyed reputation (40% academic + 10% employer); ARWU and CWUR use none.",
+    "cell_id": "cell_profile",
+    "code_file": "code/01_profile.py",
+    "code_lines": null,
+    "code": "rep={\"QS 2023\":50,\"THE\":33,\"ARWU\":0,\"CWUR\":0,\"OpenAlex\":0}\nfor s,p in rep.items():\n    print(f\"{s}: reputation-survey share = {p}%\")\n",
+    "data_preview": null,
+    "expected_output": "QS 2023: reputation-survey share = 50%\nTHE: reputation-survey share = 33%\nARWU: reputation-survey share = 0%\nCWUR: reputation-survey share = 0%\nOpenAlex: reputation-survey share = 0%",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_07": {
+    "kind": "computation",
+    "title": "Look up your university",
+    "claim": "Each of the 218 common-core universities carries its four commercial ranks plus OpenAlex and its cross-system spread; Oxford swings 7 places, Peking 89, Berkeley 23, Caltech 11, Michigan 8.",
+    "cell_id": "cell_client_models",
+    "code_file": "code/client_model.js",
+    "code_lines": null,
+    "code": "L={\"University of Oxford\":(3,10,5,4),\"Peking University\":(48,101,56,12),\n   \"University of California, Berkeley\":(8,4,7,27),\"California Institute of Technology\":(1,7,12,6),\n   \"University of Michigan\":(17,22,19,25)}\nfor n,r in L.items():\n    print(f\"{n}: THE {r[0]} / ARWU {r[1]} / CWUR {r[2]} / QS {r[3]} -> spread {max(r)-min(r)}\")\n",
+    "data_preview": null,
+    "expected_output": "University of Oxford: THE 3 / ARWU 10 / CWUR 5 / QS 4 -> spread 7\nPeking University: THE 48 / ARWU 101 / CWUR 56 / QS 12 -> spread 89\nUniversity of California, Berkeley: THE 8 / ARWU 4 / CWUR 7 / QS 27 -> spread 23\nCalifornia Institute of Technology: THE 1 / ARWU 7 / CWUR 12 / QS 6 -> spread 11\nUniversity of Michigan: THE 17 / ARWU 22 / CWUR 19 / QS 25 -> spread 8",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  }
+}

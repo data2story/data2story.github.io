@@ -1,0 +1,178 @@
+{
+  "cell_ana_01": {
+    "computes": "Census scope: 5,726 launches, 1957-2018, 94% success",
+    "backs": [
+      "ana_01"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_02": {
+    "computes": "Global launches per year (the 'how much' is roughly flat)",
+    "backs": [
+      "ana_02",
+      "cin_03"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_03": {
+    "computes": "CORE: launches per country per year, 1957-2018 (SU+RU merged)",
+    "backs": [
+      "ana_03"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_04": {
+    "computes": "Cumulative ledger: the Cold-War duopoly is still 85% of all launches",
+    "backs": [
+      "ana_04"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_05": {
+    "computes": "China's rise by decade and the 2018 crossover (partial-aware)",
+    "backs": [
+      "ana_05"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_06": {
+    "computes": "National share of launches by decade (no bloc holds a majority by 2010s)",
+    "backs": [
+      "ana_06"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_07": {
+    "computes": "Concentration: the superpower duopoly's share fell from ~99% to 54%",
+    "backs": [
+      "ana_07"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_08": {
+    "computes": "Two commercialization waves: Arianespace (1984) then startups (2006)",
+    "backs": [
+      "ana_08"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_09": {
+    "computes": "Reliability matured to a 95-97% plateau",
+    "backs": [
+      "ana_09"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_10": {
+    "computes": "Every major power launches at 89-96%; new contenders match incumbents",
+    "backs": [
+      "ana_10"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_11": {
+    "computes": "By operator type, commercial 'private' is the most reliable (97.4%)",
+    "backs": [
+      "ana_11"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_12": {
+    "computes": "Top vehicles are Soviet workhorses; Falcon 9 and Long March rank low all-time",
+    "backs": [
+      "ana_12"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_13": {
+    "computes": "Vehicle families: Soviet fleet (>3,200) still dwarfs Long March (287) and Falcon (68)",
+    "backs": [
+      "ana_13"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_14": {
+    "computes": "China's program IS the Long March: 287 of 302 launches (95%)",
+    "backs": [
+      "ana_14"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_15": {
+    "computes": "The startup class: SpaceX 68 + Rocket Lab 2, ramping to ~18/yr by 2018",
+    "backs": [
+      "ana_15"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_16": {
+    "computes": "Before SpaceX, commercial meant Europe: Arianespace 260 launches",
+    "backs": [
+      "ana_16"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_17": {
+    "computes": "Geography: lat/long are UNUSABLE; only a country choropleth is possible",
+    "backs": [
+      "ana_17"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_19": {
+    "computes": "VALIDATION: 'China overtakes 2018' holds at partial, annualized AND full-year",
+    "backs": [
+      "ana_19"
+    ],
+    "needs_network": false
+  },
+  "cell_ana_20": {
+    "computes": "Launch volume by decade: 1970s peak (1,226), post-Soviet trough (650)",
+    "backs": [
+      "ana_20"
+    ],
+    "needs_network": false
+  },
+  "cell_int_01": {
+    "computes": "Hero scrubber — the duel-to-crowd duopoly share (per year)",
+    "backs": [
+      "int_01"
+    ],
+    "needs_network": false
+  },
+  "cell_int_02": {
+    "computes": "Cumulative ledger bar-race — the 85.5% old-world share",
+    "backs": [
+      "int_02"
+    ],
+    "needs_network": false
+  },
+  "cell_int_03": {
+    "computes": "Partial-2018 annualizer — does the China crossover survive?",
+    "backs": [
+      "int_03"
+    ],
+    "needs_network": false
+  },
+  "cell_int_04": {
+    "computes": "Success-rate calculator — newcomers match the incumbents",
+    "backs": [
+      "int_04"
+    ],
+    "needs_network": false
+  },
+  "cell_int_05": {
+    "computes": "Guess China's single-family concentration (Long March)",
+    "backs": [
+      "int_05"
+    ],
+    "needs_network": false
+  },
+  "cell_int_06": {
+    "computes": "Guess when a 'startup' first reached orbit",
+    "backs": [
+      "int_06"
+    ],
+    "needs_network": false
+  }
+}

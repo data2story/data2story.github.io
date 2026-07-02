@@ -1,0 +1,10 @@
+{
+  "generated_by": "relocate_unreferenced.py",
+  "project": "blog_opus48_0702_0017",
+  "assets_dir": "assets/",
+  "provenance_dir": "provenance/",
+  "moved_count": 0,
+  "moved": [],
+  "repointed_pointers": {},
+  "note": "Heavy unreferenced media masters moved out of assets/ (reversible: move each back from provenance/ to assets/ to restore). The shipped page does not load any of these."
+}

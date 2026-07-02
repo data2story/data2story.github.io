@@ -1,0 +1,332 @@
+{
+  "meta": {
+    "role": "cinematographer",
+    "version": "1.0",
+    "domain": "Global university rankings & research bibliometrics",
+    "generated_at": "2026-07-02",
+    "run": "PREMIUM",
+    "mode": "photographic",
+    "mode_reason": "Rich, verified, license-clean REAL campus imagery is registered for almost every named school in the story: 13 cover-able landscape backgrounds (6 Scout sct_ + 7 Designer des_, all with complete license+identity), well above the >=5 floor. Every beat's named cast (ETH / MIT / Stanford / Peking / Tsinghua / Michigan / Caltech / UCL / Princeton / Washington) has a real photograph that honestly belongs, so no generative or data_driven fallback is warranted. Backgrounds are drawn ONLY from designer.json meta.team_brief.cinematic_cover_able_backgrounds; every image/video media_ref resolves to a registered sct_/des_ id (never a bare Detective ref_ or the cinematic_imagery_manifest scratchpad).",
+    "engine_note": "Copy the exact CSS/JS technique from cinematographer/references/example_cinematic_scroll.html (pinned .cin-stage full-bleed layer; one .cin-bg per scene crossfaded by a CSS `transition:opacity ~1.15s ease` toggled `.active` via an IntersectionObserver on the text beats at rootMargin '-45% 0px -45% 0px'; decoding=async + img.decode() pre-decode; gentle ken-burns via a CSS transform transition on `.active`, NEVER a forced-reflow restart). Apply the blog's OWN editorial_dark theme (bg ~#0e0f13, gilt-gold accent #e3b23c, teal referee #5aa9b5, Didot display / Georgia body) — not the example's mint/Georgia demo palette.",
+    "scene_order": ["cin_00", "cin_01", "cin_02", "cin_03", "cin_04", "cin_05", "cin_06", "cin_07", "cin_08", "cin_09", "cin_10", "cin_11", "cin_12"],
+    "scene_arc": "ETH night hero (cin_00) -> MIT night, QS's champion (edt_01) -> Stanford Oval, the tight summit anchor (edt_02) -> Peking, the swinger (edt_03) -> quiet hold on Peking for the weighting-mechanics beat (edt_04, REST) -> Tsinghua, reputation-lifted (edt_05) -> Princeton, the neutral 'you decide' centerpiece (edt_06) -> Michigan, the referee's output giant (edt_07) -> Caltech, the small-dense riser (edt_08) -> quiet hold on Caltech for the validation beat (edt_09, REST) -> UCL, a human-scale 'find yourself' campus (edt_10) -> ETH night reprise/bookend for the close (edt_11) -> Washington, a quiet methods-appendix backdrop (edt_12). Night/dusk shots (ETH, MIT) anchor the nocturne palette; the ETH bookend ties the film back to its opening.",
+    "rest_scenes": ["cin_04", "cin_09"],
+    "rest_policy_check": "2 rest scenes, non-consecutive (cin_04 then a fresh cin_05; cin_09 then a fresh cin_10). Zero kind:gradient/color scenes exist (photographic mode) — every rest HOLDS a real photo dimmed/framed under a heavier scrim, never a black gradient gap (PIT-54). Each rest re-uses the immediately-prior verified photo as a calmer hold of the SAME surface (edt_04 holds Peking from edt_03; edt_09 holds Caltech from edt_08).",
+    "centerpiece_scene": "cin_06",
+    "unused_registered_backgrounds": ["des_img_berkeley", "sct_tokyo"],
+    "unused_note": "des_img_berkeley (Campanile) and sct_tokyo (Yasuda Auditorium) are registered and cover-able but not needed as distinct cinematic beats (one background per beat, and closer-fitting subjects were chosen). They remain available to the Designer as in-body section images for edt_03 (Berkeley, the reverse-direction swinger) and the swinger/reputation set (Tokyo). Not using every registered asset is fine; every asset that IS staged resolves to a registered id.",
+    "logos_excluded": "des_crest_harvard / des_crest_oxford / des_crest_cambridge are LOGOS (coats of arms), not landscape backgrounds — never used as cinematic backgrounds (they are optional inline champion marks for the Programmer)."
+  },
+
+  "scenes": {
+    "cin_00": {
+      "backs": "teaser",
+      "order": 0,
+      "active_by_default": true,
+      "is_rest": false,
+      "background": {
+        "kind": "video",
+        "media_ref": "des_hero_video",
+        "still_ref": "sct_eth",
+        "filename": "assets/teaser_web.mp4",
+        "webm": "assets/teaser.webm",
+        "poster": "assets/teaser.jpg",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of the animated ETH Zurich Hauptgebaude night panorama (a real Wikimedia photograph with an ffmpeg Ken-Burns push-in + warm-light breathing boomerang added; not AI video, no person). This IS the cin_00 layer of the pinned .cin-stage, lifted above the stage's global darkening (higher z-index) so the hero keeps its own brightness. The hero's furniture (headline, kicker, stat strip, scrim, vignette) lives in a SEPARATE transparent overlay in <main> that scrolls OVER this fixed backdrop.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "None on entry (active by default from the very top, before any scroll). The SAME crossfade engine carries cin_00 -> cin_01: when edt_01 crosses the viewport middle the IntersectionObserver toggles .active from cin_00 to cin_01, dissolving the ETH night hero into the MIT night background as one continuous move (no 'cover ends, content begins' seam).",
+      "overlay_dissolve": "The transparent hero overlay (furniture only) OPACITY-DISSOLVES (opacity 1 -> 0) as it scrolls out, driven by a small rAF scroll handler or CSS scroll-out. OPACITY ONLY — never scale the transparent overlay (scaling a transparent pane re-introduces the seam). Under prefers-reduced-motion the overlay stays static + fully opaque and never touches the video.",
+      "scrim": "Solid dark headline plate over the black night-sky band + a subtle vignette (the Hero role's furniture), tuned to hold WCAG AA over the night image. linear-gradient(180deg, rgba(10,11,15,.55) 0%, rgba(10,11,15,.20) 42%, rgba(10,11,15,.88) 100%) as the base stage scrim.",
+      "motion": "The clip's own seamless boomerang (a centered ~12% push-in toward the lit dome + gentle warm-light breathing). Do NOT add a second ken-burns transform on top of the video. Reduced-motion / JS-off / no-video: show the poster still assets/teaser.jpg (already always in the DOM per the Hero build_contract).",
+      "scroll_span": "~1.0 viewport height (the full-bleed teaser)",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Nemanja Skoric / Wikimedia Commons (CC BY-SA 3.0) - ETH Zurich Hauptgebaude, identity verified. Motion = a camera push-in + light animation added to the still (not AI video, not a person).",
+      "programmer_tag": {"data-cin": "cin_00", "data-des": "des_hero_video"},
+      "verify_note": "Tag cin_00 data-cin + data-des='des_hero_video' for background traceability, but the hero's clickable Verify hit stays on the .teaser OVERLAY (data-des='des_hero_video', class-marker 'teaser') per hero.json.verify — NOT on the cin_00 backdrop layer. The .cin-stage wrap auto-excludes the cover from the Verify engine (isDecorative)."
+    },
+
+    "cin_01": {
+      "backs": "edt_01",
+      "order": 1,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "des_img_mit",
+        "filename": "ref_q49108__photo_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of MIT's Great Dome at night. Belongs to the hook: MIT is QS 2023's #1 - one of the four different champions the section names (Caltech / Harvard / MIT / Michigan) - and its night mood crossfades seamlessly out of the ETH night hero.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_00 (the hero handoff) on scroll-progress as edt_01 reaches the viewport middle; CSS opacity transition ~1.15s ease on .active, pre-decoded, no forced reflow.",
+      "scrim": "linear-gradient(180deg, rgba(10,11,15,.55) 0%, rgba(10,11,15,.28) 40%, rgba(10,11,15,.9) 100%) - the hook carries the now-playing BGM card, the bump chart and the guess-the-champions quiz, so keep copy fully legible.",
+      "motion": "Gentle ken-burns scale 1.0 -> 1.05 over the scene (CSS transform transition on .active); slight parallax translateY at ~0.5x scroll.",
+      "scroll_span": "~1.2 viewport heights",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Fcb981, edited by Thermos / Wikimedia Commons (CC BY-SA 3.0) - MIT Great Dome at night, identity verified.",
+      "programmer_tag": {"data-cin": "cin_01", "data-des": "des_img_mit"}
+    },
+
+    "cin_02": {
+      "backs": "edt_02",
+      "order": 2,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "des_img_stanford",
+        "filename": "ref_q41506__photo_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of Stanford's Main Quad / Oval panorama. Belongs to 'agreement is tight only at the summit' - Stanford varies by just two places across the four tables, the school every system agrees on. A wide panorama is highly cover-able.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_01 on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "linear-gradient(180deg, rgba(10,11,15,.5) 0%, rgba(10,11,15,.25) 42%, rgba(10,11,15,.9) 100%) - text-forward analytical beat (the Spearman heatmap); prose backplate carries the copy.",
+      "motion": "Slow ken-burns scale 1.0 -> 1.03 (a wide establishing shot, so keep the zoom shallow); parallax ~0.5x.",
+      "scroll_span": "~1.1 viewport heights",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: King of Hearts / Wikimedia Commons (CC BY-SA 3.0) - Stanford University Main Quad / the Oval, identity verified.",
+      "programmer_tag": {"data-cin": "cin_02", "data-des": "des_img_stanford"}
+    },
+
+    "cin_03": {
+      "backs": "edt_03",
+      "order": 3,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "des_img_peking",
+        "filename": "ref_q16952__photo_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of Peking University's west gate (with the stone lion). Belongs to the swingers beat as the cleanest reputation-vs-research swing: QS 12 vs ARWU 101, an 89-place gap. It also backs the guess-the-spread playground here.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_02 on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "linear-gradient(180deg, rgba(10,11,15,.5) 0%, rgba(10,11,15,.26) 40%, rgba(10,11,15,.9) 100%).",
+      "motion": "Gentle ken-burns scale 1.0 -> 1.05; parallax ~0.55x.",
+      "scroll_span": "~1.2 viewport heights",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: galaygobi / Wikimedia Commons (CC BY 2.0) - Peking University west gate, identity verified.",
+      "programmer_tag": {"data-cin": "cin_03", "data-des": "des_img_peking"}
+    },
+
+    "cin_04": {
+      "backs": "edt_04",
+      "order": 4,
+      "is_rest": true,
+      "background": {
+        "kind": "image",
+        "media_ref": "des_img_peking",
+        "filename": "ref_q16952__photo_web.webp",
+        "fit": "framed",
+        "treatment": "REST beat. HOLDS the same Peking photograph from cin_03, quieted: rendered `framed` (a blurred, darkened cover copy as a full-bleed fill + the image `contain` on top) under a HEAVIER scrim, so the same photographic surface simply calms down while the beat explains the mechanical CAUSE of the disagreement (the weighting dial). No new campus honestly belongs to this abstract mechanics beat, and it is NEVER a black/gradient gap - it is a dimmed real photo.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade/settle from cin_03 (same photo dimming down) on scroll-progress (CSS opacity ~1.15s ease on .active); because it is the same surface it reads as the image quieting, not a cut.",
+      "scrim": "Heavier: linear-gradient(180deg, rgba(10,11,15,.72) 0%, rgba(10,11,15,.5) 45%, rgba(10,11,15,.95) 100%) - carries the 100%-stacked weighting bar and the reputation-share quiz.",
+      "motion": "Minimal - a very slow drift only (scale 1.0 -> 1.02); a rest should feel held, not filmed. Parallax off/near-static.",
+      "scroll_span": "~1.0 viewport height",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: galaygobi / Wikimedia Commons (CC BY 2.0) - Peking University west gate, identity verified.",
+      "programmer_tag": {"data-cin": "cin_04", "data-des": "des_img_peking"}
+    },
+
+    "cin_05": {
+      "backs": "edt_05",
+      "order": 5,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "des_img_tsinghua",
+        "filename": "ref_q16955__photo_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of Tsinghua's historic gate. Belongs to 'the survey and the microscope lift different schools': Tsinghua is one of the reputation-lifted Asia-Pacific names QS raises ~90 places above ARWU (QS 14 vs ARWU 101). A fresh subject after the dimmed Peking rest.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_04 on scroll-progress (the held Peking dissolves into a fresh Tsinghua; CSS opacity ~1.15s ease on .active).",
+      "scrim": "linear-gradient(180deg, rgba(10,11,15,.52) 0%, rgba(10,11,15,.26) 42%, rgba(10,11,15,.9) 100%) - text-forward analytical beat (the diverging bar); prose backplate carries the copy.",
+      "motion": "Gentle ken-burns scale 1.0 -> 1.04; parallax ~0.5x.",
+      "scroll_span": "~1.1 viewport heights",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Yaoleilei / Wikimedia Commons (CC BY-SA 3.0) - Tsinghua University historic gate, identity verified.",
+      "programmer_tag": {"data-cin": "cin_05", "data-des": "des_img_tsinghua"}
+    },
+
+    "cin_06": {
+      "backs": "edt_06",
+      "order": 6,
+      "is_rest": false,
+      "is_centerpiece": true,
+      "hosts_interactive": "int_01",
+      "background": {
+        "kind": "image",
+        "media_ref": "sct_princeton",
+        "filename": "scout_filenassau_hall_princetonjpg__openverse_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of Princeton's Nassau Hall (ivy brownstone, green copper cupola). CENTERPIECE scene - the reweighter (int_01) sits over it. A deliberately NEUTRAL, stately campus that does not preempt any of the Oxford / MIT / Michigan trio the reader is about to manufacture, so the 'you decide' explorable reads as impartial. Background dims slightly beneath the widget panel so the sliders/leaderboard stay the focus.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_05 on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "Stronger over the widget zone: linear-gradient(180deg, rgba(10,11,15,.6) 0%, rgba(10,11,15,.5) 40%, rgba(10,11,15,.95) 100%) - the reweighter's five sliders, leaderboard and #1 card must stay fully legible; the frosted panel of the widget itself adds a second readable plate.",
+      "motion": "Very subtle - scale 1.0 -> 1.02 only; keep motion minimal so it never distracts from dragging the sliders. Parallax off during interaction.",
+      "scroll_span": "~1.4 viewport heights (the load-bearing centerpiece needs room: play-first controls render before the ana_12 reveal paragraph)",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Smallbones / Wikimedia Commons (CC0 1.0, public-domain dedication) - Nassau Hall, Princeton University, identity verified.",
+      "programmer_tag": {"data-cin": "cin_06", "data-sct": "sct_princeton"},
+      "centerpiece_note": "This scene hosts the Interaction centerpiece int_01 / des_reweighter (edt_06). The widget carries its OWN provenance id (data-des='des_reweighter') on the leaderboard/#1-card container; the cinematic background carries data-cin + data-sct='sct_princeton' independently. Keep the background motion calm and the scrim strong so the explorable is the focus."
+    },
+
+    "cin_07": {
+      "backs": "edt_07",
+      "order": 7,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "des_img_michigan",
+        "filename": "ref_q230492__photo_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of the University of Michigan's Angell Hall. THE emblem of this beat: OpenAlex works #1 in the world, yet its best commercial rank is only 17th - the raw-output giant the neutral referee crowns that no ranking company will. Backs the toggle-the-referee's-lens playground.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_06 on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "linear-gradient(180deg, rgba(10,11,15,.52) 0%, rgba(10,11,15,.28) 42%, rgba(10,11,15,.92) 100%).",
+      "motion": "Gentle ken-burns scale 1.0 -> 1.05; parallax ~0.55x.",
+      "scroll_span": "~1.2 viewport heights",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: AndrewHorne / Wikimedia Commons (CC BY 3.0) - University of Michigan, Angell Hall, identity verified.",
+      "programmer_tag": {"data-cin": "cin_07", "data-des": "des_img_michigan"}
+    },
+
+    "cin_08": {
+      "backs": "edt_08",
+      "order": 8,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "des_img_caltech",
+        "filename": "ref_q161562__photo_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of Caltech's campus entrance. Belongs to the size trap: Caltech is the small, citation-dense riser (volume #82 -> impact #13) that inverts Michigan's plunge - the counter-emblem to edt_07's Michigan.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_07 on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "linear-gradient(180deg, rgba(10,11,15,.5) 0%, rgba(10,11,15,.26) 42%, rgba(10,11,15,.9) 100%) - carries the two-point slope chart and the guess-Michigan's-impact-rank playground.",
+      "motion": "Gentle ken-burns scale 1.0 -> 1.05; parallax ~0.5x.",
+      "scroll_span": "~1.2 viewport heights",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Canon.vs.nikon / Wikimedia Commons (CC BY-SA 3.0) - California Institute of Technology campus entrance, identity verified.",
+      "programmer_tag": {"data-cin": "cin_08", "data-des": "des_img_caltech"}
+    },
+
+    "cin_09": {
+      "backs": "edt_09",
+      "order": 9,
+      "is_rest": true,
+      "background": {
+        "kind": "image",
+        "media_ref": "des_img_caltech",
+        "filename": "ref_q161562__photo_web.webp",
+        "fit": "framed",
+        "treatment": "REST beat. HOLDS the same Caltech photograph from cin_08, quieted: `framed` (blurred-darkened cover fill + `contain` image) under a HEAVIER scrim, so the surface calms for the sober 'why believe this' validation passage (the disagreement survives holding the year fixed). No new campus belongs to this methodological beat; never a black/gradient gap - a dimmed real photo.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade/settle from cin_08 (same photo dimming down) on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "Heavier: linear-gradient(180deg, rgba(10,11,15,.72) 0%, rgba(10,11,15,.5) 45%, rgba(10,11,15,.95) 100%) - the validation dot plot + honest era-mismatch prose must read clearly.",
+      "motion": "Minimal - slow drift only (scale 1.0 -> 1.02); held, not filmed. Parallax off/near-static.",
+      "scroll_span": "~1.0 viewport height",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Canon.vs.nikon / Wikimedia Commons (CC BY-SA 3.0) - California Institute of Technology campus entrance, identity verified.",
+      "programmer_tag": {"data-cin": "cin_09", "data-des": "des_img_caltech"}
+    },
+
+    "cin_10": {
+      "backs": "edt_10",
+      "order": 10,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "sct_ucl",
+        "filename": "scout_q193196__photo_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of UCL's Wilkins Building portico (students seated on the quad steps). Belongs to the reader-as-subject beat: a human-scale, everyman research campus for 'look up your own university' (any of the 218). A varied, distinct subject from the named-champion cast. Backs the personal-input lookup playground.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_09 (the held Caltech dissolves into a fresh UCL) on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "linear-gradient(180deg, rgba(10,11,15,.5) 0%, rgba(10,11,15,.26) 42%, rgba(10,11,15,.9) 100%).",
+      "motion": "Gentle ken-burns scale 1.0 -> 1.04; parallax ~0.5x.",
+      "scroll_span": "~1.1 viewport heights",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Diliff / Wikimedia Commons (CC BY-SA 3.0) - University College London, Wilkins Building, identity verified.",
+      "programmer_tag": {"data-cin": "cin_10", "data-sct": "sct_ucl"}
+    },
+
+    "cin_11": {
+      "backs": "edt_11",
+      "order": 11,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "sct_eth",
+        "filename": "scout_eth_zurich_main_building__openverse_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of the ETH Zurich Hauptgebaude night panorama - a deliberate REPRISE/BOOKEND of the opening hero (the still, not the animated clip), returning the film to where it began for the emotional close ('the only honest #1 is the one whose weighting you would defend'). Not a rest and not back-to-back (the last ETH beat was the teaser, ten scenes earlier); the reprise ties the story together.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_10 on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "linear-gradient(180deg, rgba(10,11,15,.58) 0%, rgba(10,11,15,.32) 42%, rgba(10,11,15,.94) 100%) - the close carries the oversized-serif pull quote; keep it legible over the night image.",
+      "motion": "Slow ken-burns scale 1.0 -> 1.04 toward the lit dome (echoes the hero's push-in); parallax ~0.5x.",
+      "scroll_span": "~1.2 viewport heights",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Nemanja Skoric / Wikimedia Commons (CC BY-SA 3.0) - ETH Zurich Hauptgebaude at night, identity verified.",
+      "programmer_tag": {"data-cin": "cin_11", "data-sct": "sct_eth"},
+      "notes": "Bookend reprise of the ETH still (the same surface as cin_00's animated hero, but as a still image scene, ten beats later - not a repeat/strobe, a deliberate return)."
+    },
+
+    "cin_12": {
+      "backs": "edt_12",
+      "order": 12,
+      "is_rest": false,
+      "background": {
+        "kind": "image",
+        "media_ref": "sct_washington",
+        "filename": "scout_q219563__photo_web.webp",
+        "fit": "cover",
+        "treatment": "Full-bleed cover of the University of Washington's Drumheller Fountain quad - a quiet, broad public-research campus as the low-key backdrop for the methods appendix (after the emotional close). A fresh, distinct subject (NOT a repeat of the ETH bookend, so the close and the appendix stay visually separated) but treated calmly under a heavier scrim.",
+        "purpose": "IMMERSE"
+      },
+      "transition_in": "Crossfade from cin_11 on scroll-progress (CSS opacity ~1.15s ease on .active).",
+      "scrim": "Heavier (appendix): linear-gradient(180deg, rgba(10,11,15,.72) 0%, rgba(10,11,15,.52) 45%, rgba(10,11,15,.96) 100%) - the About-the-data prose + the 218-core stat callout read clearly.",
+      "motion": "Minimal - slow drift scale 1.0 -> 1.02 only (a quiet appendix); parallax off/near-static.",
+      "scroll_span": "~1.0 viewport height",
+      "purpose": "IMMERSE",
+      "source_credit": "Photo: Martin Kraft / Wikimedia Commons (CC BY-SA 3.0) - University of Washington, Drumheller Fountain, identity verified.",
+      "programmer_tag": {"data-cin": "cin_12", "data-sct": "sct_washington"}
+    }
+  },
+
+  "global": {
+    "engine": "A single pinned full-bleed background layer (.cin-stage, position:fixed inset:0 z-index:0) behind the text column (main position:relative z-index:1). One .cin-bg layer per scene, stacked; the active scene has opacity 1, the rest 0, crossfaded by a CSS `transition:opacity ~1.15s ease` on the .active class (NOT a JS opacity tween, NOT a keyframe restart). An IntersectionObserver on the text beats (rootMargin '-45% 0px -45% 0px', threshold 0) toggles .active on the .cin-bg whose data-cin matches the beat whose middle crosses the viewport middle. cin_00 is .active by default from the top. Ken-burns is a CSS transform transition on .active (scale 1.0 -> ~1.03/1.05); NEVER force a synchronous reflow (no `void el.offsetWidth`) to restart animation. Copy the exact CSS/JS from references/example_cinematic_scroll.html; apply the blog's editorial_dark theme + these verified images.",
+    "hero_handoff": "cin_00 (the ETH hero video) is the FIRST .cin-bg layer inside the same .cin-stage, lifted above the stage darkening so it keeps full brightness, and .active by default. Its interactive furniture (headline, kicker, stat strip, scrim, vignette) lives in a SEPARATE transparent overlay in <main> that scrolls OVER the fixed cin_00 backdrop and OPACITY-DISSOLVES (opacity only, never scale) as it scrolls out. The same IntersectionObserver crossfade carries cin_00 -> cin_01 when edt_01 centres, so the hero-to-content transition is seamless. The hero's Verify hit stays on the .teaser overlay (data-des='des_hero_video'), not on cin_00.",
+    "reduced_motion": "Under @media (prefers-reduced-motion: reduce): disable parallax, ken-burns, crossfade and video autoplay. Render each scene's background as a STATIC, scrimmed per-section still (the framed rests show their dimmed still; cin_00 shows the poster assets/teaser.jpg). The whole story reads and makes its point with motion fully off. This is NOT an off switch - the imagery and the stage stay; only motion freezes.",
+    "no_toggle_guardrail": "The cinematic stage is UNCONDITIONAL. Do NOT emit any on/off toggle, `.cinematic-off` / `html.cinematic` class gate, or sessionStorage state. Cinematic CSS is always on; the only adaptation is prefers-reduced-motion (which freezes motion, not the stage).",
+    "performance": "Lazy-load every scene background (loading='lazy' or IO-gated src swap); decode only the current + next pair; put decoding='async' on every background <img> and call img.decode() on load to pre-decode (kills crossfade stutter). Mobile: serve a smaller srcset per background and default the hero to its poster still (assets/teaser.jpg); never decode 13 full-res images at once. Animate transform/opacity only (compositor); rAF-throttle the scroll handler; never animate layout properties. Virality happens on mobile - keep total weight low (web .webp backgrounds; hero webm 0.44 MB + mp4 1.23 MB).",
+    "readability": "Every text-over-background scene gets a per-scene background scrim (above). ADDITIONALLY the body prose in <main> that scrolls over the always-on dark stage needs its own frosted dark backplate: main>section:not(.teaser):not(.refs){ background:rgba(13,11,8,~.6); backdrop-filter:blur(~3px) } at the PROSE width - wide charts/maps/card-decks break OUT as their own frosted figure, but wide data-grid tables stay within the backplate measure. Text-shadow alone is not enough on the dark stage. Tune alpha up on the two rests and the appendix (heavier scrims).",
+    "verifiability": "Every image/video background's media_ref resolves to a registered Scout sct_ or Designer des_ item (verified license + identity) - never a bare Detective ref_ or the cinematic_imagery_manifest scratchpad. The Programmer tags each background data-cin + data-sct (sct_ backgrounds: cin_06/cin_10/cin_11/cin_12) or data-des (des_ backgrounds: cin_00/cin_01/cin_02/cin_03/cin_04/cin_05/cin_07/cin_08/cin_09) so validate.py Section 6 checks its license + identity. Decorative background imagery gets aria-hidden / empty alt, but the visible per-scene source credit stays in the DOM. The page is fully usable with JS off (static per-section stills, never a blank column).",
+    "centerpiece_scene": "cin_06 - hosts the Interaction centerpiece int_01 / des_reweighter (edt_06). The widget keeps its own provenance id (data-des='des_reweighter'); the background carries data-cin + data-sct='sct_princeton' independently. Calm background motion + strong scrim so the explorable is the focus.",
+    "media_ref_resolution_check": {
+      "cin_00": "des_hero_video (designer.json items) -> RESOLVES",
+      "cin_01": "des_img_mit (designer.json items) -> RESOLVES",
+      "cin_02": "des_img_stanford (designer.json items) -> RESOLVES",
+      "cin_03": "des_img_peking (designer.json items) -> RESOLVES",
+      "cin_04": "des_img_peking (designer.json items) -> RESOLVES",
+      "cin_05": "des_img_tsinghua (designer.json items) -> RESOLVES",
+      "cin_06": "sct_princeton (scout.json items) -> RESOLVES",
+      "cin_07": "des_img_michigan (designer.json items) -> RESOLVES",
+      "cin_08": "des_img_caltech (designer.json items) -> RESOLVES",
+      "cin_09": "des_img_caltech (designer.json items) -> RESOLVES",
+      "cin_10": "sct_ucl (scout.json items) -> RESOLVES",
+      "cin_11": "sct_eth (scout.json items) -> RESOLVES",
+      "cin_12": "sct_washington (scout.json items) -> RESOLVES",
+      "gradient_or_color_scenes": "NONE (photographic mode) - zero kind:gradient/color rests exist"
+    }
+  }
+}

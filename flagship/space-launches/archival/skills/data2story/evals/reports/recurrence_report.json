@@ -1,0 +1,225 @@
+{
+  "generated": null,
+  "project_root": "D:\\AI\\journalist agent review\\phase2\\project",
+  "runs_scanned": 35,
+  "min_runs": 2,
+  "candidates": [
+    {
+      "token": "validate:media_manifest_unresolved",
+      "recurrence": 4,
+      "run_ids": [
+        "2020-07-29_meteorite-landings/blog_opus48_0622_0437",
+        "pudding_cetaceans/blog_opus48_0622_1454",
+        "worldcup_2026/blog_cinematic_opus48_0622",
+        "worldcup_2026/blog_verify_opus48_0622"
+      ],
+      "severity": "warn",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-48",
+      "samples": [
+        "displayed des_ image carries neither a media_ref into a checked sct_ item nor an inline {spdx,permits_republication,...} block — provenance not verifiable from the role JSONs"
+      ]
+    },
+    {
+      "token": "validate:html_dangling_data_des",
+      "recurrence": 3,
+      "run_ids": [
+        "worldcup_2026/blog_cinematic_opus48_0622",
+        "worldcup_2026/blog_showcase_opus48_0621",
+        "worldcup_2026/blog_verify_opus48_0622"
+      ],
+      "severity": "error",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-12",
+      "samples": [
+        "data-des=\"des_bg_trophy_gold\" not found in des JSON",
+        "data-des=\"des_bg_stadium_day_aerial\" not found in des JSON",
+        "data-des=\"des_bg_ball_pitch\" not found in des JSON"
+      ]
+    },
+    {
+      "token": "validate:html_dangling_data_edt",
+      "recurrence": 3,
+      "run_ids": [
+        "worldcup_2026/blog_cinematic_opus48_0622",
+        "worldcup_2026/blog_showcase_opus48_0621",
+        "worldcup_2026/blog_verify_opus48_0622"
+      ],
+      "severity": "error",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-12",
+      "samples": [
+        "data-edt=\"edt_predictor\" not found in edt JSON",
+        "data-edt=\"ratings\" not found in edt JSON",
+        "data-edt=\"edt_oddsmkt\" not found in edt JSON"
+      ]
+    },
+    {
+      "token": "validate:html_dangling_data_sct",
+      "recurrence": 3,
+      "run_ids": [
+        "worldcup_2026/blog_cinematic_opus48_0622",
+        "worldcup_2026/blog_showcase_opus48_0621",
+        "worldcup_2026/blog_verify_opus48_0622"
+      ],
+      "severity": "error",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-12",
+      "samples": [
+        "data-sct=\"sct_bg_wc_stadium_atmosphere\" not found in sct JSON",
+        "data-sct=\"sct_bg_stadium_night_crowd\" not found in sct JSON",
+        "data-sct=\"sct_bg_wc_match_pitch\" not found in sct JSON"
+      ]
+    },
+    {
+      "token": "validate:image_no_maxwidth_cap",
+      "recurrence": 3,
+      "run_ids": [
+        "pudding_cetaceans/blog_opus48_0623_0122",
+        "worldcup_2026/blog_cinematic_opus48_0622",
+        "worldcup_2026/blog_verify_opus48_0622"
+      ],
+      "severity": "warn",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-11",
+      "samples": [
+        "in-body <figure> image has no max-width cap (add max-width:100%;height:auto or a column cap so a large source image cannot overflow the story column)"
+      ]
+    },
+    {
+      "token": "render:oversizedAssets",
+      "recurrence": 2,
+      "run_ids": [
+        "worldcup_2026/blog_opus48_0621_2132",
+        "worldcup_2026/blog_viral_v1"
+      ],
+      "severity": "error",
+      "source": "render",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-13",
+      "samples": [
+        "oversizedAssets: 3 item(s); e.g. {'file': 'assets/scout_bgm.flac', 'kind': 'audio', 'bytes': 13998305, 'mb': 13.3, {'file': 'assets/scout_q615__photo.jpg', 'kind': 'image', 'bytes': 905868, 'mb':",
+        "oversizedAssets: 3 item(s); e.g. {'file': 'assets/scout_bgm.flac', 'kind': 'audio', 'bytes': 13998305, 'mb': 13.3, {'file': 'assets/scout_messi.jpg', 'kind': 'image', 'bytes': 905868, 'mb': 0.86,"
+      ]
+    },
+    {
+      "token": "render:totalPayloadOverBudget",
+      "recurrence": 2,
+      "run_ids": [
+        "worldcup_2026/blog_opus48_0621_2132",
+        "worldcup_2026/blog_viral_v1"
+      ],
+      "severity": "error",
+      "source": "render",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-13",
+      "samples": [
+        "totalPayloadOverBudget=True"
+      ]
+    },
+    {
+      "token": "validate:cin_media_ref_dangling",
+      "recurrence": 2,
+      "run_ids": [
+        "worldcup_2026/blog_cinematic_opus48_0622",
+        "worldcup_2026/blog_verify_opus48_0622"
+      ],
+      "severity": "error",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-49",
+      "samples": [
+        "background.media_ref -> des_bg_trophy_gold not in scout (sct_) or designer (des_)",
+        "background.media_ref -> des_bg_stadium_day_aerial not in scout (sct_) or designer (des_)",
+        "background.media_ref -> sct_bg_wc_stadium_atmosphere not in scout (sct_) or designer (des_)"
+      ]
+    },
+    {
+      "token": "validate:number_not_from_model",
+      "recurrence": 2,
+      "run_ids": [
+        "pudding_cetaceans/blog_opus48_0623_0122",
+        "worldcup_2026/blog_opus48_0623_1449"
+      ],
+      "severity": "warn",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-42",
+      "samples": [
+        "none of the backing numbers for displayed element ana_02 (e.g. 76.0%) appear verbatim in the visible page — confirm the shown figure is rendered from the model, not a stale hardcoded literal",
+        "none of the backing numbers for displayed element ana_07 (e.g. 0.92475, 3.96, 365.25) appear verbatim in the visible page — confirm the shown figure is rendered from the model, not a stale hardcoded literal",
+        "none of the backing numbers for displayed element des_chart_species (e.g. 76.0%) appear verbatim in the visible page — confirm the shown figure is rendered from the model, not a stale hardcoded literal"
+      ]
+    },
+    {
+      "token": "validate:panel_shell_missing",
+      "recurrence": 2,
+      "run_ids": [
+        "2020-07-29_meteorite-landings/blog_opus48_0622_0437",
+        "worldcup_2026/blog_cinematic_opus48_0622"
+      ],
+      "severity": "error",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-29",
+      "samples": [
+        "verify panel shell not pasted — missing: <script type=\"application/json\" id=\"verifyMap\"> island; <script type=\"application/json\" id=\"runCells\"> island; #verifyToggle; var COLAB_BASE; var NB_PATH"
+      ]
+    },
+    {
+      "token": "validate:publish_gate_missing_note",
+      "recurrence": 2,
+      "run_ids": [
+        "worldcup_2026/blog_cinematic_opus48_0622",
+        "worldcup_2026/blog_verify_opus48_0622"
+      ],
+      "severity": "warn",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-50",
+      "samples": [
+        "copyrighted asset (permits_republication:false / demo-only spdx) carries no publish_note — record the license-or-swap resolution plan"
+      ]
+    },
+    {
+      "token": "validate:verify_dir_missing",
+      "recurrence": 2,
+      "run_ids": [
+        "2020-07-29_meteorite-landings/blog_opus48_0622_0437",
+        "worldcup_2026/blog_cinematic_opus48_0622"
+      ],
+      "severity": "error",
+      "source": "validate",
+      "classification": "already_gated",
+      "mapped_pit": "PIT-29",
+      "samples": [
+        "verify/ directory not found (the Programmer must author the verify layer)"
+      ]
+    }
+  ],
+  "advisory": [
+    {
+      "token": "render:unreferencedAssets",
+      "recurrence": 6,
+      "run_ids": [
+        "2020-07-29_meteorite-landings/blog_opus48_0622_0437",
+        "industrial_revolutions/blog_opus48_0623_1708",
+        "pudding_cetaceans/blog_opus48_0623_0122",
+        "pudding_pockets/blog_opus48_0622_1719",
+        "worldcup_2026/blog_opus48_0622_2114",
+        "worldcup_2026/blog_opus48_0623_1449"
+      ],
+      "samples": [
+        "unreferencedAssets: 1 item(s); e.g. {'file': 'assets/scout_leonids_1833_web.jpg', 'kind': 'image', 'bytes': 581864, ",
+        "unreferencedAssets: 1 item(s); e.g. {'file': 'assets/scout_bgm.ogg', 'kind': 'audio', 'bytes': 8022589, 'mb': 7.65}",
+        "unreferencedAssets: 8 item(s); e.g. {'file': 'assets/scout_baby_dolphin_at_6_mnths_old__openverse.jpg', 'kind': 'ima, {'file': 'assets/scout_bgm.flac', 'kind': 'audio', 'bytes': 10185435, 'mb': 9.71"
+      ],
+      "note": "cleanup hint, not a defect (excluded from the failure set)"
+    }
+  ]
+}

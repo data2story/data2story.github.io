@@ -1,0 +1,74 @@
+{
+  "cell_alignment": {
+    "computes": "Cross-system name join sizes — 218-institution 5-way core",
+    "backs": [
+      "ana_03",
+      "des_scale"
+    ],
+    "needs_network": false
+  },
+  "cell_client_models": {
+    "computes": "INTERACTIVE — re-weight the rankings and watch #1 flip",
+    "backs": [
+      "ana_12",
+      "ana_13",
+      "des_reweighter",
+      "int_01",
+      "int_07"
+    ],
+    "needs_network": false
+  },
+  "cell_disagreement": {
+    "computes": "The 4 systems correlate only 0.60-0.85 (Spearman)",
+    "backs": [
+      "ana_04",
+      "ana_05",
+      "ana_05b",
+      "ana_06",
+      "des_champions",
+      "des_corr_matrix",
+      "des_referee_scatter",
+      "des_swingers_dumbbell",
+      "int_05"
+    ],
+    "needs_network": false
+  },
+  "cell_profile": {
+    "computes": "Dataset profile — 5 comparison tables + registry + crosswalk",
+    "backs": [
+      "ana_01",
+      "ana_02",
+      "des_weights",
+      "int_06"
+    ],
+    "needs_network": false
+  },
+  "cell_referee": {
+    "computes": "Which table tracks measured output — ARWU/CWUR closest, QS loosest on impact",
+    "backs": [
+      "ana_07",
+      "ana_08",
+      "des_referee_track"
+    ],
+    "needs_network": false
+  },
+  "cell_reputation": {
+    "computes": "Reputation vs research — the survey lifts different schools",
+    "backs": [
+      "ana_09",
+      "ana_10",
+      "des_rep_research",
+      "des_size_flip",
+      "int_04"
+    ],
+    "needs_network": false
+  },
+  "cell_validation": {
+    "computes": "VALIDATION — the disagreement survives holding the year fixed at 2015",
+    "backs": [
+      "ana_11",
+      "des_validation"
+    ],
+    "needs_network": false
+  }
+}

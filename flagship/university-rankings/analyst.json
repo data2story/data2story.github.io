@@ -1,0 +1,511 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0",
+    "domain": "Global university rankings & research bibliometrics",
+    "generated_at": "2026-07-02",
+    "run": "PREMIUM",
+    "note": "All findings computed by code/*.py, runnable from DATA_DIR. Shared join key = normalize_name() in code/common.py. Canonical universe = the 218-institution 5-way common core (THE2015 n ARWU2015 n CWUR2015 n QS2023 n OpenAlex), saved to code/core_master.csv by 02_alignment.py."
+  },
+  "dataset": {
+    "files": [
+      "the/timesData.csv",
+      "arwu/shanghaiData.csv",
+      "qs/QS_2023_Dataset.csv",
+      "cwur/cwurData.csv",
+      "openalex/openalex_institutions_research_output.csv",
+      "leiden/leiden_open_2024_universities.xlsx",
+      "_join/school_and_country_table.csv"
+    ],
+    "rows": 11722,
+    "columns": 27,
+    "what_one_row_represents": "One university's placement in one ranking system. THE (2603 rows, 2011-2016), ARWU (4897, 2005-2015) and CWUR (2200, 2012-2015) carry a `year`; QS is the single 2023 edition (1422 rows); OpenAlex is one row per institution (600). Leiden (1506) is a name/ROR/country registry only; _join (818) is a school->country crosswalk. `rows`=11722 is the sum of the five comparison tables; `columns`=27 is the widest table (QS).",
+    "time_range": "THE 2011-2016, ARWU 2005-2015, CWUR 2012-2015 (cleanest cross-system year = 2015); QS 2023 and OpenAlex (fetched 2026-06-24) attach as recent-state overlays",
+    "geographic_scope": "Global"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Dataset profile — 5 comparison tables + registry + crosswalk",
+      "content": "Seven files. Four commercial ranking systems (THE 2603 rows/2011-2016, ARWU 4897/2005-2015, CWUR 2200/2012-2015, QS 1422/2023) plus a neutral open research-output anchor (OpenAlex, 600 institutions, fetched 2026-06-24), a Leiden CC0 registry (1506 rows, name/ROR/country only) and an 818-row school->country crosswalk. One row = one university's placement in one system. The only fully overlapping cross-SYSTEM edition year is 2015: THE has 401 rows for 2015, ARWU 500, CWUR 1000. QS (2023) and OpenAlex (current) are recent-state overlays, which is the dataset's central era-mismatch limitation (see ana_11).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [14, 40],
+        "output": "THE (the/timesData.csv): rows=2603, cols=14 | years 2011-2016\nARWU (arwu/shanghaiData.csv): rows=4897, cols=11 | years 2005-2015\nQS 2023 (qs/QS_2023_Dataset.csv): rows=1422, cols=27\nCWUR (cwur/cwurData.csv): rows=2200, cols=14 | years 2012-2015\nOpenAlex ...: rows=600, cols=9\nCleanest cross-SYSTEM year = 2015 (THE 2015 rows=401, ARWU 2015 rows=500, CWUR 2015 rows=1000)."
+      },
+      "data_table": {
+        "description": "Each source file: rows, columns, coverage",
+        "columns": ["source", "file", "rows", "columns", "coverage"],
+        "rows": [
+          ["THE", "the/timesData.csv", 2603, 14, "2011-2016"],
+          ["ARWU", "arwu/shanghaiData.csv", 4897, 11, "2005-2015"],
+          ["QS", "qs/QS_2023_Dataset.csv", 1422, 27, "2023"],
+          ["CWUR", "cwur/cwurData.csv", 2200, 14, "2012-2015"],
+          ["OpenAlex", "openalex/..._research_output.csv", 600, 9, "fetched 2026-06-24"],
+          ["Leiden", "leiden/...universities.xlsx", 1506, 3, "registry only"],
+          ["join crosswalk", "_join/school_and_country_table.csv", 818, 2, "n/a"]
+        ]
+      },
+      "based_on": ["det_01", "det_06", "det_14"]
+    },
+    "ana_01b": {
+      "label": "Data-quality quirks in the join-relevant columns",
+      "content": "Four quirks the downstream analysis handles explicitly. (1) THE 2015 stores 200 of its 401 ranks as BANDS ('201-225', '351-400'...); ARWU and QS band their tails too. code/common.py collapses a band to its lower bound. (2) QS 'score scaled' is numeric for only ~500 of 1422 schools (922 are blank/banded) and 308 QS ranks are ties ('6='). (3) OpenAlex two_yr_mean_citedness has exactly one anomaly: University of Washington at 46.4 versus a peer median of 3.39 — a data artefact, so use cited_by/works for per-paper impact instead. (4) CWUR indicator columns are RANKS (1=best), the OPPOSITE direction to the 0-100 scores in THE/ARWU/QS, and CWUR broad_impact is null for 2012-2013.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [42, 59],
+        "output": "THE 2015 world_rank banded (non-integer) rows: 200 e.g. ['201-225', '226-250', '251-275', '276-300']\nQS 'score scaled' non-numeric rows: 922 | QS rank display tie rows ('='): 308\nOpenAlex two_yr_mean_citedness anomalies (>15 vs peer median 3.39): [{'institution': 'University of Washington', 'two_yr_mean_citedness': 46.40516221727173}]\nCWUR indicator cols are RANKS (1=best) ... 2012-2013 broad_impact nulls: 200"
+      },
+      "data_table": {
+        "description": "Data-quality quirks per source",
+        "columns": ["source", "quirk", "count"],
+        "rows": [
+          ["THE 2015", "ranks stored as bands (non-integer)", 200],
+          ["QS", "score scaled blank/banded", 922],
+          ["QS", "tied ranks ('=')", 308],
+          ["OpenAlex", "two_yr_mean_citedness anomaly (Washington=46.4)", 1],
+          ["CWUR 2012-2013", "broad_impact null", 200]
+        ]
+      },
+      "based_on": ["det_14", "det_06"]
+    },
+    "ana_02": {
+      "label": "Methodology weights — the perception-to-output axis",
+      "content": "The mechanical reason the tables disagree, encoded from the published methodologies (detective det_02..det_07). Reputation-survey share of the total score: QS 50% (Academic Reputation 40% + Employer 10%), THE 33% (15% teaching survey + 18% research survey) but with a further 30% on citations, ARWU 0%, CWUR 0%. OpenAlex is 0% reputation by construction (raw output only). Along a perception->measured-output axis the systems fan out QS (most perception) -> THE -> ARWU/CWUR (most output), with OpenAlex the pure-output anchor beyond them. This is a lookup, not a CSV computation, but it is the causal spine that ana_04/ana_07 confirm empirically.",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/01_profile.py",
+        "lines": [61, 76],
+        "output": "('QS 2023 (legacy)', 50, 20, 0, 20, 10, 0)\n('THE (2011-2023)', 33, 30, 0, 30, 7.5, 2.5)\n('ARWU', 0, 20, 70, 0, 0, 0)\n('CWUR (current)', 0, 10, 75, 0, 0, 0)\n('OpenAlex', 0, 100, 0, 0, 0, 0)\nReputation-survey share ... QS 50% > THE 33% > ARWU 0% = CWUR 0%; OpenAlex 0%."
+      },
+      "data_table": {
+        "description": "Published weighting of each system (% of total score), reputation-survey share highlighted",
+        "columns": ["system", "reputation_survey_pct", "citations_impact_pct", "research_output_prizes_pct", "teaching_faculty_pct", "international_pct", "industry_pct"],
+        "rows": [
+          ["QS 2023 (legacy)", 50, 20, 0, 20, 10, 0],
+          ["THE (2011-2023)", 33, 30, 0, 30, 7.5, 2.5],
+          ["ARWU", 0, 20, 70, 0, 0, 0],
+          ["CWUR (current)", 0, 10, 75, 0, 0, 0],
+          ["OpenAlex", 0, 100, 0, 0, 0, 0]
+        ]
+      },
+      "based_on": ["det_02", "det_03", "det_04", "det_05", "det_06", "det_07"]
+    },
+    "ana_03": {
+      "label": "Cross-system name join sizes — 218-institution 5-way core",
+      "content": "A normalized-name join (code/common.py: lowercase, strip parentheticals/'university'/'the'/'of', de-accent, plus a small alias map for Ann-Arbor/ETH/EPFL variants) reproduces the dataset's advertised common core. Pairwise overlaps: THE n ARWU 297, THE n CWUR 354, THE n QS 306, THE n OpenAlex 280, ARWU n CWUR 439, CWUR n QS 587 (largest), QS n OpenAlex 453. The 2015 trio (THE n ARWU n CWUR) is 285; adding QS gives a 238-school 4-commercial core; adding OpenAlex gives the 218-institution FIVE-WAY common core. That 218 is slightly larger than the README's stated ~189 because this normalizer recovers more true variants (Michigan-Ann Arbor, ETH Zurich, University College London); the exact count is normalizer-dependent, so treat ~200 as the scale, not a precise constant.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/02_alignment.py",
+        "lines": [18, 41],
+        "output": "THE n ARWU = 297\nTHE n CWUR = 354\nTHE n QS = 306\nTHE n OpenAlex = 280\nARWU n CWUR = 439\nCWUR n QS = 587\nQS n OpenAlex = 453\n2015 trio (THE n ARWU n CWUR): 285\n4-commercial core (+QS): 238\n5-WAY COMMON CORE (+OpenAlex): 218"
+      },
+      "data_table": {
+        "description": "Join sizes: pairwise overlaps + multi-way cores",
+        "columns": ["join", "n_universities"],
+        "rows": [
+          ["THE n ARWU", 297],
+          ["THE n CWUR", 354],
+          ["THE n QS", 306],
+          ["THE n OpenAlex", 280],
+          ["ARWU n CWUR", 439],
+          ["ARWU n QS", 345],
+          ["ARWU n OpenAlex", 340],
+          ["CWUR n QS", 587],
+          ["CWUR n OpenAlex", 426],
+          ["QS n OpenAlex", 453],
+          ["2015 trio (THE n ARWU n CWUR)", 285],
+          ["4-commercial core (+QS)", 238],
+          ["5-way common core (+OpenAlex)", 218]
+        ]
+      },
+      "based_on": ["det_01", "det_14"]
+    },
+    "ana_04": {
+      "label": "The 4 systems correlate only 0.60-0.85 (Spearman)",
+      "content": "On the 218-school common core, the six pairwise rank correlations between the commercial systems span Spearman 0.599 to 0.853 (Kendall 0.426 to 0.706) — 'correlated but far from agreeing', exactly the 0.7-0.8 band the literature reports (det_08). The two most alike are ARWU and CWUR (Spearman 0.853) — unsurprising, since both are survey-free research tables. The two LEAST alike are CWUR and QS (0.599), and QS's other two pairings are also the weakest (QS-ARWU 0.647, QS-THE 0.735): QS, the reputation-survey pole, is the systematic outlier. NB QS's low correlations partly reflect its 2023 edition vs the others' 2015 (see ana_11).",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_disagreement.py",
+        "lines": [20, 34],
+        "output": "THE vs ARWU  n=218  Spearman=0.793  Kendall=0.638\nTHE vs CWUR  n=218  Spearman=0.759  Kendall=0.581\nTHE vs QS    n=218  Spearman=0.735  Kendall=0.551\nARWU vs CWUR  n=218  Spearman=0.853  Kendall=0.706\nARWU vs QS    n=218  Spearman=0.647  Kendall=0.484\nCWUR vs QS    n=218  Spearman=0.599  Kendall=0.426\nMOST alike: ARWU-CWUR 0.853 | LEAST alike: CWUR-QS 0.599"
+      },
+      "data_table": {
+        "description": "Pairwise rank correlations among the 4 commercial systems, common core n=218",
+        "columns": ["system_a", "system_b", "spearman", "kendall"],
+        "rows": [
+          ["ARWU", "CWUR", 0.853, 0.706],
+          ["THE", "ARWU", 0.793, 0.638],
+          ["THE", "CWUR", 0.759, 0.581],
+          ["THE", "QS", 0.735, 0.551],
+          ["ARWU", "QS", 0.647, 0.484],
+          ["CWUR", "QS", 0.599, 0.426]
+        ]
+      },
+      "based_on": ["det_07", "det_08"],
+      "notable_instance": {
+        "name": "CWUR vs QS",
+        "value": "Spearman 0.599 (lowest of six pairs)",
+        "why": "The survey-free research table and the reputation-survey table agree least — the clearest single number that 'best' is a weighting choice"
+      }
+    },
+    "ana_05": {
+      "label": "Rank spread across the 4 systems — median 122 places",
+      "content": "For each of the 218 core universities, the gap between its best and worst rank across the four systems (max-min) has median 122.5 and mean 157.8 places (quartiles 63.8 / 122.5 / 210.0; max 850). The systems AGREE tightly only at the very top: Stanford varies by just 2 places (THE 4 / ARWU 2 / CWUR 2 / QS 3), Cambridge and Chicago by 3, Harvard and Penn by 4, MIT by 5. The biggest raw swingers are mid-tier schools whose spread is partly inflated by tail bands — George Mason (THE 351 / ARWU 151 / CWUR 414 / QS band 1001 = 850 spread), University of Technology Sydney (678), Syracuse (574). See ana_05b for the recognizable, band-free swingers.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_disagreement.py",
+        "lines": [36, 64],
+        "output": "Spread distribution over the 218-school core:\n{'min': 2.0, '25%': 63.8, '50%': 122.5, '75%': 210.0, 'max': 850.0} | mean=157.8\nBIGGEST swingers: George Mason 351/151/414/1001 spread 850; Univ Tech Sydney 226/301/815/137 spread 678\nSMALLEST spread: Stanford 4/2/2/3 spread 2; Chicago 11/9/8/10 spread 3; Cambridge 5/5/4/2 spread 3"
+      },
+      "data_table": {
+        "description": "Spread distribution quantiles, and the biggest/smallest-spread universities (THE/ARWU/CWUR/QS ranks + OpenAlex works rank)",
+        "columns": ["university", "country", "the_rank", "arwu_rank", "cwur_rank", "qs_rank", "oa_works_rank", "spread", "group"],
+        "rows": [
+          ["George Mason University", "USA", 351, 151, 414, 1001, 429, 850, "biggest (band-inflated)"],
+          ["University of Technology Sydney", "Australia", 226, 301, 815, 137, 340, 678, "biggest (band-inflated)"],
+          ["Bielefeld University", "Germany", 351, 401, 464, 1001, 562, 650, "biggest (band-inflated)"],
+          ["Syracuse University", "USA", 177, 401, 463, 751, 475, 574, "biggest (band-inflated)"],
+          ["University of Houston", "USA", 301, 201, 184, 751, 318, 567, "biggest (band-inflated)"],
+          ["Stanford University", "USA", 4, 2, 2, 3, 6, 2, "smallest (anchor)"],
+          ["University of Chicago", "USA", 11, 9, 8, 10, 45, 3, "smallest (anchor)"],
+          ["University of Cambridge", "UK", 5, 5, 4, 2, 13, 3, "smallest (anchor)"],
+          ["Harvard University", "USA", 2, 1, 1, 5, 2, 4, "smallest (anchor)"],
+          ["University of Pennsylvania", "USA", 16, 17, 14, 13, 21, 4, "smallest (anchor)"],
+          ["Massachusetts Institute of Technology", "USA", 6, 3, 3, 1, 35, 5, "smallest (anchor)"]
+        ],
+        "quantiles": {"min": 2.0, "q25": 63.8, "median": 122.5, "q75": 210.0, "max": 850.0, "mean": 157.8}
+      },
+      "based_on": ["det_08", "det_13"]
+    },
+    "ana_05b": {
+      "label": "The recognizable swingers — the story's cast",
+      "content": "Among the 92 schools ranked <=200 by all four systems (so no tail-band inflation), the biggest movers are famous names: Fudan (THE 193 / QS 34, spread 161), Australian National University (149), University of Hong Kong (149), Vanderbilt (146). The named load-bearing characters make the thesis concrete: Peking swings THE 48 / ARWU 101 / CWUR 56 / QS 12 (spread 89) and Tsinghua 49 / 101 / 78 / 14 (spread 87) — QS's survey ranks them ~90 places above ARWU's prizes metric. Berkeley is ARWU 4 but QS 27 (research strength, weaker reputation placement). Caltech is THE 1 / QS 6 but only OpenAlex-works #82 (tiny, citation-dense). Michigan is a commercial 17-25 yet OpenAlex-works #1. Princeton is commercial 6-16 yet OpenAlex-works #104 (small output). These per-system rank vectors are the slope/bump-chart data.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_disagreement.py",
+        "lines": [52, 64],
+        "output": "Schools ranked <=200 by ALL FOUR systems: 92\nBiggest CLEAN swingers: Fudan 193/151/195/34 spread 161; ANU 45/77/179/30 spread 149; HKU 43/151/170/21 spread 149\nNamed characters (per-system + OA works rank):\nMichigan 17/22/19/25 OA1 spread 8; Berkeley 8/4/7/27 OA12 spread 23; Peking 48/101/56/12 OA17 spread 89; Tsinghua 49/101/78/14 OA23 spread 87; Caltech 1/7/12/6 OA82 spread 11; Princeton 7/6/9/16 OA104 spread 10"
+      },
+      "data_table": {
+        "description": "Named load-bearing universities: rank in each of the 4 systems + OpenAlex works rank + spread (slope/bump-chart ready)",
+        "columns": ["university", "country", "the_rank", "arwu_rank", "cwur_rank", "qs_rank", "oa_works_rank", "spread"],
+        "rows": [
+          ["University of Michigan", "USA", 17, 22, 19, 25, 1, 8],
+          ["Harvard University", "USA", 2, 1, 1, 5, 2, 4],
+          ["University of Oxford", "UK", 3, 10, 5, 4, 3, 7],
+          ["University of Tokyo", "Japan", 23, 21, 13, 23, 8, 10],
+          ["University of California, Berkeley", "USA", 8, 4, 7, 27, 12, 23],
+          ["Yale University", "USA", 9, 11, 11, 18, 15, 9],
+          ["Peking University", "China", 48, 101, 56, 12, 17, 89],
+          ["Tsinghua University", "China", 49, 101, 78, 14, 23, 87],
+          ["Massachusetts Institute of Technology", "USA", 6, 3, 3, 1, 35, 5],
+          ["California Institute of Technology", "USA", 1, 7, 12, 6, 82, 11],
+          ["Princeton University", "USA", 7, 6, 9, 16, 104, 10]
+        ]
+      },
+      "based_on": ["det_13", "det_08"],
+      "notable_instance": {
+        "name": "Peking University",
+        "value": "QS 12 vs ARWU 101 (89-place swing)",
+        "why": "A reputation-survey darling that QS ranks 89 places above ARWU's research-and-prizes metric — the cleanest famous-name illustration that the weighting, not the university, moves the rank"
+      }
+    },
+    "ana_06": {
+      "label": "The four tables crown four different champions",
+      "content": "The disagreement reaches the very #1 spot. THE 2015 crowns Caltech, ARWU 2015 and CWUR 2015 crown Harvard, QS 2023 crowns MIT — and the neutral OpenAlex output order crowns yet another school, University of Michigan. Only five universities (Harvard, Stanford, MIT, Cambridge, Oxford) appear in ALL FOUR commercial top-10s, out of 15 distinct names that appear in any top-10; the other ten seats are contested (Caltech, Princeton, Berkeley, Imperial, Yale, Columbia, Chicago, Cornell, UCL, ETH Zurich). The side-by-side top-10 is the opening 'they can't even agree who's best' table.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/03_disagreement.py",
+        "lines": [66, 84],
+        "output": "#1 of each table: {'THE 2015': 'California Institute of Technology', 'ARWU 2015': 'Harvard University', 'CWUR 2015': 'Harvard University', 'QS 2023': 'Massachusetts Institute of Technology (MIT)', 'OpenAlex (works)': 'University of Michigan'}\nUniversities in ALL FOUR commercial top-10s: 5 of 15 distinct names"
+      },
+      "data_table": {
+        "description": "Each system's top 10, side by side (rank 1-10)",
+        "columns": ["rank", "THE_2015", "ARWU_2015", "CWUR_2015", "QS_2023", "OpenAlex_works"],
+        "rows": [
+          [1, "Caltech", "Harvard", "Harvard", "MIT", "Michigan"],
+          [2, "Harvard", "Stanford", "Stanford", "Cambridge", "Harvard"],
+          [3, "Oxford", "MIT", "MIT", "Stanford", "Oxford"],
+          [4, "Stanford", "Berkeley", "Cambridge", "Oxford", "UCL"],
+          [5, "Cambridge", "Cambridge", "Oxford", "Harvard", "Toronto"],
+          [6, "MIT", "Princeton", "Columbia", "Caltech", "Stanford"],
+          [7, "Princeton", "Caltech", "Berkeley", "Imperial", "Washington"],
+          [8, "Berkeley", "Columbia", "Chicago", "UCL", "Tokyo"],
+          [9, "Imperial", "Chicago", "Princeton", "ETH Zurich", "Johns Hopkins"],
+          [10, "Yale", "Oxford", "Cornell", "Chicago", "Sao Paulo"]
+        ]
+      },
+      "based_on": ["det_08", "det_13"],
+      "notable_instance": {
+        "name": "Four different #1s",
+        "value": "Caltech (THE) / Harvard (ARWU+CWUR) / MIT (QS) / Michigan (OpenAlex)",
+        "why": "No school is #1 everywhere; the neutral referee crowns a fifth-flavour winner no commercial table ranks first"
+      }
+    },
+    "ana_07": {
+      "label": "Which table tracks measured output — ARWU/CWUR closest, QS loosest on impact",
+      "content": "Correlating each commercial rank against the neutral OpenAlex order on the 218 core: ARWU and CWUR (the survey-free research tables) track it most closely on every lens, ARWU peaking at Spearman 0.876 against h_index and 0.775 against raw works. THE tracks raw volume LEAST (0.623) — not because it is reputation-heavy but because its citations pillar is size-normalized, so citation-dense Caltech outranks sprawling volume giants. QS tracks measured IMPACT least (0.636 vs h_index) — consistent with its 50% reputation weighting. Crucially, even the best correlation (0.88) is far from 1.0: no commercial table is 'just measuring output', so OpenAlex does not vindicate any single one.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_referee.py",
+        "lines": [20, 37],
+        "output": "system  vs works_count   vs cited_by   vs h_index\nTHE              0.623         0.735         0.815\nARWU             0.775         0.854         0.876\nCWUR             0.775         0.842         0.835\nQS               0.686         0.703         0.636\nTracks raw OUTPUT most closely: ARWU 0.775 | least: THE 0.623\nTracks IMPACT (h_index) most closely: ARWU 0.876"
+      },
+      "data_table": {
+        "description": "Spearman of each commercial rank vs the OpenAlex output/impact order (n=218)",
+        "columns": ["system", "vs_works_count", "vs_cited_by", "vs_h_index"],
+        "rows": [
+          ["THE", 0.623, 0.735, 0.815],
+          ["ARWU", 0.775, 0.854, 0.876],
+          ["CWUR", 0.775, 0.842, 0.835],
+          ["QS", 0.686, 0.703, 0.636]
+        ]
+      },
+      "based_on": ["det_06", "det_07", "det_13"],
+      "notable_instance": {
+        "name": "QS vs OpenAlex h_index",
+        "value": "Spearman 0.636 (lowest impact-tracking of the four)",
+        "why": "The reputation-survey table aligns least with measured research impact — the empirical payoff of the ana_02 weighting axis"
+      }
+    },
+    "ana_08": {
+      "label": "The referee crowns three different winners of its own",
+      "content": "OpenAlex does not settle the argument — it opens a new one. Ranked by raw works_count it crowns University of Michigan; by total cited_by_count, Harvard; by h_index, University of Washington. Three neutral lenses, three different #1s, none matching Caltech/Harvard(x2)/MIT from the commercial tables (only Harvard-by-citations coincides with ARWU/CWUR). The neutral lenses even disagree with each OTHER: works vs cited_by correlate 0.873 and works vs h_index only 0.762. Michigan is the emblem — OpenAlex-works #1 but its best commercial rank is only #17 (THE): the raw-output giant no ranking table will crown.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/04_referee.py",
+        "lines": [39, 59],
+        "output": "OpenAlex #1 by each lens: {'works': 'University of Michigan', 'cited_by': 'Harvard University', 'h_index': 'University of Washington'}\nSpearman among the neutral lenses themselves: works vs cited_by=0.873, works vs h_index=0.762\nMichigan: OpenAlex works rank #1, but best commercial rank is #17 (THE)"
+      },
+      "data_table": {
+        "description": "OpenAlex top 10 by three neutral lenses (volume / total citations / h-index)",
+        "columns": ["rank", "by_works_count", "by_cited_by_count", "by_h_index"],
+        "rows": [
+          [1, "Michigan", "Harvard", "Washington"],
+          [2, "Harvard", "Washington", "Harvard"],
+          [3, "Oxford", "Stanford", "Stanford"],
+          [4, "UCL", "Johns Hopkins", "MIT"],
+          [5, "Toronto", "Michigan", "Johns Hopkins"],
+          [6, "Stanford", "UCL", "Michigan"],
+          [7, "Washington", "MIT", "Oxford"],
+          [8, "Tokyo", "Oxford", "UCL"],
+          [9, "Johns Hopkins", "Toronto", "Berkeley"],
+          [10, "Sao Paulo", "Cornell", "Washington University in St. Louis"]
+        ]
+      },
+      "based_on": ["det_06", "det_13", "det_14"],
+      "notable_instance": {
+        "name": "University of Michigan",
+        "value": "OpenAlex works #1, best commercial rank only #17",
+        "why": "The neutral referee's raw-output champion is nobody's commercial #1 — the referee crowns yet another order rather than resolving the dispute"
+      }
+    },
+    "ana_09": {
+      "label": "Reputation vs research — the survey lifts different schools",
+      "content": "Within QS itself, the Academic-Reputation survey score and the Citations-per-Faculty score correlate only Spearman 0.421 across the 218 core — the survey and the citation metric rank schools very differently. Comparing QS to ARWU on schools both rank <=200: QS lifts reputation-rich Asia-Pacific names far above ARWU's research-and-prizes order — University of Hong Kong (ARWU 151 / QS 21), NUS (101/11), Peking (101/12), Tsinghua (101/14), Seoul National (101/29). The reverse (ARWU >> QS) lifts US research-heavy schools — Vanderbilt (ARWU 53 / QS 199), Maryland (43/164), UCSB (38/149), Florida (83/188), WashU St Louis (32/118). Inside QS's own indicators, its reputation metric most over-lifts famous names with thin per-faculty citations (NYU AR 95.9 / CPF 28.9; Toronto 99.6 / 43.5; TU Munich 84.0 / 25.8), while its citation metric lifts research-dense but less-famous schools (Dartmouth AR 19.2 / CPF 86.7; Rensselaer 8.4 / 70.5; Bern 30.3 / 98.3).",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_reputation_size.py",
+        "lines": [22, 46],
+        "output": "REPUTATION-LIFTED (QS >> ARWU): HKU 151/21 -130; NUS 101/11 -90; Peking 101/12 -89; Tsinghua 101/14 -87; Seoul Nat 101/29 -72\nRESEARCH-LIFTED (ARWU >> QS): Vanderbilt 53/199 +146; Maryland 43/164 +121; UCSB 38/149 +111; Florida 83/188 +105; WashU 32/118 +86\nWithin QS itself, Academic-Reputation vs Citations-per-Faculty correlate only Spearman=0.421 (n=218)"
+      },
+      "data_table": {
+        "description": "Reputation-lifted vs research-lifted schools (both ranks <=200): ARWU rank, QS rank, gap (QS-ARWU; negative=QS lifts), QS Academic-Reputation & Citations-per-Faculty sub-scores",
+        "columns": ["university", "country", "arwu_rank", "qs_rank", "qs_minus_arwu", "qs_ar_score", "qs_cpf_score", "direction"],
+        "rows": [
+          ["University of Hong Kong", "Hong Kong", 151, 21, -130, 97.4, 72.6, "reputation-lifted"],
+          ["Fudan University", "China", 151, 34, -117, 83.6, 70.4, "reputation-lifted"],
+          ["Chinese University of Hong Kong", "Hong Kong", 151, 38, -113, 87.3, 92.9, "reputation-lifted"],
+          ["Tokyo Institute of Technology", "Japan", 151, 55, -96, 74.1, 65.9, "reputation-lifted"],
+          ["National University of Singapore", "Singapore", 101, 11, -90, 99.5, 91.8, "reputation-lifted"],
+          ["Peking University", "China", 101, 12, -89, 99.3, 96.7, "reputation-lifted"],
+          ["Tsinghua University", "China", 101, 14, -87, 98.9, 98.1, "reputation-lifted"],
+          ["National Taiwan University", "Taiwan", 151, 77, -74, 92.3, 49.7, "reputation-lifted"],
+          ["Seoul National University", "South Korea", 101, 29, -72, 98.6, 70.3, "reputation-lifted"],
+          ["University of Sydney", "Australia", 101, 41, -60, 96.2, 92.1, "reputation-lifted"],
+          ["Vanderbilt University", "USA", 53, 199, 146, 25.9, 38.5, "research-lifted"],
+          ["University of Maryland, College Park", "USA", 43, 164, 121, 51.2, 71.1, "research-lifted"],
+          ["University of California, Santa Barbara", "USA", 38, 149, 111, 55.9, 97.2, "research-lifted"],
+          ["University of Florida", "USA", 83, 188, 105, 48.5, 26.4, "research-lifted"],
+          ["University of Liverpool", "UK", 101, 190, 89, 42.7, 33.7, "research-lifted"],
+          ["Aarhus University", "Denmark", 73, 161, 88, 55.6, 55.2, "research-lifted"],
+          ["Washington University in St Louis", "USA", 32, 118, 86, 40.1, 55.6, "research-lifted"],
+          ["University of Southern California", "USA", 49, 134, 85, 54.6, 71.7, "research-lifted"],
+          ["Stockholm University", "Sweden", 77, 153, 76, 54.5, 62.5, "research-lifted"],
+          ["Case Western Reserve University", "USA", 101, 176, 75, 18.3, 65.8, "research-lifted"]
+        ],
+        "qs_internal_ar_vs_cpf_spearman": 0.421
+      },
+      "based_on": ["det_02", "det_04", "det_07", "det_13"]
+    },
+    "ana_10": {
+      "label": "Size-normalisation flip — volume crowns Michigan, per-paper crowns Harvard",
+      "content": "Whether 'best research' means volume or per-paper impact flips the winner completely. By raw works_count OpenAlex crowns University of Michigan (980,174 works) but its citations-per-work is only 67.2 (impact rank #332) — a +331-place flip. Toronto flips +55 (volume #5, impact #60). At the other pole, small citation-dense schools soar when you divide by output: Caltech is volume #82 but per-paper impact #13 (-69), Princeton volume #104 / impact #24 (-80), MIT volume #35 / impact #3 (-32). Harvard is the rare school that is both big and dense (volume #2, per-paper impact #1). This is det_13's Caltech-vs-Michigan two-sided illustration, quantified: the same neutral database ranks the 'best' completely differently depending on one normalisation choice.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/05_reputation_size.py",
+        "lines": [48, 75],
+        "output": "University of Michigan: works= 980174 (volume #  1) | cites/work= 67.2 (impact #332) | flip +331\nUniversity of Toronto: works= 551833 (volume #  5) | cites/work=105.4 (impact # 60) | flip +55\nHarvard University: works= 702657 (volume #  2) | cites/work=203.5 (impact #  1) | flip -1\nCalifornia Institute of Technology: works= 242783 (volume # 82) | cites/work=148.5 (impact # 13) | flip -69\nPrinceton University: works= 211211 (volume #104) | cites/work=126.5 (impact # 24) | flip -80\nMassachusetts Institute of Technology: works= 345834 (volume # 35) | cites/work=185.0 (impact #  3) | flip -32"
+      },
+      "data_table": {
+        "description": "Volume (works_count) vs per-paper impact (cites/work) for named schools: rank on each metric and the flip (impact_rank - volume_rank)",
+        "columns": ["university", "works_count", "cites_per_work", "rank_volume", "rank_impact", "flip"],
+        "rows": [
+          ["University of Michigan", 980174, 67.2, 1, 332, 331],
+          ["Harvard University", 702657, 203.5, 2, 1, -1],
+          ["University of Oxford", 590664, 106.3, 3, 57, 54],
+          ["University College London", 579259, 112.5, 4, 42, 38],
+          ["University of Toronto", 551833, 105.4, 5, 60, 55],
+          ["Stanford University", 526048, 164.6, 6, 9, 3],
+          ["University of Washington", 520004, 180.5, 7, 4, -3],
+          ["University of Tokyo", 505805, 91.6, 8, 122, 114],
+          ["Massachusetts Institute of Technology", 345834, 185.0, 35, 3, -32],
+          ["California Institute of Technology", 242783, 148.5, 82, 13, -69],
+          ["Princeton University", 211211, 126.5, 104, 24, -80]
+        ]
+      },
+      "based_on": ["det_13", "det_14"],
+      "notable_instance": {
+        "name": "University of Michigan",
+        "value": "works #1 -> cites/work #332 (+331-place flip)",
+        "why": "The single starkest demonstration that one normalisation choice (per paper vs total) moves the 'best research university' by hundreds of places"
+      }
+    },
+    "ana_11": {
+      "label": "VALIDATION — the disagreement survives holding the year fixed at 2015",
+      "content": "Robustness check for the era mismatch (det_14). Restricting to the SAME-YEAR 2015 trio (THE n ARWU n CWUR, 285 schools, all 2015 editions), the three systems still only agree at Spearman 0.757 (THE-ARWU), 0.751 (THE-CWUR) and 0.840 (ARWU-CWUR), mean 0.782 — NOT ~1.0. So the headline 'they disagree' is not an artefact of mixing years; it holds within a single year. LEVEL VALIDATED: cross-system methodology disagreement among the three 2015 tables (era held fixed). LEVEL THE HEADLINE CLAIMS: the full 4-way QS/THE/ARWU/CWUR disagreement plus the OpenAlex referee overlay. GAP: QS is 2023 and OpenAlex is 2026, so every QS- or OpenAlex-involving comparison conflates methodology divergence with an ~8-year (QS) / ~11-year (OpenAlex) time gap. QS's lower mean correlation (0.660 vs the trio's 0.782) is therefore an UPPER bound on its methodology divergence, not a clean estimate — the Editor must not sell a QS-vs-2015 gap as pure methodology.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/06_validation.py",
+        "lines": [17, 55],
+        "output": "2015 trio core (THE n ARWU n CWUR, all edition year 2015): 285 schools\n  THE vs ARWU  Spearman=0.757  Kendall=0.608\n  THE vs CWUR  Spearman=0.751  Kendall=0.573\n  ARWU vs CWUR  Spearman=0.840  Kendall=0.700\nMean same-year (2015) Spearman among the trio: 0.782\nMean QS(2023)-vs-2015-system Spearman: 0.660 -> {'the_rank': 0.735, 'arwu_rank': 0.647, 'cwur_rank': 0.599}"
+      },
+      "data_table": {
+        "description": "Same-year 2015 trio correlations (era held fixed) vs QS-2023-involving correlations (era-mismatched)",
+        "columns": ["pair", "spearman", "kendall", "era", "n"],
+        "rows": [
+          ["THE vs ARWU (2015)", 0.757, 0.608, "same year 2015", 285],
+          ["THE vs CWUR (2015)", 0.751, 0.573, "same year 2015", 285],
+          ["ARWU vs CWUR (2015)", 0.840, 0.700, "same year 2015", 285],
+          ["QS vs THE", 0.735, null, "2023 vs 2015 (+8y)", 218],
+          ["QS vs ARWU", 0.647, null, "2023 vs 2015 (+8y)", 218],
+          ["QS vs CWUR", 0.599, null, "2023 vs 2015 (+8y)", 218]
+        ],
+        "mean_trio_spearman": 0.782,
+        "mean_qs_spearman": 0.660
+      },
+      "based_on": ["det_08", "det_14"],
+      "notable_instance": {
+        "name": "2015 trio mean Spearman 0.782",
+        "value": "same-year agreement still far below 1.0",
+        "why": "Proves the disagreement is methodological, not a year-mixing artefact — the 'why believe this' beat"
+      }
+    },
+    "ana_12": {
+      "label": "INTERACTIVE — re-weight the rankings and watch #1 flip",
+      "content": "The centrepiece client model. Each of the 218 common-core universities carries five REAL 0-100 pillars — rep (QS Academic Reputation survey), cite (THE field-normalised citation impact), teach (THE teaching), intl (THE international outlook), vol (OpenAlex raw output scaled 0-100). A pure-JS function blends them under reader-set weights and re-ranks. Just moving between five preset weightings produces THREE different #1s: balanced weights crown Oxford (87.02), a QS-like reputation-heavy weighting crowns MIT (96.25), and an output-only weighting crowns Michigan (100.0). A THE-like blend also gives MIT; an ARWU-like output blend gives Michigan. The reader discovers first-hand that 'best university' is a slider position, not a fact. Verified identical in Python and Node (code/client_model.js).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/07_client_models.py",
+        "lines": [67, 127],
+        "output": "[balanced] #1 University of Oxford (87.02); #2 Harvard (86.22); #3 Cambridge (83.64); #4 Michigan (82.84); #5 Stanford (82.66)\n[qs_like] #1 MIT (96.25); [the_like] #1 MIT (95.16); [arwu_like] #1 Michigan (95.24); [output_only] #1 Michigan (100.0)\n#1 under each preset: balanced=Oxford, qs_like=MIT, the_like=MIT, arwu_like=Michigan, output_only=Michigan\nDistinct #1s produced just by moving the sliders: 3"
+      },
+      "data_table": {
+        "description": "The #1 university produced by each preset weighting (rep,cite,teach,intl,vol), plus the balanced top-5",
+        "columns": ["preset", "weights_rep_cite_teach_intl_vol", "number_one", "top5"],
+        "rows": [
+          ["balanced", "1,1,1,1,1", "University of Oxford", "Oxford, Harvard, Cambridge, Michigan, Stanford"],
+          ["qs_like", "5,2,2,1,0", "MIT", "MIT, Oxford, Cambridge, Harvard, Stanford"],
+          ["the_like", "3,3,3,1,0", "MIT", "MIT, Harvard, Oxford, Cambridge, Stanford"],
+          ["arwu_like", "0,3,0,0,4", "University of Michigan", "Michigan, Harvard, Oxford, Stanford, Johns Hopkins"],
+          ["output_only", "0,0,0,0,1", "University of Michigan", "Michigan, Harvard, Oxford, Toronto, Stanford"]
+        ]
+      },
+      "client_model": {
+        "file": "code/client_model.js",
+        "function": "reweightRankings(weights, topN)",
+        "inputs": {"weights": {"rep": "reputation (0-100 QS Academic Reputation)", "cite": "citations (0-100 THE citation impact)", "teach": "teaching (0-100 THE)", "intl": "international (0-100 THE)", "vol": "output volume (0-100 OpenAlex works)"}, "topN": "optional int"},
+        "returns": "[{rank, name, country, score}] sorted best-first",
+        "data_ref": "REWEIGHT_DATA (218 universities x 5 pillars), embedded in client_model.js",
+        "presets": "REWEIGHT_PRESETS (balanced, qs_like, the_like, arwu_like, output_only)",
+        "recipe": "explorable_recompute",
+        "cost": "closed-form O(n log n) over 218 rows, <1ms; verified identical in Python and Node"
+      },
+      "based_on": ["det_02", "det_03", "det_07", "det_13"],
+      "notable_instance": {
+        "name": "3 distinct #1s from 5 sliders",
+        "value": "Oxford / MIT / Michigan",
+        "why": "The interactive proof of the thesis — the reader manufactures a different world #1 just by re-weighting"
+      }
+    },
+    "ana_13": {
+      "label": "INTERACTIVE — look up any university's five verdicts",
+      "content": "A second client model powers a 'find your university' widget: for each of the 218 common-core schools it returns its rank in all four commercial systems plus OpenAlex (by works and by citations) and its cross-system spread. Examples: Caltech THE 1 / ARWU 7 / CWUR 12 / QS 6 / OpenAlex-works 82 / OpenAlex-cites 27 (spread 11); Michigan 17 / 22 / 19 / 25 / works 1 / cites 5 (spread 8); Peking 48 / 101 / 56 / 12 / works 17 / cites 35 (spread 89); Berkeley 8 / 4 / 7 / 27 / works 12 / cites 11 (spread 23). The lookup (RANK_LOOKUP in client_model.js) covers all 218 universities.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/07_client_models.py",
+        "lines": [129, 140],
+        "output": "Berkeley 8/4/7/27 works12 cites11 spread23\nCaltech 1/7/12/6 works82 cites27 spread11\nHarvard 2/1/1/5 works2 cites1 spread4\nMichigan 17/22/19/25 works1 cites5 spread8\nPeking 48/101/56/12 works17 cites35 spread89\nPrinceton 7/6/9/16 works104 cites56 spread10\nLookup covers all 218 common-core universities."
+      },
+      "data_table": {
+        "description": "Per-university lookup sample: four commercial ranks + OpenAlex ranks (works, citations) + spread",
+        "columns": ["university", "country", "the_rank", "arwu_rank", "cwur_rank", "qs_rank", "oa_works_rank", "oa_cites_rank", "spread"],
+        "rows": [
+          ["University of California, Berkeley", "USA", 8, 4, 7, 27, 12, 11, 23],
+          ["California Institute of Technology", "USA", 1, 7, 12, 6, 82, 27, 11],
+          ["Harvard University", "USA", 2, 1, 1, 5, 2, 1, 4],
+          ["University of Michigan", "USA", 17, 22, 19, 25, 1, 5, 8],
+          ["Peking University", "China", 48, 101, 56, 12, 17, 35, 89],
+          ["Princeton University", "USA", 7, 6, 9, 16, 104, 56, 10]
+        ]
+      },
+      "client_model": {
+        "file": "code/client_model.js",
+        "object": "RANK_LOOKUP",
+        "shape": "{ university_name: {country, THE, ARWU, CWUR, QS, OpenAlex_works, OpenAlex_cites, spread} }",
+        "coverage": "all 218 common-core universities",
+        "recipe": "personal_input"
+      },
+      "based_on": ["det_08", "det_13"]
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "ERA MISMATCH (the dataset's main limitation): THE/ARWU/CWUR are 2015 editions, QS is 2023, OpenAlex is fetched 2026-06-24. The clean cross-SYSTEM comparison is the 2015 trio (ana_11, which validates the disagreement holds within one year). Any QS- or OpenAlex-involving figure conflates methodology divergence with an 8-11 year time gap and should be framed as a recent-state overlay, not a same-year comparison."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "FUZZY NAME JOIN: the cross-system core is built on a normalized-name match (code/common.py), not a shared identifier, for the four commercial tables. It required a small manual alias map (Michigan-Ann Arbor, ETH Zurich/EPFL, TU Munich) and still produces a handful of genuine collisions where 'University of X' and 'X University' or homonyms collapse together: York (Univ of York UK vs York University Canada), Newcastle, Miami (Ohio vs Florida), China/Taiwan homonyms (2-7 collisions per system). The 5-way core is 218 here vs the README's stated ~189 — the exact count is normalizer-dependent; treat ~200 as the scale. OpenAlex and Leiden do carry ROR ids for a cleaner future join."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "OPENALEX SIZE/COVERAGE BIAS: works_count rewards big, old, medical-heavy universities (Michigan #1, Sao Paulo top-10), so it is a yardstick of research QUANTITY, not quality — always read cited_by_count and h_index alongside it (ana_08, ana_10). Coverage is also uneven by region (documented discrepancies for China, det_06/det_14). One clear artefact: University of Washington's two_yr_mean_citedness = 46.4 vs a peer median of 3.39, which also inflates Washington's h_index rank (#1 by h_index) — flagged, not used for per-paper impact (cites/work used instead)."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "RANK BANDS INFLATE SPREAD: THE bands ranks past 200 ('201-225'), ARWU past 100, QS deep tails ('1001-1200'); code/common.py maps a band to its lower bound. This inflates the max-min spread for tail schools, so the raw 'biggest swingers' (George Mason 850, etc.) are partly artefacts. ana_05b restricts to schools ranked <=200 by all four systems for the recognizable, band-free swingers — use those for the story."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "MIXED SCORE DIRECTIONS: CWUR's indicator columns are RANKS (1=best), the opposite direction to the 0-100 scores in THE/ARWU/QS, and CWUR broad_impact is null for 2012-2013 (present 2014-2015). All correlations here use each system's world_rank (a consistent rank space), never mixes raw scores across systems. The QS 2023 edition uses the pre-2024 LEGACY weights (Academic Reputation 40%), so its reputation-heaviness is specific to this edition."
+    }
+  ]
+}

@@ -1,0 +1,347 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "Economist / 2018-10-20_space-launches",
+    "one_line": "Six decades of orbital launches (1957-2018) from Jonathan McDowell's JSR database, behind The Economist's 'The space race is dominated by new contenders'.",
+    "thesis": "The launch business has gone from a two-superpower duel to a crowded field: the USSR/US duopoly of the Cold War gave way to a post-Soviet lull, then a rise of new state contenders (above all China, which out-launched everyone in 2018) and a new class of commercial/'startup' providers (SpaceX, Rocket Lab) — the data shows WHO launches changing more than HOW MUCH gets launched.",
+    "media_note": "This is a visual + historical + geographic dataset (rockets, launch sites, national programs photograph extremely well), so rich reference media is warranted. Per the orchestrator's scope for this run I deliberately did NOT download image files (detective.json is the only file written); reference_media is therefore left empty BY DESIGN and the visual sourcing is handed to the Scout (Stage 1.5) via meta.scout_brief below. This omission is intentional, not an oversight.",
+    "scout_brief": {
+      "load_bearing_subjects": [
+        "A Chinese Long March rocket on the pad / lifting off (the 'new contender' that topped 2018) — Wikimedia Commons category 'Long March (rocket family)' / CASC imagery",
+        "A SpaceX Falcon 9 (and the iconic Falcon Heavy Feb-2018 dual-booster landing) — the 'startup' agency_type made visible; SpaceX releases its photos public-domain (CC0) on Flickr/Commons",
+        "A Soyuz / R-7 launch at Baikonur — the Soviet/Russian workhorse behind the dataset's huge SU/RU counts (Soyuz-U is the single most-launched vehicle here)",
+        "Sputnik 1 (replica) and/or the 1957 era — the dataset's start point and the birth of the space race",
+        "A launch-site / world-map visual: Baikonur (Kazakhstan), Cape Canaveral/Kennedy (US), Jiuquan/Xichang (China), Kourou (ESA/France) — the agencies.csv lat/long enables a real map"
+      ],
+      "nice_to_have": [
+        "Ariane 5 (Arianespace/ESA — the first commercial provider, the largest 'private' before SpaceX)",
+        "Rocket Lab Electron (the smallsat-era new entrant, first orbit Jan 2018)",
+        "Space Shuttle (135 launches in the data — the US 1980s workhorse)"
+      ],
+      "embeddable_instance_candidates": [
+        "YouTube: SpaceX Falcon Heavy demo flight (Feb 6 2018) — iconic synchronized booster landing",
+        "YouTube: a Long March launch (CASC official) to put a face on China's 2018 surge"
+      ],
+      "already_covered_by_detective": "none (no media downloaded this run) — Scout should source the full set from scratch and vision-verify (vlm_view) each subject identity before any image reaches the page",
+      "audio_hint": "Mandatory BGM: a restrained, spacious instrumental sets the reading tone for a Cold-War-to-now history (e.g. a license-clean classical/ambient recording); no sonification needed."
+    }
+  },
+  "items": {
+    "det_01": {
+      "label": "Origin: Economist Graphic Detail article + JSR database",
+      "content": "This dataset is the data behind The Economist's Graphic Detail piece 'The space race is dominated by new contenders' (published online 2018-10-18; the dataset folder is dated 2018-10-20). The Economist publishes the data and code behind its Graphic Detail charts in a public GitHub repository. The principal source is Jonathan McDowell's JSR Launch Vehicle Database; the agencies table is credited jointly to McDowell and The Economist. Two CSVs ship with it: launches.csv (one row per orbital launch attempt) and agencies.csv (one row per launch-provider organization/phase). The article's headline IS the thesis the data is meant to support — that the set of actors launching into orbit has broadened beyond the original superpowers.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://www.economist.com/graphic-detail/2018/10/18/the-space-race-is-dominated-by-new-contenders",
+          "title": "The space race is dominated by new contenders — The Economist, Graphic Detail",
+          "facts": [
+            "Article title is 'The space race is dominated by new contenders'",
+            "Published in The Economist's Graphic Detail section, 2018-10-18"
+          ]
+        },
+        {
+          "url": "https://github.com/TheEconomist/graphic-detail-data",
+          "title": "TheEconomist/graphic-detail-data — Data and code behind The Economist's Graphic Detail section",
+          "facts": [
+            "The Economist publishes the data and code behind its Graphic Detail charts in this public GitHub repository",
+            "Launch data is credited to Jonathan McDowell; the agencies table is credited to Jonathan McDowell and The Economist"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "The source: Jonathan McDowell & the JSR Launch Vehicle Database",
+      "content": "The numbers come from Jonathan McDowell, an astrophysicist at the Harvard-Smithsonian Center for Astrophysics who has maintained 'Jonathan's Space Report' (JSR) and an associated set of launch catalogs since the 1980s. The JSR Launch Vehicle Database aims to list every type of space launch vehicle, suborbital and orbital, and his master launch log is widely treated as the most complete public record of orbital launch attempts, with launch times to the second where available. It is a reference-grade, hand-curated catalog rather than an official government dataset — which matters for the analyst because edge cases (a launch's success/failure status, an agency's nationality, an org's start/stop dates) reflect McDowell's adjudication. Provenance note: the dataset README links to the LVDB at http://www.planet4589.org/space/lvdb/index.html, which now returns HTTP 404; McDowell reorganized the site (the catalog now lives under planet4589.org/space/gcat and the master launch log at planet4589.org/space/log/launch.html). The data itself is unaffected — only the README's link rotted.",
+      "category": "origin",
+      "sources": [
+        {
+          "url": "https://planet4589.org/jcm/jmcdowell.html",
+          "title": "Jonathan McDowell — planet4589.org",
+          "facts": [
+            "Jonathan McDowell is an astrophysicist at the Harvard-Smithsonian Center for Astrophysics",
+            "He authors 'Jonathan's Space Report' (JSR), a long-running newsletter and database on spaceflight"
+          ]
+        },
+        {
+          "url": "https://planet4589.org/space/log/launch.html",
+          "title": "JSR Launch Logs — planet4589.org",
+          "facts": [
+            "The JSR launch log is presented as the most complete public list of satellite orbital launches and launch attempts",
+            "It records launch times to the nearest second where available — the only online source for many of these times"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Sputnik 1957 — why the data starts where it does",
+      "content": "The dataset opens on 1957-10-04, the day the Soviet Union launched Sputnik 1, the world's first artificial satellite. Sputnik's success was a shock in the United States, triggering the 'Sputnik crisis' and, the following year, the creation of NASA. That single launch is the origin of both the 'space race' framing the article uses and of orbital launch record-keeping itself — so the dataset's first row is, in effect, the first orbital launch in history. Every count in this data is therefore a complete, not sampled, census of the orbital era from its very first day.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.nasa.gov/history/65-years-ago-sputnik-ushers-in-the-space-age/",
+          "title": "65 Years Ago: Sputnik Ushers in the Space Age — NASA",
+          "facts": [
+            "The Soviet Union launched Sputnik 1, the world's first artificial satellite, on 1957-10-04",
+            "Sputnik's launch marked the start of the space age and the US-USSR space race"
+          ]
+        },
+        {
+          "url": "https://guides.loc.gov/sputnik-and-the-space-race",
+          "title": "Sputnik and the Space Race: 1957 and Beyond — Library of Congress",
+          "facts": [
+            "The unanticipated success of Sputnik precipitated the American 'Sputnik crisis'",
+            "The episode led to the creation of the National Aeronautics and Space Administration (NASA)"
+          ]
+        }
+      ]
+    },
+    "det_04": {
+      "label": "Why the USSR dwarfs everyone: Kosmos + the Soyuz/R-7 workhorse",
+      "content": "The single biggest fact in the raw counts — the USSR has more launches (2,444) than any other state, and the most-launched vehicles in the data are all Soviet (Soyuz-U at 632, Kosmos 11K65M at 445, Voskhod and Molniya variants) — has a concrete external explanation. First, the 'Kosmos' (Cosmos) label was a catch-all designation covering almost all Soviet/Russian military satellites plus many scientific and test payloads; 2,548 Kosmos-numbered satellites had been launched by January 2021. Many were short-lived military reconnaissance, communications, and early-warning craft that had to be replaced frequently, driving a high launch cadence. Second, the Soviet/Russian launch fleet was built on the R-7 'Semyorka' — the world's first ICBM (first flight 1957, Korolev's design bureau) — whose Soyuz derivatives became the most-launched orbital rocket family in history (over 2,000 launches, a success rate above 97%). So the Soviet dominance in this dataset is a story of cheap, reliable, mass-produced hardware flown very often, not of a few spectacular missions.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Kosmos_(satellite)",
+          "title": "Kosmos (satellite) — Wikipedia",
+          "facts": [
+            "'Kosmos' is a catch-all designation covering almost all Soviet and Russian military satellites, plus scientific and test payloads",
+            "As of January 2021, 2,548 Kosmos satellites had been launched"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/R-7_(rocket_family)",
+          "title": "R-7 (rocket family) — Wikipedia",
+          "facts": [
+            "The R-7 originated as the world's first intercontinental ballistic missile (Sergei Korolev's design bureau)",
+            "More R-7 / Soyuz family rockets have been launched than any other orbital rocket family — over 2,000 launches at a success rate above 97%"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "The 1990s dip: the post-Soviet collapse",
+      "content": "The data shows global launch volume falling from its 1980s peak (about 1,191 launches in the 1980s) to roughly 889 in the 1990s and 650 in the 2000s, with the Soviet 'SU' code vanishing after 1991 and a smaller Russian 'RU' program taking its place. The external cause is the collapse of the Soviet Union. Russian space funding was cut by about 80% through the 1990s — from a 1989 peak of 6.9 billion rubles (about 1.5% of GDP) down to roughly 0.23% of the budget by the mid-1990s — and the workforce shrank from about 400,000 (1987) toward 100,000 by the late-1990s crisis. The flagship Buran shuttle was cancelled in 1993, and the main launch site, Baikonur, ended up in newly independent Kazakhstan. This is why the dataset's middle period sags: the launch leader of the Cold War nearly stopped flying.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Space_industry_of_Russia",
+          "title": "Space industry of Russia — Wikipedia",
+          "facts": [
+            "By 1998, Russian space program funding had been cut by 80%",
+            "Soviet space spending peaked in 1989 at 6.9 billion rubles (1.5% of GDP), falling to about 0.23% of the budget by the mid-1990s",
+            "The space workforce fell from 400,000 in 1987 to about 300,000 by late 1994 and toward 100,000 by the late-1990s crisis",
+            "The Buran shuttle program was cancelled in 1993"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "The rise of China: Long March, Dong Fang Hong, Shenzhou",
+      "content": "China is the clearest 'new contender'. In the data its launches climb from a handful in the 1970s (13) to 39 in the 1990s, 64 in the 2000s and 171 in the 2010s, and 287 of its 302 launches are Long March ('Chang Zheng', CZ) rockets. The history: under the 'Two Bombs, One Satellite' program China launched its first satellite, Dong Fang Hong 1, on a Long March 1 on 1970-04-24, becoming the fifth nation to reach orbit independently. The Long March family is built by the China Academy of Launch Vehicle Technology (CALT) under the state giant CASC. China became the third nation to fly humans to orbit on its own with Shenzhou 5 on 2003-10-15, and the Long March family ran 75 consecutive successful launches from October 1996 to April 2009. By the dataset's end China is no longer a minor player but a launch superpower in the making.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Chinese_space_program",
+          "title": "Chinese space program — Wikipedia",
+          "facts": [
+            "China launched its first satellite, Dong Fang Hong 1, on a Long March 1 on 1970-04-24, becoming the fifth nation to achieve independent launch capability",
+            "Shenzhou 5 carried China's first astronaut to orbit on 2003-10-15, making China the third nation with independent human spaceflight"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Long_March_(rocket_family)",
+          "title": "Long March (rocket family) — Wikipedia",
+          "facts": [
+            "Long March rockets are built by the China Academy of Launch Vehicle Technology (CALT), a subsidiary of CASC",
+            "From October 1996 to April 2009 the Long March family flew 75 consecutive successful launches"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "The headline moment: China out-launched everyone in 2018",
+      "content": "The event that makes 2018 the right vantage point — and gives the article its title — is that 2018 became the first year in which more rockets reached orbit from China than from any other country. Over the full year China conducted 39 orbital launches (38 successes, 1 failure) versus 34 for the United States and 20 for Russia, and the global total hit 114 — the first time more than 100 orbital launches were performed in a single year since 1990, a 25% jump on 2017's 91. (Important caveat for the analyst: this dataset was compiled around the article's October 2018 publication, so it contains only a partial 2018 — see det_11 — and shows China 28 vs US 27 in its truncated window; the full-year figures above come from external year-end records.) The shift is not that the US declined but that a third pole emerged.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.technologyreview.com/2018/12/19/66274/china-launched-more-rockets-into-orbit-in-2018-than-any-other-country/",
+          "title": "China launched more rockets into orbit in 2018 than any other country — MIT Technology Review",
+          "facts": [
+            "2018 was the first year in which more rockets reached Earth orbit from China than from any other country",
+            "As of mid-December 2018, China had ~35 successful launches versus ~30 for the United States, and was on pace for nearly 40"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/2018_in_spaceflight",
+          "title": "2018 in spaceflight — Wikipedia",
+          "facts": [
+            "Full-year 2018: China 39 orbital launches (38 successes, 1 failure), United States 34, Russia 20",
+            "The global total was 114 launches — the first time since 1990 that more than 100 orbital launches were performed in a year, up 25% from 91 in 2017"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "The 'startup' contender: SpaceX and reusability",
+      "content": "The data carries a rare third agency_type beyond 'state' and 'private': 'startup', and in this dataset it is almost entirely SpaceX (62 Falcon 9 + 5 Falcon 1 + 1 Falcon Heavy = 68 rows; Rocket Lab supplies the rest). SpaceX was founded in 2002. After three failures that nearly bankrupted it, Falcon 1 reached orbit on 2008-09-28, the first privately developed, fully liquid-fueled rocket to do so. Falcon 9 first flew on 2010-06-04; in December 2015 SpaceX landed a Falcon 9 first stage back on the ground, the breakthrough toward reusability; and the Falcon Heavy first flew on 2018-02-06 — landing its two side boosters simultaneously — squarely inside this dataset's window. The 'startup' label is the data's way of marking a genuinely new kind of actor: a venture-funded private firm driving launch costs down through reuse, distinct from the older state-contractor 'private' providers.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/SpaceX",
+          "title": "SpaceX — Wikipedia",
+          "facts": [
+            "SpaceX was founded in 2002 by Elon Musk",
+            "The Falcon Heavy made its first test flight on 2018-02-06, with the two side boosters returning to Cape Canaveral"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Falcon_1",
+          "title": "Falcon 1 — Wikipedia",
+          "facts": [
+            "On 2008-09-28 Falcon 1 became the first privately developed, fully liquid-fueled launch vehicle to reach orbit",
+            "It succeeded after three failed attempts between 2006 and 2008 that nearly bankrupted the company"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Falcon_9",
+          "title": "Falcon 9 — Wikipedia",
+          "facts": [
+            "The first Falcon 9 launch was on 2010-06-04",
+            "In December 2015 a Falcon 9 first stage successfully returned to Earth near its launch site — a milestone toward reusable launch vehicles"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "The smallsat new entrant: Rocket Lab Electron",
+      "content": "The other 'startup' in the data is Rocket Lab, whose Electron rocket appears with its first orbital flights. Electron reached orbit on 2018-01-21, deploying three CubeSats, and flew its first commercial mission on 2018-11-11. Electron is a dedicated small-satellite launcher — built to carry 200-300 kg to a Sun-synchronous orbit — and it opened up frequent, dedicated access to orbit for small-satellite operators, a segment previously stuck hitching rides as secondary payloads. Its presence (alongside SpaceX) signals a second axis of the 'new contenders' story that runs orthogonal to the country story: not just new nations, but a new class of small, commercial, high-cadence launch providers emerging right at the dataset's edge.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Rocket_Lab_Electron",
+          "title": "Rocket Lab Electron — Wikipedia",
+          "facts": [
+            "Electron reached orbit on 2018-01-21, deploying three CubeSats; its first commercial launch was on 2018-11-11",
+            "Electron is designed to launch a 200-300 kg payload to a 500 km Sun-synchronous orbit, serving the commercial small-satellite market"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "The first commercial wave: Arianespace",
+      "content": "Long before SpaceX, the 'private' agency_type in this data was led by Europe. Arianespace, founded on 1980-03-26, was the world's first commercial launch-service provider, created to commercialize the European Space Agency's Ariane rockets. In the dataset, Arianespace (agency code 'AE', state 'F' for France/Europe) accounts for 258 launches — the largest single 'private' provider before the SpaceX era, and its Ariane 5 is among the most-flown vehicles in the data. This matters for interpreting the agency_type field: 'private' is not new — it dates to 1980 and grew steadily through the 1990s-2000s — whereas 'startup' is the genuinely recent category. An analyst tracking 'commercialization' should distinguish the older Arianespace-style commercial providers from the newer venture-backed startups.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Arianespace",
+          "title": "Arianespace — Wikipedia",
+          "facts": [
+            "Arianespace was founded on 1980-03-26 as the world's first commercial launch-service provider",
+            "It was created to commercialize the European Space Agency's Ariane launcher program"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "CAVEAT: 2018 is a partial year in this dataset",
+      "content": "The most important analytical caveat: this dataset is truncated at the article's publication. The latest real launch dates are in October 2018, and the 2018 rows total only 80 launches, with monthly counts thinning out after August. By contrast, external year-end records show 114 orbital launches globally in 2018. So 2018 in this data is roughly a 9-to-10-month snapshot, not a full year. Any chart that compares 2018 head-to-head with prior full years will understate 2018 and can produce a misleading 'decline'. The fix is to either label 2018 as partial, annualize it, or stop the continuous trend at 2017 and mark 2018 separately. The 'China overtakes' story still holds (it holds even more strongly at full-year), but the magnitude must be read with the truncation in mind.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2018_in_spaceflight",
+          "title": "2018 in spaceflight — Wikipedia",
+          "facts": [
+            "The full-year 2018 global total was 114 orbital launches",
+            "This dataset's 2018 rows total only 80 and end in October 2018, confirming it captures a partial year"
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "arithmetic",
+        "formula": "80 (dataset 2018 rows) / 114 (external full-year 2018 total)",
+        "result": "~70% — the dataset holds roughly 9-10 months of 2018"
+      }
+    },
+    "det_12": {
+      "label": "CAVEAT: state codes, the 1991 break, and a data typo",
+      "content": "Three structural caveats for the analyst, all visible in the raw fields. (1) The Soviet/Russian discontinuity: launches before 1991 carry state_code 'SU' and after carry 'RU' (and military org codes like RVSN/UNKS give way to VKSR). To draw one continuous 'USSR -> Russia' line, SU and RU must be merged; treating them as two separate countries hides that the same program is the through-line of the whole dataset. (2) 'F' denotes France/Europe and is effectively the ESA/Arianespace bloc (with separate 'I-ESA' / 'I-ELDO' codes for multinational European bodies) — it is European launch activity, not just French. (3) There is at least one date typo: a row with launch_year 2018 carries launch_date '2918-10-11' (a mistyped '2918' for '2018'); parse on launch_year, not raw launch_date, or clean that value. Also note agencies.csv's pre-computed 'count' column can differ slightly from a fresh row-count of launches.csv (e.g. SpaceX shows 65 in agencies.csv vs 68 launch rows) because the two were tallied at slightly different cutoffs — prefer recomputing from launches.csv for consistency.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://github.com/TheEconomist/graphic-detail-data",
+          "title": "TheEconomist/graphic-detail-data (space-launches data + codebook)",
+          "facts": [
+            "launches.csv uses state_code 'SU' for pre-1991 Soviet launches and 'RU' for post-1991 Russian launches",
+            "category is coded O (success) / F (failure); agency_type is one of state / private / startup",
+            "The codebook fields (state_code, agency_type, category) are defined in the dataset README"
+          ]
+        }
+      ]
+    },
+    "det_13": {
+      "label": "BENCHMARK: orbital launch is now highly reliable",
+      "content": "For any success/failure analysis, the relevant benchmark is that mature orbital launch is now a high-reliability activity. In this dataset every major launching state sits between roughly 89% and 98% success (e.g. France/Europe ~98%, Russia ~97%, USSR ~95%, China ~96%, US ~92%, India ~89%), and overall 5,384 of 5,726 attempts succeeded (~94%). Externally this is corroborated: the Soyuz/R-7 family exceeds 97% success across 2,000+ flights, and CSIS reports China's Long March at a 95.3% success rate — comparable to the US Delta (95.5%) and Soyuz (97.2%). So the 'new contenders' are not cutting corners on reliability; China and the commercial entrants are competitive with the incumbents on this dimension. Treat sub-90% or early-program failure clusters (e.g. SpaceX's three early Falcon 1 failures) as the exceptions that prove a high baseline, not the norm.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://chinapower.csis.org/china-space-launch/",
+          "title": "How is China Advancing its Space Launch Capabilities? — CSIS ChinaPower",
+          "facts": [
+            "China's Long March series has a 95.3% success rate, comparable to the US Delta (95.5%) and Russia's Soyuz (97.2%)"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/R-7_(rocket_family)",
+          "title": "R-7 (rocket family) — Wikipedia",
+          "facts": [
+            "The Soyuz/R-7 family has a success rate above 97% across more than 2,000 launches"
+          ]
+        }
+      ]
+    },
+    "det_14": {
+      "label": "Why it matters: launch access is national power and a $1tn market",
+      "content": "Why a general reader should care: who can launch, and how cheaply, decides who controls the satellites that run modern life — communications, navigation (GPS, GLONASS, BeiDou), Earth observation, and military reconnaissance and early warning. Indigenous launch capability is held by only a handful of nations and is treated as a marker of top-tier technological and strategic power; everyone else depends on those few providers. The economics are large and growing: CSIS cites estimates that the global space economy grows from about $350 billion (2016) toward more than $1 trillion by 2040, with reusable rockets sharply cutting launch costs. Against that backdrop, China executed 207 launches in 2010-2019 — more than in the prior four decades combined — narrowing the gap with the US (which in 2018 still spent about $40.1bn on space and operated ~1,327 satellites, versus China's ~$5.8bn and ~363). The 'new contenders' story is really a story about access to space diffusing from two Cold-War superpowers to many state and commercial hands.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://chinapower.csis.org/china-space-launch/",
+          "title": "How is China Advancing its Space Launch Capabilities? — CSIS ChinaPower",
+          "facts": [
+            "Space technologies underpin communications, navigation (GPS, GLONASS, BeiDou), Earth observation, and military reconnaissance / early warning; only a handful of nations have indigenous launch capability",
+            "The global space economy is projected to grow from about $350 billion (2016) to over $1 trillion by 2040, with reusable rockets reducing launch costs",
+            "China executed 207 launches between 2010 and 2019 — more than in the previous four decades combined",
+            "In 2018 US government space spending was ~$40.1bn with ~1,327 active satellites, versus China ~$5.8bn / ~363 and Russia ~$4.2bn / ~169"
+          ]
+        }
+      ]
+    },
+    "det_15": {
+      "label": "Scope: what the analyst should build",
+      "content": "Recommended analytical spine, in priority order. (1) The core chart: orbital launches per year by launching state, 1957-2018, with SU+RU merged into one USSR/Russia line, US, China, and Europe ('F'/ESA) as the other leads — this is where the duopoly -> dip -> China-rising arc reads at a glance, and where the 'new contenders' headline lands. (2) Composition over time by agency_type (state vs private vs startup) — show 'startup' appearing only from ~2006 (SpaceX) and the commercial share rising. (3) China's trajectory to the top spot, ending on the 2018 crossover (with the partial-year caveat from det_11 made explicit). (4) Top vehicle families as a texture layer (Soyuz/Kosmos workhorses vs Long March vs Falcon 9) — the agencies.csv lat/long also supports a launch-provider world map. (5) Success-rate by state/era as a reliability check against the det_13 benchmark. Watch-outs: merge SU/RU; label or annualize partial-2018; clean the '2918' typo; recompute counts from launches.csv rather than trusting agencies.csv's 'count' column. The headline finding most defensible from data + context: the launch field has pluralized — the US never collapsed, but it lost its two-way race as China and a new commercial sector turned a duel into a crowd.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://github.com/TheEconomist/graphic-detail-data",
+          "title": "TheEconomist/graphic-detail-data (space-launches data + codebook)",
+          "facts": [
+            "launches.csv provides launch_year, type/variant of vehicle, agency, state_code, category (O/F) and agency_type per launch",
+            "agencies.csv provides per-provider count, state_code, type, class, founding/closing dates, latitude/longitude and parent org"
+          ]
+        }
+      ]
+    }
+  },
+  "reference_media": [],
+  "instances": [],
+  "topic_profile": {
+    "tags": ["visual_subject", "geographic", "event", "place"],
+    "is_visual": true,
+    "is_computational": true,
+    "classified_by": "detective",
+    "classified_at": "2026-06-30T02:45:00Z",
+    "rationale": "is_visual TRUE: the story's subjects — rockets (Long March, Falcon 9, Soyuz, Space Shuttle), launch sites (Baikonur, Cape Canaveral, Jiuquan, Kourou) and named national/commercial programs — are concrete, highly photographable real subjects (visual_subject + event + place), with abundant public-domain NASA/SpaceX/Wikimedia imagery; geographic supports a launch-provider world map from the agencies lat/long, but the visual tags (not geography alone) drive is_visual. is_computational TRUE: the headline claim ('new contenders dominate'; China overtaking the US in 2018) is a reproducible aggregate — counts/shares/rankings of launches per country-year and success rates the reader can recompute directly from launches.csv. Not privacy_sensitive, not abstract. No real-person subject is the natural cover (the subjects are rockets and nations, not individuals), so ai_face_policy is omitted."
+  }
+}

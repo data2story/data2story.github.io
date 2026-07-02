@@ -1,0 +1,1139 @@
+{
+  "url": "http://127.0.0.1:54295/index.html",
+  "page": "index.html",
+  "browser": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "viewport": {
+    "w": 1280
+  },
+  "loadErr": null,
+  "console": [],
+  "consoleTruncated": false,
+  "findings": {
+    "zeroWidthCharts": [],
+    "zeroHeightCharts": [],
+    "chartsWithNoRender": [
+      "des_03",
+      "des_02",
+      "des_06",
+      "des_05",
+      "des_11",
+      "des_18",
+      "des_21",
+      "des_23",
+      "des_22"
+    ],
+    "hiddenCharts": [],
+    "brokenImages": [],
+    "horizontalOverflow": false,
+    "consoleErrors": 0,
+    "visibleCssLeak": [],
+    "zeroWidthBars": [],
+    "iframeHeroLoops": [],
+    "brokenMaps": [],
+    "cascadeScriptAbort": null,
+    "oversizedAssets": [],
+    "totalPayloadOverBudget": false,
+    "unreferencedAssets": [
+      {
+        "file": "assets/scout_ariane5.jpg",
+        "kind": "image",
+        "bytes": 297880,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/scout_baikonur_pad.jpg",
+        "kind": "image",
+        "bytes": 337480,
+        "mb": 0.32
+      },
+      {
+        "file": "assets/scout_bgm.flac",
+        "kind": "audio",
+        "bytes": 46839163,
+        "mb": 44.67
+      },
+      {
+        "file": "assets/scout_bgm.mp3",
+        "kind": "audio",
+        "bytes": 1441374,
+        "mb": 1.37
+      },
+      {
+        "file": "assets/scout_china_launch.png",
+        "kind": "image",
+        "bytes": 762463,
+        "mb": 0.73
+      },
+      {
+        "file": "assets/scout_earth_limb.jpg",
+        "kind": "image",
+        "bytes": 358248,
+        "mb": 0.34
+      },
+      {
+        "file": "assets/scout_electron_b.jpg",
+        "kind": "image",
+        "bytes": 384598,
+        "mb": 0.37
+      },
+      {
+        "file": "assets/scout_electron_b_web.webp",
+        "kind": "image",
+        "bytes": 65874,
+        "mb": 0.06
+      },
+      {
+        "file": "assets/scout_falcon9_2018launch.jpg",
+        "kind": "image",
+        "bytes": 403323,
+        "mb": 0.38
+      },
+      {
+        "file": "assets/scout_falcon9_2018launch_web.webp",
+        "kind": "image",
+        "bytes": 147682,
+        "mb": 0.14
+      },
+      {
+        "file": "assets/scout_falcon9_landing.jpg",
+        "kind": "image",
+        "bytes": 291839,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/scout_falcon9_landing_web.webp",
+        "kind": "image",
+        "bytes": 102178,
+        "mb": 0.1
+      },
+      {
+        "file": "assets/scout_falcon9_reflight.jpg",
+        "kind": "image",
+        "bytes": 362890,
+        "mb": 0.35
+      },
+      {
+        "file": "assets/scout_falcon9_reflight_web.webp",
+        "kind": "image",
+        "bytes": 137076,
+        "mb": 0.13
+      },
+      {
+        "file": "assets/scout_falconheavy_boosters.jpg",
+        "kind": "image",
+        "bytes": 387506,
+        "mb": 0.37
+      },
+      {
+        "file": "assets/scout_falconheavy_launch.jpg",
+        "kind": "image",
+        "bytes": 334510,
+        "mb": 0.32
+      },
+      {
+        "file": "assets/scout_falconheavy_launch_web.webp",
+        "kind": "image",
+        "bytes": 126060,
+        "mb": 0.12
+      },
+      {
+        "file": "assets/scout_iss_earth.jpg",
+        "kind": "image",
+        "bytes": 202238,
+        "mb": 0.19
+      },
+      {
+        "file": "assets/scout_longmarch5_pad.jpg",
+        "kind": "image",
+        "bytes": 257798,
+        "mb": 0.25
+      },
+      {
+        "file": "assets/scout_longmarch5_pad_web.webp",
+        "kind": "image",
+        "bytes": 61358,
+        "mb": 0.06
+      },
+      {
+        "file": "assets/scout_longmarch_launch.jpg",
+        "kind": "image",
+        "bytes": 205210,
+        "mb": 0.2
+      },
+      {
+        "file": "assets/scout_longmarch_launch_web.webp",
+        "kind": "image",
+        "bytes": 61072,
+        "mb": 0.06
+      },
+      {
+        "file": "assets/scout_shuttle_liftoff.jpg",
+        "kind": "image",
+        "bytes": 434776,
+        "mb": 0.41
+      },
+      {
+        "file": "assets/scout_shuttle_liftoff_web.webp",
+        "kind": "image",
+        "bytes": 113382,
+        "mb": 0.11
+      },
+      {
+        "file": "assets/scout_shuttle_pad.jpg",
+        "kind": "image",
+        "bytes": 205464,
+        "mb": 0.2
+      },
+      {
+        "file": "assets/scout_soyuz_launch.jpg",
+        "kind": "image",
+        "bytes": 572124,
+        "mb": 0.55
+      },
+      {
+        "file": "assets/scout_sputnik.jpg",
+        "kind": "image",
+        "bytes": 606286,
+        "mb": 0.58
+      }
+    ]
+  },
+  "metrics": {
+    "pageW": 1280,
+    "viewportW": 1280,
+    "pageH": 19592,
+    "overflowX": false,
+    "controls": {
+      "ranges": 5,
+      "buttons": 11
+    },
+    "charts": [
+      {
+        "id": "des_03",
+        "cls": "stat-callout",
+        "des": null,
+        "label": "The record this rests on is unusually complete. It is a cens",
+        "mount": {
+          "w": 707,
+          "h": 120,
+          "top": 2170,
+          "left": 287,
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      },
+      {
+        "id": "des_02",
+        "cls": "visual",
+        "des": "des_02",
+        "label": "5,714\n        orbital launch attempts mapped, 1957–2018 — a ",
+        "mount": {
+          "w": 707,
+          "h": 566,
+          "top": 2319,
+          "left": 287,
+          "display": "block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      },
+      {
+        "id": "des_04_m",
+        "cls": "chart-mount vega-embed",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 653,
+          "h": 329,
+          "top": 3547,
+          "left": 314,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 653,
+          "h": 329
+        }
+      },
+      {
+        "id": "des_06",
+        "cls": "stat-callout",
+        "des": null,
+        "label": "The fingerprints are still in the all-time list of individua",
+        "mount": {
+          "w": 707,
+          "h": 120,
+          "top": 4113,
+          "left": 287,
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      },
+      {
+        "id": "des_05",
+        "cls": "visual",
+        "des": "des_05",
+        "label": "Then the floor fell out. Launch volume peaked by decade in t",
+        "mount": {
+          "w": 707,
+          "h": 1193,
+          "top": 4436,
+          "left": 287,
+          "display": "block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      },
+      {
+        "id": "des_07_m",
+        "cls": "chart-mount vega-embed",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 653,
+          "h": 281,
+          "top": 6206,
+          "left": 314,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 653,
+          "h": 281
+        }
+      },
+      {
+        "id": "des_09_m",
+        "cls": "chart-mount vega-embed",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 653,
+          "h": 271,
+          "top": 8192,
+          "left": 314,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 653,
+          "h": 271
+        }
+      },
+      {
+        "id": "des_11",
+        "cls": "visual",
+        "des": "des_11",
+        "label": "How much of China's program is one rocket?\n  \n    Your guess",
+        "mount": {
+          "w": 707,
+          "h": 441,
+          "top": 9128,
+          "left": 287,
+          "display": "block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      },
+      {
+        "id": "des_14_m",
+        "cls": "chart-mount",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 653,
+          "h": 300,
+          "top": 12501,
+          "left": 314,
+          "display": "block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 653,
+          "h": 300
+        }
+      },
+      {
+        "id": "des_15_m",
+        "cls": "chart-mount vega-embed",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 653,
+          "h": 395,
+          "top": 13103,
+          "left": 314,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 653,
+          "h": 395
+        }
+      },
+      {
+        "id": "des_16_m",
+        "cls": "chart-mount vega-embed",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 653,
+          "h": 241,
+          "top": 14158,
+          "left": 314,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 653,
+          "h": 241
+        }
+      },
+      {
+        "id": "des_18",
+        "cls": "stat-callout",
+        "des": null,
+        "label": "Sorted by kind of operator, the surprise runs the other way.",
+        "mount": {
+          "w": 707,
+          "h": 141,
+          "top": 15102,
+          "left": 287,
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      },
+      {
+        "id": "des_19_m",
+        "cls": "chart-mount vega-embed",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 653,
+          "h": 292,
+          "top": 15850,
+          "left": 314,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 653,
+          "h": 292
+        }
+      },
+      {
+        "id": "des_21",
+        "cls": "visual",
+        "des": "des_21",
+        "label": "When did a 'startup' first reach orbit?\n  \n    Your guess: t",
+        "mount": {
+          "w": 707,
+          "h": 492,
+          "top": 16646,
+          "left": 287,
+          "display": "block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      },
+      {
+        "id": "des_23",
+        "cls": "stat-callout",
+        "des": null,
+        "label": "Why any of this matters beyond a leaderboard: who can launch",
+        "mount": {
+          "w": 707,
+          "h": 141,
+          "top": 17776,
+          "left": 287,
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      },
+      {
+        "id": "des_22",
+        "cls": "visual",
+        "des": "des_22",
+        "label": "Which leaves two true pictures of the same sky. In any given",
+        "mount": {
+          "w": 707,
+          "h": 565,
+          "top": 18149,
+          "left": 287,
+          "display": "block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": false,
+        "isWrapper": false,
+        "renderTag": null,
+        "render": null
+      }
+    ],
+    "imgs": [
+      {
+        "src": "assets/teaser.jpg",
+        "natW": 1080,
+        "natH": 720,
+        "lazyPending": false,
+        "broken": false,
+        "w": 0,
+        "h": 0,
+        "top": 0,
+        "left": 0,
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_sputnik_web.webp",
+        "natW": 1600,
+        "natH": 1067,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1600,
+        "h": 1250,
+        "top": -125,
+        "left": -160,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_sputnik_web.webp",
+        "natW": 1600,
+        "natH": 1067,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_baikonur_pad_web.webp",
+        "natW": 1600,
+        "natH": 1065,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_china_launch_web.webp",
+        "natW": 1600,
+        "natH": 783,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_china_launch_web.webp",
+        "natW": 1600,
+        "natH": 783,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1600,
+        "h": 1250,
+        "top": -125,
+        "left": -160,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_china_launch_web.webp",
+        "natW": 1600,
+        "natH": 783,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_shuttle_pad_web.webp",
+        "natW": 1600,
+        "natH": 1064,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_ariane5_web.webp",
+        "natW": 1600,
+        "natH": 1200,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_falconheavy_boosters_web.webp",
+        "natW": 1600,
+        "natH": 1067,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_earth_limb_web.webp",
+        "natW": 1600,
+        "natH": 1062,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_earth_limb_web.webp",
+        "natW": 1600,
+        "natH": 1062,
+        "lazyPending": false,
+        "broken": false,
+        "w": 98,
+        "h": 98,
+        "top": 1497,
+        "left": 389,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_sputnik_web.webp",
+        "natW": 1600,
+        "natH": 1067,
+        "lazyPending": false,
+        "broken": false,
+        "w": 707,
+        "h": 472,
+        "top": 2319,
+        "left": 287,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_soyuz_launch_web.webp",
+        "natW": 1600,
+        "natH": 2490,
+        "lazyPending": false,
+        "broken": false,
+        "w": 707,
+        "h": 1099,
+        "top": 4436,
+        "left": 287,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_china_launch_web.webp",
+        "natW": 1600,
+        "natH": 783,
+        "lazyPending": false,
+        "broken": false,
+        "w": 707,
+        "h": 347,
+        "top": 9128,
+        "left": 287,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "https://img.youtube.com/vi/wbSwFU6tY1c/hqdefault.jpg",
+        "natW": 0,
+        "natH": 0,
+        "lazyPending": false,
+        "broken": false,
+        "w": 705,
+        "h": 0,
+        "top": 16647,
+        "left": 288,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 0.9
+      },
+      {
+        "src": "assets/scout_iss_earth_web.webp",
+        "natW": 1600,
+        "natH": 1065,
+        "lazyPending": false,
+        "broken": false,
+        "w": 707,
+        "h": 471,
+        "top": 18149,
+        "left": 287,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      }
+    ],
+    "vids": [
+      {
+        "src": "http://127.0.0.1:54295/assets/teaser.webm",
+        "hasPoster": true,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      }
+    ],
+    "maps": [],
+    "cssLeak": [],
+    "zeroWidthBars": [],
+    "iframeHeroLoops": []
+  },
+  "performance": {
+    "oversizedAssets": [],
+    "unreferencedAssets": [
+      {
+        "file": "assets/scout_ariane5.jpg",
+        "kind": "image",
+        "bytes": 297880,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/scout_baikonur_pad.jpg",
+        "kind": "image",
+        "bytes": 337480,
+        "mb": 0.32
+      },
+      {
+        "file": "assets/scout_bgm.flac",
+        "kind": "audio",
+        "bytes": 46839163,
+        "mb": 44.67
+      },
+      {
+        "file": "assets/scout_bgm.mp3",
+        "kind": "audio",
+        "bytes": 1441374,
+        "mb": 1.37
+      },
+      {
+        "file": "assets/scout_china_launch.png",
+        "kind": "image",
+        "bytes": 762463,
+        "mb": 0.73
+      },
+      {
+        "file": "assets/scout_earth_limb.jpg",
+        "kind": "image",
+        "bytes": 358248,
+        "mb": 0.34
+      },
+      {
+        "file": "assets/scout_electron_b.jpg",
+        "kind": "image",
+        "bytes": 384598,
+        "mb": 0.37
+      },
+      {
+        "file": "assets/scout_electron_b_web.webp",
+        "kind": "image",
+        "bytes": 65874,
+        "mb": 0.06
+      },
+      {
+        "file": "assets/scout_falcon9_2018launch.jpg",
+        "kind": "image",
+        "bytes": 403323,
+        "mb": 0.38
+      },
+      {
+        "file": "assets/scout_falcon9_2018launch_web.webp",
+        "kind": "image",
+        "bytes": 147682,
+        "mb": 0.14
+      },
+      {
+        "file": "assets/scout_falcon9_landing.jpg",
+        "kind": "image",
+        "bytes": 291839,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/scout_falcon9_landing_web.webp",
+        "kind": "image",
+        "bytes": 102178,
+        "mb": 0.1
+      },
+      {
+        "file": "assets/scout_falcon9_reflight.jpg",
+        "kind": "image",
+        "bytes": 362890,
+        "mb": 0.35
+      },
+      {
+        "file": "assets/scout_falcon9_reflight_web.webp",
+        "kind": "image",
+        "bytes": 137076,
+        "mb": 0.13
+      },
+      {
+        "file": "assets/scout_falconheavy_boosters.jpg",
+        "kind": "image",
+        "bytes": 387506,
+        "mb": 0.37
+      },
+      {
+        "file": "assets/scout_falconheavy_launch.jpg",
+        "kind": "image",
+        "bytes": 334510,
+        "mb": 0.32
+      },
+      {
+        "file": "assets/scout_falconheavy_launch_web.webp",
+        "kind": "image",
+        "bytes": 126060,
+        "mb": 0.12
+      },
+      {
+        "file": "assets/scout_iss_earth.jpg",
+        "kind": "image",
+        "bytes": 202238,
+        "mb": 0.19
+      },
+      {
+        "file": "assets/scout_longmarch5_pad.jpg",
+        "kind": "image",
+        "bytes": 257798,
+        "mb": 0.25
+      },
+      {
+        "file": "assets/scout_longmarch5_pad_web.webp",
+        "kind": "image",
+        "bytes": 61358,
+        "mb": 0.06
+      },
+      {
+        "file": "assets/scout_longmarch_launch.jpg",
+        "kind": "image",
+        "bytes": 205210,
+        "mb": 0.2
+      },
+      {
+        "file": "assets/scout_longmarch_launch_web.webp",
+        "kind": "image",
+        "bytes": 61072,
+        "mb": 0.06
+      },
+      {
+        "file": "assets/scout_shuttle_liftoff.jpg",
+        "kind": "image",
+        "bytes": 434776,
+        "mb": 0.41
+      },
+      {
+        "file": "assets/scout_shuttle_liftoff_web.webp",
+        "kind": "image",
+        "bytes": 113382,
+        "mb": 0.11
+      },
+      {
+        "file": "assets/scout_shuttle_pad.jpg",
+        "kind": "image",
+        "bytes": 205464,
+        "mb": 0.2
+      },
+      {
+        "file": "assets/scout_soyuz_launch.jpg",
+        "kind": "image",
+        "bytes": 572124,
+        "mb": 0.55
+      },
+      {
+        "file": "assets/scout_sputnik.jpg",
+        "kind": "image",
+        "bytes": 606286,
+        "mb": 0.58
+      }
+    ],
+    "totalAssetBytes": 4165269,
+    "totalAssetMb": 3.97,
+    "totalBudgetMb": 8,
+    "totalOverBudget": false
+  },
+  "mobile": {
+    "viewport": {
+      "w": 390,
+      "h": 844,
+      "dpr": 2
+    },
+    "pageW": 390,
+    "viewportW": 390,
+    "horizontalOverflow": false,
+    "screenshot": "audit\\shots\\_mobile.png"
+  },
+  "probe": null,
+  "screenshots": [
+    {
+      "name": "_full_seg0_y0",
+      "path": "audit\\shots\\_full_00.png"
+    },
+    {
+      "name": "_full_seg1_y1000",
+      "path": "audit\\shots\\_full_01.png"
+    },
+    {
+      "name": "_full_seg2_y2000",
+      "path": "audit\\shots\\_full_02.png"
+    },
+    {
+      "name": "_full_seg3_y3000",
+      "path": "audit\\shots\\_full_03.png"
+    },
+    {
+      "name": "_full_seg4_y4000",
+      "path": "audit\\shots\\_full_04.png"
+    },
+    {
+      "name": "_full_seg5_y5000",
+      "path": "audit\\shots\\_full_05.png"
+    },
+    {
+      "name": "_full_seg6_y6000",
+      "path": "audit\\shots\\_full_06.png"
+    },
+    {
+      "name": "_full_seg7_y7000",
+      "path": "audit\\shots\\_full_07.png"
+    },
+    {
+      "name": "_full_seg8_y8000",
+      "path": "audit\\shots\\_full_08.png"
+    },
+    {
+      "name": "_full_seg9_y9000",
+      "path": "audit\\shots\\_full_09.png"
+    },
+    {
+      "name": "_full_seg10_y10000",
+      "path": "audit\\shots\\_full_10.png"
+    },
+    {
+      "name": "_full_seg11_y11000",
+      "path": "audit\\shots\\_full_11.png"
+    },
+    {
+      "name": "_full_seg12_y12000",
+      "path": "audit\\shots\\_full_12.png"
+    },
+    {
+      "name": "_full_seg13_y13000",
+      "path": "audit\\shots\\_full_13.png"
+    },
+    {
+      "name": "_full_seg14_y14000",
+      "path": "audit\\shots\\_full_14.png"
+    },
+    {
+      "name": "_full_seg15_y15000",
+      "path": "audit\\shots\\_full_15.png"
+    },
+    {
+      "name": "des_03",
+      "path": "audit\\shots\\chart_0_des_03.png"
+    },
+    {
+      "name": "des_02",
+      "path": "audit\\shots\\chart_1_des_02.png"
+    },
+    {
+      "name": "des_04",
+      "path": "audit\\shots\\chart_2_des_04.png"
+    },
+    {
+      "name": "des_04_m",
+      "path": "audit\\shots\\chart_3_des_04_m.png"
+    },
+    {
+      "name": "des_06",
+      "path": "audit\\shots\\chart_4_des_06.png"
+    },
+    {
+      "name": "des_05",
+      "path": "audit\\shots\\chart_5_des_05.png"
+    },
+    {
+      "name": "des_07",
+      "path": "audit\\shots\\chart_6_des_07.png"
+    },
+    {
+      "name": "des_07_m",
+      "path": "audit\\shots\\chart_7_des_07_m.png"
+    },
+    {
+      "name": "des_09",
+      "path": "audit\\shots\\chart_8_des_09.png"
+    },
+    {
+      "name": "des_09_m",
+      "path": "audit\\shots\\chart_9_des_09_m.png"
+    },
+    {
+      "name": "des_11",
+      "path": "audit\\shots\\chart_10_des_11.png"
+    },
+    {
+      "name": "des_14",
+      "path": "audit\\shots\\chart_11_des_14.png"
+    },
+    {
+      "name": "des_14_m",
+      "path": "audit\\shots\\chart_12_des_14_m.png"
+    },
+    {
+      "name": "des_15",
+      "path": "audit\\shots\\chart_13_des_15.png"
+    },
+    {
+      "name": "des_15_m",
+      "path": "audit\\shots\\chart_14_des_15_m.png"
+    },
+    {
+      "name": "des_16",
+      "path": "audit\\shots\\chart_15_des_16.png"
+    },
+    {
+      "name": "des_16_m",
+      "path": "audit\\shots\\chart_16_des_16_m.png"
+    },
+    {
+      "name": "des_18",
+      "path": "audit\\shots\\chart_17_des_18.png"
+    },
+    {
+      "name": "des_19",
+      "path": "audit\\shots\\chart_18_des_19.png"
+    },
+    {
+      "name": "des_19_m",
+      "path": "audit\\shots\\chart_19_des_19_m.png"
+    },
+    {
+      "name": "des_21",
+      "path": "audit\\shots\\chart_20_des_21.png"
+    },
+    {
+      "name": "des_23",
+      "path": "audit\\shots\\chart_21_des_23.png"
+    },
+    {
+      "name": "des_22",
+      "path": "audit\\shots\\chart_22_des_22.png"
+    }
+  ],
+  "screenshotErrors": [
+    "page 19592px > 16 segs; captured top 16000px"
+  ]
+}

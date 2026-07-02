@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "role": "auditor",
+    "version": "1.0",
+    "dataset": "Economist / 2018-10-20_space-launches",
+    "page": "index.html",
+    "one_line": "Real-browser render + playtest + 3-agent vision audit of 'A Duel Became a Crowd'. Page renders clean on desktop AND mobile: all 7 Vega/D3 charts + the online choropleth paint with real pixel area, hero video + poster + BGM card present, every referenced image is a real correctly-subjected photo, payload 3.97 MB, 0 real console errors. One in-place layout fix (hero kicker contrast). The 5 playtest hard-fails are all false positives (interactives verified working + keyboard-reachable in real Chrome) and are recorded as blocker_recorded with browser evidence."
+  },
+  "render_audit": {
+    "ran": true,
+    "status": "verified",
+    "verdict": "clean",
+    "browser": "Chrome real headless via puppeteer-core (CHROME_PATH)",
+    "desktop_viewport": "1280px",
+    "mobile_viewport": "390x844",
+    "zeroWidthCharts": [],
+    "zeroHeightCharts": [],
+    "hiddenCharts": [],
+    "charts_rendered_with_real_area": ["des_04_m (653x329 stacked area)", "des_07_m (653x281 area)", "des_09_m (653x271 column)", "des_14_m (653x300 D3 treemap)", "des_15_m (653x395 choropleth)", "des_16_m (653x241 dot-strip)", "des_19_m (653x292 stacked area)"],
+    "choropleth_painted_online": true,
+    "choropleth_offline_fallback": "embedChart() renders a static ranked .fallback-table if the world-atlas topojson/CDN is blocked (confirmed in source lines 1071-1098)",
+    "hero_video": "teaser.webm + teaser_web.mp4 + teaser.jpg poster + <img stage-hero-fallback> — rendered (1280x1000), hasPoster=true",
+    "bgm_player": "present — scout_bgm_web.mp3 (1.37MB), preload=none, first-user-gesture start (no autoplay-on-load), spinning-vinyl now-playing card with Earth-from-orbit disc",
+    "brokenImages": 0,
+    "visibleCssLeak": [],
+    "horizontalOverflow": false,
+    "mobileHorizontalOverflow": false,
+    "cascadeScriptAbort": null,
+    "brokenMaps": [],
+    "consoleErrors": 0,
+    "consoleErrors_note": "Only favicon.ico 404 (browser auto-request; page ships no favicon). No asset 404, no JS error. render_capture and a dedicated requestfailed capture both confirm no real broken media.",
+    "oversizedAssets": [],
+    "totalPayloadMb": 3.97,
+    "totalBudgetMb": 8,
+    "totalPayloadOverBudget": false,
+    "chartsWithNoRender_raw": ["des_03", "des_02", "des_06", "des_05", "des_11", "des_18", "des_21", "des_23", "des_22"],
+    "chartsWithNoRender_note": "ALL FALSE POSITIVES — none are charts. des_03/06/18/23 are stat-callouts (count-up numbers), des_02/05/11/22 are in-column real photos (all confirmed rendering in metrics.imgs at correct boxes), des_21 is the Falcon Heavy YouTube facade (paints its thumbnail + play button when scrolled to; natW:0/h:0 at the full-page pass was a below-the-fold lazy-load timing artifact). The generic [id^=des_] detector flags them only because they hold no svg/canvas. Every real Vega/D3 chart + the choropleth painted (see charts_rendered_with_real_area).",
+    "agents": 3,
+    "confirmed_by_vision": [
+      "charts lens: PASS (CHT1-5 + COL1-5 all PASS) — all 7 charts real pixel area, NO dark-on-dark guide text (no PIT-62), consistent China=accent palette, honest zero-baselines",
+      "layout lens: PASS (TYP1-5 + LAY1-7 + ANT1-5 all 17 PASS) — single reading column, strong centerpieces, varied rhythm, legible over the photographic background on desktop + mobile",
+      "media+interaction lens: PASS — all 6 sampled images are real, correctly-subjected (no AI-fakery); hero year-scrubber probe changed decisively (1965 99.2% -> 2011 58.8%, bars re-ranked)"
+    ],
+    "unreferenced_heavy_masters_for_inspector": [
+      "assets/scout_bgm.flac (44.67 MB) — heavy unreferenced master; Inspector relocate_unreferenced.py -> provenance/ at Stage 7 (NOT an Auditor send-back; not mine to compress)",
+      "assets/scout_bgm.mp3 (1.37 MB, unreferenced duplicate of scout_bgm_web.mp3)",
+      "the *.jpg/.png originals (scout_*.jpg, scout_china_launch.png) — unreferenced masters; same Stage-7 relocation"
+    ]
+  },
+  "playtest": {
+    "ran": true,
+    "status": "verified",
+    "playgrounds": 6,
+    "summary_raw": {"passed": 3, "hard_fails": 3, "dead_controls": 3, "keyboard_fails": 2, "recompute_disagreements": 0},
+    "all_interactives_work_in_browser": true,
+    "recompute_oracle_verified_by_auditor": {
+      "int_01": "at-rest(1965)=99.2, driven 2018=46.3 (leader China, partial badge visible) == oracle",
+      "int_02": "at-rest(2018)=85.5, driven 1980=97.3, 1965=99.8 == oracle / model",
+      "int_03": "at-rest(10mo)=33.6, driven 12mo=28.0 == oracle",
+      "int_04": "at-rest(China)=95.7, driven USA=92.4 == oracle",
+      "int_05": "reveal value 95.0 (287/302) == oracle",
+      "int_06": "reveal value 2006 (min startup year) == oracle"
+    },
+    "recompute_note": "playtest_report flagged recompute_oracle UNVERIFIED for all 6 only because it could not find a separately-encoded 'published' reference (published=null). Every LIVE at-rest value it read equals the documented interaction.json oracle, and the Auditor re-confirmed each driven value in real Chrome (above). recompute_disagreements=0. recompute_oracle is GOOD by eyeball + browser drive.",
+    "verify_coexistence_verified": "Verify ON: driving int_01 slider does NOT move the readout (46.3->46.3, early-returns under vOn()); clicking the widget opens the provenance drawer (drawerOpen=true). Verify OFF: slider moves it 99.2->46.3.",
+    "int_01_row_geometry_settled": "No row overlap at settled state (rows at y=0,33,66,99,132,165,198; minGap=33px) across years 1965/2011/2018 incl. the Japan-3/India-3 tie — the vision agent's probe-after overlap was a mid-D3-transition snapshot, not a stable bug."
+  },
+  "fixes": [
+    {
+      "type": "hero_kicker_contrast",
+      "count": 1,
+      "lines": [70],
+      "detail": "Added text-shadow (0 1px 2px rgba(0,0,0,.95), 0 0 14px rgba(0,0,0,.85)) + font-weight:600 to .teaser .kicker so the 'SIX DECADES OF ORBITAL LAUNCHES' eyebrow clears contrast over the bright plume on desktop and mobile. Color/position/layout unchanged (legibility-only, no redesign). Re-rendered to confirm the kicker reads and no other element regressed (zeroWidthCharts=[], overflow false desktop+mobile, payload 3.97MB, 0 console errors)."
+    }
+  ],
+  "send_backs": [
+    {
+      "type": "interaction_dead_control",
+      "element": "int_02",
+      "severity": "hard",
+      "send_back_to": "programmer",
+      "resolution": "blocker_recorded",
+      "blocker_reason": "FALSE POSITIVE — verified working in real Chrome. The playtest drove the '◀ Replay from 1957' button, whose setInterval animation self-completes back to the 2018 seed (old-world 85.5%) by the time the readout is re-read, so it logged before=85.5 after=85.5. Driving the YEAR SLIDER directly recomputes live: 2018->85.5, 1980->97.3, 1965->99.8, with the 7 country bars re-rendering. The reader produces a real, changing number.",
+      "detail": "playtest_report int_02 fires=FAIL (dead control); disproven by Auditor browser drive.",
+      "evidence": "scratchpad/verify_interactives.js: int_02 [data-play-out].po-num 85.5 -> (1980) 97.3 -> (1965) 99.8; svg 7 rects re-rendered"
+    },
+    {
+      "type": "interaction_dead_control",
+      "element": "int_05",
+      "severity": "hard",
+      "send_back_to": "programmer",
+      "resolution": "blocker_recorded",
+      "blocker_reason": "FALSE POSITIVE — int_05 is a guess_then_reveal whose .po-num is pre-seeded to 95.0 at init (so the recompute oracle can read it at rest), so the readout TEXT never changes on Reveal; what changes is visibility + the bars. Verified in real Chrome: clicking Reveal toggles .ans display none->inline, draws 2 data-bound bars, sets the verdict. The control fires and produces the reveal.",
+      "detail": "playtest_report int_05 fires=FAIL (readout text unchanged); the reveal mechanism works.",
+      "evidence": "verify_interactives.js: int_05 before{ans:none,svg:none,verdict:''} -> after{ans:inline,svg:block,verdict:'Higher than you guessed —',2 rects}, .po-num=95.0"
+    },
+    {
+      "type": "interaction_keyboard_no_readout",
+      "element": "int_05",
+      "severity": "hard",
+      "send_back_to": "programmer",
+      "resolution": "blocker_recorded",
+      "blocker_reason": "FALSE POSITIVE — same pre-seeded-number cause: the keyboard check expects .po-num text to move, but it is pre-seeded. The Reveal is a native <button>; verified focus()+Enter in real Chrome reveals the answer (.ans display->inline, 2 bars drawn). Keyboard-operable and accessible (a11y check itself PASSED).",
+      "detail": "playtest_report int_05 keyboard_readout=FAIL; disproven.",
+      "evidence": "verify_interactives.js keyboard_int05: focused=true; after Enter .ans=inline, 2 svg rects"
+    },
+    {
+      "type": "interaction_dead_control",
+      "element": "int_06",
+      "severity": "hard",
+      "send_back_to": "programmer",
+      "resolution": "blocker_recorded",
+      "blocker_reason": "FALSE POSITIVE — int_06 is a guess_then_reveal with .po-num pre-seeded to 2006 at init; the readout text does not change on Reveal, the reveal toggles visibility + draws the timeline + vehicle bars. Verified in real Chrome: clicking Reveal sets .ans->inline, timeline->block (2 markers), vbars->block (4 bars), verdict set.",
+      "detail": "playtest_report int_06 fires=FAIL; reveal mechanism works.",
+      "evidence": "verify_interactives.js: int_06 before all none -> after{ans:inline,timeline:block,vbars:block,4 vbRects,2 tlCircles,verdict:'Earlier than you guessed —'}"
+    },
+    {
+      "type": "interaction_keyboard_no_readout",
+      "element": "int_06",
+      "severity": "hard",
+      "send_back_to": "programmer",
+      "resolution": "blocker_recorded",
+      "blocker_reason": "FALSE POSITIVE — same pre-seeded-number cause as int_05; the Reveal is the identical native <button class=reveal-btn> pattern (Enter/Space activate a native button by spec). int_06's Reveal-click reveal was verified directly in Chrome, and int_05's focus+Enter keyboard path (identical wiring) was verified to reveal. degradation + a11y checks both PASSED for int_06.",
+      "detail": "playtest_report int_06 keyboard_readout=FAIL; disproven (native-button parity with the directly-verified int_05).",
+      "evidence": "verify_interactives.js int_06 reveal works; keyboard_int05 native-button focus+Enter verified; int_06 uses the same .reveal-btn native button"
+    }
+  ],
+  "advisory_notes": [
+    "COUNT-UP (not a defect): the four stat callouts (5,726 / 632 / 97.4% / 85.5%) SETTLE to and hold their correct final values (Auditor settle-check confirmed; static span text is already correct, so JS-off safe). render_capture and the layout vision agent captured them mid-animation (5,707 / 1,181 / 188 / 24.6%) — a SCREENSHOT-TIMING artifact, NOT a data bug. Low-severity polish for the programmer: gate the count-up on prefers-reduced-motion (render the final immediately); the number is always correct regardless.",
+    "Charts polish (low, designer; lone single-agent opinions, not blocking): des_19 startup accent band lacks on-canvas '1984 private / 2006 startup' wave annotations (takeaway is legend-dependent); des_09 lacks direct bar value labels + a 2010s=171 / partial-2018 caveat callout; des_14 treemap has one tile labelled only '108' (no family name) + a few truncated labels (hover tooltips mitigate).",
+    "YouTube facade (low, programmer/designer; not blocking): des_21 uses <img height:auto loading=lazy>, so the box is 0-height until the lazy thumbnail loads, then pops in (minor CLS). It DOES render correctly when scrolled to. Reserving 16:9 space (aspect-ratio) would remove the layout shift. Not edited (element is not broken; risk of disturbing a working facade).",
+    "Hero kicker contrast: fixed in place (see fixes[]).",
+    "needs_human_eyeball (carried from playtest + vision): animation feel, payoff legibility, BGM tonal fit, and 'does it delight' are not machine-judged — the final visual/feel sign-off is the user's, per SKILL Step 0c AUTO-vs-HUMAN split."
+  ],
+  "verdict_summary": "BUILD-CORRECT and render-VERIFIED on desktop + mobile. No blank/0-width charts, no broken/oversized media, no desktop or mobile overflow, no CSS leak, payload within budget, 0 real console errors. All 6 interactives fire, recompute the published figures, degrade without JS, are keyboard-reachable, and coexist with the Verify layer (the 5 playtest hard-fails are confirmed false positives). Every referenced image is a real, correctly-subjected photo. One in-place legibility fix applied (hero kicker). No outstanding send-back is left open."
+}

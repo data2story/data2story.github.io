@@ -1,0 +1,750 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "dataset": "Economist / 2018-10-20_space-launches",
+    "run_profile": "premium",
+    "one_line": "Visual brief for 'A Duel Became a Crowd': an editorial-dark, cinematic space-history page where a real Long March cinemagraph hero opens, a year-scrubber lets the reader produce the duopoly-share collapse, and six static charts + a country choropleth + a verified real-photo layer carry the duel->crowd thesis honestly (partial-2018 marked, vehicle-family ranking, no point map).",
+    "media_strategy": {
+      "selection_principle": "All five channels used and earned; each asset carries an explicit INFORM/IMMERSE purpose; no decoration.",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true,
+      "centerpiece": "des_08",
+      "centerpiece_section": "edt_03"
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "A dense quantitative census -> 6 charts with varied types (stacked area spine, single-series area, columns, dot-strip, treemap) carrying the per-country/per-year/reliability/commercialization findings."
+      },
+      "image": {
+        "used": true,
+        "reason": "A visual_subject + place topic: 5 verified real launch/space photos (hero Long March 5, Sputnik, Soyuz, Long March, ISS) plus a 15-image cover-able pool for the cinematic; no decorative stock, no AI of any real subject."
+      },
+      "video": {
+        "used": true,
+        "reason": "Two earned video beats: the hero cinemagraph (image2video on the verified Long March still) and the Scout-verified Falcon Heavy oEmbed (the iconic Feb-2018 moment, in-window)."
+      },
+      "audio": {
+        "used": true,
+        "reason": "Mandatory BGM: a license-clean ambient instrumental (rung 1, sct_01) in the top-of-article spinning-vinyl card; restrained mood fits a sober analytical history. Transcoded 45 MB FLAC -> 1.375 MB MP3."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "The hero year-scrubber centerpiece + 5 supporting playgrounds (annualize, cumulative bar-race, success-rate calculator, two guess-then-reveals) each bound to a distinct finding, plus an all-time country choropleth for the geographic channel."
+      }
+    },
+    "media_blockers": [],
+    "ai_assets_generated": "NONE. Every named real subject (rockets, Sputnik, ISS) uses a verified Scout photo; no genuine gap required AI (the Rocket Lab Electron gap is covered by the Scout's generic-captioned sct_19, and geography is the data-driven choropleth) — so no real object is faked.",
+    "cinematic": {
+      "mandatory": true,
+      "mode": "photographic",
+      "why_mode": "is_visual=true and 15 cover-able, license-clean, identity-verified backgrounds are registered (>=5) -> photographic scroll background.",
+      "hero_as_cin_00": "des_hero_video (sct_03, Long March 5 night launch) is staged as cin_00.",
+      "coverable_pool": [
+        "sct_03",
+        "sct_05",
+        "sct_07",
+        "sct_08",
+        "sct_09",
+        "sct_10",
+        "sct_11",
+        "sct_12",
+        "sct_13",
+        "sct_14",
+        "sct_15",
+        "sct_16",
+        "sct_17",
+        "sct_18",
+        "sct_19"
+      ],
+      "suggested_scene_arc": [
+        {
+          "beat": "origin (1957)",
+          "media_ref": "sct_13"
+        },
+        {
+          "beat": "the Soviet workhorse / Baikonur",
+          "media_ref": "sct_07"
+        },
+        {
+          "beat": "China rises",
+          "media_ref": "sct_05"
+        },
+        {
+          "beat": "the US fleet (Shuttle era)",
+          "media_ref": "sct_14"
+        },
+        {
+          "beat": "the venture wave (Falcon Heavy boosters)",
+          "media_ref": "sct_11"
+        },
+        {
+          "beat": "Europe / Arianespace",
+          "media_ref": "sct_16"
+        },
+        {
+          "beat": "close — Earth / orbit",
+          "media_ref": "sct_17"
+        }
+      ],
+      "note": "All backgrounds resolve to registered scout sct_ ids (license + identity checked in scout.json). Portrait shots sct_04, sct_06 are NOT cover-able (background use excluded)."
+    }
+  },
+  "items": {
+    "des_hero_video": {
+      "label": "Hero cover — Long March 5 night launch (cinemagraph)",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "teaser",
+      "content": {
+        "asset_type": "video",
+        "filename": "teaser.webm",
+        "poster": "scout_longmarch5_pad_web.webp",
+        "tool": "image2video",
+        "source_image": "assets/scout_longmarch5_pad_web.webp",
+        "media_ref": "sct_03",
+        "model": "google/veo-3.1-fast",
+        "duration": 6,
+        "aspect_ratio": "16:9",
+        "frame_role": "first",
+        "prompt": "MOTION-ONLY cinemagraph: the bright exhaust plume billows and rises, smoke drifts and curls outward at the base, the engine flame flickers, the four lightning towers glow and shimmer, faint stars twinkle in the night sky and palm fronds sway slightly — the white Long March 5 rocket body stays HELD and undistorted, no camera shake, in-place cyclic motion that loops.",
+        "hero_strategy": {
+          "rung": "real_still",
+          "note": "+image2video",
+          "why": "Rung 1 (interactive hero) declined on purpose: the centerpiece is the duel->crowd duopoly-share reveal, which the Editor's standfirst must NOT spoil (no 54.5% on the first screen) — so it cannot front-load the hero. Rung 2 (real_still) taken: a verified, license-clean, dramatic real launch (Long March 5 night liftoff at Wenchang, sct_03) is the natural face of 'new contenders' and lands the hook immediately; animated into a subtle cinemagraph (rocket held, plume/smoke/floodlights move). Not a real face, so no Veo refusal; Hero may fall back to ffmpeg Ken-Burns boomerang if motion distorts."
+        },
+        "disclosure": "Real photograph (Long March 5, Wenchang, China — CC0, Shujianyang/Wikimedia); motion added as a cinemagraph (the rocket is the original still; plume/smoke/lights animated). Not AI video of a real person."
+      },
+      "brief": "The first thing the reader sees, before the headline. A full-bleed, muted, looping cinemagraph built from the verified real still of a Long March 5 lifting off at night between four floodlit lightning towers (sct_03). The rocket body holds still; the exhaust plume, drifting smoke, flame flicker and tower glow move, so the cover reads as premium motion without faking anything. The headline 'A Duel Became a Crowd' sits over a bottom scrim. It signals the subject (a launch) and the protagonist (China's new heavy-lift rocket) so the 'new contenders' hook lands in the first beat. Rendered by the Hero stage as teaser.webm + _web.mp4 + .jpg poster; degrades to the still poster.",
+      "rationale": "An animated real launch is the strongest possible cover for a launch-history story and front-loads the 'new contender' subject without spending the centerpiece's reveal. A FETCHED real still animated as a cinemagraph honors the real-subject rule (never generate a specific real rocket).",
+      "based_on": [],
+      "media_ref": "sct_03"
+    },
+    "des_01": {
+      "label": "Top-of-article BGM — restrained ambient (now-playing card)",
+      "type": "audio",
+      "purpose": "IMMERSE",
+      "section": "edt_01",
+      "content": {
+        "audio_type": "sourced_bgm",
+        "why_audio": "A sober, analytical six-decade Cold-War-to-now space history wants a restrained, spacious ambient bed (mood word 'ambient'/'pensive' per the sober_computational map), not an anthem. It sets a contemplative reading tone for a numbers-heavy piece.",
+        "filename": "scout_bgm_web.mp3",
+        "media_ref": "sct_01",
+        "cover_image": "scout_earth_limb_web.webp",
+        "trigger": "Autostarts on the reader's FIRST click/tap anywhere; then reader-controlled via one play/pause button; page works fully when muted.",
+        "ui_form": "The one canonical BGM card: top of the article (directly below the title), centered, with a SPINNING VINYL disc (the Earth-from-orbit cover rendered as a circular disc that rotates only while playing; paused otherwise; spin disabled under prefers-reduced-motion) + title/artist/eyebrow + one play/pause button.",
+        "fallback": "If muted/unsupported the page is unaffected; if the cover image were missing, a designed CSS disc stands in (never AI).",
+        "novelty_note": "Track character differs from recent blogs (a quiet ambient instrumental, not an anthem/loop); the PLAYER FORM is the fixed top-of-article spinning-vinyl card by design.",
+        "web_weight": "Transcoded from the Scout's 45 MB FLAC to a 90 s 128 kbps MP3 (1.375 MB, < 3 MB budget)."
+      },
+      "brief": "The mandatory front-of-blog soundtrack as a spinning-vinyl now-playing card at the very top of the article, below the title. Real, license-clean ambient instrumental (raspberrymusic, CC BY 3.0; attribution renders in the References footer). Cover art = the Earth-from-orbit still (sct_17). First-click autostart, reader-controlled, mute-safe.",
+      "rationale": "BGM is mandatory; a restrained ambient real track is the right fit for a sober analytical space history (rung 1 license-clean). Sets immersion without competing with the data.",
+      "based_on": [],
+      "media_ref": "sct_01"
+    },
+    "des_02": {
+      "label": "Sputnik 1 replica — where the census begins (1957)",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_01",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_sputnik_web.webp",
+        "tool": "scout_fetch",
+        "media_ref": "sct_13"
+      },
+      "brief": "A real photo of the Sputnik 1 replica (polished sphere + four antennas) anchoring the census-authority paragraph — the first object of the orbital era the dataset starts from (4 Oct 1957). Set beside the '5,726 attempts since Sputnik' line.",
+      "rationale": "Grounds the abstract 'census of 5,726 launches' in the concrete object the record opens with; a real artifact, not a fabricated one. Distinct from the hero (a Long March) so the opening isn't a duplicate image.",
+      "based_on": [
+        "ana_01"
+      ],
+      "media_ref": "sct_13"
+    },
+    "des_03": {
+      "label": "Census scope callout — 5,726 launches, 94.0%",
+      "type": "stat_callout",
+      "purpose": "INFORM",
+      "section": "edt_01",
+      "content": {
+        "value": "5,726",
+        "label": "orbital launch attempts mapped, 1957-2018 — a full census, not a sample (94.0% reached orbit)",
+        "data_source": "ana_01"
+      },
+      "brief": "An oversized headline stat that establishes the trust footing right at the hook: every orbital launch ever attempted is in the data. Number counts up on scroll-in.",
+      "rationale": "The census completeness is the credibility spine of the whole piece; a callout lands it harder than a clause and varies the rhythm before any chart.",
+      "based_on": [
+        "ana_01"
+      ]
+    },
+    "des_04": {
+      "label": "The master spine — launches per country per year (1957-2018)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "stacked_area",
+        "data_source": "ana_03",
+        "x": "year",
+        "y": "launches (stacked: USSR/Russia, USA, China, Europe, Japan, India, Other)",
+        "color": "country",
+        "highlight": {
+          "accent_series": "China",
+          "partial_year": 2018
+        },
+        "interaction": "hover tooltip: year + per-country counts + total",
+        "annotations": [
+          "Soviet peak 1982 (108 of 129) — in-chart callout on the USSR/Russia band",
+          "1991 Soviet collapse — vertical rule + label where the USSR/Russia band drops",
+          "2018 is PARTIAL (Jan-Oct): render the final year's edge hatched/striped with a 'Jan-Oct (partial)' note; never present it as a complete year",
+          "China's band rising in the final decade -> the seam into edt_03/04"
+        ],
+        "style": {
+          "palette": {
+            "USSR/Russia": "#5b8fc7",
+            "USA": "#9aa7b8",
+            "China": "#e2563a",
+            "Europe": "#56b89a",
+            "Japan": "#e3b23c",
+            "India": "#b07cd0",
+            "Other": "#5a5e66"
+          },
+          "no_gridlines": false,
+          "stack_order": "USSR/Russia, USA, China, Europe, Japan, India, Other",
+          "redundant_labels": "label bands directly; China carries --accent"
+        }
+      },
+      "brief": "The reference chart the whole piece points back to: a stacked area of launches per country per year, 1957-2018, SU+RU merged to one USSR/Russia series and F+I-ESA+I-ELDO to Europe. The dominant USSR/Russia band swells through the 1970s-80s, collapses after 1991, and China's band rises in the last decade — the duel->crowd arc at a glance. 2018's leading edge is hatched as partial.",
+      "rationale": "Stacked area shows BOTH the volume arc and the WHO-composition in one frame, which is exactly the thesis ('who, not how much'). Annotating the 1982 peak and 1991 collapse makes the Soviet-dominance story self-explaining.",
+      "based_on": [
+        "ana_03",
+        "ana_20"
+      ]
+    },
+    "des_05": {
+      "label": "Soyuz (R-7) lifting off at Baikonur — the workhorse",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_02",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_soyuz_launch_web.webp",
+        "tool": "scout_fetch",
+        "media_ref": "sct_06",
+        "orientation": "portrait"
+      },
+      "brief": "A real Soyuz (R-7 'Semyorka' lineage) launching from Baikonur, beside the prose on the Soviet workhorse fleet. The most-launched orbital rocket family in history, in action.",
+      "rationale": "Puts a face on the abstract 'R-7/Soyuz workhorse' that drove Soviet volume; a real, verified photo of the specific family the section is about.",
+      "based_on": [
+        "ana_12",
+        "ana_13"
+      ],
+      "media_ref": "sct_06"
+    },
+    "des_06": {
+      "label": "Soyuz-U callout — 632 launches, most-flown ever",
+      "type": "stat_callout",
+      "purpose": "INFORM",
+      "section": "edt_02",
+      "content": {
+        "value": "632",
+        "label": "launches of the Soviet Soyuz-U — the single most-flown rocket in history",
+        "data_source": "ana_12"
+      },
+      "brief": "A pull-stat that makes the 'volume has a Russian accent' point land: the top individual vehicle is Soviet, by a wide margin. Counts up on scroll-in. Breaks the chart->image rhythm.",
+      "rationale": "The 632 figure is striking and concrete; as a callout it punctuates the Soviet-dominance beat without another chart.",
+      "based_on": [
+        "ana_12"
+      ]
+    },
+    "des_07": {
+      "label": "How much is flat — global launches per year",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "area",
+        "data_source": "ana_02",
+        "x": "year",
+        "y": "launches",
+        "highlight": {
+          "peak_year": 1967,
+          "partial_year": 2018
+        },
+        "interaction": "hover tooltip: year + launches",
+        "annotations": [
+          "Peak 1967 = 139 (in-chart callout + point) — the Cold-War cadence high",
+          "Cruising band ~100-140/yr (mid-1960s-1990), the post-1991 dip, the partial 2010s recovery",
+          "2018 = 80 marked PARTIAL (Jan-Oct; full year 114): distinct hatched point + 'partial' note, never plotted as a finished year"
+        ],
+        "style": {
+          "single_series_fill": true,
+          "accent_line": "--accent at low opacity fill",
+          "zero_baseline": true
+        }
+      },
+      "brief": "A single-series area of total orbital launches per year, 1957-2018, sitting just before the turn. It visibly does NOT boom: a flat-to-down arc with the 1967=139 peak annotated and 2018 marked partial. Sets up 'so if the sky isn't busier, what changed?' — answered by the hero scrubber right after.",
+      "rationale": "An area chart reads the volume arc (rise, plateau, dip, partial recovery) at a glance and proves the 'how much is flat' premise the thesis pivots on. Honest partial-2018 marking is load-bearing.",
+      "based_on": [
+        "ana_02"
+      ]
+    },
+    "des_08": {
+      "label": "HERO INTERACTIVE — the duel-to-crowd year scrubber",
+      "type": "interactive",
+      "purpose": "IMMERSE",
+      "section": "edt_03",
+      "content": {
+        "interaction_type": "explorable_recompute",
+        "data_source": [
+          "ana_07",
+          "ana_03"
+        ],
+        "client_model": "launchSnapshot",
+        "initial_state": "Seeded at an early year (e.g. 1965): per-country bars with the two superpowers towering, and a single big readout showing the US+USSR/Russia combined share at ~99% (a bare, parseable number).",
+        "trigger": "The reader drags ONE year slider from 1957 to 2018 (>=44px thumb; keyboard arrows; scroll-linked motion is linear).",
+        "transition": "On each year the per-country bars re-rank and resize (D3 join + transition) and the duopoly-share readout recomputes live via the SAME launchSnapshot model that produced the published headline.",
+        "payoff": "By 2018 the reader has produced, under their own hand, the two-superpower combined share falling from ~99% to ~54.5% (2010s), the field widening from 2 to 7 countries, and China topping the bars in the final (partial) year. The reveal is the reader's action, not the prose.",
+        "readout": "Expose the duopoly share as a BARE number in a data-play-out node (e.g. <span class=po-num>54.5</span> %). Seed at baseline so the untouched widget reproduces the headline.",
+        "verify_coexistence": "Every handler first early-returns under verify-on (const vOn=()=>document.documentElement.classList.contains('verify-on')) so under audit a click opens the provenance drawer instead of moving the year.",
+        "partial_note": "Label 2018 partial (Jan-Oct) in the scrubber so the final frame is not read as a complete year."
+      },
+      "brief": "THE centerpiece (built by the Interaction Engineer as int_xx; this is the design brief). A single year-scrubber that merges the share-collapse and the launch-race into one control on the launchSnapshot model: drag the year and watch the two-superpower duopoly share melt from ~99% to 54.5% while the per-country bars re-rank. It sits ABOVE the reveal paragraph in edt_03 so the reader produces the 54.5% the standfirst withheld.",
+      "rationale": "A predictive/derived headline (the duopoly-share collapse) is best PRODUCED, not read; an explorable on the audited client_model makes 'check the number yourself' literally true and is the thesis made hands-on.",
+      "based_on": [
+        "ana_07",
+        "ana_03",
+        "ana_06"
+      ]
+    },
+    "des_09": {
+      "label": "China's decade ramp (13 -> 171)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_04",
+      "content": {
+        "chart_type": "column",
+        "data_source": "ana_05",
+        "x": "decade",
+        "y": "launches",
+        "color": "single (--accent for China)",
+        "highlight": {
+          "max_bar": "2010s (171)"
+        },
+        "interaction": "hover tooltip: decade + launches",
+        "annotations": [
+          "2010s bar (171) emphasized",
+          "note: 2010s includes partial 2018"
+        ],
+        "style": {
+          "zero_baseline": true,
+          "bar_color": "#e2563a"
+        }
+      },
+      "brief": "A clean column chart of China's launches by decade (13 / 15 / 39 / 64 / 171), accent-colored, showing the climb 'decade on decade' from one rocket in 1970 to the top of the table. Columns start at zero.",
+      "rationale": "Few discrete periods where each magnitude matters -> columns from zero (chart_chooser change_over_time/magnitude). The single accelerating accent series makes the rise unmistakable.",
+      "based_on": [
+        "ana_05"
+      ]
+    },
+    "des_10": {
+      "label": "Guess-then-reveal — how concentrated is China's fleet?",
+      "type": "interactive",
+      "purpose": "IMMERSE",
+      "section": "edt_04",
+      "content": {
+        "interaction_type": "guess_then_reveal",
+        "data_source": "ana_14",
+        "initial_state": "Prompt: 'What share of China's 302 launches were the Long March family?' with a guess slider (0-100%, >=44px thumb) and an empty answer track.",
+        "trigger": "Reader sets a guess, then taps Reveal.",
+        "transition": "Both bars draw from the DATA (guess vs the real 95.0%), animated in; a one-line verdict branches off the gap.",
+        "payoff": "Reveals 287 of 302 = 95.0% Long March — China's rise IS one sovereign rocket family, unlike the diversified US fleet. Real value as a bare number in the readout node.",
+        "verify_coexistence": "guess + reveal handlers early-return under verify-on (open the drawer instead)."
+      },
+      "brief": "A light guess-first widget on China's single-family concentration (ana_14). The reader commits to a share, then meets the real 95% Long March. Built by the Interaction Engineer (int_xx).",
+      "rationale": "A 'you assume X, actually Y' concentration fact lands harder when the reader predicts first; distinct finding from the country-count story (it's about ONE family, not many countries).",
+      "based_on": [
+        "ana_14"
+      ]
+    },
+    "des_11": {
+      "label": "A Long March climbing from Xichang",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_china_launch_web.webp",
+        "tool": "scout_fetch",
+        "media_ref": "sct_05",
+        "orientation": "landscape"
+      },
+      "brief": "A real Long March (Yaogan) night launch from Xichang beside the China section — the cadence that made China 2018's busiest launcher. Different shot from the hero so the section reads fresh.",
+      "rationale": "Puts the named protagonist on the page with a verified real photo (the Detective's scout_brief placed a Long March here); a concrete real rocket, never generated.",
+      "based_on": [
+        "ana_05",
+        "ana_14"
+      ],
+      "media_ref": "sct_05"
+    },
+    "des_12": {
+      "label": "Tune the caveat — annualize partial 2018",
+      "type": "interactive",
+      "purpose": "INFORM",
+      "section": "edt_05",
+      "content": {
+        "interaction_type": "tune_the_assumption",
+        "data_source": "ana_19",
+        "client_model": "annualize",
+        "initial_state": "Seeded at monthsElapsed = 10 (Jan-Oct), showing China 28 partial -> ~33.6 naive full-year projection beside the external actual 39 (a ghost/reference value).",
+        "trigger": "Reader drags a 'months elapsed' control (>=44px) and watches the naive projection move against the fixed external full-year 39.",
+        "transition": "Projection recomputes via the annualize model (partialCount * 12 / monthsElapsed); the external 39 stays as a constant reference line so the delta is visible.",
+        "payoff": "However the reader sets the months, China leads at partial (28>27), naive-annualized (~33.6>32.4) AND external full-year (39>34) — the crossover survives the truncation. Bare number in the readout. Honest framing: this is a naive pro-rate, NOT a forecast; it validates a per-year COUNT, not 'China owns space'.",
+        "verify_coexistence": "control handler early-returns under verify-on."
+      },
+      "brief": "The credibility keystone (ana_19): the reader sets months-elapsed and produces China's naive full-year pro-rate against the independent external actual (39), confirming the 2018 crossover isn't a truncation artifact. Built by the Interaction Engineer.",
+      "rationale": "The partial-2018 calendar is the lead's material weakness; letting the reader move the assumption and see the crossover hold at every granularity earns the trust the headline needs. Distinct finding (validation), distinct model (annualize).",
+      "based_on": [
+        "ana_19",
+        "ana_02"
+      ]
+    },
+    "des_13": {
+      "label": "Cumulative ledger bar-race (1957 -> 2018)",
+      "type": "interactive",
+      "purpose": "INFORM",
+      "section": "edt_06",
+      "content": {
+        "interaction_type": "explorable_recompute",
+        "data_source": "ana_04",
+        "client_model": "cumulativeThrough",
+        "initial_state": "Seeded at 2018 (full era): horizontal bars ranked USSR/Russia 3,178 > USA 1,716 > Europe 307 > China 302 > Japan 115 > India 65 > Other 43.",
+        "trigger": "Reader scrubs a year; the cumulative totals re-accumulate and re-rank via cumulativeThrough.",
+        "transition": "Bars grow/re-sort with a transition; a running 'old-world share' readout updates.",
+        "payoff": "Advancing to 2018 produces the counter-tension: the cumulative ledger is still 85.5% USSR/Russia+USA, and Europe (307) still edges China (302) all-time. The per-year crowd has NOT rewritten history. Bare 'old-world %' number in the readout; degrades to a static ordered bar of the final ledger with no JS.",
+        "verify_coexistence": "scrub handler early-returns under verify-on.",
+        "serves_chart_slot": "This interactive IS the edt_06 [CHART: ana_04] ledger viz (no separate static chart needed)."
+      },
+      "brief": "A cumulative bar-race on ana_04 (cumulativeThrough): scrub the year and watch the all-time ranking build to the 85.5% old-world ledger. The counter-tension to the hero's per-year crowd. Built by the Interaction Engineer.",
+      "rationale": "Distinct finding from the hero (history's ledger vs the per-year field); the bar-race lets the reader feel how recent the newcomers are against the Cold-War mass. Doubles as the section's ledger chart.",
+      "based_on": [
+        "ana_04"
+      ]
+    },
+    "des_14": {
+      "label": "Vehicle-family scale gap (treemap)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "treemap",
+        "data_source": "ana_13",
+        "size": "launches (area, not radius)",
+        "color": "country/family group (reuse country palette; Soviet/Russian families cool, Long March + Falcon in --accent)",
+        "highlight": {
+          "accent_tiles": [
+            "Long March / Chang Zheng (China)",
+            "Falcon (SpaceX)"
+          ]
+        },
+        "interaction": "hover tooltip: family + launches",
+        "annotations": [
+          "R-7/Soyuz 1,832 dominates; Soviet/Russian families together >3,200",
+          "Long March 287 and Falcon 68 are small but recent"
+        ],
+        "style": {
+          "vega_lite_native": false,
+          "engine": "d3_treemap",
+          "note": "rank-by-FAMILY (agency is NaN for Soviet launches); cut FIRST if scope must trim"
+        }
+      },
+      "brief": "A treemap of launch-vehicle FAMILIES by total launches (ana_13): the Soviet/Russian fleet (R-7/Soyuz 1,832, Kosmos 621, Proton 411 ...) dwarfs Long March (287) and Falcon (68). Area encodes hardware mass; the two newcomer families are accented. D3 (treemap is not Vega-Lite-native); hover for exact counts.",
+      "rationale": "Area-by-family is the honest way to show the hardware mass gap at a glance; ranks by FAMILY not agency (the agency column is blank for all Soviet launches). Distinct from the launch-count ledger (ana_04) and China's internal share (ana_14). Kept as a hoverable chart, not a recompute widget, to avoid an unearned interactive (the finding is best SEEN, not produced).",
+      "based_on": [
+        "ana_13"
+      ]
+    },
+    "des_15": {
+      "label": "Where launches come from — all-time country choropleth",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "choropleth",
+        "data_source": "ana_17",
+        "geo_key": "country_name (join by name/ISO; merge SU+RU onto Russia for a continuous fill)",
+        "color": "launches (all-time count)",
+        "scale": "sequential, CVD-safe (cividis OR an --accent-tinted single-hue ramp), LOG or quantize to tame the count skew; keep a numeric value legend",
+        "interaction": "hover tooltip: country + all-time launches",
+        "constraints": [
+          "NO launch-SITE point map: agencies.csv lat/long are ALL blank (0 of 74) — country-level fill ONLY, never a scatter of pads",
+          "Merge SU+RU -> Russia onto one polygon; Europe shown via France/ESA fill",
+          "Counts (not a rate) -> note the area-bias caveat in the caption; a proportional-symbol map (circle AREA at country centroids) is the honest fallback if a clean inlined geometry isn't available"
+        ],
+        "style": {
+          "offline": "render via Vega-Lite geoshape with an inlined lightweight world topojson, OR a tile-less Leaflet GeoJSON (no network tiles on file://)"
+        }
+      },
+      "brief": "A static all-time choropleth of orbital launches by launching state (ana_17), SU+RU merged onto Russia: the Soviet/Russian and US fills dominate, everyone else light. The map channel. Explicitly country-level — the source has no usable coordinates, so there is NO pad-level point map (stated in the prose).",
+      "rationale": "ana_17 is choropleth-ready and the Editor's edt_06 calls for a country-level map; a log/quantize sequential scale + value legend keeps a count choropleth honest. Carries the geographic channel without inventing pad coordinates.",
+      "based_on": [
+        "ana_17"
+      ]
+    },
+    "des_16": {
+      "label": "Reliability by country — everyone clusters high",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_07",
+      "content": {
+        "chart_type": "dot_strip_plot",
+        "data_source": "ana_10",
+        "x": "success_rate_pct",
+        "y": "country (sorted by rate)",
+        "color": "single + --accent for China",
+        "highlight": {
+          "accent_point": "China (95.7%)"
+        },
+        "interaction": "hover tooltip: country + successes/attempts + rate",
+        "annotations": [
+          "Tight band: Europe 95.8 / China 95.7 / USSR-Russia 95.2 / USA 92.4 / Japan 92.2 / India 89.2",
+          "China callout: 'ties the incumbents'",
+          "'Other' 65.1% (43 attempts) shown as the lone low outlier for context"
+        ],
+        "style": {
+          "x_axis": "labelled, ~60-100% (dots, not bars, so a non-zero start is honest); reference band over 89-96%",
+          "redundant_labels": "label each dot"
+        }
+      },
+      "brief": "A dot-strip of all-time success rate by country (ana_10): six major powers packed into a tight 89-96% band with China (accent) sitting right among the incumbents, and 'Other' (65%) as the lone low outlier. Rebuts the 'cutting corners' reflex.",
+      "rationale": "A dot strip on a common scale shows clustering far better than bars and makes 'China ties the incumbents' visible instantly (channel_accuracy: position). Dots permit an honest non-zero axis where bars would not.",
+      "based_on": [
+        "ana_10"
+      ]
+    },
+    "des_17": {
+      "label": "Success-rate calculator — pick a country",
+      "type": "interactive",
+      "purpose": "INFORM",
+      "section": "edt_07",
+      "content": {
+        "interaction_type": "explorable_recompute",
+        "data_source": "ana_10",
+        "client_model": "successRate",
+        "initial_state": "Seeded on China: readout '289 / 302 = 95.7%' (bare number).",
+        "trigger": "Reader picks a country (or switches scope to type/decade) via a labelled select/buttons (>=44px).",
+        "transition": "successRate recomputes successes/attempts/rate; the chosen country's dot highlights on the companion strip.",
+        "payoff": "The reader checks any country's reliability themselves and sees the newcomers match the incumbents. Bare rate in the readout node.",
+        "verify_coexistence": "select handler early-returns under verify-on."
+      },
+      "brief": "A pick-a-country success-rate calculator on the successRate model (ana_10): 'check it yourself'. Built by the Interaction Engineer. Pairs with the dot-strip (des_16).",
+      "rationale": "A reliability finding the reader can verify per-country, distinct from every count/share widget; uses the audited successRate model so the readout and prose agree.",
+      "based_on": [
+        "ana_10",
+        "ana_09",
+        "ana_11"
+      ]
+    },
+    "des_18": {
+      "label": "Operator-type surprise — commercial is most reliable",
+      "type": "stat_callout",
+      "purpose": "INFORM",
+      "section": "edt_07",
+      "content": {
+        "value": "97.4%",
+        "label": "success rate of established commercial 'private' launches (Arianespace-led) — above state programs (93.4%) and venture startups (92.9%, thin 70-launch base)",
+        "data_source": "ana_11"
+      },
+      "brief": "A callout flipping the intuition: by operator type the established commercial providers, not the states or the startups, are the most reliable. Breaks the chart+interactive rhythm in edt_07.",
+      "rationale": "ana_11 is a 3-category surprise best stated as a punchy callout; avoids a third viz in the section while covering the 'old isn't shaky, new isn't reckless' beat.",
+      "based_on": [
+        "ana_11"
+      ]
+    },
+    "des_19": {
+      "label": "Two commercialization waves (1984, then 2006)",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "stacked_area",
+        "data_source": "ana_08",
+        "x": "decade",
+        "y": "share of launches (%)",
+        "color": "agency_type (state / private / startup)",
+        "highlight": {
+          "accent_series": "startup"
+        },
+        "interaction": "hover tooltip: decade + state/private/startup shares",
+        "annotations": [
+          "'private' appears 1984 (Arianespace), peaks 46.9% in the 2000s",
+          "'startup' appears only 2006, climbs to 8.8% by the 2010s (--accent)",
+          "state rebounds in the 2010s (China)"
+        ],
+        "style": {
+          "palette": {
+            "state": "#9aa7b8",
+            "private": "#56b89a",
+            "startup": "#e2563a"
+          },
+          "stack_order": "state, private, startup"
+        }
+      },
+      "brief": "A stacked area of agency-type share by decade (ana_08): the older 'private' wave (Arianespace from 1984) and the late 'startup' wave (from 2006, accented) are clearly different vintages, with state launches rebounding in the 2010s. Shows commercialization isn't one monotonic trend.",
+      "rationale": "Composition-over-time -> stacked area; accenting the startup band surfaces the second 'new contender' axis (a KIND of actor, not a nation).",
+      "based_on": [
+        "ana_08"
+      ]
+    },
+    "des_20": {
+      "label": "Guess-then-reveal — when did a 'startup' first reach orbit?",
+      "type": "interactive",
+      "purpose": "IMMERSE",
+      "section": "edt_08",
+      "content": {
+        "interaction_type": "guess_then_reveal",
+        "data_source": "ana_15",
+        "initial_state": "Prompt: 'What year did a venture startup first reach orbit?' with a year-guess control; then a small ramp chart hidden.",
+        "trigger": "Reader guesses a year, taps Reveal.",
+        "transition": "Reveals 2006 (Falcon 1) and animates the startup cadence climbing 1 (2006) -> 19 (2017) -> 18 (partial 2018) from the data.",
+        "payoff": "The reader sees how recent and how steep the venture-startup ramp is — one firm launching at a mid-size national rate by 2018. Bare reveal value (year/2006) in the readout.",
+        "verify_coexistence": "guess + reveal handlers early-return under verify-on."
+      },
+      "brief": "A guess-first widget on the startup ramp (ana_15): predict the year a startup first reached orbit (2006), then watch SpaceX+Rocket Lab climb. Opens the SECOND axis of 'new contenders'. Built by the Interaction Engineer.",
+      "rationale": "A distinct producible finding (a new KIND of actor, not a nation) no country widget covers; the surprise of how recent 2006 is lands via a guess.",
+      "based_on": [
+        "ana_15"
+      ]
+    },
+    "des_21": {
+      "label": "Falcon Heavy first flight, 6 Feb 2018 (video)",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_08",
+      "content": {
+        "asset_type": "video",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/wbSwFU6tY1c",
+        "tool": "scout_fetch",
+        "media_ref": "sct_02",
+        "no_local_file": true
+      },
+      "brief": "The official SpaceX Falcon Heavy test-flight VIDEO (Scout-verified oEmbed, sct_02), embedded as a lazy click-to-play YouTube iframe in the commercial section — the Feb-2018 heavy-lift demo that falls inside the dataset's window. This is a VIDEO embed (render the YouTube player), not audio; the official player carries its own rights (not re-hosted).",
+      "rationale": "Motion earns its place here: the synchronized twin-booster landing is the iconic moment of the venture-startup wave, and it sits exactly in the 2018 window. A verified official embed, not a re-host.",
+      "based_on": [
+        "ana_15",
+        "ana_16"
+      ],
+      "media_ref": "sct_02"
+    },
+    "des_22": {
+      "label": "The Station over Earth — what launches build",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "edt_09",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_iss_earth_web.webp",
+        "tool": "scout_fetch",
+        "media_ref": "sct_18",
+        "orientation": "landscape"
+      },
+      "brief": "A real photo of the ISS over Earth with the Moon beyond, closing the piece on the stakes ('what the launch business ultimately serves'). Distinct from the BGM cover (Earth limb, sct_17) so the close reads fresh.",
+      "rationale": "The close is about why access to orbit matters; the orbital infrastructure itself is the right quiet, immersive note to end on. Verified real photo.",
+      "based_on": [],
+      "media_ref": "sct_18"
+    },
+    "des_23": {
+      "label": "Counter-tension callout — 85.5% old-world ledger",
+      "type": "stat_callout",
+      "purpose": "INFORM",
+      "section": "edt_09",
+      "content": {
+        "value": "85.5%",
+        "label": "of every orbital launch in history was flown by the two original superpowers (USSR/Russia + USA) — the duel the crowd has not yet rewritten",
+        "data_source": "ana_04"
+      },
+      "brief": "The closing stat that holds the two-pictures tension: against the per-year crowd, the all-time ledger is still 85.5% old-world. Counts up on scroll-in, sitting opposite the hero's 54.5%.",
+      "rationale": "Ends on the unresolved tension (crowd vs ledger) rather than a summary; pairs the reader-produced 54.5% with the 85.5% counterweight.",
+      "based_on": [
+        "ana_04",
+        "ana_07"
+      ]
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark editorial, cinematic, analytical",
+    "theme": "editorial_dark",
+    "accent": "#e2563a",
+    "accent_meaning": "rocket-ignition orange = the new contenders (China carries the accent across every chart); the two Cold-War incumbents read cool (blue/grey) so 'old world vs newcomer' is encoded in color itself.",
+    "type_pairing": "broadsheet",
+    "type_stacks": {
+      "--font-display": "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif",
+      "--font-body": "Charter, 'Bitstream Charter', 'Sitka Text', Cambria, Georgia, serif",
+      "--font-ui": "system-ui, -apple-system, 'Segoe UI', sans-serif"
+    },
+    "tokens": {
+      "--bg": "#0e0f13",
+      "--surface": "#16181f",
+      "--ink": "#ece7df",
+      "--muted": "#9aa0ab",
+      "--line": "#2a2d36",
+      "--accent": "#e2563a"
+    },
+    "color_palette": {
+      "country_categorical": {
+        "USSR/Russia": "#5b8fc7",
+        "USA": "#9aa7b8",
+        "China": "#e2563a",
+        "Europe": "#56b89a",
+        "Japan": "#e3b23c",
+        "India": "#b07cd0",
+        "Other": "#5a5e66"
+      },
+      "rule": "ONE color per country across EVERY chart (encoding_craft consistency); China = --accent and is always the focal/highlighted series; mute the rest. CVD-safe + ALWAYS back color with a redundant cue (line/band end-labels, sorted position) so meaning never rests on hue alone.",
+      "sequential": "choropleth/treemap use a CVD-safe sequential ramp (cividis or an --accent-tinted single-hue), log/quantize-scaled, with a numeric value legend."
+    },
+    "text_visual_pattern": "visual-first and varied: cinemagraph hero -> BGM card -> hook (image + callout) -> the stacked-area spine -> the turn (area + the hero scrubber) -> evidence sections that alternate chart / interactive / image / callout so no 3 charts run in a row.",
+    "centrepiece": "des_08",
+    "anti_sameness_notes": "Centerpiece is an interactive scrubber, not a chart; charts deliberately vary type (stacked area, area, column, dot-strip, treemap, choropleth) rather than a line streak; the 'old=cool / new=hot' palette is a single committed idea; a real cinemagraph + real archival photos make it read reported, not synthesized. Avoids the generic-AI look (no bootstrap blue, no purple gradient, no default Vega palette).",
+    "typography_notes": "Broadsheet serif (Cambria/Georgia guaranteed on Windows for a reliable file:// render) for authoritative reportage gravitas; the dark cinematic treatment + dramatic headline carry the drama instead of a fashion display. Weight extremes + >=3x size jumps for hierarchy; stat callouts large (count-up). UI/chart labels in system-ui.",
+    "finish_notes": "One drop-cap on the edt_01 lead paragraph (accent initial); a short uppercase kicker for the 'PART ONE / PART TWO' contender sections (edt_04/edt_08); ONE divider style (hairline, for a serious/quant piece); an oversized-serif pull quote for 'A duel became a crowd.'; NO paper grain (digital-cinematic). Committed dark theme (no light toggle) because the night-launch imagery + cinematic demand dark.",
+    "motion_notes": "Drive all motion from the motion.json tokens. count-up on the four stat callouts (5,726 / 632 / 97.4% / 85.5%); reveal-visible-by-default for section reveals (gated behind html.js-reveal, charts/visuals excluded so async Vega/Leaflet never stays blank); skeleton->crossfade for each chart mount; hero cinemagraph autoplay loop muted with the still as poster; the year-scrubber and any scroll-linked motion are LINEAR; restraint — no hover-scale spam, no pulsing, no uniform fade-in.",
+    "interaction_brief": {
+      "centerpiece_candidate": "edt_03 — the duel->crowd duopoly-share collapse (ana_07 on the launchSnapshot model); the reader PRODUCES the 54.5% via the year scrubber (des_08).",
+      "supporting_set": [
+        {
+          "des": "des_12",
+          "finding": "ana_19",
+          "section": "edt_05",
+          "job": "annualize the partial-2018 caveat (validation keystone)"
+        },
+        {
+          "des": "des_13",
+          "finding": "ana_04",
+          "section": "edt_06",
+          "job": "cumulative ledger bar-race (counter-tension)"
+        },
+        {
+          "des": "des_17",
+          "finding": "ana_10",
+          "section": "edt_07",
+          "job": "success-rate calculator (reliability)"
+        },
+        {
+          "des": "des_10",
+          "finding": "ana_14",
+          "section": "edt_04",
+          "job": "guess China's single-family concentration"
+        },
+        {
+          "des": "des_20",
+          "finding": "ana_15",
+          "section": "edt_08",
+          "job": "guess when a startup first reached orbit"
+        }
+      ],
+      "note": "Each supporting playground is bound to a DISTINCT finding/model and earns its place; the treemap (des_14) is intentionally a hoverable chart, not a recompute widget (no producible number), to avoid an unearned interactive. All reader controls must early-return under verify-on and expose a bare parseable readout number."
+    }
+  }
+}

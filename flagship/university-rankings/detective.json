@@ -1,0 +1,283 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "domain": "Higher education / global university rankings & research bibliometrics",
+    "scout_brief": {
+      "story_leans_on": "A cross-system disagreement story. The load-bearing subjects are (a) the famous ANCHORS every reader recognises and (b) the SWINGERS whose rank jumps tens of places between systems because of what each table weights.",
+      "load_bearing_subjects": [
+        "Harvard (ARWU/CWUR #1, reputation + prizes darling) — LOAD-BEARING",
+        "MIT (QS 2023 #1, reputation-heavy) — LOAD-BEARING",
+        "Caltech (THE-topping yet tiny; wins on citation-per-faculty normalisation, mid-pack on raw ARWU volume — the cleanest 'small school, big rank' swinger) — LOAD-BEARING",
+        "University of Michigan (OpenAlex #1 by raw works_count, but top of no commercial table — the raw-output giant the referee crowns) — LOAD-BEARING",
+        "UC Berkeley (research-volume/ARWU strength vs weaker QS reputation placement) — LOAD-BEARING",
+        "Oxford, Cambridge, Stanford, Princeton (anchors, reputation + research) — LOAD-BEARING (Princeton photo still needed, see gaps)",
+        "Tsinghua & Peking (Asian risers: strong and climbing in ARWU/research volume, historically lower in reputation-survey tables) — LOAD-BEARING"
+      ],
+      "already_covered_in_reference_media": [
+        "Harvard (crest, det_media_01)", "Oxford (crest, det_media_02)", "Cambridge (crest, det_media_03)",
+        "MIT (campus photo, det_media_04)", "Stanford (campus photo, det_media_05)", "Caltech (campus photo, det_media_06)",
+        "Tsinghua (gate photo, det_media_07)", "Peking (gate photo, det_media_08)", "UC Berkeley (Campanile photo, det_media_09)",
+        "University of Michigan (Angell Hall photo, det_media_10)"
+      ],
+      "gaps_for_scout": [
+        "Princeton — my Wikidata P18 returned a WATERCOLOUR PAINTING (Cleveland Tower), not a real photo; I dropped it. Source a real license-clean photo (e.g. Nassau Hall).",
+        "University of Toronto, University College London, University of Washington — OpenAlex top-output institutions that will appear on the 'raw output referee' side; worth verified photos if the Analyst features them.",
+        "Non-US/UK diversity for the swinger set: ETH Zurich, National University of Singapore, University of Tokyo — nice-to-have, not load-bearing.",
+        "Official seals/wordmarks: I fetched heraldic CRESTS (P94) only for Harvard/Oxford/Cambridge (US & Chinese schools use seals, not coats of arms). If the Designer wants a uniform logo row, the Scout can source official seals/wordmarks.",
+        "Mandatory BGM (a restrained instrumental/classical track fits this reflective, methodology-critique tone) and any hero cover imagery are the Scout's to source."
+      ],
+      "do_not_refetch": "All 10 ref_ assets below are VISION-CONFIRMED real subjects (I viewed each). Do not re-fetch these 10 universities' primary crest/campus image.",
+      "notes": "No real-PERSON subject anywhere — institutions only. No ai_face_policy needed. Every subject is a concrete, photographable place/brand, so is_visual is true."
+    }
+  },
+  "topic_profile": {
+    "tags": ["education", "rankings", "universities", "bibliometrics", "methodology", "visual_subject", "place"],
+    "is_visual": true,
+    "is_computational": true,
+    "classified_by": "detective",
+    "classified_at": "2026-07-02T00:35:00Z",
+    "rationale": "is_visual=true: universities are concrete, branded, photographable subjects (crests, campuses, iconic landmarks like MIT's dome, Berkeley's Campanile, Tsinghua's gate) — visual_subject + place tags apply. is_computational=true: the headline is a reproducible calculation — world ranks, 0-100 scores, pairwise rank correlations between QS/THE/ARWU/CWUR, and regressions of those ranks against a neutral OpenAlex research-output order. No real-person subject (institutions, not people), so ai_face_policy is omitted."
+  },
+  "items": {
+    "det_01": {
+      "label": "Dataset provenance — 4 commercial rankings + OpenAlex neutral anchor",
+      "content": "This is a multi-source theme dataset that aligns four commercial global university-ranking systems against a neutral, open research-output yardstick. THE (Times Higher Education, 2011-2016), ARWU/ShanghaiRanking (2005-2015) and CWUR (2012-2015) come from the widely-mirrored 'World University Rankings' compilation on GitHub (arnaudbenard/university-ranking, itself a copy of Myles O'Neill's classic Kaggle dataset). QS is the 2023 edition, mirrored from GeorgeM2000/QS-World-University-Ranking. The neutral anchor is OpenAlex, an open bibliometric index, fetched live from its REST API in June 2026 (top ~600 institutions by works_count). A normalised institution-name join produces a 189-institution five-way common core (THE2015 ∩ ARWU2015 ∩ CWUR2015 ∩ QS2023 ∩ OpenAlex); 2015 is the cleanest cross-system year, with QS (2023) and OpenAlex (current) attached as recent-state overlays. US News Best Global was the intended fourth 'big' system but has no clean downloadable CSV, so CWUR substitutes.",
+      "category": "origin",
+      "sources": [
+        {"url": "https://github.com/arnaudbenard/university-ranking", "title": "arnaudbenard/university-ranking (THE/ARWU/CWUR mirror)", "facts": ["Mirrors timesData.csv (THE 2011-2016), shanghaiData.csv (ARWU 2005-2015) and cwurData.csv (CWUR 2012-2015)", "Is itself a copy of Myles O'Neill's Kaggle 'World University Rankings' compilation"]},
+        {"url": "https://github.com/GeorgeM2000/QS-World-University-Ranking", "title": "GeorgeM2000/QS-World-University-Ranking", "facts": ["Supplies the QS 2023 edition table (~1,422 institutions) with 8 indicator score/rank pairs"]},
+        {"url": "https://api.openalex.org/institutions", "title": "OpenAlex Institutions API", "facts": ["Neutral anchor: works_count, cited_by_count, h_index, i10_index, two_yr_mean_citedness per institution", "Fetched for the top ~600 education-type institutions by works_count, sorted descending"]}
+      ]
+    },
+    "det_02": {
+      "label": "QS methodology — the reputation-survey pole",
+      "content": "QS is the most reputation-driven of the four systems. In the pre-2024 methodology used for the 2023 edition in this dataset, Academic Reputation (a global survey of academics) was worth 40% and Employer Reputation (a survey of employers) 10% — so surveyed opinion alone drove HALF of a university's QS score. The remaining weight was split between Citations per Faculty (20%, research impact from Elsevier Scopus), Faculty/Student Ratio (20%, a teaching-capacity proxy) and international faculty + student share (5% each). Reputation responses are pooled over a rolling five-year window. This is why QS is the natural counter-pole to ARWU: its order is dominated by perception, not measured output.",
+      "category": "background",
+      "sources": [
+        {"url": "https://www.topuniversities.com/university-rankings-articles/world-university-rankings/understanding-methodology-qs-world-university-rankings", "title": "Understanding the Methodology: QS World University Rankings (TopUniversities)", "facts": ["Academic Reputation 40%, Employer Reputation 10%, Citations per Faculty 20%, Faculty/Student Ratio 20%, International Faculty 5%, International Students 5% (pre-2024 methodology)", "Citations-per-faculty data is drawn from Elsevier Scopus", "The reputation surveys pool responses over the previous five years"]}
+      ]
+    },
+    "det_03": {
+      "label": "THE methodology — reputation + citations blend",
+      "content": "Times Higher Education blends performance and reputation. For the 2011-2023 editions (the family the 2011-2016 data here belongs to) THE used five pillars weighted Teaching 30%, Research 30%, Citations 30%, International outlook 7.5% and Industry income 2.5%. Reputation surveys are baked INSIDE the Teaching and Research pillars — 15% of the overall score from the teaching reputation survey plus 18% from the research reputation survey, i.e. about a third of the total is still surveyed opinion. But unlike QS, THE also gives fully 30% to field-normalised Citations (research influence), which is what lets citation-dense small institutions like Caltech top the table. THE later replaced this structure with 'WUR 3.0' in 2024.",
+      "category": "background",
+      "sources": [
+        {"url": "https://www.timeshighereducation.com/world-university-rankings/world-university-rankings-2023-methodology", "title": "THE World University Rankings 2023: methodology", "facts": ["Five pillars: Teaching 30%, Research 30%, Citations 30%, International outlook 7.5%, Industry income 2.5%", "Reputation survey = 15% of the overall score inside Teaching and 18% inside Research (about 33% combined)"]},
+        {"url": "https://en.wikipedia.org/wiki/Times_Higher_Education_World_University_Rankings", "title": "Times Higher Education World University Rankings (Wikipedia)", "facts": ["THE used its five-pillar methodology with Citations weighted ~30% from 2011 until the 2024 'WUR 3.0' overhaul"]}
+      ]
+    },
+    "det_04": {
+      "label": "ARWU methodology — pure research & elite prizes",
+      "content": "ARWU (the Shanghai Ranking), first published in 2003 by Shanghai Jiao Tong University and since 2009 by ShanghaiRanking Consultancy, is almost purely a research-and-prizes machine with NO reputation survey and NO teaching pillar. Its six indicators are: Alumni winning Nobel Prizes / Fields Medals (10%), Staff winning Nobel Prizes / Fields Medals (20%), Highly Cited Researchers per Clarivate (20%), papers in Nature & Science (20%), papers indexed in SCIE/SSCI (20%), and per-capita academic performance (10%). Because half the score rides on elite prizes and highly-cited-researcher counts, ARWU rewards a very different profile from QS — a university can sit top-5 in ARWU and middling in QS.",
+      "category": "background",
+      "sources": [
+        {"url": "https://www.shanghairanking.com/methodology/arwu/2020", "title": "ARWU Ranking Methodology (ShanghaiRanking)", "facts": ["Six indicators: Alumni 10%, Award (staff Nobel/Fields) 20%, Highly Cited Researchers 20%, Nature & Science papers 20%, SCIE/SSCI-indexed papers 20%, Per-Capita Performance 10%", "All six indicators relate to research excellence; there is no reputation survey and no teaching or income pillar"]},
+        {"url": "https://www.shanghairanking.com/rankings/arwu/2025", "title": "ShanghaiRanking's Academic Ranking of World Universities", "facts": ["First published in 2003 by the Center for World-Class Universities at Shanghai Jiao Tong University; published and copyrighted by ShanghaiRanking Consultancy since 2009"]}
+      ]
+    },
+    "det_05": {
+      "label": "CWUR methodology — outcomes + research, no surveys",
+      "content": "The Center for World University Rankings (CWUR) is distinctive because it uses NO reputation surveys and NO university-submitted data at all, relying only on independently verifiable indicators — which is exactly what makes it a useful 'commercial-but-not-survey-based' tiebreaker. Its current scheme groups seven indicators into four areas: Education 25% (alumni academic success relative to size), Employability 25% (alumni professional success), Faculty 10% (top academic distinctions) and Research 40% (output, high-quality publications, and influence/citations). Note: the 2012-2015 editions in THIS dataset use an OLDER eight-indicator version whose columns are RANKS (1 = best), not 0-100 scores — quality of education, alumni employment, quality of faculty, publications, influence, citations, broad impact and patents.",
+      "category": "background",
+      "sources": [
+        {"url": "https://cwur.org/methodology/world-university-rankings.php", "title": "Methodology | Center for World University Rankings", "facts": ["CWUR uses no reputation surveys and no university data submissions, relying entirely on independently verifiable datasets", "Current weighting: Education 25%, Employability 25%, Faculty 10%, Research 40% (output 10% + high-quality publications 10% + influence 10% + citations 10%)"]},
+        {"url": "https://github.com/arnaudbenard/university-ranking", "title": "cwurData.csv (2012-2015) columns", "facts": ["The dataset's 2012-2015 CWUR rows carry eight indicator columns as RANKS (1=best): quality_of_education, alumni_employment, quality_of_faculty, publications, influence, citations, broad_impact (2014-2015 only), patents"]}
+      ]
+    },
+    "det_06": {
+      "label": "OpenAlex — the neutral open research-output referee",
+      "content": "OpenAlex is the story's neutral yardstick: a fully open, CC0 index of scholarly works, authors and institutions launched in January 2022 by the non-profit OurResearch as the successor to Microsoft Academic Graph (which Microsoft shut down at the end of 2021). It carries metadata for 200M+ works, is free via a high-volume REST API, and is positioned as an open alternative to the commercial Scopus and Web of Science databases the ranking companies rely on. For this story it supplies an order that owes nothing to any commercial methodology — raw works_count, total cited_by_count and h_index per institution. Its coverage is not perfectly even (documented discrepancies exist, e.g. for China), which the Analyst should treat as a caveat rather than a flaw.",
+      "category": "background",
+      "sources": [
+        {"url": "https://en.wikipedia.org/wiki/OpenAlex", "title": "OpenAlex (Wikipedia)", "facts": ["Launched January 2022 by OurResearch as successor to the terminated Microsoft Academic Graph", "Contains metadata for 200M+ works; fully open (CC0) via GUI, data dump and REST API", "Competes with Clarivate's Web of Science and Elsevier's Scopus"]},
+        {"url": "https://arxiv.org/abs/2205.01833", "title": "OpenAlex: A fully-open index of scholarly works, authors, venues, institutions, and concepts", "facts": ["Built on a five-entity model (works, authors, venues, institutions, concepts) aggregating MAG, Crossref, ORCID and Unpaywall"]},
+        {"url": "https://arxiv.org/pdf/2507.19302", "title": "Understanding discrepancies in the coverage of OpenAlex: the case of China", "facts": ["OpenAlex coverage is uneven across regions; discrepancies are documented for China's institutions"]}
+      ]
+    },
+    "det_07": {
+      "label": "BENCHMARK — how much each table is reputation vs measured output",
+      "content": "The single most useful comparison for the Analyst is the reputation-vs-output weighting of each system, because it is the mechanical reason they disagree. Reputation-survey share of the total score: QS ~50% (Academic 40% + Employer 10%); THE ~33% (15% teaching survey + 18% research survey) but with a further 30% on citations; ARWU 0% (100% research output + elite prizes); CWUR 0% (surveys are excluded by design). OpenAlex is 0% reputation by construction — it is raw output/impact only. So along a 'perception ↔ measured output' axis the four systems fan out from QS (most perception) through THE to ARWU/CWUR (most output), with OpenAlex as the pure-output anchor beyond them.",
+      "category": "benchmark",
+      "sources": [
+        {"url": "https://www.topuniversities.com/university-rankings-articles/world-university-rankings/understanding-methodology-qs-world-university-rankings", "title": "QS methodology", "facts": ["QS reputation-survey share = 40% + 10% = 50% of the score (pre-2024)"]},
+        {"url": "https://www.timeshighereducation.com/world-university-rankings/world-university-rankings-2023-methodology", "title": "THE methodology", "facts": ["THE reputation-survey share = 15% + 18% = 33%, with a separate 30% on citations"]},
+        {"url": "https://www.shanghairanking.com/methodology/arwu/2020", "title": "ARWU methodology", "facts": ["ARWU has 0% reputation survey; score is 100% research output + Nobel/Fields prizes"]},
+        {"url": "https://cwur.org/methodology/world-university-rankings.php", "title": "CWUR methodology", "facts": ["CWUR has 0% reputation survey and takes no university-submitted data"]}
+      ],
+      "calculation": {
+        "method": "lookup",
+        "formula": "reputation_survey_share: QS = 40% + 10%; THE = 15% + 18%; ARWU = 0%; CWUR = 0%; OpenAlex = 0%",
+        "result": "QS ~50% reputation | THE ~33% reputation (+30% citations) | ARWU 0% (100% research/prizes) | CWUR 0% (surveys excluded) | OpenAlex 0% (raw output only)"
+      }
+    },
+    "det_08": {
+      "label": "The systems correlate weakly and crown different winners",
+      "content": "Academic studies confirm the core premise: the big systems are statistically correlated but diverge sharply for individual universities and are unstable year to year. Reconciliation studies find pairwise rank correlations only in the 0.7-0.8 range for Times/QS/Shanghai, with 'many cases of high divergence and instability'. The disagreement even reaches the very top — in recent editions no single university leads all three (MIT tops QS, Oxford tops THE, Harvard tops ARWU), and this dataset's own years already disagree on #1 (ARWU 2015 and CWUR 2015 crown Harvard, THE 2015 crowns Caltech, QS 2023 crowns MIT). That the tables can't even agree who is best is the clearest evidence that 'best' is a weighting choice.",
+      "category": "related_work",
+      "sources": [
+        {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10468493/", "title": "Relationship between bibliometric indicators and university ranking positions (PMC)", "facts": ["Rankings are statistically correlated yet show many cases of high divergence and instability", "Reconciliation schemes yield correlations in the narrow 0.7-0.8 range for Times, QS and Shanghai", "Absolute publication/citation counts dominate ARWU while field-weighted citation impact is central to THE"]},
+        {"url": "https://arxiv.org/pdf/1908.10632", "title": "A Longitudinal Analysis of University Rankings", "facts": ["Documents year-to-year instability in the major global ranking systems"]},
+        {"url": "https://arxiv.org/pdf/2004.09006", "title": "How Reliable are University Rankings?", "facts": ["Critically examines the reliability and reproducibility of the major ranking methodologies"]}
+      ]
+    },
+    "det_09": {
+      "label": "Why it matters — rankings steer real decisions",
+      "content": "These tables are not academic parlour games; they move students, money and policy. In QS's own International Student Survey, roughly a quarter of prospective students (23.5%) said institutional ranking was the single most important factor in choosing a university and subject, and about a fifth (19.6%) said rankings shaped which COUNTRY they studied in. Ellen Hazelkorn's landmark work documents how rankings now reshape decisions not just for students and parents but for governments, funding agencies, employers and universities' own strategies — a 'global reputation race' in which a few weighting choices by three or four private companies ripple into national policy and billions in tuition and research funding. That stakes-per-decision is exactly why the disagreement between the tables is worth exposing.",
+      "category": "why_it_matters",
+      "sources": [
+        {"url": "https://en.wikipedia.org/wiki/QS_World_University_Rankings", "title": "QS World University Rankings (Wikipedia)", "facts": ["In the 2017 QS International Student Survey, 23.5% said institutional ranking was the most important factor in choosing a university and subject, and 19.6% said rankings were important in choosing a country of study"]},
+        {"url": "https://link.springer.com/book/10.1057/9781137446671", "title": "Rankings and the Reshaping of Higher Education (Hazelkorn)", "facts": ["Rankings influence students, parents, governments, funding agencies, employers and public opinion, reshaping higher education in the age of globalisation"]}
+      ]
+    },
+    "det_10": {
+      "label": "Controversy — methodology changes cause artificial volatility",
+      "content": "A university can jump or plunge dozens of places without changing at all, simply because a ranker changes its formula. QS's 2024 edition made what it called its largest-ever methodological change, adding three new indicators each worth 5% — International Research Network, Employment Outcomes and Sustainability — and rebalancing the surveys (Academic Reputation cut from 40% to 30%). Analysts noted this made year-on-year comparison essentially apples-to-oranges, and whole national systems moved (many Korean institutions fell under the new weights). This is a direct interpretive hook: the disagreement between systems is compounded by disagreement of each system WITH ITSELF over time, so a headline rank is a snapshot of a methodology, not a fixed truth.",
+      "category": "controversy",
+      "sources": [
+        {"url": "https://www.qs.com/insights/qs-world-university-rankings-2024-whats-new-in-our-20th-year", "title": "QS World University Rankings 2024: What's new in our 20th year", "facts": ["The 2024 edition was QS's largest-ever methodological enhancement", "Three new indicators added, each 5%: International Research Network, Employment Outcomes, Sustainability"]},
+        {"url": "https://higheredstrategy.com/rankings-round-up-3-the-evolution-of-qs-rankings/", "title": "Rankings Round-up: The Evolution of QS Rankings (HESA)", "facts": ["The 2024 methodology change made comparison with the 2023 edition apples-to-oranges, moving many institutions for methodological rather than real reasons"]}
+      ]
+    },
+    "det_11": {
+      "label": "Controversy — rankings can be gamed with bad data",
+      "content": "Because several ranking indicators rely on self-reported institutional data, they can be manipulated. In 2022 Columbia University — ranked #2 by U.S. News — was found by its own mathematics professor Michael Thaddeus to have submitted inaccurate figures (class sizes, share of full-time faculty with terminal degrees, instructional spending). When corrected, Columbia fell from #2 to #18, one of the sharpest drops in the ranking's history; the university then withdrew from the undergraduate rankings and later reportedly settled related litigation for about $9 million. Although U.S. News is not one of the four systems in this dataset, the episode is the canonical warning that a headline rank is only as trustworthy as the data feeding it — reinforcing why an independent, non-submitted anchor like OpenAlex matters.",
+      "category": "controversy",
+      "sources": [
+        {"url": "https://www.chronicle.com/article/columbia-is-ranked-no-2-by-u-s-news-a-professor-says-its-spot-is-based-on-false-data", "title": "Columbia Is Ranked No. 2... A Professor Says Its Spot Is Based on False Data (Chronicle)", "facts": ["Math professor Michael Thaddeus alleged Columbia misreported class sizes, share of full-time faculty with terminal degrees, and instructional spending to U.S. News"]},
+        {"url": "https://www.highereddive.com/news/columbia-us-news-rejects-undergraduate-rankings-matter/652505/", "title": "Columbia rejects U.S. News undergraduate rankings (Higher Ed Dive)", "facts": ["Columbia fell from #2 to #18 after the data was corrected and subsequently declined to submit data / dropped out of the undergraduate rankings"]},
+        {"url": "https://blogs.smartrules.com/columbia-universitys-shocking-9-million-settlement-over-false-rankings-data/", "title": "Columbia's $9 Million Settlement Over False Rankings Data", "facts": ["Columbia reportedly agreed to pay about $9 million to resolve allegations it submitted false data to improve its U.S. News ranking"]}
+      ]
+    },
+    "det_12": {
+      "label": "Controversy — top schools are boycotting the rankings",
+      "content": "Institutions themselves increasingly reject the tables' authority. In 2023, led by Yale and Harvard law schools, dozens of top U.S. law schools and several medical schools boycotted the U.S. News rankings, refusing to supply data. Their objections go to methodology: Yale's dean argued the heavily weighted standardised-test metric penalises promising students who cannot afford test prep, Stanford's dean said the formula 'inappropriately discourages public service', and medical deans said the rankings 'measure the wrong things'. U.S. News responded by revising its formula to de-emphasise reputational surveys in favour of outcome measures. The revolt underscores the story's thesis: even the ranked elite dispute that a single weighting captures 'quality'.",
+      "category": "controversy",
+      "sources": [
+        {"url": "https://www.thecrimson.com/article/2023/5/25/us-news-rankings-harvard-feature/", "title": "Rejecting the Rankings: Why Harvard and Yale Led a Widespread Boycott (Harvard Crimson)", "facts": ["Yale Law led a 2023 boycott of U.S. News that dozens of top law schools joined", "Yale's dean argued the test-score metric pressures schools to overlook students who can't afford test prep; Stanford's dean said the methodology discourages public service"]},
+        {"url": "https://www.insidehighered.com/news/admissions/graduate/2023/04/21/us-news-again-delays-law-and-medical-school-rankings", "title": "U.S. News again delays medical and law school rankings (Inside Higher Ed)", "facts": ["U.S. News delayed and revised the law and medical rankings after pushback, moving to de-emphasise reputational surveys in favour of outcome measures"]}
+      ]
+    },
+    "det_13": {
+      "label": "Interpretive hook — the prestige loop and the size effect",
+      "content": "Two mechanisms explain most of the disagreement and give the story its characters. First, reputation surveys create a self-reinforcing prestige (halo) loop that favours older, larger, English-speaking, already-famous universities — so QS's survey-heavy order rewards name recognition, which is partly downstream of past rankings. Second, normalisation choices flip the winners: THE and QS divide citations by faculty, so a tiny, citation-dense, science-focused school like Caltech can top THE, while a metric based on RAW output volume (OpenAlex works_count) instead crowns sprawling multi-faculty, medical-heavy giants like the University of Michigan or Toronto that no commercial table places first. The same universities therefore swing tens of places between systems purely because of what is weighted and whether it is size-normalised — Caltech (small, normalised winner) and Michigan (large, raw-volume winner) are the perfect two-sided illustration.",
+      "category": "interpretive_hook",
+      "sources": [
+        {"url": "https://iier.org.au/iier30/fauzi.pdf", "title": "University rankings: A review of methodological flaws", "facts": ["Reviews systematic methodological flaws in global rankings, including reputation-survey bias toward established, well-known institutions and the sensitivity of results to normalisation and weighting choices"]},
+        {"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10468493/", "title": "Relationship between bibliometric indicators and university ranking positions (PMC)", "facts": ["Absolute publication and citation COUNTS drive ARWU/U.S. News, whereas field-weighted (normalised) citation impact drives THE — so raw-volume and normalised metrics rank the same universities differently"]}
+      ]
+    },
+    "det_14": {
+      "label": "Scope note for the Analyst — caveats and confounds",
+      "content": "Guidance for the analysis. (1) ERA MISMATCH is the dataset's main honest limitation: THE/ARWU/CWUR are 2015, QS is 2023, OpenAlex is current — so a strict 'they disagree' comparison is cleanest on the 2015 trio plus the anchor, treating QS and OpenAlex as recent-state overlays and flagging the mismatch explicitly. (2) The cross-system join is by NORMALISED INSTITUTION NAME (names differ across tables), which produced the 189-institution five-way core; a handful of edge cases may be mis-joined. (3) OpenAlex works_count REWARDS SIZE/AGE and medical output — big, old, hospital-affiliated universities dominate raw volume, so it is a yardstick of quantity, not quality; consider cited_by_count and h_index alongside it, and note that two_yr_mean_citedness has anomalous rows (e.g. Washington ~46 vs peers ~3-7) that look like data artefacts. (4) CWUR indicator columns are RANKS (1 = best), the OPPOSITE direction to the 0-100 scores in THE/ARWU/QS — do not mix them without inverting. (5) The QS 2023 edition uses the PRE-2024 legacy weights (Academic Reputation 40%), not the current formula.",
+      "category": "scope_suggestion",
+      "sources": [
+        {"url": "https://github.com/arnaudbenard/university-ranking", "title": "Source mirror (THE/ARWU/CWUR coverage years)", "facts": ["THE 2011-2016, ARWU 2005-2015, CWUR 2012-2015 — the only fully overlapping cross-system year is 2015", "CWUR indicator columns are ranks (1=best), not 0-100 scores"]},
+        {"url": "https://arxiv.org/pdf/2507.19302", "title": "Understanding discrepancies in the coverage of OpenAlex", "facts": ["OpenAlex coverage varies by region, so raw works_count/citation totals should be read as coverage- and size-dependent, not a clean quality measure"]}
+      ]
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_q13371__coat_of_arms.png",
+      "url": "https://commons.wikimedia.org/wiki/File:Harvard_University_coat_of_arms.svg",
+      "license": "Public domain",
+      "attribution": "Harvard University (via Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "Harvard University crest (VERITAS). Vision-confirmed. Harvard tops ARWU 2015 and CWUR 2015 in this dataset — the prestige + prizes anchor.",
+      "relates_to": ["det_04", "det_08", "det_13"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_q34433__coat_of_arms.png",
+      "url": "https://commons.wikimedia.org/wiki/File:Arms_of_University_of_Oxford.svg",
+      "license": "Public domain",
+      "attribution": "Wikimedia Commons",
+      "source": "Wikimedia Commons",
+      "description": "University of Oxford coat of arms (DOMINUS ILLUMINATIO MEA, three crowns). Vision-confirmed. Oxford tops THE in recent editions — a reputation + research anchor.",
+      "relates_to": ["det_03", "det_08", "det_13"]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "ref_q35794__coat_of_arms.png",
+      "url": "https://commons.wikimedia.org/wiki/File:Coat_of_Arms_of_the_University_of_Cambridge.svg",
+      "license": "CC BY-SA 3.0",
+      "attribution": "Wikimedia Commons contributor (own work based on Cambridge University Crest)",
+      "source": "Wikimedia Commons",
+      "description": "University of Cambridge coat of arms (cross with lions and book). Vision-confirmed. Classic reputation anchor alongside Oxford.",
+      "relates_to": ["det_03", "det_13"]
+    },
+    {
+      "id": "det_media_04",
+      "filename": "ref_q49108__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:MIT_Dome_night1_Edit.jpg",
+      "license": "CC BY-SA 3.0",
+      "attribution": "Fcb981, edited by Thermos (Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "MIT Great Dome (Building 10) at night. Vision-confirmed. MIT is QS 2023 #1 — the reputation-survey pole's top school.",
+      "relates_to": ["det_02", "det_08", "det_13"]
+    },
+    {
+      "id": "det_media_05",
+      "filename": "ref_q41506__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Stanford_Oval_May_2011_panorama.jpg",
+      "license": "CC BY-SA 3.0",
+      "attribution": "King of Hearts (Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "Stanford Main Quad / the Oval, panorama. Vision-confirmed. Top-5 anchor across THE/ARWU/CWUR.",
+      "relates_to": ["det_13"]
+    },
+    {
+      "id": "det_media_06",
+      "filename": "ref_q161562__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Caltech_Entrance.jpg",
+      "license": "CC BY-SA 3.0",
+      "attribution": "Canon.vs.nikon (Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "Caltech campus entrance/quad. Vision-confirmed. THE 2015 #1 despite being tiny — the citation-per-faculty 'small school, big rank' swinger.",
+      "relates_to": ["det_03", "det_13"]
+    },
+    {
+      "id": "det_media_07",
+      "filename": "ref_q16955__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Thu_gate.JPG",
+      "license": "CC BY-SA 3.0",
+      "attribution": "Yaoleilei (Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "Tsinghua University historic gate (清华园). Vision-confirmed. Asian research riser — strong/climbing in ARWU, historically lower in reputation-survey tables.",
+      "relates_to": ["det_04", "det_13"]
+    },
+    {
+      "id": "det_media_08",
+      "filename": "ref_q16952__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:PekingUniversityPic6.jpg",
+      "license": "CC BY 2.0",
+      "attribution": "galaygobi (Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "Peking University west gate with stone lion. Vision-confirmed. Second Asian riser, pairs with Tsinghua as the reputation-vs-research swing case.",
+      "relates_to": ["det_04", "det_13"]
+    },
+    {
+      "id": "det_media_09",
+      "filename": "ref_q168756__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Berkeley_glade_afternoon.jpg",
+      "license": "CC BY-SA 3.0",
+      "attribution": "Gku (Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "UC Berkeley — Sather Tower (the Campanile) over the glade. Vision-confirmed. Research-volume/ARWU strength but weaker QS reputation placement — a swinger.",
+      "relates_to": ["det_04", "det_13"]
+    },
+    {
+      "id": "det_media_10",
+      "filename": "ref_q230492__photo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:AngellHall2010.JPG",
+      "license": "CC BY 3.0",
+      "attribution": "AndrewHorne (Wikimedia Commons)",
+      "source": "Wikimedia Commons",
+      "description": "University of Michigan — Angell Hall. Vision-confirmed. OpenAlex #1 by raw works_count yet top of no commercial table — the raw-output giant the neutral referee crowns.",
+      "relates_to": ["det_06", "det_13", "det_14"]
+    }
+  ],
+  "instances": []
+}

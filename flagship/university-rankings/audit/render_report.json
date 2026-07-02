@@ -1,0 +1,1089 @@
+{
+  "url": "http://127.0.0.1:60607/index.html",
+  "page": "index.html",
+  "browser": "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  "viewport": {
+    "w": 1280
+  },
+  "loadErr": null,
+  "console": [],
+  "consoleTruncated": false,
+  "findings": {
+    "zeroWidthCharts": [],
+    "zeroHeightCharts": [],
+    "chartsWithNoRender": [],
+    "hiddenCharts": [],
+    "brokenImages": [],
+    "horizontalOverflow": false,
+    "consoleErrors": 0,
+    "visibleCssLeak": [],
+    "zeroWidthBars": [],
+    "iframeHeroLoops": [],
+    "brokenMaps": [],
+    "cascadeScriptAbort": null,
+    "oversizedAssets": [],
+    "totalPayloadOverBudget": false,
+    "unreferencedAssets": [
+      {
+        "file": "assets/ref_q13371__coat_of_arms.png",
+        "kind": "image",
+        "bytes": 437037,
+        "mb": 0.42
+      },
+      {
+        "file": "assets/ref_q13371__coat_of_arms_web.webp",
+        "kind": "image",
+        "bytes": 216472,
+        "mb": 0.21
+      },
+      {
+        "file": "assets/ref_q161562__photo.jpg",
+        "kind": "image",
+        "bytes": 212409,
+        "mb": 0.2
+      },
+      {
+        "file": "assets/ref_q168756__photo.jpg",
+        "kind": "image",
+        "bytes": 166281,
+        "mb": 0.16
+      },
+      {
+        "file": "assets/ref_q16952__photo.jpg",
+        "kind": "image",
+        "bytes": 342599,
+        "mb": 0.33
+      },
+      {
+        "file": "assets/ref_q16955__photo.jpg",
+        "kind": "image",
+        "bytes": 558177,
+        "mb": 0.53
+      },
+      {
+        "file": "assets/ref_q230492__photo.jpg",
+        "kind": "image",
+        "bytes": 370455,
+        "mb": 0.35
+      },
+      {
+        "file": "assets/ref_q34433__coat_of_arms.png",
+        "kind": "image",
+        "bytes": 368541,
+        "mb": 0.35
+      },
+      {
+        "file": "assets/ref_q34433__coat_of_arms_web.webp",
+        "kind": "image",
+        "bytes": 103510,
+        "mb": 0.1
+      },
+      {
+        "file": "assets/ref_q35794__coat_of_arms.png",
+        "kind": "image",
+        "bytes": 562297,
+        "mb": 0.54
+      },
+      {
+        "file": "assets/ref_q35794__coat_of_arms_web.webp",
+        "kind": "image",
+        "bytes": 140606,
+        "mb": 0.13
+      },
+      {
+        "file": "assets/ref_q41506__photo.jpg",
+        "kind": "image",
+        "bytes": 123004,
+        "mb": 0.12
+      },
+      {
+        "file": "assets/ref_q49108__photo.jpg",
+        "kind": "image",
+        "bytes": 215064,
+        "mb": 0.21
+      },
+      {
+        "file": "assets/scout_bgm.ogg",
+        "kind": "audio",
+        "bytes": 2571451,
+        "mb": 2.45
+      },
+      {
+        "file": "assets/scout_eth_zurich_main_building__openverse.jpg",
+        "kind": "image",
+        "bytes": 3495509,
+        "mb": 3.33
+      },
+      {
+        "file": "assets/scout_filenassau_hall_princetonjpg__openverse.jpg",
+        "kind": "image",
+        "bytes": 4633444,
+        "mb": 4.42
+      },
+      {
+        "file": "assets/scout_q11942__photo.jpg",
+        "kind": "image",
+        "bytes": 51051,
+        "mb": 0.05
+      },
+      {
+        "file": "assets/scout_q11942__photo_web.webp",
+        "kind": "image",
+        "bytes": 35526,
+        "mb": 0.03
+      },
+      {
+        "file": "assets/scout_q180865__photo.jpg",
+        "kind": "image",
+        "bytes": 291855,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/scout_q193196__photo.jpg",
+        "kind": "image",
+        "bytes": 266579,
+        "mb": 0.25
+      },
+      {
+        "file": "assets/scout_q219563__photo.jpg",
+        "kind": "image",
+        "bytes": 329009,
+        "mb": 0.31
+      },
+      {
+        "file": "assets/scout_q7842__photo.jpg",
+        "kind": "image",
+        "bytes": 290025,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/scout_q7842__photo_web.webp",
+        "kind": "image",
+        "bytes": 201274,
+        "mb": 0.19
+      },
+      {
+        "file": "assets/scout_vienna_bosendorfer_grand_piano_keyboard_detail_9593__openverse.jpg",
+        "kind": "image",
+        "bytes": 4337930,
+        "mb": 4.14
+      },
+      {
+        "file": "assets/teaser.mp4",
+        "kind": "video",
+        "bytes": 838982,
+        "mb": 0.8
+      },
+      {
+        "file": "assets/teaser_fwd.mp4",
+        "kind": "video",
+        "bytes": 239467,
+        "mb": 0.23
+      },
+      {
+        "file": "assets/teaser_fwd_web.mp4",
+        "kind": "video",
+        "bytes": 427708,
+        "mb": 0.41
+      },
+      {
+        "file": "assets/teaser_hi.jpg",
+        "kind": "image",
+        "bytes": 294149,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/teaser_hi_web.webp",
+        "kind": "image",
+        "bytes": 62092,
+        "mb": 0.06
+      },
+      {
+        "file": "assets/teaser_web.webp",
+        "kind": "image",
+        "bytes": 43082,
+        "mb": 0.04
+      }
+    ]
+  },
+  "metrics": {
+    "pageW": 1280,
+    "viewportW": 1280,
+    "pageH": 19121,
+    "overflowX": false,
+    "controls": {
+      "ranges": 8,
+      "buttons": 45
+    },
+    "charts": [
+      {
+        "id": "des_champions",
+        "cls": "chart-host vega-embed fit-x fit-y",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 360,
+          "top": 2046,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 360
+        }
+      },
+      {
+        "id": "des_corr_matrix",
+        "cls": "chart-host vega-embed fit-x fit-y",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 300,
+          "top": 3738,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 300
+        }
+      },
+      {
+        "id": "des_swingers_dumbbell",
+        "cls": "chart-host vega-embed fit-x",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 401,
+          "top": 4795,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 401
+        }
+      },
+      {
+        "id": "des_weights",
+        "cls": "chart-host vega-embed fit-x",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 261,
+          "top": 7104,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 261
+        }
+      },
+      {
+        "id": "des_rep_research",
+        "cls": "chart-host vega-embed fit-x",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 511,
+          "top": 8438,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 511
+        }
+      },
+      {
+        "id": "des_referee_scatter",
+        "cls": "chart-host vega-embed fit-x fit-y",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 340,
+          "top": 11814,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 340
+        }
+      },
+      {
+        "id": "des_referee_track",
+        "cls": "chart-host vega-embed fit-x",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 247,
+          "top": 12270,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 247
+        }
+      },
+      {
+        "id": "des_size_flip",
+        "cls": "chart-host vega-embed fit-x fit-y",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 380,
+          "top": 14387,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 380
+        }
+      },
+      {
+        "id": "des_validation",
+        "cls": "chart-host vega-embed fit-x",
+        "des": null,
+        "label": null,
+        "mount": {
+          "w": 644,
+          "h": 275,
+          "top": 15838,
+          "left": 318,
+          "display": "inline-block",
+          "visibility": "visible",
+          "opacity": 1
+        },
+        "hasRender": true,
+        "isWrapper": false,
+        "renderTag": "svg",
+        "render": {
+          "w": 644,
+          "h": 275
+        }
+      }
+    ],
+    "imgs": [
+      {
+        "src": "assets/teaser.jpg",
+        "natW": 1280,
+        "natH": 720,
+        "lazyPending": false,
+        "broken": false,
+        "w": 0,
+        "h": 0,
+        "top": 0,
+        "left": 0,
+        "display": "none",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q49108__photo_web.webp",
+        "natW": 1280,
+        "natH": 779,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1287,
+        "h": 1006,
+        "top": -3,
+        "left": -4,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q41506__photo_web.webp",
+        "natW": 1280,
+        "natH": 320,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q16952__photo_web.webp",
+        "natW": 1280,
+        "natH": 851,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q16952__photo_web.webp",
+        "natW": 1280,
+        "natH": 851,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1600,
+        "h": 1250,
+        "top": -125,
+        "left": -160,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q16952__photo_web.webp",
+        "natW": 1280,
+        "natH": 851,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q16955__photo_web.webp",
+        "natW": 1000,
+        "natH": 1200,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_filenassau_hall_princetonjpg__openverse_web.webp",
+        "natW": 1600,
+        "natH": 1066,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q230492__photo_web.webp",
+        "natW": 1280,
+        "natH": 850,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q161562__photo_web.webp",
+        "natW": 1280,
+        "natH": 381,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q161562__photo_web.webp",
+        "natW": 1280,
+        "natH": 381,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1600,
+        "h": 1250,
+        "top": -125,
+        "left": -160,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q161562__photo_web.webp",
+        "natW": 1280,
+        "natH": 381,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_q193196__photo_web.webp",
+        "natW": 1280,
+        "natH": 844,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_eth_zurich_main_building__openverse_web.webp",
+        "natW": 1600,
+        "natH": 419,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_q219563__photo_web.webp",
+        "natW": 1280,
+        "natH": 720,
+        "lazyPending": false,
+        "broken": false,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_vienna_bosendorfer_grand_piano_keyboard_detail_9593__openverse_web.webp",
+        "natW": 1600,
+        "natH": 1067,
+        "lazyPending": false,
+        "broken": false,
+        "w": 101,
+        "h": 101,
+        "top": 1368,
+        "left": 366,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q16952__photo_web.webp",
+        "natW": 1280,
+        "natH": 851,
+        "lazyPending": false,
+        "broken": false,
+        "w": 331,
+        "h": 248,
+        "top": 5293,
+        "left": 301,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q16955__photo_web.webp",
+        "natW": 1000,
+        "natH": 1200,
+        "lazyPending": false,
+        "broken": false,
+        "w": 331,
+        "h": 248,
+        "top": 5293,
+        "left": 648,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q168756__photo_web.webp",
+        "natW": 640,
+        "natH": 480,
+        "lazyPending": false,
+        "broken": false,
+        "w": 331,
+        "h": 248,
+        "top": 5633,
+        "left": 301,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q161562__photo_web.webp",
+        "natW": 1280,
+        "natH": 381,
+        "lazyPending": false,
+        "broken": false,
+        "w": 331,
+        "h": 248,
+        "top": 5633,
+        "left": 648,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/ref_q230492__photo_web.webp",
+        "natW": 1280,
+        "natH": 850,
+        "lazyPending": false,
+        "broken": false,
+        "w": 331,
+        "h": 248,
+        "top": 12614,
+        "left": 301,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_q180865__photo_web.webp",
+        "natW": 1280,
+        "natH": 960,
+        "lazyPending": false,
+        "broken": false,
+        "w": 331,
+        "h": 248,
+        "top": 12614,
+        "left": 648,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_q193196__photo_web.webp",
+        "natW": 1280,
+        "natH": 844,
+        "lazyPending": false,
+        "broken": false,
+        "w": 331,
+        "h": 248,
+        "top": 12954,
+        "left": 301,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      },
+      {
+        "src": "assets/scout_q219563__photo_web.webp",
+        "natW": 1280,
+        "natH": 720,
+        "lazyPending": false,
+        "broken": false,
+        "w": 331,
+        "h": 248,
+        "top": 12954,
+        "left": 648,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      }
+    ],
+    "vids": [
+      {
+        "src": "http://127.0.0.1:60607/assets/teaser.webm",
+        "hasPoster": true,
+        "w": 1280,
+        "h": 1000,
+        "top": 0,
+        "left": 0,
+        "display": "block",
+        "visibility": "visible",
+        "opacity": 1
+      }
+    ],
+    "maps": [],
+    "cssLeak": [],
+    "zeroWidthBars": [],
+    "iframeHeroLoops": []
+  },
+  "performance": {
+    "oversizedAssets": [],
+    "unreferencedAssets": [
+      {
+        "file": "assets/ref_q13371__coat_of_arms.png",
+        "kind": "image",
+        "bytes": 437037,
+        "mb": 0.42
+      },
+      {
+        "file": "assets/ref_q13371__coat_of_arms_web.webp",
+        "kind": "image",
+        "bytes": 216472,
+        "mb": 0.21
+      },
+      {
+        "file": "assets/ref_q161562__photo.jpg",
+        "kind": "image",
+        "bytes": 212409,
+        "mb": 0.2
+      },
+      {
+        "file": "assets/ref_q168756__photo.jpg",
+        "kind": "image",
+        "bytes": 166281,
+        "mb": 0.16
+      },
+      {
+        "file": "assets/ref_q16952__photo.jpg",
+        "kind": "image",
+        "bytes": 342599,
+        "mb": 0.33
+      },
+      {
+        "file": "assets/ref_q16955__photo.jpg",
+        "kind": "image",
+        "bytes": 558177,
+        "mb": 0.53
+      },
+      {
+        "file": "assets/ref_q230492__photo.jpg",
+        "kind": "image",
+        "bytes": 370455,
+        "mb": 0.35
+      },
+      {
+        "file": "assets/ref_q34433__coat_of_arms.png",
+        "kind": "image",
+        "bytes": 368541,
+        "mb": 0.35
+      },
+      {
+        "file": "assets/ref_q34433__coat_of_arms_web.webp",
+        "kind": "image",
+        "bytes": 103510,
+        "mb": 0.1
+      },
+      {
+        "file": "assets/ref_q35794__coat_of_arms.png",
+        "kind": "image",
+        "bytes": 562297,
+        "mb": 0.54
+      },
+      {
+        "file": "assets/ref_q35794__coat_of_arms_web.webp",
+        "kind": "image",
+        "bytes": 140606,
+        "mb": 0.13
+      },
+      {
+        "file": "assets/ref_q41506__photo.jpg",
+        "kind": "image",
+        "bytes": 123004,
+        "mb": 0.12
+      },
+      {
+        "file": "assets/ref_q49108__photo.jpg",
+        "kind": "image",
+        "bytes": 215064,
+        "mb": 0.21
+      },
+      {
+        "file": "assets/scout_bgm.ogg",
+        "kind": "audio",
+        "bytes": 2571451,
+        "mb": 2.45
+      },
+      {
+        "file": "assets/scout_eth_zurich_main_building__openverse.jpg",
+        "kind": "image",
+        "bytes": 3495509,
+        "mb": 3.33
+      },
+      {
+        "file": "assets/scout_filenassau_hall_princetonjpg__openverse.jpg",
+        "kind": "image",
+        "bytes": 4633444,
+        "mb": 4.42
+      },
+      {
+        "file": "assets/scout_q11942__photo.jpg",
+        "kind": "image",
+        "bytes": 51051,
+        "mb": 0.05
+      },
+      {
+        "file": "assets/scout_q11942__photo_web.webp",
+        "kind": "image",
+        "bytes": 35526,
+        "mb": 0.03
+      },
+      {
+        "file": "assets/scout_q180865__photo.jpg",
+        "kind": "image",
+        "bytes": 291855,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/scout_q193196__photo.jpg",
+        "kind": "image",
+        "bytes": 266579,
+        "mb": 0.25
+      },
+      {
+        "file": "assets/scout_q219563__photo.jpg",
+        "kind": "image",
+        "bytes": 329009,
+        "mb": 0.31
+      },
+      {
+        "file": "assets/scout_q7842__photo.jpg",
+        "kind": "image",
+        "bytes": 290025,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/scout_q7842__photo_web.webp",
+        "kind": "image",
+        "bytes": 201274,
+        "mb": 0.19
+      },
+      {
+        "file": "assets/scout_vienna_bosendorfer_grand_piano_keyboard_detail_9593__openverse.jpg",
+        "kind": "image",
+        "bytes": 4337930,
+        "mb": 4.14
+      },
+      {
+        "file": "assets/teaser.mp4",
+        "kind": "video",
+        "bytes": 838982,
+        "mb": 0.8
+      },
+      {
+        "file": "assets/teaser_fwd.mp4",
+        "kind": "video",
+        "bytes": 239467,
+        "mb": 0.23
+      },
+      {
+        "file": "assets/teaser_fwd_web.mp4",
+        "kind": "video",
+        "bytes": 427708,
+        "mb": 0.41
+      },
+      {
+        "file": "assets/teaser_hi.jpg",
+        "kind": "image",
+        "bytes": 294149,
+        "mb": 0.28
+      },
+      {
+        "file": "assets/teaser_hi_web.webp",
+        "kind": "image",
+        "bytes": 62092,
+        "mb": 0.06
+      },
+      {
+        "file": "assets/teaser_web.webp",
+        "kind": "image",
+        "bytes": 43082,
+        "mb": 0.04
+      }
+    ],
+    "totalAssetBytes": 6993215,
+    "totalAssetMb": 6.67,
+    "totalBudgetMb": 8,
+    "totalOverBudget": false
+  },
+  "mobile": {
+    "viewport": {
+      "w": 390,
+      "h": 844,
+      "dpr": 2
+    },
+    "pageW": 390,
+    "viewportW": 390,
+    "horizontalOverflow": false,
+    "screenshot": "audit\\shots\\_mobile.png"
+  },
+  "probe": {
+    "target": "data-int",
+    "actions": [
+      "sliders->1@0.66",
+      "clicked:Caltech"
+    ],
+    "before": "audit\\shots\\_probe_before.png",
+    "after": "audit\\shots\\_probe_after.png",
+    "changed": false
+  },
+  "screenshots": [
+    {
+      "name": "_full_seg0_y0",
+      "path": "audit\\shots\\_full_00.png"
+    },
+    {
+      "name": "_full_seg1_y1000",
+      "path": "audit\\shots\\_full_01.png"
+    },
+    {
+      "name": "_full_seg2_y2000",
+      "path": "audit\\shots\\_full_02.png"
+    },
+    {
+      "name": "_full_seg3_y3000",
+      "path": "audit\\shots\\_full_03.png"
+    },
+    {
+      "name": "_full_seg4_y4000",
+      "path": "audit\\shots\\_full_04.png"
+    },
+    {
+      "name": "_full_seg5_y5000",
+      "path": "audit\\shots\\_full_05.png"
+    },
+    {
+      "name": "_full_seg6_y6000",
+      "path": "audit\\shots\\_full_06.png"
+    },
+    {
+      "name": "_full_seg7_y7000",
+      "path": "audit\\shots\\_full_07.png"
+    },
+    {
+      "name": "_full_seg8_y8000",
+      "path": "audit\\shots\\_full_08.png"
+    },
+    {
+      "name": "_full_seg9_y9000",
+      "path": "audit\\shots\\_full_09.png"
+    },
+    {
+      "name": "_full_seg10_y10000",
+      "path": "audit\\shots\\_full_10.png"
+    },
+    {
+      "name": "_full_seg11_y11000",
+      "path": "audit\\shots\\_full_11.png"
+    },
+    {
+      "name": "_full_seg12_y12000",
+      "path": "audit\\shots\\_full_12.png"
+    },
+    {
+      "name": "_full_seg13_y13000",
+      "path": "audit\\shots\\_full_13.png"
+    },
+    {
+      "name": "_full_seg14_y14000",
+      "path": "audit\\shots\\_full_14.png"
+    },
+    {
+      "name": "_full_seg15_y15000",
+      "path": "audit\\shots\\_full_15.png"
+    },
+    {
+      "name": "des_champions",
+      "path": "audit\\shots\\chart_0_des_champions.png"
+    },
+    {
+      "name": "des_corr_matrix",
+      "path": "audit\\shots\\chart_1_des_corr_matrix.png"
+    },
+    {
+      "name": "des_swingers_dumbbell",
+      "path": "audit\\shots\\chart_2_des_swingers_dumbbell.png"
+    },
+    {
+      "name": "des_weights",
+      "path": "audit\\shots\\chart_3_des_weights.png"
+    },
+    {
+      "name": "des_rep_research",
+      "path": "audit\\shots\\chart_4_des_rep_research.png"
+    },
+    {
+      "name": "des_referee_scatter",
+      "path": "audit\\shots\\chart_5_des_referee_scatter.png"
+    },
+    {
+      "name": "des_referee_track",
+      "path": "audit\\shots\\chart_6_des_referee_track.png"
+    },
+    {
+      "name": "des_size_flip",
+      "path": "audit\\shots\\chart_7_des_size_flip.png"
+    },
+    {
+      "name": "des_validation",
+      "path": "audit\\shots\\chart_8_des_validation.png"
+    }
+  ],
+  "screenshotErrors": [
+    "page 19121px > 16 segs; captured top 16000px"
+  ]
+}

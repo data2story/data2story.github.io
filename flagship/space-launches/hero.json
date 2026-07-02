@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "role": "hero",
+    "version": "1.0",
+    "dataset": "Economist / 2018-10-20_space-launches",
+    "source_ladder_rung": 1,
+    "rung_name": "scout_still",
+    "why": "Rung 0 (interactive passthrough) does NOT resolve — the Editor placed the centerpiece scrubber in edt_03, not the teaser (editor.json.interactives.hero.section=='edt_03'), so the cover must not spoil the 54.5% reveal. Rung 1 resolves: sct_03 is a verified license-clean real still of a Long March 5 night launch (a rocket/place, NOT a public figure), so default Veo image2video animated it into a held cinemagraph. The Designer's hero_strategy 'real_still' maps to this executable rung 1.",
+    "loop_note": "Seamless loop via ffmpeg xfade (0.7s crossfade of the tail into the head) — NOT boomerang, because the exhaust smoke is strongly directional (billows outward/upward and grows through the clip); a reverse would suck the smoke back in. Output loop master 5.33s; first and last frames verified near-identical.",
+    "post_process_note": "Veo 16:9 output pillarboxed the 3:2 source still with 100px black bars each side (cropdetect=1080:720:100:0); cropped to a clean 1080x720 (3:2) cover so no synthetic black bars show full-bleed."
+  },
+  "hero": {
+    "id": "des_hero_video",
+    "kind": "video",
+    "backs": "teaser",
+    "subject_is_real_public_figure": false,
+    "source": {
+      "origin": "scout_still",
+      "still_ref": "sct_03",
+      "model": "google/veo-3.1-fast",
+      "tool": "image2video",
+      "prompt": "MOTION-ONLY cinemagraph: the bright exhaust plume billows and rises, smoke drifts and curls outward at the base, the engine flame flickers, the four lightning towers glow and shimmer, faint stars twinkle in the night sky and palm fronds sway slightly — the white Long March 5 rocket body stays HELD and undistorted, no camera shake, in-place cyclic motion that loops.",
+      "duration": 6,
+      "fallback_used": null
+    },
+    "loop": "xfade",
+    "assets": {
+      "video_webm": "assets/teaser.webm",
+      "video_mp4": "assets/teaser_web.mp4",
+      "poster": "assets/teaser.jpg"
+    },
+    "reduced_motion_fallback": "assets/teaser.jpg",
+    "furniture": {
+      "headline_band": "A Duel Became a Crowd",
+      "kicker": "Six decades of orbital launches",
+      "credit_line": "Photo: Shujianyang / Wikimedia Commons (CC0) — Long March 5, Wenchang; motion added (cinemagraph), not authentic launch footage",
+      "decorative": ["bottom gradient scrim"]
+    },
+    "interactive_overlay_ref": null,
+    "verify": {
+      "hit_target": ".teaser",
+      "data_attr": "data-des",
+      "id": "des_hero_video",
+      "class_marker": "teaser"
+    },
+    "disclosure": "Real CC0 photograph (Long March 5 night launch, Wenchang — Shujianyang / Wikimedia Commons); the motion is an AI-generated cinemagraph added to the still (rocket held; plume, smoke and floodlights animated) — not authentic launch footage, and not AI video of a real person.",
+    "publish_blocker": false,
+    "ip_record_ref": "references/hero_recipes.json#ip_record"
+  }
+}

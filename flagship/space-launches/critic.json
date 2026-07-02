@@ -1,0 +1,114 @@
+{
+  "_role": "critic",
+  "_page": "A Duel Became a Crowd — six decades of orbital launches (index.html)",
+  "_dataset": "Economist / 2018-10-20_space-launches (5,726 orbital launches, 1957-2018)",
+  "overall": {
+    "average_score": 5.0,
+    "pass": true,
+    "flagship": true,
+    "tier": "flagship",
+    "signature_dimension": "data_method_transparency",
+    "also_reached_5": ["narrative_pacing", "claim_data_alignment", "insight_value", "visual_design"],
+    "round": 0,
+    "verdict": "Flagship pass. Every dimension clears the FAIL floor at >=4 and FIVE reach >=5 (signature moves), so R9 / pass_requires_signature_move is met. Honest, well-bounded, genuinely insightful, and the rare runnable-verify thesis is fully realized. Shippable as-is; the items below are non-blocking polish, NOT send-backs."
+  },
+  "dimensions": [
+    {
+      "dimension": "visual_design",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Subject-tied dark editorial system: rocket-fire accent #e2563a on a #0e0f13 stage (NOT bootstrap-blue / purple-gradient hero — ANT1/COL1 pass), Charter serif display+body distinct from the UI sans (TYP1/ANT4 pass).",
+        "Seven varied, annotated chart types carry information the prose doesn't: des_04 stacked-area spine with an on-canvas '1991 USSR breaks up' rule + a '2018 partial (Jan-Oct)' rule; des_07 area with a 'Peak: 1967 = 139' callout and a flagged partial-2018 point; des_14 D3 treemap; des_15 log choropleth (with an offline ranked-table fallback); des_16 dot-strip with an 89-96% reference band; plus des_09 column and des_19 operator-type stacked area.",
+        "A genuine data_driven cinematic spine (cin_03): a dimmed inline-SVG annual-volume chart of ana_02 behind the 'turn' section, with scroll-revealed Peak-1967 / 2018-partial annotations — immersion that also informs.",
+        "Ten-scene photographic cinematic scroll (cin_00..cin_09, real CC0/PD launch imagery) under ONE uniform veil, with a frosted dark backplate behind every body section (.story>.wrap rgba+blur) so prose stays legible over the moving background (PIT-67 handled; cinematic_text_legibility positive).",
+        "Spinning-vinyl BGM now-playing card at the top of edt_01 (PIT-19 form), first-gesture start, no autoplay sound (MOT2 pass).",
+        "Handled category-typical failure modes: PIT-01 chart-width-0 (canonical embedChart measure-after-layout + IntersectionObserver), PIT-62 dark-on-dark Vega guide text (one shared CFG block with light axis/title/legend colors), PIT-55 (each chart its own try/catch IIFE). Auditor real-Chrome render: all 7 charts paint with real pixel area, all 17 layout/chart criteria PASS, 0 console errors, payload 3.97 MB.",
+        "Clears chart_signature_floor: the lead charts satisfy CHT1 (annotate the datum) + CHT3, so the visual_design 5 rests on a real signature chart, not a library default."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null,
+      "advisory_polish_non_blocking": "Auditor (low, designer): des_19 lacks on-canvas '1984 private / 2006 startup' wave labels (takeaway is currently legend-dependent); des_09 lacks direct bar-value labels + a 171/partial-2018 callout; des_14 treemap has one tile labelled only '108' (no family name) and a few truncated labels (hover tooltips mitigate). None caps the score; would lift toward 6."
+    },
+    {
+      "dimension": "narrative_pacing",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Deliberate 9-beat arc with a real structural move: hook (edt_01 'a new country led the table') -> context (edt_02 duel + workhorse) -> the turn + hero (edt_03 'who, not how much') -> nation contender (edt_04) -> earn-the-trust (edt_05) -> counter-tension (edt_06 old world owns the ledger) -> honest twist (edt_07 not cutting corners) -> company contender (edt_08) -> close (edt_09).",
+        "The lead IS the most surprising thing (2018: for the first time in spaceflight history the top launcher was neither the US nor Russia), not background-first.",
+        "A genuine reframe/callback: 'two true pictures of the same sky' in edt_09 bookends the duel->crowd hook and resolves on an open implication ('which is the future?'), not a summary.",
+        "Standfirst primes without spoiling: it withholds 54.5% / the 2018 28-27 count / the HHI (the hero's reveal), stating only the qualitative setup (PIT-57 honored; confirmed in copywriter.json rationale and on-page).",
+        "Titling layer is the positive case, not an AI-tell: a takeaway H1 on a real device ('A Duel Became a Crowd'), finding-stating section headings (no AT1 'flat statement. flat counter-statement.' two-beat, no 'An Analysis of...' label), and takeaway-title chart captions throughout ('Launch volume peaked in 1967 and never came back', 'The Soviet fleet still dwarfs every newcomer'), photo captions = who/what/where + absolute date. Zero marketing words on the page (grep clean)."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null
+    },
+    {
+      "dimension": "data_method_transparency",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "verifier.json: 201/204 sentences traced (98.5%); the only 3 untraced are NON-load-bearing (two standfirst priming lines + the Verify-toast UI helper) — i.e. 100% of load-bearing claims resolve to a code line / data_table / source URL.",
+        "Full 'Sources & method' section with specifics: The Economist Graphic-Detail repo, McDowell's JSR launch database, Wikipedia '2018 in spaceflight' (the external 39/34/20 yardstick), CSIS ChinaPower (Long March success + the space-economy projection); 'Every count here is recomputed from launches.csv by code/analyze.py.'",
+        "Material caveat richly survives into visible prose, not just JSON: partial-2018 (80 rows Jan-Oct vs 114 full-year) is flagged in edt_01/03/04, charts carry an on-canvas '2018 partial' marker, AND there is a dedicated beat (edt_05 'Three ways to count 2018') — material_caveat_survival_cap NOT triggered.",
+        "Honest validation of the derived crossover headline (five_plus_requires): the int_03 annualize widget + edt_05 prose show China leading three independent ways — partial (28>27), naive pro-rate (~33.6>32.4, explicitly 'NOT a forecast'), and external full-year (39>34) — and explicitly disclaims what it does NOT prove ('not that China owns space').",
+        "Runnable: six live recompute interactives + an inlined, self-contained client_model.js (launchSnapshot / cumulativeThrough / successRate / annualize) let the reader reproduce headline numbers live; the reproducible notebook (verify/space_launches_verify.ipynb), verify_map.json and run_cells.json all exist on disk (the in-page Inspector panel islands are filled at Stage 7, by design).",
+        "Other concrete method caveats stated on-page: blank source coordinates -> country choropleth not a pad map (edt_06); blank Soviet agency field -> ranked by vehicle family not agency; the '2918'->2018 date-typo correction disclosed."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null,
+      "note": "Held at 5 rather than 6 only because the in-page Inspector 'run it yourself' panel materializes at Stage 7 (the #verifyMap/#runCells islands are empty at the Critic stage); what is live and creditable now is the 6 recompute interactives + the on-disk notebook + 100% load-bearing traceability. No honest_accuracy_cap issue (reliability figures are descriptive successes/attempts shown beside cross-group baselines)."
+    },
+    {
+      "dimension": "claim_data_alignment",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Every quantitative claim is bounded by the data and spot-checks out: 2010s duopoly 54.5% ((208+193)/736), all-time 85.5% (4894/5726), per-year 2018 partial 46.3% ((10+27)/80), China 95.0% Long March (287/302), China reliability 95.7% (289/302) — all reproduce the inlined matrix.",
+        "The level gap is NAMED, not implied: the piece explicitly distinguishes the per-year 'crowd' from the all-time 'ledger' ('two true pictures of the same sky'), so the pluralization claim is never conflated with the unchanged cumulative record.",
+        "Partial-period flags are explicit wherever 2018 appears; the snapshot 28-27 is paired with the external full-year 39-34 and labelled 'the snapshot it is, not a final tally'.",
+        "Sample-size caveats appear where they matter: startups 92.9% 'on a thin base of 70 launches that still carries SpaceX's three early Falcon 1 failures'; the 43-attempt 'Other' bucket flagged as the lone low outlier.",
+        "Counter-evidence is kept, not hidden: 'Europe's all-time count (307) even noses ahead of China's (302)' and 'the United States never collapsed — its share even recovered' both cut against the China-rise narrative.",
+        "Third-party figures are attributed, not absorbed (cite_third_party_as_theirs_cap clear): the external full-year 2018 counts and the >$1T space-economy projection are credited to Wikipedia / CSIS in the refs, kept distinct from the project's own recomputed numbers; no causal language over correlational data."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null
+    },
+    {
+      "dimension": "insight_value",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "A non-obvious reframing that updates an informed reader: the change is WHO launches, not HOW MUCH (total volume is flat-to-down, busiest year still 1967) — refuting the instinctive 'launch boom' story.",
+        "Refutes two further Cold-War reflexes with the data: the newcomers are NOT cutting corners (China's 95.7% ties the incumbents; the most reliable operators are the established commercial providers, not the startups), and the per-year crowd sits on an all-time ledger still 85.5% old-world.",
+        "Angle partly from outside the raw data (detective context): the Soviet-collapse funding cut (~80%, Buran, Baikonur stranded), the Arianespace-vs-venture-startup distinction, and the $350B->$1T space-economy stakes give the 'so what' beyond a leaderboard.",
+        "ONE clear earned hero (int_01 duel->crowd year-scrubber) that lands AT the turn (edt_03), ABOVE the reveal paragraph, so the reader PRODUCES the duopoly-share collapse rather than reading it (interaction-as-argument satisfied; not bolted on after the answer).",
+        "An EARNED supporting set (C-ABUNDANCE flagship bar, not a widget-pile): int_02 all-time ledger, int_03 annualize-the-caveat, int_04 success-rate calculator, int_05 guess-the-Long-March-share, int_06 guess-the-startup-year — each bound to a DISTINCT producible finding and each verified working + keyboard-reachable by the Auditor in real Chrome."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null
+    }
+  ],
+  "cross_checks": {
+    "pitfalls_hard_fail_scan": "No severity:hard pitfall visibly present. PIT-01 (0-width chart), PIT-62 (dark-on-dark guide text), PIT-67 (body over cinematic w/o backplate), PIT-55 (cascade abort), PIT-08/MOT2 (autoplay sound), PIT-10 (un-auditable proprietary number) all checked clean; Auditor real-browser render confirms.",
+    "marketing_words": "none (grep for novel/state-of-the-art/unprecedented/groundbreaking/revolutionary/first-to returned no matches).",
+    "richness_floor": "Not triggered — rich visual topic delivered richly: animated Long March 5 hero cinemagraph (xfade seamless loop, real CC0 still), 10-scene photographic cinematic + data_driven spine, real BGM, 7 charts, 6 interactives. The opposite of the impoverished path (PIT-45/46/47).",
+    "static_hero_cap": "Not triggered — hero is a dynamic, seamlessly-looping cinemagraph (hero.json loop:'xfade', primary plume/smoke/floodlight motion), not a near-still or jumping clip.",
+    "inert_immersion_cap": "Not triggered — cinematic scroll layer is real and BGM is present + tonally fitting (restrained spacious instrumental for a Cold-War-to-now history).",
+    "animated_likeness_taste": "N/A — the hero animates a rocket/place (Long March 5, Wenchang), not a person; honestly disclosed as a cinemagraph, not authentic footage. No sensitive-subject advisory needed.",
+    "interactive_set_R8": "6 playgrounds, one clear hero (int_01) + 5 earned supporting, each a distinct producible finding; none re-teaches another; Auditor's 5 hard playtest fails are all recorded false positives (pre-seeded reveal numbers / self-completing replay animation), verified working in real Chrome — dedup'd with the Programmer correctness loop, not re-routed here.",
+    "unused_ids_context": "49 unused_ids in verifier.json are the intentional routing the task flagged (charts carry data-ana not data-des; scouted media routed via des_/cin_ verify_map; cinematic backgrounds cin_*; the deliberately-cut ana_18 agency ranking) + decorative scene layers — NOT missing traceability."
+  },
+  "send_backs": [],
+  "notes": [
+    "FLAGSHIP PASS (round 0): all five dimensions = 5; no dimension fails; R9 signature-move bar met several times over. No send-back required.",
+    "Non-blocking polish a future round could use to push individual dimensions toward 6 (all low-severity, designer/programmer-owned, already in auditor.json advisory_notes): on-canvas wave labels on des_19; direct bar labels + a 171/partial callout on des_09; family-name + de-truncation on the des_14 treemap; gate the stat count-up on prefers-reduced-motion; reserve 16:9 (aspect-ratio) on the des_21 YouTube facade to remove minor CLS.",
+    "Final visual/feel sign-off (animation feel, payoff legibility, BGM tonal fit, 'does it delight') is the human reviewer's per the AUTO-vs-HUMAN split — outside the machine-judged rubric."
+  ]
+}

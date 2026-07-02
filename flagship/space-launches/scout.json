@@ -1,0 +1,643 @@
+{
+  "meta": {
+    "role": "scout",
+    "version": "1.0",
+    "dataset": "Economist / 2018-10-20_space-launches",
+    "summary": "Sourced + verified license-clean media for the 'space race / new contenders' story: one BGM track, one oEmbed video, and 17 real photos (15 cover-able landscape backgrounds for the cinematic). Every asset carries a checked license + identity block.",
+    "topic_profile": {
+      "tags": [
+        "visual_subject",
+        "geographic",
+        "event",
+        "place"
+      ],
+      "is_visual": true,
+      "is_computational": true,
+      "source": "resolved by Detective; echoed here",
+      "privacy_sensitive": false
+    },
+    "coverable_image_count": 15,
+    "bgm_note": "BGM is mandatory; chose a genuinely license-clean (CC BY 3.0, non-review-pending) restrained ambient track over the better-theme but review-pending 'space ambient' option. 45 MB FLAC — Designer must transcode.",
+    "video_note": "One oEmbed-verified YouTube embed (SpaceX Falcon Heavy, the Feb 2018 headline moment). The live-stream alternative xLIb8glag-0 was rejected (oEmbed HTTP 403 = embedding disabled).",
+    "live_status_note": "No live_status: this is a closed 2018 historical dataset, not an ongoing event. Adding forward-dated launch tallies would muddy the dataset's 2018 snapshot (see detective det_11 truncation caveat). Skipped by design.",
+    "gaps_for_designer": [
+      "No license-clean REAL Jiuquan/Xichang or Cape Canaveral *site* wide-shot was kept (the launch photos themselves carry the China and US sites); a dedicated site/skyline or a launch-provider world map can be generated/data-driven if wanted.",
+      "Rocket Lab Electron real launch photos on Commons are 2023-2024 (the only license-clean ones); captioned generically as 'Rocket Lab Electron', not date-specific. A 2018 Electron photo could not be sourced license-clean.",
+      "Dropped 4 candidates that failed identity/quality: change5_launch (distant glow, weak ID), ariane5_pad (tourists were the real subject), kourou (campus+rainbow, caption-mismatch), electron diagram .webp (a render, not a photo)."
+    ]
+  },
+  "items": {
+    "sct_01": {
+      "kind": "audio",
+      "label": "Restrained ambient BGM for the space-launch history",
+      "filename": "scout_bgm_web.mp3",
+      "caption": "License-clean ambient instrumental sourced for the top-of-article spinning-vinyl soundtrack.",
+      "caption_claims": [
+        "this is a license-clean ambient music track"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Raspberrymusic_-_Ambient_(10_minutes).flac",
+      "retrieved_at": "2026-06-30T02:06:31Z",
+      "license": {
+        "spdx": "CC-BY-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Music: raspberrymusic / Wikimedia Commons (CC BY 3.0)"
+      },
+      "identity": {
+        "method": "trusted_source",
+        "verified": true,
+        "verified_title": "Commons file page asserts CC BY 3.0 (plain {{cc-by-3.0}}, NOT a review-pending YouTube import); artist raspberrymusic (raspberrysounds, royalty-free ambient).",
+        "subject": "ambient instrumental track (~10 min)"
+      },
+      "cover_path": "scout_earth_limb.jpg",
+      "duration_s": 601.0,
+      "note": "Lead is a sober, analytical Cold-War-to-now space history, so the mood word was 'ambient'/'restrained cinematic', not a celebratory anthem. FILE IS A 45 MB 10-min FLAC — Designer MUST transcode to a web-weight streaming copy (~128 kbps mp3/opus, <3 MB) before referencing; the heavy original never ships. No Commons cover art existed, so cover_path reuses the PD Earth-from-orbit still scout_earth_limb.jpg (square-croppable for the spinning disc). Alternatives if a different tone is wanted: 'Dreamstate Logic – Zero Point (space ambient)' (File on Commons, CC-BY-3.0 but pending Commons license review — stronger THEME fit, swap only after the review clears) or 'Chopin Nocturne No. 21, B.108' performed by Diana Hughes / Musopen (genuinely PD recording — guaranteed-clean classical floor).",
+      "relates_to": [
+        "det_01"
+      ],
+      "purpose": "IMMERSE"
+    },
+    "sct_02": {
+      "kind": "embed",
+      "label": "SpaceX Falcon Heavy Test Flight (Feb 2018)",
+      "embed_url": "https://www.youtube.com/embed/wbSwFU6tY1c",
+      "source_url": "https://www.youtube.com/watch?v=wbSwFU6tY1c",
+      "caption": "SpaceX's Falcon Heavy makes its first flight, 6 February 2018 — the demonstration that put a new heavy-lift commercial rocket into service inside this dataset's window.",
+      "caption_claims": [
+        "this is the official SpaceX video of the 6 February 2018 Falcon Heavy test flight"
+      ],
+      "retrieved_at": "2026-06-30T03:15:00Z",
+      "license": {
+        "spdx": "All Rights Reserved",
+        "permits_republication": false,
+        "requires_attribution": false,
+        "attribution_text": "Video: SpaceX — 'Falcon Heavy Test Flight' (official SpaceX YouTube channel); embedded via the YouTube player (not re-hosted)."
+      },
+      "identity": {
+        "method": "oembed",
+        "verified": true,
+        "verified_title": "YouTube oEmbed HTTP 200 — title 'Falcon Heavy Test Flight', author 'SpaceX' (youtube.com/@SpaceX).",
+        "subject": "SpaceX Falcon Heavy test flight, 6 Feb 2018"
+      },
+      "relates_to": [
+        "det_08"
+      ],
+      "purpose": "INFORM",
+      "publish_note": "Embedded via the official YouTube player (oEmbed-verified, SpaceX channel) — NOT re-hosted, so the platform carries its own rights and NO license swap is required before publishing. Resolution: keep as an official embed; if embedding is ever disabled, swap to a license-clean launch clip or drop the video."
+    },
+    "sct_03": {
+      "kind": "image",
+      "label": "Long March 5 night launch, Wenchang",
+      "filename": "scout_longmarch5_pad_web.webp",
+      "caption": "A Long March 5 lifts off at night from Wenchang on China's tropical Hainan coast — the heavy-lift rocket behind China's climb up the launch table.",
+      "caption_claims": [
+        "this is a Chinese Long March 5 (CZ-5) rocket",
+        "this depicts a night launch at the Wenchang launch site"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:CZ-5_at_WSLS_03.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1067,
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: Shujianyang / Wikimedia Commons (CC0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Large white rocket marked 中国航天 (China Aerospace) lifting off at night between four lightning towers, palm trees silhouetted at the base — a Long March 5 at Wenchang. Real photo.",
+        "subject": "Long March 5 (CZ-5) night launch, Wenchang"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_06",
+        "det_07"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_04": {
+      "kind": "image",
+      "label": "Long March 3B liftoff, Xichang",
+      "filename": "scout_longmarch_launch_web.webp",
+      "caption": "A Long March 3B climbs away from Xichang. The Long March (CZ) family flew the overwhelming majority of China's missions in this data.",
+      "caption_claims": [
+        "this is a Chinese Long March (CZ) rocket",
+        "this depicts a night launch"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:The_Launch_of_Long_March_3B_Rocket.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1008,
+      "native_height": 1404,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: AAxanderr / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "White rocket marked 中国航天 and 'CZ' lifting off at night beside a gantry tower with orange flame and smoke — a Long March 3B. Real photo.",
+        "subject": "Long March 3B night launch (Xichang)"
+      },
+      "orientation": "portrait",
+      "coverable": false,
+      "relates_to": [
+        "det_06"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_05": {
+      "kind": "image",
+      "label": "Long March launch (Yaogan), Xichang",
+      "filename": "scout_china_launch_web.webp",
+      "caption": "A Long March carries a Yaogan satellite to orbit from Xichang at night — part of the cadence that made China 2018's busiest launcher.",
+      "caption_claims": [
+        "this is a Chinese Long March rocket launch"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Yaogan-36_satellite_launch.png",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1668,
+      "native_height": 816,
+      "license": {
+        "spdx": "CC-BY-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: China News Serivce / Wikimedia Commons (CC BY 4.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Pale rocket rising on a bright plume from a tower at night, orange smoke, support building at left — a Chinese Long March (Yaogan-36) launch. Real photo.",
+        "subject": "Long March launch, Xichang (Yaogan-36)"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_06",
+        "det_07"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_06": {
+      "kind": "image",
+      "label": "Soyuz (R-7) liftoff, Baikonur",
+      "filename": "scout_soyuz_launch_web.webp",
+      "caption": "A Soyuz rocket — the R-7 'Semyorka' lineage — lifts off from Baikonur. Soyuz/R-7 is the most-launched orbital rocket family in history.",
+      "caption_claims": [
+        "this is a Soyuz (R-7 family) rocket",
+        "this depicts a launch from Baikonur"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Soyuz_TMA-5_launch.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1819,
+      "native_height": 2831,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: Bill Ingalls / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Tapered rocket with four conical strap-on boosters and a Russian flag lifting off on a bright plume, gantry arms swung back — a Soyuz at Baikonur. Real photo.",
+        "subject": "Soyuz (TMA-5) launch, Baikonur"
+      },
+      "orientation": "portrait",
+      "coverable": false,
+      "relates_to": [
+        "det_04"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_07": {
+      "kind": "image",
+      "label": "Baikonur Soyuz launch pad at sunset",
+      "filename": "scout_baikonur_pad_web.webp",
+      "caption": "Sunset over a Soyuz launch pad at Baikonur Cosmodrome in Kazakhstan — the Soviet/Russian programme's main spaceport.",
+      "caption_claims": [
+        "this is the Baikonur Cosmodrome Soyuz launch pad"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Baikonur_Cosmodrome_Soyuz_launch_pad.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1065,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: Bill Ingalls / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Silhouetted launch pad with four lightning towers and service structures against an orange sunset, the sun setting behind the pad — Baikonur. Real photo.",
+        "subject": "Baikonur Cosmodrome Soyuz launch pad (sunset)"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_04",
+        "det_05"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_08": {
+      "kind": "image",
+      "label": "Falcon 9 launch (GRACE-FO, 2018), Vandenberg",
+      "filename": "scout_falcon9_2018launch_web.webp",
+      "caption": "A SpaceX Falcon 9 climbs from coastal Vandenberg with the GRACE-FO satellites, May 2018 — inside this dataset's window.",
+      "caption_claims": [
+        "this is a SpaceX Falcon 9",
+        "this depicts a 2018 launch from Vandenberg"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:GRACE-FO_Launch_(NHQ201805220019).jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1284,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: Bill Ingalls / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Single-core white rocket ascending above a huge white smoke cloud on a coastal scrubland pad with the ocean behind — a Falcon 9 (GRACE-FO) at Vandenberg. Real photo.",
+        "subject": "Falcon 9 launch (GRACE-FO), Vandenberg, May 2018"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_08"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_09": {
+      "kind": "image",
+      "label": "Falcon 9 SES-10 reflight, LC-39A",
+      "filename": "scout_falcon9_reflight_web.webp",
+      "caption": "A Falcon 9 lifts off from Kennedy's pad 39A on SES-10 — the first reflight of an orbital-class booster (March 2017).",
+      "caption_claims": [
+        "this is a SpaceX Falcon 9 launch"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:SES-10_Launch_-_world%27s_first_reflight_of_an_orbital_class_rocket_(33361035200).jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1058,
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: SpaceX / Wikimedia Commons (CC0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "White Falcon 9 ascending on a bright plume past a 'SPACEX' water tower over the ocean at LC-39A — the SES-10 reflight. Real photo.",
+        "subject": "Falcon 9 launch (SES-10 reflight), KSC LC-39A"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_08"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_10": {
+      "kind": "image",
+      "label": "Falcon 9 first stage after landing (LZ-1)",
+      "filename": "scout_falcon9_landing_web.webp",
+      "caption": "A recovered Falcon 9 first stage stands on its legs after landing — the reuse that reset launch economics.",
+      "caption_claims": [
+        "this is a landed SpaceX Falcon 9 first stage"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Falcon_9_first_stage_at_LZ-1(two).jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1077,
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: SpaceX Photos / Wikimedia Commons (CC0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Slender booster marked 'SPACEX' standing on four landing legs beside a crane at sunset, crew in hi-vis — a recovered Falcon 9 first stage at Landing Zone 1. Real photo.",
+        "subject": "Falcon 9 first stage after landing (LZ-1)"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_08"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_11": {
+      "kind": "image",
+      "label": "Falcon Heavy side boosters landing (Feb 6 2018)",
+      "filename": "scout_falconheavy_boosters_web.webp",
+      "caption": "The two Falcon Heavy side boosters touch down together at Cape Canaveral, 6 February 2018 — the synchronized landing that defined the flight.",
+      "caption_claims": [
+        "these are two SpaceX Falcon (Heavy) side boosters landing",
+        "this depicts the 6 Feb 2018 Falcon Heavy demo landing"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Falcon_Heavy_Side_Boosters_landing_on_LZ1_and_LZ2_-_2018_(25254688767).jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1067,
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: SpaceX / Wikimedia Commons (CC0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Two identical boosters descending side-by-side on deployed landing legs with engines firing over a landing zone — the Falcon Heavy side-booster dual landing. Real photo.",
+        "subject": "Falcon Heavy side boosters landing, Feb 6 2018"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_08"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_12": {
+      "kind": "image",
+      "label": "Falcon Heavy on pad 39A (pre-launch)",
+      "filename": "scout_falconheavy_launch_web.webp",
+      "caption": "Falcon Heavy stands on pad 39A ahead of its first flight — three Falcon cores strapped together.",
+      "caption_claims": [
+        "this is the SpaceX Falcon Heavy on the launch pad"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Falcon_Heavy_Demo_Mission_(38583829295).jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1067,
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: SpaceX / Wikimedia Commons (CC0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Three-core rocket with an 'FH / FALCON HEAVY' fairing and 'SPACEX' cores beside the fixed service structure on pad 39A — Falcon Heavy on the pad (not launching). Real photo.",
+        "subject": "Falcon Heavy on pad 39A (pre-launch)"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_08"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_13": {
+      "kind": "image",
+      "label": "Sputnik 1 replica (NASM)",
+      "filename": "scout_sputnik_web.webp",
+      "caption": "A replica of Sputnik 1 — the polished sphere whose 1957 launch opened the orbital era this data charts.",
+      "caption_claims": [
+        "this is a replica of Sputnik 1"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sputnik_1_at_the_National_Air_and_Space_Museum,_Dec_2017.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1067,
+      "license": {
+        "spdx": "CC-BY-SA-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Mys 721tx / Wikimedia Commons (CC BY-SA 3.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Polished metal sphere with four long whip antennas hanging in a museum hall — a Sputnik 1 replica at the National Air and Space Museum. Real photo.",
+        "subject": "Sputnik 1 replica (National Air and Space Museum)"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_03"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_14": {
+      "kind": "image",
+      "label": "Space Shuttle night launch (STS-130), LC-39A",
+      "filename": "scout_shuttle_pad_web.webp",
+      "caption": "A Space Shuttle thunders off pad 39A at night — the US workhorse that flew 135 times across this dataset.",
+      "caption_claims": [
+        "this is a Space Shuttle launch"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:STS-130_exhaust_cloud_engulfs_Launch_Pad_39A.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1065,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: NASA/Sandra Joseph and Kevin O'Connell / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Orbiter + external tank + two solid boosters rising on a brilliant flame amid vast billowing exhaust at night — a Space Shuttle launch (STS-130). Real photo.",
+        "subject": "Space Shuttle launch (STS-130), LC-39A, night"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_15"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_15": {
+      "kind": "image",
+      "label": "Space Shuttle Discovery night liftoff",
+      "filename": "scout_shuttle_liftoff_web.webp",
+      "caption": "Space Shuttle Discovery lifts off at night, seen through the Florida treeline.",
+      "caption_claims": [
+        "this is a Space Shuttle (Discovery) launch"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Space_Shuttle_Discovery_Liftoff_(28024327995).jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1583,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: NASA Hubble Space Telescope / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Orbiter labelled 'Discovery' ascending on twin solid-booster plumes at night, framed by dark tree branches, launch tower at left — a Space Shuttle Discovery liftoff. Real photo.",
+        "subject": "Space Shuttle Discovery night liftoff"
+      },
+      "orientation": "square",
+      "coverable": true,
+      "relates_to": [
+        "det_15"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_16": {
+      "kind": "image",
+      "label": "Ariane 5 at the Guiana Space Centre, Kourou",
+      "filename": "scout_ariane5_web.webp",
+      "caption": "An Ariane 5 rolls to its pad at Europe's Guiana Space Centre in Kourou — Arianespace was the world's first commercial launch provider.",
+      "caption_claims": [
+        "this is an Ariane 5 rocket",
+        "this depicts the Guiana Space Centre, Kourou"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ariane_5ECA_on_its_way_to_launch_pad_ELA-3.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:08:21Z",
+      "native_width": 1600,
+      "native_height": 1200,
+      "license": {
+        "spdx": "CC-BY-2.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: elisabetta_monaco from Munich, Germany / Wikimedia Commons (CC BY 2.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "White rocket with 'arianespace' / ESA / 'SES' markings and ESA member flags beside a beige mobile gantry in tropical surroundings — an Ariane 5 at Kourou. Real photo.",
+        "subject": "Ariane 5 (ECA) at the Guiana Space Centre, Kourou"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_10"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_17": {
+      "kind": "image",
+      "label": "Earth's limb from the ISS (also the BGM cover)",
+      "filename": "scout_earth_limb_web.webp",
+      "caption": "Earth's thin atmosphere and towering storm clouds, seen from the International Space Station — what the launch business ultimately serves.",
+      "caption_claims": [
+        "this is a real photograph of Earth from orbit (ISS)"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:ISS-20_Thunderstorms_on_the_Brazilian_Horizon.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1063,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: NASA Expedition 20 crew / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Curved Earth limb with a thin blue atmospheric line against black space, towering thunderheads casting shadows and a sunlit river — an ISS Earth-observation photo. Real photo.",
+        "subject": "Earth from orbit (ISS); atmospheric"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_14"
+      ],
+      "purpose": "IMMERSE"
+    },
+    "sct_18": {
+      "kind": "image",
+      "label": "International Space Station in orbit",
+      "filename": "scout_iss_earth_web.webp",
+      "caption": "The International Space Station over Earth, with the Moon beyond — the orbital infrastructure that launches build.",
+      "caption_claims": [
+        "this is the International Space Station photographed from orbit"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:STS-135_final_flyaround_of_ISS_1.jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:02:11Z",
+      "native_width": 1600,
+      "native_height": 1065,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: NASA / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Truss-and-solar-array station against black space with the Moon at upper right and Earth's limb below — the ISS during the STS-135 flyaround. Real photo.",
+        "subject": "International Space Station in orbit"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_14"
+      ],
+      "purpose": "IMMERSE"
+    },
+    "sct_19": {
+      "kind": "image",
+      "label": "Rocket Lab Electron launch",
+      "filename": "scout_electron_b_web.webp",
+      "caption": "Rocket Lab's Electron lifts off — the dedicated small-satellite launcher that reached orbit in 2018, opening a high-cadence commercial niche.",
+      "caption_claims": [
+        "this is a Rocket Lab Electron rocket launch"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:TROPICS_Rocket_Launch_(KSC-20230507-PH-RLS01_0001-reupload)_(cropped).jpg",
+      "site": "Wikimedia",
+      "retrieved_at": "2026-06-30T02:10:43Z",
+      "native_width": 1600,
+      "native_height": 1201,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: NASA Kennedy Space Center / Rocket Lab / Wikimedia Commons (public domain)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Slim black-and-white rocket with 'ELECTRON' and 'NASA' on the body ascending on a bright plume against blue sky, launch arm at right — a Rocket Lab Electron. Real photo.",
+        "subject": "Rocket Lab Electron launch"
+      },
+      "orientation": "landscape",
+      "coverable": true,
+      "relates_to": [
+        "det_09"
+      ],
+      "purpose": "INFORM"
+    }
+  },
+  "live_status": []
+}

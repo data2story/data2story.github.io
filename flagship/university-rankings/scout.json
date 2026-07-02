@@ -1,0 +1,250 @@
+{
+  "meta": {
+    "role": "scout",
+    "version": "1.0",
+    "notes": "Premium-stage media verification for the 'four university rankings disagree' story. Fills the Detective's scout_brief gaps with 6 NEW distinct, license-clean, landscape/cover-able campus photos (none duplicating the Detective's 10 ref_ subjects) to feed the mandatory cinematic scroll, plus the MANDATORY front-of-blog BGM (a serene solo-piano nocturne matched to the sober/analytical tone) with a license-clean cover. Every real-subject asset carries a verified license + identity block. live_status is intentionally EMPTY: this is a STATIC historical dataset (THE/ARWU/CWUR 2015 + QS 2023 + OpenAlex current), not an ongoing event, so no live feed is fabricated."
+  },
+  "items": {
+    "sct_bgm": {
+      "kind": "audio",
+      "label": "Pensive solo-piano nocturne BGM",
+      "filename": "scout_bgm_web.mp3",
+      "caption": "John Field, Nocturne in B-flat major (H. 37) — a serene solo-piano nocturne, chosen to match the story's pensive, analytical tone rather than a celebratory loop.",
+      "caption_claims": [
+        "this is a recording of John Field's Nocturne in B-flat major (H.37), performed by Constantin Stephan"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Field-NocturneB-flatmajorH37-Stephan.ogg",
+      "retrieved_at": "2026-07-01T23:33:40Z",
+      "license": {
+        "spdx": "CC-BY-SA-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Music: John Field, Nocturne in B-flat major (H.37), performed by Constantin Stephan / Wikimedia Commons (CC BY-SA 4.0)"
+      },
+      "identity": {
+        "method": "trusted_source",
+        "verified": true,
+        "verified_title": "Commons File page names the composition (John Field, Nocturne in B-flat major H.37) and the performer (Constantin Stephan, piano); audio, not vlm_view-able.",
+        "subject": "a real recording of John Field's Nocturne in B-flat major (solo piano) — license-clean instrumental, not AI-composed"
+      },
+      "cover_path": "scout_vienna_bosendorfer_grand_piano_keyboard_detail_9593__openverse.jpg",
+      "duration_s": 176.3,
+      "note": "MANDATORY BGM (every blog, no exemption). Tone = sober/analytical/computational, so the mood word was 'nocturne' (list -> pick -> download via fetch_music.py). This is rung 1 (a license-clean real instrumental) that also satisfies the rung-C classical floor: the RECORDING's own license was verified CC-BY-SA-4.0 (allowlisted), not merely the PD composition. Serene B-flat MAJOR nocturne = pensive, non-triumphant, not mournful. File is a ~2.5 MB .ogg (already web-weight); the Designer may still transcode to a streaming copy. Cover = the Bosendorfer keyboard image registered as sct_bgm_cover.",
+      "relates_to": [
+        "det_01"
+      ],
+      "purpose": "IMMERSE"
+    },
+    "sct_bgm_cover": {
+      "kind": "image",
+      "label": "Bosendorfer grand piano — BGM cover art",
+      "filename": "scout_vienna_bosendorfer_grand_piano_keyboard_detail_9593__openverse_web.webp",
+      "caption": "Cover art for the now-playing card: the keyboard of an ornate 19th-century Bosendorfer grand piano (Vienna).",
+      "caption_claims": [
+        "this is an ornate antique Bosendorfer grand piano keyboard"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Vienna_-_Bosendorfer_grand_piano_keyboard_detail_-_9593.jpg",
+      "retrieved_at": "2026-07-01T23:34:55Z",
+      "native_width": 4368,
+      "native_height": 2912,
+      "license": {
+        "spdx": "CC-BY-SA-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Jorge Royan / Wikimedia Commons (CC BY-SA 3.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Viewed: close-up of an ebonised Bosendorfer (Wien) grand-piano keyboard with gilt-bronze caryatid and marquetry inlay; a real photograph, not an AI render. Illustrative cover art for the piano BGM.",
+        "subject": "an ornate antique Bosendorfer grand piano keyboard (Vienna); real photograph, decorative cover for the BGM card"
+      },
+      "relates_to": [
+        "det_01"
+      ],
+      "purpose": "IMMERSE"
+    },
+    "sct_princeton": {
+      "kind": "image",
+      "label": "Princeton — Nassau Hall",
+      "filename": "scout_filenassau_hall_princetonjpg__openverse_web.webp",
+      "caption": "Nassau Hall, Princeton University — the university's oldest building.",
+      "caption_claims": [
+        "this is Nassau Hall at Princeton University"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Nassau_Hall_Princeton.JPG",
+      "retrieved_at": "2026-07-01T23:34:18Z",
+      "native_width": 4108,
+      "native_height": 2738,
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: Smallbones / Wikimedia Commons (CC0 1.0 — public-domain dedication)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Viewed: ivy-clad brownstone Nassau Hall with its green copper cupola and US flag, framed by bare trees along a paved path; a real photograph. Fills the Detective's Princeton gap (their P18 returned a watercolour).",
+        "subject": "Nassau Hall, Princeton University"
+      },
+      "relates_to": [
+        "det_08",
+        "det_13"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_toronto": {
+      "kind": "image",
+      "label": "University of Toronto — Convocation Hall",
+      "filename": "scout_q180865__photo_web.webp",
+      "caption": "Convocation Hall at the University of Toronto.",
+      "caption_claims": [
+        "this is the University of Toronto (Convocation Hall)"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:UofTConvocationHall.jpg",
+      "retrieved_at": "2026-07-01T23:31:00Z",
+      "native_width": 1280,
+      "native_height": 960,
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: Raysonho / Wikimedia Commons (CC0 1.0 — public-domain dedication)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Viewed: the domed, colonnaded rotunda of U of T's Convocation Hall (Ionic columns, green copper dome) under a blue sky; a real photograph.",
+        "subject": "Convocation Hall, University of Toronto"
+      },
+      "relates_to": [
+        "det_06",
+        "det_13",
+        "det_14"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_ucl": {
+      "kind": "image",
+      "label": "University College London — Wilkins Building",
+      "filename": "scout_q193196__photo_web.webp",
+      "caption": "The Wilkins Building portico at University College London.",
+      "caption_claims": [
+        "this is University College London (the Wilkins Building)"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Wilkins_Building_1,_UCL,_London_-_Diliff.jpg",
+      "retrieved_at": "2026-07-01T23:31:00Z",
+      "native_width": 1280,
+      "native_height": 844,
+      "license": {
+        "spdx": "CC-BY-SA-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Diliff / Wikimedia Commons (CC BY-SA 3.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Viewed: UCL's neoclassical Wilkins Building — a Corinthian portico under a dome, students seated on the steps of the main quad; a real photograph.",
+        "subject": "Wilkins Building (main quad), University College London"
+      },
+      "relates_to": [
+        "det_06",
+        "det_13"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_washington": {
+      "kind": "image",
+      "label": "University of Washington — Drumheller Fountain",
+      "filename": "scout_q219563__photo_web.webp",
+      "caption": "Drumheller Fountain on the Rainier Vista quad, University of Washington.",
+      "caption_claims": [
+        "this is the University of Washington (Drumheller Fountain)"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:MK03244_University_of_Washington_Drumheller_Fountain.jpg",
+      "retrieved_at": "2026-07-01T23:31:00Z",
+      "native_width": 1280,
+      "native_height": 720,
+      "license": {
+        "spdx": "CC-BY-SA-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Martin Kraft / Wikimedia Commons (CC BY-SA 3.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Viewed: the Drumheller Fountain jetting in a circular pool, flanked by the University of Washington's collegiate-Gothic brick buildings; a real photograph. (Washington is the two_yr_mean_citedness anomaly flagged in det_14.)",
+        "subject": "Drumheller Fountain, University of Washington"
+      },
+      "relates_to": [
+        "det_06",
+        "det_14"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_tokyo": {
+      "kind": "image",
+      "label": "University of Tokyo — Yasuda Auditorium",
+      "filename": "scout_q7842__photo_web.webp",
+      "caption": "Yasuda Auditorium at the University of Tokyo.",
+      "caption_claims": [
+        "this is the University of Tokyo (Yasuda Auditorium)"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Yasuda_Auditorium_-_Tokyo_University_3.jpg",
+      "retrieved_at": "2026-07-01T23:31:00Z",
+      "native_width": 1280,
+      "native_height": 914,
+      "license": {
+        "spdx": "CC-BY-SA-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Kakidai / Wikimedia Commons (CC BY-SA 4.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Viewed: the University of Tokyo's red-brick Yasuda Auditorium with its central clock tower and pointed-arch entrance, on a manicured lawn; a real photograph. Adds Asian geographic diversity to the swinger set.",
+        "subject": "Yasuda Auditorium, University of Tokyo"
+      },
+      "relates_to": [
+        "det_06",
+        "det_13"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_eth": {
+      "kind": "image",
+      "label": "ETH Zurich — main building at night",
+      "filename": "scout_eth_zurich_main_building__openverse_web.webp",
+      "caption": "The main building (Hauptgebaude) of ETH Zurich at night.",
+      "caption_claims": [
+        "this is ETH Zurich (the main building / Hauptgebaude)"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:ETH_Zurich,_Main_building.jpg",
+      "retrieved_at": "2026-07-01T23:35:08Z",
+      "native_width": 10060,
+      "native_height": 2636,
+      "license": {
+        "spdx": "CC-BY-SA-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Nemanja Skoric / Wikimedia Commons (CC BY-SA 3.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "Viewed: a wide night panorama of ETH Zurich's neoclassical Hauptgebaude — the lit domed central rotunda flanked by symmetric colonnaded wings, empty forecourt; a real photograph. Ultra-wide (10060px), ideal for a full-bleed cinematic band, and its night mood pairs with the nocturne BGM.",
+        "subject": "ETH Zurich main building (Hauptgebaude), Zurich"
+      },
+      "relates_to": [
+        "det_08",
+        "det_13"
+      ],
+      "purpose": "INFORM"
+    }
+  },
+  "live_status": []
+}

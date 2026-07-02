@@ -1,0 +1,209 @@
+{
+  "meta": {
+    "role": "imagineer",
+    "is_computational": true,
+    "is_visual": true,
+    "topic_profile_source": "detective.json topic_profile (is_computational=true AND is_visual=true) — fanned out WIDELY per the computational gate; editor.md/editor.json did not exist yet, so the lead candidate is marked here by the Imagineer.",
+    "lead_candidate": "img_01",
+    "node_checked": "code/client_model.js node-run: reweightRankings + RANK_LOOKUP both return the expected shapes and reproduce analyst.json exactly (balanced #1 Oxford 87.02, qs_like #1 MIT 96.25, output_only #1 Michigan 100; RANK_LOOKUP n=218, Peking 48/101/56/12 works17 cites35 spread89).",
+    "_doc": "Candidate interactive-concept pool for the Editor to curate a hero + supporting set from. img_xx are INTERNAL planning ids — never reach the HTML, tagged on no element, in no provenance tuple. Deliberate over-generation (14 concepts, one per producible finding). Only what the Editor keeps is ever built."
+  },
+  "items": {
+    "img_01": {
+      "label": "Re-weight the world rankings and watch #1 flip",
+      "finding": "ana_12",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "drags the five pillar weights (rep/cite/teach/intl/vol) and re-ranks all 218 universities live — manufactures Oxford, MIT, or Michigan as world #1 from the SAME data, discovering 'best university' is a slider position",
+      "needs": {
+        "client_model": "code/client_model.js:reweightRankings",
+        "data_table": "ana_12"
+      },
+      "feasibility": "high",
+      "sketch": "5 sliders(rep,cite,teach,intl,vol)+preset chips(balanced/qs_like/the_like/arwu_like/output_only) -> animated ranked bars + #1 badge; bare readout = the live #1's blended score",
+      "hero_candidate": true
+    },
+    "img_02": {
+      "label": "Look up your university's five verdicts",
+      "finding": "ana_13",
+      "archetype": "personal_input",
+      "purpose": "INFORM",
+      "reader_produces": "types a university and pulls its four commercial ranks (THE/ARWU/CWUR/QS) + OpenAlex works & cites ranks + its cross-system spread — 'your uni swings N places between the tables'",
+      "needs": {
+        "client_model": "code/client_model.js:RANK_LOOKUP",
+        "data_table": "ana_13"
+      },
+      "feasibility": "high",
+      "sketch": "search <input>/<datalist>(218 names) -> dumbbell/slope of its 4 commercial + 2 OpenAlex ranks; bare readout = the spread number",
+      "hero_candidate": false
+    },
+    "img_03": {
+      "label": "Guess a famous school's rank spread before the reveal",
+      "finding": "ana_05b",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "commits a guess for where Peking (or Tsinghua/Berkeley) sits in each of the four tables, then feels the real 89-place QS-vs-ARWU gap land data-bound",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_05b"
+      },
+      "feasibility": "high",
+      "sketch": "pick a named swinger + guess slider(its QS rank) -> reveal real per-system ranks as data-bound bars (Peking QS12 vs ARWU101); verdict on the spread",
+      "hero_candidate": false
+    },
+    "img_04": {
+      "label": "Guess each table's #1 - then meet four different champions",
+      "finding": "ana_06",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "picks who they think tops THE, ARWU, CWUR, QS and OpenAlex, then discovers Caltech / Harvard / MIT / Michigan are four (five) different winners — nobody is #1 everywhere",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_06"
+      },
+      "feasibility": "high",
+      "sketch": "5 choice rows (candidate tiles: Caltech/Harvard/MIT/Michigan/...) -> score vs the real #1 of each table; reveal the side-by-side top-10 grid",
+      "hero_candidate": false
+    },
+    "img_05": {
+      "label": "Guess Michigan's impact rank, then watch volume flip to per-paper",
+      "finding": "ana_10",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "guesses where the raw-output #1 (Michigan) lands once you divide citations by papers, then sees the +331-place plunge from works #1 to per-paper impact #332",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_10"
+      },
+      "feasibility": "high",
+      "sketch": "guess slider(Michigan's per-paper impact rank) -> reveal works#1 vs impact#332 data-bound bars; verdict; bare readout = 332",
+      "hero_candidate": false
+    },
+    "img_06": {
+      "label": "Pick two systems and see how little they agree",
+      "finding": "ana_04",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "chooses any two ranking systems and re-derives their agreement — a scatter of all 218 universities' rank-in-A vs rank-in-B plus the Spearman number (0.60 for QS-vs-CWUR, the systematic outlier)",
+      "needs": {
+        "client_model": "code/client_model.js:RANK_LOOKUP",
+        "data_table": "ana_04"
+      },
+      "feasibility": "high",
+      "sketch": "two system dropdowns -> scatter of 218 rank-pairs built from RANK_LOOKUP + Spearman r from ana_04 table; bare readout = the selected pair's r (refilter/selector, no live regression needed)",
+      "hero_candidate": false
+    },
+    "img_07": {
+      "label": "Toggle the referee's lens - the neutral yardstick has three #1s too",
+      "finding": "ana_08",
+      "archetype": "toggle_refilter",
+      "purpose": "IMMERSE",
+      "reader_produces": "switches OpenAlex between raw volume / total citations / h-index and watches the neutral top-10 crown a different school each time (Michigan -> Harvard -> Washington) — the referee opens a new argument instead of settling it",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_08"
+      },
+      "feasibility": "high",
+      "sketch": "3 toggle chips(works/cited_by/h_index) -> reordered top-10 list with animated rows; caption = which #1 this lens crowns",
+      "hero_candidate": false
+    },
+    "img_08": {
+      "label": "Inside QS: the reputation survey and the citation metric disagree",
+      "finding": "ana_09",
+      "archetype": "personal_input",
+      "purpose": "INFORM",
+      "reader_produces": "picks a school and reads its QS Academic-Reputation survey score against its Citations-per-Faculty score, seeing the survey lift reputation-rich names (Peking, HKU) and sink research-dense ones (Vanderbilt, UCSB)",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_09"
+      },
+      "feasibility": "high",
+      "sketch": "school picker (reputation-lifted vs research-lifted lists) -> AR bar vs CPF bar + QS-minus-ARWU gap, on a scatter of AR vs CPF. HIGH on the 20 curated rows in ana_09; a full 218-wide AR-vs-CPF version would need the Analyst to emit per-university QS CPF (reweight model has QS-AR as 'rep' but not QS-CPF) -> that variant is medium",
+      "hero_candidate": false
+    },
+    "img_09": {
+      "label": "Which table tracks the neutral referee?",
+      "finding": "ana_07",
+      "archetype": "toggle_refilter",
+      "purpose": "INFORM",
+      "reader_produces": "picks a commercial system and an OpenAlex lens and produces how tightly that table tracks measured output — discovering ARWU tracks research most (0.88 vs h-index) and QS tracks impact least (0.64)",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_07"
+      },
+      "feasibility": "high",
+      "sketch": "system chips(THE/ARWU/CWUR/QS) x lens chips(works/cited_by/h_index) -> Spearman value + bar; bare readout = the selected r",
+      "hero_candidate": false
+    },
+    "img_10": {
+      "label": "Guess how far apart the four tables put a typical school",
+      "finding": "ana_05",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "commits a guess for the median best-to-worst rank gap across the four systems, then sees it is 122 places — and where their guess sits in the spread distribution",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_05"
+      },
+      "feasibility": "high",
+      "sketch": "numeric guess slider(0-300) -> reveal median 122 + the spread-distribution band (q25 64 / median 122 / q75 210) from ana_05 quantiles; verdict; bare readout = 122",
+      "hero_candidate": false
+    },
+    "img_11": {
+      "label": "Guess how much of each ranking is just reputation survey",
+      "finding": "ana_02",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "guesses the reputation-survey share of QS (and the others), then sees QS is 50% surveyed opinion while ARWU and CWUR are 0% — the mechanical reason the tables disagree",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_02"
+      },
+      "feasibility": "high",
+      "sketch": "guess slider(% of QS score that is opinion) -> reveal the stacked weighting bar (reputation vs citations vs output) for all five systems; verdict; bare readout = 50",
+      "hero_candidate": false
+    },
+    "img_12": {
+      "label": "Flip the whole core between volume and per-paper impact",
+      "finding": "ana_10",
+      "archetype": "tune_the_assumption",
+      "purpose": "INFORM",
+      "reader_produces": "slides one assumption from raw-volume weighting to per-paper impact and watches the entire OpenAlex leaderboard invert - sprawling giants (Michigan, Toronto) sink, small dense schools (Caltech, Princeton) rise",
+      "needs": {
+        "client_model": "code/client_model.js:reweightRankings (partial: exposes a 'vol' output pillar but NO per-paper-impact field; a full 218-row volume<->per-paper flip needs a cites/work-normalised array the Analyst has not emitted - only ana_10's 11 named rows exist today)",
+        "data_table": "ana_10"
+      },
+      "feasibility": "medium",
+      "sketch": "single slider(volume <-> per-paper) -> re-ranked full leaderboard; Analyst should emit a per-paper-impact (cites/work) pillar or a normImpact model to make the 218-wide version high (the 11-school named version is high today)",
+      "hero_candidate": false
+    },
+    "img_13": {
+      "label": "Spin the weights - how many schools can be world #1?",
+      "finding": "ana_12",
+      "archetype": "playable_game",
+      "purpose": "IMMERSE",
+      "reader_produces": "hits 'spin' to randomise the pillar weights over and over and tallies how many DIFFERENT universities become world #1, feeling that 'best' is a dice roll of what you choose to weight",
+      "needs": {
+        "client_model": "code/client_model.js:reweightRankings",
+        "data_table": "ana_12"
+      },
+      "feasibility": "high",
+      "sketch": "'spin' button -> random weights -> reweightRankings -> new #1 flashes onto the podium; running tally of DISTINCT #1s as the bare readout (an alternative framing of ana_12 - the Editor will not build this AND the img_01 hero)",
+      "hero_candidate": false
+    },
+    "img_14": {
+      "label": "Does the disagreement vanish if you compare the same year?",
+      "finding": "ana_11",
+      "archetype": "guess_then_reveal",
+      "purpose": "INFORM",
+      "reader_produces": "guesses whether forcing all three tables to 2015 makes them agree, then sees they still correlate only 0.78 - proving the gap is methodology, not the dataset's era-mismatch",
+      "needs": {
+        "client_model": null,
+        "data_table": "ana_11"
+      },
+      "feasibility": "high",
+      "sketch": "toggle(mixed-era vs 2015-only trio) + guess slider -> reveal same-year mean Spearman 0.782 vs the reader's ~1.0 prior; bare readout = 0.782",
+      "hero_candidate": false
+    }
+  }
+}

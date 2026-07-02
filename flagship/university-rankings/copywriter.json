@@ -1,0 +1,215 @@
+{
+  "meta": {
+    "role": "copywriter",
+    "is_computational": true,
+    "is_visual": true,
+    "domain": "Global university rankings & research bibliometrics",
+    "generated_at": "2026-07-02",
+    "run": "PREMIUM",
+    "_doc": "Re-titled STRINGS for the 'four university rankings disagree' story: masthead + 12 section titles (edt_01-edt_12) + 21 figure/photo/table captions (des_xx). Strings only — no finding, number, data-* id, layout or body prose touched; every edt_/des_ id reused, none added. topic_profile is is_computational+is_visual on a sober/analytical higher-ed subject, so heads favour D3 surprising-number and D16 plain-literal, varied across the deck so AT8 never fires; the AT1 two-beat is killed everywhere. Standfirst primes without naming the reweighter's Oxford/MIT/Michigan reveal (PIT-57 held)."
+  },
+  "masthead": {
+    "headline": "Four Different Universities Are Ranked #1 in the World",
+    "standfirst": "Four of the biggest global rankings can't agree on who is #1, and a neutral, survey-free referee crowns a school none of them do. Which university is really best turns out to depend entirely on what you choose to count — so we built the dial and handed it to you.",
+    "kicker": "Global university rankings",
+    "headline_device": "D3",
+    "headline_backs": "ana_06",
+    "rationale": "D3 surprising-fact stated as ONE spine (kills the AT1 two-beat 'Rankings disagree. No one is #1.'); accurate — Caltech (THE), Harvard (ARWU/CWUR), MIT (QS) and Michigan (OpenAlex) each top a real table, so four distinct universities are genuinely #1 (ana_06). Names no reweighter reveal (no Oxford, no 87.02), so PIT-57 holds; standfirst primes the question + stakes + the invitation to the hero dial without stating the produced figure."
+  },
+  "items": {
+    "edt_01": {
+      "title": "Four Rankings, Four Different Champions",
+      "device": "D3",
+      "backs": "ana_06",
+      "rationale": "D3 surprising-number single spine; states the hook's finding (four distinct #1s: Caltech/Harvard/MIT/Michigan) not a topic label. No AT1 two-beat; may name the published champions per the Editor's note but not the reweighter reveal."
+    },
+    "edt_02": {
+      "title": "The Reputation Table Agrees Least With Everyone Else",
+      "device": "D1",
+      "backs": "ana_04",
+      "rationale": "D1 flat verdict (a different device from its neighbours, so no AT8); states the section's real finding — QS's three pairings (0.599/0.647/0.735) are the three lowest of six, so the survey-led table is the systematic outlier. Single clause, no two-beat."
+    },
+    "edt_03": {
+      "title": "Peking Ranks 12th in One Table and 101st in Another",
+      "device": "D13",
+      "backs": "ana_05b",
+      "rationale": "D13 concrete-detail proof — the actual data in the head (Peking QS 12 vs ARWU 101). One vivid fact, not a contradiction pair, so no AT1; distinct in shape/length from the neighbouring heads."
+    },
+    "edt_04": {
+      "title": "What Each Table Counts Is Why They Disagree",
+      "device": "D8",
+      "backs": "ana_02",
+      "rationale": "D8 causal spine — names the mechanism (the weighting choice) as the cause. Number-free category-of-cause heading that traces to ana_02's perception-to-output weighting axis; no puffery, no colon subtitle (AT3 avoided)."
+    },
+    "edt_05": {
+      "title": "Inside QS, Reputation and Citations Correlate Just 0.421",
+      "device": "D3",
+      "backs": "ana_09",
+      "rationale": "D3 surprising-number; states the exact ana_09 finding (qs_internal_ar_vs_cpf_spearman 0.421, unrounded per the Editor's exact-number rule). Single clause, concrete, no AT1."
+    },
+    "edt_06": {
+      "title": "Set the Weights and Crown Your Own #1",
+      "device": "D6",
+      "backs": "ana_12",
+      "rationale": "D6 second-person imperative hands the reader the centerpiece lever. Backs ana_12 by DIRECTION only — deliberately does NOT name Oxford/MIT/Michigan or any preset score, so the reader produces the reveal (PIT-57 held). Single imperative, not the AT1 period two-beat."
+    },
+    "edt_07": {
+      "title": "Three Neutral Lenses, Three Different Winners",
+      "device": "D14",
+      "backs": "ana_08",
+      "rationale": "D14 genuine triple — the three OpenAlex lenses really do crown three distinct schools (works→Michigan, citations→Harvard, h-index→Washington, ana_08). A true triple, not a reflexive rule-of-three (AT2); parallel mirror, not an AT1 contradiction."
+    },
+    "edt_08": {
+      "title": "From #1 to #332 on One Normalisation Choice",
+      "device": "D9",
+      "backs": "ana_10",
+      "rationale": "D9 magnitude/'N places later' — states the size-trap flip (Michigan works #1 → impact #332, a 331-place fall) as the section's takeaway. Exact numbers from ana_10; single clause, no two-beat."
+    },
+    "edt_09": {
+      "title": "Why This Isn't Just a Year-Mismatch",
+      "device": "D16",
+      "backs": "ana_11",
+      "rationale": "D16 plain-literal register for the sober validation beat — sets up the honest era-mismatch objection ana_11 answers (the 2015 trio still agrees only 0.782). No superlative, no puffery; distinct short question-shaped head breaks the deck's rhythm (anti-AT8)."
+    },
+    "edt_10": {
+      "title": "How Far Do the Rankings Move Your School?",
+      "device": "D7",
+      "backs": "ana_13",
+      "rationale": "D7 self-challenge — a genuinely reader-resolved question (answered by the look-up-your-university interactive), not a Betteridge yes/no head. Backs ana_13's per-university spread lookup; distinct device from its neighbours."
+    },
+    "edt_11": {
+      "title": "The Only Honest #1 Is the One You'd Defend",
+      "device": "D1",
+      "backs": "ana_12",
+      "rationale": "D1 flat verdict closing the argument (ends on tension, not a summary). Backs ana_12's thesis (best = a weighting you choose); no names, no reveal number. Single spine, no AT1."
+    },
+    "edt_12": {
+      "title": "How We Built These Numbers",
+      "device": "D5",
+      "backs": "ana_01",
+      "rationale": "D5/plain container label for the methods appendix — an honest category heading (no invented finding to punch it up). Traces to ana_01's dataset provenance; no AT6 gerund ('Exploring the data'), no puffery."
+    },
+    "des_hero_video": {
+      "caption": "The floodlit dome of ETH Zurich's main building stands over an empty forecourt after dark. A night-campus image opens a story that argues the world's 'best university' is a matter of what you choose to count, not a fact you can photograph.",
+      "backs": "des_hero_video",
+      "rationale": "PHOTO caption for the animated cover — present-tense who/what/where then the past/present why-it-matters. Pure-illustration mood cover (no number to state), so it backs its own des_hero_video; captions only what the pixels depict (a night building), no fabricated shoot date, no 'is pictured' wire cliché (PIT-58 avoided). The AI-motion disclosure lives in the designer/programmer layer, not the caption."
+    },
+    "des_bgm": {
+      "caption": "The keyboard of a Bösendorfer grand piano — the cover on the soundtrack card. John Field's B-flat nocturne plays as an optional bed for reading; press play to start it, or leave it silent.",
+      "backs": "des_bgm",
+      "rationale": "PHOTO caption for the now-playing card's vinyl-disc cover art — present-tense what/where then the why (an optional reading soundtrack). Pure-illustration image, so it backs des_bgm; states no number, no wire cliché. The track title/artist remain the Designer's card label (a fact, not re-written)."
+    },
+    "des_champions": {
+      "caption": "Four rankings, four different schools at #1",
+      "subtitle": "Top-10 places across five systems, ordered survey → output; THE/ARWU/CWUR 2015, QS 2023, OpenAlex fetched 2026",
+      "backs": "ana_06",
+      "rationale": "CHART takeaway-title (conclusion, active, 7 words) — states the finding, not 'championship top tens'. The #1 changing hands is annotated ON the bump chart; the caption asserts it (PIT-58 avoided). Backs ana_06."
+    },
+    "des_corr_matrix": {
+      "caption": "No pair of rankings comes close to agreeing",
+      "subtitle": "Spearman rank correlation for each pair of commercial systems (0.599–0.853), 218-school common core",
+      "backs": "ana_04",
+      "rationale": "CHART takeaway-title — the heatmap's conclusion (every cell far from 1.0), not 'the axes show systems'. The exact values (0.599–0.853) are printed in every cell and carried in the subtitle, so the title states the finding without rounding a headline number. Backs ana_04."
+    },
+    "des_swingers_dumbbell": {
+      "caption": "Peking and Tsinghua swing about 90 places between rankings",
+      "subtitle": "Best-to-worst rank across THE, ARWU, CWUR and QS; schools ranked ≤200 by all four (no tail-band inflation)",
+      "backs": "ana_05b",
+      "rationale": "CHART takeaway-title — states the spread as the finding (Peking 89, Tsinghua 87; 'about 90' with the exact 89 pinned ON the bar). Active, 9 words, no axis-labelling. Band-free set per ana_caveat_04. Backs ana_05b."
+    },
+    "des_weights": {
+      "caption": "Half of a QS score is surveyed opinion",
+      "subtitle": "Share of each system's score from reputation surveys vs measured output; QS 2023 uses the pre-2024 legacy weights (Academic Reputation 40%)",
+      "backs": "ana_02",
+      "rationale": "CHART takeaway-title — the mechanical cause stated as the finding (QS 50% reputation vs ARWU/CWUR 0%), gold reputation band located ON the bar. Edition caveat carried in the subtitle per ana_caveat_05, not body prose. Backs ana_02."
+    },
+    "des_rep_research": {
+      "caption": "Reputation and research rankings lift opposite schools",
+      "subtitle": "QS rank minus ARWU rank; negative = the survey lifts it (HK, NUS, Peking), positive = research lifts it (Vanderbilt, Maryland)",
+      "backs": "ana_09",
+      "rationale": "CHART takeaway-title — states the diverging finding, not 'signed gap on the x-axis'. The two extremes are labelled ON the chart; the caption asserts the direction. Backs ana_09."
+    },
+    "des_reweighter": {
+      "caption": "Drag the weights and the world #1 changes hands",
+      "subtitle": "Five reader-set pillars re-rank all 218 universities live, on the article's audited client model",
+      "backs": "ana_12",
+      "rationale": "CENTERPIECE priming caption — states the finding by DIRECTION (the champion is a function of the weights) but names NO school and NO score, so the reader still produces the Oxford/MIT/Michigan reveal (PIT-57 held). Backs ana_12; not an axis label."
+    },
+    "des_referee_scatter": {
+      "caption": "Michigan leads research output yet sits 25th in QS",
+      "subtitle": "OpenAlex output rank vs QS rank for the named cast; distance off the y=x diagonal = how far the referee reorders a school",
+      "backs": "ana_05b",
+      "rationale": "CHART takeaway-title — names the off-diagonal finding (Michigan OA-works #1 vs QS 25) as the conclusion; Michigan and Caltech are annotated ON the scatter. Active, 9 words. Backs ana_05b."
+    },
+    "des_referee_track": {
+      "caption": "Even the closest table matches the referee only 0.876",
+      "subtitle": "Spearman of each commercial rank vs the OpenAlex order (works, citations, h-index); a perfect match would be 1.0",
+      "backs": "ana_07",
+      "rationale": "CHART takeaway-title — states the finding (best fit ARWU vs h-index 0.876, still short of 1.0), exact number unrounded. The 1.0 reference line is drawn ON the chart; the caption asserts the shortfall. Backs ana_07."
+    },
+    "des_size_flip": {
+      "caption": "Count impact per paper and Michigan falls 331 places",
+      "subtitle": "Rank by raw output volume vs rank by citations per paper (OpenAlex); Michigan #1 → #332",
+      "backs": "ana_10",
+      "rationale": "CHART takeaway-title — the size-trap conclusion (one normalisation choice moves the #1 by 331 places), the plunge annotated ON the slope. Exact numbers from ana_10, active, 9 words. Backs ana_10."
+    },
+    "des_validation": {
+      "caption": "Hold the year fixed and they still disagree",
+      "subtitle": "Spearman within the same-year 2015 trio (mean 0.782) vs the QS-2023 pairs (mean 0.660); 1.0 = perfect agreement",
+      "backs": "ana_11",
+      "rationale": "CHART takeaway-title — the 'why believe this' finding (the disagreement survives one fixed year), the two means marked ON the dot plot. The QS-2023 upper-bound caveat rides in the subtitle per the Editor's rule, not oversold. Backs ana_11."
+    },
+    "des_scale": {
+      "caption": "218 universities appear in all five tables",
+      "subtitle": "The five-system common core via a normalised-name join; treat ~200 as the scale, not a precise constant",
+      "backs": "ana_03",
+      "rationale": "STAT-callout caption — states what the big number is (the common-core scale), with the matcher-dependence caveat (ana_caveat_02) in the subtitle. No axis-labelling. Backs ana_03."
+    },
+    "des_img_peking": {
+      "caption": "The stone lion guards Peking University's west gate. QS ranks Peking 12th in the world; ARWU, which counts prizes and papers instead of reputation, ranks it 101st — an 89-place gap for one unchanged campus.",
+      "backs": "ana_05b",
+      "rationale": "PHOTO caption — present-tense scene (the west gate) then the past-tense why the pixels can't show (the 89-place QS-vs-ARWU swing, Peking QS 12 / ARWU 101). Captions only what's depicted; no fabricated date, no 'is pictured'. Backs ana_05b."
+    },
+    "des_img_tsinghua": {
+      "caption": "Tsinghua University's historic gate stands in Beijing. Like its neighbour Peking, Tsinghua is a QS top-15 school (14th) that ARWU places 101st — the reputation survey and the research count disagree by about 87 places.",
+      "backs": "ana_05b",
+      "rationale": "PHOTO caption — present-tense scene then the why (Tsinghua QS 14 / ARWU 101, spread 87). Depicts only the gate; absolute date genuinely unknown for the archival photo, so omitted rather than fabricated. Backs ana_05b."
+    },
+    "des_img_berkeley": {
+      "caption": "The Campanile rises over UC Berkeley's glade. Berkeley is ARWU's 4th-best university on research strength but only 27th in reputation-driven QS — the same swing running the other way.",
+      "backs": "ana_05b",
+      "rationale": "PHOTO caption — present-tense scene then the why (Berkeley ARWU 4 / QS 27, the reverse-direction swing). Captions only the Campanile/glade; no invented date, no wire cliché. Backs ana_05b."
+    },
+    "des_img_caltech": {
+      "caption": "The entrance to the California Institute of Technology. Tiny but citation-dense, Caltech tops the Times Higher Education table at #1 yet ranks only 82nd by OpenAlex's raw output count.",
+      "backs": "ana_05b",
+      "rationale": "PHOTO caption — present-tense scene then the why (Caltech THE #1 vs OpenAlex works #82, the small-school/big-rank swinger). Depicts only the entrance; no fabricated date. Backs ana_05b."
+    },
+    "des_img_michigan": {
+      "caption": "Angell Hall on the University of Michigan campus. Michigan produces more research than any institution in OpenAlex — first in the world by raw output — yet its best finish in any commercial ranking is only 17th.",
+      "backs": "ana_08",
+      "rationale": "PHOTO caption — present-tense scene then the why (Michigan OpenAlex works #1, best commercial rank #17: the raw-output giant no table crowns). Captions only Angell Hall; no invented date. Backs ana_08."
+    },
+    "des_img_toronto": {
+      "caption": "The domed Convocation Hall at the University of Toronto. Toronto ranks fifth in the world by OpenAlex research output — one of the volume giants the commercial tables never place at the top.",
+      "backs": "ana_08",
+      "rationale": "PHOTO caption — present-tense scene then the why (Toronto OpenAlex works rank 5, a referee-side output giant). Depicts only Convocation Hall; no fabricated date, no 'is pictured'. Backs ana_08."
+    },
+    "des_img_ucl": {
+      "caption": "The neoclassical portico of University College London's Wilkins Building. UCL sits fourth in the world by OpenAlex research output, a leading producer among the referee's output giants.",
+      "backs": "ana_08",
+      "rationale": "PHOTO caption — present-tense scene then the why (UCL OpenAlex works rank 4). Captions only the Wilkins portico; no unverifiable commercial-gap claim, no invented date. Backs ana_08."
+    },
+    "des_img_washington": {
+      "caption": "Drumheller Fountain and the quad at the University of Washington. By OpenAlex's h-index lens Washington ranks first in the world — the neutral referee's third different #1, alongside Michigan and Harvard.",
+      "backs": "ana_08",
+      "rationale": "PHOTO caption — present-tense scene then the why (Washington OpenAlex h-index #1, the referee's third lens). Frames it as the h-index lens (the two_yr_mean_citedness artefact caveat lives in the verify layer per ana_caveat_03). No fabricated date. Backs ana_08."
+    }
+  },
+  "_not_captioned": {
+    "des_img_mit": "Primary use is a cinematic-scroll background (designer.json): a full-bleed background image takes a source credit, not a figcaption — no caption needed.",
+    "des_img_stanford": "Primary use is a cinematic-scroll background (designer.json): source credit only, no figcaption — no caption needed.",
+    "des_crest_harvard": "A small inline champion-mark LOGO beside a name, not a figure; a crest mark carries an alt/credit, not a takeaway caption.",
+    "des_crest_oxford": "A small inline champion-mark LOGO at the reweighter payoff, not a figure; alt/credit only, no caption. (Also easily omitted per designer.json.)"
+  }
+}

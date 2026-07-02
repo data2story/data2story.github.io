@@ -1,0 +1,232 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0",
+    "dataset": "Economist / 2018-10-20_space-launches",
+    "one_line": "Editorial structure for 'A duel became a crowd': the US/USSR launch duopoly (99% -> 54.5% share) pluralized into a crowd led by China and a new commercial sector, even as the all-time ledger stays 85.5% old-world. Change is in WHO launches, not how much."
+  },
+  "core_claim": "Spaceflight stopped being a two-country contest: the US/USSR duopoly that launched ~99% of everything thinned to 54.5% as China (riding one rocket family) and a new commercial/startup sector crowded in -- yet the cumulative ledger is still 85.5% old-world. The change is in WHO launches, not how much.",
+  "items": {
+    "edt_01": {
+      "label": "The year the table flipped",
+      "purpose": "hook",
+      "title": "The year the table flipped",
+      "findings": ["ana_05", "ana_07", "ana_01"],
+      "context": ["det_07", "det_01", "det_03"],
+      "triage": {
+        "ana_05": "supporting",
+        "ana_07": "lead",
+        "ana_01": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "audio",
+      "editorial_notes": "Lead with the 2018 China crossover as the premise (the Economist headline), then prime the hero in edt_03 WITHOUT giving its number. State the 1960s ~99% as the SETUP, not 54.5%. Census-authority line builds trust (5,726 attempts, 94.0% success, Sputnik 1957). [MEDIA: audio] = the mandatory top-of-article BGM now-playing card; an opening Long March image also belongs here. Do not state the partial-2018 raw 28-27 here (save for edt_04/05, where it is marked partial)."
+    },
+    "edt_02": {
+      "label": "Two superpowers and a workhorse",
+      "purpose": "context",
+      "title": "Two superpowers and a workhorse",
+      "findings": ["ana_03", "ana_12", "ana_20"],
+      "context": ["det_03", "det_04", "det_05"],
+      "triage": {
+        "ana_03": "supporting",
+        "ana_12": "color",
+        "ana_20": "color"
+      },
+      "chart_placeholder": "ana_03",
+      "media_placeholder": "image",
+      "editorial_notes": "Establish the duel and Soviet dominance. Exact: Soviet 1982 peak = 108 of 129; Soyuz-U 632 (most-flown single vehicle); decade volume peak 1970s 1,226 then 1980s 1,191 -> 1990s 889 -> 2000s 650 trough. SU code vanishes after 1991. [CHART: ana_03] is the master per-country-year spine the whole piece references. Merge SU+RU into one 'USSR/Russia' series."
+    },
+    "edt_03": {
+      "label": "It's who, not how much",
+      "purpose": "turn",
+      "title": "It's who, not how much",
+      "findings": ["ana_02", "ana_07", "ana_06"],
+      "context": ["det_05", "det_11"],
+      "triage": {
+        "ana_02": "supporting",
+        "ana_07": "lead",
+        "ana_06": "color"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "interactive",
+      "editorial_notes": "THE THESIS TURN and the HERO's home. ana_02 sets up 'volume is flat' (peak year 1967=139; 2018=80 PARTIAL vs 114 full-year). The hero year-scrubber sits ABOVE the reveal paragraph: the reader produces the duopoly share falling ~99% -> 54.5% (HHI ~6,600 -> ~2,200; 2 -> 7 countries) before the prose states it. The US 'never collapsed' framing must survive. ana_06 supplies the 'no bloc holds a majority in the 2010s, first time since the 1950s' line."
+    },
+    "edt_04": {
+      "label": "The new contender, part one - a nation",
+      "purpose": "evidence",
+      "title": "The new contender, part one - a nation",
+      "findings": ["ana_05", "ana_14", "ana_03"],
+      "context": ["det_06", "det_07", "det_11"],
+      "triage": {
+        "ana_05": "supporting",
+        "ana_14": "supporting",
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "interactive",
+      "editorial_notes": "China's decade ramp 13/15/39/64/171. CROSSOVER MUST BE PARTIAL-MARKED: dataset partial (Jan-Oct) China 28 > USA 27 > Russia 10; full-year external 39/34/20. Never present 28-27 as a final tally. China = 287 of 302 (95.0%) Long March (the guess_then_reveal interactive). Detective scout_brief: Long March launch photo/clip belongs here."
+    },
+    "edt_05": {
+      "label": "Does the crossover survive the caveat?",
+      "purpose": "turn",
+      "title": "Does the crossover survive the caveat?",
+      "findings": ["ana_19", "ana_02"],
+      "context": ["det_11", "det_07"],
+      "triage": {
+        "ana_19": "supporting",
+        "ana_02": "supporting"
+      },
+      "chart_placeholder": "ana_19",
+      "media_placeholder": "interactive",
+      "editorial_notes": "LOAD-BEARING credibility beat ('earn the trust') AND the visible-prose home of the lead's material limitation (partial 2018). Keep det_11 + the partial caveat in the prose. The crossover holds at partial (28-27), naive annualize (~33.6 vs 32.4) and external full-year (39-34); China is #1 in exactly one of 62 years. State honestly what it does NOT prove (a per-year count, not ownership of space). The annualize interactive lets the reader move months-elapsed against the real 39. Do not cut this section."
+    },
+    "edt_06": {
+      "label": "But the old world still owns the ledger",
+      "purpose": "evidence",
+      "title": "But the old world still owns the ledger",
+      "findings": ["ana_04", "ana_13", "ana_17"],
+      "context": ["det_04"],
+      "triage": {
+        "ana_04": "supporting",
+        "ana_13": "supporting",
+        "ana_17": "color"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The COUNTER-TENSION (the honest twist that balances the hero). Cumulative: USSR/Russia 3,178 (55.5%) + USA 1,716 (30.0%) = 85.5%; Europe 307 edges China 302 all-time. Family scale gap: Soviet/Russian fleet >3,200 (R-7/Soyuz 1,832, Kosmos 621, Proton 411) vs Long March 287, Falcon 68. Hosts TWO distinct interactives (cumulative bar race ana_04 + vehicle-family treemap ana_13). [MEDIA: map] = static all-time country choropleth ONLY; NO point map (lat/long all blank) -- state this in prose."
+    },
+    "edt_07": {
+      "label": "They are not cutting corners",
+      "purpose": "evidence",
+      "title": "They are not cutting corners",
+      "findings": ["ana_10", "ana_11", "ana_09"],
+      "context": ["det_13"],
+      "triage": {
+        "ana_10": "supporting",
+        "ana_11": "color",
+        "ana_09": "color"
+      },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Honest twist #2: newcomers are not trading reliability for entry. Country band: Europe 95.8 / China 95.7 / USSR-Russia 95.2 / USA 92.4 / Japan 92.2 / India 89.2; overall 94.0%. By type the surprise: private 97.4 > state 93.4 > startup 92.9 (startup on a thin 70-launch base -- note it). Maturation 46% (1950s) -> 97.1% peak (1980s) -> ~96%. The success-rate calculator (ana_10) is the interactive; ana_11/ana_09 are static callouts."
+    },
+    "edt_08": {
+      "label": "The new contender, part two - a new kind of company",
+      "purpose": "evidence",
+      "title": "The new contender, part two - a new kind of company",
+      "findings": ["ana_15", "ana_08", "ana_16"],
+      "context": ["det_08", "det_10", "det_09"],
+      "triage": {
+        "ana_15": "supporting",
+        "ana_08": "supporting",
+        "ana_16": "color"
+      },
+      "chart_placeholder": "ana_08",
+      "media_placeholder": "video",
+      "editorial_notes": "The second axis of 'new contenders' (a KIND, not a nation). Two waves: 'private' commercial from 1984 (Arianespace, peak 46.9% in 2000s) vs 'startup' appearing only 2006 (8.8% of 2010s). Startup class = SpaceX 68 (Falcon 9 62, Falcon 1 5, Falcon Heavy 1) + Rocket Lab 2; ramp 1 (2006) -> 19 (2017) -> 18 (partial 2018). Arianespace 260 (1984-2018). The guess_then_reveal startup-ramp is the interactive (ana_15). [MEDIA: video] = Falcon Heavy Feb-6-2018 embeddable instance per scout_brief. [CHART: ana_08] = agency-type stacked area."
+    },
+    "edt_09": {
+      "label": "Two pictures of the same sky",
+      "purpose": "close",
+      "title": "Two pictures of the same sky",
+      "findings": ["ana_07", "ana_04"],
+      "context": ["det_14"],
+      "triage": {
+        "ana_07": "lead",
+        "ana_04": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "Close on TENSION, not summary. Stakes: launch access = national power + a space economy ~$350bn (2016) -> $1tn+ (2040). End on the unresolved question: the per-year field is a crowd (54.5%, no majority), the all-time ledger is still a duel won long ago (85.5% old-world) -- which is the future? Do not resolve it."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "supporting",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "color",
+    "ana_07": "lead",
+    "ana_08": "supporting",
+    "ana_09": "color",
+    "ana_10": "supporting",
+    "ana_11": "color",
+    "ana_12": "color",
+    "ana_13": "supporting",
+    "ana_14": "supporting",
+    "ana_15": "supporting",
+    "ana_16": "color",
+    "ana_17": "color",
+    "ana_18": "cut",
+    "ana_19": "supporting",
+    "ana_20": "color"
+  },
+  "interactives": {
+    "hero": {
+      "concept_ref": "img_01",
+      "finding": "ana_07",
+      "purpose": "IMMERSE",
+      "section": "edt_03",
+      "archetype": "explorable_recompute",
+      "why_hero": "The single contestable headline the reader must produce: drag a year 1957->2018 and the two-superpower combined share falls under your hand from ~99% to 54.5% while the per-country bars re-rank beneath it (merges img_01's share-collapse with img_02's launch-race over one launchSnapshot model). It is the thesis ('a duel became a crowd') made hands-on, and it surfaces the exact per-year duopoly share so the standfirst can prime the question without spoiling the number."
+    },
+    "supporting": [
+      {
+        "concept_ref": "img_03",
+        "finding": "ana_04",
+        "purpose": "INFORM",
+        "section": "edt_06",
+        "archetype": "explorable_recompute",
+        "rank": 1,
+        "earns_place": "Distinct finding = the all-time cumulative ledger (advance the year and produce the ranking ending USSR/Russia 3,178 > USA 1,716 > Europe 307 > China 302 = 85.5% old-world). It is the COUNTER-TENSION to the hero's per-year crowd, not a duplicate: the hero shows the field pluralizing per year, this shows history unrewritten."
+      },
+      {
+        "concept_ref": "img_05",
+        "finding": "ana_19",
+        "purpose": "INFORM",
+        "section": "edt_05",
+        "archetype": "tune_the_assumption",
+        "rank": 2,
+        "earns_place": "Distinct finding = the partial-2018 validation. The reader sets months-elapsed and produces China's naive full-year pro-rate (28 -> ~33.6) against the external actual 39, verifying the crossover survives truncation. It is the credibility keystone for the lead and teaches a number no other widget does."
+      },
+      {
+        "concept_ref": "img_04",
+        "finding": "ana_10",
+        "purpose": "INFORM",
+        "section": "edt_07",
+        "archetype": "explorable_recompute",
+        "rank": 3,
+        "earns_place": "Distinct finding = success rate by country (pick a country, produce its rate; China 95.7% ties the incumbents). Rebuts the 'cheap volume / cutting corners' read -- a reliability finding distinct from every count/share widget."
+      },
+      {
+        "concept_ref": "img_10",
+        "finding": "ana_14",
+        "purpose": "IMMERSE",
+        "section": "edt_04",
+        "archetype": "guess_then_reveal",
+        "rank": 4,
+        "earns_place": "Distinct finding = China's single-family concentration (guess the share, then meet 287 of 302 = 95% Long March). Distinct from the country-count story: it shows China's rise IS one sovereign rocket family, vs the diversified US fleet."
+      },
+      {
+        "concept_ref": "img_11",
+        "finding": "ana_15",
+        "purpose": "IMMERSE",
+        "section": "edt_08",
+        "archetype": "guess_then_reveal",
+        "rank": 5,
+        "earns_place": "Distinct finding = the startup ramp (guess the year a 'startup' first reached orbit, then watch SpaceX/Rocket Lab climb 1 (2006) -> 19 (2017) -> 18 (partial 2018)). Opens the SECOND axis of 'new contenders' -- a new KIND of actor, not a new nation -- which no country-based widget covers."
+      },
+      {
+        "concept_ref": "img_18",
+        "finding": "ana_13",
+        "purpose": "INFORM",
+        "section": "edt_06",
+        "archetype": "explorable_recompute",
+        "rank": 6,
+        "earns_place": "Distinct finding = the vehicle-FAMILY scale gap (explore a treemap and produce R-7/Soyuz 1,832 and a >3,200 Soviet fleet vs Long March 287, Falcon 68). Hardware mass, distinct from ana_04's launch-count ledger and ana_14's China-internal share; cut first if scope must trim."
+      }
+    ]
+  }
+}

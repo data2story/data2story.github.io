@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "role": "critic",
+    "version": "2.0",
+    "domain": "Global university rankings & research bibliometrics",
+    "run": "PREMIUM",
+    "generated_at": "2026-07-02",
+    "scored_against": "critic/references/rubric.json (5 dims, integer 1-7 anchored at 3, R1-R9, C-FLAGSHIP)",
+    "evidence_base": "index.html prose (read in full), verifier.json (197/225 traced; the 28 untraced are the standfirst + References list only, no load-bearing body number), verify/run_cells.json (18 runnable Pyodide cells reproduce oracles: ana_12 Oxford 87.02 / MIT 96.25, ana_11 trio mean 0.782, ana_10 Michigan #1->#332), verify/*.ipynb reproducible notebook, validation.json (0 errors / 19 warnings, all asset_unreferenced_pending relocate-at-Stage-7), auditor.json + audit/playtest_report.json (all 7 playgrounds re-driven in real Chrome: fire + reproduce oracle + keyboard-operable; the 6 playtest_drive.js hard-fails recorded as false-positive blockers, none open), hero.json, editor.json, copywriter.json, analyst.json, detective.json."
+  },
+  "overall": {
+    "average_score": 5.2,
+    "pass": true,
+    "flagship": true,
+    "tier": "flagship",
+    "signature_dimension": "data_method_transparency",
+    "round": 1,
+    "summary": "Flagship. Every dimension >=4 and four dimensions reach >=5 (transparency at 6). Signature move = the runnable coding verifier: 18 in-browser Pyodide cells that re-execute load-bearing numbers and grade against published output + a reproducible notebook + full material-caveat survival (the era-mismatch caveat reached visible prose with an honest 'upper bound' framing, and the 2015-trio validation names exactly what level it validates). The reweighter hero lets the reader PRODUCE the lead finding (3 different world #1s) before the prose names them, backed by 6 earned, distinct, oracle-verified supporting playgrounds. No caps triggered; no open detected defects."
+  },
+  "dimensions": [
+    {
+      "dimension": "data_method_transparency",
+      "score": 6,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Runnable coding verifier is real: verify/run_cells.json ships 18 Pyodide cells (ana_02..ana_13, int_01/04/05/06/07) that re-execute in-browser and grade against published output; ana_12 reproduces the balanced #1 Oxford 87.02 and qs_like MIT 96.25, ana_11 reproduces the 2015-trio Spearman 0.757/0.751/0.840 (mean 0.782), ana_10 reproduces Michigan volume #1 -> impact #332 (flip +331).",
+        "Reproducible notebook present (verify/university_rankings_forecast.ipynb) re-running headline numbers from the raw files; in-page Inspector drawer reads verify_map.json (per-element provenance) and offers Download-notebook + Open-cell.",
+        "197/225 sentences traced in verifier.json to code lines / data_tables / source URLs; the only 28 untraced are the standfirst (a priming line, no number) and the References-section list items (the sources themselves) - no load-bearing body number is untraced.",
+        "MATERIAL era-mismatch caveat survived into VISIBLE prose (edt_09, lines 727-731, tagged ana_11/det_14): THE/ARWU/CWUR 2015 vs QS 2023 vs OpenAlex 2026 stated plainly, and QS's 0.660 explicitly framed as 'an upper bound... not a clean measurement' - not buried, not a stray clause.",
+        "The 2015-trio validation names its LEVEL: it validates cross-system methodology disagreement among the three 2015 tables (mean 0.782, still far below 1.0) and states what it does NOT settle (the exact size of QS's gap). Further caveats survive: 218-vs-~189 matcher-dependence (edt_12), pre-2024 QS legacy-weights (chart subtitle des_weights), band-inflation avoided via the <=200 subset (edt_03), OpenAlex size/coverage bias.",
+        "honest_accuracy_cap NOT triggered: no 'model is right X%' boast; OpenAlex/QS/THE/ARWU/CWUR are attributed as third parties and the reweighter is framed as the project's OWN audited derived index built on attributed pillars (cite_third_party_as_theirs_cap not triggered)."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null,
+      "note": "Clears five_plus_requires in its strongest form (traceable AND independently re-runnable) and is clearly above professional-typical (runnable in-browser recompute + reproducible notebook + full caveat survival + explicit validation-level-gap naming), so 6, not 5. The run's signature dimension."
+    },
+    {
+      "dimension": "insight_value",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Interaction-as-argument: the reweighter hero (int_01, edt_06) renders and is usable (at-rest Oxford 87.02) BEFORE the paragraph that names Oxford/MIT/Michigan - the reader PRODUCES the lead finding (three different world #1s from one dataset). Exactly ONE clear hero centerpiece the page is built around; not a widget-pile.",
+        "6 earned supporting playgrounds each bound to a DISTINCT producible finding (guess the four published champions; toggle the referee's works/cited_by/h_index lens; feel Michigan's #1->#332 plunge; guess Peking's 89-place swing; guess QS's 50% reputation share; look up your own university's spread) - all 7 re-driven in real Chrome and reproduce their oracles (auditor per_int_reverified), so the earned subset (R8) is genuine, not padded count.",
+        "Non-obvious reframing that updates a careful reader: 'best' is a slider position, not a fact; the neutral referee opens a new argument (three of its own #1s) instead of settling it; a single normalisation choice moves the 'best research university' by 331 places.",
+        "Angle partly from outside the raw data (detective context in edt_11): QS's 2024 40%->30% reputation cut, Columbia's 2->18 fall for false data, the 2023 Yale/Harvard-led boycott - grounding the thesis beyond the tables themselves."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null,
+      "note": "Clears five_plus_requires (non-obvious reframe + a personal-position interactive the reader runs). Held at 5 rather than 6 because the underlying 'best is a weighting choice' critique is known; the producibility is what elevates it."
+    },
+    {
+      "dimension": "narrative_pacing",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Masthead 'Four Different Universities Are Ranked #1 in the World' is a D3 surprising-fact single spine - NOT an AT1 two-beat, not an 'An Analysis of...' label, no empty superlative, no marketing word.",
+        "Standfirst primes without pre-spoiling: 'so we built the dial and handed it to you' names no Oxford/MIT/Michigan and no 87.02, so the reweighter reveal is still the reader's to produce (PIT-57 held).",
+        "Section headings are takeaway-titles carrying the finding ('Peking Ranks 12th in One Table and 101st in Another', 'From #1 to #332 on One Normalisation Choice', 'Inside QS, Reputation and Citations Correlate Just 0.421'), varied across devices (D1/D3/D6/D8/D9/D13/D14/D16) so AT8 sameness never fires; captions state the conclusion + a metric subtitle, never 'this chart shows' / axis-only.",
+        "Deliberate arc: reframe hook (lead with four champions, not background) -> mechanism -> turn at the reweighter (reader produces the finding) -> close on tension with a callback ('the only honest #1 is the one whose weighting you would be willing to defend'), not a summary."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null,
+      "note": "titling_caption_cap NOT triggered; the positive titling case (conclusion-stating headline + priming standfirst + takeaway captions) is present and lifts to 5."
+    },
+    {
+      "dimension": "claim_data_alignment",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Quantitative claims are bounded by the data and carry their caveats where they matter: the swinger set is the band-free <=200 subset (edt_03) not the George-Mason tail artefacts; the common core is stated as matcher-dependent ('treat ~200 as the scale, not a precise constant', edt_12); OpenAlex works_count is framed as quantity not quality.",
+        "The level gap between the validation and the headline is NAMED, not implied: edt_09 states the 2015-trio result validates same-year methodology disagreement and that QS's 0.660 is an UPPER bound conflated with an 8-year drift - it does not sell a QS-vs-2015 gap as pure methodology.",
+        "No causal overreach: 'Neither order is wrong... They are simply answering different questions and calling both answers rank' (edt_05); correlation is not dressed as causation.",
+        "Third-party attribution intact (cite_third_party_as_theirs_cap not triggered): OpenAlex, QS, THE, ARWU, CWUR are presented as their owners' with named sources/links in the References; the reweighter is kept visibly distinct as the project's OWN audited derived index, not a lifted proprietary one."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null,
+      "note": "material_caveat_survival_cap NOT triggered - the material era-mismatch limitation reached the reader honestly. Clears five_plus_requires (every claim bounded, caveats where they matter, level gap named)."
+    },
+    {
+      "dimension": "visual_design",
+      "score": 5,
+      "severity": "low",
+      "issues": [
+        "des_size_flip: the direct end-labels 'Oxford' and 'Toronto' overprint near rank ~50 on the per-paper side (LOW cosmetic; recorded blocker_recorded, Programmer re-run 402-blocked this round - does not affect numbers or the Michigan-plunge payoff).",
+        "des_weights: the five non-reputation stacked segments use a muted brown-grey ramp with low lightness separation (MED, single-agent; reads as deliberate de-emphasis of the reputation-vs-rest point - advisory, not corroborated as a hard defect)."
+      ],
+      "evidence": [
+        "Real chart-type variety, right-chart-for-the-data across 9 charts (bump champions, correlation heatmap, swingers dumbbell, weighting stacked-share bar, signed reputation-vs-research gap, referee scatter, referee dot/track, size-flip slope, validation dot plot) + a stat callout - not templated sameness; each annotates its point (the #1 changing hands on the bump, the 89-place swing pinned on the dumbbell, the #1->#332 plunge on the slope, the 1.0 reference line on the track chart).",
+        "Dynamic, seamlessly-looping animated hero (hero.json loop=boomerang): a real identity-verified Wikimedia photo of ETH Zurich's Hauptgebaude with a clearly-visible ~12% ffmpeg Ken-Burns push-in (honest disclosure of the 402 fallback) - clears the static_hero_cap; not a bare still, not a jumping loop.",
+        "Immersion layers present and topic-fitting: a 13-scene photographic cinematic scroll (cin_00..cin_12, clean crossfades per the auditor) + a real Scout-sourced BGM (John Field nocturne recording, license-clean, first-click-to-play cover-art card) - clears the inert_immersion_cap and the richness floor on this is_visual topic; real campus-photo galleries with takeaway captions.",
+        "Render-clean and coherent: layout vision verdict PASS on all typography/spacing/anti-template criteria; 0 zero-width charts, no horizontal overflow desktop OR mobile (390x844), 0 broken images, no CSS leak, 0 console errors, 6.67MB payload < 8MB budget; three vision-consensus chart defects (placeholder axes, phantom category rows, duplicate dark legend) were fixed in place and re-render-confirmed."
+      ],
+      "send_back_to": null,
+      "suggested_fix": "No send-back (dimension passes at 5). Optional pre-publish polish once OpenRouter credit returns: add a label-dodge to des_size_flip so Oxford/Toronto don't overprint, and (if segment-level decoding is wanted) give des_weights a lightness-varied CVD-safe ramp. Both are LOW/advisory and already recorded as non-blocking blockers.",
+      "note": "No hard fail present, so no cap; clears five_plus_requires (coherent themed system across chart types + a data-driven cinematic/annotation move carrying information the prose doesn't). Held at 5 (not 6) because of the two recorded LOW/advisory chart blemishes."
+    }
+  ],
+  "caps_checked": {
+    "material_caveat_survival_cap": "not triggered - era-mismatch caveat survived into edt_09 with honest upper-bound framing; validation level-gap named.",
+    "honest_accuracy_cap": "not triggered - no accuracy/skill boast; no baseline suppression; referee explicitly does not vindicate any table.",
+    "cite_third_party_as_theirs_cap": "not triggered - OpenAlex/QS/THE/ARWU/CWUR attributed; reweighter kept distinct as the project's own derived index.",
+    "titling_caption_cap": "not triggered - D3 single-spine masthead, no AT1/AT8, priming standfirst, takeaway captions, no marketing words.",
+    "richness_floor_cap": "not triggered - animated boomerang hero + 13-scene cinematic + real BGM + 9 varied annotated charts + real photo galleries on an is_visual topic.",
+    "inert_immersion_cap": "not triggered - cinematic scroll and BGM both present and tonally fitting (reflective nocturne over a methodology-critique).",
+    "static_hero_cap": "not triggered - dynamic ~12% push-in, seamless boomerang loop, hero.json loop marker present.",
+    "interaction_as_argument": "satisfied - one earned hero centerpiece landing before the reveal; supporting set each earns its place; no widget-pile.",
+    "open_detected_defect_gate": "not a Critic call and not triggered - validate.py 0 errors; all playtest hard-fails resolution=blocker_recorded (false positives, re-verified in real Chrome), none left open."
+  },
+  "taste_advisory": null,
+  "notes": "All five dimensions score honestly at >=5 except none below 4, with data_method_transparency the clear 6. This is a genuine flagship pass (R9 signature-move floor met). The only outstanding items are two LOW/advisory chart-polish blemishes (des_size_flip label overprint; des_weights grey segment separation), both non-blocking and already recorded as 402-blocked this round - optional to fix before publish. No send-backs required."
+}

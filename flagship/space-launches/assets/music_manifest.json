@@ -1,0 +1,20 @@
+[
+  {
+    "id": "File:Raspberrymusic - Ambient (10 minutes).flac",
+    "title": "Raspberrymusic - Ambient (10 minutes).flac",
+    "local_path": "scout_bgm.flac",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Raspberrymusic_-_Ambient_%2810_minutes%29.flac",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Raspberrymusic_-_Ambient_(10_minutes).flac",
+    "license": "CC BY 3.0",
+    "spdx": "CC-BY-3.0",
+    "artist": "raspberrymusic",
+    "credit": "https://raspberrysounds.bandcamp.com/track/royalty-free-music-ambient-no-copyright-music-10-minutes-free-download-by-raspberrymusic",
+    "mime": "audio/flac",
+    "duration_s": 601.0,
+    "cover_source_url": "",
+    "cover_path": "",
+    "publish_blocker": false,
+    "retrieved_at": "2026-06-30T02:06:31Z",
+    "status": "ok"
+  }
+]

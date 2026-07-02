@@ -1,0 +1,306 @@
+{
+  "meta": {
+    "role": "interaction",
+    "version": "2.0",
+    "domain": "Global university rankings & research bibliometrics",
+    "generated_at": "2026-07-02",
+    "run": "PREMIUM",
+    "note": "The curated interactive SET the Editor approved (editor.json.interactives): ONE hero centerpiece (int_01, the reweighter, ana_12 @ edt_06) + 6 ranked supporting playgrounds, each bound to a DISTINCT finding. Built to the Pudding-grade manipulate->recompute->payoff standard with Verify-layer coexistence, bare-number readouts, graceful degradation and keyboard a11y on every element. Two client_model-backed elements (int_01, int_07) node-verified against their oracles before spec (see node_verify).",
+    "spine_note": "The hero is at edt_06 (NOT the teaser). This is NOT the rung-0 interactive-hero passthrough, so interactive_overlay_ref does NOT apply. The hero (and every supporting) still follows the E1 verify-coexistence rules (see verify_coexistence): sub-targets that are non-native-controls sitting over a provenance container are role=link off the Verify allow-list; every feature handler early-returns under verify-on; feature code never stopPropagation."
+  },
+
+  "node_verify": {
+    "_note": "Ran `node code/client_model.js` calls before speccing the two model-backed elements as buildable. Both return the expected shape and reproduce analyst.json exactly.",
+    "reweightRankings": {
+      "for": "int_01",
+      "exports_present": ["REWEIGHT_DATA", "REWEIGHT_PRESETS", "reweightRankings", "RANK_LOOKUP"],
+      "return_shape": "[{name, country, score, rank}] sorted best-first; 218 rows; topN slice respected",
+      "oracle_checks": {
+        "balanced {rep:1,cite:1,teach:1,intl:1,vol:1}": "#1 University of Oxford 87.02  (MATCH)",
+        "qs_like {rep:5,cite:2,teach:2,intl:1,vol:0}": "#1 Massachusetts Institute of Technology 96.25  (MATCH)",
+        "the_like {rep:3,cite:3,teach:3,intl:1,vol:0}": "#1 Massachusetts Institute of Technology 95.16  (MATCH)",
+        "arwu_like {rep:0,cite:3,teach:0,intl:0,vol:4}": "#1 University of Michigan 95.24  (MATCH)",
+        "output_only {rep:0,cite:0,teach:0,intl:0,vol:1}": "#1 University of Michigan 100.0  (MATCH)",
+        "balanced_top5": "Oxford 87.02 | Harvard 86.22 | Cambridge 83.64 | Michigan 82.84 | Stanford 82.66",
+        "distinct_number_ones": "3 (Oxford / MIT / Michigan)"
+      },
+      "verdict": "BUILDABLE — same audited model as the published headline; live #1 and prose figures are two readouts of one model."
+    },
+    "RANK_LOOKUP": {
+      "for": "int_07",
+      "shape": "{ university_name: {country, THE, ARWU, CWUR, QS, OpenAlex_works, OpenAlex_cites, spread} }",
+      "coverage": "218 universities",
+      "oracle_checks": {
+        "Peking University": "THE 48 / ARWU 101 / CWUR 56 / QS 12 / works 17 / cites 35 / spread 89  (MATCH — the task's suggested oracle)",
+        "University of California, Berkeley": "spread 23  (MATCH)",
+        "California Institute of Technology": "spread 11, works 82  (MATCH)",
+        "University of Michigan": "spread 8, works 1  (MATCH)",
+        "University of Oxford": "spread 7  (MATCH)"
+      },
+      "verdict": "BUILDABLE — per-university vectors for all 218 common-core schools."
+    },
+    "data_table_bound_supporting": {
+      "_note": "The five data_table-bound supporting elements (int_02..int_06) each fire honestly from their ana_xx data_table — confirmed present in analyst.json; none is a dead control.",
+      "int_02_ana_06": "top-of-table row rank=1 -> THE=Caltech, ARWU=Harvard, CWUR=Harvard, QS=MIT, OpenAlex=Michigan; distinct champions across the 5 rankings = 4 {Caltech,Harvard,MIT,Michigan}.",
+      "int_03_ana_08": "by_works #1=Michigan; by_cited_by #1=Harvard; by_h_index #1=Washington. Michigan's own rank across the three lenses = 1 / 5 / 6 (data-bound, changes on toggle).",
+      "int_04_ana_10": "University of Michigan: rank_volume 1, rank_impact 332, flip +331.",
+      "int_05_ana_05b": "Peking University: THE 48 / ARWU 101 / CWUR 56 / QS 12, spread 89 (QS-vs-ARWU 89-place swing).",
+      "int_06_ana_02": "QS reputation_survey_pct = 50; ARWU=0, CWUR=0, THE=33, OpenAlex=0."
+    }
+  },
+
+  "centerpiece": {
+    "id": "int_01",
+    "role": "hero",
+    "concept_ref": "img_01",
+    "based_on": ["ana_12"],
+    "section": "edt_06",
+    "designer_item": "des_reweighter",
+    "mechanism": "explorable_recompute",
+    "reader_produces": "The reader drags the five pillar-weight sliders (Reputation / Citations / Teaching / International / Output) or taps a preset chip; all 218 universities re-rank live and a different school becomes world #1. Moving between presets alone manufactures Oxford, MIT or Michigan as #1 from the SAME data — the reader produces the thesis 'best is a slider position, not a fact' with their own hands, BEFORE the prose names any champion.",
+    "controls": [
+      "Five labelled range sliders — Reputation (rep), Citations (cite), Teaching (teach), International (intl), Output (vol) — integer 0-10, seeded at the BALANCED preset (all equal) so the untouched widget reproduces the published #1 Oxford 87.02.",
+      "Five preset chips as native <button>: Balanced / QS-like / THE-like / ARWU-like / Output-only, placed ABOVE the sliders (each chip sets all five slider values then recomputes).",
+      "A 'reset to balanced' affordance."
+    ],
+    "client_model": {
+      "file": "code/client_model.js",
+      "fn": "reweightRankings",
+      "inputs": "(weights, topN)  where weights = {rep,cite,teach,intl,vol} (non-negative numbers; the fn normalises by the weight sum), topN optional int",
+      "returns": "[{rank, name, country, score}] sorted best-first (218 rows); pass topN=15 for the leaderboard",
+      "presets_source": "REWEIGHT_PRESETS in the same file (balanced 1,1,1,1,1 / qs_like 5,2,2,1,0 / the_like 3,3,3,1,0 / arwu_like 0,3,0,0,4 / output_only 0,0,0,0,1) — inline these, do NOT re-tune",
+      "cost": "closed-form O(n log n), <1ms; recompute on every slider input (no debounce needed, but a --dur-xs crossfade keeps it flicker-free)"
+    },
+    "at_rest": "Sliders at BALANCED. Leaderboard shows reweightRankings(balanced, 15): #1 University of Oxford, then Harvard 86.22, Cambridge 83.64, Michigan 82.84, Stanford 82.66. A big '#1' champion card reads 'University of Oxford'. The live blended score of the current #1 is exposed as a BARE parseable number: <span data-play-out=\"int_01\" class=\"po-num\">87.02</span> (with a separate static unit node, e.g. '<span class=\"po-unit\">blended score</span>', OUTSIDE the parsed span).",
+    "on_interact": "On any slider input OR preset-chip click: FIRST `if (vOn()) return;` (Verify coexistence) — then read the five slider values -> call reweightRankings({rep,cite,teach,intl,vol}, 15) -> re-sort/re-join the leaderboard bars to their new positions with a short crossfade (D3 join + transition, motion.json --dur-xs on high-frequency drag) -> update the champion card's NAME + score -> write the new #1's bare score into [data-play-out=int_01]. When the CHAMPION actually changes (name differs from the previous render), the crown badge does a single gentle pop (motion.json --ease-spring, once) — not on every drag.",
+    "payoff": "The five presets crown THREE different schools from the identical 218-university data: Balanced -> Oxford (87.02), QS-like -> MIT (96.25), Output-only -> Michigan (100.0) [THE-like -> MIT 95.16; ARWU-like -> Michigan 95.24]. A running line ('You just crowned ___') makes the reader realise they manufactured a world #1 by moving sliders. This lands BEFORE the [ana_12] paragraph that names Oxford / MIT / Michigan.",
+    "placement": "PLAY-FIRST, at/before the reveal in edt_06. Render the control cluster (preset chips + five sliders + leaderboard + #1 card) immediately after the short [editorial] lead-in ('...the honest thing is to hand you the dial. Every one of the 218 universities below carries five real 0-100 scores...') and BEFORE the [ana_12] paragraph that states 'Balanced -> Oxford (87.02) ... QS-like -> MIT (96.25) ... ARWU -> Michigan (100.0)'. The reader must be able to drag a slider / tap a preset with MINIMAL reading — one-line affordance only ('Drag a weight, or tap a preset, and watch #1 change'); any longer 'how it works' text follows the play. The prose champions must not appear above the widget.",
+    "transition": "Leaderboard bars: D3 enter/update/exit join, position transition (motion.json --dur-xs on drag so rapid slider motion updates smoothly, not flicker; --dur-md when a preset chip jumps the ordering). Crown badge: single --ease-spring pop only when the champion name changes. Number count-up (motion.json --dur-count) on the #1 score when a preset chip is tapped (skip the count-up on continuous drag).",
+    "degradation": "JS off / model fails: render a STATIC published leaderboard (the balanced-preset top ~15 with University of Oxford #1 at 87.02) as inlined HTML/SVG (or a <noscript> table), plus the bare '87.02'. The section still makes its point — the sliders are the bonus that lets the reader reproduce it. Sliders/chips carry disabled styling if the model is unavailable.",
+    "a11y": "Native <input type=range> sliders, each with a <label> and aria-valuetext (e.g. 'Reputation weight: 5 of 10'); >=44px grabbable band (size the thumb + vertical padding per control_specs); Arrow keys change value; preset chips are real <button>s (keyboard-activatable, focus-visible, aria-pressed on the active preset); the champion card is aria-live=polite so the new #1 is announced. No pointer-only interaction.",
+    "verify": {
+      "kind": "computation",
+      "recompute": "client_model",
+      "three_layer": true,
+      "provenance_container": "the leaderboard + #1 card carry ONE data-des=\"des_reweighter\" (the chart's provenance id). Do NOT tag each slider/row with its own data-* provenance id. Under verify-on, dragging is inert (vOn guard) so the published balanced ordering stays put under audit; a click on the chart area bubbles to the container's provenance hit and opens the drawer.",
+      "notebook_recompute": "a Pyodide/notebook cell recomputes reweightRankings at the balanced settings and reproduces Oxford 87.02 exactly (deterministic), and shows one tuned preset (output_only -> Michigan 100.0) as the delta."
+    }
+  },
+
+  "supporting": [
+    {
+      "id": "int_02",
+      "role": "supporting",
+      "concept_ref": "img_04",
+      "based_on": ["ana_06"],
+      "section": "edt_01",
+      "designer_item": null,
+      "mechanism": "scored_quiz",
+      "reader_produces": "Before scrolling on, the reader guesses who each table crowns #1 (THE / ARWU / CWUR / QS), then discovers the tables already disagree AS PRINTED — Caltech (THE), Harvard (ARWU & CWUR), MIT (QS) — and the neutral OpenAlex referee crowns a fourth, Michigan. Four different champions exist before ANY reweighting (distinct from the hero, where the reader manufactures a champion).",
+      "controls": [
+        "Four guess rows (one per commercial table: THE, ARWU, CWUR, QS), each a set of candidate tiles as native <button> (Caltech / Harvard / MIT / Michigan / Stanford / Cambridge / Oxford). One 'Reveal' button.",
+        "Tiles seed unselected; the reader picks one per row, then Reveal."
+      ],
+      "client_model": null,
+      "at_rest": "The four guess rows with unselected tiles + a hidden/empty answer grid. The readout <span data-play-out=\"int_02\" class=\"po-num\"> is present but empty (the reveal populates it) — a matching <noscript> states the four champions and the number 4.",
+      "on_interact": "On tile-pick and on Reveal: FIRST `if (vOn()) return;`. On Reveal, read the real #1 of each table straight from ana_06.data_table row rank=1 (THE=Caltech, ARWU=Harvard, CWUR=Harvard, QS=MIT) + surface the OpenAlex referee (Michigan); mark each guess right/wrong; animate in the side-by-side top-10 grid (D3, motion.json --dur-md); write the number of DISTINCT champions across the five rankings (=4) into [data-play-out=int_02] as a bare number, and a secondary verdict line 'you matched N of 4'.",
+      "payoff": "The reader sees that four (five) of the world's biggest rankings can't even agree WHO IS BEST — four distinct #1s — which primes the whole thesis. Lands at the hook, before any explanation.",
+      "degradation": "JS off: the <noscript>/static grid shows the four tables' #1s (Caltech / Harvard / Harvard / MIT) + Michigan and states '4 different champions'. No guessing, but the finding still reads.",
+      "a11y": "Candidate tiles and Reveal are native <button>s (>=44px, keyboard-activatable, focus-visible, aria-pressed on the picked tile); each guess row is a <fieldset> with a <legend> naming the table; the result grid is aria-live=polite.",
+      "verify": { "kind": "fact", "recompute": "data_table", "three_layer": true }
+    },
+    {
+      "id": "int_03",
+      "role": "supporting",
+      "concept_ref": "img_07",
+      "based_on": ["ana_08"],
+      "section": "edt_07",
+      "designer_item": null,
+      "mechanism": "toggle_refilter",
+      "reader_produces": "The reader toggles the neutral referee's lens between raw works / total citations / h-index and watches the crowned #1 change hands — Michigan -> Harvard -> Washington. The 'objective' referee opens a new argument instead of settling it; and the raw-output emblem (Michigan) itself slides down the table as the lens changes.",
+      "controls": [
+        "Three toggle chips as native <button> (Works / Citations / h-index), a single-select segmented control seeded on 'Works'.",
+        "Selecting a chip re-orders the top-10 list."
+      ],
+      "client_model": null,
+      "at_rest": "'Works' lens selected: the top-10 from ana_08.data_table by_works_count with a crown on #1 Michigan. The bare readout tracks the section emblem — Michigan's OWN rank under the current lens — exposed as <span data-play-out=\"int_03\" class=\"po-num\">1</span> (Works: Michigan is #1). A static caption names the current crown ('By research volume, #1 is Michigan').",
+      "on_interact": "On chip select: FIRST `if (vOn()) return;` — then set state.lens, re-join the top-10 rows from the matching ana_08.data_table column (by_works_count / by_cited_by_count / by_h_index) with a D3 position transition (motion.json --dur-md), move the crown to the new #1, update the caption's crowned NAME (Michigan -> Harvard -> Washington), and write Michigan's rank under the selected lens (Works 1 / Citations 5 / h-index 6) into [data-play-out=int_03].",
+      "payoff": "Three neutral lenses, three different #1s — and the raw-output giant Michigan itself drops from 1st to 5th to 6th. The referee crowns a new order rather than resolving the dispute. The crowned-name change is the felt payoff; Michigan's own descent is the data-bound number the reader reads out.",
+      "degradation": "JS off: render the 'Works' top-10 statically with the crown on Michigan and a one-line note listing the other two lenses' #1s (Harvard by citations, Washington by h-index). The finding still reads; the number 1 (Michigan by works) is present.",
+      "a11y": "The three chips are a keyboard-operable single-select group (native <button>s with role/aria-pressed, or radios styled as chips; >=44px; ArrowLeft/Right move selection; focus-visible); the top-10 list is an ordered list; the crown/caption region is aria-live=polite.",
+      "verify": { "kind": "fact", "recompute": "data_table", "three_layer": true }
+    },
+    {
+      "id": "int_04",
+      "role": "supporting",
+      "concept_ref": "img_05",
+      "based_on": ["ana_10"],
+      "section": "edt_08",
+      "designer_item": null,
+      "mechanism": "guess_then_reveal",
+      "reader_produces": "Told Michigan is #1 in the world by raw research volume, the reader guesses where it lands once you divide citations by papers — then feels the +331-place plunge from works #1 to per-paper impact #332. Isolates the single normalisation choice (volume vs per-paper).",
+      "controls": [
+        "One guess slider (native <input type=range>, 1-400) — 'Michigan's impact rank per paper' — seeded at a neutral midpoint. One 'Reveal' button."
+      ],
+      "client_model": null,
+      "at_rest": "The guess slider + an empty/hidden reveal track. A present-but-empty <span data-play-out=\"int_04\" class=\"po-num\"> awaits the reveal; a <noscript> states '#1 by volume -> #332 per paper'.",
+      "on_interact": "On slider input and on Reveal: FIRST `if (vOn()) return;`. On Reveal, pull Michigan's rank_volume (1) and rank_impact (332) straight from ana_10.data_table; draw BOTH the reader's guess bar and the REAL impact-rank bar with widths from a shared D3 scale over the rank axis (never hardcoded px); animate in (motion.json --dur-md); branch a verdict off the signed gap between guess and 332; write 332 into [data-play-out=int_04] as the bare number.",
+      "payoff": "One normalisation decision (count papers vs impact per paper) moves the 'best research university' by 331 places. The reader's own guess makes the plunge land.",
+      "degradation": "JS off: a static two-bar figure (volume #1 vs impact #332) + the bare '332'. The correction still reads without the guess.",
+      "a11y": "The guess slider is a labelled <input type=range> with aria-valuetext ('your guess: 150th'), >=44px band, Arrow-key operable; Reveal is a native <button>; the reveal region is aria-live=polite.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true }
+    },
+    {
+      "id": "int_05",
+      "role": "supporting",
+      "concept_ref": "img_03",
+      "based_on": ["ana_05b"],
+      "section": "edt_03",
+      "designer_item": null,
+      "mechanism": "guess_then_reveal",
+      "reader_produces": "The reader commits a guess for how far apart the four tables place a famous swinger, then feels the real 89-place QS-vs-ARWU gap for Peking land data-bound (QS 12 vs ARWU 101). Makes a single school's swing hands-on.",
+      "controls": [
+        "A named-swinger selector (native <select> or chips: Peking / Tsinghua / Berkeley), default Peking.",
+        "One guess slider (native <input type=range>, 0-200) — 'how many places does it swing?'. One 'Reveal' button."
+      ],
+      "client_model": null,
+      "at_rest": "Peking selected; guess slider + hidden reveal. The bare readout <span data-play-out=\"int_05\" class=\"po-num\"> awaits the reveal (the selected school's spread lands there); a <noscript> states 'Peking: QS 12 vs ARWU 101, spread 89'.",
+      "on_interact": "On selector change, slider input and Reveal: FIRST `if (vOn()) return;`. On Reveal, read the selected school's four commercial ranks + spread from ana_05b.data_table (Peking THE 48 / ARWU 101 / CWUR 56 / QS 12, spread 89; Tsinghua spread 87; Berkeley spread 23); draw its four ranks as data-bound dots on a shared rank axis with the min->max spread bar, plus the reader's guess marker; animate in (motion.json --dur-md); verdict off the guess-vs-spread gap; write the selected school's spread into [data-play-out=int_05] (Peking = 89).",
+      "payoff": "The university did not change between the two tables; the definition of 'best' did. The reader's guess sharpens the 89-place shock.",
+      "degradation": "JS off: a static dumbbell for Peking (QS 12 ... ARWU 101) + the bare '89'. Still reads.",
+      "a11y": "Selector is a labelled <select> (or keyboard chip group); the guess slider is a labelled <input type=range> with aria-valuetext, >=44px, Arrow-operable; Reveal is a <button>; reveal region aria-live=polite.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true }
+    },
+    {
+      "id": "int_06",
+      "role": "supporting",
+      "concept_ref": "img_11",
+      "based_on": ["ana_02"],
+      "section": "edt_04",
+      "designer_item": null,
+      "mechanism": "scored_quiz",
+      "reader_produces": "The reader guesses how much of a QS score is just surveyed reputation, then sees QS is 50% surveyed opinion while ARWU and CWUR are 0% — the mechanical CAUSE of the disagreement made producible.",
+      "controls": [
+        "One guess slider (native <input type=range>, 0-100 %) — 'what share of a QS score is reputation survey?'. One 'Reveal' button."
+      ],
+      "client_model": null,
+      "at_rest": "Guess slider + hidden reveal (the five-system stacked weighting bar). A present-but-empty <span data-play-out=\"int_06\" class=\"po-num\"> awaits the reveal; a <noscript> states 'QS reputation survey = 50%; ARWU & CWUR = 0%'.",
+      "on_interact": "On slider input and Reveal: FIRST `if (vOn()) return;`. On Reveal, pull the reputation_survey_pct column from ana_02.data_table (QS 50, THE 33, ARWU 0, CWUR 0, OpenAlex 0); draw the 100%-stacked weighting bar for all five systems with the reputation segment highlighted, plus the reader's guess marker on the QS bar; animate in (motion.json --dur-md); verdict off guess-vs-50; write 50 into [data-play-out=int_06] as the bare number.",
+      "payoff": "Half of a QS score is surveyed opinion; ARWU and CWUR contain none. The reader guesses the number, then owns the reason the tables disagree.",
+      "degradation": "JS off: a static stacked weighting bar (or a one-line statement 'QS 50% reputation vs ARWU/CWUR 0%') + the bare '50'. Still reads.",
+      "a11y": "The guess slider is a labelled <input type=range> with aria-valuetext ('your guess: 30%'), >=44px, Arrow-operable; Reveal is a native <button>; the reveal region is aria-live=polite.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true }
+    },
+    {
+      "id": "int_07",
+      "role": "supporting",
+      "concept_ref": "img_02",
+      "based_on": ["ana_13"],
+      "section": "edt_10",
+      "designer_item": null,
+      "mechanism": "personal_input",
+      "reader_produces": "The reader types/selects their own university (any of 218) and pulls its four commercial ranks (THE/ARWU/CWUR/QS) + OpenAlex works & cites ranks + its cross-system spread — 'your university swings N places between the tables'. The reader-as-subject lever; distinct 'find yourself in the data' job.",
+      "controls": [
+        "A search <input> backed by a <datalist> of all 218 university names (or a searchable <select>), seeded at a sensible default (University of Oxford) so the at-rest state is meaningful."
+      ],
+      "client_model": {
+        "file": "code/client_model.js",
+        "fn": "RANK_LOOKUP",
+        "inputs": "RANK_LOOKUP[exactName] -> {country, THE, ARWU, CWUR, QS, OpenAlex_works, OpenAlex_cites, spread}",
+        "returns": "one per-university record; 218 covered",
+        "note": "an object lookup, not a function — match the typed name to a key (case/diacritic-tolerant match recommended; fall back to a not-found message)"
+      },
+      "at_rest": "Default = University of Oxford: a dumbbell/slope of its six ranks (THE 3 / ARWU 10 / CWUR 5 / QS 4 / works 3 / cites 8) with its spread. The bare readout exposes the spread: <span data-play-out=\"int_07\" class=\"po-num\">7</span> (Oxford's spread), with a static label 'places between its best and worst table' OUTSIDE the parsed span.",
+      "on_interact": "On input/change: FIRST `if (vOn()) return;` — then look up RANK_LOOKUP[name]; draw the six ranks as a data-bound dumbbell/slope (min->max spread bar) and highlight the reader's school; animate the marker in (motion.json --dur-md); write the school's spread into [data-play-out=int_07] (e.g. Peking -> 89, Berkeley -> 23, Caltech -> 11, Michigan -> 8). Unknown name -> a gentle 'not in the 218-school core' note, readout unchanged.",
+      "payoff": "The aggregate becomes personal: 'Berkeley swings 23, Caltech 11, Michigan 8, Peking a full 89 — look yours up.' The reader locates their own school in the disagreement.",
+      "degradation": "JS off: a static short list of sample spreads (Berkeley 23, Caltech 11, Michigan 8, Peking 89) with no highlight, plus the default Oxford dumbbell and the bare '7'. The distribution still conveys.",
+      "a11y": "The lookup is a labelled <input>+<datalist> (or searchable <select>), keyboard-operable, focus-visible, with a sensible default so the at-rest chart is populated; the result region is aria-live=polite so the looked-up ranks + spread are announced.",
+      "verify": { "kind": "computation", "recompute": "client_model", "three_layer": true }
+    }
+  ],
+
+  "verify_coexistence": {
+    "_note": "MANDATORY for every element above so the built controls COEXIST with the Inspector/Verify layer (E1 verify-coexistence + the shared playbook verify_coexistence). This is what the Playtester's verify_coexist check enforces.",
+    "rule_1_vOn_guard": "Define once near the top of the script: `const vOn = () => document.documentElement.classList.contains('verify-on');`. The FIRST line of EVERY feature handler (slider input, button/chip click, <select> change, tile pick, Reveal, keydown Enter/Space, and any hover/focus side-effect) early-returns: `if (vOn()) return;`. Guard the MUTATING handlers only — never guard the initial render()/baseline draw (the at-rest published numbers must still paint).",
+    "rule_2_never_stopPropagation": "No feature handler calls stopPropagation() (nor a preventDefault that swallows the bubble). Under verify-on the gesture must be free to bubble to the provenance container so the Verify engine's delegated handler opens the drawer.",
+    "rule_3_role_link_only_for_non_control_subtargets_over_provenance": "Native controls (<input>, <button>, <select>) are IN the Verify INNER_INTERACTIVE allow-list, so the engine defers to them and the vOn() guard alone makes them inert under Verify — use native controls for ALL the sliders/chips/tiles/selects above (best for a11y). The role=link trick is needed ONLY when a NON-control clickable sub-target sits OVER a provenance-bearing container (e.g. a clickable leaderboard row or a clickable chart region layered on the data-des chart): make that sub-target `role=\"link\" tabindex=\"0\"` (OUT of the allow-list) + vOn()-guarded + never stopPropagation, so under Verify its click bubbles to the container's provenance hit. Do NOT give such sub-targets their own data-* provenance id (that would split one claim into many hits).",
+    "provenance_keying": "Provenance stays on the CHART/READOUT container (its data-des id), ONE per element. The interactive recompute is NOT itself a separate provenance claim; the data-play-out readout node is a NON-provenance hook (in no validate tuple/schema) the Playtester reads."
+  },
+
+  "scrollytelling": null,
+  "scrollytelling_note": "The spine is a sequence of discrete evidence beats, not one morphing sticky graphic, so no scrollytelling rig. The mandatory full-bleed scroll BACKGROUND (night-campus cinematic) is the Cinematographer's stage (des_ / sct_ imagery), separate from these playgrounds.",
+
+  "transitions": [
+    "int_01 leaderboard: D3 enter/update/exit join with position transition — motion.json --dur-xs on high-frequency slider drag (flicker-free crossfade), --dur-md when a preset chip jumps the ordering; crown badge single --ease-spring pop ONLY when the champion name changes; #1 score count-up (--dur-count) on preset taps.",
+    "int_02 result grid: fade/rise in on Reveal (--dur-md, --ease-out).",
+    "int_03 top-10 rows: D3 position transition on lens toggle (--dur-md); crown slides to the new #1.",
+    "int_04 / int_05 / int_06 reveal bars: draw/grow from the data scale on Reveal (--dur-md, --ease-out), never hard-popped; guess marker eases to position.",
+    "int_07 dumbbell + 'you are here' marker: marker fades/rings in on lookup (--dur-md).",
+    "All: animate transform/opacity only; honor prefers-reduced-motion (motion.json collapses tokens — bars/positions appear at final state, no motion)."
+  ],
+
+  "spine_change": null,
+  "spine_change_note": "No change to the Editor's spine. The hero was already designated by the Editor at edt_06 (interactives.hero, ana_12) and I build exactly that. The only refinement is WITHIN-section ordering (play-first: the reweighter control cluster renders before the [ana_12] champions paragraph inside edt_06) — a placement instruction to the Programmer, already required by editor.md's centerpiece note, not a spine restructure. All 6 supporting playgrounds are built as curated; none dropped, none invented.",
+
+  "programmer_tagging": {
+    "_note": "Tag EACH built element for traceability; build ONLY these seven.",
+    "per_element": "Tag the element root `data-int=\"int_NN\"` + `data-ana=\"ana_NN\"` (int_01->ana_12, int_02->ana_06, int_03->ana_08, int_04->ana_10, int_05->ana_05b, int_06->ana_02, int_07->ana_13). Put the live readout in a node with `data-play-out=\"int_NN\"` containing a bare parseable number in a `.po-num` span (a NON-provenance hook, in no validate tuple).",
+    "provenance": "The chart/leaderboard/readout container carries its Designer provenance id (int_01 -> data-des=\"des_reweighter\"; the supporting charts carry their own des_ ids where the Designer registered them). ONE provenance id per element; do not tag controls/rows with provenance ids.",
+    "client_model_inlining": "Inline code/client_model.js (REWEIGHT_DATA + REWEIGHT_PRESETS + reweightRankings for int_01; RANK_LOOKUP for int_07) into the page as a JS literal — do not fetch raw files. The data_table-bound elements (int_02..int_06) inline only the small ana_xx data_table rows they read."
+  },
+
+  "playtest_handoff": {
+    "build_ids": ["int_01", "int_02", "int_03", "int_04", "int_05", "int_06", "int_07"],
+    "per_id": {
+      "int_01": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_01]",
+        "oracle": "At rest (BALANCED) [data-play-out=int_01] = 87.02 and the champion card names University of Oxford. Tap 'QS-like' -> 96.25 (MIT). Tap 'Output-only' -> 100.0 (Michigan). Tap 'ARWU-like' -> 95.24 (Michigan); 'THE-like' -> 95.16 (MIT). Node-verified against reweightRankings.",
+        "degradation_path": "static published leaderboard with Oxford #1 87.02 (inlined HTML/SVG or <noscript>)"
+      },
+      "int_02": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_02]",
+        "oracle": "On Reveal, [data-play-out=int_02] = 4 (distinct champions across the five rankings: Caltech/Harvard/MIT/Michigan). The result grid shows THE=Caltech, ARWU=Harvard, CWUR=Harvard, QS=MIT, OpenAlex=Michigan (ana_06 row 1).",
+        "degradation_path": "static four-tables-#1 grid (Caltech/Harvard/Harvard/MIT) + Michigan referee + the number 4"
+      },
+      "int_03": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_03]",
+        "oracle": "At rest (Works lens) [data-play-out=int_03] = 1 (Michigan is #1 by works) and the crown caption names Michigan. Toggle Citations -> 5 (crown -> Harvard). Toggle h-index -> 6 (crown -> Washington). Michigan's own rank per lens and the crowned name both change on toggle (ana_08 data_table).",
+        "degradation_path": "static 'Works' top-10 with crown on Michigan + a note listing the other two lenses' #1s (Harvard, Washington); number 1 present"
+      },
+      "int_04": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_04]",
+        "oracle": "On Reveal, [data-play-out=int_04] = 332 (Michigan's per-paper impact rank; volume #1 -> impact #332, a +331 flip; ana_10 data_table).",
+        "degradation_path": "static two-bar figure (volume #1 vs impact #332) + the bare 332"
+      },
+      "int_05": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_05]",
+        "oracle": "On Reveal with Peking selected (default), [data-play-out=int_05] = 89 (Peking's spread; QS 12 vs ARWU 101; ana_05b data_table). Tsinghua -> 87; Berkeley -> 23.",
+        "degradation_path": "static Peking dumbbell (QS 12 ... ARWU 101) + the bare 89"
+      },
+      "int_06": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_06]",
+        "oracle": "On Reveal, [data-play-out=int_06] = 50 (QS reputation-survey share; ARWU & CWUR = 0; ana_02 data_table).",
+        "degradation_path": "static stacked weighting bar (QS 50% vs ARWU/CWUR 0%) + the bare 50"
+      },
+      "int_07": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_07]",
+        "oracle": "At rest (default University of Oxford) [data-play-out=int_07] = 7 (Oxford's spread). Type 'Peking University' -> 89 (the task's suggested oracle); 'University of California, Berkeley' -> 23; 'California Institute of Technology' -> 11; 'University of Michigan' -> 8. Node-verified against RANK_LOOKUP.",
+        "degradation_path": "static sample-spread list (Berkeley 23, Caltech 11, Michigan 8, Peking 89) + default Oxford dumbbell + bare 7"
+      }
+    }
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0",
+    "domain": "Global university rankings & research bibliometrics",
+    "generated_at": "2026-07-02",
+    "run": "PREMIUM",
+    "note": "Editorial structure for the 'four university rankings disagree' story. Spine: 'best university' is a weighting choice, not a fact. Hero = the reweighter (ana_12 / img_01) in edt_06, produced by the reader before the prose names Oxford/MIT/Michigan. Full earned interactive set curated for a visual+computational topic (hero + 6 distinct supporting playgrounds)."
+  },
+  "core_claim": "\"Best university\" is a weighting choice, not a fact: four global rankings disagree and even the neutral OpenAlex research-output referee crowns a different order, so no table is simply right — each measures a different definition of \"best\".",
+  "items": {
+    "edt_01": {
+      "label": "Hook — Four tables, four champions",
+      "purpose": "hook",
+      "title": null,
+      "findings": ["ana_06", "ana_05b"],
+      "context": ["det_08", "det_09", "sct_bgm"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_05b": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "audio",
+      "editorial_notes": "Reframe hook — lead with the surprise (four different #1s + Peking's 89-place swing), not background. Exact: Caltech/Harvard/Harvard/MIT (+Michigan referee); only 5 of 15 names in all four top-10s; Peking QS 12 vs ARWU 101 = 89; 23.5% / 19.6% exact. sct_bgm (John Field nocturne) is the mandatory top-of-article now-playing BGM card. Opening interactive = the guess-each-table's-#1 quiz (img_04); it may reveal the four PUBLISHED champions but must NOT spoil the reweighter's Oxford/MIT/Michigan."
+    },
+    "edt_02": {
+      "label": "How far apart are they?",
+      "purpose": "evidence",
+      "title": null,
+      "findings": ["ana_04", "ana_05"],
+      "context": ["det_08"],
+      "triage": {
+        "ana_04": "supporting",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_04",
+      "media_placeholder": null,
+      "editorial_notes": "Correlations 0.599-0.853 exact (most alike ARWU-CWUR 0.853, least CWUR-QS 0.599); QS is the systematic outlier (its three pairings 0.599/0.647/0.735 are the three lowest). Median spread 122 (122.5), mean 158 (157.8); Stanford spread 2, MIT 5. Chart-led, no forced media."
+    },
+    "edt_03": {
+      "label": "The swingers — same school, tens of places apart",
+      "purpose": "evidence",
+      "title": null,
+      "findings": ["ana_05b"],
+      "context": ["det_13"],
+      "triage": {
+        "ana_05b": "supporting"
+      },
+      "chart_placeholder": "ana_05b",
+      "media_placeholder": "image",
+      "editorial_notes": "Use ONLY the band-free set (schools ranked <=200 by all four systems) per ana_caveat_04 — never the raw George Mason 850 tail-band artefacts. Exact: Peking 12/101, Tsinghua 14/101 (~90 apart), Berkeley 4/27, Caltech THE 1 / OpenAlex-works 82, Fudan spread 161. Campus images: Peking (det_media_08), Tsinghua (det_media_07), Berkeley (det_media_09), Caltech (det_media_06). Supporting interactive = guess-Peking's-spread (img_03)."
+    },
+    "edt_04": {
+      "label": "Why they disagree — the weighting dial",
+      "purpose": "context",
+      "title": null,
+      "findings": ["ana_02"],
+      "context": ["det_02", "det_03", "det_04", "det_05", "det_06", "det_07"],
+      "triage": {
+        "ana_02": "supporting"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "interactive",
+      "editorial_notes": "The mechanical cause. Exact: QS reputation survey 50% (40% academic + 10% employer); THE ~33% survey + 30% citations; ARWU 0%; CWUR 0%; OpenAlex 0%. Flag that the QS 2023 edition uses the PRE-2024 legacy weights (Academic Reputation 40%) per ana_caveat_05 — its reputation-heaviness is edition-specific. Supporting interactive = guess-the-reputation-share quiz (img_11)."
+    },
+    "edt_05": {
+      "label": "The survey and the microscope disagree",
+      "purpose": "evidence",
+      "title": null,
+      "findings": ["ana_09"],
+      "context": ["det_02", "det_04", "det_13"],
+      "triage": {
+        "ana_09": "supporting"
+      },
+      "chart_placeholder": "ana_09",
+      "media_placeholder": null,
+      "editorial_notes": "QS internal Academic-Reputation vs Citations-per-Faculty correlate only 0.421. Reputation-lifted (QS>>ARWU): HKU 151/21, NUS 101/11, Peking 101/12. Research-lifted (ARWU>>QS): Vanderbilt 53/199, Maryland 43/164. Chart-led."
+    },
+    "edt_06": {
+      "label": "So you decide — set the weights yourself",
+      "purpose": "turn",
+      "title": null,
+      "findings": ["ana_12"],
+      "context": ["det_02", "det_03", "det_07", "det_13"],
+      "triage": {
+        "ana_12": "lead"
+      },
+      "chart_placeholder": "ana_12",
+      "media_placeholder": "interactive",
+      "editorial_notes": "CENTERPIECE SECTION. The hero reweighter (img_01/ana_12) must render and be usable BEFORE the paragraph that names Oxford (87.02) / MIT (96.25) / Michigan (100.0). The reader produces the '#1 flips' answer themselves. It MUST recompute on the Analyst's audited client_model reweightRankings (code/client_model.js) so the live #1 and the prose figures are two readouts of one model — never a divergent second model. Exact preset #1s: balanced Oxford 87.02, qs_like MIT 96.25, the_like MIT 95.16, arwu_like Michigan 95.24, output_only Michigan 100.0; 3 distinct #1s."
+    },
+    "edt_07": {
+      "label": "The neutral referee doesn't settle it either",
+      "purpose": "evidence",
+      "title": null,
+      "findings": ["ana_08", "ana_07"],
+      "context": ["det_06", "sct_toronto", "sct_ucl", "sct_washington"],
+      "triage": {
+        "ana_08": "supporting",
+        "ana_07": "supporting"
+      },
+      "chart_placeholder": "ana_07",
+      "media_placeholder": "image",
+      "editorial_notes": "Exact: OpenAlex #1 by works=Michigan, by cited_by=Harvard, by h_index=Washington; Michigan works #1 but best commercial rank only #17. ARWU tracks OpenAlex most (0.876 vs h_index), QS least (0.636); even the best fit 0.88 is far from 1.0 — the referee vindicates no single table. Campus images: Michigan (det_media_10), Toronto (sct_toronto), UCL (sct_ucl), Washington (sct_washington). Supporting interactive = toggle-the-referee's-lens (img_07). Note the Washington h_index rank is inflated by the two_yr_mean_citedness anomaly (ana_caveat_03) — per-paper impact uses cites/work instead."
+    },
+    "edt_08": {
+      "label": "The size trap — papers or impact?",
+      "purpose": "evidence",
+      "title": null,
+      "findings": ["ana_10"],
+      "context": ["det_13"],
+      "triage": {
+        "ana_10": "supporting"
+      },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Exact: Michigan works ~980,174 (volume #1) -> cites/work 67.2 (impact #332), a +331-place flip; Caltech volume #82 / impact #13; Princeton #104 / #24; MIT #35 / #3; Harvard #2 / #1. Supporting interactive = guess-Michigan's-impact-rank (img_05)."
+    },
+    "edt_09": {
+      "label": "Why believe this — the disagreement survives holding the year fixed",
+      "purpose": "evidence",
+      "title": null,
+      "findings": ["ana_11"],
+      "context": ["det_14"],
+      "triage": {
+        "ana_11": "supporting"
+      },
+      "chart_placeholder": "ana_11",
+      "media_placeholder": null,
+      "editorial_notes": "VALIDATION BEAT (its own passage) + the MANDATORY era-mismatch sentence, tagged [ana_11, det_14] in prose. Exact: 2015 trio (285 schools) mean Spearman 0.782 (THE-ARWU 0.757, THE-CWUR 0.751, ARWU-CWUR 0.840) — still far below 1.0, so the disagreement is methodological, not a year-mixing artefact. State honestly that QS's 0.660 is an UPPER bound conflated with the ~8-year span; do NOT sell a QS-vs-2015 gap as pure methodology."
+    },
+    "edt_10": {
+      "label": "Look up your own university",
+      "purpose": "context",
+      "title": null,
+      "findings": ["ana_13"],
+      "context": ["det_09"],
+      "triage": {
+        "ana_13": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "interactive",
+      "editorial_notes": "Reader-as-subject engagement lever. Lookup covers all 218 common-core universities: rank in THE/ARWU/CWUR/QS + OpenAlex (works & cites) + spread. Exact sample spreads: Berkeley 23, Caltech 11, Michigan 8, Peking 89. Supporting interactive = look-up-your-university (img_02, personal_input)."
+    },
+    "edt_11": {
+      "label": "What \"best\" actually means",
+      "purpose": "close",
+      "title": null,
+      "findings": ["ana_12"],
+      "context": ["det_10", "det_11", "det_12", "det_09"],
+      "triage": {
+        "ana_12": "lead"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "End on tension, not a summary. Controversies as context: QS 2024 cut reputation 40%->30% (schools moved without changing, det_10); Columbia fell 2->18 for false data (det_11); the 2023 Yale/Harvard-led boycott (det_12). Do NOT overclaim rankings are worthless — the point is 'best' is a question the reader must finish. Close on the reweighter: the only honest #1 is the one whose weighting you would defend."
+    },
+    "edt_12": {
+      "label": "About the data",
+      "purpose": "context",
+      "title": null,
+      "findings": ["ana_01", "ana_03"],
+      "context": ["det_01", "det_14"],
+      "triage": {
+        "ana_01": "color",
+        "ana_03": "color"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": null,
+      "editorial_notes": "Methods appendix (after the close; not the emotional ending). Provenance: 4 commercial systems + OpenAlex (fetched 24 Jun 2026); cleanest cross-system year 2015, QS 2023 + OpenAlex as overlays. The 218-school common core is a normalised-name join and is matcher-dependent (dataset states ~189) — treat ~200 as the scale, not a precise constant (ana_caveat_02). The fine data-quality quirks (ana_01b) live here / in the verify layer, not in body prose."
+    }
+  },
+  "full_triage": {
+    "ana_01": "color",
+    "ana_01b": "cut",
+    "ana_02": "supporting",
+    "ana_03": "color",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_05b": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "supporting",
+    "ana_10": "supporting",
+    "ana_11": "supporting",
+    "ana_12": "lead",
+    "ana_13": "supporting"
+  },
+  "interactives": {
+    "hero": {
+      "concept_ref": "img_01",
+      "finding": "ana_12",
+      "purpose": "INFORM",
+      "section": "edt_06",
+      "archetype": "explorable_recompute",
+      "why_hero": "The single contestable headline the reader must produce: dragging the five pillar weights re-ranks all 218 universities live and manufactures Oxford, MIT, or Michigan as world #1 from the same data — proving 'best' is a slider position, not a fact. Recomputes on the Analyst's audited reweightRankings client_model."
+    },
+    "supporting": [
+      {
+        "concept_ref": "img_04",
+        "finding": "ana_06",
+        "purpose": "IMMERSE",
+        "section": "edt_01",
+        "archetype": "scored_quiz",
+        "rank": 1,
+        "earns_place": "Distinct finding: the reader guesses each table's PUBLISHED #1 and discovers four different champions (Caltech/Harvard/MIT + the Michigan referee) exist BEFORE any reweighting. Not a duplicate of the hero (which is the reader manufacturing a champion) — this is 'the tables already disagree as printed'."
+      },
+      {
+        "concept_ref": "img_07",
+        "finding": "ana_08",
+        "purpose": "IMMERSE",
+        "section": "edt_07",
+        "archetype": "toggle_refilter",
+        "rank": 2,
+        "earns_place": "Distinct finding: toggling the neutral referee between works / cited_by / h_index crowns Michigan -> Harvard -> Washington — the 'objective' referee opens a new argument instead of settling it. Only playground bound to OpenAlex's own three-way self-disagreement."
+      },
+      {
+        "concept_ref": "img_05",
+        "finding": "ana_10",
+        "purpose": "IMMERSE",
+        "section": "edt_08",
+        "archetype": "guess_then_reveal",
+        "rank": 3,
+        "earns_place": "Distinct finding: guess where the raw-output #1 (Michigan) lands per-paper, then feel the +331-place plunge (works #1 -> impact #332). Isolates the single normalisation choice (volume vs per-paper) — a different lever than weighting across systems (hero) or across tables (others)."
+      },
+      {
+        "concept_ref": "img_03",
+        "finding": "ana_05b",
+        "purpose": "IMMERSE",
+        "section": "edt_03",
+        "archetype": "guess_then_reveal",
+        "rank": 4,
+        "earns_place": "Distinct finding: commit a guess for a famous swinger's per-system ranks, then feel the real 89-place QS-vs-ARWU gap for Peking land data-bound. Makes the single-school swing hands-on — distinct from the aggregate correlation/spread and from the #1-champion findings."
+      },
+      {
+        "concept_ref": "img_11",
+        "finding": "ana_02",
+        "purpose": "IMMERSE",
+        "section": "edt_04",
+        "archetype": "scored_quiz",
+        "rank": 5,
+        "earns_place": "Distinct finding: guess the reputation-survey share of QS, then see QS is 50% surveyed opinion while ARWU and CWUR are 0% — the mechanical CAUSE of the disagreement. No other playground makes the weighting-of-opinion figure producible."
+      },
+      {
+        "concept_ref": "img_02",
+        "finding": "ana_13",
+        "purpose": "INFORM",
+        "section": "edt_10",
+        "archetype": "personal_input",
+        "rank": 6,
+        "earns_place": "Distinct finding: the reader types their own university (any of 218) and pulls its five verdicts + spread — the reader-as-subject lever. Distinct data (RANK_LOOKUP, per-university vectors) and a distinct 'find yourself in the data' job no other playground covers."
+      }
+    ]
+  }
+}

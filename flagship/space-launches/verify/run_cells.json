@@ -1,0 +1,175 @@
+{
+  "_doc": {
+    "what": "In-browser-runnable (Pyodide) recompute snippets, one per runnable computation id in verify_map. Each is self-contained pure-stdlib, pre-tested: code reproduces expected_stdout exactly. Byte-identical to the inline #runCells island once filled."
+  },
+  "ana_01": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# Census of orbital launch attempts 1957-2018 (outcome + agency_type counts from launches.csv).\noutcomes = {'Success (O)': 5384, 'Failure (F)': 342}\ntotal = sum(outcomes.values())\nprint(f'orbital launch attempts (1957-2018): {total}')\nprint(f\"successes {outcomes['Success (O)']}  failures {outcomes['Failure (F)']}\")\nprint(f'overall success rate: {100*outcomes[\"Success (O)\"]/total:.1f}%')\nprint('agency_type split:', {'state': 4776, 'private': 880, 'startup': 70})\n",
+    "expected_stdout": "orbital launch attempts (1957-2018): 5726\nsuccesses 5384  failures 342\noverall success rate: 94.0%\nagency_type split: {'state': 4776, 'private': 880, 'startup': 70}\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_02": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# Global orbital launches per year (per-year totals from launches.csv); 2018 is PARTIAL (Jan-Oct).\nyears = [(1957,3),(1958,27),(1959,22),(1960,37),(1961,50),(1962,81),(1963,69),(1964,99),(1965,124),\n(1966,131),(1967,139),(1968,128),(1969,124),(1970,122),(1971,134),(1972,113),(1973,114),(1974,113),\n(1975,132),(1976,131),(1977,130),(1978,128),(1979,109),(1980,107),(1981,126),(1982,129),(1983,129),\n(1984,129),(1985,125),(1986,110),(1987,113),(1988,121),(1989,102),(1990,121),(1991,91),(1992,97),\n(1993,83),(1994,93),(1995,79),(1996,77),(1997,89),(1998,82),(1999,77),(2000,83),(2001,58),(2002,64),\n(2003,62),(2004,53),(2005,56),(2006,65),(2007,65),(2008,67),(2009,77),(2010,71),(2011,80),(2012,78),\n(2013,78),(2014,90),(2015,84),(2016,85),(2017,90),(2018,80)]\npeak = max(years, key=lambda t: t[1])\nprint(f'peak year: {peak[0]} with {peak[1]} launches')\nprint(f'2018 (PARTIAL, Jan-Oct): {dict(years)[2018]}  (external full-year total: 114)')\n",
+    "expected_stdout": "peak year: 1967 with 139 launches\n2018 (PARTIAL, Jan-Oct): 80  (external full-year total: 114)\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_04": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# Cumulative launches by country, all era 1957-2018 (SU+RU merged into USSR/Russia).\ncum = {'USSR/Russia':3178,'USA':1716,'Europe':307,'China':302,'Japan':115,'India':65,'Other':43}\ntotal = sum(cum.values())\nfor c,n in sorted(cum.items(), key=lambda x:-x[1]):\n    print(f'{c:12} {n:5} ({100*n/total:.1f}%)')\nold = 100*(cum['USSR/Russia']+cum['USA'])/total\nprint(f'old-world (USSR/Russia + USA): {old:.1f}%')\n",
+    "expected_stdout": "USSR/Russia   3178 (55.5%)\nUSA           1716 (30.0%)\nEurope         307 (5.4%)\nChina          302 (5.3%)\nJapan          115 (2.0%)\nIndia           65 (1.1%)\nOther           43 (0.8%)\nold-world (USSR/Russia + USA): 85.5%\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_05": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# China's launches by decade + the partial-2018 crossover (from launches.csv).\nchina = [('1970s',13),('1980s',15),('1990s',39),('2000s',64),('2010s',171)]\nfor d,n in china: print(f'China {d}: {n}')\nprint('2018 partial (Jan-Oct): China 28, USA 27, USSR/Russia 10')\n",
+    "expected_stdout": "China 1970s: 13\nChina 1980s: 15\nChina 1990s: 39\nChina 2000s: 64\nChina 2010s: 171\n2018 partial (Jan-Oct): China 28, USA 27, USSR/Russia 10\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_07": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# Two-superpower (USA + USSR/Russia) share of launches, by decade, from the per-year matrix.\n# rows: [year, USSR/Russia, USA, China, Europe, Japan, India, Other]\nM = {\n '1960s': [[1960,8,29,0,0,0,0,0],[1961,9,41,0,0,0,0,0],[1962,22,59,0,0,0,0,0],[1963,23,46,0,0,0,0,0],\n           [1964,36,63,0,0,0,0,0],[1965,53,70,0,1,0,0,0],[1966,51,77,0,1,2,0,0],[1967,74,61,0,2,1,0,1],\n           [1968,79,48,0,1,0,0,0],[1969,81,41,0,1,1,0,0]],\n '2010s': [[2010,28,15,15,6,2,3,2],[2011,28,19,19,7,3,3,1],[2012,24,16,19,10,2,2,5],[2013,29,20,15,7,3,3,1],\n           [2014,30,24,16,11,4,4,1],[2015,24,20,19,11,4,5,1],[2016,17,22,22,11,4,7,2],[2017,18,30,18,11,7,5,1],\n           [2018,10,27,28,6,5,4,0]],\n}\nfor dec in ('1960s','2010s'):\n    rows = M[dec]\n    top2 = sum(r[1]+r[2] for r in rows)\n    tot = sum(sum(r[1:]) for r in rows)\n    print(f'{dec}: US + USSR/Russia = {100*top2/tot:.1f}% of launches')\n",
+    "expected_stdout": "1960s: US + USSR/Russia = 98.9% of launches\n2010s: US + USSR/Russia = 54.5% of launches\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_09": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# Launch success rate by decade + overall, from successes/attempts (launches.csv outcome col).\nsbd = {'1950s':[24,52],'1960s':[854,982],'1970s':[1163,1226],'1980s':[1156,1191],\n       '1990s':[849,889],'2000s':[629,650],'2010s':[709,736]}\nfor d,(s,a) in sbd.items(): print(f'{d}: {100*s/a:.1f}%')\nS = sum(s for s,a in sbd.values()); A = sum(a for s,a in sbd.values())\nprint(f'OVERALL: {S}/{A} = {100*S/A:.1f}%')\n",
+    "expected_stdout": "1950s: 46.2%\n1960s: 87.0%\n1970s: 94.9%\n1980s: 97.1%\n1990s: 95.5%\n2000s: 96.8%\n2010s: 96.3%\nOVERALL: 5384/5726 = 94.0%\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_10": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# All-time launch success rate by country (successes/attempts from launches.csv).\nsbc = {'USSR/Russia':[3024,3178],'USA':[1585,1716],'China':[289,302],'Europe':[294,307],\n       'Japan':[106,115],'India':[58,65],'Other':[28,43]}\nfor c,(s,a) in sorted(sbc.items(), key=lambda x:-100*x[1][0]/x[1][1]):\n    print(f'{c:12} {s:4}/{a:4} = {100*s/a:.1f}%')\n",
+    "expected_stdout": "Europe        294/ 307 = 95.8%\nChina         289/ 302 = 95.7%\nUSSR/Russia  3024/3178 = 95.2%\nUSA          1585/1716 = 92.4%\nJapan         106/ 115 = 92.2%\nIndia          58/  65 = 89.2%\nOther          28/  43 = 65.1%\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_11": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# Launch success rate by operator type (launches.csv agency_type x outcome).\nsbt = {'private':[857,880],'state':[4462,4776],'startup':[65,70]}\nfor t,(s,a) in sorted(sbt.items(), key=lambda x:-100*x[1][0]/x[1][1]):\n    print(f'{t:8} {s:4}/{a:4} = {100*s/a:.1f}%')\n",
+    "expected_stdout": "private   857/ 880 = 97.4%\nstate    4462/4776 = 93.4%\nstartup    65/  70 = 92.9%\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_14": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# China's single-family concentration: Long March (Chang Zheng) share of China's launches.\nlong_march, total_cn = 287, 302\nprint(f'Long March: {long_march} of {total_cn} = {100*long_march/total_cn:.1f}%')\n",
+    "expected_stdout": "Long March: 287 of 302 = 95.0%\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_15": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# The 'startup' class (state_code US): SpaceX Falcon + Rocket Lab Electron.\nstartup = [('Falcon 9',62,2010),('Falcon 1',5,2006),('Electron',2,2017),('Falcon Heavy',1,2018)]\nprint(f'first startup in orbit: {min(y for _,_,y in startup)}')\nprint(f'startup-class launches total: {sum(n for _,n,_ in startup)}')\nfor v,n,y in sorted(startup, key=lambda t:-t[1]): print(f'  {v}: {n} (from {y})')\n",
+    "expected_stdout": "first startup in orbit: 2006\nstartup-class launches total: 70\n  Falcon 9: 62 (from 2010)\n  Falcon 1: 5 (from 2006)\n  Electron: 2 (from 2017)\n  Falcon Heavy: 1 (from 2018)\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "ana_19": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# 'China overtakes 2018' at three honest granularities. months=10 (Jan-Oct partial window).\npartial = {'China':28,'USA':27,'USSR/Russia':10}\nexternal = {'China':39,'USA':34,'USSR/Russia':20}\nmonths = 10\nprint('country       partial  naive_annualized  external_full_year')\nfor c in ('China','USA','USSR/Russia'):\n    print(f'{c:12} {partial[c]:6}  {partial[c]*12/months:15.1f}  {external[c]:17}')\n",
+    "expected_stdout": "country       partial  naive_annualized  external_full_year\nChina            28             33.6                 39\nUSA              27             32.4                 34\nUSSR/Russia      10             12.0                 20\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "int_01": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "import math\ndef r1(x): return math.floor(x*10+0.5)/10   # round-half-up to 1 dp (matches the page model)\n# per-year [USSR/Russia, USA, China, Europe, Japan, India, Other]\nM = {1965:[53,70,0,1,0,0,0], 2018:[10,27,28,6,5,4,0]}\nfor y in (1965, 2018):\n    r = M[y]; tot = sum(r); duo = 100*(r[1]+r[0])/tot\n    print(f'{y}: USA + USSR/Russia = {r1(duo)}% of {tot} launches')\n",
+    "expected_stdout": "1965: USA + USSR/Russia = 99.2% of 124 launches\n2018: USA + USSR/Russia = 46.3% of 80 launches\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "int_02": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "cum = {'USSR/Russia':3178,'USA':1716,'Europe':307,'China':302,'Japan':115,'India':65,'Other':43}\ntotal = sum(cum.values())\nprint(f\"all-time old-world (USSR/Russia + USA): {100*(cum['USSR/Russia']+cum['USA'])/total:.1f}%\")\nprint(f\"Europe {cum['Europe']} still edges China {cum['China']} all-time\")\n",
+    "expected_stdout": "all-time old-world (USSR/Russia + USA): 85.5%\nEurope 307 still edges China 302 all-time\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "int_03": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "partial_china, months = 28, 10\nprint(f'China naive full-year (x12/{months}): {partial_china*12/months:.1f}  (external actual: 39)')\n",
+    "expected_stdout": "China naive full-year (x12/10): 33.6  (external actual: 39)\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "int_04": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "s, a = 289, 302\nprint(f'China success rate: {s}/{a} = {100*s/a:.1f}%  (ties Europe 95.8, USSR/Russia 95.2)')\n",
+    "expected_stdout": "China success rate: 289/302 = 95.7%  (ties Europe 95.8, USSR/Russia 95.2)\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "int_05": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "lm, tot = 287, 302\nprint(f\"Long March share of China's launches: {lm}/{tot} = {100*lm/tot:.1f}%\")\n",
+    "expected_stdout": "Long March share of China's launches: 287/302 = 95.0%\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  },
+  "int_06": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "startup = [('Falcon 1',2006),('Falcon 9',2010),('Electron',2017),('Falcon Heavy',2018)]\nprint(f\"first 'startup' to reach orbit: {min(y for _,y in startup)} (SpaceX Falcon 1)\")\n",
+    "expected_stdout": "first 'startup' to reach orbit: 2006 (SpaceX Falcon 1)\n",
+    "note": "Exact recompute from the inlined aggregate (no Monte-Carlo) — stdout must match byte-for-byte (graded PASS).",
+    "needs_network": false,
+    "full_ref": "code/analyze.py over the full launches.csv (5,726 attempts); client recompute in code/client_model.js. Notebook: verify/space_launches_verify.ipynb."
+  }
+}

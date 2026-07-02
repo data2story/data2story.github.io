@@ -1,0 +1,241 @@
+{
+  "meta": {
+    "role": "imagineer",
+    "is_computational": true,
+    "is_visual": true,
+    "_doc": "Candidate interactive-concept pool for the Economist space-launches story ('a duel became a crowd'). topic_profile = is_computational:true AND is_visual:true -> fanned out widely. img_xx ids are INTERNAL planning vocabulary only; they never reach the HTML. Feasibility for every client_model concept was node-checked against code/client_model.js (launchSnapshot 99.2%@1965 -> 46.3%@2018; cumulativeThrough(2018) ends USSR/Russia 3178 > USA 1716 > Europe 307 > China 302; successRate(country,China)=95.7; annualize(28)=33.6). The Editor curates this down to a hero + supporting set."
+  },
+  "items": {
+    "img_01": {
+      "label": "Duel -> crowd year-scrubber (duopoly share collapses)",
+      "finding": "ana_07",
+      "archetype": "explorable_recompute",
+      "purpose": "IMMERSE",
+      "reader_produces": "drag a single year 1957->2018 and watch the two-superpower share of all launches fall under your hand from 99.2% (1965) to 46.3% (2018) as the field fills in",
+      "needs": { "client_model": "code/client_model.js:launchSnapshot", "data_table": "ana_07" },
+      "feasibility": "high",
+      "sketch": "year slider -> launchSnapshot(year).duopolyShare big counter + per-country bars; the thesis felt as one falling number",
+      "hero_candidate": true
+    },
+    "img_02": {
+      "label": "Launch-race year-scrubber (per-country bars re-rank)",
+      "finding": "ana_03",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "scrub the year and produce the exact who-launched-what ranking for any year: a US/USSR duel (1960s), Soviet dominance (70s-80s), the post-1991 collapse, then China taking the top bar in 2018",
+      "needs": { "client_model": "code/client_model.js:launchSnapshot", "data_table": "ana_03" },
+      "feasibility": "high",
+      "sketch": "year slider -> launchSnapshot(year).counts as animated sorted bars + leader label",
+      "hero_candidate": true
+    },
+    "img_03": {
+      "label": "All-time cumulative bar race (the old world still leads the ledger)",
+      "finding": "ana_04",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "advance the year and watch the cumulative all-time ranking accrue, ending USSR/Russia 3,178 > USA 1,716 > Europe 307 > China 302 -- the tension that the per-year crowd hasn't yet rewritten the 85.5% Cold-War ledger",
+      "needs": { "client_model": "code/client_model.js:cumulativeThrough", "data_table": "ana_04" },
+      "feasibility": "high",
+      "sketch": "play/scrub year -> cumulativeThrough(year).ranked as a racing bar chart",
+      "hero_candidate": true
+    },
+    "img_04": {
+      "label": "Success-rate calculator (are the new contenders cutting corners?)",
+      "finding": "ana_10",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "pick any country and produce its real success rate -- discovering China's 95.7% ties the incumbents, rebutting the 'cheap volume' read",
+      "needs": { "client_model": "code/client_model.js:successRate", "data_table": "ana_10" },
+      "feasibility": "high",
+      "sketch": "dropdown(country) -> successRate('country',key) -> {successes/attempts, rate} dial; defaults to China vs USA",
+      "hero_candidate": false
+    },
+    "img_05": {
+      "label": "Annualize the partial-2018 caveat honestly",
+      "finding": "ana_19",
+      "archetype": "tune_the_assumption",
+      "purpose": "INFORM",
+      "reader_produces": "set how many months of 2018 the data covers and watch China's naive full-year pro-rate move (28 -> 33.6 at 10 months) against the external actual 39 -- the reader verifies the crossover survives the truncation, not a forecast",
+      "needs": { "client_model": "code/client_model.js:annualize", "data_table": "ana_19" },
+      "feasibility": "high",
+      "sketch": "slider(months elapsed 1-12) -> annualize(partial) for China/USA/Russia vs external full-year reference bars",
+      "hero_candidate": false
+    },
+    "img_06": {
+      "label": "Guess the 2018 top launcher before the reveal",
+      "finding": "ana_05",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "commit a guess for who launched most in 2018, then feel the correction when China 28 > USA 27 > Russia 10 lands (39 > 34 > 20 at full year)",
+      "needs": { "client_model": null, "data_table": "ana_19" },
+      "feasibility": "high",
+      "sketch": "tap-to-pick country -> reveal partial + full-year bars from ana_19 data_table; score the guess",
+      "hero_candidate": false
+    },
+    "img_07": {
+      "label": "Guess the superpowers' share today",
+      "finding": "ana_07",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "drag a guess for the US+Russia combined share of launches in the 2010s, then feel the gap when the real 54.5% lands (down from ~99%)",
+      "needs": { "client_model": null, "data_table": "ana_07" },
+      "feasibility": "high",
+      "sketch": "slider(your % guess) -> reveal your bar vs the real 54.5% from ana_07 decade table; show the 99%->54.5% drop",
+      "hero_candidate": false
+    },
+    "img_08": {
+      "label": "Guess who has launched the most rockets ever",
+      "finding": "ana_04",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "guess the all-time launch leader, then meet the counterintuitive answer -- USSR/Russia at 3,178 (55.5% of every orbital launch in history)",
+      "needs": { "client_model": null, "data_table": "ana_04" },
+      "feasibility": "high",
+      "sketch": "pick a country -> reveal the all-time ranking + 'more than half of everything ever' from ana_04 data_table",
+      "hero_candidate": false
+    },
+    "img_09": {
+      "label": "Quiz: which KIND of operator is most reliable?",
+      "finding": "ana_11",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "rank state / private / startup by reliability, then learn the surprising answer -- established 'private' (Arianespace-led) is the MOST reliable at 97.4%, not the state programs",
+      "needs": { "client_model": "code/client_model.js:successRate", "data_table": "ana_11" },
+      "feasibility": "high",
+      "sketch": "drag to order 3 operator types -> reveal successRate('type',key): private 97.4 / state 93.4 / startup 92.9",
+      "hero_candidate": false
+    },
+    "img_10": {
+      "label": "China's program IS one rocket family (reveal)",
+      "finding": "ana_14",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "guess what share of China's launches are a single rocket family, then see it land at 95% -- 287 of 302 are Long March, a sovereign family scaling up (vs the diversified US fleet)",
+      "needs": { "client_model": null, "data_table": "ana_14" },
+      "feasibility": "high",
+      "sketch": "slider(your % guess) -> reveal 287/302 = 95% Long March donut from ana_14 data_table",
+      "hero_candidate": false
+    },
+    "img_11": {
+      "label": "When did a 'startup' first reach orbit?",
+      "finding": "ana_15",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "guess the year venture 'startups' first appear, then watch the SpaceX/Rocket Lab cadence ramp from 1 (2006) to 19 (2017) to 18 in partial 2018 -- a label becoming a rival to national programs",
+      "needs": { "client_model": null, "data_table": "ana_15" },
+      "feasibility": "high",
+      "sketch": "guess-the-year -> reveal startup-by-year ramp line + per-vehicle counts (Falcon 9 62 / Falcon 1 5 / Electron 2) from ana_15",
+      "hero_candidate": false
+    },
+    "img_12": {
+      "label": "Pick a year: who ruled space then?",
+      "finding": "ana_03",
+      "archetype": "personal_input",
+      "purpose": "IMMERSE",
+      "reader_produces": "enter a year that matters to them (birth year, today) and get their personal snapshot -- 'in 1985 the USSR launched 100 of 125 rockets, 80% of the world's' -- locating themselves in the 62-year arc",
+      "needs": { "client_model": "code/client_model.js:launchSnapshot", "data_table": "ana_03" },
+      "feasibility": "high",
+      "sketch": "number input(year) -> launchSnapshot(year) -> sentence + mini bars + leader/duopolyShare for that year",
+      "hero_candidate": false
+    },
+    "img_13": {
+      "label": "Scrollytelling the 62-year arc",
+      "finding": "ana_03",
+      "archetype": "scrollytelling",
+      "purpose": "IMMERSE",
+      "reader_produces": "step the core series through five beats -- the duel (1960s), Soviet dominance, the 1991 collapse, China's climb, the 2018 crossover -- each scroll snapping the chart to that era with its annotation",
+      "needs": { "client_model": null, "data_table": "ana_03" },
+      "feasibility": "high",
+      "sketch": "scroll-pinned country-year chart; each step highlights an era + caption from the ana_03 spine",
+      "hero_candidate": false
+    },
+    "img_14": {
+      "label": "Scrollytelling the two commercialization waves",
+      "finding": "ana_08",
+      "archetype": "scrollytelling",
+      "purpose": "IMMERSE",
+      "reader_produces": "step through the state-only era -> the Arianespace commercial wave (1984, peaking 46.9% in the 2000s) -> the venture-startup wave (2006-), feeling that 'private' and 'startup' are different vintages of actor",
+      "needs": { "client_model": null, "data_table": "ana_08" },
+      "feasibility": "high",
+      "sketch": "scroll-driven 100%-stacked state/private/startup area; each step lands one wave from ana_08 decade table",
+      "hero_candidate": false
+    },
+    "img_15": {
+      "label": "Toggle: how much vs WHO (the thesis in one control)",
+      "finding": "ana_02",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "flip between the 'how much' line (total launches/yr, roughly flat-to-down for 60 years) and the 'who' composition, producing the core insight that the change is in WHO launches, not HOW MUCH",
+      "needs": { "client_model": "code/client_model.js:launchSnapshot", "data_table": "ana_02" },
+      "feasibility": "high",
+      "sketch": "toggle(total | by-country) over the same year axis; total from ana_02, composition via launchSnapshot/ana_03",
+      "hero_candidate": false
+    },
+    "img_16": {
+      "label": "National-share-by-decade explorer (no bloc holds a majority)",
+      "finding": "ana_06",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "step through decades and produce each bloc's share, watching the USSR/Russia line run 21->80->28% and arriving at the first decade since the 1950s when no single bloc holds a majority",
+      "needs": { "client_model": null, "data_table": "ana_06" },
+      "feasibility": "high",
+      "sketch": "decade slider -> 100%-stacked share bar from ana_06; annotate the 'no majority' 2010s",
+      "hero_candidate": false
+    },
+    "img_17": {
+      "label": "Country choropleth of launches over time",
+      "finding": "ana_17",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "scrub a decade and watch the world map fill by launches per launching state, producing the geographic diffusion from a two-country glow to a multi-continent spread",
+      "needs": { "client_model": null, "data_table": "ana_17" },
+      "feasibility": "medium",
+      "sketch": "decade slider -> country choropleth (NOT a point map -- lat/long unusable per ana_caveat_02); all-time fill is high feasibility, but a time-varying fill needs a per-decade state_code matrix the Analyst hasn't emitted yet (client_data is merged-country, not state_code)",
+      "hero_candidate": false
+    },
+    "img_18": {
+      "label": "Vehicle-family treemap (the Soviet fleet dwarfs everyone)",
+      "finding": "ana_13",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "explore a treemap of vehicle families and produce the scale gap -- R-7/Soyuz 1,832 and a >3,200 Soviet fleet against Long March 287 and Falcon 68, the new contenders' hardware still recent, not yet voluminous",
+      "needs": { "client_model": null, "data_table": "ana_13" },
+      "feasibility": "high",
+      "sketch": "hover/click treemap sized by ana_13 family counts; color by nation/bloc",
+      "hero_candidate": false
+    },
+    "img_19": {
+      "label": "Reliability-plateau scrubber",
+      "finding": "ana_09",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "scrub the decade and produce its success rate, watching it climb from 46.2% (1950s) to a 97.1% peak (1980s) and hold near 96% -- modern orbital launch as a high-reliability activity",
+      "needs": { "client_model": "code/client_model.js:successRate", "data_table": "ana_09" },
+      "feasibility": "high",
+      "sketch": "decade slider -> successRate('decade',key) -> rate line with the maturation curve highlighted",
+      "hero_candidate": false
+    },
+    "img_20": {
+      "label": "Concentration dial (Herfindahl falls by decade)",
+      "finding": "ana_07",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "scrub the decade and read the launch-market Herfindahl index falling from ~6,600 toward ~2,200 as the active-country count rises from 2 to 7 -- the concentration framing of 'a duel became a crowd'",
+      "needs": { "client_model": null, "data_table": "ana_07" },
+      "feasibility": "high",
+      "sketch": "decade slider -> HHI gauge + duopoly% + countries-active readout from ana_07 decade table",
+      "hero_candidate": false
+    },
+    "img_21": {
+      "label": "[REJECTED] Launch-site point map",
+      "finding": "ana_17",
+      "archetype": "explorable_recompute",
+      "purpose": "IMMERSE",
+      "reader_produces": "(intended) pan/zoom a world map of individual launch sites -- but NOT BUILDABLE: agencies.csv lat/long are all '-' (0 of 74 usable), so no point coordinates exist (ana_caveat_02). Recorded so the Editor sees it was considered and correctly ruled out; use the country choropleth (img_17) instead",
+      "needs": { "client_model": null, "data_table": "ana_17" },
+      "feasibility": "low",
+      "sketch": "would need lat/long the data lacks; contradicts the Detective's lat/long-map assumption -- do not build",
+      "hero_candidate": false
+    }
+  }
+}

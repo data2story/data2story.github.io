@@ -1,0 +1,219 @@
+key,the_name,country,the_rank,arwu_rank,cwur_rank,qs_rank,institution,country_code,works_count,cited_by_count,h_index,two_yr_mean_citedness,oa_rank_works,oa_rank_cites,oa_rank_hindex
+aalborg,Aalborg University,Denmark,351,301,565,330,Aalborg University,DK,113329,4492124,547,3.1118965304358563,286,455,412
+aalto,Aalto University,Finland,251,401,421,116,Aalto University,FI,63938,3455541,489,3.747251394814572,560,518,468
+aarhus,Aarhus University,Denmark,153,73,122,161,Aarhus University,DK,223824,12705396,858,3.1490875857729304,95,169,180
+aberdeen,University of Aberdeen,United Kingdom,178,201,285,220,University of Aberdeen,GB,96432,7237242,760,3.112238841405508,348,306,228
+adelaide,University of Adelaide,Australia,164,151,335,109,The University of Adelaide,AU,150263,29666035,885,4.876871781719179,192,42,164
+alberta,University of Alberta,Canada,124,101,107,110,University of Alberta,CA,264029,20897018,1067,3.581311757711599,66,84,98
+amsterdam,University of Amsterdam,Netherlands,77,101,114,58,University of Amsterdam,NL,234691,25317861,1147,3.797055234045904,87,62,72
+antwerp,University of Antwerp,Belgium,170,301,312,280,University of Antwerp,BE,94996,9248847,830,7.637258143232733,362,243,192
+arizona,University of Arizona,United States of America,86,90,68,262,University of Arizona,US,258835,22716000,1262,3.791571585704201,70,73,48
+arizona state,Arizona State University,United States of America,182,93,97,219,Arizona State University,US,195461,13888587,964,3.482853566958698,126,153,129
+auckland,University of Auckland,New Zealand,175,201,266,87,University of Auckland,NZ,141607,9834065,764,3.3283861037818823,213,226,223
+australian national,Australian National University,Australia,45,77,179,30,Australian National University,AU,191777,14387444,1057,4.158179520984399,131,146,100
+basel,University of Basel,Switzerland,75,87,160,136,University of Basel,CH,109273,10507739,866,3.8984804078516366,297,210,170
+bath,University of Bath,United Kingdom,301,401,405,179,University of Bath,GB,75203,4484892,610,3.345433192761437,488,459,354
+bergen,University of Bergen,Norway,201,201,283,207,University of Bergen,NO,211161,9179575,759,1.7737037356569751,105,246,229
+bern,University of Bern,Switzerland,132,151,200,120,University of Bern,CH,153367,14134790,908,3.4823704153796817,183,148,155
+bielefeld,Bielefeld University,Germany,351,401,464,1001,Bielefeld University,DE,63832,3199655,488,1.7788379450610154,562,534,470
+birmingham,University of Birmingham,United Kingdom,148,101,152,91,University of Birmingham,GB,216649,22580760,1174,4.652253855278766,102,76,67
+boston,Boston University,United States of America,57,73,66,108,Boston University,US,198356,24541335,1349,3.975854542619948,118,66,40
+bristol,University of Bristol,United Kingdom,74,66,123,61,University of Bristol,GB,213963,21448942,1172,3.154081066074403,103,80,68
+british columbia,University of British Columbia,Canada,32,40,62,47,University of British Columbia,CA,373460,32132870,1328,3.040709653110144,24,33,42
+brown,Brown University,United States of America,54,75,83,63,Brown University,US,137809,14484073,1001,3.765289381357429,222,142,114
+calgary,University of Calgary,Canada,226,201,167,242,University of Calgary,CA,197164,14402133,916,3.584045584045584,121,145,147
+california berkeley,"University of California, Berkeley",United States of America,8,4,7,27,"University of California, Berkeley",US,448158,55796313,1862,3.751129104813316,12,11,9
+california davis,"University of California, Davis",United States of America,55,57,53,102,"University of California, Davis",US,298751,29432124,1208,3.202979265919613,47,43,60
+california institute technology,California Institute of Technology,United States of America,1,7,12,6,California Institute of Technology,US,242783,36061372,1842,7.913493975903615,82,27,12
+california irvine,"University of California, Irvine",United States of America,88,50,89,235,"University of California, Irvine",US,191757,20069354,1126,3.8065533668082914,132,92,77
+california los angeles,"University of California, Los Angeles",United States of America,12,12,15,44,"University of California, Los Angeles",US,413583,51486493,1633,4.104183764658679,14,15,21
+california riverside,"University of California, Riverside",United States of America,150,101,214,453,"University of California, Riverside",US,103796,10610460,850,3.675814819215081,319,207,186
+california san diego,"University of California, San Diego",United States of America,41,14,21,53,University of California San Diego,US,354205,50272476,1735,3.883862760776332,32,16,17
+california santa barbara,"University of California, Santa Barbara",United States of America,37,38,64,149,"University of California, Santa Barbara",US,139636,17821828,1118,4.511527878807047,218,113,79
+california santa cruz,"University of California, Santa Cruz",United States of America,109,93,154,375,"University of California, Santa Cruz",US,76115,11973747,1091,5.475376884422111,476,184,89
+cambridge,University of Cambridge,United Kingdom,5,5,4,2,University of Cambridge,GB,446160,53221624,1815,5.996957008205059,13,13,13
+cape town,University of Cape Town,South Africa,124,201,248,237,University of Cape Town,ZA,323502,7480446,697,0.7964413557595819,41,300,281
+cardiff,Cardiff University,United Kingdom,201,151,201,166,Cardiff University,GB,126026,13154983,1216,4.156762295081967,248,161,58
+carleton,Carleton University,Canada,226,401,593,601,Carleton University,CA,77464,4484907,534,3.059292119824461,471,458,422
+carnegie mellon,Carnegie Mellon University,United States of America,24,61,61,52,Carnegie Mellon University,US,157832,16460538,1140,4.027322000492732,176,129,73
+case western reserve,Case Western Reserve University,United States of America,116,101,105,176,Case Western Reserve University,US,171267,16787170,1025,3.7887838916497154,151,126,106
+chalmers technology,Chalmers University of Technology,Sweden,276,301,402,125,Chalmers University of Technology,SE,90070,5592122,557,3.78487358326068,385,387,404
+chicago,University of Chicago,United States of America,11,9,8,10,University of Chicago,US,306236,34273296,1622,4.126764367411165,45,30,22
+chinese hong kong,Chinese University of Hong Kong,Hong Kong,129,151,220,38,Chinese University of Hong Kong,HK,196604,17453327,1098,3.1462363481293067,122,119,86
+cincinnati,University of Cincinnati,United States of America,276,201,157,701,University of Cincinnati,US,129162,9887730,770,3.386813503203052,242,224,220
+city hong kong,City University of Hong Kong,Hong Kong,192,201,373,54,City University of Hong Kong,HK,115685,7941499,647,8.668547439773537,279,280,324
+college cork,University College Cork,Republic of Ireland,276,401,436,303,University College Cork,IE,62364,4531455,640,3.61190250079139,582,452,330
+college dublin,University College Dublin,Republic of Ireland,226,301,238,181,University College Dublin,IE,105600,6831831,657,3.293783025989432,315,329,311
+colorado boulder,University of Colorado Boulder,United States of America,97,34,54,317,University of Colorado Boulder,US,166323,18537776,1120,3.871898054996647,162,106,78
+columbia,Columbia University,United States of America,14,8,6,22,Columbia University,US,386225,46951905,1720,4.631964281697744,18,18,18
+connecticut,University of Connecticut,United States of America,301,301,218,350,University of Connecticut,US,117524,8291807,687,3.613272682966453,270,263,287
+copenhagen,University of Copenhagen,Denmark,160,35,74,82,University of Copenhagen,DK,286142,26959563,1228,4.047248382644295,52,55,55
+cornell,Cornell University,United States of America,19,13,10,20,Cornell University,US,471134,56177819,1847,4.849242629974955,11,10,11
+curtin,Curtin University,Australia,351,201,595,193,Curtin University,AU,93886,5285449,570,3.994715168153741,369,408,391
+dalhousie,Dalhousie University,Canada,226,201,286,308,Dalhousie University,CA,107381,7224758,700,3.023750443105282,310,307,278
+dartmouth college,Dartmouth College,United States of America,152,201,44,205,Dartmouth College,US,88177,6967442,748,1.9578923593185336,394,318,235
+deakin,Deakin University,Australia,301,301,579,266,Deakin University,AU,95183,5709094,609,4.248136565024759,358,382,357
+delaware,University of Delaware,United States of America,180,151,281,581,University of Delaware,US,96224,7051065,709,3.113550340651022,351,315,269
+delft technology,Delft University of Technology,Netherlands,71,201,255,61,Delft University of Technology,NL,173861,10839440,787,3.1369479965899405,149,205,210
+drexel,Drexel University,United States of America,301,301,258,651,Drexel University,US,83471,5999990,759,4.220431019854064,433,367,229
+duke,Duke University,United States of America,18,31,28,50,Duke University,US,268490,29687524,1405,3.473400454693082,63,41,35
+dundee,University of Dundee,United Kingdom,201,201,242,354,University of Dundee,GB,62714,6547978,777,3.96716378859236,578,340,216
+durham,Durham University,United Kingdom,83,201,261,92,Durham University,GB,109301,6847201,726,4.972158787230941,296,326,258
+east anglia,University of East Anglia,United Kingdom,198,201,336,342,University of East Anglia,GB,72052,5368431,747,3.535327617497966,506,402,237
+edinburgh,University of Edinburgh,United Kingdom,36,47,55,15,University of Edinburgh,GB,280134,25899244,1328,3.895781525523353,55,60,42
+eindhoven technology,Eindhoven University of Technology,Netherlands,144,301,348,138,Eindhoven University of Technology,NL,96031,6639354,650,3.5361025826259707,353,337,317
+emory,Emory University,United States of America,93,101,84,155,Emory University,US,226886,23430356,1193,3.0444797545339983,92,70,62
+eth zurich,ETH Zurich – Swiss Federal Institute of Technology Zurich,Switzerland,13,20,20,9,ETH Zurich,CH,245153,26691798,1162,3.499112448226146,80,57,70
+exeter,University of Exeter,United Kingdom,154,151,333,163,University of Exeter,GB,116609,7390677,795,3.715969504332285,275,304,204
+florence,University of Florence,Italy,351,201,247,460,University of Florence,IT,142867,10587895,695,2.8104151790268284,210,208,282
+florida,University of Florida,United States of America,126,83,60,188,University of Florida,US,359575,30315039,1234,2.9911481608800274,29,37,54
+fudan,Fudan University,China,193,151,195,34,Fudan University,CN,240585,19976445,854,5.008202139310924,85,93,184
+geneva,University of Geneva,Switzerland,107,58,92,125,University of Geneva,CH,131374,15659378,1011,4.080373501688705,234,136,112
+george mason,George Mason University,United States of America,351,151,414,1001,George Mason University,US,83782,3300284,548,1.9123141905612864,429,529,409
+george washington,George Washington University,United States of America,200,201,202,362,George Washington University,US,117405,6395745,749,2.751946162240815,271,351,234
+georgetown,Georgetown University,United States of America,173,301,113,281,Georgetown University,US,116456,8830981,857,2.4555970938844607,276,256,181
+georgia,University of Georgia,United States of America,276,151,198,601,University of Georgia,US,141345,11829476,861,3.3956874095513747,214,186,178
+georgia institute technology,Georgia Institute of Technology,United States of America,27,101,80,88,Georgia Institute of Technology,US,195565,17880085,1129,4.051293935882581,125,112,76
+ghent,Ghent University,Belgium,90,71,119,143,Ghent University,BE,168377,16447853,908,4.290997467980113,157,130,155
+glasgow,University of Glasgow,United Kingdom,94,101,128,81,University of Glasgow,GB,192615,22814841,1415,4.516162854469788,129,71,34
+gothenburg,University of Gothenburg,Sweden,226,151,237,185,University of Gothenburg,SE,144619,12660476,911,3.4220289958577346,205,170,152
+groningen,University of Groningen,Netherlands,117,75,110,145,University of Groningen,NL,181276,20202827,1260,4.299225288914123,144,90,49
+hanyang,Hanyang University,South Korea,351,301,192,157,Hanyang University,KR,92639,5773327,525,4.317341526180348,374,379,433
+harvard,Harvard University,United States of America,2,1,1,5,Harvard University,US,702657,142994635,2759,6.976074777178869,2,1,2
+hebrew jerusalem,Hebrew University of Jerusalem,Israel,201,67,23,222,Hebrew University of Jerusalem,IL,147787,11151395,841,2.694028961325309,195,195,188
+helsinki,University of Helsinki,Finland,103,67,111,106,University of Helsinki,FI,220126,21588204,1163,2.9682170938425405,100,79,69
+hokkaido,Hokkaido University,Japan,351,151,178,141,Hokkaido University,JP,254170,11650129,648,0.9412462334513444,74,189,322
+hong kong,University of Hong Kong,Hong Kong,43,151,170,21,University of Hong Kong,HK,228747,21869651,1162,4.884175254473036,90,78,70
+hong kong polytechnic,Hong Kong Polytechnic University,Hong Kong,201,301,354,65,Hong Kong Polytechnic University,HK,152349,9252377,651,6.669738065292284,186,241,316
+hong kong science technology,Hong Kong University of Science and Technology,Hong Kong,51,201,319,40,Hong Kong University of Science and Technology,HK,94139,8558981,745,6.44689143501127,368,258,240
+houston,University of Houston,United States of America,301,201,184,751,University of Houston,US,104117,6575021,656,3.4628337378640777,318,339,314
+illinois chicago,University of Illinois at Chicago,United States of America,201,151,203,317,University of Illinois Chicago,US,197857,17464360,963,3.4231170162016995,120,118,130
+illinois urbana champaign,University of Illinois at Urbana-Champaign,United States of America,29,29,33,85,University of Illinois Urbana-Champaign,US,330825,32128389,1382,3.576947383990641,40,34,38
+iowa,University of Iowa,United States of America,175,151,141,467,University of Iowa,US,192066,18801949,991,2.774810418727333,130,101,116
+iowa state,Iowa State University,United States of America,193,151,187,481,Iowa State University,US,195894,12583613,808,3.146100483498003,123,171,199
+johns hopkins,Johns Hopkins University,United States of America,15,16,16,24,Johns Hopkins University,US,495824,76158919,2248,4.043081795954657,9,4,5
+kansas,University of Kansas,United States of America,301,201,196,369,University of Kansas,US,115273,7796837,691,2.64155177941648,281,287,285
+kansas state,Kansas State University,United States of America,301,401,353,801,Kansas State University,US,79884,6006403,625,3.500285225328009,454,366,343
+king s college london,King’s College London,United Kingdom,40,55,94,37,King's College London,GB,258834,22599723,1238,3.676748391154438,71,74,52
+korea,Korea University,South Korea,201,201,115,74,Korea University,KR,116760,9676519,649,5.437721518987342,274,230,319
+kyoto,Kyoto University,Japan,59,26,17,36,Kyoto University,JP,357125,30049175,1115,2.9070475749865063,31,39,82
+kyushu,Kyushu University,Japan,351,201,100,135,Kyushu University,JP,227335,14223822,699,2.521066515922367,91,147,279
+lancaster,Lancaster University,United Kingdom,131,301,426,146,Lancaster University,GB,84041,6339815,684,3.588507502920298,427,353,290
+lausanne,University of Lausanne,Switzerland,136,201,186,203,University of Lausanne,CH,104536,9743346,971,3.587325014535534,317,228,127
+leeds,University of Leeds,United Kingdom,146,101,161,86,University of Leeds,GB,194698,13748371,934,3.15207753574513,127,155,141
+leicester,University of Leicester,United Kingdom,199,201,240,279,University of Leicester,GB,106508,8257899,807,4.286488382972088,314,265,200
+leiden,Leiden University,Netherlands,64,82,108,131,Leiden University,NL,145486,11791085,864,3.903784025845249,201,187,173
+linkoping,Linköping University,Sweden,351,301,355,320,Linköping University,SE,88301,6235881,648,3.4410058027079304,393,359,322
+lisbon,University of Lisbon,Portugal,351,201,257,335,University of Lisbon,PT,149432,7873149,604,3.312206481661168,193,284,362
+liverpool,University of Liverpool,United Kingdom,157,101,199,190,University of Liverpool,GB,220528,17732927,1079,3.625341769142374,98,114,93
+lund,Lund University,Sweden,119,101,117,95,Lund University,SE,233965,22083755,1075,3.25802446230037,88,77,96
+maastricht,Maastricht University,Netherlands,101,201,225,278,Maastricht University,NL,113573,10895159,837,3.3621290322580646,285,203,189
+macquarie,Macquarie University,Australia,301,201,449,195,Macquarie University,AU,101125,5375447,650,3.41373968575132,327,401,317
+manchester,University of Manchester,United Kingdom,52,41,67,28,University of Manchester,GB,312935,28644656,1236,3.652916356935705,43,48,53
+manitoba,University of Manitoba,Canada,301,301,222,651,University of Manitoba,CA,116250,7531010,636,2.797688226376958,278,295,337
+maryland college park,"University of Maryland, College Park",United States of America,132,43,72,164,"University of Maryland, College Park",US,240694,23978700,1340,3.8777586206896553,84,67,41
+massachusetts institute technology,Massachusetts Institute of Technology,United States of America,6,3,3,1,Massachusetts Institute of Technology,US,345834,63972764,2253,6.855728117486517,35,7,4
+mcgill,McGill University,Canada,39,64,42,31,McGill University,CA,294512,27172384,1222,3.7990266281525353,50,54,56
+mcmaster,McMaster University,Canada,94,96,150,152,McMaster University,CA,182008,18131001,1183,3.7259952353002106,143,110,64
+melbourne,University of Melbourne,Australia,33,44,93,33,The University of Melbourne,AU,343395,30509430,1266,3.913141937571027,36,36,47
+miami,University of Miami,United States of America,169,151,137,296,University of Miami,US,169376,13972125,911,2.7091525655956703,156,151,152
+michigan,University of Michigan,United States of America,17,22,19,25,University of Michigan,US,980174,65901192,2076,3.495711254168376,1,5,6
+michigan state,Michigan State University,United States of America,82,99,118,159,Michigan State University,US,246945,19833826,1063,2.559787277561873,79,95,99
+milan,University of Milan,Italy,276,151,172,324,University of Milan,IT,374034,18393339,934,0.3345294890871361,22,108,141
+monash,Monash University,Australia,83,101,145,57,Monash University,AU,281681,21335881,1068,4.345022176087572,54,82,97
+nagoya,Nagoya University,Japan,226,77,125,112,Nagoya University,JP,267386,14861816,745,1.2896103547836346,64,138,240
+nanjing,Nanjing University,China,251,201,244,133,Nanjing University,CN,185203,16742228,826,5.960905731688798,139,127,194
+national cheng kung,National Cheng Kung University,Taiwan,351,301,226,224,National Cheng Kung University,TW,98804,5380598,461,2.9291529300948667,338,400,499
+national singapore,National University of Singapore,Singapore,25,101,65,11,National University of Singapore,SG,277524,24780818,1087,6.321369229044129,57,64,90
+national taiwan,National Taiwan University,Taiwan,155,151,57,77,National Taiwan University,TW,171151,12710882,716,3.0225733240223462,152,168,266
+national tsing hua,National Tsing Hua University,Taiwan,251,201,407,177,National Tsing Hua University,TW,73146,4977207,558,5.159457620528771,500,427,403
+nebraska lincoln,University of Nebraska-Lincoln,United States of America,276,201,314,651,University of Nebraska–Lincoln,US,108132,8236477,768,2.7238739263922893,303,267,222
+new york,New York University,United States of America,38,27,18,39,New York University,US,275616,26655508,1373,3.7118012117644175,59,59,39
+newcastle,Newcastle University,United Kingdom,201,201,212,122,Newcastle University,GB,150608,11772321,885,3.517655845216701,188,188,164
+north carolina chapel hill,University of North Carolina at Chapel Hill,United States of America,46,39,40,102,University of North Carolina at Chapel Hill,US,352924,34607526,1591,2.1318711207197154,34,29,24
+northeastern,Northeastern University,United States of America,185,201,275,388,Northeastern University,CN,94576,4893214,360,5.567981976182813,363,434,557
+northwestern,Northwestern University,United States of America,21,27,22,32,Northwestern University,US,260238,35472512,1433,5.38972890878056,69,28,32
+notre dame,University of Notre Dame,United States of America,86,201,77,243,University of Notre Dame,US,98834,8235444,746,3.326260646717419,336,268,239
+nottingham,University of Nottingham,United Kingdom,171,101,140,114,University of Nottingham,GB,186937,13548797,864,3.6184439866899054,138,157,173
+oregon state,Oregon State University,United States of America,301,151,260,601,Oregon State University,US,117090,8204102,804,2.6571394114809457,272,269,202
+osaka,Osaka University,Japan,157,85,45,68,The University of Osaka,JP,288477,25565071,1095,3.0798382011412047,51,61,87
+oslo,University of Oslo,Norway,186,58,99,101,University of Oslo,NO,188656,15630126,990,2.883474940931637,137,137,117
+otago,University of Otago,New Zealand,251,201,357,217,University of Otago,NZ,91507,6472871,646,2.8318284424379234,378,347,325
+ottawa,University of Ottawa,Canada,188,201,193,237,University of Ottawa,CA,165124,12111644,857,3.184774682805892,164,182,181
+oxford,University of Oxford,United Kingdom,3,10,5,4,University of Oxford,GB,590664,62795610,2062,4.536958081083408,3,8,7
+peking,Peking University,China,48,101,56,12,Peking University,CN,390848,31917313,1116,4.959754230956164,17,35,80
+pennsylvania,University of Pennsylvania,United States of America,16,17,14,13,University of Pennsylvania,US,379713,54477220,1739,5.851157448312423,21,12,16
+pisa,University of Pisa,Italy,301,151,295,404,University of Pisa,IT,135094,12482256,883,3.800556153206,228,172,166
+princeton,Princeton University,United States of America,7,6,9,16,Princeton University,US,211211,26726181,1530,6.920886376591298,104,56,26
+queen mary london,Queen Mary University of London,United Kingdom,107,151,209,125,Queen Mary University of London,GB,135580,13493458,981,4.4330792682926825,227,158,120
+queen s belfast,Queen’s University Belfast,United Kingdom,251,301,343,233,Queen's University Belfast,GB,104794,6662308,661,3.692631922888417,316,335,307
+queensland,The University of Queensland,Australia,65,77,103,50,The University of Queensland,AU,276513,27207319,1461,4.425851885506588,58,53,28
+queensland technology,Queensland University of Technology,Australia,276,401,621,222,Queensland University of Technology,AU,100823,5623608,607,4.755633517743894,329,384,360
+reading,University of Reading,United Kingdom,201,301,263,229,University of Reading,GB,88726,5309527,644,2.625865759979852,392,405,326
+rensselaer polytechnic institute,Rensselaer Polytechnic Institute,United States of America,226,301,282,461,Rensselaer Polytechnic Institute,US,63223,4123534,576,2.2269001113247646,568,482,383
+rice,Rice University,United States of America,69,84,120,100,Rice University,US,82250,10464996,931,5.102961239065886,441,212,143
+rochester,University of Rochester,United States of America,121,101,81,147,University of Rochester,US,146375,15767271,1025,3.699934044849502,200,135,106
+rwth aachen,RWTH Aachen University,Germany,156,201,230,147,RWTH Aachen University,DE,190357,17249720,890,2.42066459072418,133,122,162
+sapienza rome,Sapienza University of Rome,Italy,301,151,112,171,Sapienza University of Rome,IT,250333,20226838,1076,3.4660462924789446,77,89,95
+science technology china,University of Science and Technology of China,China,201,151,239,94,University of Science and Technology of China,CN,206338,22759218,973,6.216424320668248,109,72,126
+seoul national,Seoul National University,South Korea,50,101,24,29,Seoul National University,KR,242644,21224026,968,3.6664458367246495,83,83,128
+shanghai jiao tong,Shanghai Jiao Tong University,China,276,101,180,46,Shanghai Jiao Tong University,CN,364307,27792165,872,5.529248880894743,28,49,169
+sheffield,University of Sheffield,United Kingdom,121,101,173,96,University of Sheffield,GB,189976,15797198,978,3.6178067956786855,135,134,123
+simon fraser,Simon Fraser University,Canada,226,201,362,328,Simon Fraser University,CA,88138,6125998,652,2.9622056400814034,395,363,315
+southampton,University of Southampton,United Kingdom,132,101,148,78,University of Southampton,GB,184352,12938700,914,3.0499946149703825,140,164,149
+southern california,University of Southern California,United States of America,75,49,51,134,University of Southern California,US,273255,27710883,1458,3.6514099065575127,61,50,29
+southern denmark,University of Southern Denmark,Denmark,301,201,356,347,University of Southern Denmark,DK,91635,5474418,611,3.208910500722828,376,394,351
+st andrews,University of St Andrews,United Kingdom,111,301,309,96,University of St Andrews,GB,78721,4748563,649,3.60122444127437,460,442,319
+stanford,Stanford University,United States of America,4,2,2,3,Stanford University,US,526048,86572525,2469,6.167270574304322,6,3,3
+stellenbosch,Stellenbosch University,South Africa,276,401,306,454,Stellenbosch University,ZA,87218,4090002,551,3.0325835320134065,405,483,406
+stockholm,Stockholm University,Sweden,98,77,168,153,Stockholm University,SE,129426,12407341,949,4.031425666786269,240,173,136
+sun yat sen,Sun Yat-sen University,China,301,151,277,267,Sun Yat-sen University,CN,301066,25005625,914,4.634924429743405,46,63,149
+sungkyunkwan,Sungkyunkwan University (SKKU),South Korea,148,201,211,99,Sungkyunkwan University,KR,126208,11038842,708,4.818706178462276,247,199,271
+sussex,University of Sussex,United Kingdom,111,151,253,240,University of Sussex,GB,83458,6418690,708,4.088008937437935,434,350,271
+swinburne technology,Swinburne University of Technology,Australia,351,301,688,296,Swinburne University of Technology,AU,68234,2894690,499,3.834978035270898,530,547,456
+sydney,University of Sydney,Australia,60,101,88,41,The University of Sydney,AU,332959,26679002,1272,4.617837491007369,39,58,46
+syracuse,Syracuse University,United States of America,177,401,463,751,Syracuse University,US,76195,6463094,795,3.6147325155738232,475,348,204
+technical denmark,Technical University of Denmark,Denmark,121,101,174,104,Technical University of Denmark,DK,148807,11931700,983,4.008301697884944,194,185,119
+technion israel institute technology,Technion Israel Institute of Technology,Israel,201,77,136,408,Technion – Israel Institute of Technology,IL,113956,8077610,713,3.743855431674058,284,276,268
+technische munchen,Technical University of Munich,Germany,98,51,101,49,Technical University of Munich,DE,225604,18593669,1017,3.791600737732179,93,104,111
+technology sydney,University of Technology Sydney,Australia,226,301,815,137,University of Technology Sydney,AU,98259,5313524,567,5.256608803275046,340,404,392
+tel aviv,Tel Aviv University,Israel,188,151,86,260,Tel Aviv University,IL,205016,17230476,916,3.396838708501212,112,123,147
+texas austin,University of Texas at Austin,United States of America,28,37,30,72,The University of Texas at Austin,US,353502,23650199,1194,0.7550147676945632,33,68,61
+tohoku,Tohoku University,Japan,165,101,73,79,Tohoku University,JP,277625,18778241,866,2.973397204145577,56,102,170
+tokyo,University of Tokyo,Japan,23,21,13,23,The University of Tokyo,JP,505805,46343928,1386,3.946493622949376,8,19,37
+tokyo institute technology,Tokyo Institute of Technology,Japan,141,151,109,55,Tokyo Institute of Technology,JP,164964,9789753,665,3.3812990720913634,165,227,304
+toronto,University of Toronto,Canada,20,25,32,34,University of Toronto,CA,551833,58139277,1771,4.248826372608607,5,9,15
+tsinghua,Tsinghua University,China,49,101,78,14,Tsinghua University,CN,373704,32995848,1177,6.5260988189393,23,32,66
+tsukuba,University of Tsukuba,Japan,301,201,262,312,University of Tsukuba,JP,135604,9308494,672,2.3944444444444444,226,239,300
+tufts,Tufts University,United States of America,88,101,95,312,Tufts University,US,117021,12789781,980,2.811953400877859,273,167,121
+tulane,Tulane University,United States of America,301,301,272,471,Tulane University,US,84151,7462915,706,2.8621849493228093,425,302,274
+turin,University of Turin,Italy,251,151,221,475,University of Turin,IT,143189,11634272,757,3.124418993225385,207,190,233
+turku,University of Turku,Finland,351,301,383,291,University of Turku,FI,91829,6474242,604,2.6001857510935347,375,346,362
+twente,University of Twente,Netherlands,201,301,408,212,University of Twente,NL,89058,5873798,618,2.8089838811630847,390,371,349
+umea,Umeå University,Sweden,351,301,287,369,Umeå University,SE,84612,7518353,731,2.681086519114688,421,296,256
+universite libre bruxelles,Université Libre de Bruxelles,Belgium,201,101,163,210,Université Libre de Bruxelles,BE,101772,9177026,828,3.609400006532319,324,247,193
+uppsala,Uppsala University,Sweden,98,61,124,128,Uppsala University,SE,203418,18080770,1036,3.204513071490521,113,111,104
+utah,University of Utah,United States of America,162,93,70,392,University of Utah,US,220307,20427385,1113,2.988190303154625,99,86,83
+utrecht,Utrecht University,Netherlands,79,56,87,112,Utrecht University,NL,235250,20298085,1082,4.066664541731079,86,87,91
+vanderbilt,Vanderbilt University,United States of America,96,53,69,199,Vanderbilt University,US,172695,19468486,1103,3.037333850781023,150,100,85
+vermont,University of Vermont,United States of America,351,301,324,701,University of Vermont,US,64429,5192505,663,2.718634622082898,552,413,305
+victoria,University of Victoria,Canada,173,201,352,359,University of Victoria,CA,75197,5858394,644,3.948165750779741,489,374,326
+vienna,University of Vienna,Austria,182,151,223,151,University of Vienna,AT,167226,10323624,775,2.3984655419956926,158,216,217
+virginia,University of Virginia,United States of America,130,101,41,253,University of Virginia,US,202566,17403488,1047,3.207206023168923,116,120,102
+vrije universiteit brussel,Vrije Universiteit Brussel,Belgium,351,201,280,251,Vrije Universiteit Brussel,BE,91134,6893165,673,3.1977176722779146,381,323,299
+wake forest,Wake Forest University,United States of America,201,401,159,438,Wake Forest University,US,85645,8830258,805,2.971168381078789,411,257,201
+warsaw,University of Warsaw,Poland,301,301,462,284,University of Warsaw,PL,107807,4357322,571,2.1636345259753385,306,463,389
+warwick,University of Warwick,United Kingdom,103,92,293,64,University of Warwick,GB,139274,9032081,772,3.714296702733193,219,250,219
+washington st louis,Washington University in St Louis,United States of America,42,32,52,118,Washington University in St. Louis,US,254270,40168554,1851,4.166638595309276,73,23,10
+waterloo,University of Waterloo,Canada,251,201,269,154,University of Waterloo,CA,155529,9532587,769,4.209367393189894,180,233,221
+wayne state,Wayne State University,United States of America,301,301,189,601,Wayne State University,US,129775,10953397,747,2.644403038555253,238,202,237
+western australia,University of Western Australia,Australia,157,87,216,90,The University of Western Australia,AU,157186,13141276,975,4.4174338740318575,177,162,125
+wisconsin madison,University of Wisconsin-Madison,United States of America,29,24,25,83,University of Wisconsin–Madison,US,373002,42960068,1422,3.677159904069257,25,20,33
+witwatersrand,University of the Witwatersrand,South Africa,251,201,149,428,University of the Witwatersrand,ZA,102786,5171501,542,3.0892003914570263,321,414,416
+wollongong,University of Wollongong,Australia,276,201,467,185,University of Wollongong,AU,82417,5077496,573,4.207582454947297,439,422,388
+wuhan,Wuhan University,China,351,301,415,194,Wuhan University,CN,225084,17032363,864,4.9143021765459824,94,124,173
+yale,Yale University,United States of America,9,11,11,18,Yale University,US,409697,51537527,1794,2.454729155663735,15,14,14
+yonsei,Yonsei University,South Korea,201,201,98,73,Yonsei University,KR,179170,13308410,687,3.8250977441894927,145,160,287
+york,University of York,United Kingdom,113,201,325,162,University of York,GB,101614,7473601,737,2.778541343382842,326,301,250
+zhejiang,Zhejiang University,China,301,101,191,42,Zhejiang University,CN,368006,29194719,938,5.525585323342857,27,44,140
+zurich,University of Zurich,Switzerland,103,54,96,83,University of Zurich,CH,201507,20576427,1111,7.217930559277265,117,85,84

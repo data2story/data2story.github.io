@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "role": "cinematographer",
+    "version": "1.0",
+    "dataset": "Economist / 2018-10-20_space-launches",
+    "mode": "photographic",
+    "mode_reason": "is_visual=true and 15 cover-able, license-clean, identity-verified real launch/space photos are registered in scout.json (>=5) -> a photographic scroll spine built from verified real imagery (the WC exemplar pattern). The Long March 5 cinemagraph hero opens it as cin_00.",
+    "one_line": "A scrolled film of six decades of spaceflight: a Long March 5 cinemagraph hero dissolves into Sputnik (origin) -> Baikonur (the Soviet duel) -> a dimmed flat-volume chart-spine behind the hero year-scrubber (the analytical turn) -> a Long March (China rises, held quiet for the caveat beat) -> the Space Shuttle (the old-world ledger) -> Ariane 5 (reliability) -> Falcon Heavy boosters landing (the venture wave) -> Earth from orbit (the close).",
+    "scene_count": 10,
+    "data_driven_scene_note": "EXACTLY ONE scene is non-photographic: cin_03 (the edt_03 turn) is a data_driven chart-spine of ana_02 (flat annual volume) staged BEHIND the hero year-scrubber. This is BY DESIGN (the orchestrator-authorized 'data-driven beat behind the hero scrubber' so the analytical turn gets a tasteful immersive layer + chart variety in the cinematic), NOT for lack of imagery — 9 of 10 scenes are verified real photos/video. Its background.kind is 'data_driven' (NOT 'color'/'gradient') so it carries no media_ref (validate.py Section 6 image/video guard skips it) and does NOT trip the photographic gradient-rest gate (validate.py Section 6c keys on 'color'/'gradient' only). The CSS theme-gradient base is part of its treatment, not its kind.",
+    "registration_note": "Every image/video scene's media_ref resolves to a REGISTERED scout sct_ or designer des_ id (checked against scout.json / designer.json, not the imagery manifest scratchpad): cin_00->des_hero_video, cin_01->sct_13, cin_02->sct_07, cin_04->sct_05, cin_05->sct_05 (held rest), cin_06->sct_14, cin_07->sct_16, cin_08->sct_11, cin_09->sct_17. Only cover-able landscape assets are used as backgrounds; the non-cover-able portraits sct_04 and sct_06 are excluded (they serve as in-column figures instead)."
+  },
+
+  "scenes": {
+    "cin_00": {
+      "backs": "teaser",
+      "order": 0,
+      "background": {
+        "kind": "video",
+        "fit": "cover",
+        "media_ref": "des_hero_video",
+        "filename": "teaser.webm",
+        "poster": "teaser.jpg",
+        "mp4": "teaser_web.mp4",
+        "treatment": "full-bleed cover, autoplay loop muted playsinline; the Long March 5 cinemagraph (rocket held; plume/smoke/floodlights/stars animated). NO ken-burns (the clip already moves). This is the FIRST .cin-bg layer, .active by default (shows from the very top before any scroll), lifted ABOVE the stage's global darkening (higher z-index) so the hero keeps its own brightness."
+      },
+      "transition_in": "active by default at page top; the SAME IntersectionObserver crossfade engine carries cin_00 -> cin_01 when edt_01 crosses the viewport middle (no 'cover ends, content begins' seam).",
+      "scrim": "the hero furniture overlay (.teaser) carries its own bottom gradient scrim rgba(14,15,19,0)->.85 for the headline; the fixed cin_00 backdrop itself stays unscrimmed/bright.",
+      "motion": "video plays in place; the transparent hero overlay (headline/kicker/credit) scrolls over the fixed backdrop and OPACITY-DISSOLVES (opacity 1->0, opacity ONLY — never scale a transparent overlay, that reads as a shrinking pane). Under prefers-reduced-motion the overlay pins opacity:1 and the video is replaced by the poster still.",
+      "scroll_span": "~1.0 viewport height (the teaser)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Shujianyang / Wikimedia Commons (CC0) — Long March 5, Wenchang; motion added (cinemagraph), not authentic launch footage.",
+      "notes": "Hero-handoff layer per cinematic_recipes.json hero_as_cin_00_continuous_backdrop. Tag the backdrop element data-cin=\"cin_00\" + data-des=\"des_hero_video\" for background traceability, BUT keep the hero's Verify hit-target on the .teaser OVERLAY (data-des=des_hero_video, class-marker 'teaser'), NOT on cin_00. The overlay also paints the poster (teaser.jpg) as its own static backdrop so the hero always shows when the video can't run (reduced-motion / JS-off / no-video)."
+    },
+
+    "cin_01": {
+      "backs": "edt_01",
+      "order": 1,
+      "background": {
+        "kind": "image",
+        "fit": "framed",
+        "media_ref": "sct_13",
+        "filename": "scout_sputnik_web.webp",
+        "treatment": "framed: a blurred-darkened cover copy of the same image as the full-bleed backdrop (object-fit:cover; blur ~30px; brightness ~.42; scale 1.2) + the real photo on top object-fit:contain so the whole Sputnik sphere + antennas read. The origin object (1957) where the census begins."
+      },
+      "transition_in": "crossfade on scroll-progress from cin_00 (the hero Long March dissolves into the first satellite — today's contender giving way to the very beginning).",
+      "scrim": "linear-gradient(180deg, rgba(14,15,19,.42) 0%, rgba(14,15,19,.90) 100%)",
+      "motion": "gentle ken-burns 1.0 -> 1.03 on the contained sphere (subtle, so the subject does not grow out of frame); blurred backdrop static; parallax translateY ~0.5x scroll.",
+      "scroll_span": "~1.2 viewport heights (the hook carries the BGM card, the census callout and opening prose)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Mys 721tx / Wikimedia Commons (CC BY-SA 3.0) — Sputnik 1 replica, National Air and Space Museum; identity verified.",
+      "notes": "edt_01 also hosts the top-of-article BGM now-playing card (des_01) and the in-column Sputnik figure (des_02, also sct_13) — the cinematic background is the framed/dimmed atmospheric version; the in-column figure is the crisp one. Tag data-cin=\"cin_01\" + data-sct=\"sct_13\"."
+    },
+
+    "cin_02": {
+      "backs": "edt_02",
+      "order": 2,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_07",
+        "filename": "scout_baikonur_pad_web.webp",
+        "treatment": "full-bleed cover — the silhouetted Baikonur Soyuz pad with its four lightning towers against an orange sunset. The Soviet/Russian spaceport that flew the workhorse fleet behind two decades of dominance."
+      },
+      "transition_in": "crossfade on scroll-progress from cin_01.",
+      "scrim": "linear-gradient(180deg, rgba(14,15,19,.46) 0%, rgba(14,15,19,.92) 100%)",
+      "motion": "slow ken-burns 1.0 -> 1.05; parallax translateY ~0.6x scroll (the pad drifts slower than the prose).",
+      "scroll_span": "~1.3 viewport heights (Soviet dominance prose + the master stacked-area spine des_04)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Bill Ingalls / Wikimedia Commons (Public Domain) — Baikonur Cosmodrome Soyuz launch pad, sunset; identity verified.",
+      "notes": "The in-column figure here is the portrait Soyuz-launching photo (des_05, sct_06, NOT cover-able) and the master spine chart (des_04, ana_03) — distinct from this pad background. Tag data-cin=\"cin_02\" + data-sct=\"sct_07\"."
+    },
+
+    "cin_03": {
+      "backs": "edt_03",
+      "order": 3,
+      "background": {
+        "kind": "data_driven",
+        "fit": "cover",
+        "data_ana": "ana_02",
+        "chart": "ana_02 — total orbital launches per year, 1957-2018 (the flat-to-down 'how much' curve; peak 1967 = 139; 2018 partial)",
+        "treatment": "DATA-DRIVEN chart-spine (NOT a photo, NOT a bare gradient): pin a dimmed, desaturated, low-contrast version of the ana_02 annual-volume area chart full-bleed over the theme gradient base (linear-gradient(160deg, var(--bg) #0e0f13, var(--surface) #16181f)); its peak-1967 and partial-2018 annotations reveal on scroll-enter (.in). The data itself is the set the narrative turns on: the reader works the WHO (the hero scrubber, foreground) over the flat HOW-MUCH curve behind it. NO media_ref (kind is 'data_driven', not 'color'/'gradient')."
+      },
+      "transition_in": "crossfade on scroll-progress from cin_02 (the Baikonur sunset settles into the dimmed data spine); the chart's annotations fade/translate in as the beat centers (reveal_on_enter).",
+      "scrim": "rgba(14,15,19,.62) flat wash between the dimmed chart and the foreground column, so the scrubber's bars/readout and prose win; keep the background chart legible enough to read as a backdrop.",
+      "motion": "NO ken-burns and NO parallax — the chart stays PINNED; only its annotations/series animate in on scroll (opacity/transform .in toggles). Foreground hero scrubber animates on its own (linear scrub).",
+      "scroll_span": "~1.6 viewport heights (the turn carries the in-column ana_02 area chart des_07 AND the hero year-scrubber int_01 above the reveal paragraph)",
+      "purpose": "INFORM",
+      "credit": "Chart: total orbital launches per year (ana_02), Jonathan McDowell's JSR catalog — recomputed in-browser; the full readable version sits in-column as des_07.",
+      "notes": "CENTERPIECE SCENE — hosts the hero year-scrubber int_01 (the duel->crowd duopoly-share reveal). data_driven by design (the marquee analytical turn behind the scrubber), not for lack of imagery. PROGRAMMER: build this as the data_driven_spine recipe — ONE pinned .cin-bg layer holding the dimmed ana_02 chart over the theme gradient; tag the layer data-cin=\"cin_03\" + data-ana=\"ana_02\" (so Verify traces the spine to its computation). Under reduced-motion / JS-off render the full ana_02 chart with all annotations shown AT ONCE over the gradient (never a blank backdrop). This is the ONE non-photo scene; it is NOT a gradient 'rest' (it is an active chart-spine), and its kind is deliberately 'data_driven' not 'color'/'gradient'."
+    },
+
+    "cin_04": {
+      "backs": "edt_04",
+      "order": 4,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_05",
+        "filename": "scout_china_launch_web.webp",
+        "treatment": "full-bleed cover — a Long March rising on a bright plume from its tower at night, Xichang. The protagonist of the crowd: China's cadence climbing decade on decade to the top of the table."
+      },
+      "transition_in": "crossfade on scroll-progress from the cin_03 data spine into the China launch (the abstract turn resolves into its protagonist).",
+      "scrim": "linear-gradient(180deg, rgba(14,15,19,.55) 0%, rgba(14,15,19,.94) 100%) — strong, the night plume is bright.",
+      "motion": "ken-burns 1.0 -> 1.05; parallax translateY ~0.6x scroll.",
+      "scroll_span": "~1.4 viewport heights (China decade-ramp prose + the des_09 column chart + the int_05 guess-then-reveal)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: China News Service / Wikimedia Commons (CC BY 4.0) — Long March launch, Xichang; identity verified.",
+      "notes": "Fresh China photo distinct from the hero's Long March 5 (cin_00, Wenchang). Hosts int_05 (guess China's single-family Long March share). The in-column figure des_11 is also sct_05 — the cinematic full-bleed cover treatment reads differently from the crisp in-column figure; if the Designer wants zero overlap it can drop des_11 since cin_04 already carries this image full-bleed. Tag data-cin=\"cin_04\" + data-sct=\"sct_05\"."
+    },
+
+    "cin_05": {
+      "backs": "edt_05",
+      "order": 5,
+      "background": {
+        "kind": "image",
+        "fit": "framed",
+        "media_ref": "sct_05",
+        "filename": "scout_china_launch_web.webp",
+        "treatment": "REST — HOLD the SAME China launch photo, quieted: rendered framed (blurred-darkened cover copy as backdrop + the contained image) under a HEAVIER scrim, so the China image simply settles into a calmer hold while the reader works the validation math. Never a black/gradient gap — a real photo stays on screen, dimmed."
+      },
+      "transition_in": "crossfade on scroll-progress from cin_04 — the full-bleed China launch quiets into a darker framed hold of the same surface (a 'settle', not a new image).",
+      "scrim": "linear-gradient(180deg, rgba(14,15,19,.62) 0%, rgba(14,15,19,.95) 100%) — heavier hold scrim.",
+      "motion": "minimal — a static hold (ken-burns at most 1.0 -> 1.02, effectively still); parallax ~0.4x. It is a rest beat; the energy is in the foreground annualize widget.",
+      "scroll_span": "~1.1 viewport heights (the 'does the crossover survive' credibility beat + the int_03 annualize widget)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: China News Service / Wikimedia Commons (CC BY 4.0) — Long March launch, Xichang; identity verified.",
+      "notes": "The ONE rest scene (the prescribed photographic-rest pattern: same adjacent photo, framed/dimmed, heavier scrim — cinematic_recipes.json continuous_photo_no_black_gap). On-theme: edt_05 validates CHINA's 2018 crossover, so China stays on screen, quieted. Surrounded by fresh beats (cin_04 fresh, cin_06 fresh) so there are NEVER two consecutive rests. Hosts int_03 (the partial-2018 annualizer). Tag data-cin=\"cin_05\" + data-sct=\"sct_05\"."
+    },
+
+    "cin_06": {
+      "backs": "edt_06",
+      "order": 6,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_14",
+        "filename": "scout_shuttle_pad_web.webp",
+        "treatment": "full-bleed cover — a Space Shuttle thundering off pad 39A at night amid a vast billowing exhaust cloud. The old-world mass: the US workhorse that flew 135 times, anchoring the half of the 85.5% all-time ledger that isn't Soviet."
+      },
+      "transition_in": "crossfade on scroll-progress from the cin_05 held-China rest into the Shuttle (the per-year crowd gives way to the Cold-War ledger).",
+      "scrim": "linear-gradient(180deg, rgba(14,15,19,.55) 0%, rgba(14,15,19,.94) 100%) — strong, the exhaust cloud is very bright.",
+      "motion": "ken-burns 1.0 -> 1.05; parallax translateY ~0.6x scroll.",
+      "scroll_span": "~1.5 viewport heights (the counter-tension carries the int_02 cumulative bar-race, the des_14 family treemap and the des_15 choropleth)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: NASA / Sandra Joseph & Kevin O'Connell / Wikimedia Commons (Public Domain) — Space Shuttle STS-130, LC-39A, night; identity verified.",
+      "notes": "Represents the old-world ledger (USSR/Russia + USA = 85.5% all-time). Hosts int_02 (cumulative ledger bar-race, which serves the edt_06 ana_04 chart slot), the des_14 vehicle-family treemap and the des_15 country choropleth as foreground figures. Tag data-cin=\"cin_06\" + data-sct=\"sct_14\"."
+    },
+
+    "cin_07": {
+      "backs": "edt_07",
+      "order": 7,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_16",
+        "filename": "scout_ariane5_web.webp",
+        "treatment": "full-bleed cover — an Ariane 5 beside its mobile gantry at Europe's Guiana Space Centre, Kourou. The reliability beat's visual: Europe tops the country band (95.8%) and the Arianespace-led 'private' category is the single most reliable operator type (97.4%)."
+      },
+      "transition_in": "crossfade on scroll-progress from cin_06.",
+      "scrim": "linear-gradient(180deg, rgba(14,15,19,.52) 0%, rgba(14,15,19,.93) 100%) — strong, the daytime tropical shot is bright.",
+      "motion": "ken-burns 1.0 -> 1.04; parallax translateY ~0.6x scroll.",
+      "scroll_span": "~1.3 viewport heights (the 'not cutting corners' reliability prose + the int_04 success-rate calculator + the des_16 dot-strip)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: elisabetta_monaco / Wikimedia Commons (CC BY 2.0) — Ariane 5 at the Guiana Space Centre, Kourou; identity verified.",
+      "notes": "Ariane/Arianespace is the reliability champion (the section's surprise, des_18) and a fresh daytime/tropical frame that breaks the run of night launches. Hosts int_04 (pick-a-country success-rate calculator). Tag data-cin=\"cin_07\" + data-sct=\"sct_16\"."
+    },
+
+    "cin_08": {
+      "backs": "edt_08",
+      "order": 8,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_11",
+        "filename": "scout_falconheavy_boosters_web.webp",
+        "treatment": "full-bleed cover — the two Falcon Heavy side boosters descending side-by-side onto the landing zone, 6 February 2018. The venture-startup wave (the new KIND of contender) and the iconic moment that falls inside this dataset's window."
+      },
+      "transition_in": "crossfade on scroll-progress from cin_07.",
+      "scrim": "linear-gradient(180deg, rgba(14,15,19,.52) 0%, rgba(14,15,19,.93) 100%) — strong.",
+      "motion": "ken-burns 1.0 -> 1.05; parallax translateY ~0.6x scroll.",
+      "scroll_span": "~1.4 viewport heights (the second-axis commercial/startup prose + the des_19 stacked area + int_06 guess + the des_21 Falcon Heavy video embed)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: SpaceX / Wikimedia Commons (CC0) — Falcon Heavy side boosters landing, 6 Feb 2018; identity verified.",
+      "notes": "Distinct moment from the in-column Falcon Heavy LAUNCH video (des_21, sct_02 oEmbed) — background = the synchronized landing, in-column = the launch; complementary, not redundant. Hosts int_06 (guess when a startup first reached orbit). Tag data-cin=\"cin_08\" + data-sct=\"sct_11\"."
+    },
+
+    "cin_09": {
+      "backs": "edt_09",
+      "order": 9,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_17",
+        "filename": "scout_earth_limb_web.webp",
+        "treatment": "full-bleed cover — Earth's thin atmosphere and towering storm clouds seen from the ISS, the curved limb against black space. The quiet, wide closing frame: what the whole launch business ultimately serves."
+      },
+      "transition_in": "crossfade on scroll-progress from cin_08 (the rockets give way to the orbit they reach).",
+      "scrim": "linear-gradient(180deg, rgba(14,15,19,.35) 0%, rgba(14,15,19,.88) 100%) — moderate; the scene is mostly dark space, so a lighter top scrim keeps the limb visible while the closing prose stays legible.",
+      "motion": "gentle ken-burns 1.0 -> 1.03 (contemplative); parallax translateY ~0.5x scroll.",
+      "scroll_span": "~1.2 viewport heights (the close: stakes + the unresolved two-pictures tension + the 85.5% callout)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: NASA Expedition 20 crew / Wikimedia Commons (Public Domain) — Earth from the ISS; identity verified.",
+      "notes": "Closing background = Earth's limb (sct_17, also the BGM disc cover — a subtle callback from the now-playing card at the top to the full sky at the close). The in-column close figure des_22 is the ISS station itself (sct_18), so background and in-column figure differ. Tag data-cin=\"cin_09\" + data-sct=\"sct_17\"."
+    }
+  },
+
+  "global": {
+    "engine": "Copy the technique from references/example_cinematic_scroll.html. ONE pinned full-bleed background stage (.cin-stage, position:fixed/sticky; top:0; height:100vh; behind the text). Each scene is an absolutely-positioned .cin-bg layer stacked inside it; the active scene has opacity 1, the rest 0, crossfaded by a CSS `transition:opacity ~1.1-1.2s ease` on an `.active` class toggled by an IntersectionObserver on the text beats (rootMargin '-45% 0px -45% 0px', threshold 0 — the beat whose middle crosses the viewport middle becomes active, mapping its data-backs id -> its .cin-bg). cin_00 (the hero) is the first layer, .active by default and lifted above the stage darkening. The editorial column + every chart/interactive scroll in <main> OVER the stage, each text-bearing scene under a per-scene readability scrim and each body section under a frosted dark backplate (main>section:not(.teaser):not(.refs){background:rgba(13,11,8,.55-.62);backdrop-filter:blur(3px)}) so prose stays legible on the varying background; wide charts/maps/card-decks break out as their own frosted figures, wide data-grid tables stay within the prose measure.",
+    "reduced_motion": "Under @media (prefers-reduced-motion: reduce): drop parallax, ken-burns, crossfade and video autoplay. Render each scene's background as a STATIC, scrimmed per-section still (cin_00 -> the poster teaser.jpg; cin_03 -> the full ana_02 chart with all annotations shown at once over the theme gradient; every photo scene -> its still). The hero overlay pins opacity:1 and never touches the video. The whole story reads and makes its point with motion fully off.",
+    "performance": "Lazy-load every scene background (IO-gated src swap / loading=lazy); only the current + next layer is decoded. Put decoding=\"async\" on every background <img> and call img.decode() on load to pre-decode so a crossfade never waits on first-decode. Animate opacity/transform ONLY (compositor; will-change:opacity); never force a synchronous reflow to restart an animation (no `void el.offsetWidth`); rAF-throttle the scroll handler. Mobile: smaller srcset; the hero/cin_00 video defaults to its poster still on mobile/reduced-motion. Cap total weight — virality happens on mobile.",
+    "centerpiece_scene": "cin_03",
+    "centerpiece_note": "cin_03 (the data_driven ana_02 chart-spine) is the scene that hosts the Interaction centerpiece — the hero year-scrubber int_01 plays in the foreground column over the dimmed flat-volume chart. The other five supporting explorables play as foreground figures over their own scenes: int_05 over cin_04 (edt_04), int_03 over cin_05 (edt_05), int_02 over cin_06 (edt_06), int_04 over cin_07 (edt_07), int_06 over cin_08 (edt_08).",
+    "staging_map": {
+      "cin_00 / teaser": "hero cinemagraph (des_hero_video) + headline overlay",
+      "cin_01 / edt_01": "BGM now-playing card (des_01) + census callout (des_03) + in-column Sputnik (des_02)",
+      "cin_02 / edt_02": "master stacked-area spine (des_04, ana_03) + in-column Soyuz portrait (des_05) + Soyuz-U callout (des_06)",
+      "cin_03 / edt_03": "in-column flat-volume area chart (des_07, ana_02) + HERO year-scrubber (int_01) above the reveal paragraph",
+      "cin_04 / edt_04": "China decade-ramp column (des_09, ana_05) + guess-the-share (int_05) + in-column Long March (des_11)",
+      "cin_05 / edt_05": "partial-2018 annualizer (int_03)",
+      "cin_06 / edt_06": "cumulative ledger bar-race (int_02, serves ana_04 slot) + vehicle-family treemap (des_14, ana_13) + country choropleth (des_15, ana_17)",
+      "cin_07 / edt_07": "reliability dot-strip (des_16, ana_10) + success-rate calculator (int_04) + operator-type callout (des_18)",
+      "cin_08 / edt_08": "commercialization stacked area (des_19, ana_08) + startup guess (int_06) + Falcon Heavy video embed (des_21)",
+      "cin_09 / edt_09": "85.5% counter-tension callout (des_23) + in-column ISS (des_22)"
+    },
+    "readability": "Every text-over-background scene gets a scrim (specified per scene) AND the body sections sit on the frosted backplate; verify WCAG-ish contrast on each headline over its scrim (bright night-launch plumes => stronger scrims, already tuned per scene).",
+    "verifiability": "Every image/video background's media_ref resolves to a registered scout sct_ / designer des_ asset (license + identity carried over); the Programmer tags each background data-cin + data-sct/data-des, and the data_driven cin_03 data-cin + data-ana. No raw/unverified background photo anywhere. The hero's clickable Verify provenance stays on the .teaser overlay, not on the cin_00 backdrop.",
+    "build_template": "references/example_cinematic_scroll.html — apply THIS blog's editorial_dark theme (tokens --bg #0e0f13 / --surface #16181f / --ink #ece7df / --accent #e2563a, broadsheet serif) and these verified images, not the example's mint/copy."
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "meta": {
+    "role": "copywriter",
+    "is_computational": true,
+    "is_visual": true,
+    "register_note": "topic_profile is_computational:true + is_visual:true, NOT privacy-sensitive: a sober-but-dramatic analytical history. Earned superlatives allowed where the data carries them (D2: USSR/Russia 55.5%; China 95.7% ties incumbents; D3 surprising-number favoured for the computational findings). Standfirst withholds the hero's reveal (54.5% / 2018 count / HHI all live in ana_07) per PIT-57. Strings only: no finding, number, data-* id, layout or body prose touched; existing edt_/des_ ids reused, none added.",
+    "scope_note": "Captioned the 7 charts (chart rule) + 6 photo/video assets (photo rule) per Step 3 (figure/photo/table). No tables exist. Audio (des_01), stat_callouts (des_03/06/18/23) and interactives (des_08/10/12/13/17/20) are out of caption scope (not figure/photo/table) and already carry designer/interaction-authored labels; captioning the hero interactive would also risk PIT-57."
+  },
+  "masthead": {
+    "headline": "A Duel Became a Crowd",
+    "standfirst": "Two superpowers once launched almost everything that reached orbit. Drag through six decades of the complete launch record and watch their grip loosen under your hand, as China, Europe and a new kind of company crowd the sky.",
+    "kicker": "Six decades of orbital launches",
+    "headline_device": "D10",
+    "headline_backs": "ana_07",
+    "rationale": "Confirms the Editor's named-phenomenon headline (D10): one metaphor-spine (duel -> crowd) states the thesis direction of ana_07 (the launch duopoly pluralized) with no number, so it kills AT1 (no 'Two countries launched everything. Now seven do.' two-beat) and AT4 puffery; the kicker carries the subject the metaphor omits. Candidates generated and rejected: D1 'Spaceflight Stopped Being a Two-Country Race' (weaker, less vivid), D3 'Two superpowers once owned the sky. The data says the duel is over.' (an AT1 two-beat), D13 'China, SpaceX and the End of the Two-Horse Race' (overclaims 'end' — the US never collapsed). Standfirst primes the hero scrubber (ana_07) and withholds its reveal numbers (no 54.5%, no 2018 count, no HHI) per PIT-57; '~99%' appears only as the 1960s setup the Editor sanctioned."
+  },
+  "items": {
+    "edt_01": {
+      "title": "After six decades, a new country led the launch table",
+      "device": "D9",
+      "backs": "ana_05",
+      "rationale": "D9 'N-units-later' opens on the hook (the 2018 crossover, ana_05/ana_19: China is the top launcher for the first time in the whole record) without stating the partial 28-27 count or the hero's 54.5%; no gerund opener (AT6), no two-beat (AT1). 'Six decades' is a rounded label for 1957-2018, honest."
+    },
+    "edt_02": {
+      "title": "Two superpowers, and a workhorse that flew 632 times",
+      "device": "D13",
+      "backs": "ana_12",
+      "rationale": "D13 concrete-detail proof: the real number (Soyuz-U, 632, ana_12) is the evidence for Soviet dominance, so 'workhorse' is earned, not AT5 puffery; states the duel + the workhorse the section is about. Different shape/length from its neighbours (no AT8)."
+    },
+    "edt_03": {
+      "title": "What changed was who, not how much",
+      "device": "D1",
+      "backs": "ana_02",
+      "rationale": "D1 flat verdict: states the thesis turn (volume is roughly flat, ana_02; the change is in the cast). The 'who, not how much' is a single-clause thesis contrast (the Editor's established core claim), NOT the AT1 two-sentence 'flat statement. flat counter-statement.' two-beat; carries no number so it cannot pre-spoil the hero's 54.5%."
+    },
+    "edt_04": {
+      "title": "How one rocket family carried China to the front",
+      "device": "D8",
+      "backs": "ana_05",
+      "rationale": "D8 causal spine: states China's rise to the top (ana_05) on a single family, priming the Long March guess (ana_14) without revealing its 95% — so the in-section guess_then_reveal keeps its number. No AT1 two-beat, no AT4 puffery."
+    },
+    "edt_05": {
+      "title": "Three ways to count 2018, and China leads them all",
+      "device": "D14",
+      "backs": "ana_19",
+      "rationale": "D14 genuine triple: the three counts are real and independent (partial Jan-Oct, naive annualization, external full-year — ana_19), so it is not a reflexive rule-of-three (AT2). Resolves the section as a statement rather than a Betteridge question; states the validation without dumping the 28/33.6/39 figures the annualize widget produces."
+    },
+    "edt_06": {
+      "title": "More than half of every launch ever was Soviet or Russian",
+      "device": "D2",
+      "backs": "ana_04",
+      "rationale": "D2 EARNED superlative: 'more than half' is backed (USSR/Russia 3,178 = 55.5% of all launches, ana_04 notable_instance), so it is not the empty AT5 superlative; says 'Soviet or Russian' because the merged USSR/Russia series, not Soviet alone (42.7%), clears half. States the counter-tension and leaves the combined 85.5% for the close."
+    },
+    "edt_07": {
+      "title": "China reaches orbit 95.7% of the time, matching the incumbents",
+      "device": "D3",
+      "backs": "ana_10",
+      "rationale": "D3 surprising number: 95.7% (ana_10, China 289/302) is openly shown on the dot-strip and seeded in the success-rate calculator (not a withheld reveal), so stating it spoils nothing; rebuts the 'cutting corners' reflex with the data. No AT7 puffed verb, different shape from neighbours (no AT8)."
+    },
+    "edt_08": {
+      "title": "A venture-funded startup now launches like a national programme",
+      "device": "D1",
+      "backs": "ana_15",
+      "rationale": "D1 flat verdict: states the second 'new contender' axis (a KIND of actor, ana_15: SpaceX rivals mid-size national programs) without naming 2006, so the in-section guess_then_reveal (when a startup first reached orbit) keeps its answer. Worded/lengthened differently from the other D1 (edt_03) so no uniform rhythm (AT8)."
+    },
+    "edt_09": {
+      "title": "Which is the future: the per-year crowd, or the all-time duel?",
+      "device": "D15",
+      "backs": "ana_07",
+      "rationale": "D15 open question, the ONE sanctioned use here: the Editor explicitly closes on the unresolved tension (the per-year crowd, ana_07, vs the all-time ledger, ana_04) and forbids resolving it. The colon introduces two real options (not the AT3 'Topic: A Something' subtitle); carries no number and bookends the headline (duel/crowd)."
+    },
+    "des_hero_video": {
+      "caption": "A Long March 5 climbs through the night from Wenchang, on China's Hainan coast, framed by four lightning towers. The country's heavy-lift rocket has become the public face of a launch programme that turned a Cold-War latecomer into a front-runner.",
+      "backs": "des_hero_video",
+      "rationale": "Photo rule on the real-still cover: present-tense who/what/where (Long March 5, Wenchang, night) then the past-tense why; captions only what the pixels show. Pure-illustration cover, so it backs des_hero_video; the why traces to China's rise (ana_05) without stating a number. No 'is pictured'/'recently' wire cliche (PIT-58); date omitted rather than fabricated (the source capture date is not in the data — never invent one)."
+    },
+    "des_02": {
+      "caption": "A replica of Sputnik 1, a polished metal sphere trailing four whip antennas, holds the shape of the first object humans ever put in orbit. Its launch on 4 October 1957 began both the space race and the launch record this story counts from.",
+      "backs": "ana_01",
+      "rationale": "Photo rule: present-tense what (the replica's shape) then past-tense why with an ABSOLUTE date (4 October 1957, det_03/ana_01) anchoring the census start; states the finding (the record opens at Sputnik), not 'a satellite is pictured' (PIT-58 sibling)."
+    },
+    "des_04": {
+      "caption": "The Soviet wave crested, then the field broke open",
+      "subtitle": "Orbital launches per country per year, 1957 to 2018 (2018 partial); SU+RU shown as USSR/Russia, ESA as Europe",
+      "backs": "ana_03",
+      "rationale": "Chart rule: title line is the conclusion (the spine's duel -> dominance -> pluralization arc, ana_03), active and under 10 words; subtitle carries metric/window/merges. The 1982 peak and 1991 collapse are annotated ON the chart, so the caption asserts and the annotation locates (not 'this chart shows', PIT-58)."
+    },
+    "des_05": {
+      "caption": "A Soyuz rocket, direct descendant of the R-7 that carried Sputnik, lifts off from Baikonur in Kazakhstan. The R-7/Soyuz line is the most-flown rocket family in history, and it is why the Soviet Union towers over this entire record.",
+      "backs": "ana_13",
+      "rationale": "Photo rule: present-tense who/what/where then past-tense why; 'most-flown family' is earned (R-7/Soyuz 1,832, ana_13/det_04), not AT5 puffery. Captions only the launch the pixels show; date omitted rather than fabricated."
+    },
+    "des_07": {
+      "caption": "Launch volume peaked in 1967 and never came back",
+      "subtitle": "Global orbital launches per year, 1957 to 2018 (2018 ends in October, partial)",
+      "backs": "ana_02",
+      "rationale": "Chart rule: the conclusion line states the finding with the number (1967 peak = 139, ana_02) and proves 'how much is flat'; subtitle carries metric/window and the partial flag. Not an axis label (PIT-58). The peak and partial-2018 point are annotated on the chart."
+    },
+    "des_09": {
+      "caption": "China climbed from 13 launches a decade to 171",
+      "subtitle": "Chinese orbital launches per decade, 1970s to 2010s (2010s includes partial 2018)",
+      "backs": "ana_05",
+      "rationale": "Chart rule: conclusion line with the real endpoints (13 -> 171, ana_05), active, under 10 words; subtitle carries the metric/window. States the climb, not 'launches by decade' (PIT-58)."
+    },
+    "des_11": {
+      "caption": "A Long March rocket lifts off after dark from Xichang, in China's mountainous southwest. More than nine in ten Chinese launches have ridden this single family of rockets, the one programme behind China's climb up the table.",
+      "backs": "ana_14",
+      "rationale": "Photo rule: present-tense who/what/where then past-tense why; 'more than nine in ten' is the honest plain-language form of ana_14 (287 of 302 = 95.0% Long March). A different shot from the hero; captions only what the pixels show; date omitted rather than fabricated."
+    },
+    "des_14": {
+      "caption": "The Soviet fleet still dwarfs every newcomer",
+      "subtitle": "Launches by rocket family, 1957 to 2018; R-7/Soyuz 1,832 against Long March 287 and Falcon 68 (area = launches)",
+      "backs": "ana_13",
+      "rationale": "Chart rule: conclusion line states the scale gap (ana_13); the numbers (1,832 vs 287 vs 68) sit in the subtitle with the metric. The two newcomer families are accented ON the treemap, so the caption asserts the gap rather than labelling tiles (PIT-58)."
+    },
+    "des_15": {
+      "caption": "Most of the world has never reached orbit",
+      "subtitle": "All-time orbital launches by launching nation, 1957 to 2018 (count; USSR/Russia merged). The data carries no launch-site coordinates, so this is country fill, not a pad map",
+      "backs": "ana_17",
+      "rationale": "Chart rule: conclusion line states the finding (only ~17 states ever launched, ana_17); subtitle carries the metric and the honest caveats (count not rate; no point map because lat/long are blank). Not 'a map of launches by country' (PIT-58)."
+    },
+    "des_16": {
+      "caption": "Every major launcher succeeds 89% to 96% of the time",
+      "subtitle": "All-time launch success rate by country, successes divided by attempts, 1957 to 2018",
+      "backs": "ana_10",
+      "rationale": "Chart rule: conclusion line states the tight reliability band exactly (India 89.2% to Europe 95.8%, ana_10); subtitle carries the metric. The China point and the lone 'Other' outlier are annotated on the strip, so the caption asserts the clustering (not 'success rate by country', PIT-58)."
+    },
+    "des_19": {
+      "caption": "Commercial launch arrived in two separate waves",
+      "subtitle": "Share of launches by operator type (state, private, startup), per decade, 1950s to 2010s",
+      "backs": "ana_08",
+      "rationale": "Chart rule: conclusion line states the finding (two distinct commercialization vintages, ana_08) without naming 2006, so the adjacent guess_then_reveal (des_20) keeps its year; subtitle carries the metric/window. Not 'agency-type share over time' (PIT-58)."
+    },
+    "des_21": {
+      "caption": "SpaceX's Falcon Heavy makes its first flight on 6 February 2018, its two side boosters touching down together at Cape Canaveral. The demonstration put a venture-funded 'startup' at the front of the commercial launch business, inside the very window this data covers.",
+      "backs": "ana_15",
+      "rationale": "Photo/video rule: present-tense who/what/where with an ABSOLUTE date (6 February 2018, det_08) then past-tense why (the startup class, ana_15); captions only the launch and twin-booster landing the footage shows, not 'a rocket is pictured' (PIT-58)."
+    },
+    "des_22": {
+      "caption": "The International Space Station orbits high above the Earth, the Moon beyond it. This is the kind of infrastructure all these launches ultimately build, and the reason who can reach orbit, and how cheaply, is now treated as national power.",
+      "backs": "edt_09",
+      "rationale": "Photo rule on the closing image: present-tense what/where then the past-tense why (the stakes, det_14). Pure-illustration close with no number, so it backs the edt_09 it sits in; captions only what the pixels show; date omitted rather than fabricated."
+    }
+  }
+}

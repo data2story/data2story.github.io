@@ -1,0 +1,60 @@
+{
+  "meta": {
+    "role": "hero",
+    "version": "1.0",
+    "source_ladder_rung": 1,
+    "why": "Rung 1 (scout_still) resolves: the natural cover is the Scout-verified ETH Zurich night panorama (sct_eth) — a real, license-clean landmark with NO recognizable public figure (buildings only), so any video model is safe and no Kling is needed. Rung 0 does NOT apply: the Editor placed the centerpiece reweighter at edt_06, not the teaser (editor.json.interactives.hero.section == 'edt_06'), so this is a normal animated cover, not the interactive-hero passthrough. The ultra-wide 10060x2636 source was 16:9-cropped from the ORIGINAL, centered on the lit domed rotunda, into a crisp 1280x720 hero frame (large black night-sky band kept on top for the headline scrim). RENDER NOTE (honest): image2video was invoked at rung 1, but the OpenRouter video endpoint returned HTTP 402 'Insufficient credits' for BOTH the Veo primary (google/veo-3.1-fast) and the Seedance fallback (bytedance/seedance-2.0), so the pipeline's sanctioned ffmpeg Ken-Burns + boomerang motion fallback rendered the cover from the SAME verified ETH still (FALLBACK_USED=kenburns). This is still an ANIMATED <video> cover (kind:video), NOT the static rung-5 fallback: a clearly-visible centered ~12% push-in toward the lit dome (PRIMARY motion) plus a subtle warm-light breathing at 0.5 Hz / 3 whole cycles over 6 s (SECONDARY, on the designer's 'window-lights flicker gently' brief), post-processed into a seamless forward+reverse boomerang. No AI model produced the motion, so source.model is null and source.fallback_used is 'kenburns' (not fabricated as a clean AI render). Web-weight cover: webm 0.44 MB + mp4 1.23 MB = 1.69 MB < 3 MB."
+  },
+  "hero": {
+    "id": "des_hero_video",
+    "kind": "video",
+    "backs": "teaser",
+    "subject_is_real_public_figure": false,
+    "source": {
+      "origin": "scout_still",
+      "still_ref": "sct_eth",
+      "model": null,
+      "tool": "ffmpeg_kenburns",
+      "prompt": "Cinemagraph, motion-only. PRIMARY: a slow, steady cinematic push-in toward the lit domed central rotunda. SECONDARY: the warm interior window-lights and the glowing arched windows shimmer and softly pulse like real incandescent light; the forecourt street-lamp halos bloom and twinkle; thin atmospheric night haze drifts slowly across the empty plaza. HELD PERFECTLY STILL: the neoclassical stone building, its columns, arches and dome geometry stay rigid with no warping and no camera shake -- only the light, the haze and the slow push-in move. Deep black night sky, calm nocturne mood. [Submitted to image2video; the AI models refused with HTTP 402 insufficient credits, so the realized motion is the ffmpeg Ken-Burns subset: a centered ~12% push-in + a gentle warm-light breathing, boomeranged.]",
+      "duration": 6,
+      "fallback_used": "kenburns"
+    },
+    "loop": "boomerang",
+    "assets": {
+      "video_webm": "assets/teaser.webm",
+      "video_mp4": "assets/teaser_web.mp4",
+      "poster": "assets/teaser.jpg"
+    },
+    "reduced_motion_fallback": "assets/teaser.jpg",
+    "furniture": {
+      "headline_band": "Who Is the Best University in the World? Pick a Number.",
+      "kicker": "Global university rankings",
+      "credit_line": "Photo: Nemanja Skoric / Wikimedia Commons (CC BY-SA 3.0) - ETH Zurich Hauptgebaude, identity verified; motion added (a camera push-in + light animation, not AI video).",
+      "decorative": [
+        "solid dark scrim / headline plate over the black night-sky band to hold WCAG AA over the night image",
+        "compact stat strip against the image: 'Four rankings. Four different #1s. Caltech - Harvard - MIT - Michigan.'",
+        "gilt-gold (#e3b23c) hairline rule under the kicker",
+        "subtle vignette"
+      ]
+    },
+    "interactive_overlay_ref": null,
+    "verify": {
+      "hit_target": ".teaser",
+      "data_attr": "data-des",
+      "id": "des_hero_video",
+      "class_marker": "teaser"
+    },
+    "disclosure": "Image = a real Wikimedia Commons photograph of ETH Zurich's Hauptgebaude (a fetched, identity-verified still, not AI). Motion = a slow camera push-in and a gentle warm-light animation added to the still via ffmpeg (Ken-Burns boomerang) because the AI video endpoint was unavailable; this is not AI video and not of any real person.",
+    "publish_blocker": false,
+    "ip_record_ref": "references/hero_recipes.json#ip_record"
+  },
+  "build_contract": {
+    "_who": "The Hero SPECS this; the Programmer builds it; validate.py Section 12 asserts it. Do NOT edit the frozen verify engine.",
+    "video_tag": "<video webm+mp4+poster autoplay loop muted playsinline> using assets/teaser.webm (VP9) + assets/teaser_web.mp4 (H.264) + poster=assets/teaser.jpg. Keep the loop attribute (the clip is a seamless boomerang).",
+    "cin_stage_wrap": "Wrap the cover in .cin-stage. Cinematic-ON: it IS the cin_00 layer of the live cinematic stage (Cinematographer stages sct_eth as cin_00). Cinematic-OFF: a degenerate <div class='cin-stage hero-only-stage'> that still paints assets/teaser.jpg as backdrop. Either way isDecorative() (el.closest('.cin-stage')) auto-excludes the cover from Verify -- no verify-engine edit.",
+    "reduced_motion": "A reduced-motion <img src='assets/teaser.jpg'> fallback is ALWAYS in the DOM; under prefers-reduced-motion / JS-off it shows and autoplay never fires.",
+    "autoplay_retry": "Keep autoplay muted loop playsinline. Additionally wire a JS video.play() retry on the first user gesture (bind a one-time handler to pointerdown/touchstart/keydown/click + scroll/wheel/touchmove, mirroring the BGM sndKick pattern; remove listeners only on a resolved .play() promise). If .play() rejects, reveal a centred tap-to-play glyph over the cover that calls video.play() on click. Skip the retry under prefers-reduced-motion.",
+    "single_teaser_hit": "Exactly ONE .teaser overlay carries data-des='des_hero_video' -- the cover's single Verify hit. All decorative furniture (scrim, stat strip, kicker rule, vignette) is pointer-events:none with NO data-* so the Verify engine ignores it.",
+    "provenance_prefix": "Reuse data-des='des_hero_video' -- mint NO new provenance prefix."
+  }
+}

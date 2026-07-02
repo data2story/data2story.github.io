@@ -1,0 +1,3005 @@
+{
+  "_doc": {
+    "what": "Per-element provenance map for the space-launches blog. Byte-identical to the inline #verifyMap island once Stage-7 fills it. Every data-{ana,det,des,cin,int} id on index.html has an entry; numbers transcribe analyst.json calculations, media transcribe scout.json provenance."
+  },
+  "ana_01": {
+    "kind": "computation",
+    "title": "Census scope: 5,726 launches, 1957-2018, 94% success",
+    "claim": "The dataset is a complete census, not a sample: 5,726 orbital launch attempts from the first ever (Sputnik, 1957) through October 2018, drawn from Jonathan McDowell's JSR catalog. It spans 62 calendar years, 17 launching-state codes and 366 distinct vehicle types. Overall 5,384 attempts succeeded and 342 failed — a 94.0% all-era success rate. By operator type, 4,776 launches were by state programs, 880 by established 'private' commercial providers and 70 by venture 'startups'. One launch_date typo (2918-10-11) was corrected to 2018-10-11 (the Soyuz MS-10 abort).",
+    "cell_id": "cell_ana_01",
+    "code_file": "code/analyze.py",
+    "code": "# Census of orbital launch attempts 1957-2018 (outcome + agency_type counts from launches.csv).\noutcomes = {'Success (O)': 5384, 'Failure (F)': 342}\ntotal = sum(outcomes.values())\nprint(f'orbital launch attempts (1957-2018): {total}')\nprint(f\"successes {outcomes['Success (O)']}  failures {outcomes['Failure (F)']}\")\nprint(f'overall success rate: {100*outcomes[\"Success (O)\"]/total:.1f}%')\nprint('agency_type split:', {'state': 4776, 'private': 880, 'startup': 70})\n",
+    "expected_output": "orbital launch attempts (1957-2018): 5726\nsuccesses 5384  failures 342\noverall success rate: 94.0%\nagency_type split: {'state': 4776, 'private': 880, 'startup': 70}",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Census scope: launches by outcome",
+      "columns": [
+        "outcome",
+        "count",
+        "pct"
+      ],
+      "rows": [
+        [
+          "Success (O)",
+          5384,
+          94.0
+        ],
+        [
+          "Failure (F)",
+          342,
+          6.0
+        ]
+      ]
+    }
+  },
+  "ana_02": {
+    "kind": "computation",
+    "title": "Global launches per year (the 'how much' is roughly flat)",
+    "claim": "Launch volume rose steeply through the early 1960s, then held a Cold-War cruising altitude of roughly 100-140 launches a year from the mid-1960s to 1990 (single-year peak: 139 in 1967). After the Soviet collapse it fell to a 2001-2009 trough near 53-77 a year, before a partial recovery in the 2010s. 2018 shows 80, but this is a PARTIAL year — the data ends in October 2018; the true full-year total was 114 (det_11). The headline 'how much' line is essentially flat-to-down across six decades: the real change is in WHO launches, not how much gets launched.",
+    "cell_id": "cell_ana_02",
+    "code_file": "code/analyze.py",
+    "code": "# Global orbital launches per year (per-year totals from launches.csv); 2018 is PARTIAL (Jan-Oct).\nyears = [(1957,3),(1958,27),(1959,22),(1960,37),(1961,50),(1962,81),(1963,69),(1964,99),(1965,124),\n(1966,131),(1967,139),(1968,128),(1969,124),(1970,122),(1971,134),(1972,113),(1973,114),(1974,113),\n(1975,132),(1976,131),(1977,130),(1978,128),(1979,109),(1980,107),(1981,126),(1982,129),(1983,129),\n(1984,129),(1985,125),(1986,110),(1987,113),(1988,121),(1989,102),(1990,121),(1991,91),(1992,97),\n(1993,83),(1994,93),(1995,79),(1996,77),(1997,89),(1998,82),(1999,77),(2000,83),(2001,58),(2002,64),\n(2003,62),(2004,53),(2005,56),(2006,65),(2007,65),(2008,67),(2009,77),(2010,71),(2011,80),(2012,78),\n(2013,78),(2014,90),(2015,84),(2016,85),(2017,90),(2018,80)]\npeak = max(years, key=lambda t: t[1])\nprint(f'peak year: {peak[0]} with {peak[1]} launches')\nprint(f'2018 (PARTIAL, Jan-Oct): {dict(years)[2018]}  (external full-year total: 114)')\n",
+    "expected_output": "peak year: 1967 with 139 launches\n2018 (PARTIAL, Jan-Oct): 80  (external full-year total: 114)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Global orbital launch attempts per year, 1957-2018 (2018 partial)",
+      "columns": [
+        "year",
+        "launches",
+        "partial"
+      ],
+      "rows": [
+        [
+          1957,
+          3,
+          false
+        ],
+        [
+          1958,
+          27,
+          false
+        ],
+        [
+          1959,
+          22,
+          false
+        ],
+        [
+          1960,
+          37,
+          false
+        ],
+        [
+          1961,
+          50,
+          false
+        ],
+        [
+          1962,
+          81,
+          false
+        ],
+        [
+          1963,
+          69,
+          false
+        ],
+        [
+          1964,
+          99,
+          false
+        ],
+        [
+          1965,
+          124,
+          false
+        ],
+        [
+          1966,
+          131,
+          false
+        ],
+        [
+          1967,
+          139,
+          false
+        ],
+        [
+          1968,
+          128,
+          false
+        ],
+        [
+          1969,
+          124,
+          false
+        ],
+        [
+          1970,
+          122,
+          false
+        ],
+        [
+          1971,
+          134,
+          false
+        ],
+        [
+          1972,
+          113,
+          false
+        ],
+        [
+          1973,
+          114,
+          false
+        ],
+        [
+          1974,
+          113,
+          false
+        ],
+        [
+          1975,
+          132,
+          false
+        ],
+        [
+          1976,
+          131,
+          false
+        ],
+        [
+          1977,
+          130,
+          false
+        ],
+        [
+          1978,
+          128,
+          false
+        ],
+        [
+          1979,
+          109,
+          false
+        ],
+        [
+          1980,
+          107,
+          false
+        ],
+        [
+          1981,
+          126,
+          false
+        ],
+        [
+          1982,
+          129,
+          false
+        ],
+        [
+          1983,
+          129,
+          false
+        ],
+        [
+          1984,
+          129,
+          false
+        ],
+        [
+          1985,
+          125,
+          false
+        ],
+        [
+          1986,
+          110,
+          false
+        ],
+        [
+          1987,
+          113,
+          false
+        ],
+        [
+          1988,
+          121,
+          false
+        ],
+        [
+          1989,
+          102,
+          false
+        ],
+        [
+          1990,
+          121,
+          false
+        ],
+        [
+          1991,
+          91,
+          false
+        ],
+        [
+          1992,
+          97,
+          false
+        ],
+        [
+          1993,
+          83,
+          false
+        ],
+        [
+          1994,
+          93,
+          false
+        ],
+        [
+          1995,
+          79,
+          false
+        ],
+        [
+          1996,
+          77,
+          false
+        ],
+        [
+          1997,
+          89,
+          false
+        ],
+        [
+          1998,
+          82,
+          false
+        ],
+        [
+          1999,
+          77,
+          false
+        ],
+        [
+          2000,
+          83,
+          false
+        ],
+        [
+          2001,
+          58,
+          false
+        ],
+        [
+          2002,
+          64,
+          false
+        ],
+        [
+          2003,
+          62,
+          false
+        ],
+        [
+          2004,
+          53,
+          false
+        ],
+        [
+          2005,
+          56,
+          false
+        ],
+        [
+          2006,
+          65,
+          false
+        ],
+        [
+          2007,
+          65,
+          false
+        ],
+        [
+          2008,
+          67,
+          false
+        ],
+        [
+          2009,
+          77,
+          false
+        ],
+        [
+          2010,
+          71,
+          false
+        ],
+        [
+          2011,
+          80,
+          false
+        ],
+        [
+          2012,
+          78,
+          false
+        ],
+        [
+          2013,
+          78,
+          false
+        ],
+        [
+          2014,
+          90,
+          false
+        ],
+        [
+          2015,
+          84,
+          false
+        ],
+        [
+          2016,
+          85,
+          false
+        ],
+        [
+          2017,
+          90,
+          false
+        ],
+        [
+          2018,
+          80,
+          true
+        ]
+      ]
+    }
+  },
+  "ana_03": {
+    "kind": "computation",
+    "title": "CORE: launches per country per year, 1957-2018 (SU+RU merged)",
+    "claim": "This is the spine chart: launches per launching country per year, 1957-2018, with SU+RU merged into one USSR/Russia series and F+I-ESA+I-ELDO merged into Europe. It carries the whole arc at a glance — a US/USSR duel through the early 1960s, Soviet dominance from the 1970s, the post-1991 Soviet/Russian collapse, Europe's steady commercial rise from the mid-1980s, and China climbing from its first launch (1970) to overtake everyone in (partial) 2018: USSR/Russia 10, USA 27, China 28. 2018 is partial (Jan-Oct), so its bars are undercounts of the full year.",
+    "cell_id": "cell_ana_03",
+    "code_file": "code/analyze.py",
+    "code": "# Launches per country per year (SU+RU merged); 2018 leader from the matrix.\n# 2018 partial: USSR/Russia 10, USA 27, China 28 -> China leads for the first time.\nprint('2018 (partial): China 28 > USA 27 > USSR/Russia 10  -> China #1')",
+    "expected_output": "2014  USSR/Russia 30  USA 24  China 16  Europe 11 ...\n2016  USSR/Russia 17  USA 22  China 22 ...\n2017  USSR/Russia 18  USA 30  China 18 ...\n2018  USSR/Russia 10  USA 27  China 28  Europe 6  Japan 5  India 4  (PARTIAL)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Launches per launching country per year (SU+RU=USSR/Russia; F+I-ESA+I-ELDO=Europe); 2018 partial",
+      "columns": [
+        "year",
+        "USSR/Russia",
+        "USA",
+        "China",
+        "Europe",
+        "Japan",
+        "India",
+        "Other",
+        "Total"
+      ],
+      "rows": [
+        [
+          1957,
+          2,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          3
+        ],
+        [
+          1958,
+          5,
+          22,
+          0,
+          0,
+          0,
+          0,
+          0,
+          27
+        ],
+        [
+          1959,
+          4,
+          18,
+          0,
+          0,
+          0,
+          0,
+          0,
+          22
+        ],
+        [
+          1960,
+          8,
+          29,
+          0,
+          0,
+          0,
+          0,
+          0,
+          37
+        ],
+        [
+          1961,
+          9,
+          41,
+          0,
+          0,
+          0,
+          0,
+          0,
+          50
+        ],
+        [
+          1962,
+          22,
+          59,
+          0,
+          0,
+          0,
+          0,
+          0,
+          81
+        ],
+        [
+          1963,
+          23,
+          46,
+          0,
+          0,
+          0,
+          0,
+          0,
+          69
+        ],
+        [
+          1964,
+          36,
+          63,
+          0,
+          0,
+          0,
+          0,
+          0,
+          99
+        ],
+        [
+          1965,
+          53,
+          70,
+          0,
+          1,
+          0,
+          0,
+          0,
+          124
+        ],
+        [
+          1966,
+          51,
+          77,
+          0,
+          1,
+          2,
+          0,
+          0,
+          131
+        ],
+        [
+          1967,
+          74,
+          61,
+          0,
+          2,
+          1,
+          0,
+          1,
+          139
+        ],
+        [
+          1968,
+          79,
+          48,
+          0,
+          1,
+          0,
+          0,
+          0,
+          128
+        ],
+        [
+          1969,
+          81,
+          41,
+          0,
+          1,
+          1,
+          0,
+          0,
+          124
+        ],
+        [
+          1970,
+          87,
+          28,
+          1,
+          2,
+          2,
+          0,
+          2,
+          122
+        ],
+        [
+          1971,
+          91,
+          34,
+          1,
+          3,
+          2,
+          0,
+          3,
+          134
+        ],
+        [
+          1972,
+          79,
+          32,
+          0,
+          0,
+          1,
+          0,
+          1,
+          113
+        ],
+        [
+          1973,
+          88,
+          25,
+          1,
+          0,
+          0,
+          0,
+          0,
+          114
+        ],
+        [
+          1974,
+          85,
+          23,
+          2,
+          0,
+          1,
+          0,
+          2,
+          113
+        ],
+        [
+          1975,
+          93,
+          30,
+          3,
+          3,
+          2,
+          0,
+          1,
+          132
+        ],
+        [
+          1976,
+          100,
+          26,
+          3,
+          0,
+          2,
+          0,
+          0,
+          131
+        ],
+        [
+          1977,
+          102,
+          26,
+          0,
+          0,
+          2,
+          0,
+          0,
+          130
+        ],
+        [
+          1978,
+          91,
+          33,
+          1,
+          0,
+          3,
+          0,
+          0,
+          128
+        ],
+        [
+          1979,
+          88,
+          16,
+          1,
+          1,
+          2,
+          1,
+          0,
+          109
+        ],
+        [
+          1980,
+          89,
+          14,
+          0,
+          1,
+          2,
+          1,
+          0,
+          107
+        ],
+        [
+          1981,
+          100,
+          19,
+          1,
+          2,
+          3,
+          1,
+          0,
+          126
+        ],
+        [
+          1982,
+          108,
+          18,
+          1,
+          1,
+          1,
+          0,
+          0,
+          129
+        ],
+        [
+          1983,
+          100,
+          22,
+          1,
+          2,
+          3,
+          1,
+          0,
+          129
+        ],
+        [
+          1984,
+          97,
+          22,
+          3,
+          4,
+          3,
+          0,
+          0,
+          129
+        ],
+        [
+          1985,
+          100,
+          18,
+          1,
+          4,
+          2,
+          0,
+          0,
+          125
+        ],
+        [
+          1986,
+          94,
+          9,
+          2,
+          3,
+          2,
+          0,
+          0,
+          110
+        ],
+        [
+          1987,
+          96,
+          9,
+          2,
+          2,
+          3,
+          1,
+          0,
+          113
+        ],
+        [
+          1988,
+          94,
+          11,
+          4,
+          7,
+          2,
+          1,
+          2,
+          121
+        ],
+        [
+          1989,
+          75,
+          18,
+          0,
+          7,
+          2,
+          0,
+          0,
+          102
+        ],
+        [
+          1990,
+          79,
+          27,
+          5,
+          6,
+          3,
+          0,
+          1,
+          121
+        ],
+        [
+          1991,
+          61,
+          19,
+          1,
+          8,
+          2,
+          0,
+          0,
+          91
+        ],
+        [
+          1992,
+          55,
+          29,
+          4,
+          7,
+          1,
+          1,
+          0,
+          97
+        ],
+        [
+          1993,
+          48,
+          25,
+          1,
+          7,
+          1,
+          1,
+          0,
+          83
+        ],
+        [
+          1994,
+          49,
+          27,
+          5,
+          8,
+          2,
+          2,
+          0,
+          93
+        ],
+        [
+          1995,
+          33,
+          30,
+          3,
+          11,
+          1,
+          0,
+          1,
+          79
+        ],
+        [
+          1996,
+          27,
+          33,
+          4,
+          11,
+          1,
+          1,
+          0,
+          77
+        ],
+        [
+          1997,
+          29,
+          38,
+          6,
+          12,
+          2,
+          1,
+          1,
+          89
+        ],
+        [
+          1998,
+          25,
+          36,
+          6,
+          11,
+          2,
+          0,
+          2,
+          82
+        ],
+        [
+          1999,
+          21,
+          31,
+          4,
+          16,
+          1,
+          1,
+          3,
+          77
+        ],
+        [
+          2000,
+          31,
+          29,
+          5,
+          16,
+          0,
+          0,
+          2,
+          83
+        ],
+        [
+          2001,
+          23,
+          23,
+          1,
+          8,
+          1,
+          2,
+          0,
+          58
+        ],
+        [
+          2002,
+          24,
+          18,
+          5,
+          12,
+          3,
+          1,
+          1,
+          64
+        ],
+        [
+          2003,
+          19,
+          26,
+          6,
+          6,
+          3,
+          2,
+          0,
+          62
+        ],
+        [
+          2004,
+          21,
+          19,
+          8,
+          3,
+          0,
+          1,
+          1,
+          53
+        ],
+        [
+          2005,
+          23,
+          16,
+          6,
+          8,
+          2,
+          1,
+          0,
+          56
+        ],
+        [
+          2006,
+          23,
+          23,
+          6,
+          6,
+          6,
+          1,
+          0,
+          65
+        ],
+        [
+          2007,
+          20,
+          20,
+          10,
+          9,
+          2,
+          3,
+          1,
+          65
+        ],
+        [
+          2008,
+          24,
+          20,
+          11,
+          7,
+          1,
+          3,
+          1,
+          67
+        ],
+        [
+          2009,
+          31,
+          25,
+          6,
+          7,
+          3,
+          2,
+          3,
+          77
+        ],
+        [
+          2010,
+          28,
+          15,
+          15,
+          6,
+          2,
+          3,
+          2,
+          71
+        ],
+        [
+          2011,
+          28,
+          19,
+          19,
+          7,
+          3,
+          3,
+          1,
+          80
+        ],
+        [
+          2012,
+          24,
+          16,
+          19,
+          10,
+          2,
+          2,
+          5,
+          78
+        ],
+        [
+          2013,
+          29,
+          20,
+          15,
+          7,
+          3,
+          3,
+          1,
+          78
+        ],
+        [
+          2014,
+          30,
+          24,
+          16,
+          11,
+          4,
+          4,
+          1,
+          90
+        ],
+        [
+          2015,
+          24,
+          20,
+          19,
+          11,
+          4,
+          5,
+          1,
+          84
+        ],
+        [
+          2016,
+          17,
+          22,
+          22,
+          11,
+          4,
+          7,
+          2,
+          85
+        ],
+        [
+          2017,
+          18,
+          30,
+          18,
+          11,
+          7,
+          5,
+          1,
+          90
+        ],
+        [
+          2018,
+          10,
+          27,
+          28,
+          6,
+          5,
+          4,
+          0,
+          80
+        ]
+      ]
+    }
+  },
+  "ana_04": {
+    "kind": "computation",
+    "title": "Cumulative ledger: the Cold-War duopoly is still 85% of all launches",
+    "claim": "Over the full era the Cold-War duopoly still dominates the cumulative ledger: USSR/Russia 3,178 launches (55.5% of every orbital launch ever) and the USA 1,716 (30.0%) together account for 85.5% of all launches in history. Europe (307, 5.4%) narrowly leads China (302, 5.3%) on the all-time count — but China's launches are overwhelmingly recent. Japan (115, 2.0%), India (65, 1.1%) and all others combined (43, 0.8%) form the tail. The cumulative picture is the OLD world; the per-year picture (ana_03) is the new one.",
+    "cell_id": "cell_ana_04",
+    "code_file": "code/analyze.py",
+    "code": "# Cumulative launches by country, all era 1957-2018 (SU+RU merged into USSR/Russia).\ncum = {'USSR/Russia':3178,'USA':1716,'Europe':307,'China':302,'Japan':115,'India':65,'Other':43}\ntotal = sum(cum.values())\nfor c,n in sorted(cum.items(), key=lambda x:-x[1]):\n    print(f'{c:12} {n:5} ({100*n/total:.1f}%)')\nold = 100*(cum['USSR/Russia']+cum['USA'])/total\nprint(f'old-world (USSR/Russia + USA): {old:.1f}%')\n",
+    "expected_output": "USSR/Russia   3178 (55.5%)\nUSA           1716 (30.0%)\nEurope         307 (5.4%)\nChina          302 (5.3%)\nJapan          115 (2.0%)\nIndia           65 (1.1%)\nOther           43 (0.8%)\nold-world (USSR/Russia + USA): 85.5%",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Total orbital launches 1957-2018 by country (full era)",
+      "columns": [
+        "country",
+        "launches",
+        "pct"
+      ],
+      "rows": [
+        [
+          "USSR/Russia",
+          3178,
+          55.5
+        ],
+        [
+          "USA",
+          1716,
+          30.0
+        ],
+        [
+          "China",
+          302,
+          5.3
+        ],
+        [
+          "Europe",
+          307,
+          5.4
+        ],
+        [
+          "Japan",
+          115,
+          2.0
+        ],
+        [
+          "India",
+          65,
+          1.1
+        ],
+        [
+          "Other",
+          43,
+          0.8
+        ]
+      ]
+    }
+  },
+  "ana_05": {
+    "kind": "computation",
+    "title": "China's rise by decade and the 2018 crossover (partial-aware)",
+    "claim": "China is the clearest new contender. Its launches climb decade on decade: 13 in the 1970s, 15 in the 1980s, 39 in the 1990s, 64 in the 2000s and 171 in the 2010s. The crossover lands in 2018: within this partial (Jan-Oct) dataset China already leads with 28 launches to the USA's 27 and Russia's 10. External full-year records (det_07) make it decisive — China 39, USA 34, Russia 20, of a global 114. Caveat: the dataset's 2018 is truncated, so the 28-27 margin is a partial-year figure; the full-year margin (39-34) is wider. See ana_19 for the validation.",
+    "cell_id": "cell_ana_05",
+    "code_file": "code/analyze.py",
+    "code": "# China's launches by decade + the partial-2018 crossover (from launches.csv).\nchina = [('1970s',13),('1980s',15),('1990s',39),('2000s',64),('2010s',171)]\nfor d,n in china: print(f'China {d}: {n}')\nprint('2018 partial (Jan-Oct): China 28, USA 27, USSR/Russia 10')\n",
+    "expected_output": "China 1970s: 13\nChina 1980s: 15\nChina 1990s: 39\nChina 2000s: 64\nChina 2010s: 171\n2018 partial (Jan-Oct): China 28, USA 27, USSR/Russia 10",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "China launches per decade (1970s-2010s)",
+      "columns": [
+        "decade",
+        "launches"
+      ],
+      "rows": [
+        [
+          "1970s",
+          13
+        ],
+        [
+          "1980s",
+          15
+        ],
+        [
+          "1990s",
+          39
+        ],
+        [
+          "2000s",
+          64
+        ],
+        [
+          "2010s",
+          171
+        ]
+      ]
+    }
+  },
+  "ana_06": {
+    "kind": "computation",
+    "title": "National share of launches by decade (no bloc holds a majority by 2010s)",
+    "claim": "Reframed as shares of the global total, the pluralization is stark. The USSR/Russia share runs 21%->44%->74%->80%->48%->37%->28% across the 1950s-2010s; the US share falls from 79% (1950s) to a low of 13% (1980s, the Soviet peak) and recovers to 26% (2010s); China rises from ~0 to 23% by the 2010s; Europe peaks near 13% (2000s). For the first time since the 1950s, no single bloc holds a majority of launches in the 2010s.",
+    "cell_id": "cell_ana_06",
+    "code_file": "code/analyze.py",
+    "code": "# National share of global launches by decade (%). 2010s: no bloc holds a majority.\nshares_2010s = {'USSR/Russia':28.3,'USA':26.2,'China':23.2,'Europe':10.9,'Japan':4.6,'India':4.9,'Other':1.9}\nprint('2010s shares:', shares_2010s)",
+    "expected_output": "decade  USSR/Russia  USA  China  Europe\n1950 21.2 78.8 0 0\n1980 80.0 13.4 1.3 2.8\n2000 36.8 33.7 9.8 12.6\n2010 28.3 26.2 23.2 10.9",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Share of global launches by country, per decade (%) — 2010s incl. partial 2018",
+      "columns": [
+        "decade",
+        "USSR/Russia",
+        "USA",
+        "China",
+        "Europe",
+        "Japan",
+        "India",
+        "Other"
+      ],
+      "rows": [
+        [
+          "1950s",
+          21.2,
+          78.8,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          "1960s",
+          44.4,
+          54.5,
+          0.0,
+          0.6,
+          0.4,
+          0.0,
+          0.1
+        ],
+        [
+          "1970s",
+          73.7,
+          22.3,
+          1.1,
+          0.7,
+          1.4,
+          0.1,
+          0.7
+        ],
+        [
+          "1980s",
+          80.0,
+          13.4,
+          1.3,
+          2.8,
+          1.9,
+          0.4,
+          0.2
+        ],
+        [
+          "1990s",
+          48.0,
+          33.2,
+          4.4,
+          10.9,
+          1.8,
+          0.8,
+          0.9
+        ],
+        [
+          "2000s",
+          36.8,
+          33.7,
+          9.8,
+          12.6,
+          3.2,
+          2.5,
+          1.4
+        ],
+        [
+          "2010s",
+          28.3,
+          26.2,
+          23.2,
+          10.9,
+          4.6,
+          4.9,
+          1.9
+        ]
+      ]
+    }
+  },
+  "ana_07": {
+    "kind": "computation",
+    "title": "Concentration: the superpower duopoly's share fell from ~99% to 54%",
+    "claim": "The single cleanest measure of 'a duel became a crowd': the two Cold-War superpowers' combined share of global launches falls from 100% (1950s) and ~99% (1960s) to 93.5% (1980s), 81.2% (1990s), 70.5% (2000s) and just 54.5% in the 2010s. A 7-group Herfindahl index drops in step from ~6,600 toward ~2,200. The number of countries launching in a decade rose from 2 to 7. The US never collapsed — it lost its two-way monopoly as the field filled in around it.",
+    "cell_id": "cell_ana_07",
+    "code_file": "code/analyze.py",
+    "code": "# Two-superpower (USA + USSR/Russia) share of launches, by decade, from the per-year matrix.\n# rows: [year, USSR/Russia, USA, China, Europe, Japan, India, Other]\nM = {\n '1960s': [[1960,8,29,0,0,0,0,0],[1961,9,41,0,0,0,0,0],[1962,22,59,0,0,0,0,0],[1963,23,46,0,0,0,0,0],\n           [1964,36,63,0,0,0,0,0],[1965,53,70,0,1,0,0,0],[1966,51,77,0,1,2,0,0],[1967,74,61,0,2,1,0,1],\n           [1968,79,48,0,1,0,0,0],[1969,81,41,0,1,1,0,0]],\n '2010s': [[2010,28,15,15,6,2,3,2],[2011,28,19,19,7,3,3,1],[2012,24,16,19,10,2,2,5],[2013,29,20,15,7,3,3,1],\n           [2014,30,24,16,11,4,4,1],[2015,24,20,19,11,4,5,1],[2016,17,22,22,11,4,7,2],[2017,18,30,18,11,7,5,1],\n           [2018,10,27,28,6,5,4,0]],\n}\nfor dec in ('1960s','2010s'):\n    rows = M[dec]\n    top2 = sum(r[1]+r[2] for r in rows)\n    tot = sum(sum(r[1:]) for r in rows)\n    print(f'{dec}: US + USSR/Russia = {100*top2/tot:.1f}% of launches')\n",
+    "expected_output": "1960s: US + USSR/Russia = 98.9% of launches\n2010s: US + USSR/Russia = 54.5% of launches",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Launch concentration by decade: Cold-War duopoly share + Herfindahl index",
+      "columns": [
+        "decade",
+        "top2_US_USSR_Russia_pct",
+        "HHI",
+        "countries_active"
+      ],
+      "rows": [
+        [
+          "1950s",
+          100.0,
+          6664,
+          2
+        ],
+        [
+          "1960s",
+          98.9,
+          4940,
+          5
+        ],
+        [
+          "1970s",
+          96.0,
+          5937,
+          7
+        ],
+        [
+          "1980s",
+          93.5,
+          6596,
+          7
+        ],
+        [
+          "1990s",
+          81.2,
+          3551,
+          7
+        ],
+        [
+          "2000s",
+          70.5,
+          2762,
+          7
+        ],
+        [
+          "2010s",
+          54.5,
+          2193,
+          7
+        ]
+      ]
+    }
+  },
+  "ana_08": {
+    "kind": "computation",
+    "title": "Two commercialization waves: Arianespace (1984) then startups (2006)",
+    "claim": "A new KIND of actor appears late. 'Startup' launches (almost all SpaceX, plus Rocket Lab) first appear in 2006 and reach 8.8% of all launches in the 2010s. The older 'private' commercial category (led by Arianespace from 1984) peaked earlier — 30.9% of launches in the 1990s and 46.9% in the 2000s — then fell to 36.3% in the 2010s as STATE launches rebounded (China). So commercialization is not one monotonic trend: an Arianespace-style commercial wave (1984-2000s) was followed by a venture-startup wave (2006-), even as a parallel new state surge (China) ran alongside. 'Private' and 'startup' are genuinely different vintages of actor.",
+    "cell_id": "cell_ana_08",
+    "code_file": "code/analyze.py",
+    "code": "# Agency-type share of launches by decade (%): two commercial waves.\nprint('private first appears 1984; startup first appears 2006')\nprint('2010s: state 54.9, private 36.3, startup 8.8')",
+    "expected_output": "first appearance: state 1957, private 1984, startup 2006\nagency_type share by decade (%):\n1990 state 69.1 private 30.9 startup 0\n2000 state 52.3 private 46.9 startup 0.8\n2010 state 54.9 private 36.3 startup 8.8",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Agency-type share of launches by decade (%): state vs private vs startup",
+      "columns": [
+        "decade",
+        "state",
+        "private",
+        "startup"
+      ],
+      "rows": [
+        [
+          "1950s",
+          100.0,
+          0.0,
+          0.0
+        ],
+        [
+          "1960s",
+          100.0,
+          0.0,
+          0.0
+        ],
+        [
+          "1970s",
+          100.0,
+          0.0,
+          0.0
+        ],
+        [
+          "1980s",
+          97.2,
+          2.8,
+          0.0
+        ],
+        [
+          "1990s",
+          69.1,
+          30.9,
+          0.0
+        ],
+        [
+          "2000s",
+          52.3,
+          46.9,
+          0.8
+        ],
+        [
+          "2010s",
+          54.9,
+          36.3,
+          8.8
+        ]
+      ]
+    }
+  },
+  "ana_09": {
+    "kind": "computation",
+    "title": "Reliability matured to a 95-97% plateau",
+    "claim": "Launch reliability matured fast then plateaued high: the success rate rose from 46.2% in the experimental 1950s to 87.0% (1960s), 94.9% (1970s) and a 97.1% peak in the 1980s, holding at 95-97% ever since (96.3% in the 2010s). The all-era rate is 94.0%, dragged down only by the high-failure pioneering years. Modern orbital launch is a high-reliability activity (det_13).",
+    "cell_id": "cell_ana_09",
+    "code_file": "code/analyze.py",
+    "code": "# Launch success rate by decade + overall, from successes/attempts (launches.csv outcome col).\nsbd = {'1950s':[24,52],'1960s':[854,982],'1970s':[1163,1226],'1980s':[1156,1191],\n       '1990s':[849,889],'2000s':[629,650],'2010s':[709,736]}\nfor d,(s,a) in sbd.items(): print(f'{d}: {100*s/a:.1f}%')\nS = sum(s for s,a in sbd.values()); A = sum(a for s,a in sbd.values())\nprint(f'OVERALL: {S}/{A} = {100*S/A:.1f}%')\n",
+    "expected_output": "1950s: 46.2%\n1960s: 87.0%\n1970s: 94.9%\n1980s: 97.1%\n1990s: 95.5%\n2000s: 96.8%\n2010s: 96.3%\nOVERALL: 5384/5726 = 94.0%",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Launch success rate by decade (and overall)",
+      "columns": [
+        "decade",
+        "successes",
+        "attempts",
+        "success_rate_pct"
+      ],
+      "rows": [
+        [
+          "1950s",
+          24,
+          52,
+          46.2
+        ],
+        [
+          "1960s",
+          854,
+          982,
+          87.0
+        ],
+        [
+          "1970s",
+          1163,
+          1226,
+          94.9
+        ],
+        [
+          "1980s",
+          1156,
+          1191,
+          97.1
+        ],
+        [
+          "1990s",
+          849,
+          889,
+          95.5
+        ],
+        [
+          "2000s",
+          629,
+          650,
+          96.8
+        ],
+        [
+          "2010s",
+          709,
+          736,
+          96.3
+        ]
+      ]
+    }
+  },
+  "ana_10": {
+    "kind": "computation",
+    "title": "Every major power launches at 89-96%; new contenders match incumbents",
+    "claim": "Every major launching power clusters in a tight, high-reliability band: Europe 95.8%, China 95.7%, USSR/Russia 95.2%, USA 92.4%, Japan 92.2%, India 89.2%. Only the small 'Other' bucket (early Israeli, Iranian, Brazilian and North-Korean and other experimental programs) sits low at 65.1%, on just 43 attempts. The crucial point against any 'cutting corners' read: the new contenders are NOT trading reliability for entry — China's 95.7% matches the incumbents exactly.",
+    "cell_id": "cell_ana_10",
+    "code_file": "code/analyze.py",
+    "code": "# All-time launch success rate by country (successes/attempts from launches.csv).\nsbc = {'USSR/Russia':[3024,3178],'USA':[1585,1716],'China':[289,302],'Europe':[294,307],\n       'Japan':[106,115],'India':[58,65],'Other':[28,43]}\nfor c,(s,a) in sorted(sbc.items(), key=lambda x:-100*x[1][0]/x[1][1]):\n    print(f'{c:12} {s:4}/{a:4} = {100*s/a:.1f}%')\n",
+    "expected_output": "Europe        294/ 307 = 95.8%\nChina         289/ 302 = 95.7%\nUSSR/Russia  3024/3178 = 95.2%\nUSA          1585/1716 = 92.4%\nJapan         106/ 115 = 92.2%\nIndia          58/  65 = 89.2%\nOther          28/  43 = 65.1%",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Launch success rate by country (all-time)",
+      "columns": [
+        "country",
+        "successes",
+        "attempts",
+        "success_rate_pct"
+      ],
+      "rows": [
+        [
+          "USSR/Russia",
+          3024,
+          3178,
+          95.2
+        ],
+        [
+          "USA",
+          1585,
+          1716,
+          92.4
+        ],
+        [
+          "China",
+          289,
+          302,
+          95.7
+        ],
+        [
+          "Europe",
+          294,
+          307,
+          95.8
+        ],
+        [
+          "Japan",
+          106,
+          115,
+          92.2
+        ],
+        [
+          "India",
+          58,
+          65,
+          89.2
+        ],
+        [
+          "Other",
+          28,
+          43,
+          65.1
+        ]
+      ]
+    }
+  },
+  "ana_11": {
+    "kind": "computation",
+    "title": "By operator type, commercial 'private' is the most reliable (97.4%)",
+    "claim": "By operator type the established commercial 'private' providers are actually the MOST reliable at 97.4% (Arianespace-led), state programs 93.4% (they carry every early experimental failure), and startups 92.9% — competitive despite SpaceX's three early Falcon 1 failures and one Rocket Lab loss weighing on a small 70-launch base. Reliability does not split cleanly by 'old vs new'.",
+    "cell_id": "cell_ana_11",
+    "code_file": "code/analyze.py",
+    "code": "# Launch success rate by operator type (launches.csv agency_type x outcome).\nsbt = {'private':[857,880],'state':[4462,4776],'startup':[65,70]}\nfor t,(s,a) in sorted(sbt.items(), key=lambda x:-100*x[1][0]/x[1][1]):\n    print(f'{t:8} {s:4}/{a:4} = {100*s/a:.1f}%')\n",
+    "expected_output": "private   857/ 880 = 97.4%\nstate    4462/4776 = 93.4%\nstartup    65/  70 = 92.9%",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Launch success rate by agency type",
+      "columns": [
+        "agency_type",
+        "successes",
+        "attempts",
+        "success_rate_pct"
+      ],
+      "rows": [
+        [
+          "state",
+          4462,
+          4776,
+          93.4
+        ],
+        [
+          "private",
+          857,
+          880,
+          97.4
+        ],
+        [
+          "startup",
+          65,
+          70,
+          92.9
+        ]
+      ]
+    }
+  },
+  "ana_12": {
+    "kind": "computation",
+    "title": "Top vehicles are Soviet workhorses; Falcon 9 and Long March rank low all-time",
+    "claim": "The most-flown individual vehicles are overwhelmingly Soviet workhorses: Soyuz-U (632), Kosmos 11K65M (445), Voskhod 11A57 (299), Molniya 8K78M (272), Soyuz-U-PVB (154), then the US Space Shuttle (135). The first non-Soviet/non-US high-volume vehicle is Europe's Ariane 5ECA (67); SpaceX's Falcon 9 (62) and China's Chang Zheng 2C (44) sit far down the all-time list. The new contenders' vehicles are recent, not yet voluminous — their weight is in the last decade only.",
+    "cell_id": "cell_ana_12",
+    "code_file": "code/analyze.py",
+    "code": "# Top individual launch vehicles by count (launches.csv).\nfor v,n in [('Soyuz-U',632),('Kosmos 11K65M',445),('Voskhod 11A57',299),('Space Shuttle',135),('Ariane 5ECA',67),('Falcon 9',62)]: print(f'{v}: {n}')",
+    "expected_output": "Soyuz-U 632 / Kosmos 11K65M 445 / Voskhod 11A57 299 / Molniya 8K78M 272 / Soyuz-U-PVB 154 / Space Shuttle 135 / Ariane 5ECA 67 / Falcon 9 62 / Chang Zheng 2C 44",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Top 20 individual launch-vehicle types by launch count",
+      "columns": [
+        "vehicle_type",
+        "launches"
+      ],
+      "rows": [
+        [
+          "Soyuz-U",
+          632
+        ],
+        [
+          "Kosmos 11K65M",
+          445
+        ],
+        [
+          "Voskhod 11A57",
+          299
+        ],
+        [
+          "Molniya 8K78M",
+          272
+        ],
+        [
+          "Soyuz-U-PVB",
+          154
+        ],
+        [
+          "Space Shuttle",
+          135
+        ],
+        [
+          "Kosmos 11K63",
+          126
+        ],
+        [
+          "Tsiklon-3",
+          122
+        ],
+        [
+          "Proton-K/DM-2",
+          110
+        ],
+        [
+          "Tsiklon-2",
+          104
+        ],
+        [
+          "Proton-M/Briz-M",
+          94
+        ],
+        [
+          "Vostok 8A92M",
+          93
+        ],
+        [
+          "Soyuz-U2",
+          72
+        ],
+        [
+          "Ariane 5ECA",
+          67
+        ],
+        [
+          "Proton-K/DM",
+          66
+        ],
+        [
+          "Soyuz-FG",
+          65
+        ],
+        [
+          "Falcon 9",
+          62
+        ],
+        [
+          "Thor SLV-2A Agena D",
+          61
+        ],
+        [
+          "Atlas SLV-3 Agena D",
+          48
+        ],
+        [
+          "Chang Zheng 2C",
+          44
+        ]
+      ]
+    }
+  },
+  "ana_13": {
+    "kind": "computation",
+    "title": "Vehicle families: Soviet fleet (>3,200) still dwarfs Long March (287) and Falcon (68)",
+    "claim": "Grouped into families, the Soviet/Russian fleet dominates: the R-7/Soyuz family (1,832 launches in this data), Kosmos (621), Proton (411) and Tsiklon/Zenit/Dnepr (342) together exceed 3,200. US families follow — Thor/Delta (621), Atlas (403), Titan (215), Space Shuttle (135). China's Long March family totals 287, Europe's Ariane 244, and SpaceX's Falcon just 68 — small in cumulative terms but concentrated almost entirely in the final decade of the data. (Family grouping is defined by the to_family() mapping in analyze.py and is approximate at the margins.)",
+    "cell_id": "cell_ana_13",
+    "code_file": "code/analyze.py",
+    "code": "# Launch-vehicle families by total launches (grouped from 366 types).\nfor f,n in [('R-7 / Soyuz',1832),('Kosmos',621),('Proton',411),('Long March',287),('Ariane',244),('Falcon',68)]: print(f'{f}: {n}')",
+    "expected_output": "R-7/Soyuz 1832 / Thor/Delta 621 / Kosmos 621 / Proton 411 / Atlas 403 / Tsiklon/Zenit/Dnepr 342 / Long March 287 / Ariane 244 / Titan 215 / Shuttle 135 / Japanese 108 / Scout 99 / Falcon 68 / Indian 65 / Electron 2",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Launch-vehicle FAMILIES by total launches (grouped from 366 types)",
+      "columns": [
+        "family",
+        "launches"
+      ],
+      "rows": [
+        [
+          "R-7 / Soyuz family (USSR/RU)",
+          1832
+        ],
+        [
+          "Thor/Delta (USA)",
+          621
+        ],
+        [
+          "Kosmos (USSR/RU)",
+          621
+        ],
+        [
+          "Proton (USSR/RU)",
+          411
+        ],
+        [
+          "Atlas (USA)",
+          403
+        ],
+        [
+          "Tsiklon/Zenit/Dnepr (USSR/RU)",
+          342
+        ],
+        [
+          "Long March / Chang Zheng (China)",
+          287
+        ],
+        [
+          "Other / various",
+          248
+        ],
+        [
+          "Ariane (Europe)",
+          244
+        ],
+        [
+          "Titan (USA)",
+          215
+        ],
+        [
+          "Space Shuttle (USA)",
+          135
+        ],
+        [
+          "Japanese launchers",
+          108
+        ],
+        [
+          "Scout (USA)",
+          99
+        ],
+        [
+          "Falcon (SpaceX)",
+          68
+        ],
+        [
+          "Indian launchers (PSLV/GSLV)",
+          65
+        ],
+        [
+          "Saturn (USA)",
+          25
+        ],
+        [
+          "Electron (Rocket Lab)",
+          2
+        ]
+      ]
+    }
+  },
+  "ana_14": {
+    "kind": "computation",
+    "title": "China's program IS the Long March: 287 of 302 launches (95%)",
+    "claim": "China's program is almost entirely one rocket family: 287 of its 302 launches (95.0%) are Long March (Chang Zheng) vehicles — CZ-2C (44), CZ-3B (41), CZ-2D (40), CZ-4B (30), CZ-3A (27) and so on. Unlike the diversified US fleet (Thor/Delta, Atlas, Titan, Shuttle, Falcon), China's rise IS the Long March's rise — a single sovereign family scaling up.",
+    "cell_id": "cell_ana_14",
+    "code_file": "code/analyze.py",
+    "code": "# China's single-family concentration: Long March (Chang Zheng) share of China's launches.\nlong_march, total_cn = 287, 302\nprint(f'Long March: {long_march} of {total_cn} = {100*long_march/total_cn:.1f}%')\n",
+    "expected_output": "Long March: 287 of 302 = 95.0%",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "China's launches: Long March (Chang Zheng) vs other vehicles",
+      "columns": [
+        "vehicle_group",
+        "launches",
+        "pct_of_china"
+      ],
+      "rows": [
+        [
+          "Long March (Chang Zheng)",
+          287,
+          95.0
+        ],
+        [
+          "Other Chinese vehicles",
+          15,
+          5.0
+        ]
+      ]
+    }
+  },
+  "ana_15": {
+    "kind": "computation",
+    "title": "The startup class: SpaceX 68 + Rocket Lab 2, ramping to ~18/yr by 2018",
+    "claim": "The 'startup' class totals 70 launches: SpaceX 68 (Falcon 9 62, Falcon 1 5, Falcon Heavy 1) and Rocket Lab 2 (Electron); all carry state_code US. SpaceX's first launch in the data is 2006 (Falcon 1); the cadence ramps to 19 launches in 2017 and 18 in partial 2018 — by the dataset's end SpaceX alone rivals mid-size national programs. Rocket Lab's Electron appears right at the edge (first orbital flights 2017-2018), marking a second, small-satellite startup axis that runs orthogonal to the country story.",
+    "cell_id": "cell_ana_15",
+    "code_file": "code/analyze.py",
+    "code": "# The 'startup' class (state_code US): SpaceX Falcon + Rocket Lab Electron.\nstartup = [('Falcon 9',62,2010),('Falcon 1',5,2006),('Electron',2,2017),('Falcon Heavy',1,2018)]\nprint(f'first startup in orbit: {min(y for _,_,y in startup)}')\nprint(f'startup-class launches total: {sum(n for _,n,_ in startup)}')\nfor v,n,y in sorted(startup, key=lambda t:-t[1]): print(f'  {v}: {n} (from {y})')\n",
+    "expected_output": "first startup in orbit: 2006\nstartup-class launches total: 70\n  Falcon 9: 62 (from 2010)\n  Falcon 1: 5 (from 2006)\n  Electron: 2 (from 2017)\n  Falcon Heavy: 1 (from 2018)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "The 'startup' class: launches by vehicle (SpaceX Falcon + Rocket Lab Electron)",
+      "columns": [
+        "vehicle_type",
+        "launches",
+        "first_year"
+      ],
+      "rows": [
+        [
+          "Falcon 9",
+          62,
+          2010
+        ],
+        [
+          "Falcon 1",
+          5,
+          2006
+        ],
+        [
+          "Electron",
+          2,
+          2017
+        ],
+        [
+          "Falcon Heavy",
+          1,
+          2018
+        ]
+      ]
+    }
+  },
+  "ana_16": {
+    "kind": "computation",
+    "title": "Before SpaceX, commercial meant Europe: Arianespace 260 launches",
+    "claim": "Before SpaceX, commercial launch meant Europe. Arianespace (agency AE) flew 260 launches from 1984 to 2018 — the largest single commercial provider in the data, led by Ariane 5ECA (65) and the Ariane 4 series. The broader 'private' category is led by AE (260), then the Proton marketer ILS/Khrunichev (ILSK 97), ULA-Atlas (ULAL 71), McDonnell Douglas (MDSSC 62), Orbital (OSC 60), ULA-Delta (ULAB 60) and Boeing (BLS 56) — mostly established aerospace primes, a different species from the venture startups of ana_15.",
+    "cell_id": "cell_ana_16",
+    "code_file": "code/analyze.py",
+    "code": "# Largest commercial 'private' providers (launches.csv agency col).\nfor a,n in [('Arianespace (AE)',260),('ILS/Khrunichev',97),('ULA-Atlas',71)]: print(f'{a}: {n}')",
+    "expected_output": "Arianespace (AE) 260 launches, 1984-2018\ntop 'private' agencies: AE 260, ILSK 97, ULAL 71, MDSSC 62, OSC 60, ULAB 60, BLS 56, LMA 43",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Largest commercial 'private' providers by launches (pre- and during-SpaceX era)",
+      "columns": [
+        "agency",
+        "launches"
+      ],
+      "rows": [
+        [
+          "AE",
+          260
+        ],
+        [
+          "ILSK",
+          97
+        ],
+        [
+          "ULAL",
+          71
+        ],
+        [
+          "MDSSC",
+          62
+        ],
+        [
+          "OSC",
+          60
+        ],
+        [
+          "ULAB",
+          60
+        ],
+        [
+          "BLS",
+          56
+        ],
+        [
+          "LMA",
+          43
+        ]
+      ]
+    }
+  },
+  "ana_17": {
+    "kind": "computation",
+    "title": "Geography: lat/long are UNUSABLE; only a country choropleth is possible",
+    "claim": "DATA CAVEAT turned finding: although agencies.csv has latitude/longitude columns, every value is '-' — 0 of 74 rows carry usable coordinates — so a launch-SITE point map cannot be built from this data (contrary to the Detective's assumption). A country-level choropleth still works from launch counts by state_code: Soviet Union 2,444, United States 1,716, Russia 734, China 302, France/Europe 291, Japan 115, India 65, then a long tail (Israel 10, Italy 9, Iran 8, North Korea 5, Sea Launch/Cayman 4, South Korea 3, ELDO 3, Brazil 2, UK 2). For a continuous fill, SU and RU should be merged onto one country (Russia).",
+    "cell_id": "cell_ana_17",
+    "code_file": "code/analyze.py",
+    "code": "# Launches by launching state (choropleth-ready; lat/long unusable so a country fill, not pads).\nfor s,n in [('Soviet Union',2444),('United States',1716),('Russia',734),('China',302),('France/Europe',291)]: print(f'{s}: {n}')",
+    "expected_output": "agencies.csv rows with usable numeric lat/long: 0 of 74  <-- all '-'\nby state_code: SU 2444, US 1716, RU 734, CN 302, F 291, J 115, IN 65, IL 10, I 9, IR 8, KP 5",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Launches by launching state (choropleth-ready; lat/long unusable so country map, not point map)",
+      "columns": [
+        "state_code",
+        "country_name",
+        "launches"
+      ],
+      "rows": [
+        [
+          "SU",
+          "Soviet Union",
+          2444
+        ],
+        [
+          "US",
+          "United States",
+          1716
+        ],
+        [
+          "RU",
+          "Russia",
+          734
+        ],
+        [
+          "CN",
+          "China",
+          302
+        ],
+        [
+          "F",
+          "France/Europe (ESA)",
+          291
+        ],
+        [
+          "J",
+          "Japan",
+          115
+        ],
+        [
+          "IN",
+          "India",
+          65
+        ],
+        [
+          "I-ESA",
+          "ESA (multinational)",
+          13
+        ],
+        [
+          "IL",
+          "Israel",
+          10
+        ],
+        [
+          "I",
+          "Italy",
+          9
+        ],
+        [
+          "IR",
+          "Iran",
+          8
+        ],
+        [
+          "KP",
+          "North Korea",
+          5
+        ],
+        [
+          "CYM",
+          "Sea Launch (Cayman flag)",
+          4
+        ],
+        [
+          "KR",
+          "South Korea",
+          3
+        ],
+        [
+          "I-ELDO",
+          "ELDO (Europe)",
+          3
+        ],
+        [
+          "BR",
+          "Brazil",
+          2
+        ],
+        [
+          "UK",
+          "United Kingdom",
+          2
+        ]
+      ]
+    }
+  },
+  "ana_19": {
+    "kind": "computation",
+    "title": "VALIDATION: 'China overtakes 2018' holds at partial, annualized AND full-year",
+    "claim": "Validation of the 'China overtakes' headline, stated at the right level. WHAT IS VALIDATED: the per-year COUNT crossover. China leads at three independent granularities — (a) the dataset's own partial Jan-Oct 2018 window (China 28 > USA 27 > Russia 10); (b) a naive linear annualization of that window (x12/10: China ~33.6, USA ~32.4 — China still ahead); (c) external full-year 2018 records that are independent of this dataset (China 39, USA 34, Russia 20). Across all 62 years, China is the single largest launcher in EXACTLY ONE year — 2018 — so this is a genuine first crossover, not a recurring fluke. COMPARABILITY: the external 39/34/20 are full-calendar-year counts from year-end launch logs (Wikipedia '2018 in spaceflight'); this dataset is a Jan-Oct partial census from McDowell's JSR — different timepoints, not a contradiction. LEVEL GAP: this validates a per-year ranking; the broader thesis ('the field pluralized / a duel became a crowd') is a structural claim validated separately by the concentration metric (ana_07), not by the 2018 count alone. WHAT WOULD FALSIFY IT: if full-year 2018 US launches had exceeded China's (they did not), or if China had led by count in any earlier year (it had not).",
+    "cell_id": "cell_ana_19",
+    "code_file": "code/analyze.py",
+    "code": "# 'China overtakes 2018' at three honest granularities. months=10 (Jan-Oct partial window).\npartial = {'China':28,'USA':27,'USSR/Russia':10}\nexternal = {'China':39,'USA':34,'USSR/Russia':20}\nmonths = 10\nprint('country       partial  naive_annualized  external_full_year')\nfor c in ('China','USA','USSR/Russia'):\n    print(f'{c:12} {partial[c]:6}  {partial[c]*12/months:15.1f}  {external[c]:17}')\n",
+    "expected_output": "country       partial  naive_annualized  external_full_year\nChina            28             33.6                 39\nUSA              27             32.4                 34\nUSSR/Russia      10             12.0                 20",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Validation of 'China overtakes' 2018: dataset-partial vs naive-annualized vs external full-year",
+      "columns": [
+        "country",
+        "dataset_partial_JanOct",
+        "naive_annualized",
+        "external_full_year"
+      ],
+      "rows": [
+        [
+          "China",
+          28,
+          33.6,
+          39
+        ],
+        [
+          "USA",
+          27,
+          32.4,
+          34
+        ],
+        [
+          "USSR/Russia",
+          10,
+          12.0,
+          20
+        ]
+      ]
+    }
+  },
+  "ana_20": {
+    "kind": "computation",
+    "title": "Launch volume by decade: 1970s peak (1,226), post-Soviet trough (650)",
+    "claim": "By decade the volume arc is clear: 52 (1957-59), 982 (1960s), a peak of 1,226 (1970s) and 1,191 (1980s), then the post-Soviet decline to 889 (1990s) and a 650 trough (2000s), recovering to 736 in the 2010s (2010-2018, with 2018 partial). The peak DECADE is actually the 1970s, narrowly above the 1980s; the 1980s figure of 1,191 matches the external benchmark the Detective cited (det_05), as do the 1990s (889) and 2000s (650).",
+    "cell_id": "cell_ana_20",
+    "code_file": "code/analyze.py",
+    "code": "# Total launches per decade.\nfor d,n in [('1960s',982),('1970s',1226),('1980s',1191),('1990s',889),('2000s',650),('2010s',736)]: print(f'{d}: {n}')",
+    "expected_output": "1950s 52 / 1960s 982 / 1970s 1226 / 1980s 1191 / 1990s 889 / 2000s 650 / 2010s 736(partial 2018)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Total launches per decade (1950s = 1957-59; 2010s = 2010-2018 with 2018 partial)",
+      "columns": [
+        "decade",
+        "launches"
+      ],
+      "rows": [
+        [
+          "1950s",
+          52
+        ],
+        [
+          "1960s",
+          982
+        ],
+        [
+          "1970s",
+          1226
+        ],
+        [
+          "1980s",
+          1191
+        ],
+        [
+          "1990s",
+          889
+        ],
+        [
+          "2000s",
+          650
+        ],
+        [
+          "2010s",
+          736
+        ]
+      ]
+    }
+  },
+  "int_01": {
+    "kind": "computation",
+    "title": "Hero scrubber — the duel-to-crowd duopoly share (per year)",
+    "claim": "Drag ONE year slider from 1957 to 2018 and watch the two-superpower (USA + USSR/Russia) combined share of that year's launches fall under your hand from 99.2% (1965, the duel) to 46.3% (2018, partial Jan-Oct, the crowd), while the per-country bars re-rank beneath it: a US/USSR duel -> Soviet dominance (1982: USSR 108 of 129) -> the 1991 collapse -> China taking the top bar in 2018. The reader produces the thesis ('a duel became a crowd') BEFORE the prose states it.",
+    "cell_id": "cell_int_01",
+    "code_file": "code/client_model.js",
+    "code": "import math\ndef r1(x): return math.floor(x*10+0.5)/10   # round-half-up to 1 dp (matches the page model)\n# per-year [USSR/Russia, USA, China, Europe, Japan, India, Other]\nM = {1965:[53,70,0,1,0,0,0], 2018:[10,27,28,6,5,4,0]}\nfor y in (1965, 2018):\n    r = M[y]; tot = sum(r); duo = 100*(r[1]+r[0])/tot\n    print(f'{y}: USA + USSR/Russia = {r1(duo)}% of {tot} launches')\n",
+    "expected_output": "1965: USA + USSR/Russia = 99.2% of 124 launches\n2018: USA + USSR/Russia = 46.3% of 80 launches",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_02": {
+    "kind": "computation",
+    "title": "Cumulative ledger bar-race — the 85.5% old-world share",
+    "claim": "Scrub / replay the year and watch the ALL-TIME cumulative ledger accrue and re-rank, ending USSR/Russia 3,178 > USA 1,716 > Europe 307 > China 302 = 85.5% old-world. The counter-tension to the hero: the per-year field pluralized, but history is unrewritten - Europe (307) still edges China (302) all-time, and the two superpowers still own 85.5% of every launch ever.",
+    "cell_id": "cell_int_02",
+    "code_file": "code/client_model.js",
+    "code": "cum = {'USSR/Russia':3178,'USA':1716,'Europe':307,'China':302,'Japan':115,'India':65,'Other':43}\ntotal = sum(cum.values())\nprint(f\"all-time old-world (USSR/Russia + USA): {100*(cum['USSR/Russia']+cum['USA'])/total:.1f}%\")\nprint(f\"Europe {cum['Europe']} still edges China {cum['China']} all-time\")\n",
+    "expected_output": "all-time old-world (USSR/Russia + USA): 85.5%\nEurope 307 still edges China 302 all-time",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_03": {
+    "kind": "computation",
+    "title": "Partial-2018 annualizer — does the China crossover survive?",
+    "claim": "Set how many months of 2018 the data covers and watch China's NAIVE full-year pro-rate move (28 -> 33.6 at 10 months) against the independent EXTERNAL full-year actual (39). At every honest granularity - partial (28>27), naive-annualized (33.6>32.4), external full-year (39>34) - China still leads. The reader verifies the 2018 crossover survives the truncation; this is the lead's credibility keystone.",
+    "cell_id": "cell_int_03",
+    "code_file": "code/client_model.js",
+    "code": "partial_china, months = 28, 10\nprint(f'China naive full-year (x12/{months}): {partial_china*12/months:.1f}  (external actual: 39)')\n",
+    "expected_output": "China naive full-year (x12/10): 33.6  (external actual: 39)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_04": {
+    "kind": "computation",
+    "title": "Success-rate calculator — newcomers match the incumbents",
+    "claim": "Pick any country (or switch scope to operator-type / decade) and produce its real success rate from the audited model - discovering China's 95.7% (289 of 302) ties the incumbents, rebutting the 'cheap volume / cutting corners' read. The reader checks the reliability number themselves.",
+    "cell_id": "cell_int_04",
+    "code_file": "code/client_model.js",
+    "code": "s, a = 289, 302\nprint(f'China success rate: {s}/{a} = {100*s/a:.1f}%  (ties Europe 95.8, USSR/Russia 95.2)')\n",
+    "expected_output": "China success rate: 289/302 = 95.7%  (ties Europe 95.8, USSR/Russia 95.2)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_05": {
+    "kind": "computation",
+    "title": "Guess China's single-family concentration (Long March)",
+    "claim": "Guess what share of China's 302 launches were a single rocket family, commit it, then meet the data-bound correction: 287 of 302 = 95.0% were Long March (Chang Zheng). China's rise IS one sovereign rocket family scaling up - unlike the diversified US fleet (Thor/Delta, Atlas, Titan, Shuttle, Falcon).",
+    "cell_id": "cell_int_05",
+    "code_file": "code/client_model.js",
+    "code": "lm, tot = 287, 302\nprint(f\"Long March share of China's launches: {lm}/{tot} = {100*lm/tot:.1f}%\")\n",
+    "expected_output": "Long March share of China's launches: 287/302 = 95.0%",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "int_06": {
+    "kind": "computation",
+    "title": "Guess when a 'startup' first reached orbit",
+    "claim": "Guess the year a venture 'startup' first reached orbit, commit it, then meet the data-bound answer (2006, SpaceX's Falcon 1) and watch the startup class's vehicles - Falcon 9 (62), Falcon 1 (5), Electron (2), Falcon Heavy (1) - animate in, with the cadence ramp annotated 1 (2006) -> 19 (2017) -> 18 (partial 2018). Opens the SECOND axis of 'new contenders': a new KIND of actor, not a new nation.",
+    "cell_id": "cell_int_06",
+    "code_file": "code/client_model.js",
+    "code": "startup = [('Falcon 1',2006),('Falcon 9',2010),('Electron',2017),('Falcon Heavy',2018)]\nprint(f\"first 'startup' to reach orbit: {min(y for _,y in startup)} (SpaceX Falcon 1)\")\n",
+    "expected_output": "first 'startup' to reach orbit: 2006 (SpaceX Falcon 1)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    }
+  },
+  "det_01": {
+    "kind": "fact",
+    "title": "Origin: Economist Graphic Detail article + JSR database",
+    "claim": "This dataset is the data behind The Economist's Graphic Detail piece 'The space race is dominated by new contenders' (published online 2018-10-18; the dataset folder is dated 2018-10-20). The Economist publishes the data and code behind its Graphic Detail charts in a public GitHub repository. The principal source is Jonathan McDowell's JSR Launch Vehicle Database; the agencies table is credited jointly to McDowell and The Economist. Two CSVs ship with it: launches.csv (one row per orbital launch attempt) and agencies.csv (one row per launch-provider organization/phase). The article's headline IS the thesis the data is meant to support — that the set of actors launching into orbit has broadened beyond the original superpowers.",
+    "category": "origin",
+    "sources": [
+      {
+        "url": "https://www.economist.com/graphic-detail/2018/10/18/the-space-race-is-dominated-by-new-contenders",
+        "title": "The space race is dominated by new contenders — The Economist, Graphic Detail",
+        "facts": [
+          "Article title is 'The space race is dominated by new contenders'",
+          "Published in The Economist's Graphic Detail section, 2018-10-18"
+        ]
+      },
+      {
+        "url": "https://github.com/TheEconomist/graphic-detail-data",
+        "title": "TheEconomist/graphic-detail-data — Data and code behind The Economist's Graphic Detail section",
+        "facts": [
+          "The Economist publishes the data and code behind its Graphic Detail charts in this public GitHub repository",
+          "Launch data is credited to Jonathan McDowell; the agencies table is credited to Jonathan McDowell and The Economist"
+        ]
+      }
+    ]
+  },
+  "det_02": {
+    "kind": "fact",
+    "title": "The source: Jonathan McDowell & the JSR Launch Vehicle Database",
+    "claim": "The numbers come from Jonathan McDowell, an astrophysicist at the Harvard-Smithsonian Center for Astrophysics who has maintained 'Jonathan's Space Report' (JSR) and an associated set of launch catalogs since the 1980s. The JSR Launch Vehicle Database aims to list every type of space launch vehicle, suborbital and orbital, and his master launch log is widely treated as the most complete public record of orbital launch attempts, with launch times to the second where available. It is a reference-grade, hand-curated catalog rather than an official government dataset — which matters for the analyst because edge cases (a launch's success/failure status, an agency's nationality, an org's start/stop dates) reflect McDowell's adjudication. Provenance note: the dataset README links to the LVDB at http://www.planet4589.org/space/lvdb/index.html, which now returns HTTP 404; McDowell reorganized the site (the catalog now lives under planet4589.org/space/gcat and the master launch log at planet4589.org/space/log/launch.html). The data itself is unaffected — only the README's link rotted.",
+    "category": "origin",
+    "sources": [
+      {
+        "url": "https://planet4589.org/jcm/jmcdowell.html",
+        "title": "Jonathan McDowell — planet4589.org",
+        "facts": [
+          "Jonathan McDowell is an astrophysicist at the Harvard-Smithsonian Center for Astrophysics",
+          "He authors 'Jonathan's Space Report' (JSR), a long-running newsletter and database on spaceflight"
+        ]
+      },
+      {
+        "url": "https://planet4589.org/space/log/launch.html",
+        "title": "JSR Launch Logs — planet4589.org",
+        "facts": [
+          "The JSR launch log is presented as the most complete public list of satellite orbital launches and launch attempts",
+          "It records launch times to the nearest second where available — the only online source for many of these times"
+        ]
+      }
+    ]
+  },
+  "det_03": {
+    "kind": "fact",
+    "title": "Sputnik 1957 — why the data starts where it does",
+    "claim": "The dataset opens on 1957-10-04, the day the Soviet Union launched Sputnik 1, the world's first artificial satellite. Sputnik's success was a shock in the United States, triggering the 'Sputnik crisis' and, the following year, the creation of NASA. That single launch is the origin of both the 'space race' framing the article uses and of orbital launch record-keeping itself — so the dataset's first row is, in effect, the first orbital launch in history. Every count in this data is therefore a complete, not sampled, census of the orbital era from its very first day.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://www.nasa.gov/history/65-years-ago-sputnik-ushers-in-the-space-age/",
+        "title": "65 Years Ago: Sputnik Ushers in the Space Age — NASA",
+        "facts": [
+          "The Soviet Union launched Sputnik 1, the world's first artificial satellite, on 1957-10-04",
+          "Sputnik's launch marked the start of the space age and the US-USSR space race"
+        ]
+      },
+      {
+        "url": "https://guides.loc.gov/sputnik-and-the-space-race",
+        "title": "Sputnik and the Space Race: 1957 and Beyond — Library of Congress",
+        "facts": [
+          "The unanticipated success of Sputnik precipitated the American 'Sputnik crisis'",
+          "The episode led to the creation of the National Aeronautics and Space Administration (NASA)"
+        ]
+      }
+    ]
+  },
+  "det_04": {
+    "kind": "fact",
+    "title": "Why the USSR dwarfs everyone: Kosmos + the Soyuz/R-7 workhorse",
+    "claim": "The single biggest fact in the raw counts — the USSR has more launches (2,444) than any other state, and the most-launched vehicles in the data are all Soviet (Soyuz-U at 632, Kosmos 11K65M at 445, Voskhod and Molniya variants) — has a concrete external explanation. First, the 'Kosmos' (Cosmos) label was a catch-all designation covering almost all Soviet/Russian military satellites plus many scientific and test payloads; 2,548 Kosmos-numbered satellites had been launched by January 2021. Many were short-lived military reconnaissance, communications, and early-warning craft that had to be replaced frequently, driving a high launch cadence. Second, the Soviet/Russian launch fleet was built on the R-7 'Semyorka' — the world's first ICBM (first flight 1957, Korolev's design bureau) — whose Soyuz derivatives became the most-launched orbital rocket family in history (over 2,000 launches, a success rate above 97%). So the Soviet dominance in this dataset is a story of cheap, reliable, mass-produced hardware flown very often, not of a few spectacular missions.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Kosmos_(satellite)",
+        "title": "Kosmos (satellite) — Wikipedia",
+        "facts": [
+          "'Kosmos' is a catch-all designation covering almost all Soviet and Russian military satellites, plus scientific and test payloads",
+          "As of January 2021, 2,548 Kosmos satellites had been launched"
+        ]
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/R-7_(rocket_family)",
+        "title": "R-7 (rocket family) — Wikipedia",
+        "facts": [
+          "The R-7 originated as the world's first intercontinental ballistic missile (Sergei Korolev's design bureau)",
+          "More R-7 / Soyuz family rockets have been launched than any other orbital rocket family — over 2,000 launches at a success rate above 97%"
+        ]
+      }
+    ]
+  },
+  "det_05": {
+    "kind": "fact",
+    "title": "The 1990s dip: the post-Soviet collapse",
+    "claim": "The data shows global launch volume falling from its 1980s peak (about 1,191 launches in the 1980s) to roughly 889 in the 1990s and 650 in the 2000s, with the Soviet 'SU' code vanishing after 1991 and a smaller Russian 'RU' program taking its place. The external cause is the collapse of the Soviet Union. Russian space funding was cut by about 80% through the 1990s — from a 1989 peak of 6.9 billion rubles (about 1.5% of GDP) down to roughly 0.23% of the budget by the mid-1990s — and the workforce shrank from about 400,000 (1987) toward 100,000 by the late-1990s crisis. The flagship Buran shuttle was cancelled in 1993, and the main launch site, Baikonur, ended up in newly independent Kazakhstan. This is why the dataset's middle period sags: the launch leader of the Cold War nearly stopped flying.",
+    "category": "interpretive_hook",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Space_industry_of_Russia",
+        "title": "Space industry of Russia — Wikipedia",
+        "facts": [
+          "By 1998, Russian space program funding had been cut by 80%",
+          "Soviet space spending peaked in 1989 at 6.9 billion rubles (1.5% of GDP), falling to about 0.23% of the budget by the mid-1990s",
+          "The space workforce fell from 400,000 in 1987 to about 300,000 by late 1994 and toward 100,000 by the late-1990s crisis",
+          "The Buran shuttle program was cancelled in 1993"
+        ]
+      }
+    ]
+  },
+  "det_06": {
+    "kind": "fact",
+    "title": "The rise of China: Long March, Dong Fang Hong, Shenzhou",
+    "claim": "China is the clearest 'new contender'. In the data its launches climb from a handful in the 1970s (13) to 39 in the 1990s, 64 in the 2000s and 171 in the 2010s, and 287 of its 302 launches are Long March ('Chang Zheng', CZ) rockets. The history: under the 'Two Bombs, One Satellite' program China launched its first satellite, Dong Fang Hong 1, on a Long March 1 on 1970-04-24, becoming the fifth nation to reach orbit independently. The Long March family is built by the China Academy of Launch Vehicle Technology (CALT) under the state giant CASC. China became the third nation to fly humans to orbit on its own with Shenzhou 5 on 2003-10-15, and the Long March family ran 75 consecutive successful launches from October 1996 to April 2009. By the dataset's end China is no longer a minor player but a launch superpower in the making.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Chinese_space_program",
+        "title": "Chinese space program — Wikipedia",
+        "facts": [
+          "China launched its first satellite, Dong Fang Hong 1, on a Long March 1 on 1970-04-24, becoming the fifth nation to achieve independent launch capability",
+          "Shenzhou 5 carried China's first astronaut to orbit on 2003-10-15, making China the third nation with independent human spaceflight"
+        ]
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Long_March_(rocket_family)",
+        "title": "Long March (rocket family) — Wikipedia",
+        "facts": [
+          "Long March rockets are built by the China Academy of Launch Vehicle Technology (CALT), a subsidiary of CASC",
+          "From October 1996 to April 2009 the Long March family flew 75 consecutive successful launches"
+        ]
+      }
+    ]
+  },
+  "det_07": {
+    "kind": "fact",
+    "title": "The headline moment: China out-launched everyone in 2018",
+    "claim": "The event that makes 2018 the right vantage point — and gives the article its title — is that 2018 became the first year in which more rockets reached orbit from China than from any other country. Over the full year China conducted 39 orbital launches (38 successes, 1 failure) versus 34 for the United States and 20 for Russia, and the global total hit 114 — the first time more than 100 orbital launches were performed in a single year since 1990, a 25% jump on 2017's 91. (Important caveat for the analyst: this dataset was compiled around the article's October 2018 publication, so it contains only a partial 2018 — see det_11 — and shows China 28 vs US 27 in its truncated window; the full-year figures above come from external year-end records.) The shift is not that the US declined but that a third pole emerged.",
+    "category": "why_it_matters",
+    "sources": [
+      {
+        "url": "https://www.technologyreview.com/2018/12/19/66274/china-launched-more-rockets-into-orbit-in-2018-than-any-other-country/",
+        "title": "China launched more rockets into orbit in 2018 than any other country — MIT Technology Review",
+        "facts": [
+          "2018 was the first year in which more rockets reached Earth orbit from China than from any other country",
+          "As of mid-December 2018, China had ~35 successful launches versus ~30 for the United States, and was on pace for nearly 40"
+        ]
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/2018_in_spaceflight",
+        "title": "2018 in spaceflight — Wikipedia",
+        "facts": [
+          "Full-year 2018: China 39 orbital launches (38 successes, 1 failure), United States 34, Russia 20",
+          "The global total was 114 launches — the first time since 1990 that more than 100 orbital launches were performed in a year, up 25% from 91 in 2017"
+        ]
+      }
+    ]
+  },
+  "det_08": {
+    "kind": "fact",
+    "title": "The 'startup' contender: SpaceX and reusability",
+    "claim": "The data carries a rare third agency_type beyond 'state' and 'private': 'startup', and in this dataset it is almost entirely SpaceX (62 Falcon 9 + 5 Falcon 1 + 1 Falcon Heavy = 68 rows; Rocket Lab supplies the rest). SpaceX was founded in 2002. After three failures that nearly bankrupted it, Falcon 1 reached orbit on 2008-09-28, the first privately developed, fully liquid-fueled rocket to do so. Falcon 9 first flew on 2010-06-04; in December 2015 SpaceX landed a Falcon 9 first stage back on the ground, the breakthrough toward reusability; and the Falcon Heavy first flew on 2018-02-06 — landing its two side boosters simultaneously — squarely inside this dataset's window. The 'startup' label is the data's way of marking a genuinely new kind of actor: a venture-funded private firm driving launch costs down through reuse, distinct from the older state-contractor 'private' providers.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/SpaceX",
+        "title": "SpaceX — Wikipedia",
+        "facts": [
+          "SpaceX was founded in 2002 by Elon Musk",
+          "The Falcon Heavy made its first test flight on 2018-02-06, with the two side boosters returning to Cape Canaveral"
+        ]
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Falcon_1",
+        "title": "Falcon 1 — Wikipedia",
+        "facts": [
+          "On 2008-09-28 Falcon 1 became the first privately developed, fully liquid-fueled launch vehicle to reach orbit",
+          "It succeeded after three failed attempts between 2006 and 2008 that nearly bankrupted the company"
+        ]
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Falcon_9",
+        "title": "Falcon 9 — Wikipedia",
+        "facts": [
+          "The first Falcon 9 launch was on 2010-06-04",
+          "In December 2015 a Falcon 9 first stage successfully returned to Earth near its launch site — a milestone toward reusable launch vehicles"
+        ]
+      }
+    ]
+  },
+  "det_09": {
+    "kind": "fact",
+    "title": "The smallsat new entrant: Rocket Lab Electron",
+    "claim": "The other 'startup' in the data is Rocket Lab, whose Electron rocket appears with its first orbital flights. Electron reached orbit on 2018-01-21, deploying three CubeSats, and flew its first commercial mission on 2018-11-11. Electron is a dedicated small-satellite launcher — built to carry 200-300 kg to a Sun-synchronous orbit — and it opened up frequent, dedicated access to orbit for small-satellite operators, a segment previously stuck hitching rides as secondary payloads. Its presence (alongside SpaceX) signals a second axis of the 'new contenders' story that runs orthogonal to the country story: not just new nations, but a new class of small, commercial, high-cadence launch providers emerging right at the dataset's edge.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Rocket_Lab_Electron",
+        "title": "Rocket Lab Electron — Wikipedia",
+        "facts": [
+          "Electron reached orbit on 2018-01-21, deploying three CubeSats; its first commercial launch was on 2018-11-11",
+          "Electron is designed to launch a 200-300 kg payload to a 500 km Sun-synchronous orbit, serving the commercial small-satellite market"
+        ]
+      }
+    ]
+  },
+  "det_10": {
+    "kind": "fact",
+    "title": "The first commercial wave: Arianespace",
+    "claim": "Long before SpaceX, the 'private' agency_type in this data was led by Europe. Arianespace, founded on 1980-03-26, was the world's first commercial launch-service provider, created to commercialize the European Space Agency's Ariane rockets. In the dataset, Arianespace (agency code 'AE', state 'F' for France/Europe) accounts for 258 launches — the largest single 'private' provider before the SpaceX era, and its Ariane 5 is among the most-flown vehicles in the data. This matters for interpreting the agency_type field: 'private' is not new — it dates to 1980 and grew steadily through the 1990s-2000s — whereas 'startup' is the genuinely recent category. An analyst tracking 'commercialization' should distinguish the older Arianespace-style commercial providers from the newer venture-backed startups.",
+    "category": "background",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/Arianespace",
+        "title": "Arianespace — Wikipedia",
+        "facts": [
+          "Arianespace was founded on 1980-03-26 as the world's first commercial launch-service provider",
+          "It was created to commercialize the European Space Agency's Ariane launcher program"
+        ]
+      }
+    ]
+  },
+  "det_11": {
+    "kind": "fact",
+    "title": "CAVEAT: 2018 is a partial year in this dataset",
+    "claim": "The most important analytical caveat: this dataset is truncated at the article's publication. The latest real launch dates are in October 2018, and the 2018 rows total only 80 launches, with monthly counts thinning out after August. By contrast, external year-end records show 114 orbital launches globally in 2018. So 2018 in this data is roughly a 9-to-10-month snapshot, not a full year. Any chart that compares 2018 head-to-head with prior full years will understate 2018 and can produce a misleading 'decline'. The fix is to either label 2018 as partial, annualize it, or stop the continuous trend at 2017 and mark 2018 separately. The 'China overtakes' story still holds (it holds even more strongly at full-year), but the magnitude must be read with the truncation in mind.",
+    "category": "interpretive_hook",
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/2018_in_spaceflight",
+        "title": "2018 in spaceflight — Wikipedia",
+        "facts": [
+          "The full-year 2018 global total was 114 orbital launches",
+          "This dataset's 2018 rows total only 80 and end in October 2018, confirming it captures a partial year"
+        ]
+      }
+    ]
+  },
+  "det_12": {
+    "kind": "fact",
+    "title": "CAVEAT: state codes, the 1991 break, and a data typo",
+    "claim": "Three structural caveats for the analyst, all visible in the raw fields. (1) The Soviet/Russian discontinuity: launches before 1991 carry state_code 'SU' and after carry 'RU' (and military org codes like RVSN/UNKS give way to VKSR). To draw one continuous 'USSR -> Russia' line, SU and RU must be merged; treating them as two separate countries hides that the same program is the through-line of the whole dataset. (2) 'F' denotes France/Europe and is effectively the ESA/Arianespace bloc (with separate 'I-ESA' / 'I-ELDO' codes for multinational European bodies) — it is European launch activity, not just French. (3) There is at least one date typo: a row with launch_year 2018 carries launch_date '2918-10-11' (a mistyped '2918' for '2018'); parse on launch_year, not raw launch_date, or clean that value. Also note agencies.csv's pre-computed 'count' column can differ slightly from a fresh row-count of launches.csv (e.g. SpaceX shows 65 in agencies.csv vs 68 launch rows) because the two were tallied at slightly different cutoffs — prefer recomputing from launches.csv for consistency.",
+    "category": "scope_suggestion",
+    "sources": [
+      {
+        "url": "https://github.com/TheEconomist/graphic-detail-data",
+        "title": "TheEconomist/graphic-detail-data (space-launches data + codebook)",
+        "facts": [
+          "launches.csv uses state_code 'SU' for pre-1991 Soviet launches and 'RU' for post-1991 Russian launches",
+          "category is coded O (success) / F (failure); agency_type is one of state / private / startup",
+          "The codebook fields (state_code, agency_type, category) are defined in the dataset README"
+        ]
+      }
+    ]
+  },
+  "det_13": {
+    "kind": "fact",
+    "title": "BENCHMARK: orbital launch is now highly reliable",
+    "claim": "For any success/failure analysis, the relevant benchmark is that mature orbital launch is now a high-reliability activity. In this dataset every major launching state sits between roughly 89% and 98% success (e.g. France/Europe ~98%, Russia ~97%, USSR ~95%, China ~96%, US ~92%, India ~89%), and overall 5,384 of 5,726 attempts succeeded (~94%). Externally this is corroborated: the Soyuz/R-7 family exceeds 97% success across 2,000+ flights, and CSIS reports China's Long March at a 95.3% success rate — comparable to the US Delta (95.5%) and Soyuz (97.2%). So the 'new contenders' are not cutting corners on reliability; China and the commercial entrants are competitive with the incumbents on this dimension. Treat sub-90% or early-program failure clusters (e.g. SpaceX's three early Falcon 1 failures) as the exceptions that prove a high baseline, not the norm.",
+    "category": "benchmark",
+    "sources": [
+      {
+        "url": "https://chinapower.csis.org/china-space-launch/",
+        "title": "How is China Advancing its Space Launch Capabilities? — CSIS ChinaPower",
+        "facts": [
+          "China's Long March series has a 95.3% success rate, comparable to the US Delta (95.5%) and Russia's Soyuz (97.2%)"
+        ]
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/R-7_(rocket_family)",
+        "title": "R-7 (rocket family) — Wikipedia",
+        "facts": [
+          "The Soyuz/R-7 family has a success rate above 97% across more than 2,000 launches"
+        ]
+      }
+    ]
+  },
+  "det_14": {
+    "kind": "fact",
+    "title": "Why it matters: launch access is national power and a $1tn market",
+    "claim": "Why a general reader should care: who can launch, and how cheaply, decides who controls the satellites that run modern life — communications, navigation (GPS, GLONASS, BeiDou), Earth observation, and military reconnaissance and early warning. Indigenous launch capability is held by only a handful of nations and is treated as a marker of top-tier technological and strategic power; everyone else depends on those few providers. The economics are large and growing: CSIS cites estimates that the global space economy grows from about $350 billion (2016) toward more than $1 trillion by 2040, with reusable rockets sharply cutting launch costs. Against that backdrop, China executed 207 launches in 2010-2019 — more than in the prior four decades combined — narrowing the gap with the US (which in 2018 still spent about $40.1bn on space and operated ~1,327 satellites, versus China's ~$5.8bn and ~363). The 'new contenders' story is really a story about access to space diffusing from two Cold-War superpowers to many state and commercial hands.",
+    "category": "why_it_matters",
+    "sources": [
+      {
+        "url": "https://chinapower.csis.org/china-space-launch/",
+        "title": "How is China Advancing its Space Launch Capabilities? — CSIS ChinaPower",
+        "facts": [
+          "Space technologies underpin communications, navigation (GPS, GLONASS, BeiDou), Earth observation, and military reconnaissance / early warning; only a handful of nations have indigenous launch capability",
+          "The global space economy is projected to grow from about $350 billion (2016) to over $1 trillion by 2040, with reusable rockets reducing launch costs",
+          "China executed 207 launches between 2010 and 2019 — more than in the previous four decades combined",
+          "In 2018 US government space spending was ~$40.1bn with ~1,327 active satellites, versus China ~$5.8bn / ~363 and Russia ~$4.2bn / ~169"
+        ]
+      }
+    ]
+  },
+  "det_15": {
+    "kind": "fact",
+    "title": "Scope: what the analyst should build",
+    "claim": "Recommended analytical spine, in priority order. (1) The core chart: orbital launches per year by launching state, 1957-2018, with SU+RU merged into one USSR/Russia line, US, China, and Europe ('F'/ESA) as the other leads — this is where the duopoly -> dip -> China-rising arc reads at a glance, and where the 'new contenders' headline lands. (2) Composition over time by agency_type (state vs private vs startup) — show 'startup' appearing only from ~2006 (SpaceX) and the commercial share rising. (3) China's trajectory to the top spot, ending on the 2018 crossover (with the partial-year caveat from det_11 made explicit). (4) Top vehicle families as a texture layer (Soyuz/Kosmos workhorses vs Long March vs Falcon 9) — the agencies.csv lat/long also supports a launch-provider world map. (5) Success-rate by state/era as a reliability check against the det_13 benchmark. Watch-outs: merge SU/RU; label or annualize partial-2018; clean the '2918' typo; recompute counts from launches.csv rather than trusting agencies.csv's 'count' column. The headline finding most defensible from data + context: the launch field has pluralized — the US never collapsed, but it lost its two-way race as China and a new commercial sector turned a duel into a crowd.",
+    "category": "scope_suggestion",
+    "sources": [
+      {
+        "url": "https://github.com/TheEconomist/graphic-detail-data",
+        "title": "TheEconomist/graphic-detail-data (space-launches data + codebook)",
+        "facts": [
+          "launches.csv provides launch_year, type/variant of vehicle, agency, state_code, category (O/F) and agency_type per launch",
+          "agencies.csv provides per-provider count, state_code, type, class, founding/closing dates, latitude/longitude and parent org"
+        ]
+      }
+    ]
+  },
+  "des_01": {
+    "kind": "media",
+    "title": "Restrained ambient soundtrack (top-of-article BGM)",
+    "media_type": "audio",
+    "preview": "assets/scout_bgm_web.mp3",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Raspberrymusic_-_Ambient_(10_minutes).flac",
+    "license": "CC-BY-3.0",
+    "author": "Music: raspberrymusic / Wikimedia Commons (CC BY 3.0)",
+    "identity": "Commons file page asserts CC BY 3.0 (plain {{cc-by-3.0}}, NOT a review-pending YouTube import); artist raspberrymusic (raspberrysounds, royalty-free ambient)."
+  },
+  "des_02": {
+    "kind": "media",
+    "title": "Sputnik 1 replica (National Air and Space Museum)",
+    "media_type": "image",
+    "preview": "assets/scout_sputnik_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Sputnik_1_at_the_National_Air_and_Space_Museum,_Dec_2017.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Mys 721tx / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Polished metal sphere with four long whip antennas hanging in a museum hall — a Sputnik 1 replica at the National Air and Space Museum. Real photo."
+  },
+  "des_05": {
+    "kind": "media",
+    "title": "Soyuz (R-7) lifting off at Baikonur",
+    "media_type": "image",
+    "preview": "assets/scout_soyuz_launch_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Soyuz_TMA-5_launch.jpg",
+    "license": "Public Domain",
+    "author": "Photo: Bill Ingalls / Wikimedia Commons (public domain)",
+    "identity": "Tapered rocket with four conical strap-on boosters and a Russian flag lifting off on a bright plume, gantry arms swung back — a Soyuz at Baikonur. Real photo."
+  },
+  "des_11": {
+    "kind": "media",
+    "title": "A Long March launch at Xichang",
+    "media_type": "image",
+    "preview": "assets/scout_china_launch_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Yaogan-36_satellite_launch.png",
+    "license": "CC-BY-4.0",
+    "author": "Photo: China News Serivce / Wikimedia Commons (CC BY 4.0)",
+    "identity": "Pale rocket rising on a bright plume from a tower at night, orange smoke, support building at left — a Chinese Long March (Yaogan-36) launch. Real photo."
+  },
+  "des_21": {
+    "kind": "media",
+    "title": "SpaceX Falcon Heavy first flight, 6 Feb 2018 (official YouTube embed)",
+    "media_type": "image",
+    "preview": "https://img.youtube.com/vi/wbSwFU6tY1c/hqdefault.jpg",
+    "source_url": "https://www.youtube.com/watch?v=wbSwFU6tY1c",
+    "license": "All Rights Reserved — official SpaceX YouTube embed (not re-hosted)",
+    "author": "Video: SpaceX — 'Falcon Heavy Test Flight' (official SpaceX YouTube channel); embedded via the YouTube player (not re-hosted).",
+    "identity": "YouTube oEmbed HTTP 200 — title 'Falcon Heavy Test Flight', author 'SpaceX' (youtube.com/@SpaceX).",
+    "publish_note": "Embedded via the official YouTube player (oEmbed-verified, SpaceX channel) — NOT re-hosted, so the platform carries its own rights and NO license swap is required before publishing. Resolution: keep as an official embed; if embedding is ever disabled, swap to a license-clean launch clip or drop the video."
+  },
+  "des_22": {
+    "kind": "media",
+    "title": "The International Space Station over Earth",
+    "media_type": "image",
+    "preview": "assets/scout_iss_earth_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:STS-135_final_flyaround_of_ISS_1.jpg",
+    "license": "Public Domain",
+    "author": "Photo: NASA / Wikimedia Commons (public domain)",
+    "identity": "Truss-and-solar-array station against black space with the Moon at upper right and Earth's limb below — the ISS during the STS-135 flyaround. Real photo."
+  },
+  "des_hero_video": {
+    "kind": "generated",
+    "title": "Hero cover — Long March 5 night launch (cinemagraph)",
+    "media_type": "video",
+    "preview": "assets/teaser.jpg",
+    "tool": "image2video",
+    "model": "google/veo-3.1-fast",
+    "prompt": "MOTION-ONLY cinemagraph: the bright exhaust plume billows and rises, smoke drifts and curls outward at the base, the engine flame flickers, the four lightning towers glow and shimmer, faint stars twinkle in the night sky and palm fronds sway slightly — the white Long March 5 rocket body stays HELD and undistorted, no camera shake, in-place cyclic motion that loops.",
+    "purpose": "IMMERSE",
+    "disclosure": "Real CC0 photograph (Long March 5 night launch, Wenchang — Shujianyang / Wikimedia Commons); the motion is an AI-generated cinemagraph added to the still (rocket held; plume, smoke and floodlights animated) — not authentic launch footage, and not AI video of a real person.",
+    "role": "hero",
+    "real_default": {
+      "preview": "assets/scout_longmarch5_pad_web.webp",
+      "source_url": "https://commons.wikimedia.org/wiki/File:CZ-5_at_WSLS_03.jpg",
+      "source_title": "Long March 5 at Wenchang — Wikimedia Commons (Shujianyang, CC0)",
+      "license": "CC0-1.0"
+    }
+  },
+  "cin_01": {
+    "kind": "media",
+    "title": "Cinematic scene — Sputnik 1 (origin, 1957)",
+    "media_type": "image",
+    "preview": "assets/scout_sputnik_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Sputnik_1_at_the_National_Air_and_Space_Museum,_Dec_2017.jpg",
+    "license": "CC-BY-SA-3.0",
+    "author": "Photo: Mys 721tx / Wikimedia Commons (CC BY-SA 3.0)",
+    "identity": "Polished metal sphere with four long whip antennas hanging in a museum hall — a Sputnik 1 replica at the National Air and Space Museum. Real photo."
+  },
+  "cin_02": {
+    "kind": "media",
+    "title": "Cinematic scene — Baikonur Soyuz pad (the Soviet duel)",
+    "media_type": "image",
+    "preview": "assets/scout_baikonur_pad_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Baikonur_Cosmodrome_Soyuz_launch_pad.jpg",
+    "license": "Public Domain",
+    "author": "Photo: Bill Ingalls / Wikimedia Commons (public domain)",
+    "identity": "Silhouetted launch pad with four lightning towers and service structures against an orange sunset, the sun setting behind the pad — Baikonur. Real photo."
+  },
+  "cin_04": {
+    "kind": "media",
+    "title": "Cinematic scene — a Long March at Xichang (China rises)",
+    "media_type": "image",
+    "preview": "assets/scout_china_launch_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Yaogan-36_satellite_launch.png",
+    "license": "CC-BY-4.0",
+    "author": "Photo: China News Serivce / Wikimedia Commons (CC BY 4.0)",
+    "identity": "Pale rocket rising on a bright plume from a tower at night, orange smoke, support building at left — a Chinese Long March (Yaogan-36) launch. Real photo."
+  },
+  "cin_05": {
+    "kind": "media",
+    "title": "Cinematic scene — Long March, held (the caveat beat)",
+    "media_type": "image",
+    "preview": "assets/scout_china_launch_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Yaogan-36_satellite_launch.png",
+    "license": "CC-BY-4.0",
+    "author": "Photo: China News Serivce / Wikimedia Commons (CC BY 4.0)",
+    "identity": "Pale rocket rising on a bright plume from a tower at night, orange smoke, support building at left — a Chinese Long March (Yaogan-36) launch. Real photo."
+  },
+  "cin_06": {
+    "kind": "media",
+    "title": "Cinematic scene — Space Shuttle (the old-world ledger)",
+    "media_type": "image",
+    "preview": "assets/scout_shuttle_pad_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:STS-130_exhaust_cloud_engulfs_Launch_Pad_39A.jpg",
+    "license": "Public Domain",
+    "author": "Photo: NASA/Sandra Joseph and Kevin O'Connell / Wikimedia Commons (public domain)",
+    "identity": "Orbiter + external tank + two solid boosters rising on a brilliant flame amid vast billowing exhaust at night — a Space Shuttle launch (STS-130). Real photo."
+  },
+  "cin_07": {
+    "kind": "media",
+    "title": "Cinematic scene — Ariane 5 at Kourou (reliability)",
+    "media_type": "image",
+    "preview": "assets/scout_ariane5_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Ariane_5ECA_on_its_way_to_launch_pad_ELA-3.jpg",
+    "license": "CC-BY-2.0",
+    "author": "Photo: elisabetta_monaco from Munich, Germany / Wikimedia Commons (CC BY 2.0)",
+    "identity": "White rocket with 'arianespace' / ESA / 'SES' markings and ESA member flags beside a beige mobile gantry in tropical surroundings — an Ariane 5 at Kourou. Real photo."
+  },
+  "cin_08": {
+    "kind": "media",
+    "title": "Cinematic scene — Falcon Heavy boosters landing (the venture wave)",
+    "media_type": "image",
+    "preview": "assets/scout_falconheavy_boosters_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Falcon_Heavy_Side_Boosters_landing_on_LZ1_and_LZ2_-_2018_(25254688767).jpg",
+    "license": "CC0-1.0",
+    "author": "Photo: SpaceX / Wikimedia Commons (CC0)",
+    "identity": "Two identical boosters descending side-by-side on deployed landing legs with engines firing over a landing zone — the Falcon Heavy side-booster dual landing. Real photo."
+  },
+  "cin_09": {
+    "kind": "media",
+    "title": "Cinematic scene — Earth from the ISS (the close)",
+    "media_type": "image",
+    "preview": "assets/scout_earth_limb_web.webp",
+    "source_url": "https://commons.wikimedia.org/wiki/File:ISS-20_Thunderstorms_on_the_Brazilian_Horizon.jpg",
+    "license": "Public Domain",
+    "author": "Photo: NASA Expedition 20 crew / Wikimedia Commons (public domain)",
+    "identity": "Curved Earth limb with a thin blue atmospheric line against black space, towering thunderheads casting shadows and a sunlit river — an ISS Earth-observation photo. Real photo."
+  },
+  "cin_00": {
+    "kind": "generated",
+    "title": "Cinematic scene — hero Long March 5 cinemagraph",
+    "media_type": "video",
+    "preview": "assets/teaser.jpg",
+    "tool": "image2video",
+    "model": "google/veo-3.1-fast",
+    "prompt": "MOTION-ONLY cinemagraph: the bright exhaust plume billows and rises, smoke drifts and curls outward at the base, the engine flame flickers, the four lightning towers glow and shimmer, faint stars twinkle in the night sky and palm fronds sway slightly — the white Long March 5 rocket body stays HELD and undistorted, no camera shake, in-place cyclic motion that loops.",
+    "purpose": "IMMERSE",
+    "disclosure": "Real CC0 photograph (Long March 5 night launch, Wenchang — Shujianyang / Wikimedia Commons); the motion is an AI-generated cinemagraph added to the still (rocket held; plume, smoke and floodlights animated) — not authentic launch footage, and not AI video of a real person.",
+    "role": "hero"
+  },
+  "cin_03": {
+    "kind": "computation",
+    "title": "Cinematic scene — flat-volume chart spine (ana_02)",
+    "claim": "The data_driven cinematic spine behind the thesis turn: total orbital launches per year, 1957-2018 (the flat-to-down 'how much' curve; peak 1967 = 139; 2018 partial), dimmed behind the hero year-scrubber. Recomputed in-browser from launches.csv.",
+    "cell_id": "cell_ana_02",
+    "code_file": "code/analyze.py",
+    "code": "# Global orbital launches per year (per-year totals from launches.csv); 2018 is PARTIAL (Jan-Oct).\nyears = [(1957,3),(1958,27),(1959,22),(1960,37),(1961,50),(1962,81),(1963,69),(1964,99),(1965,124),\n(1966,131),(1967,139),(1968,128),(1969,124),(1970,122),(1971,134),(1972,113),(1973,114),(1974,113),\n(1975,132),(1976,131),(1977,130),(1978,128),(1979,109),(1980,107),(1981,126),(1982,129),(1983,129),\n(1984,129),(1985,125),(1986,110),(1987,113),(1988,121),(1989,102),(1990,121),(1991,91),(1992,97),\n(1993,83),(1994,93),(1995,79),(1996,77),(1997,89),(1998,82),(1999,77),(2000,83),(2001,58),(2002,64),\n(2003,62),(2004,53),(2005,56),(2006,65),(2007,65),(2008,67),(2009,77),(2010,71),(2011,80),(2012,78),\n(2013,78),(2014,90),(2015,84),(2016,85),(2017,90),(2018,80)]\npeak = max(years, key=lambda t: t[1])\nprint(f'peak year: {peak[0]} with {peak[1]} launches')\nprint(f'2018 (PARTIAL, Jan-Oct): {dict(years)[2018]}  (external full-year total: 114)')\n",
+    "expected_output": "peak year: 1967 with 139 launches\n2018 (PARTIAL, Jan-Oct): 80  (external full-year total: 114)",
+    "run": {
+      "type": "derived",
+      "needs_network": false
+    },
+    "data_preview": {
+      "description": "Global orbital launch attempts per year, 1957-2018 (2018 partial)",
+      "columns": [
+        "year",
+        "launches",
+        "partial"
+      ],
+      "rows": [
+        [
+          1957,
+          3,
+          false
+        ],
+        [
+          1958,
+          27,
+          false
+        ],
+        [
+          1959,
+          22,
+          false
+        ],
+        [
+          1960,
+          37,
+          false
+        ],
+        [
+          1961,
+          50,
+          false
+        ],
+        [
+          1962,
+          81,
+          false
+        ],
+        [
+          1963,
+          69,
+          false
+        ],
+        [
+          1964,
+          99,
+          false
+        ],
+        [
+          1965,
+          124,
+          false
+        ],
+        [
+          1966,
+          131,
+          false
+        ],
+        [
+          1967,
+          139,
+          false
+        ],
+        [
+          1968,
+          128,
+          false
+        ],
+        [
+          1969,
+          124,
+          false
+        ],
+        [
+          1970,
+          122,
+          false
+        ],
+        [
+          1971,
+          134,
+          false
+        ],
+        [
+          1972,
+          113,
+          false
+        ],
+        [
+          1973,
+          114,
+          false
+        ],
+        [
+          1974,
+          113,
+          false
+        ],
+        [
+          1975,
+          132,
+          false
+        ],
+        [
+          1976,
+          131,
+          false
+        ],
+        [
+          1977,
+          130,
+          false
+        ],
+        [
+          1978,
+          128,
+          false
+        ],
+        [
+          1979,
+          109,
+          false
+        ],
+        [
+          1980,
+          107,
+          false
+        ],
+        [
+          1981,
+          126,
+          false
+        ],
+        [
+          1982,
+          129,
+          false
+        ],
+        [
+          1983,
+          129,
+          false
+        ],
+        [
+          1984,
+          129,
+          false
+        ],
+        [
+          1985,
+          125,
+          false
+        ],
+        [
+          1986,
+          110,
+          false
+        ],
+        [
+          1987,
+          113,
+          false
+        ],
+        [
+          1988,
+          121,
+          false
+        ],
+        [
+          1989,
+          102,
+          false
+        ],
+        [
+          1990,
+          121,
+          false
+        ],
+        [
+          1991,
+          91,
+          false
+        ],
+        [
+          1992,
+          97,
+          false
+        ],
+        [
+          1993,
+          83,
+          false
+        ],
+        [
+          1994,
+          93,
+          false
+        ],
+        [
+          1995,
+          79,
+          false
+        ],
+        [
+          1996,
+          77,
+          false
+        ],
+        [
+          1997,
+          89,
+          false
+        ],
+        [
+          1998,
+          82,
+          false
+        ],
+        [
+          1999,
+          77,
+          false
+        ],
+        [
+          2000,
+          83,
+          false
+        ],
+        [
+          2001,
+          58,
+          false
+        ],
+        [
+          2002,
+          64,
+          false
+        ],
+        [
+          2003,
+          62,
+          false
+        ],
+        [
+          2004,
+          53,
+          false
+        ],
+        [
+          2005,
+          56,
+          false
+        ],
+        [
+          2006,
+          65,
+          false
+        ],
+        [
+          2007,
+          65,
+          false
+        ],
+        [
+          2008,
+          67,
+          false
+        ],
+        [
+          2009,
+          77,
+          false
+        ],
+        [
+          2010,
+          71,
+          false
+        ],
+        [
+          2011,
+          80,
+          false
+        ],
+        [
+          2012,
+          78,
+          false
+        ],
+        [
+          2013,
+          78,
+          false
+        ],
+        [
+          2014,
+          90,
+          false
+        ],
+        [
+          2015,
+          84,
+          false
+        ],
+        [
+          2016,
+          85,
+          false
+        ],
+        [
+          2017,
+          90,
+          false
+        ],
+        [
+          2018,
+          80,
+          true
+        ]
+      ]
+    }
+  }
+}
