@@ -1,8 +1,8 @@
 {
   "ana_01": {
     "kind": "computation",
-    "title": "Champion odds — Argentina 30.3% leads a steep ladder",
-    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "title": "Champion odds — Argentina 30.2% leads, France surges to 3rd",
+    "claim": "As of the 2026-07-02 snapshot — the group stage complete and 10 of the 16 Round-of-32 ties decided — the model gives Argentina the best chance of lifting the trophy at 30.2%, ahead of Spain (21.5%) and a resurgent France (19.2%), then England (8.3%), Colombia (5.5%) and Brazil (4.6%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 10 of the 48 teams still have even a 1% chance now that the field has been cut. These are championship probabilities — the share of 100,000 simulated tournaments each team wins, with every already-played result (including the group tables and the decided knockout ties) fixed — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every remaining bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/simulate.py",
     "code_lines": [
@@ -120,7 +120,7 @@
       ],
       "_rows_truncated": "showing 12 of 13"
     },
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.2%  reach-final  48.2%\nSpain          grp H  FIFA# 2  Elo 2198  champ  21.5%  reach-final  37.0%\nFrance         grp I  FIFA# 3  Elo 2154  champ  19.2%  reach-final  36.8%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.3%  reach-final  17.5%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.5%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   4.6%  reach-final  11.0%\ntop1 Argentina = 30.2%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 10",
     "run": {
       "type": "montecarlo",
       "reduced_n": 10000,
@@ -134,8 +134,8 @@
   },
   "ana_02": {
     "kind": "computation",
-    "title": "Where the model fights the FIFA ranking",
-    "claim": "A results-trained Elo model re-orders the official FIFA ladder, and among the 13 real contenders the disagreements are sharp. The model's biggest upgrade is Norway, ranked 31st by FIFA but lifted to the 10th-best title chance (1.8%); next is Colombia, FIFA's 13th but the model's 5th pick at 5.7%, then Japan (FIFA 18th up to 12th) and Germany (10th up to 8th). In the other direction the model fades market darlings: Portugal drops from FIFA 5th to 6th and Morocco from 7th to 11th. At the very top the two systems agree — Argentina, Spain, France and England are 1-2-3-4 on both. Where they part ways is where a reader has the most room to argue.",
+    "title": "Where the model still fights the FIFA ranking",
+    "claim": "A results-trained Elo model still re-orders the official FIFA ladder, but with the field thinned to 10 title contenders the disagreements have narrowed. The model's biggest upgrade is Norway, ranked 31st by FIFA but lifted to the 9th-best title chance (1.6%); next is Colombia, FIFA's 13th but the model's 5th pick at 5.5%, then Mexico (FIFA 14th up to 10th). In the other direction only one contender is faded: Portugal, FIFA's 5th, drops to the model's 8th. At the very top the two systems now agree closely - Argentina, Spain, France and England are 1-2-3-4 on both, and Brazil and Morocco sit exactly where FIFA ranks them. Where they still part ways is where a reader has the most room to argue.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -219,7 +219,7 @@
       ],
       "_rows_truncated": "showing 9 of 13"
     },
-    "expected_output": "Among the 13 teams with >=1% title chance - model rates HIGHER than FIFA rank (gap = FIFA# - model#):\n  Norway         FIFA#31 -> model#10  (+21)  champ 1.8%\n  Colombia       FIFA#13 -> model# 5  (+8)  champ 5.7%\n  Japan          FIFA#18 -> model#12  (+6)  champ 1.2%\n  Germany        FIFA#10 -> model# 8  (+2)  champ 2.4%\n  Mexico         FIFA#14 -> model#13  (+1)  champ 1.1%\nModel rates LOWER than FIFA rank:\n  Morocco        FIFA# 7 -> model#11  (-4)  champ 1.4%\n  Brazil         FIFA# 6 -> model# 7  (-1)  champ 3.3%\n  Netherlands    FIFA# 8 -> model# 9  (-1)  champ 2.1%\n  Portugal       FIFA# 5 -> model# 6  (-1)  champ 3.6%\nColombia: FIFA #13, model #5, champ 5.7% (5th)\nNorway: FIFA #31, model #10, champ 1.8%\nPortugal: FIFA #5, model #6, champ 3.6%",
+    "expected_output": "Among the 10 teams with >=1% title chance - model rates HIGHER than FIFA rank (gap = FIFA# - model#):\n  Norway         FIFA#31 -> model# 9  (+22)  champ 1.6%\n  Colombia       FIFA#13 -> model# 5  (+8)  champ 5.5%\n  Mexico         FIFA#14 -> model#10  (+4)  champ 1.2%\n  Argentina      FIFA# 1 -> model# 1  (+0)  champ 30.2%\n  Spain          FIFA# 2 -> model# 2  (+0)  champ 21.5%\nModel rates LOWER than FIFA rank:\n  Portugal       FIFA# 5 -> model# 8  (-3)  champ 2.6%\nColombia: FIFA #13, model #5, champ 5.5% (5th)\nNorway: FIFA #31, model #9, champ 1.6%\nPortugal: FIFA #5, model #8, champ 2.6%",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -227,8 +227,8 @@
   },
   "ana_03": {
     "kind": "computation",
-    "title": "Money vs. merit — Colombia is five times cheaper than France",
-    "claim": "Squad market value and simulated success only loosely track each other. France carries the costliest squad in the tournament at €1.52bn and the model gives it a 45.2% chance of reaching the semi-finals — €34m of squad value per percentage point of that chance. Colombia's squad costs €302m, roughly a fifth of France's, yet the model still gives it a 24.1% semi-final chance, at just €13m per point — more than twice as efficient. The clearest bargains are Argentina (€12m per semi-final point) and Colombia; the most expensive by this measure are Portugal (€51m per point) and Germany (€56m). Squad price buys a strong floor, not a ticket to the last four.",
+    "title": "Money vs. merit - Colombia is five times cheaper than France",
+    "claim": "Squad market value and simulated success still only loosely track each other, and now that the bracket is half-resolved the gap is starker. France carries the costliest squad in the tournament at EUR 1.52bn and the model gives it a 63.7% chance of reaching the semi-finals - EUR 24m of squad value per percentage point of that chance. Colombia's squad costs EUR 302m, roughly a fifth of France's, yet the model still gives it a 24.3% semi-final chance, at just EUR 12m per point - twice as efficient. The clearest bargains are Argentina (EUR 12m per semi-final point), Colombia and Mexico (EUR 14m); the most expensive by this measure is Portugal (EUR 63m per point). Squad price buys a strong floor, not a ticket to the last four.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -296,7 +296,7 @@
       ],
       "_rows_truncated": "showing 8 of 25 (p_reach_sf > 2%)"
     },
-    "expected_output": "Costliest squads and what the model gives them (reach-SF %):\n  France         EUR 1520.0m  SF  45.2%  = EUR   33.7m per SF-point\n  England        EUR 1360.0m  SF  37.4%  = EUR   36.4m per SF-point\n  Spain          EUR 1220.0m  SF  54.3%  = EUR   22.5m per SF-point\n  Portugal       EUR 1010.0m  SF  19.8%  = EUR   51.1m per SF-point\n  Germany        EUR  947.0m  SF  17.0%  = EUR   55.8m per SF-point\nBest value (lowest EUR per SF-point), among real contenders:\n  Argentina      EUR  807.5m  SF  66.7%  = EUR   12.1m per SF-point\n  Colombia       EUR  302.4m  SF  24.1%  = EUR   12.5m per SF-point\n  Iran           EUR   32.0m  SF   2.1%  = EUR   15.4m per SF-point\nColombia squad is 5.0x cheaper than France's yet within 21.1pp of its SF chance",
+    "expected_output": "Costliest squads and what the model gives them (reach-SF %):\n  France         EUR 1520.0m  SF  63.7%  = EUR   23.9m per SF-point\n  England        EUR 1360.0m  SF  39.9%  = EUR   34.1m per SF-point\n  Spain          EUR 1220.0m  SF  57.2%  = EUR   21.3m per SF-point\n  Portugal       EUR 1010.0m  SF  16.2%  = EUR   62.5m per SF-point\n  Brazil         EUR  928.2m  SF  29.8%  = EUR   31.2m per SF-point\nBest value (lowest EUR per SF-point), among real contenders:\n  Argentina      EUR  807.5m  SF  68.2%  = EUR   11.8m per SF-point\n  Colombia       EUR  302.4m  SF  24.3%  = EUR   12.5m per SF-point\n  Mexico         EUR  191.8m  SF  14.0%  = EUR   13.7m per SF-point\nColombia squad is 5.0x cheaper than France's yet within 39.4pp of its SF chance",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -304,78 +304,53 @@
   },
   "ana_04": {
     "kind": "computation",
-    "title": "The bracket is a coin-flip for three teams",
-    "claim": "Because only the top two of each group advance automatically and the eight best third-placed teams fill the rest of the new Round of 32, qualification splits the field into two worlds. Seventeen teams are already all but through (reach-R32 probability of 99% or more): Argentina, Spain, France, Brazil, Germany and others. But three teams sit on a true knife edge, with a reach-R32 probability between 40% and 60% — Senegal (55.5%), Bosnia & Herzegovina (48.0%) and DR Congo (41.4%) — for whom a single result swings the whole tournament. For those three, the model isn't predicting so much as measuring a coin toss.",
+    "title": "Six Round-of-32 ties left - one is still a coin-flip",
+    "claim": "With 10 of the 16 Round-of-32 ties already decided, qualification is no longer the story - six ties remain, and the model rates them from near-certain to a genuine coin-flip. Argentina is safest, advancing past Cape Verde in 99.3% of simulations, with Colombia (over Ghana, 96.4%) and Spain (over Austria, 88.3%) close behind. The three tight ties are Portugal-Croatia (Portugal 67.9%), Switzerland-Algeria (Switzerland 60.5%) and Australia-Egypt (Australia 59.5%) - the last is the only near coin-flip left on the board. Each win-the-tie number is recomputed from the two teams' Elo with the same knockout rule the model uses everywhere, and lines up with the published reach-Round-of-16 probabilities.",
     "cell_id": "cell_findings",
-    "code_file": "code/story_findings.py",
-    "code_lines": [
-      86,
-      100
-    ],
-    "code": "# --- ana_04: The conditional bracket — advancement is near-certain for the elite, a coin-flip mid-table ---\nprint(\"\\n=== ana_04 ===\")\nb = adv[[\"team\",\"group\",\"p_advance_group\",\"p_best_third\",\"p_reach_r32\"]].copy()\nb = b.sort_values(\"p_reach_r32\", ascending=False)\nprint(\"Reach-Round-of-32 probability (auto top-2 + best-third path):\")\nfor _, r in b.head(6).iterrows():\n    print(f\"  {r['team']:14} grp {r['group']}  R32 {r['p_reach_r32']*100:5.1f}%  \"\n          f\"(top2 {r['p_advance_group']*100:.0f}% + 3rd-path {r['p_best_third']*100:.0f}%)\")\nprint(\"  ...mid-table coin-flips (R32 40-60%):\")\nmid = b[(b[\"p_reach_r32\"]>=0.40) & (b[\"p_reach_r32\"]<=0.60)].head(8)\nfor _, r in mid.iterrows():\n    print(f\"  {r['team']:14} grp {r['group']}  R32 {r['p_reach_r32']*100:5.1f}%\")\nprint(f\"teams essentially through (R32>=99%): {(adv['p_reach_r32']>=0.99).sum()}\")\nprint(f\"teams on a knife edge (R32 40-60%): {((adv['p_reach_r32']>=0.40)&(adv['p_reach_r32']<=0.60)).sum()}\")",
+    "code_file": "verify/worldcup_forecast.ipynb",
+    "code": "import math\n# The 6 Round-of-32 ties still to be played (live snapshot: 10 of 16 already decided).\n# Self-contained: each tie's win-the-tie probability is recomputed from the two teams' inlined\n# Elo (cutoff 2026-06-24), using the SAME knockout rule as the model -- P(advance) = P(win in 90')\n# + P(draw) * Elo win-expectancy (the Elo term stands in for extra time + penalties).\nELO = {\"Portugal\":2052.6,\"Croatia\":1939.5,\"Spain\":2197.9,\"Austria\":1905.9,\n       \"Switzerland\":1951.2,\"Algeria\":1889.3,\"Argentina\":2220.1,\"Cape Verde\":1701.8,\n       \"Colombia\":2091.3,\"Ghana\":1673.2,\"Australia\":1913.6,\"Egypt\":1858.2}\nA, B, MU = 0.04219960215859936, 0.00517897717158734, 2.739846463953339  # Poisson calibration\nTIES = [(\"Portugal\",\"Croatia\"),(\"Spain\",\"Austria\"),(\"Switzerland\",\"Algeria\"),\n        (\"Argentina\",\"Cape Verde\"),(\"Colombia\",\"Ghana\"),(\"Australia\",\"Egypt\")]\n\ndef wdl(eh, ea, mx=10):                               # Poisson x Poisson -> P(win), P(draw), P(loss)\n    sup = A + B * (eh - ea)\n    lh = max(0.05, (MU + sup) / 2); la = max(0.05, (MU - sup) / 2)\n    ph = [math.exp(-lh) * lh**k / math.factorial(k) for k in range(mx + 1)]\n    pa = [math.exp(-la) * la**k / math.factorial(k) for k in range(mx + 1)]\n    pH = sum(ph[i] * sum(pa[:i]) for i in range(mx + 1))\n    pD = sum(ph[i] * pa[i] for i in range(mx + 1))\n    pA = sum(ph[i] * sum(pa[i + 1:]) for i in range(mx + 1))\n    s = pH + pD + pA\n    return pH / s, pD / s, pA / s\n\ndef advance(eh, ea):                                  # win the tie (90' win + draw resolved by Elo)\n    pH, pD, _ = wdl(eh, ea)\n    we = 1.0 / (1.0 + 10.0 ** (-(eh - ea) / 400.0))\n    return pH + pD * we\n\nprint(\"Win-the-tie probability for the 6 Round-of-32 ties still to play (favourite listed first):\")\nrows = []\nfor h, a in TIES:\n    p = advance(ELO[h], ELO[a])\n    fav, dog, pf = (h, a, p) if p >= 0.5 else (a, h, 1 - p)\n    rows.append((fav, dog, pf))\n    print(f\"  {fav:12} vs {dog:12}  {fav} advances {pf*100:5.1f}%\")\nclosest = min(rows, key=lambda r: r[2])\nsafest = max(rows, key=lambda r: r[2])\nprint(f\"Closest tie: {closest[0]} vs {closest[1]} at {closest[2]*100:.1f}% -- the only near-coin-flip left\")\nprint(f\"Safest favourite: {safest[0]} over {safest[1]} at {safest[2]*100:.1f}%\")\n",
     "data_preview": {
-      "description": "Reach-Round-of-32 probability for the knife-edge teams (40-60%) plus the locked-in elite, showing the auto-top-2 path vs the best-third path (advance_probs.csv).",
+      "description": "Win-the-tie probability for the 6 Round-of-32 ties still to play (favourite first); recomputed from each pair's Elo with the model's knockout rule, aligned with published reach-R16.",
       "columns": [
-        "team",
-        "group",
-        "p_reach_r32_pct",
-        "p_advance_top2_pct",
-        "p_best_third_pct"
+        "favourite",
+        "underdog",
+        "fav_win_tie_pct"
       ],
       "rows": [
         [
-          "Mexico",
-          "A",
-          100.0,
-          100.0,
-          0.0
+          "Argentina",
+          "Cape Verde",
+          99.3
         ],
         [
-          "Argentina",
-          "J",
-          100.0,
-          100.0,
-          0.0
+          "Colombia",
+          "Ghana",
+          96.4
+        ],
+        [
+          "Spain",
+          "Austria",
+          88.3
+        ],
+        [
+          "Portugal",
+          "Croatia",
+          67.9
         ],
         [
           "Switzerland",
-          "B",
-          100.0,
-          99.2,
-          0.8
+          "Algeria",
+          60.5
         ],
         [
-          "Senegal",
-          "I",
-          55.5,
-          0.0,
-          55.5
-        ],
-        [
-          "Bosnia & Herzegovina",
-          "B",
-          48.0,
-          0.8,
-          47.2
-        ],
-        [
-          "DR Congo",
-          "K",
-          41.4,
-          0.5,
-          40.8
-        ],
-        [
-          "Ghana",
-          "L",
-          67.3,
-          23.4,
-          43.8
+          "Australia",
+          "Egypt",
+          59.5
         ]
       ],
-      "_rows_truncated": "showing 7 of 48"
+      "_rows_truncated": "all 6 remaining R32 ties"
     },
-    "expected_output": "Reach-Round-of-32 probability (auto top-2 + best-third path):\n  Argentina      grp J  R32 100.0%  (top2 100% + 3rd-path 0%)\n  Spain          grp H  R32 100.0%  (top2 95% + 3rd-path 5%)\n  France         grp I  R32 100.0%  (top2 100% + 3rd-path 0%)\n  ...mid-table coin-flips (R32 40-60%):\n  Senegal        grp I  R32  55.5%\n  Bosnia & Herzegovina grp B  R32  48.0%\n  DR Congo       grp K  R32  41.4%\nteams essentially through (R32>=99%): 17\nteams on a knife edge (R32 40-60%): 3",
+    "expected_output": "Win-the-tie probability for the 6 Round-of-32 ties still to play (favourite listed first):\n  Portugal     vs Croatia       Portugal advances  67.9%\n  Spain        vs Austria       Spain advances  88.3%\n  Switzerland  vs Algeria       Switzerland advances  60.5%\n  Argentina    vs Cape Verde    Argentina advances  99.3%\n  Colombia     vs Ghana         Colombia advances  96.4%\n  Australia    vs Egypt         Australia advances  59.5%\nClosest tie: Australia vs Egypt at 59.5% -- the only near-coin-flip left\nSafest favourite: Argentina over Cape Verde at 99.3%",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -384,7 +359,7 @@
   "ana_05": {
     "kind": "computation",
     "title": "Two confederations own 95% of the title chance",
-    "claim": "The title race is geographically narrow. European (UEFA) teams hold a combined 55.2% of all championship probability and South American (CONMEBOL) teams another 39.7% — together 94.9% of the entire field's title chance. The remaining four confederations split the last 5.1% between them: North/Central America (CONCACAF) 1.8%, Asia (AFC) 1.6%, Africa (CAF) 1.6%, and Oceania (OFC) effectively 0%. Every one of the model's top six is European or South American. The 48-team field is the broadest ever, but the favourites still come from the same two continents that have won every men's World Cup.",
+    "claim": "The title race stays geographically narrow, and the surviving field has sharpened it. European (UEFA) teams hold a combined 54.5% of all championship probability and South American (CONMEBOL) teams another 40.6% - together 95.1% of the entire field's title chance. The other four confederations split the last 4.9%: Africa (CAF) 2.8% (Morocco carrying it after the group exits), North/Central America (CONCACAF) 2.0%, Asia (AFC) just 0.1% now that Japan is out, and Oceania (OFC) effectively 0%. Every one of the model's top six is European or South American - and with Brazil back in the mix, three of the top six are CONMEBOL. The 48-team field is the broadest ever, but the favourites still come from the same two continents that have won every men's World Cup.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -425,7 +400,7 @@
         ]
       ]
     },
-    "expected_output": "Total championship probability by confederation:\n  UEFA       55.2%\n  CONMEBOL   39.7%\n  CONCACAF    1.8%\n  AFC         1.6%\n  CAF         1.6%\n  OFC         0.0%\nUEFA + CONMEBOL = 94.9% of all title probability\ntop-6 confederations represented in title top-6: ['CONMEBOL', 'UEFA', 'UEFA', 'UEFA', 'CONMEBOL', 'UEFA']",
+    "expected_output": "Total championship probability by confederation:\n  UEFA       54.5%\n  CONMEBOL   40.6%\n  CAF         2.8%\n  CONCACAF    2.0%\n  AFC         0.1%\n  OFC         0.0%\nUEFA + CONMEBOL = 95.1% of all title probability\ntop-6 confederations represented in title top-6: ['CONMEBOL', 'UEFA', 'UEFA', 'UEFA', 'CONMEBOL', 'CONMEBOL']",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -433,17 +408,13 @@
   },
   "ana_06": {
     "kind": "computation",
-    "title": "Why believe it — beats a naive baseline on 8,000 games, edges it on these 46",
-    "claim": "The forecast earns trust by being checked, and the check is reported honestly. On a large out-of-sample test of 8,000 historical internationals the model clearly beats a naive baseline (which just predicts the home/draw/away base rates): log-loss 0.899 versus 1.062 — about 15% lower error — and 58.9% result accuracy versus 48.3%. That is the reliable read. On the 46 games of THIS World Cup already played, the model edges the naive baseline too (log-loss 0.943 vs 1.061; accuracy 58.7% vs 54.3%), but a 46-game sample is small and upset-prone, so it neither confirms nor refutes the model on its own. The honest summary: a clear, replicable edge on the large sample; a slim, noisy edge on the games played so far.",
+    "title": "Why believe it - beats a naive baseline on 8,000 games and on these 72",
+    "claim": "The forecast earns trust by being checked, and the check is reported honestly. On a large out-of-sample test of 8,000 historical internationals the model clearly beats a naive baseline (which just predicts the home/draw/away base rates): log-loss 0.899 versus 1.062 - about 15% lower error - and 58.9% result accuracy versus 48.3%. That is the reliable read. On all 72 group games of THIS World Cup, the model now clearly beats the naive baseline too (log-loss 0.915 vs 1.074; accuracy 61.1% vs 47.2%) - a stronger showing than at the midpoint, though 72 games is still a small, upset-prone sample. The honest summary: a clear, replicable edge on the large sample, now echoed on the full group stage.",
     "cell_id": "cell_findings",
-    "code_file": "code/story_findings.py",
-    "code_lines": [
-      114,
-      131
-    ],
-    "code": "# --- ana_06: Model health — does it beat a naive baseline? (the trust beat) ---\nprint(\"\\n=== ana_06 ===\")\nsk = summary[\"model_health\"][\"large_sample_skill\"]\nbt = summary[\"model_health\"][\"backtest_28_played\"]\nprint(f\"Large-sample skill check (n={sk['n']} historical internationals, out-of-sample):\")\nprint(f\"  model  log-loss {sk['model'][0]:.3f}  Brier {sk['model'][1]:.3f}  accuracy {sk['model'][2]*100:.1f}%\")\nprint(f\"  naive  log-loss {sk['naive'][0]:.3f}  Brier {sk['naive'][1]:.3f}  accuracy {sk['naive'][2]*100:.1f}%\")\nprint(f\"  -> model log-loss {sk['model'][0]:.3f} vs naive {sk['naive'][0]:.3f} \"\n      f\"({(1-sk['model'][0]/sk['naive'][0])*100:.1f}% better); accuracy \"\n      f\"{sk['model'][2]*100:.0f}% vs {sk['naive'][2]*100:.0f}%\")\nprint(f\"This-tournament backtest (n={bt['n']} games already played):\")\nprint(f\"  model  log-loss {bt['model'][0]:.3f}  accuracy {bt['model'][2]*100:.1f}%\")\nprint(f\"  naive  log-loss {bt['naive'][0]:.3f}  accuracy {bt['naive'][2]*100:.1f}%\")\nprint(f\"  -> on the {bt['n']} played games the model ({bt['model'][0]:.3f}) and naive ({bt['naive'][0]:.3f}) \"\n      f\"are CLOSE; n={bt['n']} is small and upset-prone, so the 8000-match check is the reliable read.\")\nprint(f\"calibration: a={summary['calibration']['a']:.4f}, b={summary['calibration']['b']:.5f}, \"\n      f\"mu_tot={summary['calibration']['mu_tot']:.3f}, n={summary['calibration']['n']}\")\n",
+    "code_file": "verify/worldcup_forecast.ipynb",
+    "code": "import pandas as pd\n# Inlined from forecast_summary.json model_health (live R32 snapshot): model vs naive base-rate\n# baseline on two tests. Log-loss/Brier/accuracy carry full precision so the headline % reproduces.\ndf = pd.DataFrame(\n    [[\"Large out-of-sample (8000 internationals)\", 8000, 0.899409942322157, 1.0622273502093058, 58.8625, 48.3],\n     [\"This World Cup so far (72 group games)\",     72, 0.9149304120596314, 1.0735622017331332, 61.1111, 47.2222]],\n    columns=[\"test\",\"n\",\"model_log_loss\",\"naive_log_loss\",\"model_acc_pct\",\"naive_acc_pct\"])\nbig, small = df.iloc[0], df.iloc[1]\n\nprint(f\"Large-sample skill check (n={big.n} historical internationals, out-of-sample):\")\nprint(f\"  model  log-loss {big.model_log_loss:.3f}  accuracy {big.model_acc_pct:.1f}%\")\nprint(f\"  naive  log-loss {big.naive_log_loss:.3f}  accuracy {big.naive_acc_pct:.1f}%\")\nprint(f\"  -> model log-loss {big.model_log_loss:.3f} vs naive {big.naive_log_loss:.3f} \"\n      f\"({(1 - big.model_log_loss/big.naive_log_loss)*100:.1f}% better); \"\n      f\"accuracy {big.model_acc_pct:.0f}% vs {big.naive_acc_pct:.0f}%\")\nprint(f\"This-tournament backtest (n={small.n} group games already played):\")\nprint(f\"  model  log-loss {small.model_log_loss:.3f}  accuracy {small.model_acc_pct:.1f}%\")\nprint(f\"  naive  log-loss {small.naive_log_loss:.3f}  accuracy {small.naive_acc_pct:.1f}%\")\nprint(f\"  -> on the {small.n} played games the model ({small.model_log_loss:.3f}) now clearly beats the naive \"\n      f\"({small.naive_log_loss:.3f}) baseline ({small.model_acc_pct:.0f}% vs {small.naive_acc_pct:.0f}% right); \"\n      f\"still a small, upset-prone sample\")\n",
     "data_preview": {
-      "description": "Model vs naive baseline on the two tests: large out-of-sample (n=8000) and this-tournament backtest (n=46). Lower log-loss is better; higher accuracy is better.",
+      "description": "Model vs naive baseline on the two tests: large out-of-sample (n=8000) and this-tournament backtest (n=72, all group games). Lower log-loss is better; higher accuracy is better.",
       "columns": [
         "test",
         "n",
@@ -462,16 +433,16 @@
           48.3
         ],
         [
-          "This World Cup so far (46 played)",
-          46,
-          0.943,
-          1.061,
-          58.7,
-          54.3
+          "This World Cup so far (72 group games)",
+          72,
+          0.915,
+          1.074,
+          61.1,
+          47.2
         ]
       ]
     },
-    "expected_output": "Large-sample skill check (n=8000 historical internationals, out-of-sample):\n  model  log-loss 0.899  accuracy 58.9%\n  naive  log-loss 1.062  accuracy 48.3%\n  -> model log-loss 0.899 vs naive 1.062 (15.3% better); accuracy 59% vs 48%\nThis-tournament backtest (n=46 games already played):\n  model  log-loss 0.943  accuracy 58.7%\n  naive  log-loss 1.061  accuracy 54.3%\n  -> on the 46 played games the model (0.943) and naive (1.061) are CLOSE; n=46 is small and upset-prone, so the 8000-match check is the reliable read.",
+    "expected_output": "Large-sample skill check (n=8000 historical internationals, out-of-sample):\n  model  log-loss 0.899  accuracy 58.9%\n  naive  log-loss 1.062  accuracy 48.3%\n  -> model log-loss 0.899 vs naive 1.062 (15.3% better); accuracy 59% vs 48%\nThis-tournament backtest (n=72 group games already played):\n  model  log-loss 0.915  accuracy 61.1%\n  naive  log-loss 1.074  accuracy 47.2%\n  -> on the 72 played games the model (0.915) now clearly beats the naive (1.074) baseline (61% vs 47% right); still a small, upset-prone sample",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -479,17 +450,13 @@
   },
   "ana_07": {
     "kind": "computation",
-    "title": "Who you'd play is itself a distribution — 495 of them",
-    "claim": "Even for a team that is certain to advance, the model cannot name its Round-of-32 opponent yet, because the pairings depend on which eight of the twelve third-placed teams qualify. FIFA's Annex C tabulates all C(12,8) = 495 of those combinations, and the simulation integrates over every one. Argentina, for example, reaches the Round of 32 in essentially 100% of simulations, but the team it meets there is spread across many possible opponents — a distribution, not a fixture. This is the structural reason a mid-tournament forecast for the first 48-team World Cup has to be probabilistic about the bracket, not just the winner.",
+    "title": "Argentina's road from here - opponent fixed, the gauntlet remains",
+    "claim": "Now that the group stage is over, the pre-tournament puzzle - 'who would Argentina even play?' - is settled: its Round-of-32 opponent is fixed as Cape Verde, the Group H runner-up. The model puts Argentina through that tie in 99.3% of simulations. From there the published forecast, which integrates every later bracket path, gives it a 99.4% chance to reach the Round of 16, 90.6% the quarter-final, 68.2% the semi-final, 48.2% the final and 30.2% the title. The takeaway flips the old framing: Argentina's danger is no longer an unknown first opponent but the compounding gauntlet after it - its title chance is barely three in ten even though clearing the Cape Verde tie is close to a formality.",
     "cell_id": "cell_findings",
-    "code_file": "code/story_findings.py",
-    "code_lines": [
-      132,
-      142
-    ],
-    "code": "# --- ana_07: Single most-likely Round-of-32 matchup distribution example (conditional pairing) ---\nprint(\"\\n=== ana_07 ===\")\n# Argentina's most likely opponents conditional set is complex; report the headline:\nprint(\"Because R32 pairings depend on which 8 of 12 thirds qualify, 'who you'd meet' is a\")\nprint(\"distribution over C(12,8)=495 permutations, integrated by the Monte-Carlo. Example:\")\nprint(f\"  Argentina reaches R32 with p={adv[adv['team']=='Argentina'].iloc[0]['p_reach_r32']*100:.1f}% but its\")\nprint(f\"  specific opponent is not fixed until the group stage ends — the model averages over all 495.\")\nprint(f\"  best-thirds table rows = 495 (FIFA Annex C)\")\n\nprint(\"\\nALL FINDINGS COMPUTED OK\")",
+    "code_file": "verify/worldcup_forecast.ipynb",
+    "code": "import math\n# Argentina's road from here. At the live snapshot the group stage is over and the Round-of-32\n# draw is fixed, so -- unlike a pre-tournament forecast -- Argentina's first opponent is KNOWN:\n# it plays Cape Verde (runner-up of Group H). Everything below is self-contained.\n#   * the R32 win-the-tie prob is recomputed from the two Elos (same knockout rule as the model);\n#   * the deeper round-by-round reach probabilities are read from the published 100k-sim forecast\n#     (advance_probs.csv), which integrates over every possible bracket path from the R16 on.\nELO_ARG, ELO_CPV = 2220.1, 1701.8\nA, B, MU = 0.04219960215859936, 0.00517897717158734, 2.739846463953339\n\ndef advance(eh, ea, mx=10):                           # win the tie: P(win 90') + P(draw)*Elo win-exp\n    sup = A + B * (eh - ea)\n    lh = max(0.05, (MU + sup) / 2); la = max(0.05, (MU - sup) / 2)\n    ph = [math.exp(-lh) * lh**k / math.factorial(k) for k in range(mx + 1)]\n    pa = [math.exp(-la) * la**k / math.factorial(k) for k in range(mx + 1)]\n    pH = sum(ph[i] * sum(pa[:i]) for i in range(mx + 1))\n    pD = sum(ph[i] * pa[i] for i in range(mx + 1))\n    we = 1.0 / (1.0 + 10.0 ** (-(eh - ea) / 400.0))\n    return (pH + pD * we) / (pH + pD + sum(ph[i] * sum(pa[i + 1:]) for i in range(mx + 1)))\n\np_r32 = advance(ELO_ARG, ELO_CPV)\n# published reach probabilities for Argentina (forecast_outputs/advance_probs.csv)\nreach = {\"R16\": 0.9938, \"QF\": 0.9058, \"SF\": 0.6823, \"Final\": 0.482, \"Champion\": 0.3019}\n\nprint(\"Argentina's path from the live Round of 32 (opponent now fixed):\")\nprint(f\"  R32: Argentina vs Cape Verde -> Argentina advances {p_r32*100:.1f}% (recomputed from Elo)\")\nprint(\"  Published reach probabilities from here (100k-sim, integrates every later bracket):\")\nfor stage, p in reach.items():\n    print(f\"    reach {stage:9} {p*100:5.1f}%\")\nprint(f\"  So the single biggest hurdle is not the Cape Verde tie ({p_r32*100:.1f}%) but surviving the\")\nprint(f\"  later rounds: champion {reach['Champion']*100:.1f}% = {reach['Champion']/reach['R16']*100:.1f}% of the worlds where it clears R32.\")\n",
     "data_preview": null,
-    "expected_output": "Because R32 pairings depend on which 8 of 12 thirds qualify, 'who you'd meet' is a\ndistribution over C(12,8)=495 permutations, integrated by the Monte-Carlo.\n  Argentina reaches R32 with p=100.0% but its specific opponent is not fixed until the group stage ends\n  best-thirds table rows = 495 (FIFA Annex C)",
+    "expected_output": "Argentina's path from the live Round of 32 (opponent now fixed):\n  R32: Argentina vs Cape Verde -> Argentina advances 99.3% (recomputed from Elo)\n  Published reach probabilities from here (100k-sim, integrates every later bracket):\n    reach R16        99.4%\n    reach QF         90.6%\n    reach SF         68.2%\n    reach Final      48.2%\n    reach Champion   30.2%\n  So the single biggest hurdle is not the Cape Verde tie (99.3%) but surviving the\n  later rounds: champion 30.2% = 30.4% of the worlds where it clears R32.",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -498,7 +465,7 @@
   "det_01": {
     "kind": "fact",
     "title": "The first 48-team World Cup and its new Round of 32",
-    "claim": "2026 is the first FIFA World Cup with 48 teams instead of 32, split into 12 groups of four. The two group winners and runners-up advance automatically, and the eight best third-placed teams fill the rest of a brand-new 32-team knockout round (the Round of 32) that did not exist in any previous men's World Cup. That single format change is why a mid-tournament forecast is unusually hard: with 12 third places competing for 8 slots and the bracket keyed to which specific groups those eight come from, the knockout pairings are not fixed until the group stage ends. The tournament is hosted across the United States, Canada and Mexico and runs to a 2026-07-19 final.",
+    "claim": "2026 is the first FIFA World Cup with 48 teams instead of 32, split into 12 groups of four. The two group winners and runners-up advance automatically, and the eight best third-placed teams fill the rest of a brand-new 32-team knockout round (the Round of 32) that did not exist in any previous men's World Cup. That single format change is why an early-tournament forecast was unusually hard: with 12 third places competing for 8 slots and the bracket keyed to which specific groups those eight came from, the knockout pairings were not fixed until the group stage ended - which it now has, so the Round-of-32 draw is set and the forecast turns to the ties that remain. The tournament is hosted across the United States, Canada and Mexico and runs to a 2026-07-19 final.",
     "category": "background",
     "sources": [
       {
@@ -523,7 +490,7 @@
   "det_02": {
     "kind": "fact",
     "title": "Why the bracket is a distribution, not a diagram (FIFA Annex C)",
-    "claim": "FIFA Regulations Annex C specifies, in advance, exactly which Round-of-32 slot each qualifying third-placed team fills — but the assignment depends on WHICH eight of the twelve groups produce a qualifying third. There are C(12,8) = 495 such combinations, and Annex C is literally a 495-row lookup table. Until the final group standings are known, 'who you'd play in the Round of 32' is therefore itself a probability distribution over those 495 permutations rather than a single pairing. A forecast made at the second-matchday snapshot must integrate over all of them, which is precisely what a Monte-Carlo simulation does naturally.",
+    "claim": "FIFA Regulations Annex C specifies, in advance, exactly which Round-of-32 slot each qualifying third-placed team fills - but the assignment depends on WHICH eight of the twelve groups produce a qualifying third. There are C(12,8) = 495 such combinations, and Annex C is literally a 495-row lookup table. Before the group stage finished, 'who you'd play in the Round of 32' was therefore itself a probability distribution over those 495 permutations rather than a single pairing, and a forecast made at that stage had to integrate over all of them - which is precisely what a Monte-Carlo simulation does naturally. Now that the group tables are final the draw is fixed, but the same machinery still carries the forecast forward through the ties that remain.",
     "category": "interpretive_hook",
     "sources": [
       {
@@ -619,7 +586,7 @@
   "det_07": {
     "kind": "fact",
     "title": "FIFA ranking vs. a results model — the headline disagreement",
-    "claim": "The FIFA World Ranking (11 June 2026 release) is the official ladder, but it is a points system tuned for confederation balance and scheduling, not a pure win-prediction engine, so a results-trained Elo model routinely re-orders it. The most striking 2026 disagreement involves Colombia, ranked only 13th by FIFA yet given the model's fifth-highest title chance, and Norway, ranked 31st but carried into the top ten of deep-run probability — both rated well above their official ranking. The opposite case is Portugal, FIFA's 5th, which the model leaves outside its top six. Where a forecast and the official ranking part ways is the natural place for a reader to argue with the model.",
+    "claim": "The FIFA World Ranking (11 June 2026 release) is the official ladder, but it is a points system tuned for confederation balance and scheduling, not a pure win-prediction engine, so a results-trained Elo model routinely re-orders it. The most striking 2026 disagreement still involves Colombia, ranked only 13th by FIFA yet given the model's fifth-highest title chance, and Norway, ranked 31st but carried into the top ten of title probability - both rated well above their official ranking. The opposite case is Portugal, FIFA's 5th, which the model leaves outside its top six. At the very top, though, forecast and ranking now largely agree - Argentina, Spain, France and England are 1-2-3-4 on both. Where a forecast and the official ranking part ways is the natural place for a reader to argue with the model.",
     "category": "interpretive_hook",
     "sources": [
       {
@@ -735,7 +702,7 @@
   "des_champ_explorable": {
     "kind": "computation",
     "title": "CENTERPIECE — live champion-odds explorable",
-    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "claim": "As of the 2026-07-02 snapshot — the group stage complete and 10 of the 16 Round-of-32 ties decided — the model gives Argentina the best chance of lifting the trophy at 30.2%, ahead of Spain (21.5%) and a resurgent France (19.2%), then England (8.3%), Colombia (5.5%) and Brazil (4.6%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 10 of the 48 teams still have even a 1% chance now that the field has been cut. These are championship probabilities — the share of 100,000 simulated tournaments each team wins, with every already-played result (including the group tables and the decided knockout ties) fixed — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every remaining bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/simulate.py",
     "code_lines": [
@@ -853,7 +820,7 @@
       ],
       "_rows_truncated": "showing 12 of 13"
     },
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.2%  reach-final  48.2%\nSpain          grp H  FIFA# 2  Elo 2198  champ  21.5%  reach-final  37.0%\nFrance         grp I  FIFA# 3  Elo 2154  champ  19.2%  reach-final  36.8%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.3%  reach-final  17.5%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.5%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   4.6%  reach-final  11.0%\ntop1 Argentina = 30.2%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 10",
     "run": {
       "type": "montecarlo",
       "reduced_n": 10000,
@@ -868,7 +835,7 @@
   "des_champ_static": {
     "kind": "computation",
     "title": "Champion odds — static ladder (degradation + print)",
-    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "claim": "As of the 2026-07-02 snapshot — the group stage complete and 10 of the 16 Round-of-32 ties decided — the model gives Argentina the best chance of lifting the trophy at 30.2%, ahead of Spain (21.5%) and a resurgent France (19.2%), then England (8.3%), Colombia (5.5%) and Brazil (4.6%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 10 of the 48 teams still have even a 1% chance now that the field has been cut. These are championship probabilities — the share of 100,000 simulated tournaments each team wins, with every already-played result (including the group tables and the decided knockout ties) fixed — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every remaining bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/simulate.py",
     "code_lines": [
@@ -986,7 +953,7 @@
       ],
       "_rows_truncated": "showing 12 of 13"
     },
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.2%  reach-final  48.2%\nSpain          grp H  FIFA# 2  Elo 2198  champ  21.5%  reach-final  37.0%\nFrance         grp I  FIFA# 3  Elo 2154  champ  19.2%  reach-final  36.8%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.3%  reach-final  17.5%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.5%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   4.6%  reach-final  11.0%\ntop1 Argentina = 30.2%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 10",
     "run": {
       "type": "montecarlo",
       "reduced_n": 10000,
@@ -1000,8 +967,8 @@
   },
   "des_confed_chart": {
     "kind": "computation",
-    "title": "Title chance by confederation — bar",
-    "claim": "The title race is geographically narrow. European (UEFA) teams hold a combined 55.2% of all championship probability and South American (CONMEBOL) teams another 39.7% — together 94.9% of the entire field's title chance. The remaining four confederations split the last 5.1% between them: North/Central America (CONCACAF) 1.8%, Asia (AFC) 1.6%, Africa (CAF) 1.6%, and Oceania (OFC) effectively 0%. Every one of the model's top six is European or South American. The 48-team field is the broadest ever, but the favourites still come from the same two continents that have won every men's World Cup.",
+    "title": "Title chance by confederation - bar",
+    "claim": "The title race stays geographically narrow, and the surviving field has sharpened it. European (UEFA) teams hold a combined 54.5% of all championship probability and South American (CONMEBOL) teams another 40.6% - together 95.1% of the entire field's title chance. The other four confederations split the last 4.9%: Africa (CAF) 2.8% (Morocco carrying it after the group exits), North/Central America (CONCACAF) 2.0%, Asia (AFC) just 0.1% now that Japan is out, and Oceania (OFC) effectively 0%. Every one of the model's top six is European or South American - and with Brazil back in the mix, three of the top six are CONMEBOL. The 48-team field is the broadest ever, but the favourites still come from the same two continents that have won every men's World Cup.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -1042,7 +1009,7 @@
         ]
       ]
     },
-    "expected_output": "Total championship probability by confederation:\n  UEFA       55.2%\n  CONMEBOL   39.7%\n  CONCACAF    1.8%\n  AFC         1.6%\n  CAF         1.6%\n  OFC         0.0%\nUEFA + CONMEBOL = 94.9% of all title probability\ntop-6 confederations represented in title top-6: ['CONMEBOL', 'UEFA', 'UEFA', 'UEFA', 'CONMEBOL', 'UEFA']",
+    "expected_output": "Total championship probability by confederation:\n  UEFA       54.5%\n  CONMEBOL   40.6%\n  CAF         2.8%\n  CONCACAF    2.0%\n  AFC         0.1%\n  OFC         0.0%\nUEFA + CONMEBOL = 95.1% of all title probability\ntop-6 confederations represented in title top-6: ['CONMEBOL', 'UEFA', 'UEFA', 'UEFA', 'CONMEBOL', 'CONMEBOL']",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1050,17 +1017,13 @@
   },
   "des_health_chart": {
     "kind": "computation",
-    "title": "Model vs naive — grouped bar (the honesty beat)",
-    "claim": "The forecast earns trust by being checked, and the check is reported honestly. On a large out-of-sample test of 8,000 historical internationals the model clearly beats a naive baseline (which just predicts the home/draw/away base rates): log-loss 0.899 versus 1.062 — about 15% lower error — and 58.9% result accuracy versus 48.3%. That is the reliable read. On the 46 games of THIS World Cup already played, the model edges the naive baseline too (log-loss 0.943 vs 1.061; accuracy 58.7% vs 54.3%), but a 46-game sample is small and upset-prone, so it neither confirms nor refutes the model on its own. The honest summary: a clear, replicable edge on the large sample; a slim, noisy edge on the games played so far.",
+    "title": "Model vs naive - grouped bar (the honesty beat)",
+    "claim": "The forecast earns trust by being checked, and the check is reported honestly. On a large out-of-sample test of 8,000 historical internationals the model clearly beats a naive baseline (which just predicts the home/draw/away base rates): log-loss 0.899 versus 1.062 - about 15% lower error - and 58.9% result accuracy versus 48.3%. That is the reliable read. On all 72 group games of THIS World Cup, the model now clearly beats the naive baseline too (log-loss 0.915 vs 1.074; accuracy 61.1% vs 47.2%) - a stronger showing than at the midpoint, though 72 games is still a small, upset-prone sample. The honest summary: a clear, replicable edge on the large sample, now echoed on the full group stage.",
     "cell_id": "cell_findings",
-    "code_file": "code/story_findings.py",
-    "code_lines": [
-      114,
-      131
-    ],
-    "code": "# --- ana_06: Model health — does it beat a naive baseline? (the trust beat) ---\nprint(\"\\n=== ana_06 ===\")\nsk = summary[\"model_health\"][\"large_sample_skill\"]\nbt = summary[\"model_health\"][\"backtest_28_played\"]\nprint(f\"Large-sample skill check (n={sk['n']} historical internationals, out-of-sample):\")\nprint(f\"  model  log-loss {sk['model'][0]:.3f}  Brier {sk['model'][1]:.3f}  accuracy {sk['model'][2]*100:.1f}%\")\nprint(f\"  naive  log-loss {sk['naive'][0]:.3f}  Brier {sk['naive'][1]:.3f}  accuracy {sk['naive'][2]*100:.1f}%\")\nprint(f\"  -> model log-loss {sk['model'][0]:.3f} vs naive {sk['naive'][0]:.3f} \"\n      f\"({(1-sk['model'][0]/sk['naive'][0])*100:.1f}% better); accuracy \"\n      f\"{sk['model'][2]*100:.0f}% vs {sk['naive'][2]*100:.0f}%\")\nprint(f\"This-tournament backtest (n={bt['n']} games already played):\")\nprint(f\"  model  log-loss {bt['model'][0]:.3f}  accuracy {bt['model'][2]*100:.1f}%\")\nprint(f\"  naive  log-loss {bt['naive'][0]:.3f}  accuracy {bt['naive'][2]*100:.1f}%\")\nprint(f\"  -> on the {bt['n']} played games the model ({bt['model'][0]:.3f}) and naive ({bt['naive'][0]:.3f}) \"\n      f\"are CLOSE; n={bt['n']} is small and upset-prone, so the 8000-match check is the reliable read.\")\nprint(f\"calibration: a={summary['calibration']['a']:.4f}, b={summary['calibration']['b']:.5f}, \"\n      f\"mu_tot={summary['calibration']['mu_tot']:.3f}, n={summary['calibration']['n']}\")\n",
+    "code_file": "verify/worldcup_forecast.ipynb",
+    "code": "import pandas as pd\n# Inlined from forecast_summary.json model_health (live R32 snapshot): model vs naive base-rate\n# baseline on two tests. Log-loss/Brier/accuracy carry full precision so the headline % reproduces.\ndf = pd.DataFrame(\n    [[\"Large out-of-sample (8000 internationals)\", 8000, 0.899409942322157, 1.0622273502093058, 58.8625, 48.3],\n     [\"This World Cup so far (72 group games)\",     72, 0.9149304120596314, 1.0735622017331332, 61.1111, 47.2222]],\n    columns=[\"test\",\"n\",\"model_log_loss\",\"naive_log_loss\",\"model_acc_pct\",\"naive_acc_pct\"])\nbig, small = df.iloc[0], df.iloc[1]\n\nprint(f\"Large-sample skill check (n={big.n} historical internationals, out-of-sample):\")\nprint(f\"  model  log-loss {big.model_log_loss:.3f}  accuracy {big.model_acc_pct:.1f}%\")\nprint(f\"  naive  log-loss {big.naive_log_loss:.3f}  accuracy {big.naive_acc_pct:.1f}%\")\nprint(f\"  -> model log-loss {big.model_log_loss:.3f} vs naive {big.naive_log_loss:.3f} \"\n      f\"({(1 - big.model_log_loss/big.naive_log_loss)*100:.1f}% better); \"\n      f\"accuracy {big.model_acc_pct:.0f}% vs {big.naive_acc_pct:.0f}%\")\nprint(f\"This-tournament backtest (n={small.n} group games already played):\")\nprint(f\"  model  log-loss {small.model_log_loss:.3f}  accuracy {small.model_acc_pct:.1f}%\")\nprint(f\"  naive  log-loss {small.naive_log_loss:.3f}  accuracy {small.naive_acc_pct:.1f}%\")\nprint(f\"  -> on the {small.n} played games the model ({small.model_log_loss:.3f}) now clearly beats the naive \"\n      f\"({small.naive_log_loss:.3f}) baseline ({small.model_acc_pct:.0f}% vs {small.naive_acc_pct:.0f}% right); \"\n      f\"still a small, upset-prone sample\")\n",
     "data_preview": {
-      "description": "Model vs naive baseline on the two tests: large out-of-sample (n=8000) and this-tournament backtest (n=46). Lower log-loss is better; higher accuracy is better.",
+      "description": "Model vs naive baseline on the two tests: large out-of-sample (n=8000) and this-tournament backtest (n=72, all group games). Lower log-loss is better; higher accuracy is better.",
       "columns": [
         "test",
         "n",
@@ -1079,16 +1042,16 @@
           48.3
         ],
         [
-          "This World Cup so far (46 played)",
-          46,
-          0.943,
-          1.061,
-          58.7,
-          54.3
+          "This World Cup so far (72 group games)",
+          72,
+          0.915,
+          1.074,
+          61.1,
+          47.2
         ]
       ]
     },
-    "expected_output": "Large-sample skill check (n=8000 historical internationals, out-of-sample):\n  model  log-loss 0.899  accuracy 58.9%\n  naive  log-loss 1.062  accuracy 48.3%\n  -> model log-loss 0.899 vs naive 1.062 (15.3% better); accuracy 59% vs 48%\nThis-tournament backtest (n=46 games already played):\n  model  log-loss 0.943  accuracy 58.7%\n  naive  log-loss 1.061  accuracy 54.3%\n  -> on the 46 played games the model (0.943) and naive (1.061) are CLOSE; n=46 is small and upset-prone, so the 8000-match check is the reliable read.",
+    "expected_output": "Large-sample skill check (n=8000 historical internationals, out-of-sample):\n  model  log-loss 0.899  accuracy 58.9%\n  naive  log-loss 1.062  accuracy 48.3%\n  -> model log-loss 0.899 vs naive 1.062 (15.3% better); accuracy 59% vs 48%\nThis-tournament backtest (n=72 group games already played):\n  model  log-loss 0.915  accuracy 61.1%\n  naive  log-loss 1.074  accuracy 47.2%\n  -> on the 72 played games the model (0.915) now clearly beats the naive (1.074) baseline (61% vs 47% right); still a small, upset-prone sample",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1113,78 +1076,53 @@
   },
   "des_knife_chart": {
     "kind": "computation",
-    "title": "The knife-edge — stacked qualification bar",
-    "claim": "Because only the top two of each group advance automatically and the eight best third-placed teams fill the rest of the new Round of 32, qualification splits the field into two worlds. Seventeen teams are already all but through (reach-R32 probability of 99% or more): Argentina, Spain, France, Brazil, Germany and others. But three teams sit on a true knife edge, with a reach-R32 probability between 40% and 60% — Senegal (55.5%), Bosnia & Herzegovina (48.0%) and DR Congo (41.4%) — for whom a single result swings the whole tournament. For those three, the model isn't predicting so much as measuring a coin toss.",
+    "title": "The ties still to play - win-the-tie bar",
+    "claim": "With 10 of the 16 Round-of-32 ties already decided, qualification is no longer the story - six ties remain, and the model rates them from near-certain to a genuine coin-flip. Argentina is safest, advancing past Cape Verde in 99.3% of simulations, with Colombia (over Ghana, 96.4%) and Spain (over Austria, 88.3%) close behind. The three tight ties are Portugal-Croatia (Portugal 67.9%), Switzerland-Algeria (Switzerland 60.5%) and Australia-Egypt (Australia 59.5%) - the last is the only near coin-flip left on the board. Each win-the-tie number is recomputed from the two teams' Elo with the same knockout rule the model uses everywhere, and lines up with the published reach-Round-of-16 probabilities.",
     "cell_id": "cell_findings",
-    "code_file": "code/story_findings.py",
-    "code_lines": [
-      86,
-      100
-    ],
-    "code": "# --- ana_04: The conditional bracket — advancement is near-certain for the elite, a coin-flip mid-table ---\nprint(\"\\n=== ana_04 ===\")\nb = adv[[\"team\",\"group\",\"p_advance_group\",\"p_best_third\",\"p_reach_r32\"]].copy()\nb = b.sort_values(\"p_reach_r32\", ascending=False)\nprint(\"Reach-Round-of-32 probability (auto top-2 + best-third path):\")\nfor _, r in b.head(6).iterrows():\n    print(f\"  {r['team']:14} grp {r['group']}  R32 {r['p_reach_r32']*100:5.1f}%  \"\n          f\"(top2 {r['p_advance_group']*100:.0f}% + 3rd-path {r['p_best_third']*100:.0f}%)\")\nprint(\"  ...mid-table coin-flips (R32 40-60%):\")\nmid = b[(b[\"p_reach_r32\"]>=0.40) & (b[\"p_reach_r32\"]<=0.60)].head(8)\nfor _, r in mid.iterrows():\n    print(f\"  {r['team']:14} grp {r['group']}  R32 {r['p_reach_r32']*100:5.1f}%\")\nprint(f\"teams essentially through (R32>=99%): {(adv['p_reach_r32']>=0.99).sum()}\")\nprint(f\"teams on a knife edge (R32 40-60%): {((adv['p_reach_r32']>=0.40)&(adv['p_reach_r32']<=0.60)).sum()}\")",
+    "code_file": "verify/worldcup_forecast.ipynb",
+    "code": "import math\n# The 6 Round-of-32 ties still to be played (live snapshot: 10 of 16 already decided).\n# Self-contained: each tie's win-the-tie probability is recomputed from the two teams' inlined\n# Elo (cutoff 2026-06-24), using the SAME knockout rule as the model -- P(advance) = P(win in 90')\n# + P(draw) * Elo win-expectancy (the Elo term stands in for extra time + penalties).\nELO = {\"Portugal\":2052.6,\"Croatia\":1939.5,\"Spain\":2197.9,\"Austria\":1905.9,\n       \"Switzerland\":1951.2,\"Algeria\":1889.3,\"Argentina\":2220.1,\"Cape Verde\":1701.8,\n       \"Colombia\":2091.3,\"Ghana\":1673.2,\"Australia\":1913.6,\"Egypt\":1858.2}\nA, B, MU = 0.04219960215859936, 0.00517897717158734, 2.739846463953339  # Poisson calibration\nTIES = [(\"Portugal\",\"Croatia\"),(\"Spain\",\"Austria\"),(\"Switzerland\",\"Algeria\"),\n        (\"Argentina\",\"Cape Verde\"),(\"Colombia\",\"Ghana\"),(\"Australia\",\"Egypt\")]\n\ndef wdl(eh, ea, mx=10):                               # Poisson x Poisson -> P(win), P(draw), P(loss)\n    sup = A + B * (eh - ea)\n    lh = max(0.05, (MU + sup) / 2); la = max(0.05, (MU - sup) / 2)\n    ph = [math.exp(-lh) * lh**k / math.factorial(k) for k in range(mx + 1)]\n    pa = [math.exp(-la) * la**k / math.factorial(k) for k in range(mx + 1)]\n    pH = sum(ph[i] * sum(pa[:i]) for i in range(mx + 1))\n    pD = sum(ph[i] * pa[i] for i in range(mx + 1))\n    pA = sum(ph[i] * sum(pa[i + 1:]) for i in range(mx + 1))\n    s = pH + pD + pA\n    return pH / s, pD / s, pA / s\n\ndef advance(eh, ea):                                  # win the tie (90' win + draw resolved by Elo)\n    pH, pD, _ = wdl(eh, ea)\n    we = 1.0 / (1.0 + 10.0 ** (-(eh - ea) / 400.0))\n    return pH + pD * we\n\nprint(\"Win-the-tie probability for the 6 Round-of-32 ties still to play (favourite listed first):\")\nrows = []\nfor h, a in TIES:\n    p = advance(ELO[h], ELO[a])\n    fav, dog, pf = (h, a, p) if p >= 0.5 else (a, h, 1 - p)\n    rows.append((fav, dog, pf))\n    print(f\"  {fav:12} vs {dog:12}  {fav} advances {pf*100:5.1f}%\")\nclosest = min(rows, key=lambda r: r[2])\nsafest = max(rows, key=lambda r: r[2])\nprint(f\"Closest tie: {closest[0]} vs {closest[1]} at {closest[2]*100:.1f}% -- the only near-coin-flip left\")\nprint(f\"Safest favourite: {safest[0]} over {safest[1]} at {safest[2]*100:.1f}%\")\n",
     "data_preview": {
-      "description": "Reach-Round-of-32 probability for the knife-edge teams (40-60%) plus the locked-in elite, showing the auto-top-2 path vs the best-third path (advance_probs.csv).",
+      "description": "Win-the-tie probability for the 6 Round-of-32 ties still to play (favourite first); recomputed from each pair's Elo with the model's knockout rule, aligned with published reach-R16.",
       "columns": [
-        "team",
-        "group",
-        "p_reach_r32_pct",
-        "p_advance_top2_pct",
-        "p_best_third_pct"
+        "favourite",
+        "underdog",
+        "fav_win_tie_pct"
       ],
       "rows": [
         [
-          "Mexico",
-          "A",
-          100.0,
-          100.0,
-          0.0
+          "Argentina",
+          "Cape Verde",
+          99.3
         ],
         [
-          "Argentina",
-          "J",
-          100.0,
-          100.0,
-          0.0
+          "Colombia",
+          "Ghana",
+          96.4
+        ],
+        [
+          "Spain",
+          "Austria",
+          88.3
+        ],
+        [
+          "Portugal",
+          "Croatia",
+          67.9
         ],
         [
           "Switzerland",
-          "B",
-          100.0,
-          99.2,
-          0.8
+          "Algeria",
+          60.5
         ],
         [
-          "Senegal",
-          "I",
-          55.5,
-          0.0,
-          55.5
-        ],
-        [
-          "Bosnia & Herzegovina",
-          "B",
-          48.0,
-          0.8,
-          47.2
-        ],
-        [
-          "DR Congo",
-          "K",
-          41.4,
-          0.5,
-          40.8
-        ],
-        [
-          "Ghana",
-          "L",
-          67.3,
-          23.4,
-          43.8
+          "Australia",
+          "Egypt",
+          59.5
         ]
       ],
-      "_rows_truncated": "showing 7 of 48"
+      "_rows_truncated": "all 6 remaining R32 ties"
     },
-    "expected_output": "Reach-Round-of-32 probability (auto top-2 + best-third path):\n  Argentina      grp J  R32 100.0%  (top2 100% + 3rd-path 0%)\n  Spain          grp H  R32 100.0%  (top2 95% + 3rd-path 5%)\n  France         grp I  R32 100.0%  (top2 100% + 3rd-path 0%)\n  ...mid-table coin-flips (R32 40-60%):\n  Senegal        grp I  R32  55.5%\n  Bosnia & Herzegovina grp B  R32  48.0%\n  DR Congo       grp K  R32  41.4%\nteams essentially through (R32>=99%): 17\nteams on a knife edge (R32 40-60%): 3",
+    "expected_output": "Win-the-tie probability for the 6 Round-of-32 ties still to play (favourite listed first):\n  Portugal     vs Croatia       Portugal advances  67.9%\n  Spain        vs Austria       Spain advances  88.3%\n  Switzerland  vs Algeria       Switzerland advances  60.5%\n  Argentina    vs Cape Verde    Argentina advances  99.3%\n  Colombia     vs Ghana         Colombia advances  96.4%\n  Australia    vs Egypt         Australia advances  59.5%\nClosest tie: Australia vs Egypt at 59.5% -- the only near-coin-flip left\nSafest favourite: Argentina over Cape Verde at 99.3%",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1192,8 +1130,8 @@
   },
   "des_money_chart": {
     "kind": "computation",
-    "title": "Money vs merit — value-vs-semifinal scatter",
-    "claim": "Squad market value and simulated success only loosely track each other. France carries the costliest squad in the tournament at €1.52bn and the model gives it a 45.2% chance of reaching the semi-finals — €34m of squad value per percentage point of that chance. Colombia's squad costs €302m, roughly a fifth of France's, yet the model still gives it a 24.1% semi-final chance, at just €13m per point — more than twice as efficient. The clearest bargains are Argentina (€12m per semi-final point) and Colombia; the most expensive by this measure are Portugal (€51m per point) and Germany (€56m). Squad price buys a strong floor, not a ticket to the last four.",
+    "title": "Money vs merit - value-vs-semifinal scatter",
+    "claim": "Squad market value and simulated success still only loosely track each other, and now that the bracket is half-resolved the gap is starker. France carries the costliest squad in the tournament at EUR 1.52bn and the model gives it a 63.7% chance of reaching the semi-finals - EUR 24m of squad value per percentage point of that chance. Colombia's squad costs EUR 302m, roughly a fifth of France's, yet the model still gives it a 24.3% semi-final chance, at just EUR 12m per point - twice as efficient. The clearest bargains are Argentina (EUR 12m per semi-final point), Colombia and Mexico (EUR 14m); the most expensive by this measure is Portugal (EUR 63m per point). Squad price buys a strong floor, not a ticket to the last four.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -1261,7 +1199,7 @@
       ],
       "_rows_truncated": "showing 8 of 25 (p_reach_sf > 2%)"
     },
-    "expected_output": "Costliest squads and what the model gives them (reach-SF %):\n  France         EUR 1520.0m  SF  45.2%  = EUR   33.7m per SF-point\n  England        EUR 1360.0m  SF  37.4%  = EUR   36.4m per SF-point\n  Spain          EUR 1220.0m  SF  54.3%  = EUR   22.5m per SF-point\n  Portugal       EUR 1010.0m  SF  19.8%  = EUR   51.1m per SF-point\n  Germany        EUR  947.0m  SF  17.0%  = EUR   55.8m per SF-point\nBest value (lowest EUR per SF-point), among real contenders:\n  Argentina      EUR  807.5m  SF  66.7%  = EUR   12.1m per SF-point\n  Colombia       EUR  302.4m  SF  24.1%  = EUR   12.5m per SF-point\n  Iran           EUR   32.0m  SF   2.1%  = EUR   15.4m per SF-point\nColombia squad is 5.0x cheaper than France's yet within 21.1pp of its SF chance",
+    "expected_output": "Costliest squads and what the model gives them (reach-SF %):\n  France         EUR 1520.0m  SF  63.7%  = EUR   23.9m per SF-point\n  England        EUR 1360.0m  SF  39.9%  = EUR   34.1m per SF-point\n  Spain          EUR 1220.0m  SF  57.2%  = EUR   21.3m per SF-point\n  Portugal       EUR 1010.0m  SF  16.2%  = EUR   62.5m per SF-point\n  Brazil         EUR  928.2m  SF  29.8%  = EUR   31.2m per SF-point\nBest value (lowest EUR per SF-point), among real contenders:\n  Argentina      EUR  807.5m  SF  68.2%  = EUR   11.8m per SF-point\n  Colombia       EUR  302.4m  SF  24.3%  = EUR   12.5m per SF-point\n  Mexico         EUR  191.8m  SF  14.0%  = EUR   13.7m per SF-point\nColombia squad is 5.0x cheaper than France's yet within 39.4pp of its SF chance",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1270,7 +1208,7 @@
   "des_predictor": {
     "kind": "computation",
     "title": "des_predictor",
-    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "claim": "As of the 2026-07-02 snapshot — the group stage complete and 10 of the 16 Round-of-32 ties decided — the model gives Argentina the best chance of lifting the trophy at 30.2%, ahead of Spain (21.5%) and a resurgent France (19.2%), then England (8.3%), Colombia (5.5%) and Brazil (4.6%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 10 of the 48 teams still have even a 1% chance now that the field has been cut. These are championship probabilities — the share of 100,000 simulated tournaments each team wins, with every already-played result (including the group tables and the decided knockout ties) fixed — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every remaining bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/simulate.py",
     "code_lines": [
@@ -1388,7 +1326,7 @@
       ],
       "_rows_truncated": "showing 12 of 13"
     },
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.2%  reach-final  48.2%\nSpain          grp H  FIFA# 2  Elo 2198  champ  21.5%  reach-final  37.0%\nFrance         grp I  FIFA# 3  Elo 2154  champ  19.2%  reach-final  36.8%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.3%  reach-final  17.5%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.5%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   4.6%  reach-final  11.0%\ntop1 Argentina = 30.2%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 10",
     "run": {
       "type": "montecarlo",
       "reduced_n": 10000,
@@ -1403,8 +1341,8 @@
   },
   "des_rankgap_chart": {
     "kind": "computation",
-    "title": "Model vs FIFA rank — diverging bar",
-    "claim": "A results-trained Elo model re-orders the official FIFA ladder, and among the 13 real contenders the disagreements are sharp. The model's biggest upgrade is Norway, ranked 31st by FIFA but lifted to the 10th-best title chance (1.8%); next is Colombia, FIFA's 13th but the model's 5th pick at 5.7%, then Japan (FIFA 18th up to 12th) and Germany (10th up to 8th). In the other direction the model fades market darlings: Portugal drops from FIFA 5th to 6th and Morocco from 7th to 11th. At the very top the two systems agree — Argentina, Spain, France and England are 1-2-3-4 on both. Where they part ways is where a reader has the most room to argue.",
+    "title": "Model vs FIFA rank - diverging bar",
+    "claim": "A results-trained Elo model still re-orders the official FIFA ladder, but with the field thinned to 10 title contenders the disagreements have narrowed. The model's biggest upgrade is Norway, ranked 31st by FIFA but lifted to the 9th-best title chance (1.6%); next is Colombia, FIFA's 13th but the model's 5th pick at 5.5%, then Mexico (FIFA 14th up to 10th). In the other direction only one contender is faded: Portugal, FIFA's 5th, drops to the model's 8th. At the very top the two systems now agree closely - Argentina, Spain, France and England are 1-2-3-4 on both, and Brazil and Morocco sit exactly where FIFA ranks them. Where they still part ways is where a reader has the most room to argue.",
     "cell_id": "cell_findings",
     "code_file": "code/story_findings.py",
     "code_lines": [
@@ -1488,7 +1426,7 @@
       ],
       "_rows_truncated": "showing 9 of 13"
     },
-    "expected_output": "Among the 13 teams with >=1% title chance - model rates HIGHER than FIFA rank (gap = FIFA# - model#):\n  Norway         FIFA#31 -> model#10  (+21)  champ 1.8%\n  Colombia       FIFA#13 -> model# 5  (+8)  champ 5.7%\n  Japan          FIFA#18 -> model#12  (+6)  champ 1.2%\n  Germany        FIFA#10 -> model# 8  (+2)  champ 2.4%\n  Mexico         FIFA#14 -> model#13  (+1)  champ 1.1%\nModel rates LOWER than FIFA rank:\n  Morocco        FIFA# 7 -> model#11  (-4)  champ 1.4%\n  Brazil         FIFA# 6 -> model# 7  (-1)  champ 3.3%\n  Netherlands    FIFA# 8 -> model# 9  (-1)  champ 2.1%\n  Portugal       FIFA# 5 -> model# 6  (-1)  champ 3.6%\nColombia: FIFA #13, model #5, champ 5.7% (5th)\nNorway: FIFA #31, model #10, champ 1.8%\nPortugal: FIFA #5, model #6, champ 3.6%",
+    "expected_output": "Among the 10 teams with >=1% title chance - model rates HIGHER than FIFA rank (gap = FIFA# - model#):\n  Norway         FIFA#31 -> model# 9  (+22)  champ 1.6%\n  Colombia       FIFA#13 -> model# 5  (+8)  champ 5.5%\n  Mexico         FIFA#14 -> model#10  (+4)  champ 1.2%\n  Argentina      FIFA# 1 -> model# 1  (+0)  champ 30.2%\n  Spain          FIFA# 2 -> model# 2  (+0)  champ 21.5%\nModel rates LOWER than FIFA rank:\n  Portugal       FIFA# 5 -> model# 8  (-3)  champ 2.6%\nColombia: FIFA #13, model #5, champ 5.5% (5th)\nNorway: FIFA #31, model #9, champ 1.6%\nPortugal: FIFA #5, model #8, champ 2.6%",
     "run": {
       "type": "derived",
       "needs_network": false
@@ -1978,13 +1916,13 @@
   "des_stars_chart": {
     "kind": "computation",
     "title": "Stars vs deep run — EA overall against team reach-semifinal odds",
-    "claim": "As of the 2026-06-24 snapshot, the model gives Argentina the best chance of lifting the trophy at 30.3%, ahead of Spain (22.1%), France (13.7%), England (8.4%), Colombia (5.7%) and Brazil (3.3%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 13 of the 48 teams have even a 1% chance. These are championship probabilities — the share of 100,000 simulated tournaments each team wins — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every plausible bracket it survives more often than anyone else.",
+    "claim": "As of the 2026-07-02 snapshot — the group stage complete and 10 of the 16 Round-of-32 ties decided — the model gives Argentina the best chance of lifting the trophy at 30.2%, ahead of Spain (21.5%) and a resurgent France (19.2%), then England (8.3%), Colombia (5.5%) and Brazil (4.6%). The distribution is steep and top-heavy: the top two account for more than half of all title probability, and only 10 of the 48 teams still have even a 1% chance now that the field has been cut. These are championship probabilities — the share of 100,000 simulated tournaments each team wins, with every already-played result (including the group tables and the decided knockout ties) fixed — and they sum to 1.000 across the field. Argentina leads not because it is guaranteed anything, but because across every remaining bracket it survives more often than anyone else.",
     "cell_id": "cell_simulate",
     "code_file": "code/ea_ratings.json + code/simulate.py",
     "code_lines": null,
     "code": "# This scatter joins two sources, one point per player:\n#   x = player EA overall -> EA Sports FC rating (CITED, not computed here; frozen in code/ea_ratings.json)\n#   y = team p_reach_sf   -> the Monte-Carlo forecast (code/simulate.py, cell_simulate; forecast_outputs/advance_probs.csv)\n# merged on each player's national team. The loose vertical scatter at high EA overall is the 'stars != deep run' point.\n# Only the y-axis and the join are ours; the x-axis values are EA's published ratings.",
     "data_preview": null,
-    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.3%  reach-final  47.1%\nSpain          grp H  FIFA# 2  Elo 2198  champ  22.1%  reach-final  37.1%\nFrance         grp I  FIFA# 3  Elo 2154  champ  13.7%  reach-final  25.7%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.4%  reach-final  16.8%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.7%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   3.3%  reach-final   7.9%\ntop1 Argentina = 30.3%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 13",
+    "expected_output": "Argentina      grp J  FIFA# 1  Elo 2220  champ  30.2%  reach-final  48.2%\nSpain          grp H  FIFA# 2  Elo 2198  champ  21.5%  reach-final  37.0%\nFrance         grp I  FIFA# 3  Elo 2154  champ  19.2%  reach-final  36.8%\nEngland        grp L  FIFA# 4  Elo 2121  champ   8.3%  reach-final  17.5%\nColombia       grp K  FIFA#13  Elo 2091  champ   5.5%  reach-final  12.6%\nBrazil         grp C  FIFA# 6  Elo 2073  champ   4.6%  reach-final  11.0%\ntop1 Argentina = 30.2%\nchampion prob sums to 1.000 over 48 teams\nteams with >=1% champ chance: 10",
     "run": {
       "type": "ratings",
       "needs_network": false,
@@ -2070,7 +2008,7 @@
       "full_shootout_url": "https://www.youtube.com/watch?v=MCWJNOfJoSM"
     },
     "publish_note": "demo-only; license each clip or swap to the official FIFA embed (https://www.youtube.com/watch?v=zhEWqfP6V_w) before publish. license.permits_republication=false on every clip.",
-    "clips_note": "Replaces the earlier trophy-only strip. The two clips run in the edt_01 '2022 final' strip in narrative order — Mbappé's 81' open-play volley, then Messi's penalty — and autoplay when the strip scrolls into view (reduced-motion -> poster only). DECORATIVE: no per-clip data-* id and no computed number, so the strip is not click-to-run; the surrounding 30.3%/predictor copy carries data-ana=ana_01. Each clip is identity-verified real 2022-final footage but is NOT licensed for republication. 2026-06-25: Mbappé's clip was swapped from a goal CELEBRATION (wc2022-mbappe-goal.mp4, GIPHY/SportsManias) to his 81st-minute OPEN-PLAY volley (wc2022-mbappe-volley.mp4, Tenor/Ruwewaarheid; frame-verified ARG 2-1 at 80:59). Messi's clip remains his penalty: a confirmed open-play extra-time goal clip could not be sourced with verifiable identity (every candidate was a celebration, a penalty, or 2018 footage), so per the no-degrade rule his existing penalty clip was kept rather than substituting an unverified one. The save (wc2022-shootout) and trophy-lift (wc2022-messi-celebration) clips were removed and, with the two earlier trophy clips (wc2022-messi-trophy, wc2022-fifa-trophy) and the replaced celebration (wc2022-mbappe-goal), remain on disk (provenance/clips/) but are no longer shown.",
+    "clips_note": "Replaces the earlier trophy-only strip. The two clips run in the edt_01 '2022 final' strip in narrative order — Mbappé's 81' open-play volley, then Messi's penalty — and autoplay when the strip scrolls into view (reduced-motion -> poster only). DECORATIVE: no per-clip data-* id and no computed number, so the strip is not click-to-run; the surrounding 30.2%/predictor copy carries data-ana=ana_01. Each clip is identity-verified real 2022-final footage but is NOT licensed for republication. 2026-06-25: Mbappé's clip was swapped from a goal CELEBRATION (wc2022-mbappe-goal.mp4, GIPHY/SportsManias) to his 81st-minute OPEN-PLAY volley (wc2022-mbappe-volley.mp4, Tenor/Ruwewaarheid; frame-verified ARG 2-1 at 80:59). Messi's clip remains his penalty: a confirmed open-play extra-time goal clip could not be sourced with verifiable identity (every candidate was a celebration, a penalty, or 2018 footage), so per the no-degrade rule his existing penalty clip was kept rather than substituting an unverified one. The save (wc2022-shootout) and trophy-lift (wc2022-messi-celebration) clips were removed and, with the two earlier trophy clips (wc2022-messi-trophy, wc2022-fifa-trophy) and the replaced celebration (wc2022-mbappe-goal), remain on disk (provenance/clips/) but are no longer shown.",
     "_note": "Was a single Wikimedia trophy photo (ref_trophy.jpg); repurposed into the 2022-final hook media entry. Mirrors the des_ratings_grid clips[] shape; the assets[] gallery is what the Verify drawer renders (galleryItems reads .assets). Trimmed from four clips to two (Mbappé's 81' open-play volley + Messi's penalty)."
   },
   "des_venue_map": {
@@ -2450,15 +2388,15 @@
   },
   "ana_histbase": {
     "kind": "computation",
-    "title": "Is 30.3% a lot? Only eight nations have ever won",
-    "claim": "So the model says Argentina, at 30.3%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.3% sits about seven points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
+    "title": "Is 30.2% a lot? Only eight nations have ever won",
+    "claim": "So the model says Argentina, at 30.2%, is the team to beat - and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them - Brazil (5), Italy (4) and Germany (4) - hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.2% sits about seven points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
     "cell_id": "cell_historical",
     "code_file": "code/build_historical.py",
     "code_lines": [
       52,
       117
     ],
-    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.3% vs cited ~23% favourite hit-rate -> +{30.3-23:.1f} pp above the long-run favourite\")\n",
+    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.2% vs cited ~23% favourite hit-rate -> +{30.2-23:.1f} pp above the long-run favourite\")\n",
     "data_preview": {
       "description": "Men's World Cup champions 1930-2022 (historical_wc_summary.csv) — champion label and host nation per edition; the cell merges West Germany into Germany and counts title concentration + host wins.",
       "columns": [
@@ -2505,7 +2443,7 @@
       ],
       "_rows_truncated": "showing 7 of 22"
     },
-    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.3% vs cited ~23% favourite hit-rate -> +7.3 pp above the long-run favourite",
+    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.2% vs cited ~23% favourite hit-rate -> +7.2 pp above the long-run favourite",
     "run": {
       "type": "derived",
       "needs_network": false,
@@ -2632,7 +2570,7 @@
   "det_favbase": {
     "kind": "fact",
     "title": "How often does the favourite actually win? ~23%",
-    "claim": "Pre-tournament favourites have won only about 23% of men's World Cups: by FIFA's review of the previous 22 men's tournaments, the listed favourite has lifted the trophy only five times. Since 1966, when pre-tournament odds were first recorded, the shortest-priced favourite went on to win just three times — West Germany 1974, Brazil 1994 and Spain 2010. This is the external anchor the page reads the model's 30.3% against: 30.3% sits about seven points above the long-run favourite hit-rate, so the model is calling Argentina a slightly-stronger-than-usual favourite, not a certainty.",
+    "claim": "Pre-tournament favourites have won only about 23% of men's World Cups: by FIFA's review of the previous 22 men's tournaments, the listed favourite has lifted the trophy only five times. Since 1966, when pre-tournament odds were first recorded, the shortest-priced favourite went on to win just three times - West Germany 1974, Brazil 1994 and Spain 2010. This is the external anchor the page reads the model's 30.2% against: 30.2% sits about seven points above the long-run favourite hit-rate, so the model is calling Argentina a slightly-stronger-than-usual favourite, not a certainty.",
     "category": "why_it_matters",
     "computation_ref": "ana_histbase",
     "sources": [
@@ -2780,15 +2718,15 @@
   },
   "des_hist_favourite_chart": {
     "kind": "computation",
-    "title": "Argentina 30.3% vs the long-run favourite win-rate (bar)",
-    "claim": "So the model says Argentina, at 30.3%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.3% sits about seven points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
+    "title": "Argentina 30.2% vs the long-run favourite win-rate (bar)",
+    "claim": "So the model says Argentina, at 30.2%, is the team to beat - and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them - Brazil (5), Italy (4) and Germany (4) - hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against that long-run base rate, a single team sitting at roughly three-in-ten this far into the tournament is a strong favourite by historical standards, not a lock.",
     "cell_id": "cell_historical",
     "code_file": "code/build_historical.py",
     "code_lines": [
       52,
       117
     ],
-    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.3% vs cited ~23% favourite hit-rate -> +{30.3-23:.1f} pp above the long-run favourite\")\n",
+    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.2% vs cited ~23% favourite hit-rate -> +{30.2-23:.1f} pp above the long-run favourite\")\n",
     "data_preview": {
       "description": "Men's World Cup champions 1930-2022 (historical_wc_summary.csv) — champion label and host nation per edition; the cell merges West Germany into Germany and counts title concentration + host wins.",
       "columns": [
@@ -2835,7 +2773,7 @@
       ],
       "_rows_truncated": "showing 7 of 22"
     },
-    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.3% vs cited ~23% favourite hit-rate -> +7.3 pp above the long-run favourite",
+    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.2% vs cited ~23% favourite hit-rate -> +7.2 pp above the long-run favourite",
     "run": {
       "type": "derived",
       "needs_network": false,
@@ -2845,14 +2783,14 @@
   "des_hist_champions_chart": {
     "kind": "computation",
     "title": "Eight nations, 22 trophies — champions by nation (bar)",
-    "claim": "So the model says Argentina, at 30.3%, is the team to beat — and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them — Brazil (5), Italy (4) and Germany (4) — hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against a long-run favourite hit-rate of ~23%, Argentina's 30.3% sits about seven points above the bar: a slightly-stronger-than-usual favourite, not a lock.",
+    "claim": "So the model says Argentina, at 30.2%, is the team to beat - and history is unkind to favourites. Only eight nations have ever won a men's World Cup, and just three of them - Brazil (5), Italy (4) and Germany (4) - hold 13 of the 22 titles (59%). Six repeat champions account for 20 of 22 (91%). Even home advantage has converted only about 27% of the time (six host winners in twenty-two). Read against that long-run base rate, a single team sitting at roughly three-in-ten this far into the tournament is a strong favourite by historical standards, not a lock.",
     "cell_id": "cell_historical",
     "code_file": "code/build_historical.py",
     "code_lines": [
       52,
       117
     ],
-    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.3% vs cited ~23% favourite hit-rate -> +{30.3-23:.1f} pp above the long-run favourite\")\n",
+    "code": "import collections\n# The 22 men's World Cups 1930-2022 (historical_wc_summary.csv): (year, champion-label, host).\n# Self-contained: the champion + host columns are inlined verbatim; everything below is recomputed.\nWC = [\n    [1930,\"Uruguay\",\"Uruguay\"],[1934,\"Italy\",\"Italy\"],[1938,\"Italy\",\"France\"],\n    [1950,\"Uruguay\",\"Brazil\"],[1954,\"West Germany\",\"Switzerland\"],[1958,\"Brazil\",\"Sweden\"],\n    [1962,\"Brazil\",\"Chile\"],[1966,\"England\",\"England\"],[1970,\"Brazil\",\"Mexico\"],\n    [1974,\"West Germany\",\"West Germany\"],[1978,\"Argentina\",\"Argentina\"],[1982,\"Italy\",\"Spain\"],\n    [1986,\"Argentina\",\"Mexico\"],[1990,\"West Germany\",\"Italy\"],[1994,\"Brazil\",\"United States\"],\n    [1998,\"France\",\"France\"],[2002,\"Brazil\",\"South Korea/Japan\"],[2006,\"Italy\",\"Germany\"],\n    [2010,\"Spain\",\"South Africa\"],[2014,\"Germany\",\"Brazil\"],[2018,\"France\",\"Russia\"],\n    [2022,\"Argentina\",\"Qatar\"],\n]\nALIAS = {\"West Germany\": \"Germany\"}   # same nation; merge is an explicit editorial call\nn = len(WC)\nlabels = [r[1] for r in WC]\nlabel_counts = collections.Counter(labels)\nnation_counts = collections.Counter(ALIAS.get(c, c) for c in labels)\ntop3 = nation_counts.most_common(3)\ntop3_titles = sum(v for _, v in top3)\nrepeat = {k: v for k, v in nation_counts.items() if v >= 2}\nrepeat_titles = sum(repeat.values())\nhost_wins = [r for r in WC if r[2] == r[1]]\n\nprint(f\"Men's World Cups in table: {n} ({WC[0][0]}-{WC[-1][0]})\")\nprint(f\"Distinct champion LABELS: {len(label_counts)}  ->  merged NATIONS: {len(nation_counts)} (West Germany = Germany)\")\nprint(f\"Top-3 nations hold {top3_titles}/{n} = {100*top3_titles/n:.1f}% of titles: {[(k,v) for k,v in top3]}\")\nprint(f\"Repeat champions (>=2): {len(repeat)} nations hold {repeat_titles}/{n} = {100*repeat_titles/n:.1f}%\")\nprint(f\"Host-nation wins: {len(host_wins)}/{n} = {100*len(host_wins)/n:.1f}%\")\nprint(f\"Model's Argentina 30.2% vs cited ~23% favourite hit-rate -> +{30.2-23:.1f} pp above the long-run favourite\")\n",
     "data_preview": {
       "description": "Men's World Cup champions 1930-2022 (historical_wc_summary.csv) — champion label and host nation per edition; the cell merges West Germany into Germany and counts title concentration + host wins.",
       "columns": [
@@ -2899,7 +2837,7 @@
       ],
       "_rows_truncated": "showing 7 of 22"
     },
-    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.3% vs cited ~23% favourite hit-rate -> +7.3 pp above the long-run favourite",
+    "expected_output": "Men's World Cups in table: 22 (1930-2022)\nDistinct champion LABELS: 9  ->  merged NATIONS: 8 (West Germany = Germany)\nTop-3 nations hold 13/22 = 59.1% of titles: [('Brazil', 5), ('Italy', 4), ('Germany', 4)]\nRepeat champions (>=2): 6 nations hold 20/22 = 90.9%\nHost-nation wins: 6/22 = 27.3%\nModel's Argentina 30.2% vs cited ~23% favourite hit-rate -> +7.2 pp above the long-run favourite",
     "run": {
       "type": "derived",
       "needs_network": false,

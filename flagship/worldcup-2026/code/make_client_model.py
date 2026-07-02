@@ -41,6 +41,18 @@ for h, a, hg, ag in zip(played["home"], played["away"], played["home_goals"], pl
 
 SCHED = [[h, a, g] for h, a, g in zip(sched["home"], sched["away"], sched["group"])]
 
+# already-decided knockout games (live results): matchId -> {winner, loser}. The client
+# sim overrides its sampled winner for these ids (mirrors simulate.py's ko_fixed_*), so the
+# explorable reflects the real bracket incl. the penalty/ET upsets. Empty for group rows.
+ko = m[(m["stage"] != "group") & (m["status"] == "played")]
+ko_played = {}
+if "winner" in ko.columns:
+    for mid, h, a, winner in zip(ko["match_id"], ko["home"], ko["away"], ko["winner"]):
+        if not isinstance(winner, str) or not winner.strip():
+            continue
+        loser = a if winner == h else h
+        ko_played[str(int(mid))] = {"winner": winner, "loser": loser}
+
 br = json.loads((D / "bracket_rules.json").read_text(encoding="utf-8"))
 r32 = {int(k): v for k, v in br["r32_slots"].items()}
 tree = {int(k): v for k, v in br["bracket_tree"].items()}
@@ -57,12 +69,13 @@ for t, pc in zip(co["team"], co["p_champion"]):
     champ_pub[t] = round(float(pc), 4)
 
 payload = {
-    "as_of": "2026-06-24", "elo_cutoff": elo.TODAY_CUTOFF,
+    "as_of": "2026-07-02", "elo_cutoff": elo.TODAY_CUTOFF,
     "elo": {t: round(elo_now[t], 1) for t in teams},
     "params": {"a": p["a"], "b": p["b"], "mu": p["mu_tot"]},
     "groups": GROUPS, "group_of": group_of,
     "played": base, "sched": SCHED,
     "r32": r32, "tree": tree, "hostMatches": host_matches, "best3": best3,
+    "koPlayed": ko_played,
     "championPublished": champ_pub,
 }
 
@@ -139,12 +152,14 @@ window.WC_MODEL = (function () {
         const gLetter = assign[String(mid)];
         return thirdTeamByGroup[gLetter];
       }
+      const KO = DATA.koPlayed || {};
       for (let mid = 73; mid <= 88; mid++) {
         const sdef = DATA.r32[mid];
         const h = slotTeam(sdef.home, mid), a = slotTeam(sdef.away, mid);
         const eh = eloOf(h, overrides), ea = eloOf(a, overrides);
-        const win = Math.random() < advProb(eh, ea) ? h : a;
+        let win = Math.random() < advProb(eh, ea) ? h : a;
         W[mid] = win; L[mid] = win === h ? a : h;
+        if (KO[mid]) { W[mid] = KO[mid].winner; L[mid] = KO[mid].loser; }  // real result overrides
       }
       for (let mid = 89; mid <= 104; mid++) {
         const nd = DATA.tree[mid];
@@ -152,6 +167,7 @@ window.WC_MODEL = (function () {
         const h = feed(nd.home), a = feed(nd.away);
         const win = Math.random() < advProb(eloOf(h, overrides), eloOf(a, overrides)) ? h : a;
         W[mid] = win; L[mid] = win === h ? a : h;
+        if (KO[mid]) { W[mid] = KO[mid].winner; L[mid] = KO[mid].loser; }  // real result overrides
       }
       champ[W[104]] = (champ[W[104]] || 0) + 1;
     }

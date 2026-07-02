@@ -98,6 +98,20 @@ def main(N=100000):
     gmask = m["stage"] == "group"
     played = m[gmask & (m["status"] == "played")]
     sched = m[gmask & (m["status"] == "scheduled")]
+
+    # ---- already-decided knockout games (live results) -> fixed winner/loser ----
+    # These override the sampled knockout outcome so the forecast reflects the real bracket
+    # (incl. penalty/ET upsets Elo would call the wrong way). Read from matches.csv's
+    # `winner` column; loser = the other team in that match. Group rows are excluded.
+    ko = m[(m["stage"] != "group") & (m["status"] == "played")]
+    ko_fixed_winner, ko_fixed_loser = {}, {}
+    if "winner" in ko.columns:
+        for mid, home, away, winner in zip(ko["match_id"], ko["home"], ko["away"], ko["winner"]):
+            if not isinstance(winner, str) or not winner.strip():
+                continue
+            loser = away if winner == home else home
+            ko_fixed_winner[int(mid)] = tidx[winner]
+            ko_fixed_loser[int(mid)] = tidx[loser]
     pts0 = np.zeros(48); gd0 = np.zeros(48); gf0 = np.zeros(48)
     for h, aw, hg, ag in zip(played["home"], played["away"], played["home_goals"], played["away_goals"]):
         hi, ai, hg, ag = tidx[h], tidx[aw], int(hg), int(ag)
@@ -171,10 +185,13 @@ def main(N=100000):
     W = np.zeros((N, 105), dtype=np.int64)
     L = np.zeros((N, 105), dtype=np.int64)
     for ridx in range(16):
+        mid = 73 + ridx
         h, aw = r32_home[:, ridx], r32_away[:, ridx]
         padv = p_home_adv(elo_arr[h], elo_arr[aw])
         u = rng.random(N); win = np.where(u < padv, h, aw); los = np.where(u < padv, aw, h)
-        W[:, 73 + ridx] = win; L[:, 73 + ridx] = los
+        W[:, mid] = win; L[:, mid] = los
+        if mid in ko_fixed_winner:                     # real result overrides the sample
+            W[:, mid] = ko_fixed_winner[mid]; L[:, mid] = ko_fixed_loser[mid]
     for mid in range(89, 105):
         node = tree[str(mid)]
         def feed(side):
@@ -183,6 +200,8 @@ def main(N=100000):
         padv = p_home_adv(elo_arr[h], elo_arr[aw])
         u = rng.random(N); win = np.where(u < padv, h, aw); los = np.where(u < padv, aw, h)
         W[:, mid] = win; L[:, mid] = los
+        if mid in ko_fixed_winner:                     # real result overrides the sample
+            W[:, mid] = ko_fixed_winner[mid]; L[:, mid] = ko_fixed_loser[mid]
 
     # ---- aggregate per-team probabilities ----
     def frac(arr):
@@ -219,7 +238,13 @@ def main(N=100000):
           "p_third", "p_fourth" if False else "p_advance_group", "p_best_third", "p_reach_r32"]] \
         .to_csv(OUT / "group_forecast.csv", index=False, encoding="utf-8")
 
-    # ---- per-match probabilities for the 44 remaining group games (analytic) ----
+    # ---- per-match probabilities for any remaining scheduled GROUP games (analytic) ----
+    # At the live R32 state all 72 group games are played, so `sched` is empty and this
+    # writes a header-only CSV. The loop is guarded to never touch a knockout row (which
+    # would need a resolved bracket) and to emit a valid CSV either way.
+    mp_cols = ["match_id", "date", "group", "home", "away",
+               "p_home_win", "p_draw", "p_away_win",
+               "exp_home_goals", "exp_away_goals", "likely_score"]
     rows = []
     for mid, dt, g, h, aw in zip(sched["match_id"], sched["date"], sched["group"], sched["home"], sched["away"]):
         lh, la = lam(elo_arr[tidx[h]], elo_arr[tidx[aw]])
@@ -229,9 +254,7 @@ def main(N=100000):
         gi, gj = np.unravel_index(np.argmax(np.outer(ph_g, pa_g)), (8, 8))
         rows.append([int(mid), dt, g, h, aw, round(float(pH[0]), 4), round(float(pD[0]), 4),
                      round(float(pA[0]), 4), round(float(lh), 2), round(float(la), 2), f"{gi}-{gj}"])
-    pd.DataFrame(rows, columns=["match_id", "date", "group", "home", "away",
-                                "p_home_win", "p_draw", "p_away_win",
-                                "exp_home_goals", "exp_away_goals", "likely_score"]) \
+    pd.DataFrame(rows, columns=mp_cols) \
         .to_csv(OUT / "match_probs.csv", index=False, encoding="utf-8")
 
     # ---- health check + summary ----
@@ -240,7 +263,7 @@ def main(N=100000):
     sk = P.skill_check(p, frame)
     summary = {
         "n_simulations": N, "seed": SEED, "elo_cutoff": TODAY_CUTOFF,
-        "as_of": "2026-06-24", "calibration": p,
+        "as_of": "2026-07-02", "calibration": p,
         "model_health": {
             "large_sample_skill": {"model": sk["model"], "naive": sk["naive"], "n": sk["n"]},
             # all group games played so far, scored from the leak-free pre-tournament Elo

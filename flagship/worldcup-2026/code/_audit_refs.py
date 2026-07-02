@@ -4,7 +4,7 @@
 # placeholder is gone. Read-only audit.
 import re, os
 
-BASE = "D:/AI/journalist agent review/phase2/project/worldcup_2026/blog_showcase_opus48_0621"
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # this blog root
 html = open(os.path.join(BASE, "index.html"), encoding="utf-8").read()
 
 refs = set()
