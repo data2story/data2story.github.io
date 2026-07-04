@@ -1,0 +1,100 @@
+{
+  "meta": {
+    "role": "critic",
+    "version": "1.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "run_profile": "premium",
+    "project_dir": "phase2/project/cape-verde-diaspora/blog_fable5_0704_1601",
+    "artifact_under_review": "index.html (Cape Verde Is Bigger Than Cape Verde)",
+    "verify_layer_note": "PIT-29 check PASS at Critic stage: #verifyToggle shell present (line 651), verifyMap/runCells islands present-and-EMPTY by design (lines 1354-1355) — Stage-7 generate_viewer.py fills them AFTER the Critic; verify/verify_map.json (92 entries) + verify/run_cells.json (25 cells) exist on disk. Not required to be filled here.",
+    "gates_confirmed": "validate.py 0 errors / 26 warnings (all benign: 7 media_manifest_unresolved with provenance traceable via scout.json + on-page credit lines; 2 media_low_resolution shown below native size; 17 asset_unreferenced_pending = Stage-7 relocate). verify.py 618/670 sentences traced (52 untraced = masthead/standfirst/references/credits, expected). Auditor: render clean desktop+mobile after 11 fixes, 0 console errors, 6.99MB<8MB, 10/10 interactives playtest PASS (int_01/int_02 driver 'fails' are documented generic-driver false-positives with blocker_recorded, not open defects — not a Critic adjudication)."
+  },
+  "overall": {
+    "average_score": 5.0,
+    "pass": true,
+    "flagship": true,
+    "tier": "flagship",
+    "signature_dimension": "insight_value",
+    "round": 1,
+    "verdict": "Flagship-verified. Every dimension independently clears the >=5 signature-move gate (>=3 concrete on-page evidence items AND a handled category-typical failure mode each) — this is a genuine multi-signature flagship, not a manufactured or rounded-up pass. Defining moves: (1) the reveal-protected strip-the-diaspora hero (int_01) that makes the reader PRODUCE the 15/26 + 50.3%-of-caps + 3-of-4-goals collapse by their own hand, landing before the prose ever states the number; (2) the three-layer counting honesty (UN floor / census / heritage) turned into the narrative spine, with the four missing host countries drawn as ghosted markers rather than silently omitted; (3) a fully public, re-runnable Elo/ordered-logit model with an honest out-of-sample validation and its material caveats surviving verbatim into visible prose. No send-backs."
+  },
+  "dimensions": [
+    {
+      "dimension": "insight_value",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Non-obvious reframe that updates a careful reader: 'plucky minnow' is replaced by a 500-year, famine-born, remittance-financed, constitutionally-engineered emigration SYSTEM that the strictest count in the world (the UN matrix) literally cannot fully see — the thesis 'Cape Verde is bigger than Cape Verde' is earned, not asserted.",
+        "Exactly ONE earned HERO centerpiece landing AT/BEFORE the reveal: int_01 (edt_03) lets the reader switch off the five foreign birth countries and watch 15 players / 50.3% of caps / 3 of 4 World Cup goals vanish, banner 'The team that qualified stops existing.' — the reader produces the central finding themselves; the standfirst and edt_01/edt_02 never leak 15/26 or 57.7% (reveal protection verified in copywriter.json + auditor static_checks).",
+        "Earned supporting SET (R8 / C-ABUNDANCE), each bound to a DISTINCT producible finding, all 10 playtest PASS with 0 recompute disagreements: int_02 odds explorer (re-run the night / re-match anyone left in the draw), int_03 map scrolly (the holes in the count), int_04 Sao Tome decline, int_05 zero-club guess, int_06 remittance-rank climb, int_07 27.9-per-100 guess, int_08 5.1x scale guess, int_09 Elo climb, int_10 find-your-country population strip — coverage of distinct findings, not a widget-pile (a clear dominant hero exists).",
+        "Angle partly from OUTSIDE the raw data (detective context): LinkedIn recruitment of Roberto Lopes, Article 40 irrevocable citizenship + six reserved diaspora parliament seats, the Brockton curfew, morna/sodade/UNESCO and the Sao Tome contract-labour route that 'Sodade' is literally addressed to — context that reframes the migration numbers rather than restating them."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null
+    },
+    {
+      "dimension": "data_method_transparency",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Load-bearing numbers trace to named code / data_tables / source URLs: verifier.json v3 traces 618/670 sentences (52 untraced = masthead/refs/credits); the squad headline (823 caps, 414 born-abroad = 50.3%, 33/75 goals = 44.0%, 3/4 WC goals both Argentina scorers Rotterdam-born) carries computed cross-checks. References section lists real sources with specifics (UN DESA 2024, World Bank BX.TRF.PWKR.DT.GD.ZS + SP.POP.TOTL, martj42/international_results CC0, FIFA squads, Sky/DutchNews/EUDiF/State Dept/UNESCO).",
+        "RUNNABLE, not just traceable: code/client_model.js re-derives the headline exactly (squadTally -> 15/414/33/57.7/50.3/44.0; matchOdds -> 3.4/8.3/88.3/7.6 with published constants C=0.6614,B=2.0468,H=0.2965,SCALE=400), and the hero + odds explorer recompute LIVE in-browser against that same model; verify/verify_map.json (92 entries) + verify/run_cells.json (25 self-contained cells, needs_network=false) exist for the Stage-7 Inspector panel — the strongest form of the dimension, favoured by this computational topic.",
+        "Honest validation of a modelled/predictive headline (honest_accuracy_cap PASS): ana_20 out-of-sample calibration — trained 1990-2014, scored on 10,681 unseen matches, Brier 18.8% better than base-rate, calibration within 2.5 pts per decile — is stated WITH the naive baseline and a falsification condition ('what would falsify it is a decile table where longshots won far more often; that table does not exist here'); the decile table ships in the noscript.",
+        "material_caveat_survival PASS — every material limitation reaches VISIBLE prose, not just the JSONs: 'our own Elo implementation, not comparable with published boards' (edt_02 + every layer-chip + chart caption); 'extra time as a coin flip is an assumption, not a measurement -> 7.6% advance' (edt_02 + int_02 micro-copy); the LAYER RULE (UN-floor / census / heritage never mixed, layer-chips on every chart); the four missing hosts (NL/US/Spain/Senegal) drawn as ghosted 'no row' markers on int_03; 'a floor by construction, no other row'; Vozinha 40-not-39; Brazil x286 flagged as a small-base artifact."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null
+    },
+    {
+      "dimension": "claim_data_alignment",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Every quantitative claim is bounded and level-appropriate: 8.3% is explicitly 'level after 90 minutes' (not 'chance of advancing'), 7.6% is the coin-flip-adjusted advance with the assumption named; 27.9 is 'the strictest of three layers, not the diaspora'; the emigration rank is stated as '#20 of the 212 World Bank-covered origins' (the exact validated granularity, with the Puerto Rico/Somalia join-exclusion honoured), never a raw world rank.",
+        "The headline actively bounds its own scope: the 'fusion, not an imported XI' counterweight (island-born Ryan Mendes holds the all-time cap+goal records, the captain is island-born, 11 of 26 born on the archipelago) prevents the diaspora thesis from over-reaching into 'a Dutch team'.",
+        "Correlation is not dressed as causation and partial-period/small-sample flags are explicit: the remittance dip is read correctly ('a denominator transformed by tourism-led growth, not a diaspora gone quiet', proven by the 2021 pandemic re-rise); 'as of 2026-07-03' conventions; live R16 status is dated display-only, never fed to the model or headlined; Northern Ireland 1982 named as an honest exclusion.",
+        "cite_third_party_as_theirs PASS: the ~120% heritage estimate is attributed to EUDiF / government diaspora mapping, ~500k to the US State Department, the NL background count to Statistics Netherlands — and the project's OWN derived Elo numbers are kept visibly distinct ('our own implementation'); no external figure is absorbed as the project's own. No headline is contradicted by its own chart (auditor verified all 7 charts against analyst.json)."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null
+    },
+    {
+      "dimension": "narrative_pacing",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Deliberate arc with reframe + callback, lead-with-the-surprise: opens on the 111th-minute own goal nine minutes short of the biggest upset in World Cup history, TURNS on 'Whose Team Is This?' (edt_03, the lead), builds the diaspora spine, and CLOSES not on a summary but on the reserved Rotterdam-flags full-circle image and an open question ('who gets counted the next time it nearly beats the world champions?'). Callbacks: 'the escape routes are the map from the last section, drawn a century early'; the 'eleventh island' title-drop lands at the close; the sodade/morna motif returns as the mourning cinematic scene.",
+        "titling_caption_cap POSITIVE case (rewarded, not capped): the masthead states the conclusion on a real device and all 10 section titles are non-templated and non-AT1 ('Nine Minutes from History', 'Run the Night Again', 'Whose Team Is This?', 'Scouted on LinkedIn', 'The Count with Holes in It', 'Three Ways to Count a Nation', 'Why They Left', 'From 138th in the World to 64th', 'The Eleventh Island'); captions are takeaway-titles with the finding bolded ('Abroad-born players carry 50.3% of the squad’s caps.', 'The counted floor nearly tripled; Luxembourg grew 7.15x.'). Auditor grep confirms no marketing word and no forbidden opener in any h1/h2/figcaption.",
+        "Standfirst primes without spoiling (PIT-57 clear): it states only sanctioned hook numbers (527,326 residents, 111 minutes, own goal) and invites the hero interaction ('Take the squad apart and find out where Cape Verde really lives') while withholding 15/26, 57.7%, zero-club, 27.9 and 5.1x — each reserved for the widget that makes the reader produce it (guess-before-reveal ordering preserved across edt_04/06/10).",
+        "Rhythm varies section-to-section (LAY4 PASS): text plates, Vega charts, bespoke SVG scrollies, guess-sliders, stat callouts, a pullquote and photo runs alternate; the emotional turn (edt_07 famine/morna) is placed deliberately between the data-dense diaspora sections and the economic argument."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null
+    },
+    {
+      "dimension": "visual_design",
+      "score": 5,
+      "severity": "none",
+      "issues": [],
+      "evidence": [
+        "Coherent, subject-tied themed system (COL1/COL2/TYP1/ANT1/ANT4 PASS): deep-Atlantic navy #0A1420 / sand ink / star-gold #F2B544 / Atlantic-blue accent, one reused data scale, a Didone display face paired with a Georgia serif body over a dark cinematic stage — NOT bootstrap-blue, purple-gradient hero, or a default system font. Auditor vision rubric: TYP1-5, LAY1-7, ANT1-5, CHT1/2/4/5, COL1-5, MOT1-6, A11Y1-5 all PASS; zero hard fails.",
+        "A signature design move that carries information the prose cannot: the int_03 floor-map draws the four missing host countries (Netherlands/US/Spain/Senegal) as ghosted dashed 'no row' markers next to the counted destinations — the 'holes in the count' thesis rendered as geometry; plus the Elo scrolly with a zoom-inset for the mid-tournament 1702 peak, and the isotype 10x10 grid that tints 28 people to produce 27.9-per-100. Multiple distinct chart types annotate their own point (des_06 'never favoured above 49%', des_11 Luxembourg 7.15x lollipop).",
+        "Rich (not impoverished) delivery on a visual topic (richness/inert-immersion/static-hero floors all PASS as the POSITIVE case): an 11-scene photographic cinematic scroll spine with per-scene grades incl. the mourning-motif return; frosted dark backplates behind body prose over the moving background (PIT-67 handled); an animated, seamlessly boomerang-looping hero (loop marker present, seam RMS 3.4/255) disclosed as a Ken-Burns move on a verified still; a tonally-fitting real BGM (CC0 solo-guitar 'Romance Anónimo', morna's license-clean sibling) with the real morna present on-page as verified Cesaria Evora embeds.",
+        "Dark-stage chart legibility handled (PIT-62): a shared DARKCFG applies light guide-text to every Vega chart; fault-isolated IIFEs + embedChart width-measure guard against blank/0-width charts (PIT-01/PIT-55). Advisory polish debt noted but NON-capping and auditor-triaged as cosmetic (single-agent LOW): CHT3 tick density on des_20/des_22/des_09/des_13, des_22 star legend drawn inside the plot, ragged des_07+des_08 diptych bottoms, des_09 designed on-plot bracket not drawn, Bubista photo shown at 440px below its 508px native. These keep it off a 6 (reference-class) but do not threaten the 5."
+      ],
+      "send_back_to": null,
+      "suggested_fix": null
+    }
+  ],
+  "notes": {
+    "no_send_backs": "All five dimensions reached >=5 with independent, concrete on-page evidence and a handled category-typical failure mode each; there is no failing (<4) or merely-competent (==4) dimension, so no surgical send-back and no flagship-lift send-back are required. This is reported as flagship, not silently promoted.",
+    "bgm_decision_accepted": "The CC0 solo-guitar BGM (not real morna) is a documented, defensible choice, NOT the PIT-47 'generic unrelated loop' cap: real morna is genuinely not available license-clean; the chosen track is tonally correct (guitar / longing / sodade, not celebratory on a sober hook), and the actual morna (Cesaria Evora 'Sodade' inst_01, 'Petit pays' inst_03) is present on-page as verified embeds. No decorative/tonally-wrong cap fires.",
+    "animated_likeness_advisory": "None required. The hero and cinematic motion are on Mindelo harbour (a place, no person); all human subjects (Duarte, Vozinha, Bubista, Cesaria Evora) appear as static inline photos, none animated. No sensitive-subject likeness is animated, so no taste advisory applies.",
+    "polish_opportunities_non_blocking": "For a future Designer polish round only (do NOT reopen the loop for these; all LOW single-agent advisories): thin the CHT3 tick density on des_20/des_22/des_09/des_13 toward ~5-8 ticks; move the des_22 star legend out of the plot; even the des_07/des_08 diptych bottoms; draw the des_09 abroad-born on-plot bracket; and, if the Scout re-runs, re-fetch a higher-res Bubista original (currently 508px native, shown inline at 440px)."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "meta": {
+    "role": "hero",
+    "version": "1.0",
+    "source_ladder_rung": 1,
+    "why": "Rung 0 not taken: editor.json.interactives.hero.section == 'edt_03' (the strip-the-diaspora centerpiece is reveal-protected mid-page), not 'teaser'. Rung 1 resolved: des_01 — the Designer-registered Mindelo harbour still (a place, no recognizable public figure) — so image2video via default Veo was the plan; OpenRouter returned HTTP 402 insufficient-credits on every API attempt, so the recorded in-ladder fallback fired: ffmpeg Ken-Burns + boomerang on the SAME verified still. The cover stays animated (kind:'video').",
+    "ladder_walk": [
+      "rung 0 interactive_passthrough: NOT resolved — editor.interactives.hero.section='edt_03', not 'teaser'; interactive_overlay_ref stays null",
+      "rung 1 scout_still: RESOLVED on des_01 (assets/teaser.jpg, the 1280x720 faces-free crop of det_media_02 ref_mindelo_harbor.jpg)",
+      "rung 1 render attempt 1-2: google/veo-3.1-fast -> HTTP 402 'Insufficient credits' (OpenRouter account balance, not a content refusal; not retry-clearable from the pipeline)",
+      "rung 1 render attempt 3: model swap bytedance/seedance-2.0 -> HTTP 402 (same)",
+      "rung 1 recorded fallback: FALLBACK_USED=kenburns -> re-rendered as a high-quality 8s ffmpeg Ken-Burns palindrome (smoothstep-eased 1.00->1.09 push-in biased toward the moored boats; zero velocity at the loop join AND the boomerang turn; seam RMS 3.4/255 between first and last frame)",
+      "rung 5 static_fallback: NOT reached — no media_blocker; the cover is a real video loop"
+    ]
+  },
+  "hero": {
+    "id": "des_hero_video",
+    "kind": "video",
+    "backs": "teaser",
+    "subject_is_real_public_figure": false,
+    "source": {
+      "origin": "scout_still",
+      "still_ref": "des_01",
+      "model": null,
+      "tool": "ffmpeg_kenburns",
+      "prompt": "Motion-only prompt submitted to image2video before the 402: 'PRIMARY: bay water ripples and glints, moored sailboats bob and sway at anchor; SECONDARY: low grey clouds drift over the mountain ridge, breeze stirs the palms; city/buildings/shoreline held still; nothing added or removed; in-place cyclic motion; static camera, no shake, no zoom.' Executed treatment (no API): smoothstep-eased Ken-Burns push-in 1.00->1.09 over 4s toward the harbour boats, then boomerang-reversed to 8s — a pure camera move on the verified still; every pixel is the original photo, nothing fabricated.",
+      "duration": 8,
+      "fallback_used": "kenburns",
+      "api_error": "HTTP 402 Insufficient credits (openrouter.ai/settings/credits) on google/veo-3.1-fast x2 and bytedance/seedance-2.0 x1, 2026-07-04; re-run the image2video rung after topping up if a true cinemagraph (water shimmer / cloud drift) is wanted"
+    },
+    "loop": "boomerang",
+    "assets": {
+      "video_webm": "assets/teaser.webm",
+      "video_mp4": "assets/teaser_web.mp4",
+      "poster": "assets/teaser.jpg"
+    },
+    "reduced_motion_fallback": "assets/teaser.jpg",
+    "furniture": {
+      "headline_band": "Cape Verde Is Bigger Than Cape Verde",
+      "kicker": "World Cup 2026 · The diaspora",
+      "credit_line": "Photo: Manuel de Sousa / Wikimedia Commons (CC BY-SA 3.0) — identity verified; motion is a camera move on the still",
+      "decorative": [
+        "lower-third gradient scrim (bg #0A1420 fade) carrying the masthead band",
+        "hairline star-gold (#F2B544) kicker rule"
+      ]
+    },
+    "interactive_overlay_ref": null,
+    "verify": {
+      "hit_target": ".teaser",
+      "data_attr": "data-des",
+      "id": "des_hero_video",
+      "class_marker": "teaser"
+    },
+    "disclosure": "Fetched verified photo of Mindelo's harbour bay (São Vicente, Cabo Verde); motion = a Ken-Burns camera move on the still — not AI video, no content added or removed.",
+    "publish_blocker": false,
+    "ip_record_ref": "references/hero_recipes.json#ip_record",
+    "provenance": {
+      "source_photo": {
+        "detective_ref": "det_media_02",
+        "designer_ref": "des_01",
+        "file_original": "assets/ref_mindelo_harbor.jpg",
+        "file_crop": "assets/teaser.jpg (16:9 centre-crop 1280x720, prepared by the Designer; untouched here — it is frame 0 of the loop and the poster)",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Mindelo_(S_Vicente,_Cabo_Verde).JPG",
+        "author": "Manuel de Sousa",
+        "license": "CC BY-SA 3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Manuel de Sousa / Wikimedia Commons (CC BY-SA 3.0)",
+        "identity": "vlm_view verified — Mindelo harbour bay, São Vicente, Cabo Verde (Detective vision-confirmed harbour cityscape); no recognizable person in frame"
+      }
+    }
+  }
+}

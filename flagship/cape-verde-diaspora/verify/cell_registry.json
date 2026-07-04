@@ -1,0 +1,76 @@
+{
+  "cell_diaspora": {
+    "computes": "Where the counted diaspora lives: Portugal 52%, France 24%",
+    "backs": [
+      "ana_01",
+      "ana_02",
+      "ana_03",
+      "ana_04",
+      "ana_05",
+      "des_11",
+      "des_13",
+      "int_03",
+      "int_04",
+      "int_07"
+    ],
+    "needs_network": false
+  },
+  "cell_elo": {
+    "computes": "The Elo climb: world #138 in 1998 to #64 -- and an all-time peak mid-World Cup",
+    "backs": [
+      "ana_12",
+      "ana_14",
+      "ana_15",
+      "ana_16",
+      "des_06",
+      "des_20",
+      "int_09",
+      "int_10"
+    ],
+    "needs_network": false
+  },
+  "cell_outcome_model": {
+    "computes": "Cape Verde's chances against Argentina: 3.4% to win, 8.3% to force extra time",
+    "backs": [
+      "ana_19",
+      "ana_20",
+      "des_05",
+      "int_02"
+    ],
+    "needs_network": false
+  },
+  "cell_remittances": {
+    "computes": "Remittances: 28.2% of GDP in 1980, 12.3% in 2024",
+    "backs": [
+      "ana_06",
+      "ana_07",
+      "ana_08",
+      "des_18",
+      "des_19",
+      "int_06"
+    ],
+    "needs_network": false
+  },
+  "cell_squad": {
+    "computes": "The squad is the diaspora: 15 of 26 born abroad",
+    "backs": [
+      "ana_09",
+      "ana_10",
+      "ana_11",
+      "des_09",
+      "int_01",
+      "int_05"
+    ],
+    "needs_network": false
+  },
+  "cell_wc_population": {
+    "computes": "Third-least-populous World Cup nation ever -- verified",
+    "backs": [
+      "ana_17",
+      "ana_18",
+      "des_22",
+      "int_08"
+    ],
+    "needs_network": false
+  }
+}

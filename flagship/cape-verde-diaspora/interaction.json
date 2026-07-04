@@ -1,0 +1,429 @@
+{
+  "meta": {
+    "role": "interaction",
+    "version": "1.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "run_profile": "premium",
+    "buildability_check": "node-verified this session against code/client_model.js: squadTally() -> {players:15, caps:414, goals:33, playersPct:57.7, capsPct:50.3, goalsPct:44.0}; squadTally([]) -> zeros; remaining side derives 11 players / 409 caps / 49.7%; capeVerdeVsArgentina() -> {win:3.4, draw:8.3, loss:88.3, advance:7.6}; matchOdds(CV 1701.6, Egypt 1860.2, 0) -> advance 32.5; RATINGS_PRE_R32 carries exactly 32 teams. Derived quiz/lookup numbers recomputed from the bound data_tables: 2707646/527326=5.1, mean 47191938/527326=89, US 341784857/527326=648, CV 527326/1699=310 people-per-Elo-point, Argentina 45851378/527326=86.95 -> 87.0 at 1 dp (NOT 86.9), Kosovo -> 3.0, 146396/524877=27.9, 51800/375428=13.8, Portugal 52.5 / France 23.8 / PT+FR 76.3, Sao Tome -73.8.",
+    "verify_coexistence_rule": "BINDING for every element below: const vOn = () => document.documentElement.classList.contains('verify-on'); is defined once; the FIRST line of every mutating handler (chip click, select change, slider input, reveal button, keydown Enter/Space, hover/focus side-effects) is `if (vOn()) return;`. Feature code NEVER calls stopPropagation() and never preventDefault()s a bubble the Verify layer needs. Scroll-driven IntersectionObserver step changes are navigation, not control gestures — they stay live under verify-on; any BUTTON inside a scrolly is guarded. See interaction/references/interaction_recipes.json (interactive_hero_verify_coexist) and interaction_playbook.json verify_coexistence.",
+    "number_formatting_rule": "Three-layer standard on every displayed number: (1) the rendered string, (2) the bound ana_ data_table cell / client_model output it equals, (3) the deterministic recompute the verify layer can run. All percentages render with .toFixed(1) — cm_02 returns goalsPct as the Number 44, which MUST render '44.0' to match the published value. Population multiples render 1 dp (Argentina 87.0x). Counts render exact integers with thousands separators matching editor.md's exact-numbers list (146,396; 527,326; 2,707,646 ...). No number on any widget surface may be a re-rounding of a rounded value — always compute from the inlined table cells."
+  },
+  "centerpiece": {
+    "id": "int_01",
+    "role": "hero",
+    "concept_ref": "img_03",
+    "based_on": ["ana_09", "ana_10"],
+    "section": "edt_03",
+    "mechanism": "explorable_recompute",
+    "reader_produces": "Strips the diaspora out of the 26-man World Cup squad: toggles the five foreign birth countries off and watches 15 players grey out, 50.3% of the squad's career caps vanish and 3 of its 4 World Cup goals disappear — the team that qualified stops existing. All three collapse numbers are PRODUCED by the reader's toggles, never pre-stated (PIT-57 reveal protection).",
+    "controls": [
+      "five flag-chip toggle buttons (native <button aria-pressed>), one per foreign birth country — Netherlands, Portugal, France, Ireland, United States — all ON at baseline; flag assets: assets/flag_netherlands_web.webp, flag_portugal_web.webp, flag_france_web.webp, flag_ireland_web.webp (des_26), flag_united_states_web.webp. Chips show flag + country name ONLY at rest (no player counts pre-stated); when toggled off the chip gains a '−N players' badge from SQUAD_BIRTH[country].players",
+      "one 'Strip all five' button (the one-gesture payoff path) and one 'Reset' button, both native <button>, ≥44px hit-area"
+    ],
+    "client_model": {
+      "file": "code/client_model.js",
+      "fn": "squadTally(offCountries)",
+      "inputs": "(array of the currently toggled-OFF birth countries) — squadTally returns the REMOVED tally directly: squadTally(['Netherlands','Portugal','France','Ireland','United States']) = {players:15, caps:414, goals:33, playersPct:57.7, capsPct:50.3, goalsPct:44.0}. Inline ORDERED constants SQUAD_TOTALS + SQUAD_BIRTH verbatim from client_model.js. EXTENSION (inline, commented, sourced from ana_10 goalscorer attributions): const WC2026_GOALS = {'Cape Verde':1,'Netherlands':2,'Portugal':1,'France':0,'Ireland':0,'United States':0}; // Kevin Pina (CV), Helio Varela (POR), Deroy Duarte (NED), Sidny Lopes Cabral (NED) — total 4",
+      "recompute": "on any toggle: t = squadTally(offList); remainingPlayers = 26 - t.players; remainingCapsPct = ((823 - t.caps)/823*100).toFixed(1); goalsGone = sum(WC2026_GOALS[c] for c in offList)"
+    },
+    "visual": "A 26-dot squad grid grouped by birth country (6 groups), dots ~28px: island-born (11) in Atlantic blue --accent-2 #4E8FD9, abroad-born (15) in star-gold --accent #F2B544 — the exact des_09 encoding. Toggling a country off greys its dots (opacity .18 + desaturate) with a --dur-sm --ease-standard transition, staggered ≤6 dots per group. Group labels are country names (counts emerge as the reader toggles). A vanished-tally line under the grid fills in as countries go: 'Gone: N players · X% of all caps · M of 4 World Cup goals.'",
+    "at_rest": "The full squad: bare readout '26' players (SQUAD_TOTALS.players — published, unprotected), all dots lit, vanished-tally line empty. NO 15/26, 57.7%, 50.3% or 3-of-4 anywhere on or above the widget at rest — those numbers first exist when the reader creates them (binding editor order: Duarte-family texture -> priming paragraph -> THIS WIDGET -> payoff paragraphs -> des_09 chart).",
+    "on_interact": "Each toggle recomputes via squadTally: primary readout (players remaining) counts down 26 -> 11; secondary readouts show remaining caps share (100.0% -> 49.7%) and World Cup goals remaining (4 -> 1); the vanished-tally line shows the removed side straight from the model (playersPct/capsPct/goalsPct as toFixed(1)). When ALL FIVE are off, a payoff banner lands: '15 players gone. 50.3% of every cap the squad ever won. 3 of its 4 World Cup goals. The team that qualified stops existing.' (values written from the live squadTally output, not hardcoded strings — string template around model numbers).",
+    "payoff": "The reader dismantles the team themselves and discovers the squad IS the diaspora — then the prose (15/26, 50.3%, 3-of-4 paragraphs) confirms what they just produced, and des_09 keeps it as the take-home chart.",
+    "placement": "edt_03 [MEDIA: interactive] slot — after the priming paragraph ('take the squad apart yourself'), BEFORE the ana_09/ana_10 payoff paragraphs. Play-first: the chips are the first thing in the widget, a one-line affordance above them ('Switch off a birth country'), no params block.",
+    "degradation": "JS off: the grid renders fully lit and grouped with country labels (static HTML), chips render disabled; the point still lands because the ana_09/ana_10 payoff paragraphs follow immediately in the article flow. No number is lost, only the production of it.",
+    "a11y": "Chips are native <button> with aria-pressed and visible focus ring; toggle order = DOM order; 'Strip all five'/'Reset' reachable by Tab; readouts in an aria-live=polite region; dot grid has an aria-label summary ('26 players grouped by birth country'); all hit areas ≥44px; count animations gated by prefers-reduced-motion (tokens collapse).",
+    "verify": { "kind": "computation", "recompute": "client_model", "three_layer": true },
+    "numbers": [
+      "26 / 823 / 4 (at rest) <- SQUAD_TOTALS + WC2026_GOALS sum",
+      "15 / 414 (=50.3%) / 33 (=44.0%) / 57.7% (full strip) <- squadTally(all five)",
+      "11 / 409 / 49.7% (remaining) <- 26-15, 823-414, (409/823*100).toFixed(1)",
+      "3 of 4 WC goals <- WC2026_GOALS: NED 2 + POR 1 (ana_10 attributions)"
+    ],
+    "tagging": "root: data-int='int_01' data-ana='ana_09'; live readout span: data-play-out='int_01' class='po-num' (bare players-remaining number). Flag chips carry NO data-* provenance ids (they are controls, not claims); the ONE verify_map claim for the hero belongs to the widget container."
+  },
+  "supporting": [
+    {
+      "id": "int_02",
+      "role": "supporting",
+      "concept_ref": "img_01",
+      "based_on": ["ana_19"],
+      "section": "edt_02",
+      "mechanism": "explorable_recompute",
+      "rank": 1,
+      "reader_produces": "Re-runs the Argentina night on the published model and derives 3.4% / 8.3% / 88.3% themselves — then re-matches Cape Verde against any of the 32 knockout teams, including Egypt, the R16 opponent they never reached (advance 32.5%).",
+      "controls": [
+        "two native <select> team pickers over the 32 inlined RATINGS_PRE_R32 teams — Team A seeded 'Cape Verde' (1701.6), Team B seeded 'Argentina' (2225.0); each option shows 'Team — rating'",
+        "two quick-scenario chips (native <button>): 'The Argentina night' (reset to baseline) and 'The Egypt tie that never was' (sets B = Egypt 1860.2)",
+        "venue is FIXED neutral (homesign locked to 0, one microcopy line: 'All WC2026 venues are neutral — no home-advantage input.') Do NOT add a home toggle; it would detach the widget from the published baseline"
+      ],
+      "client_model": {
+        "file": "code/client_model.js",
+        "fn": "matchOdds(rA, rB, 0)",
+        "inputs": "(RATINGS_PRE_R32[teamA], RATINGS_PRE_R32[teamB], 0) — inline ORDERED_LOGIT {C:0.6614, B:2.0468, H:0.2965, SCALE:400} and RATINGS_PRE_R32 verbatim; same audited model as the prose headline (same_model_as_headline)."
+      },
+      "visual": "Three horizontal probability bars from Team A's side — 'wins in 90'', 'level after 90'' (labelled exactly that, never plain 'draw'), 'loses in 90'' — animating width on recompute (--dur-lg --ease-in-out); an advance line beneath ('chance of going through, counting extra time as a coin flip'). When the pickers leave the baseline, a ghost marker pins the published 3.4/8.3/88.3 so the delta vs the Argentina night stays visible. Labels say 'model probability' — NEVER 'Elo win expectancy', which is reserved for the des_06 chart (binding editorial distinction).",
+      "at_rest": "Seeded Cape Verde vs Argentina: bars at 3.4 / 8.3 / 88.3, bare advance readout 7.6 — the untouched widget reproduces the published headline exactly.",
+      "on_interact": "Any picker/chip change (vOn-guarded, debounced one frame): matchOdds re-derives; bars transition; readout updates; delta chip shows advance vs the 7.6 baseline. Honesty microcopy pinned under the readout: 'Level after 90 counts as a coin flip for advancing — an assumption, not a measurement' (ana_caveat_09; the our-own-Elo sentence lives in the edt_02 prose).",
+      "payoff": "The reader derives how improbable the night was — and lands the counterfactual sting: the model gave Cape Verde a 32.5% chance of beating Egypt for a quarter-final place. The hook's improbability becomes something they ran.",
+      "placement": "edt_02 [MEDIA: interactive] slot — after the model-description paragraph, before the ana_20 trust paragraph. Controls first, explanation after.",
+      "degradation": "JS off: the three bars render statically at the published 3.4/8.3/88.3 with the 7.6 advance line — the exact ana_19 data_table row for Argentina.",
+      "a11y": "Native selects (keyboard/screen-reader free), labelled 'Team A'/'Team B'; chips are real buttons ≥44px; readout aria-live=polite; bars have text labels not color-only meaning (gold reserved for the Cape Verde side per page tokens).",
+      "verify": { "kind": "computation", "recompute": "client_model", "three_layer": true },
+      "numbers": [
+        "3.4 / 8.3 / 88.3 / 7.6 <- matchOdds(1701.6, 2225.0, 0), node-verified",
+        "32.5 (Egypt advance) <- matchOdds(1701.6, 1860.2, 0).advance, node-verified",
+        "group-stage rows 2.8 / 11.3 / 33.4 available in ana_19 data_table if scenario chips for Spain/Uruguay/Saudi are added — optional, same table"
+      ],
+      "tagging": "root: data-int='int_02' data-ana='ana_19'; advance readout: data-play-out='int_02' class='po-num'."
+    },
+    {
+      "id": "int_03",
+      "role": "supporting",
+      "concept_ref": "img_07",
+      "based_on": ["ana_01"],
+      "section": "edt_05",
+      "mechanism": "scrollytelling",
+      "rank": 2,
+      "reader_produces": "Walks the UN floor map destination by destination and then watches the holes appear: the Netherlands, US, Spain and Senegal render as ghosted 'not counted' markers — the reader produces 'the 146,396 total is a floor with holes in it' themselves.",
+      "controls": ["scroll only (document scroll; steps are ordinary text blocks in DOM order — no custom key handling needed, PageDown/arrow scroll native)"],
+      "client_model": null,
+      "visual": "Sticky full-viewport SVG map (NO Leaflet, NO tiles — the page must run on file:// offline: inline SVG with an equirectangular projection function over inlined destination centroids {name, lon, lat} for the ana_01 rows + the four ghost hosts). Proportional circles AREA-scaled (sqrt) to y2024 values; ocean-blue sequential ramp navy -> #4E8FD9 -> pale sand per page tokens; Cape Verde origin marked in star-gold with hairline flow arcs. The layer label 'UN born-in-Cabo-Verde floor — 2024 bilateral matrix' is PINNED in a corner of the sticky graphic for the entire scrolly (ana_caveat_01, binding). Strip the UN '*' from destination names (det_17).",
+      "steps": [
+        "s1 — Two countries hold it: Portugal (76,835 — 52.5%) and France (34,814 — 23.8%) light up; caption: three in four counted emigrants live in one of two countries (76.3%).",
+        "s2 — The long tail: the remaining named destinations draw in to scale, Angola 9,497 -> Luxembourg 8,211 -> Mozambique 7,107 -> Italy 5,847 down the table (zero-stock Estonia/Latvia footnoted, not drawn); the world-total counter accumulates to 146,396 as circles land.",
+        "s3 — The holes: dashed hollow ghost markers appear for Netherlands, United States, Spain, Senegal labelled 'no row in the 2024 matrix'; caption: the birth countries of 7 of the 15 abroad-born squad players are statistically invisible here (NED 6 + USA 1, ana_09).",
+        "s4 — The payoff: the total re-states as 'a floor, not the diaspora' — 146,396 is literally the sum of the named destinations, with no other row. (The 2019-revision NL/US counts stay in the following prose, NOT on the map — mixing matrix vintages on one layer is banned.)"
+      ],
+      "engine": "position:sticky graphic + IntersectionObserver over .step divs (threshold array, rootMargin '-40% 0 -40% 0'), steps[i]() mutates the SVG; scroll-linked motion LINEAR (no easing on scrub); discrete step transitions --dur-lg --ease-out in / --dur-md --ease-in out.",
+      "at_rest": "Before scrolling, step s1's state is visible (Portugal+France lit, layer label pinned) — nothing hidden on load (MOT6).",
+      "on_interact": "Scroll advances steps; IO callbacks are NOT vOn-guarded (scroll is navigation) but the map surface contains no buttons; circle hover tooltips (destination, y1990, y2024) ARE vOn-guarded.",
+      "payoff": "The strictest count in the world cannot see the nation — produced visually, before the prose says it.",
+      "placement": "edt_05 [MEDIA: map] slot — after the first ana_01 paragraph, owning the section's opening; the des_11 growth chart stays at section end.",
+      "degradation": "JS off: the sticky collapses to a static figure showing the FULL final state (all circles + ghost markers + layer label) with the s1–s4 captions as ordinary paragraphs beneath it.",
+      "a11y": "Step text is real copy in DOM order; the SVG carries role='img' + an aria-label summarising the distribution; tooltips duplicated by an accessible <table> fallback (visually-hidden) of the ana_01 rows; no keyboard trap; reduced-motion collapses transitions to 1ms.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true },
+      "numbers": [
+        "146,396 / 76,835 (52.5%) / 34,814 (23.8%) / 76.3% <- ana_01 data_table 2024 column, shares recomputed from cells",
+        "ghost set NL/US/ES/SN <- ana_01 content + ana_caveat_01 (structurally absent)",
+        "7 of the 15 <- ana_09 data_table (NED 6 + USA 1)"
+      ],
+      "tagging": "root: data-int='int_03' data-ana='ana_01'; no data-play-out (no control-driven readout)."
+    },
+    {
+      "id": "int_04",
+      "role": "supporting",
+      "concept_ref": "img_15",
+      "based_on": ["ana_03"],
+      "section": "edt_07",
+      "mechanism": "scrollytelling",
+      "rank": 3,
+      "reader_produces": "A feeling, honestly earned: while 'Sodade' is available to play, the reader scrolls the one shrinking series in the data — São Tomé 4,250 -> 1,115 — wave by wave, and produces the realization that the community the song mourns is disappearing from the table.",
+      "controls": ["scroll only; the inst_01 YouTube embed inside the sticky panel is CLICK-TO-PLAY only (a real user gesture on the iframe — no autoplay parameter, no programmatic play, ever)"],
+      "client_model": null,
+      "visual": "Quiet sticky panel: eight vertical bars, one per UN wave (1990–2024), drawn full at s1 from the ana_03 data_table, each bar fading DOWN (height animates to its wave value; departed portion ghosts) as its step passes. The des_15 'Sodade' embed sits in the panel's corner with a one-line invitation ('Press play — the song is about this route'). One caption per beat, nothing else. Layer label on the series per ana_caveat_01. Imagery run (Designer-owned des_14 Évora, des_16 Ernestina, des_17 Fogo) rides the step column, not the sticky panel.",
+      "steps": [
+        "s1 — 1990: 4,250 counted in São Tomé — then the third-largest community in the table (the contract-labour generation of det_12).",
+        "s2 — 1995–2005: 3,343 -> 2,488 -> 1,956; declining in every single wave.",
+        "s3 — 2010–2020: 1,538 -> 1,363 -> 1,220; no new migration replaces the deportee generation.",
+        "s4 — 2024: 1,115. A fall of 73.8%. The song's subject, leaving the table."
+      ],
+      "engine": "same sticky + IntersectionObserver engine as int_03; bar height transitions --dur-lg --ease-in (leaving numbers exit gently); scroll-linked scrub linear.",
+      "at_rest": "s1 state visible on load (all bars full at their wave heights, 1990 highlighted).",
+      "on_interact": "Scroll advances the waves; the embed plays only on the reader's own click on the iframe. No other mutating handlers exist; hover tooltips (year, migrants) vOn-guarded.",
+      "payoff": "The −73.8% is not read, it is watched — data, history (det_12) and the art (det_15) as one object.",
+      "placement": "edt_07 [MEDIA: audio] / [INSTANCE: inst_01] slot — after the det_15 morna paragraph, BEFORE the ana_03 payoff paragraph.",
+      "degradation": "JS off: static descending bar chart (all 8 waves) with the −73.8% caption; the embed iframe still works click-to-play.",
+      "a11y": "Bars carry a visually-hidden data table (year, migrants); embed iframe has a title attribute ('Sodade — Cesária Évora, official video'); step copy in DOM order; reduced-motion shows bars at final heights per step with 1ms transitions.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true },
+      "numbers": [
+        "4,250 / 3,343 / 2,488 / 1,956 / 1,538 / 1,363 / 1,220 / 1,115 <- ana_03 data_table rows verbatim",
+        "-73.8% <- (1115-4250)/4250, node-checked"
+      ],
+      "tagging": "root: data-int='int_04' data-ana='ana_03'; embed keeps its own des_15 provenance; do NOT overlay custom hit-targets on the iframe (Verify layer handles embeds via its own allow-list)."
+    },
+    {
+      "id": "int_05",
+      "role": "supporting",
+      "concept_ref": "img_16",
+      "based_on": ["ana_11"],
+      "section": "edt_04",
+      "mechanism": "guess_then_reveal",
+      "rank": 4,
+      "reader_produces": "Commits a guess for how many of the 26 play club football in Cape Verde — and gets the flattest number in the dataset: zero, across 14 club countries. Even the island-born XI professionalised abroad.",
+      "controls": [
+        "one labelled range slider 0–26 ('How many of the 26 play their club football in Cape Verde?'), seeded at 13 (declared midpoint default), thumb + padding ≥44px, with a live value bubble",
+        "one 'Lock in my guess' native <button> ≥44px — the reveal trigger (vOn-guarded)"
+      ],
+      "client_model": null,
+      "visual": "On reveal: the 14 club-country rows from the ana_11 data_table animate in as data-bound bars (POR 7 -> TUR 3 -> ... -> ISR 1, widths from a linear scale over the column, NEVER hardcoded px) — plus one highlighted empty row: 'Cape Verde — 0'. The reader's guess renders as a marker on a 0–26 answer track next to the real 0. Verdict line branches on the signed gap: exactly right / N too high.",
+      "at_rest": "Only the slider + button + an empty answer track. The readout node exists but is EMPTY at rest (reveal-protected — the scored answer populates it on reveal, per the scored_quiz/guess recipe; this is the sanctioned exception to the at-rest bare number).",
+      "on_interact": "Reveal (vOn-guarded): bare 0 written into [data-play-out=int_05]; bars stagger in (≤6 visible groups then the rest as one block, --stagger cap); verdict renders; slider disables until 'Try again' (reset affordance).",
+      "payoff": "Zero. The whole national team is an export product — the reader's own guess measured how unbelievable that is.",
+      "placement": "edt_04, after the editorial question paragraph, BEFORE the ana_11 answer paragraph (binding guess-before-reveal order; chart_placeholder deliberately null in this section — nothing above the widget may show club data).",
+      "degradation": "noscript block states the answer plainly ('The answer is zero — the 26 play in 14 countries; not one in Cape Verde') + a static bar list; visible only when JS is off, so it cannot leak.",
+      "a11y": "Range input labelled with aria-valuetext ('N of 26 players'); reveal button real <button>; verdict + readout aria-live=polite; bars have text value labels; keyboard path = Tab to slider, arrows to set, Tab to button, Enter.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true },
+      "numbers": [
+        "0 (Cape Verde club players) <- ana_11: 26 players across 14 club countries, none domestic",
+        "POR 7 / TUR 3 / BUL·USA·CYP·RUS 2 / 8×1 <- ana_11 data_table rows verbatim; 14 countries sum to 26"
+      ],
+      "tagging": "root: data-int='int_05' data-ana='ana_11'; answer readout: data-play-out='int_05' class='po-num' (bare 0 on reveal)."
+    },
+    {
+      "id": "int_06",
+      "role": "supporting",
+      "concept_ref": "img_10",
+      "based_on": ["ana_08"],
+      "section": "edt_08",
+      "mechanism": "scrollytelling",
+      "rank": 5,
+      "reader_produces": "Rides the country's whole economic history off one rank line — #2 of 90 in 1980, 21 straight years in the global top 10, #40 by 2010, #18 of 160 in 2024 — and produces the 'dependence receded because GDP grew' reading themselves.",
+      "controls": ["scroll only"],
+      "client_model": null,
+      "visual": "Sticky panel: Cape Verde's global remittance-dependence rank as a self-drawing line (d3.line + stroke-dasharray reveal) over the 45 ana_08 rows, y-axis INVERTED (rank #1 at top — lower rank = more dependent, axis labelled exactly that), pool size annotated at the beats ('of 90' ... 'of 160'). Top-10 band (ranks 1–10) shaded as a reference region. Accent gold only on the Cape Verde line per page tokens.",
+      "steps": [
+        "s1 — 1980: the series opens at #2 of 90 (28.2% of GDP — the all-time peak).",
+        "s2 — 1980–2000: the line hugs the shaded top-10 band for 21 consecutive years; #2 again in 1994 and 1995.",
+        "s3 — 2001–2010: the slide to #40 of 179 — a denominator transformed by tourism-led growth, not a diaspora gone quiet.",
+        "s4 — 2011–2024: the settling; the 2021 pandemic re-rise to #21, then 2024: #18 of 160 — still the top 11% of the world."
+      ],
+      "engine": "shared sticky + IO engine; line reveal is scroll-linked (linear) per segment; annotation chips enter --dur-md --ease-out.",
+      "at_rest": "s1 state visible on load: axes, the top-10 band and the 1980 point drawn.",
+      "on_interact": "Scroll draws the line segment by segment; hover tooltip (year, rank, pool, pct) vOn-guarded.",
+      "payoff": "One line = fifty years of economic history; the falling dependence line is a RISING economy, which the des_18 chart then confirms in levels.",
+      "placement": "edt_08 [MEDIA: interactive] slot — after the 2021 proof paragraph, BEFORE the ana_08 rank paragraph (the scrolly delivers the ranks first; prose confirms).",
+      "degradation": "JS off: the full static rank line with all four beat annotations and the top-10 band.",
+      "a11y": "Visually-hidden table of (year, rank, pool); axis direction stated in the aria-label ('rank, 1 at top = most dependent'); step copy in DOM order.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true },
+      "numbers": [
+        "#2 of 90 (1980, 28.2%) / #2 of 130 (1994) / #2 of 137 (1995) / #40 of 179 (2010) / #21 of 175 (2021) / #18 of 160 (2024) <- ana_08 data_table rows verbatim",
+        "21 consecutive top-10 years (1980–2000) <- count of rows with cpv_rank <= 10, recomputable from the table"
+      ],
+      "tagging": "root: data-int='int_06' data-ana='ana_08'."
+    },
+    {
+      "id": "int_07",
+      "role": "supporting",
+      "concept_ref": "img_19",
+      "based_on": ["ana_04"],
+      "section": "edt_06",
+      "mechanism": "guess_then_reveal",
+      "rank": 6,
+      "reader_produces": "Guesses how many counted emigrants exist per 100 residents and watches 27.9 land on an isotype grid — then the honest layer beat: this is the FLOOR, the strictest of three layers, and it has doubled since 1990.",
+      "controls": [
+        "one labelled range slider 0–100 ('For every 100 people on the islands, how many counted emigrants live abroad?'), seeded at 50 (midpoint default), ≥44px thumb band, live value bubble",
+        "one 'Lock in my guess' native <button> ≥44px (vOn-guarded)"
+      ],
+      "client_model": null,
+      "visual": "On reveal: a 10×10 isotype grid of person-marks; 28 marks tint to star-gold in a --stagger-capped sweep, with the exact figure written large: 27.9 (note under the grid: 'the grid tints 28 whole people; the exact ratio is 27.9'). The reader's guess renders as a hairline marker on the 0–100 track against the real value. Second beat below: the 1990 comparison strip — 13.8 per 100 -> 27.9 per 100, doubled in one generation. Layer microcopy pinned: 'UN born-in-Cabo-Verde floor — the strictest of three layers; the censuses and heritage estimates run far higher' (values for those layers stay in the attributed prose, never on this widget — ana_caveat_01).",
+      "at_rest": "Slider + button + untinted grid only; readout node empty (reveal-protected).",
+      "on_interact": "Reveal (vOn-guarded): bare 27.9 written into the readout; grid tints; verdict branches on signed gap (most readers guess far low — say so only via the gap, never a fabricated '% of readers').",
+      "payoff": "Even the strictest possible count makes more than a quarter of the nation live elsewhere — and the reader felt their own underestimate.",
+      "placement": "edt_06 [MEDIA: interactive] slot — after the editorial guess question, BEFORE the ana_04 answer paragraph (binding). The des_13 ranking chart stays pinned to section END.",
+      "degradation": "noscript block: static tinted grid + '27.9 counted emigrants per 100 residents (1990: 13.8)' caption.",
+      "a11y": "Slider aria-valuetext 'N per 100 residents'; grid role='img' with aria-label carrying the exact figures; verdict aria-live=polite; keyboard path as int_05.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true },
+      "numbers": [
+        "27.9 <- ana_04 data_table 2024 row (146,396 / 524,877), node-checked",
+        "13.8 <- ana_04 data_table 1990 row (51,800 / 375,428), node-checked"
+      ],
+      "tagging": "root: data-int='int_07' data-ana='ana_04'; readout: data-play-out='int_07' class='po-num'."
+    },
+    {
+      "id": "int_08",
+      "role": "supporting",
+      "concept_ref": "img_14",
+      "based_on": ["ana_18"],
+      "section": "edt_10",
+      "mechanism": "scored_quiz",
+      "rank": 7,
+      "reader_produces": "Commits a guess for how many times more populous the next-smallest nation ever to survive a World Cup group stage is — then feels 5.1x (Uruguay 1966) land at dot scale, followed by the 89x average-2026-participant beat.",
+      "controls": [
+        "one labelled range slider 1–100 ('...how many times Cape Verde's population?'), value bubble showing 'Nx', seeded at 50, ≥44px",
+        "one 'Lock in my guess' native <button> ≥44px (vOn-guarded)"
+      ],
+      "client_model": null,
+      "visual": "On reveal, three beats: (1) two population-scaled dots — Cape Verde 527,326 vs Uruguay 1966 2,707,646 — areas computed from the ana_18 table (sqrt scale, never hardcoded px), bare 5.1 written into the readout; (2) the scale ladder: a third dot for the average 2026 participant (47.2M = 89x) and a rule noting the largest (US, 648x); (3) the score band: the reader's guess placed against the DATA'S OWN SPREAD — the 12 all-time advancers' population multiples of Cape Verde (1.0x–6.8x from the table), labelled honestly as 'where your guess sits among every advancer in history' (never a fabricated % of readers). Verdict branches on signed gap vs 5.1. Footnote woven in (ana_caveat_06): 'Northern Ireland's 1982 side (~1.5M, outside the population data) would come second — still about 3x Cape Verde.'",
+      "at_rest": "Slider + button + empty answer track; readout node empty (reveal-protected — 5.1x is a protected number until produced).",
+      "on_interact": "Reveal (vOn-guarded): dots animate in --dur-lg --ease-out; 5.1 lands in the readout; the 89x/648x beat enters on a second in-view trigger so the corrections stack rather than blur.",
+      "payoff": "The record is not close — and the reader now owns the scale of it, just before the prose states it.",
+      "placement": "edt_10 [MEDIA: interactive] slot — after the editorial guess prompt, BEFORE the ana_18 answer paragraph (binding). des_22 (populations only, no multiples) sits above at the ana_17 paragraph and leaks nothing.",
+      "degradation": "noscript block: static two-dot figure + '5.1x — Uruguay 1966, the next-smallest ever to advance' caption.",
+      "a11y": "Slider aria-valuetext 'N times'; dots carry text labels with exact populations; verdict + readout aria-live=polite; reduced-motion renders dots at final size instantly.",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true },
+      "numbers": [
+        "5.1 <- 2,707,646 / 527,326 (ana_18 rows 2 and 1), node-checked",
+        "89 <- mean 2026-participant population 47,191,938 / 527,326 (ana_18 calculation output), node-checked",
+        "648 <- 341,784,857 / 527,326 (ana_18 calculation output), node-checked",
+        "band 1.0x–6.8x <- the 12 ana_18 advancer populations / 527,326"
+      ],
+      "tagging": "root: data-int='int_08' data-ana='ana_18'; readout: data-play-out='int_08' class='po-num'."
+    },
+    {
+      "id": "int_09",
+      "role": "supporting",
+      "concept_ref": "img_11",
+      "based_on": ["ana_12"],
+      "section": "edt_09",
+      "mechanism": "scrollytelling",
+      "rank": 8,
+      "reader_produces": "Rides the 25-year Elo climb — #138 of 198 in 1998 to #64 — and feels the kicker: the all-time peak (1702) was set DURING the World Cup, on 26 June 2026, two matches before the Argentina night.",
+      "controls": ["scroll only"],
+      "client_model": null,
+      "visual": "Sticky panel: self-drawing rating line over the 41 ana_12 year-end rows (stroke-dasharray reveal, scroll-linked linear), world-rank chips at the beats. Final step ZOOMS the x-domain to 2024–2026 (axis re-scale --dur-xl --ease-in-out) and plants the gold flag: '1702 — all-time peak, 26 Jun 2026, set at the World Cup itself'. Honesty microcopy pinned once: 'our own Elo implementation — trajectory and ranks, not comparable to published boards' (ana_caveat_04, already binding in edt_02 prose).",
+      "steps": [
+        "s1 — The bottoms: 1383 (#115) in 1988; 1384, #138 of 198, in 1998 — a federation that could barely afford fixtures.",
+        "s2 — The climb: near-monotonic for 25 years — #108 (2010), #86 (2014), the 1655/#65 spike of 2015 and its 2016 dip.",
+        "s3 — The surge: 1676/#71 (2025) -> 1699/#64 (2026).",
+        "s4 — The kicker (zoom): the 47-year maximum, 1702, lands on 26 June 2026 — mid-tournament, on the eve of the knockout draw that produced Argentina; even after that defeat the rating sits within 3 points of the peak."
+      ],
+      "engine": "shared sticky + IO engine; line reveal linear with the scrub; zoom transition --dur-xl --ease-in-out; annotation chips --dur-md --ease-out.",
+      "at_rest": "s1 state visible on load: full axes, line drawn through 1998, both bottom annotations placed.",
+      "on_interact": "Scroll draws and then zooms; hover tooltip (year, rating, world_rank, pool_size) vOn-guarded.",
+      "payoff": "The rise is not a fairy tale, it is a 25-year monotonic curve — and it peaked exactly when the world was watching.",
+      "placement": "edt_09 [MEDIA: interactive] slot — after the ana_12 paragraph (IMMERSE: the prose states the arc, the scrolly makes it felt). des_20 (upset ladder) stays at section end.",
+      "degradation": "JS off: full static line 1979–2026 with the two bottom annotations and the 1702 peak flag.",
+      "a11y": "Visually-hidden (year, rating, rank) table; step copy in DOM order; zoom announced via aria-live region ('now showing 2024–2026').",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true },
+      "numbers": [
+        "1383/#115 (1988), 1384/#138 of 198 (1998), 1508/#108 (2010), 1599/#86 (2014), 1655/#65 (2015), 1676/#71 (2025), 1699/#64 (2026) <- ana_12 data_table rows verbatim",
+        "1702 on 2026-06-26 (peak) + 'within 3 points' <- ana_12 calculation output (peak fact), 1702-1699=3"
+      ],
+      "tagging": "root: data-int='int_09' data-ana='ana_12'."
+    },
+    {
+      "id": "int_10",
+      "role": "supporting",
+      "concept_ref": "img_12",
+      "based_on": ["ana_16"],
+      "section": "edt_09",
+      "mechanism": "personal_input",
+      "rank": 9,
+      "reader_produces": "Picks their own country on the current Elo top-64 board and produces the comparison themselves: 'your country has N times Cape Verde's population — and every team rated above Cape Verde has at least 3x its people.'",
+      "controls": [
+        "one native <select> (labelled 'Find your country') over the ana_16 top-64 rows that carry a population — 61 options (England, Scotland and Wales excluded from the picker; footnote: 'UK home nations have no World Bank population row'), seeded 'Argentina', ≥44px"
+      ],
+      "client_model": null,
+      "visual": "A population-vs-Elo strip built from the inlined ana_16 table: x = Elo (1699–2228), dot area = population (sqrt scale, log-friendly), all 61+CV dots muted; the reader's pick ringed with a 'you are here' marker and Cape Verde's dot in star-gold. Comparison card beneath: population multiple (bare number, 1 dp), plus the people-per-Elo-point line ('your country: N people per rating point; Cape Verde: 310').",
+      "at_rest": "Seeded Argentina: bare readout 87.0 (45,851,378 / 527,326 = 86.95 -> 87.0 at 1 dp — do NOT ship 86.9), people-per-point 20,580 vs 310; strip highlights Argentina + Cape Verde. The at-rest state is meaningful and traces to the table.",
+      "on_interact": "Select change (vOn-guarded): marker relocates (--dur-md --ease-in-out), multiple + per-point readouts recompute from the table; a fixed payoff line stays pinned: 'the smallest country above Cape Verde on this board is Kosovo — 1.58M people, 3.0x; the next smaller country appears only at #79 (Iceland).'",
+      "payoff": "The aggregate anomaly becomes personal: no other national team converts so few people into so much rating — measured against the reader's own country.",
+      "placement": "edt_09, immediately AFTER the ana_16 paragraph as its hands-on coda (personal_input personalizes an already-stated claim; nothing here is reveal-protected).",
+      "degradation": "JS off: the static strip highlighting Cape Verde + Kosovo with the '≥3x' caption — still conveys the distribution.",
+      "a11y": "Native select, labelled; readouts aria-live=polite; dots carry text tooltips + a visually-hidden rank/team/elo/population table; 'you are here' ring not color-only (ring + label).",
+      "verify": { "kind": "computation", "recompute": "data_table", "three_layer": true },
+      "numbers": [
+        "87.0 (Argentina, at rest) <- 45,851,378 / 527,326, 1 dp, node-checked",
+        "3.0 (Kosovo) <- 1,576,876 / 527,326, node-checked",
+        "310 <- 527,326 / 1699, node-checked; per-country per-point = population_2025 / elo, integer",
+        "#64 of 210 / min-above = Kosovo 1.58M / next-smaller at #79 Iceland (1629) <- ana_16 data_table + content"
+      ],
+      "tagging": "root: data-int='int_10' data-ana='ana_16'; readout: data-play-out='int_10' class='po-num'."
+    }
+  ],
+  "scrollytelling": {
+    "shared_engine": "int_03, int_04, int_06, int_09 all run ONE engine (interaction_playbook universal_engine): a .scrolly grid of [sticky graphic | step column], position:sticky; top:0; height:100svh graphic beside .step divs (min-height 90svh), IntersectionObserver (threshold array, rootMargin '-40% 0 -40% 0') -> active index -> steps[i]() mutates the graphic. Write the engine ONCE, parameterize per instance. Scroll-linked motion is LINEAR (motion.json rule.scroll_is_linear); discrete step swaps use --dur-md/--dur-lg out/in pairing. All step text is real DOM-order copy (readable with JS off). MOT6: nothing above the fold or inside a figure may start at opacity:0.",
+    "mobile": "At ≤700px the scrolly grid stacks: graphic sticky at top (min(60svh, 420px)), steps scroll beneath it; map/chart SVGs use viewBox + width:100% so 390px renders without horizontal scroll (NO page-level scroll-x, ever). Step captions max ~34ch."
+  },
+  "transitions": [
+    "ALL timing from motion.json tokens — no ms literals: chip/dot state --dur-sm --ease-standard; recompute bars --dur-lg --ease-in-out; reveal enters --dur-lg --ease-out with --stagger (≤6 items); exits --dur-md --ease-in; scrolly act/zoom --dur-xl; produced numbers may count-up over --dur-count (int_01 payoff banner, int_07 27.9, int_08 5.1) — count-up runs ONLY on reader-produced reveals, never on protected numbers at rest",
+    "prefers-reduced-motion: rely on the token collapse (1ms) + count_up's REDUCE branch (final value instantly); scrollies land each step's final state with no scrub animation",
+    "--ease-spring is permitted in exactly ONE place: the int_01 full-strip payoff banner (a genuinely celebratory beat); nowhere on utility controls"
+  ],
+  "spine_change": null,
+  "playtest_handoff": {
+    "build_ids": ["int_01", "int_02", "int_03", "int_04", "int_05", "int_06", "int_07", "int_08", "int_09", "int_10"],
+    "per_id": {
+      "int_01": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_01]",
+        "oracle": "at rest reads 26; click 'Strip all five' (or toggle all 5 chips off) -> reads 11; vanished line contains 15, 50.3 and '3 of 4'; click Reset -> 26 again. Under verify-on, chip clicks mutate NOTHING.",
+        "degradation_path": "static fully-lit 26-dot grid grouped by birth country; payoff carried by the ana_09/ana_10 paragraphs that follow"
+      },
+      "int_02": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_02]",
+        "oracle": "at rest reads 7.6 (bars 3.4/8.3/88.3); set Team B = Egypt (or click the Egypt chip) -> reads 32.5; 'Argentina night' chip restores 7.6.",
+        "degradation_path": "static published bars 3.4/8.3/88.3 + 7.6 advance line from ana_19"
+      },
+      "int_03": {
+        "expect_control_reachable": false,
+        "expect_recompute": false,
+        "readout_selector": null,
+        "oracle": null,
+        "scroll_check": "scroll the section: sticky map mutates s1->s4; ghost markers for NL/US/ES/SN appear at s3; layer label pinned throughout; no console errors",
+        "degradation_path": "static final-state map (all circles + ghosts + layer label) with step captions as paragraphs"
+      },
+      "int_04": {
+        "expect_control_reachable": false,
+        "expect_recompute": false,
+        "readout_selector": null,
+        "oracle": null,
+        "scroll_check": "scroll: eight bars fade down 4,250 -> 1,115 across s1–s4; YouTube embed does NOT autoplay (plays only on direct click)",
+        "degradation_path": "static descending bar chart + −73.8% caption; embed still click-to-play"
+      },
+      "int_05": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_05]",
+        "oracle": "readout EMPTY at rest (reveal-protected); set any guess, click 'Lock in my guess' -> reads 0; club bars render with data-bound widths (POR widest at 7).",
+        "degradation_path": "noscript static answer ('zero; 14 club countries') + bar list"
+      },
+      "int_06": {
+        "expect_control_reachable": false,
+        "expect_recompute": false,
+        "readout_selector": null,
+        "oracle": null,
+        "scroll_check": "scroll: inverted rank line self-draws through the four beats; top-10 band shaded; '#18 of 160' lands at s4",
+        "degradation_path": "full static annotated rank line"
+      },
+      "int_07": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_07]",
+        "oracle": "readout EMPTY at rest; guess + 'Lock in my guess' -> reads 27.9; isotype grid tints 28 marks; 1990 strip shows 13.8.",
+        "degradation_path": "noscript static tinted grid + 27.9/13.8 caption"
+      },
+      "int_08": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_08]",
+        "oracle": "readout EMPTY at rest; guess + 'Lock in my guess' -> reads 5.1; second beat shows 89x and 648x; score band bounded 1.0–6.8 from the advancer table.",
+        "degradation_path": "noscript static two-dot figure + 5.1x caption"
+      },
+      "int_09": {
+        "expect_control_reachable": false,
+        "expect_recompute": false,
+        "readout_selector": null,
+        "oracle": null,
+        "scroll_check": "scroll: rating line draws, then final step zooms to 2024–2026 and plants the 1702 / 26 Jun 2026 peak flag",
+        "degradation_path": "full static line with bottoms + peak annotations"
+      },
+      "int_10": {
+        "expect_control_reachable": true,
+        "expect_recompute": true,
+        "readout_selector": "[data-play-out=int_10]",
+        "oracle": "at rest (Argentina seeded) reads 87.0; select 'Kosovo' -> reads 3.0; people-per-point line shows 310 for Cape Verde in both states.",
+        "degradation_path": "static strip highlighting Cape Verde + Kosovo with the ≥3x caption"
+      }
+    }
+  },
+  "programmer_notes": {
+    "tagging": "Tag every element data-int='int_NN' + data-ana='ana_NN' as specced per item; data-play-out only on the six live readouts listed above (non-provenance hook — never in a validate tuple). Build ONLY these ten; the Editor curated nothing else.",
+    "risks": [
+      "int_03 map: NO Leaflet/tiles — the page must work offline on file://. Inline SVG + equirectangular projection of inlined centroids; ghost markers are dashed hollow strokes, clearly 'not data'.",
+      "Reveal protection is load-bearing (PIT-57): int_01 at rest shows 26 (never 15/57.7/50.3); int_05/int_07/int_08 readouts are EMPTY at rest and populate on reveal — this is the sanctioned exception to the at-rest bare-number rule (scored_quiz recipe); their noscript answers must be inside <noscript> so they cannot leak with JS on.",
+      "Formatting: cm_02 goalsPct returns the Number 44 — render .toFixed(1) = '44.0'. Argentina multiple is 87.0 (86.95 rounds up), not 86.9. Sum WC2026_GOALS from the inline constant, never hardcode '3'.",
+      "int_02: homesign is LOCKED to 0; adding a home-advantage control would detach the widget from the published 3.4/8.3/88.3 baseline. Label the middle bar 'level after 90'' and the widget's numbers 'model probability' — 'Elo win expectancy' is reserved for the des_06 chart (binding).",
+      "int_10: England/Scotland/Wales have null populations in ana_16 — exclude from the picker with the footnote; never divide by null.",
+      "int_04: the inst_01 iframe must have no autoplay and no scripted play; do not overlay hit targets on the iframe (Verify handles embeds via its own allow-list).",
+      "Verify coexistence: single shared vOn() helper; every mutating handler early-returns; NO stopPropagation/preventDefault-on-bubble anywhere in feature code. Playground controls are native <button>/<input>/<select> (INNER_INTERACTIVE), so under verify-on they are simply inert — if any playground surface must ALSO act as a provenance hit, use the role=link pattern from interaction/references/interaction_recipes.json instead.",
+      "Scrollies: step text is real DOM-order copy; MOT6 — never opacity:0 on figures/above-the-fold; scroll-linked motion linear; 100svh (not vh) for mobile URL-bar stability; NO page-level horizontal scroll at 390px (SVGs use viewBox + width:100%).",
+      "All five guess/explorable widgets seed exactly as specced (baselines reproduce published numbers at rest for int_01/int_02/int_10); every displayed number must come from the inlined table cells / model outputs — no re-rounding of rounded values."
+    ]
+  }
+}

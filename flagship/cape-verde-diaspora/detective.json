@@ -1,0 +1,601 @@
+{
+  "meta": {
+    "role": "detective",
+    "version": "2.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "domain": "sports + migration + development economics: Cape Verde's 2026 World Cup run told through its structural diaspora (emigrant stock, remittances, foreign-born squad)",
+    "scout_brief": {
+      "load_bearing_subjects_needing_verified_media": [
+        "Sidny Lopes Cabral (scorer of the 103' goal) — NO photo found (Wikidata Q124382289 has no P18); source + identity-verify one",
+        "Bubista (coach, Pedro Leitao Brito) — no Commons P18 fetched; source + identity-verify",
+        "Cape Verde fans/celebrations during WC2026 — Brockton MA street scenes or Praia/Mindelo watch parties (news/CC imagery)",
+        "Match-night action or stadium exterior, Hard Rock Stadium Miami, 2026-07-03",
+        "Rotterdam Cape Verdean community texture (Delfshaven street scene) — nice-to-have",
+        "BGM: license-clean REAL morna recording (Sodade or another canonical morna) per real-media policy; the two verified VEVO embeds in instances are page embeds, NOT re-hostable audio"
+      ],
+      "already_covered_by_detective": [
+        "det_media_01 Cesaria Evora (vision-confirmed)",
+        "det_media_02 Mindelo harbor",
+        "det_media_03 Pico do Fogo",
+        "det_media_04 Deroy Duarte (kit-consistent; run identity gate)",
+        "det_media_05 Vozinha (FCF crest visible)",
+        "det_media_06 New Bedford whaling bark model (WEAK — upgrade to archival PD whaler photo if possible)",
+        "det_media_07 flags set (9 countries, public domain)",
+        "instances: 3 oEmbed-verified YouTube embeds (Sodade, match highlights, Petit pays)"
+      ],
+      "escalation": "If no license-clean, identity-verified photo of Sidny Lopes Cabral exists, tell the Editor — his goal is load-bearing (det_01/det_04) and the narrative can lean on the verified Deroy Duarte photo + match embed instead of an unverifiable portrait."
+    }
+  },
+  "items": {
+    "det_01": {
+      "label": "The hook match: Argentina 3-2 Cape Verde (AET), Miami, 2026-07-03",
+      "content": "On the night of 3 July 2026 at Miami Stadium (Hard Rock Stadium under FIFA clean naming), Cape Verde took reigning world champions Argentina to extra time in the World Cup Round of 32 and came within nine minutes of the biggest upset in tournament history. Lionel Messi opened with a sublime touch-and-finish in the 29th minute; Deroy Duarte squeezed a shot into the far corner just before the hour (59') to level; Lisandro Martinez restored Argentina's lead two minutes into extra time (92'); Sidny Lopes Cabral curled in what Sky Sports called 'arguably the goal of the tournament' in the 103rd minute; and the winner, in the 111th, was a Cristian Romero header from a corner that went in off Cape Verde defender Diney Borges — an own-goal deflection, not an Argentine strike. Goalkeeper Vozinha (Cape Verde's 39-year-old captain) made eight saves. Both Cape Verde goalscorers were born in the Netherlands — the diaspora literally scored every Cape Verdean goal of the night. Note for downstream fact-checking: the winning goal is credited as a Diney own goal (Romero's header deflected in), and UK outlets dated the report 4 July (overnight UK time); the match was played 3 July local time in Miami. The dataset's international_results.csv records this match as the extra-time score 3-2.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://www.skysports.com/football/news/12026/13558801/world-cup-2026-argentina-3-2-cape-verde-reigning-champions-avoid-biggest-upset-in-tournament-history-after-extra-time-winner",
+          "title": "World Cup 2026: Argentina 3-2 Cape Verde — Reigning champions avoid biggest upset in tournament history after extra-time winner (Sky Sports)",
+          "facts": [
+            "Goal timeline: Messi 29', Deroy Duarte 59', Lisandro Martinez 92', Sidny Lopes Cabral 103', winner 111' — Cristian Romero's header from a corner deflected in off Diney Borges (own goal)",
+            "Vozinha made eight saves",
+            "Sky Sports called Cape Verde 'the lowest-ranked nation ever to qualify for the knockouts' and Lopes Cabral's strike 'arguably the goal of the tournament'",
+            "Venue: Miami Stadium; Argentina advance to face Egypt in the last 16"
+          ]
+        },
+        {
+          "url": "https://www.espn.com/soccer/match/_/gameId/760500/cape-verde-argentina",
+          "title": "Argentina 3-2 Cape Verde (Jul 3, 2026) Final Score — ESPN",
+          "facts": [
+            "Match date 3 July 2026; final score Argentina 3-2 Cape Verde after extra time"
+          ]
+        },
+        {
+          "url": "https://www.aljazeera.com/sports/liveblog/2026/7/3/live-argentina-vs-cape-verde-fifa-world-cup-2026",
+          "title": "Argentina 3-2 Cape Verde: FIFA World Cup 2026 — as it happened (Al Jazeera)",
+          "facts": [
+            "Live blog dated 3 July 2026 confirms the match day"
+          ]
+        },
+        {
+          "url": "https://www.foxsports.com/watch/fmc-lku0xzeb3re6loyr",
+          "title": "MESSI MAGIC — Lionel Messi Scores His 20th FIFA World Cup Goal For Argentina — FOX Sports",
+          "facts": [
+            "Messi's opener against Cape Verde was his 20th FIFA World Cup goal, extending his all-time scoring record"
+          ]
+        }
+      ]
+    },
+    "det_02": {
+      "label": "The run: first-ever qualification (Oct 2025) and an unbeaten-in-90-minutes World Cup",
+      "content": "Cape Verde qualified for a World Cup for the first time on 13 October 2025, beating Eswatini 3-0 in Praia to win their CAF qualifying group. At the 2026 tournament they were drawn into Group H with Spain, Uruguay and Saudi Arabia — and never lost a match in 90 minutes all tournament: 0-0 vs Spain (June 15), 2-2 vs Uruguay (June 21, goals from Kevin Pina and Helio Varela), 0-0 vs Saudi Arabia (June 26). Three draws and 3 points were enough to finish second in the group, making Cape Verde the smallest nation ever to reach the knockout stage of a FIFA World Cup. Their exit required the reigning champions, extra time, and an own goal. For the analyst: all of these matches are rows in international_results.csv (scores recorded at full-time/extra-time, no shootouts in these fixtures).",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cape_Verde_at_the_FIFA_World_Cup",
+          "title": "Cape Verde at the FIFA World Cup — Wikipedia",
+          "facts": [
+            "Qualified 13 October 2025 with a 3-0 win over Eswatini",
+            "Group H results: Spain 0-0 Cape Verde (Jun 15); Uruguay 2-2 Cape Verde (Jun 21, scorers Kevin Pina and Helio Varela); Cape Verde 0-0 Saudi Arabia (Jun 26)",
+            "Finished second in Group H with 3 points without winning a match",
+            "Described as the smallest-ever nation to reach the knockout stages of a FIFA World Cup"
+          ]
+        },
+        {
+          "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/cabo-verde-qualify",
+          "title": "Cabo Verde seal historic FIFA World Cup qualification — FIFA.com",
+          "facts": [
+            "FIFA's official confirmation of Cabo Verde's first-ever World Cup qualification in October 2025"
+          ]
+        }
+      ]
+    },
+    "det_03": {
+      "label": "Benchmark: second-smallest by area, THIRD-least-populated WC nation ever",
+      "content": "The 'smallest nation' claim needs precision, and the story brief's framing ('second-smallest after Iceland') is now outdated. When Cape Verde qualified in October 2025 it was the smallest country by land area (4,033 sq km) and the second-least-populated (just under 525,000, behind only Iceland 2018 at ~337,000) ever to reach a World Cup. But Curacao (444 sq km, ~156,000 people) qualified a month later, making Cape Verde the second-smallest by land area and the THIRD-least-populated nation at a World Cup. The claim Cape Verde does own outright: smallest nation ever to reach the KNOCKOUT stage (Curacao did not advance; Iceland exited their 2018 group). The analyst must verify the population ranking computationally against 04_population/API_SP.POP.TOTL (WB total population) joined to the list of WC debutants/participants by tournament year — and the story should say 'one of the smallest nations ever at a World Cup, and the smallest ever in the knockout rounds' rather than repeating the stale 'second-smallest' line.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cape_Verde_at_the_FIFA_World_Cup",
+          "title": "Cape Verde at the FIFA World Cup — Wikipedia",
+          "facts": [
+            "At qualification: smallest country by land area (4,033 sq km / 1,557 sq mi) and second-least-populated (population just under 525,000) to qualify for a World Cup",
+            "After Curacao qualified a month later, Cape Verde became the second-smallest by land area and third-least-populated",
+            "Smallest-ever nation to reach the knockout stages"
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "lookup",
+        "formula": "population order of smallest WC nations: Curacao (~156k, 2026) < Iceland (~337k, 2018) < Cabo Verde (~525k, 2026)",
+        "result": "Cape Verde = 3rd-least-populated World Cup nation ever; smallest ever to reach the knockout stage"
+      }
+    },
+    "det_04": {
+      "label": "Both Cape Verde scorers vs Argentina were born in Rotterdam",
+      "content": "The two men who scored against the world champions were both born in the same Dutch port city. Deroy D'Encarnacao Duarte (b. 4 July 1999, Rotterdam — his goal came the night before his 27th birthday) grew up in Sparta Rotterdam's academy from 2006, played 9 times for the Netherlands at U19 level, then accepted a Cape Verde call-up in March 2022; the 59th-minute equaliser against Argentina was his FIRST international goal. His older brother Laros Duarte (b. 1997, also Rotterdam) is in the same World Cup squad. Sidny Lopes Cabral (b. 18 September 2002, Rotterdam) came through FC Twente's youth ranks, was first called up by Cape Verde in 2023 for a friendly against Comoros, and curled in the 103rd-minute equaliser that Sky Sports called arguably the goal of the tournament. Neither scorer was born in Cape Verde; both chose the country of their parents. This is the diaspora thesis in a single scoreline — and it gives the Editor a precise line: every Cape Verdean goal against Argentina was scored by a son of Rotterdam.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Deroy_Duarte",
+          "title": "Deroy Duarte — Wikipedia",
+          "facts": [
+            "Born 4 July 1999 in Rotterdam, Netherlands, to Cape Verdean parents",
+            "Sparta Rotterdam youth academy from 2006; senior debut August 2017; later Fortuna Sittard, then Ludogorets Razgrad (June 2024)",
+            "Represented the Netherlands 9 times at U19 level before accepting a Cape Verde call-up in March 2022",
+            "His 59th-minute goal vs Argentina on 3 July 2026 was his first international goal",
+            "Younger brother of Cape Verde international Laros Duarte"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Sidny_Lopes_Cabral",
+          "title": "Sidny Lopes Cabral — Wikipedia",
+          "facts": [
+            "Born 18 September 2002 in Rotterdam, Netherlands",
+            "Youth career at FC Twente (until 2020), then Helsingborg",
+            "First called up by Cape Verde in 2023 for a friendly against Comoros",
+            "Scored the 103rd-minute extra-time equaliser vs Argentina, described as one of the best goals of the tournament"
+          ]
+        }
+      ]
+    },
+    "det_05": {
+      "label": "The Duarte family: a Schiedam mum, a Toyota Starlet, and five Rotterdam-born starters",
+      "content": "DutchNews interviewed Maria da Cruz of Schiedam, mother of squad brothers Laros and Deroy Duarte, on the eve of the Argentina match: 'When they're not playing I can just watch the game, but when my children play I'm chasing every ball. It's so tense.' She drove her sons to youth training across the Netherlands in a Toyota Starlet that accumulated 276,000 km. The same piece notes that FIVE Rotterdam-born players started Cape Verde's World Cup opener against Spain. After the 0-0 draw with Spain, she said, 'the boys thought: we can do this.' This is the human texture of the diaspora-squad statistic: second-generation kids raised in Dutch academies choosing the islands their parents left. Rotterdam's Cape Verdean community — which grew from sailors who settled near the port in the 1960s-70s — is the machine that produced a third of this squad's starters.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://www.dutchnews.nl/2026/07/its-too-tense-says-mum-of-cape-verdes-dutch-world-cup-stars/",
+          "title": "'It's too tense' says mum of Cape Verde's Dutch World Cup stars — DutchNews.nl",
+          "facts": [
+            "Maria da Cruz of Schiedam is the mother of Cape Verde internationals Laros and Deroy Duarte",
+            "Quote: 'When they're not playing I can just watch the game, but when my children play I'm chasing every ball. It's so tense.'",
+            "She drove her sons to training across the Netherlands in a Toyota Starlet that clocked 276,000 km",
+            "Five Rotterdam-born players started Cape Verde's opening match against Spain",
+            "After the Spain draw: 'the boys thought: we can do this'"
+          ]
+        }
+      ]
+    },
+    "det_06": {
+      "label": "Bubista and the FCF's deliberate diaspora-recruitment machine",
+      "content": "Cape Verde's rise is not an accident of eligibility rules — it is a two-decade federation strategy executed by a home-grown coach. Pedro Leitao Brito, 'Bubista' (b. 6 January 1970, Boa Vista, Cape Verde; 21 caps as a centre-back 1989-2005), was appointed head coach in January 2020, qualified the team for consecutive AFCONs (2021, 2023), delivered the historic 2026 World Cup qualification, and was named CAF Coach of the Year 2025. Since 2002 the federation has systematically recruited players developed abroad — in Portugal, France, the Netherlands and Ireland — among the children of emigrants. The emblematic story: in 2019, then-coach Rui Aguas contacted Shamrock Rovers defender Roberto Lopes ('Pico', squad no. 4, born in Dublin to a Cape Verdean father) via LINKEDIN to persuade him to play for Cape Verde. Under FIFA rules a player must hold the nationality and not have played a competitive senior match for another country — so Cape Verde's scouts work Europe's youth academies, pitching dual-nationals on representing their parents' islands. Bubista's man-management task is then to fuse Portugal-based, Netherlands-based and island-based players into one dressing room.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Bubista",
+          "title": "Bubista (Pedro Leitao Brito) — Wikipedia",
+          "facts": [
+            "Born 6 January 1970 in Boa Vista, Cape Verde; capped 21 times for Cape Verde 1989-2005 as a centre-back",
+            "Appointed Cape Verde head coach January 2020; qualified for AFCON 2021 and 2023 and the 2026 World Cup",
+            "Named CAF Coach of the Year 2025"
+          ]
+        },
+        {
+          "url": "https://theconversation.com/cape-verdes-world-cup-success-reflects-a-nation-that-has-repeatedly-defied-the-odds-286506",
+          "title": "Cape Verde's World Cup success reflects a nation that has repeatedly defied the odds — The Conversation (Aleida Borges, King's College London)",
+          "facts": [
+            "Since 2002, players developed abroad have been recruited to represent the archipelago, from Portugal, France, the Netherlands and Ireland",
+            "Defender Roberto Lopes was contacted via LinkedIn by coach Rui Aguas in 2019",
+            "The Cape Verdean diaspora is estimated to be larger than the resident population and is described as the country's '11th island'"
+          ]
+        },
+        {
+          "url": "https://www.outlookindia.com/sports/football/cape-verde-at-fifa-world-cup-2026-who-is-coach-bubista",
+          "title": "Who Is Bubista? The Man Behind Cape Verde's FIFA World Cup Fairytale — Outlook India",
+          "facts": [
+            "Bubista built the squad by scouting Cape Verde's global diaspora, blending local talent with players born in Portugal and Rotterdam",
+            "Cape Verde under Bubista is described as one of Africa's most organized national teams"
+          ]
+        }
+      ]
+    },
+    "det_07": {
+      "label": "The UN count is a floor: 146,396 born-in-CV emigrants, with the biggest hosts missing",
+      "content": "The dataset's UN DESA 2024 bilateral matrix records 146,396 people born in Cabo Verde living abroad (world total, mid-2024) across only 24 named destinations — and the Netherlands, United States, Spain and Senegal are entirely absent as destination rows, because those countries' statistics do not break out small origin groups in the 2024 revision. The absence is structural, not real: the PREVIOUS UN revision (UNDESA 2019 migrant stock, as tabulated in the EUDiF diaspora factsheet) counted Portugal 60,543, United States 43,729, France 24,545, Netherlands 12,601 and Angola 9,400 as the top destinations for Cabo Verde-born migrants, with 186,372 emigrants in total (~31% of the resident population). So the 2024 matrix's 146k world total is a hard floor on the born-in-Cape-Verde diaspora, and any chart built from the bilateral file must say so. Rule for every downstream role: never present the UN bilateral numbers as 'the diaspora' — they are the first, strictest of three layers (born-in-CV migrants < citizens abroad < heritage/ancestry diaspora).",
+      "category": "controversy",
+      "sources": [
+        {
+          "url": "https://www.un.org/development/desa/pd/content/international-migrant-stock",
+          "title": "UN DESA International Migrant Stock 2024 (POP/DB/MIG/Stock/Rev.2024)",
+          "facts": [
+            "World total of international migrants born in Cabo Verde: 146,396 at mid-2024",
+            "The 2024 destination-by-origin matrix lists only 24 named destinations for origin Cabo Verde; Netherlands, United States, Spain and Senegal have no row"
+          ]
+        },
+        {
+          "url": "https://diasporafordevelopment.eu/wp-content/uploads/2024/05/CF_Cabo-Verde-v.1.pdf",
+          "title": "EUDiF Diaspora Engagement Mapping: Cabo Verde (AFFORD/EUDiF, updated December 2023)",
+          "facts": [
+            "Emigrants = 186,372, about 31% of the total population (from UNDESA Migration Stock Statistics 2019)",
+            "Top destinations (UNDESA 2019): Portugal 60,543; United States 43,729; France 24,545; Netherlands 12,601; Angola 9,400; Senegal is another significant destination",
+            "Footnote: 'the total size of the diaspora is close to 120%' of the resident population, over one third of it in Europe (Pew Research / UN 2017 estimates)"
+          ]
+        }
+      ]
+    },
+    "det_08": {
+      "label": "The heritage layer, USA: ~106-143k self-reported vs 'half a million' of Cape Verdean descent",
+      "content": "The United States hosts the largest Cape Verdean community in the world — but its size depends entirely on the definition, and the story brief's shorthand ('US ACS Cape Verdean ancestry ~500k') conflates two different numbers that must not be blurred. The self-reported census figure: the American Community Survey counted 106,084 Americans reporting Cape Verdean ancestry (2023), rising to 142,570 in the 2024 estimates, concentrated overwhelmingly in Massachusetts (~90,118) and Rhode Island (~26,376), with Brockton MA (16,753), Boston (13,605), New Bedford (9,613) and Pawtucket RI (8,092) the biggest city communities. The descent estimate: the U.S. State Department's own account of 200 years of US-Cabo Verde ties puts 'approximately 500,000' Americans of Cape Verdean descent in New England — a number echoed by community organizations — and a 2007 New York Times report estimated 265,000 Cape Verdean immigrants and descendants. The gap between 106k (self-identified, ACS) and 500k (descent, State Dept) is itself a story: generations of Cape Verdeans arrived before the country existed (pre-1975 they traveled on Portuguese documents) and were folded into Portuguese-American or Black American identities. Use ACS numbers for charts; use the 500k only as an attributed descent estimate in prose.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cape_Verdean_Americans",
+          "title": "Cape Verdean Americans — Wikipedia",
+          "facts": [
+            "ACS 2023: 106,084 Americans with Cape Verdean ancestry; 2024 estimate 142,570",
+            "Massachusetts (~90,118) and Rhode Island (~26,376) host the vast majority",
+            "Largest city concentrations: Brockton MA 16,753; Boston 13,605; New Bedford 9,613; Pawtucket RI 8,092",
+            "A June 2007 New York Times article estimated 265,000 Cape Verdean immigrants and their descendants in the US"
+          ]
+        },
+        {
+          "url": "https://2017-2021.state.gov/building-on-200-years-of-historic-united-states-cabo-verde-ties/",
+          "title": "Building on 200 Years of Historic United States-Cabo Verde Ties — U.S. Department of State",
+          "facts": [
+            "The State Department describes approximately half a million Americans of Cape Verdean descent, mainly in New England"
+          ]
+        }
+      ]
+    },
+    "det_09": {
+      "label": "Brockton: the diaspora celebrated so hard a US city imposed a curfew",
+      "content": "No single news item captures the diaspora stakes of this World Cup better than Brockton, Massachusetts — the US city with the largest Cape Verdean community (nearly 1 in 5 residents; locals call the diaspora Cape Verde's '11th island'). After each Cape Verde match, thousands poured into downtown Brockton waving flags and dancing into the night. The celebrations also turned dangerous — at least nine people were injured in shootings and others in stabbings around post-match gatherings — so ahead of the Argentina Round-of-32 game, Mayor Moises Rodrigues announced a 'temporary safety curfew' (10 p.m. Friday to 5 a.m. Saturday, alcohol service restricted from 7 p.m., last call 9:30 p.m.). An American city adjusting its municipal bylaws around the fixtures of a 525,000-person African archipelago is the diaspora story in one headline. Editorial note: report the curfew and injuries factually and briefly — the story's tone should stay on the scale and intensity of diaspora identity, not dwell on the violence.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.cbsnews.com/boston/news/world-cup-cape-verde-brockton-curfew/",
+          "title": "Brockton issues curfew for next Cape Verde game after violent World Cup celebrations — CBS Boston",
+          "facts": [
+            "Brockton set a curfew ahead of Cape Verde's Round-of-32 match vs Argentina after post-match celebrations drew thousands downtown",
+            "At least nine people were injured in shootings after World Cup matches or as crowds gathered; others were hurt in stabbings",
+            "Mayor Moises Rodrigues called it a 'temporary safety curfew': 10 p.m. Friday to 5 a.m. Saturday; no entry to establishments serving alcohol after 7 p.m.; last call 9:30 p.m."
+          ]
+        },
+        {
+          "url": "https://www.nbcnews.com/sports/soccer/brockton-massachusetts-imposes-curfew-ahead-cape-verde-world-cup-match-rcna352795",
+          "title": "Brockton, Massachusetts, imposes curfew ahead of Cape Verde World Cup match — NBC News",
+          "facts": [
+            "Brockton has the largest Cape Verdean population in the United States, with nearly 1 in 5 residents Cape Verdean",
+            "The community is often referred to as the '11th island' of Cape Verde"
+          ]
+        }
+      ]
+    },
+    "det_10": {
+      "label": "The heritage layer, Netherlands: ~23,000 by CBS count, 90% around Rotterdam",
+      "content": "The Netherlands is the squad's biggest birthplace (6 of the 26 players) and hosts one of the most concentrated Cape Verdean communities anywhere. Statistics Netherlands (CBS) counted roughly 23,150 people of Cape Verdean migration background in 2022 — versus just 12,601 born-in-Cape-Verde migrants in the UN's 2019 stock, another clean demonstration of the migrant-stock vs heritage gap. About 90% live in the Rotterdam metropolitan area; in the borough of Delfshaven they are about 8.8% of the population, and community estimates for Rotterdam run to 20,000-30,000 — often described as the largest Cape Verdean community in any city outside the islands. The community's origin is maritime: young Cape Verdean men signed on as sailors on Dutch ships in the 1960s-70s and settled by the port. Half a century later, that settlement pattern is producing World Cup goal scorers.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Cape_Verdeans_in_the_Netherlands",
+          "title": "Cape Verdeans in the Netherlands — Wikipedia",
+          "facts": [
+            "CBS: approximately 23,150 people of Cape Verdean migration background in the Netherlands (2022)",
+            "About 90% live in the Rotterdam metropolitan area; largest concentration in Delfshaven (~8.8% of the borough)",
+            "Rotterdam community estimated at 20,000-30,000, described as the largest Cape Verdean community outside the islands",
+            "Migration began in the 1960s-70s with young men signing on as sailors on Dutch ships, concentrating in the port city of Rotterdam"
+          ]
+        }
+      ]
+    },
+    "det_11": {
+      "label": "A state built for its emigrants: 6 diaspora MPs, external voting, dual citizenship",
+      "content": "Cape Verde is one of the few countries whose constitution and parliament are explicitly architected around the fact that most of its people live abroad. Cape Verdeans abroad have voted in presidential and legislative elections since 1992; six seats in the National Assembly are reserved for the diaspora (two each for the Americas, Africa and Europe); a vote-weighting system was implemented precisely 'to avoid compromising national independence as more Cape Verdeans live abroad than in the national territory'; and Article 40 of the constitution guarantees that no one Cape Verdean by origin may be deprived of nationality — dual citizenship is a birthright, which is also what makes the football federation's diaspora recruitment legally frictionless. The EUDiF diaspora-engagement mapping puts the total diaspora at close to 120% of the resident population, and successive governments have run dedicated diaspora institutions (Institute of Communities 2001, Ministry of Communities 2011, folded into Foreign Affairs 2016), an Emigrant Investor Statute (2020) with special tax incentives, and 'ethnic tourism' promotion aimed at the diaspora itself.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://diasporafordevelopment.eu/wp-content/uploads/2024/05/CF_Cabo-Verde-v.1.pdf",
+          "title": "EUDiF Diaspora Engagement Mapping: Cabo Verde (AFFORD/EUDiF, updated December 2023)",
+          "facts": [
+            "Cape Verdeans abroad have voted in presidential and legislative elections since 1992",
+            "Six members of parliament represent citizens abroad: two each from the Americas, the rest of Africa, and Europe",
+            "A vote-weighting system exists 'to avoid compromising national independence as more Cape Verdeans live abroad than in the national territory'",
+            "Constitution Art. 40: no one Cape Verdean by origin may be deprived of nationality (dual citizenship guaranteed)",
+            "Total diaspora estimated at close to 120% of the resident population (Pew/UN 2017 estimates)",
+            "Emigrant Investor Statute (2020) grants special tax incentives to emigrant investors; government promotes 'ethnic tourism' from the diaspora"
+          ]
+        }
+      ]
+    },
+    "det_12": {
+      "label": "Why the diaspora is structural: famine, whaling ships, and colonial neglect",
+      "content": "Cape Verdean emigration is not a modern labour-market choice — it began as survival. The Sahelian archipelago, colonized by Portugal from the 1460s and a hub of the Atlantic slave trade, suffered repeated catastrophic famines: Wikipedia's tally records 11 major famines between 1580 and 1866 (including ~30,000 deaths in 1830-33 and 20,000-30,000 in 1863-66), and the two worst of the 20th century — 1941-43 and 1947-48, under Salazar's Estado Novo — killed an estimated 45,000 people while the colonial government failed to supply food aid or improve water access. On individual islands the toll reached 28% (Sao Nicolau) and 31% (Fogo) of the population. Between 1900 and 1970 about 80,000 Cape Verdeans were shipped as contract labourers to the cocoa plantations of Portuguese Sao Tome and Principe — which is why Sao Tome appears in the UN emigrant-stock data with a shrinking, ageing community (4,250 in 1990 down to 1,115 in 2024). The escape route west was older still: from the early 1800s, New England whaling ships recruited crews in the islands, and by the mid-1800s New Bedford, Massachusetts became the anchor of Cape Verdean America, later supplemented by cranberry-bog labour in southeastern Massachusetts. Emigration accelerated after 1869 amid drought, starvation and economic decline; US restrictionist laws in 1922 choked it off; the 1965 Immigration and Nationality Act reopened it. Independence arrived only in 1975, after the joint liberation struggle with Guinea-Bissau. The result: a nation whose defining infrastructure is the emigrant network itself.",
+      "category": "background",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Famine_in_Cape_Verde",
+          "title": "Famine in Cape Verde — Wikipedia",
+          "facts": [
+            "The 1941-43 and 1947-48 famines killed an estimated 45,000 people",
+            "Sao Nicolau lost 28% and Fogo 31% of their populations in the 1940s famines",
+            "Portugal's Estado Novo government failed to improve access to fresh water or supply food aid",
+            "About 80,000 Cape Verdeans were shipped to Sao Tome and Principe for contract labour on cocoa plantations between 1900 and 1970",
+            "11 major famines recorded 1580-1866, including ~30,000 deaths in 1830-33 and 20,000-30,000 in 1863-66"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Cape_Verdean_Americans",
+          "title": "Cape Verdean Americans — Wikipedia",
+          "facts": [
+            "Cape Verdean migration to the US began in the early 1800s when New England whaling crews recruited workers from Cape Verde",
+            "By the mid-1800s New Bedford was a maritime hub where Cape Verdeans worked in whaling and fishing; many worked the cranberry bogs of southeastern Massachusetts",
+            "Emigration accelerated after 1869 amid drought, starvation and economic decline; restrictive US immigration policy in 1922 curtailed it; the 1965 Immigration and Nationality Act reopened it"
+          ]
+        },
+        {
+          "url": "https://theconversation.com/cape-verdes-world-cup-success-reflects-a-nation-that-has-repeatedly-defied-the-odds-286506",
+          "title": "Cape Verde's World Cup success reflects a nation that has repeatedly defied the odds — The Conversation",
+          "facts": [
+            "Portuguese arrival in the 1460s; independence in 1975 through the liberation struggle alongside Guinea-Bissau",
+            "After the slave trade ended in the mid-19th century the islands faced resource deprivation and frequent droughts"
+          ]
+        }
+      ]
+    },
+    "det_13": {
+      "label": "Remittances: from 28% of GDP to 12% — dependence receding as the economy grows",
+      "content": "The dataset's World Bank series shows personal remittances received were 28.2% of Cabo Verde's GDP in 1980, drifting down to 12.3% in 2024 — still among the highest shares in Sub-Saharan Africa (EUDiF's factsheet cites 13.5% of GDP, USD 313M inflow, in its December 2023 update). The right reading is NOT that the diaspora matters less: absolute inflows kept growing (a record 30%+ jump in 2021 alone, per The Conversation), remittances remain a bigger financial flow than foreign aid or FDI, and the declining share mostly reflects the denominator — GDP growth driven by tourism (~25% of GDP, enabling ~40% of all economic activity, per the US State Department's 2025 investment climate statement). For the analyst: the 1980-2024 remittance share series is the story's economic spine; consider pairing the declining share with World Bank absolute inflows, and rank Cabo Verde against other economies in the same WDI indicator (it sat among the world's most remittance-dependent economies through the 1980s-90s) rather than asserting a present-day global top rank.",
+      "category": "benchmark",
+      "sources": [
+        {
+          "url": "https://data.worldbank.org/indicator/BX.TRF.PWKR.DT.GD.ZS",
+          "title": "World Bank WDI: Personal remittances, received (% of GDP) — BX.TRF.PWKR.DT.GD.ZS",
+          "facts": [
+            "Cabo Verde series runs 1980-2024: 28.2% of GDP in 1980, 12.3% in 2024 (values as shipped in the dataset's WDI extract)"
+          ]
+        },
+        {
+          "url": "https://diasporafordevelopment.eu/wp-content/uploads/2024/05/CF_Cabo-Verde-v.1.pdf",
+          "title": "EUDiF Diaspora Engagement Mapping: Cabo Verde (updated December 2023)",
+          "facts": [
+            "Remittances as a share of GDP: 13.5%; remittances inflow USD 313 million"
+          ]
+        },
+        {
+          "url": "https://theconversation.com/cape-verdes-world-cup-success-reflects-a-nation-that-has-repeatedly-defied-the-odds-286506",
+          "title": "Cape Verde's World Cup success reflects a nation that has repeatedly defied the odds — The Conversation",
+          "facts": [
+            "Remittances constitute much bigger financial flows to the country than foreign aid or foreign direct investment",
+            "Remittances recorded an increase of over 30% in 2021"
+          ]
+        },
+        {
+          "url": "https://www.state.gov/reports/2025-investment-climate-statements/cabo-verde",
+          "title": "Cabo Verde — 2025 Investment Climate Statements, U.S. Department of State",
+          "facts": [
+            "Tourism represents about 25% of GDP and enables about 40% of all economic activity in Cabo Verde"
+          ]
+        }
+      ]
+    },
+    "det_14": {
+      "label": "The development miracle: 2nd country ever to graduate from LDC status",
+      "content": "The same country that lost a quarter of its people to famine within living memory is now one of Africa's most celebrated development stories — and the diaspora financed much of the climb. In December 2007 the UN graduated Cabo Verde from Least Developed Country status, only the SECOND country ever to achieve this (after Botswana in 1994; Maldives followed in 2011). Fifty years after independence it is an upper-middle-income state, ranks third on Africa's governance index, has the second-highest life expectancy in Africa (75-77 years) and among the continent's lowest child-mortality rates, and is regularly cited among Africa's most stable democracies. This is the 'why it matters' engine of the story: the diaspora is not a footnote to Cape Verde's development — remittances, return investment and now footballing talent are the mechanism of it.",
+      "category": "why_it_matters",
+      "sources": [
+        {
+          "url": "https://www.un.org/development/desa/dpad/least-developed-country-category-cabo-verde.html",
+          "title": "The least developed country category: Cabo Verde — UN DESA Economic Analysis and Policy Division",
+          "facts": [
+            "Cabo Verde graduated from the least developed country category in December 2007"
+          ]
+        },
+        {
+          "url": "https://unctad.org/topic/least-developed-countries/list",
+          "title": "UN list of least developed countries — UNCTAD",
+          "facts": [
+            "Botswana was the first country to graduate from LDC status (1994); Cabo Verde was the second (2007)"
+          ]
+        },
+        {
+          "url": "https://theconversation.com/cape-verdes-world-cup-success-reflects-a-nation-that-has-repeatedly-defied-the-odds-286506",
+          "title": "Cape Verde's World Cup success reflects a nation that has repeatedly defied the odds — The Conversation",
+          "facts": [
+            "Cape Verde transformed from one of the poorest countries in the world to an upper-middle-income state over 50 years",
+            "Ranks third on Africa's governance index",
+            "Second-highest life expectancy in Africa, between 75 and 77 years, and among Africa's lowest child mortality rates"
+          ]
+        }
+      ]
+    },
+    "det_15": {
+      "label": "Morna and 'Sodade': the diaspora's soundtrack (UNESCO-listed)",
+      "content": "Cape Verde's national music genre is literally about this story. Morna — voice, poetry, guitar and cavaquinho, sung in Cape Verdean Creole — was inscribed on UNESCO's Representative List of the Intangible Cultural Heritage of Humanity on 11 December 2019; UNESCO's own description lists its themes as love, departure, separation, reunion and longing. Its emotional core is 'sodade' (Creole for the Portuguese saudade): the mixture of nostalgia and sadness that grips both those who leave and those who stay. The genre's global face was Cesaria Evora (1941-2011), the 'Barefoot Diva' from Mindelo, whose signature song 'Sodade' — a lament addressed to an emigrant bound for Sao Tome, the very contract-labour route in det_12 — carried the emigrant's longing to world audiences, alongside 'Petit Pays', her ode to the small homeland. Morna is played wherever the diaspora lives — New England, Portugal, the Netherlands, France, West Africa. BGM guidance for the Scout/Designer: morna (ideally Cesaria Evora's 'Sodade' or a license-clean morna recording) is the tonally perfect BGM — a real recording, per the real-media policy; the UNESCO listing and the Sao Tome lyric connection make it load-bearing, not decorative.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://ich.unesco.org/en/RL/morna-musical-practice-of-cabo-verde-01469",
+          "title": "Morna, musical practice of Cabo Verde — UNESCO Intangible Cultural Heritage",
+          "facts": [
+            "Morna was inscribed on the Representative List of the Intangible Cultural Heritage of Humanity in 2019 (14.COM, decision of 11 December 2019)",
+            "UNESCO describes morna as a traditional Cabo Verdean musical and choreographic practice whose sung poetry treats love, departure, separation, reunion and longing"
+          ]
+        },
+        {
+          "url": "https://globalvoices.org/2019/12/09/morna-a-music-style-from-cabo-verde-recognized-as-world-heritage/",
+          "title": "Morna, a music style from Cabo Verde, recognized as World Heritage — Global Voices",
+          "facts": [
+            "Morna conveys the feeling of sodade — nostalgia and sadness gripping those who remain and those who leave — central to a land of migrants",
+            "Cesaria Evora is the genre's best-known international performer"
+          ]
+        },
+        {
+          "url": "https://en.wikipedia.org/wiki/Morna_(music)",
+          "title": "Morna (music) — Wikipedia",
+          "facts": [
+            "Morna is sung in Cape Verdean Creole with instrumental accompaniment (guitar, cavaquinho, violin)",
+            "Morna is played in Cape Verdean migrant communities in New England, Portugal, the Netherlands, France, West Africa and parts of Latin America",
+            "Cesaria Evora's best-known songs include 'Sodade' and 'Petit Pays'"
+          ]
+        }
+      ]
+    },
+    "det_16": {
+      "label": "The squad IS the diaspora: 15 of 26 born abroad, 6 in the Netherlands",
+      "content": "The dataset's squad_2026.csv encodes the thesis: 15 of Cape Verde's 26 World Cup players (57.7%) were born outside Cape Verde — Netherlands 6 (Jamiro Monteiro, Garry Rodrigues, Sidny Lopes Cabral, Deroy Duarte, Laros Duarte, Dailon Livramento), Portugal 4 (Jovane Cabral, Telmo Arcanjo, Wagner Pina, Helio Varela), France 3 (Logan Costa, Willy Semedo, Steven Moreira), Ireland 1 (Roberto 'Pico' Lopes, the LinkedIn call-up of det_06), United States 1 (CJ dos Santos). The squad's birth map is nearly a map of the diaspora's destinations — with one telling inversion: the Netherlands, the top birth country of the squad, does not even appear in the UN 2024 bilateral emigrant matrix (det_07). The captain and hero of the run, 39-year-old goalkeeper Vozinha, and record cap-holder Ryan Mendes were island-born, so the team is a genuine fusion, not an imported XI. Five Rotterdam-born players started the opener against Spain (det_05). For the analyst: born_abroad is a boolean column — the 15/26 split, the birth-country breakdown, and a comparison against other WC2026 squads' foreign-born shares (if computed, source squad data per country) are all chartable; do not claim Cape Verde has 'the most foreign-born squad' without computing it.",
+      "category": "interpretive_hook",
+      "sources": [
+        {
+          "url": "https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_squads",
+          "title": "2026 FIFA World Cup squads — Wikipedia (squad as announced by the FCF)",
+          "facts": [
+            "Cape Verde's 26-man squad with clubs, caps and dates of birth as registered for the tournament"
+          ]
+        },
+        {
+          "url": "https://bolavip.com/en/world-cup/players-born-overseas-representing-cape-verde-at-the-2026-world-cup",
+          "title": "Players born overseas representing Cape Verde at the 2026 World Cup — Bolavip",
+          "facts": [
+            "15 of the 26 players were born outside Cape Verde: 6 in the Netherlands, 4 in Portugal, 3 in France, 1 in Ireland, 1 in the United States"
+          ]
+        }
+      ],
+      "calculation": {
+        "method": "arithmetic",
+        "formula": "15/26 born abroad (from squad_2026.csv born_abroad column): NED 6 + POR 4 + FRA 3 + IRL 1 + USA 1 = 15",
+        "result": "57.7% of the World Cup squad born abroad"
+      }
+    },
+    "det_17": {
+      "label": "Scope for the analyst: three layers, four checks, one Elo curve",
+      "content": "(1) NEVER mix the three diaspora layers in one chart: UN born-in-CV migrant stock (146,396 floor, 2024), citizens/nationals abroad, and heritage/ancestry estimates (US ACS 106k-143k self-reported; State Dept ~500k descent; EUDiF ~120% of resident population). Label every diaspora number with its layer. (2) The 'smallest nation' claim: compute WC-participant populations from 04_population (SP.POP.TOTL) — expect Cape Verde 3rd-least-populated ever behind Curacao (2026) and Iceland (2018), and smallest ever to reach the knockouts; say it precisely. (3) Remittances: chart the 1980-2024 share decline (28.2%->12.3%) but pair it with context from det_13 — dependence receded because GDP grew, not because the diaspora sent less; a global/African rank for 2024 can be computed from the same WDI file across countries. (4) Football trajectory: international_results.csv (263 Cape Verde matches since 1979) supports an Elo/rating curve from debut to the Argentina match — the quantitative arc of a 'small nation rising'; remember scores are ET-inclusive, shootout-exclusive. (5) The Sao Tome destination series (4,250->1,115) is the decaying trace of colonial contract labour (det_12) — a chartable historical echo. (6) Strip the UN '*' footnote flag from France/Norway/Denmark/Finland destination names before display.",
+      "category": "scope_suggestion",
+      "sources": [
+        {
+          "url": "https://github.com/martj42/international_results",
+          "title": "martj42/international_results — all international football A-matches 1872-present (CC0)",
+          "facts": [
+            "Community-maintained CSV of full internationals including WC2026 results through the fetch date; scores include extra time, exclude penalty shootouts"
+          ]
+        },
+        {
+          "url": "https://www.un.org/development/desa/pd/content/international-migrant-stock",
+          "title": "UN DESA International Migrant Stock 2024",
+          "facts": [
+            "Bilateral destination-by-origin matrix published in waves 1990-2024; small origin groups are not broken out by all destination countries"
+          ]
+        }
+      ]
+    }
+  },
+  "topic_profile": {
+    "tags": ["sport", "event", "emotional", "place", "geographic", "culture", "visual_subject"],
+    "is_visual": true,
+    "is_computational": true,
+    "privacy_sensitive": false,
+    "classified_by": "detective",
+    "classified_at": "2026-07-04T15:30:00Z",
+    "rationale": "A World Cup knockout epic (sport/event/emotional) told through real, photographable subjects — named players, Miami's stadium, the islands, Rotterdam and Brockton street celebrations, Cesaria Evora (visual_subject/place/culture) — so is_visual=true; the headline claims are computed quantities the reader can reproduce (15/26 born abroad, 146k UN floor vs heritage estimates, 28.2%->12.3% remittance share, third-least-populated ranking, Elo trajectory) — so is_computational=true. Public figures and aggregate statistics only: privacy_sensitive=false.",
+    "ai_face_policy": {
+      "real_person_subject": true,
+      "animate_real_photo": "subtle_cinemagraph",
+      "no_photo_fallback": "theme_first_no_person",
+      "disclosure": "required_proportionate",
+      "sensitivity_advisory": "Cesaria Evora died in 2011 — if her fetched photo is animated, keep the motion minimal and reverential (she is a national icon); the footballers are living public figures with no sensitivity concerns."
+    }
+  },
+  "reference_media": [
+    {
+      "id": "det_media_01",
+      "filename": "ref_cesaria_evora.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Ces%C3%A1ria_%C3%89vora_(2457851527).jpg",
+      "license": "CC BY-SA 2.0",
+      "source": "Wikimedia Commons (photo: 'As fotos da Virada!')",
+      "description": "Cesaria Evora singing at a microphone in her characteristic black dress — vision-confirmed as the 'Barefoot Diva'. Anchor image for the morna/'Sodade' section (det_15).",
+      "relates_to": ["det_15"]
+    },
+    {
+      "id": "det_media_02",
+      "filename": "ref_mindelo_harbor.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Mindelo_(S_Vicente,_Cabo_Verde).JPG",
+      "license": "CC BY-SA 3.0",
+      "source": "Wikimedia Commons (photo: Manuel de Sousa)",
+      "description": "Panorama of Mindelo's harbor bay on Sao Vicente — Cesaria Evora's hometown and the historic port through which emigrants left; vision-confirmed harbor cityscape.",
+      "relates_to": ["det_12", "det_15"]
+    },
+    {
+      "id": "det_media_03",
+      "filename": "ref_pico_do_fogo.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Pico-94-117-13.jpg",
+      "license": "CC BY-SA 3.0",
+      "source": "Wikimedia Commons (photo: Holger Reineccius)",
+      "description": "Pico do Fogo volcano rising over lava fields — Fogo lost 31% of its people in the 1940s famines (det_12); the archipelago's harsh volcanic geography is why emigration became survival. Vision-confirmed.",
+      "relates_to": ["det_12"]
+    },
+    {
+      "id": "det_media_04",
+      "filename": "ref_deroy_duarte.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Deroy_Duarte.jpg",
+      "license": "CC BY 2.0",
+      "source": "Wikimedia Commons (photo: Carlo Bruil Fotografie)",
+      "description": "Deroy Duarte in Fortuna Sittard's away kit (consistent with his 2021-24 club) — the Rotterdam-born scorer of Cape Verde's first goal vs Argentina. Vision-checked (kit/context match); Scout should run the identity gate before page use.",
+      "relates_to": ["det_01", "det_04"]
+    },
+    {
+      "id": "det_media_05",
+      "filename": "ref_vozinha.jpg",
+      "url": "https://commons.wikimedia.org/wiki/File:Vozinha_Cape_Verde_Goalkeeper.jpg",
+      "license": "CC BY 4.0",
+      "source": "Wikimedia Commons (photo: Nha Terra Nha Cretcheu)",
+      "description": "Vozinha, Cape Verde's 39-year-old captain-goalkeeper (eight saves vs Argentina), interviewed in an FCF training top — crest visible, vision-confirmed. Island-born counterweight to the diaspora players (det_16).",
+      "relates_to": ["det_01", "det_16"]
+    },
+    {
+      "id": "det_media_06",
+      "filename": "ref_whaling_bark_wanderer__openverse.jpg",
+      "url": "https://www.flickr.com/photos/124440767@N07/14888059100",
+      "license": "CC BY 2.0",
+      "source": "Flickr via Openverse (safr_social_media)",
+      "description": "Museum model of the whaling bark Wanderer of New Bedford — the whaling trade that first carried Cape Verdeans to New England (det_12). NOTE: this is a model in a display case; Scout should try to upgrade to a public-domain archival photo of an actual New Bedford whaler with Cape Verdean crew.",
+      "relates_to": ["det_08", "det_12"]
+    },
+    {
+      "id": "det_media_07",
+      "filename": "flag_cape_verde.png",
+      "url": "https://commons.wikimedia.org/wiki/File:Flag_of_Cape_Verde.svg",
+      "license": "Public domain",
+      "source": "Wikimedia Commons (fetch_flags.py set)",
+      "description": "Flags PNG set for the diaspora-destination map/chart and the match: Cape Verde, Portugal, Netherlands, United States, France, Luxembourg, Angola, Senegal, Argentina (all in assets/, manifest: flags_manifest.json; all public domain).",
+      "relates_to": ["det_03", "det_07", "det_16"]
+    }
+  ],
+  "instances": [
+    {
+      "id": "inst_01",
+      "type": "youtube",
+      "label": "Cesaria Evora — Sodade (Official Video)",
+      "embed_url": "https://www.youtube.com/embed/ku_WZoTtT8Q",
+      "source_url": "https://www.youtube.com/watch?v=ku_WZoTtT8Q",
+      "license": "YouTube embed (official CesariaEvoraVEVO channel carries the rights)",
+      "relates_to": ["det_15", "det_12"],
+      "why": "The emigrant's-longing anthem itself — a lament for contract labourers bound for Sao Tome — sung by the genre's global face; lets the reader HEAR sodade instead of reading a definition.",
+      "verified": true,
+      "verified_title": "Cesária Evora - Sodade (Official Video) — CesariaEvoraVEVO"
+    },
+    {
+      "id": "inst_02",
+      "type": "youtube",
+      "label": "Argentina vs Cape Verde Highlights — 2026 FIFA World Cup Round of 32 (FOX Sports)",
+      "embed_url": "https://www.youtube.com/embed/EC2jOKluGRI",
+      "source_url": "https://www.youtube.com/watch?v=EC2jOKluGRI",
+      "license": "YouTube embed (official FOX Sports channel, US broadcaster)",
+      "relates_to": ["det_01", "det_04"],
+      "why": "The hook event in moving pictures: both Rotterdam-born goals, Vozinha's saves, and the own-goal heartbreak — the reader can verify the match narrative with their own eyes.",
+      "verified": true,
+      "verified_title": "Argentina vs Cape Verde Highlights 🌎🏆 2026 FIFA World Cup™ | Round of 32 — FOX Sports"
+    },
+    {
+      "id": "inst_03",
+      "type": "youtube",
+      "label": "Cesaria Evora — Petit pays (Official Video)",
+      "embed_url": "https://www.youtube.com/embed/DeLUGn7qYP8",
+      "source_url": "https://www.youtube.com/watch?v=DeLUGn7qYP8",
+      "license": "YouTube embed (official CesariaEvoraVEVO channel carries the rights)",
+      "relates_to": ["det_15"],
+      "why": "'Little country' — the tender ode to a 4,033 sq km homeland; the natural closing-section counterpart to Sodade's departure theme.",
+      "verified": true,
+      "verified_title": "Cesária Evora - Petit pays (Official Video) — CesariaEvoraVEVO"
+    }
+  ]
+}

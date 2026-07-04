@@ -1,0 +1,101 @@
+[
+  {
+    "country": "Cape Verde",
+    "commons_file": "Flag of Cape Verde.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_cape_verde.png",
+    "license": "Public domain",
+    "artist": "Original: Pedro Gregório Vector:  SKopp",
+    "credit": "SVG implementation of the description in the Constitution of Cape Verde. Note that the size of the stars is not defined, neither is the ratio.",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_Cape_Verde.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Flag_of_Cape_Verde.svg/960px-Flag_of_Cape_Verde.svg.png",
+    "status": "ok"
+  },
+  {
+    "country": "Portugal",
+    "commons_file": "Flag of Portugal.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_portugal.png",
+    "license": "Public domain",
+    "artist": "Original: Columbano Bordalo Pinheiro (1910; generic design) Vector:  Vítor Luís Rodrigues; António Martins-Tuválkin (2004; this specific vector set: see sources)",
+    "credit": "Own work using: http://jorgesampaio.arquivo.presidencia.pt/pt/republica/simbolos/bandeiras/index.html#imgs\n\nsee construction sheet.",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_Portugal.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Flag_of_Portugal.svg/960px-Flag_of_Portugal.svg.png",
+    "status": "ok"
+  },
+  {
+    "country": "Netherlands",
+    "commons_file": "Flag of the Netherlands.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_netherlands.png",
+    "license": "Public domain",
+    "artist": "Zscout370",
+    "credit": "Own work",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Netherlands.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Flag_of_the_Netherlands.svg/960px-Flag_of_the_Netherlands.svg.png",
+    "status": "ok"
+  },
+  {
+    "country": "United States",
+    "commons_file": "Flag of the United States.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_united_states.png",
+    "license": "Public domain",
+    "artist": "Uploaded by Dbenbenn; edited by users such as Zscout370, Jacobolus, Indolences, and Technion.",
+    "credit": "Latest version is based from File:Flag of the United States (DoS ECA Color Standard).svg (2023)\nSVG implementation of U. S. Code: Title 4, Chapter 1, Section 1 [1] (the United States Federal \"Flag Law\").",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_United_States.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/960px-Flag_of_the_United_States.svg.png",
+    "status": "ok"
+  },
+  {
+    "country": "France",
+    "commons_file": "Flag of France.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_france.png",
+    "license": "Public domain",
+    "artist": "Original: Unknown Vector:  SKopp",
+    "credit": "This SVG flag includes elements that have been taken or adapted from this flag:",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_France.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/960px-Flag_of_France.svg.png",
+    "status": "ok"
+  },
+  {
+    "country": "Luxembourg",
+    "commons_file": "Flag of Luxembourg.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_luxembourg.png",
+    "license": "Public domain",
+    "artist": "Drawn by User:SKopp",
+    "credit": "Own work http://www.legilux.public.lu/leg/a/archives/1972/0051/a051.pdf#page=2, colors from http://www.legilux.public.lu/leg/a/archives/1993/0731609/0731609.pdf",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_Luxembourg.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/da/Flag_of_Luxembourg.svg/960px-Flag_of_Luxembourg.svg.png",
+    "status": "ok"
+  },
+  {
+    "country": "Angola",
+    "commons_file": "Flag of Angola.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_angola.png",
+    "license": "Public domain",
+    "artist": "Original: Henrique de Carvalho Santos Vector:  SKopp",
+    "credit": "Designed by Henrique de Carvalho Santos\nConstruction sheet:\n\nFlags of the World - Angola\nVexilla Mundi - Angola",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_Angola.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Flag_of_Angola.svg/960px-Flag_of_Angola.svg.png",
+    "status": "ok"
+  },
+  {
+    "country": "Senegal",
+    "commons_file": "Flag of Senegal.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_senegal.png",
+    "license": "Public domain",
+    "artist": "Original upload by Nightstallion",
+    "credit": "Original upload from Openclipart : Senegal. However, the current source code for this SVG file has almost nothing in common with the original upload.",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_Senegal.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Flag_of_Senegal.svg/960px-Flag_of_Senegal.svg.png",
+    "status": "ok"
+  },
+  {
+    "country": "Argentina",
+    "commons_file": "Flag of Argentina.svg",
+    "local_path": "..\\..\\..\\..\\..\\project\\cape-verde-diaspora\\blog_fable5_0704_1601\\assets\\flag_argentina.png",
+    "license": "Public domain",
+    "artist": "Manuel Belgrano",
+    "credit": "Here, based on: https://web.archive.org/web/20220614050403/http://manuelbelgrano.gov.ar/bandera/creacion-de-la-bandera-nacional/",
+    "descriptionurl": "https://commons.wikimedia.org/wiki/File:Flag_of_Argentina.svg",
+    "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Flag_of_Argentina.svg/960px-Flag_of_Argentina.svg.png",
+    "status": "ok"
+  }
+]

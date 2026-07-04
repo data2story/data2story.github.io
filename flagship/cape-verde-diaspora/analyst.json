@@ -1,0 +1,724 @@
+{
+  "meta": {
+    "role": "analyst",
+    "version": "2.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "run_profile": "premium",
+    "note": "All scripts in code/ are deterministic, offline (DATA_DIR files only), and runnable with `py <script>.py` under PYTHONUTF8=1. Elo engine + outcome model constants are fully documented in-file; client_model.js reproduces the ana_19 and ana_09/ana_10 headline numbers exactly (verified with node).",
+    "live_status_display_only": "scout.json live_status (as of 2026-07-04, Al Jazeera): Cape Verde eliminated in the R32 by Argentina 3-2 AET on 3 July; Argentina face Egypt (who beat Australia 4-2 on penalties -- consistent with the dataset's 1-1 ET row) in the R16. DISPLAY-ONLY context: none of this feeds any model here; all computed numbers end at the 2026-07-03 data cutoff, and the 8 unplayed R16 fixture rows are dropped."
+  },
+  "dataset": {
+    "files": [
+      "01_diaspora/cape_verde_emigrants_by_destination.csv",
+      "01_diaspora/undesa_ims_2024_destination_origin.xlsx",
+      "02_remittances/remittances_pct_gdp_tidy.csv",
+      "03_football/international_results.csv",
+      "03_football/squad_2026.csv",
+      "04_population/population_total_tidy.csv",
+      "02_remittances/Metadata_Country_*.csv + 04_population/Metadata_Country_*.csv (aggregate filters)"
+    ],
+    "rows": 76150,
+    "columns": 33,
+    "what_one_row_represents": "Varies by file: a (destination x wave) UN migrant-stock cell (208 rows, 25 destinations incl. World, 8 waves); a country-year remittance share (9,021 rows, 246 entities, 1970-2024); one international A-match (49,501 rows, 1872-2026, of which 49,493 played and 8 scheduled NaN-score R16 fixtures); one 2026 squad player (26 rows); a country-year population (17,394 rows, 1960-2025).",
+    "time_range": "1872-2026 (football results); 1990-2024 in 8 waves (migrant stock); 1980-2024 (Cabo Verde remittances); 1960-2025 (population)",
+    "geographic_scope": "Cabo Verde x global: 24 named UN destinations, 246 WDI economies (217 true countries after aggregate filter), 336 national teams",
+    "missing_values": "No missing values in the diaspora slice or squad file; 8 football rows have NaN scores (unplayed scheduled R16 fixtures, dropped everywhere); WDI tidy files omit country-years with no reported value (Somalia and Puerto Rico have no population rows at all).",
+    "profile_script": "code/profile_dataset.py"
+  },
+  "items": {
+    "ana_01": {
+      "label": "Where the counted diaspora lives: Portugal 52%, France 24%",
+      "content": "The UN's 2024 bilateral matrix counts 146,396 people born in Cabo Verde living abroad -- and that world total is literally the sum of just 24 named destinations, with no 'other' residual. Portugal alone hosts 76,835 (52.5%) and France 34,814 (23.8%): three in four counted emigrants live in one of two countries. The rest of the top six are Angola (9,497), Luxembourg (8,211), Mozambique (7,107) and Italy (5,847). The Netherlands, United States, Spain and Senegal -- major real-world hosts, including the birth country of six squad players -- are structurally absent because those countries' statistics do not break out small origin groups, which is why every number in this table is a floor, not the diaspora.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/diaspora_analysis.py",
+        "lines": [35, 51],
+        "output": "World total (floor) 2024: 146,396\nSum of 24 named destinations: 146,396 (100.0% of world total)\n'Other' (not broken out): 0\n  Portugal: 76,835 (52.5%)\n  France: 34,814 (23.8%)\n  Angola: 9,497 (6.5%)\n  Luxembourg: 8,211 (5.6%)\n  Mozambique: 7,107 (4.9%)\n  Italy: 5,847 (4.0%)\n...\nPortugal+France = 111,649 = 76.3% of the world total"
+      },
+      "data_table": {
+        "description": "UN DESA born-in-Cabo-Verde migrant stock by destination, all 8 waves 1990-2024 (persons; World = published world total; footnote '*' stripped from names)",
+        "columns": ["destination", "y1990", "y1995", "y2000", "y2005", "y2010", "y2015", "y2020", "y2024"],
+        "rows": [
+          ["Portugal", 30179, 36695, 44701, 53008, 52513, 59532, 68299, 76835],
+          ["France", 7645, 10104, 13572, 18434, 22975, 30310, 31783, 34814],
+          ["Angola", 3569, 4147, 4724, 6209, 7558, 8662, 9215, 9497],
+          ["Luxembourg", 1148, 1278, 1422, 1234, 1060, 1617, 7108, 8211],
+          ["Mozambique", 2500, 3439, 4001, 5495, 6262, 6491, 6819, 7107],
+          ["Italy", 1795, 2354, 3004, 3814, 4980, 5764, 6073, 5847],
+          ["Brazil", 5, 1447, 1181, 1285, 1173, 1305, 1523, 1430],
+          ["Sao Tome and Principe", 4250, 3343, 2488, 1956, 1538, 1363, 1220, 1115],
+          ["Norway", 163, 167, 234, 251, 382, 405, 406, 451],
+          ["Guinea-Bissau", 355, 466, 576, 549, 521, 552, 403, 338],
+          ["Colombia", 5, 12, 12, 6, 30, 94, 194, 255],
+          ["Bolivia (Plurinational State of)", 0, 1, 2, 56, 110, 129, 141, 157],
+          ["Iceland", 19, 28, 37, 40, 41, 33, 54, 82],
+          ["Sierra Leone", 5, 4, 3, 1, 6, 43, 88, 82],
+          ["Denmark", 5, 11, 16, 17, 24, 32, 40, 43],
+          ["Togo", 19, 21, 23, 25, 36, 40, 39, 39],
+          ["Guinea", 98, 112, 78, 54, 37, 34, 31, 30],
+          ["Hungary", 0, 0, 0, 0, 0, 5, 19, 22],
+          ["Finland", 2, 3, 4, 6, 8, 11, 13, 15],
+          ["Greece", 32, 33, 34, 24, 14, 13, 12, 13],
+          ["Bulgaria", 2, 3, 4, 6, 7, 6, 5, 7],
+          ["Slovenia", 0, 0, 0, 0, 1, 4, 3, 3],
+          ["Dominican Republic", 3, 4, 4, 4, 4, 3, 3, 3],
+          ["Estonia", 0, 0, 0, 0, 0, 2, 0, 0],
+          ["Latvia", 1, 1, 1, 1, 1, 0, 0, 0],
+          ["World", 51800, 63673, 76121, 92475, 99281, 116450, 133491, 146396]
+        ]
+      },
+      "based_on": ["det_07"]
+    },
+    "ana_02": {
+      "label": "Growth 1990-2024: world total x2.8, Luxembourg x7.2",
+      "content": "The counted emigrant stock grew 2.83x in 34 years (51,800 to 146,396) while Cabo Verde's resident population grew only 1.4x. France more than quadrupled (7,645 to 34,814, x4.55). The stand-out is Luxembourg: 1,148 to 8,211 (x7.15), with almost the entire surge in one wave -- 1,617 in 2015 to 7,108 in 2020 -- making Cape Verdeans 1.21% of Luxembourg's total population (677,012) by 2024, the highest density of any destination in the table. Brazil's x286 (5 to 1,430) is a small-base artifact of the 1990 wave.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/diaspora_analysis.py",
+        "lines": [52, 66],
+        "output": "World total: 51,800 -> 146,396 = x2.83 in 34 years\n[per-destination y1990/y2024/multiple table]\nLuxembourg wave series: [1148, 1278, 1422, 1234, 1060, 1617, 7108, 8211]\nLuxembourg 2024: 8,211 CV-born = 1.21% of Luxembourg's population (677,012)"
+      },
+      "data_table": {
+        "description": "Born-in-Cabo-Verde stock by destination: 1990 vs 2024 and growth multiple (null = zero 1990 base)",
+        "columns": ["destination", "migrants_1990", "migrants_2024", "multiple"],
+        "rows": [
+          ["Portugal", 30179, 76835, 2.55],
+          ["France", 7645, 34814, 4.55],
+          ["Angola", 3569, 9497, 2.66],
+          ["Luxembourg", 1148, 8211, 7.15],
+          ["Mozambique", 2500, 7107, 2.84],
+          ["Italy", 1795, 5847, 3.26],
+          ["Brazil", 5, 1430, 286.0],
+          ["Sao Tome and Principe", 4250, 1115, 0.26],
+          ["Norway", 163, 451, 2.77],
+          ["Guinea-Bissau", 355, 338, 0.95],
+          ["Colombia", 5, 255, 51.0],
+          ["Bolivia (Plurinational State of)", 0, 157, null],
+          ["Iceland", 19, 82, 4.32],
+          ["Sierra Leone", 5, 82, 16.4],
+          ["Denmark", 5, 43, 8.6],
+          ["Togo", 19, 39, 2.05],
+          ["Guinea", 98, 30, 0.31],
+          ["Hungary", 0, 22, null],
+          ["Finland", 2, 15, 7.5],
+          ["Greece", 32, 13, 0.41],
+          ["Bulgaria", 2, 7, 3.5],
+          ["Slovenia", 0, 3, null],
+          ["Dominican Republic", 3, 3, 1.0],
+          ["Estonia", 0, 0, null],
+          ["Latvia", 1, 0, 0.0],
+          ["World", 51800, 146396, 2.83]
+        ]
+      },
+      "based_on": ["det_07"],
+      "notable_instance": {
+        "name": "Luxembourg",
+        "value": "x7.15 (1,148 to 8,211); 1.21% of Luxembourg's population is Cabo Verde-born",
+        "why": "The fastest-growing sizeable destination, with the whole surge in a single 2015-2020 wave -- a brand-new branch of a 500-year-old migration."
+      }
+    },
+    "ana_03": {
+      "label": "Sao Tome: the one big destination that is dying out",
+      "content": "Of 25 destinations, only five shrank between 1990 and 2024, and one dwarfs the rest: Sao Tome and Principe fell from 4,250 (the 3rd-largest community in 1990) to 1,115 (-73.8%), declining in every single wave. This is the demographic echo of the colonial contract-labour system that shipped ~80,000 Cape Verdeans to Sao Tome's cocoa plantations between 1900 and 1970 (det_12): the deportee generation is aging out and no new migration replaces it. The community that Cesaria Evora's 'Sodade' laments is literally disappearing from the table.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/diaspora_analysis.py",
+        "lines": [67, 76],
+        "output": "Sao Tome and Principe wave series (year: migrants):\n  1990: 4,250\n  1995: 3,343\n  2000: 2,488\n  2005: 1,956\n  2010: 1,538\n  2015: 1,363\n  2020: 1,220\n  2024: 1,115\nChange 1990->2024: -3,135 (-73.8%)\nDestinations with 2024 < 1990 (of 25): ['Greece', 'Guinea', 'Guinea-Bissau', 'Latvia', 'Sao Tome and Principe']"
+      },
+      "data_table": {
+        "description": "Born-in-Cabo-Verde migrant stock living in Sao Tome and Principe, by UN wave",
+        "columns": ["year", "migrants"],
+        "rows": [[1990, 4250], [1995, 3343], [2000, 2488], [2005, 1956], [2010, 1538], [2015, 1363], [2020, 1220], [2024, 1115]]
+      },
+      "based_on": ["det_12", "det_17"]
+    },
+    "ana_04": {
+      "label": "The UN floor alone equals 28% of the resident population",
+      "content": "Even on the strictest possible definition -- born in Cabo Verde, alive, abroad, counted by a destination that reports small origins -- the diaspora has doubled relative to the home population in one generation: from 13.8% of residents in 1990 to 27.9% in 2024 (146,396 counted emigrants vs 524,877 residents). Every heritage-layer estimate (det_07/det_08: ~700k-1M+ including descendants) sits far above this line; the chart of this series should be labelled as the floor it is.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/diaspora_analysis.py",
+        "lines": [77, 85],
+        "output": "wave | UN born-in-CV abroad (floor) | CPV resident pop | ratio\n  1990 |  51,800 | 375,428 | 13.8%\n  1995 |  63,673 | 418,104 | 15.2%\n  2000 |  76,121 | 453,317 | 16.8%\n  2005 |  92,475 | 485,115 | 19.1%\n  2010 |  99,281 | 509,784 | 19.5%\n  2015 | 116,450 | 512,394 | 22.7%\n  2020 | 133,491 | 514,679 | 25.9%\n  2024 | 146,396 | 524,877 | 27.9%"
+      },
+      "data_table": {
+        "description": "UN counted emigrant floor vs Cabo Verde resident population, per wave",
+        "columns": ["year", "un_emigrant_floor", "resident_population", "ratio_pct"],
+        "rows": [
+          [1990, 51800, 375428, 13.8],
+          [1995, 63673, 418104, 15.2],
+          [2000, 76121, 453317, 16.8],
+          [2005, 92475, 485115, 19.1],
+          [2010, 99281, 509784, 19.5],
+          [2015, 116450, 512394, 22.7],
+          [2020, 133491, 514679, 25.9],
+          [2024, 146396, 524877, 27.9]
+        ]
+      },
+      "based_on": ["det_07", "det_11"]
+    },
+    "ana_05": {
+      "label": "Top-20 worldwide in emigrants-per-resident, on the floor count",
+      "content": "Reading per-origin world totals from the full UN 2024 matrix and dividing by World Bank 2024 populations, Cabo Verde's counted-emigrant floor (146,396 = 27.9% of residents) ranks #20 of 212 WB-covered origins worldwide, and #2 in Sub-Saharan Africa behind only Comoros (42.4%) -- ahead of South Sudan (26.5%) and Eritrea (25.8%), whose emigration is war-driven. Nearly everything above Cabo Verde is a war economy (West Bank and Gaza 80.0%, Syria 36.2%, Venezuela 29.3%), a Balkan or Caribbean emigration state (Albania 51.2%, Bosnia 50.8%, Jamaica 44.0%, Guyana 56.5%), or a microstate (Monaco 95.0%, Samoa 54.7%, Tonga 51.1%). And Cabo Verde's true position is HIGHER: its four biggest missing host countries (Netherlands, US, Spain, Senegal) are exactly the ones its floor count omits.",
+      "type": "ranking",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/diaspora_analysis.py",
+        "lines": [86, 158],
+        "output": "origins with a 2024 world-total row: 233\nmatched origins: 212; unmatched (no WB population row, excluded): 21\nlargest excluded origins: [('Puerto Rico', 1948223), ('Somalia', 1935594), ('China, Taiwan Province of China', 832507), ...]\n[top-25 ratio table]\nCabo Verde: rank #20 of 212 (emigrant floor 146,396 = 27.9% of residents)\nSub-Saharan Africa top 5 by ratio:\n Comoros 42.4 (#9) | Cabo Verde 27.9 (#20) | South Sudan 26.5 (#22) | Eritrea 25.8 (#24) | Seychelles 18.3 (#35)"
+      },
+      "data_table": {
+        "description": "Top 25 origins worldwide by UN-counted emigrants as % of 2024 resident population (212 WB-covered origins ranked)",
+        "columns": ["rank", "origin", "emigrants_2024", "population_2024", "ratio_pct"],
+        "rows": [
+          [1, "Monaco", 36682, 38631, 95.0],
+          [2, "West Bank and Gaza", 4233248, 5289152, 80.0],
+          [3, "Guyana", 469649, 831087, 56.5],
+          [4, "Samoa", 119313, 218019, 54.7],
+          [5, "Albania", 1216628, 2377128, 51.2],
+          [6, "Tonga", 53237, 104175, 51.1],
+          [7, "Bosnia and Herzegovina", 1608324, 3164253, 50.8],
+          [8, "Jamaica", 1248512, 2839175, 44.0],
+          [9, "Comoros", 367574, 866628, 42.4],
+          [10, "Suriname", 258026, 634431, 40.7],
+          [11, "Syrian Arab Republic", 8927523, 24672760, 36.2],
+          [12, "Moldova", 864257, 2402306, 36.0],
+          [13, "St. Vincent and the Grenadines", 35264, 100616, 35.0],
+          [14, "Greenland", 18491, 56836, 32.5],
+          [15, "Dominica", 21384, 66205, 32.3],
+          [16, "St. Kitts and Nevis", 13872, 46843, 29.6],
+          [17, "North Macedonia", 534616, 1824359, 29.3],
+          [18, "Venezuela, RB", 8328514, 28405543, 29.3],
+          [19, "El Salvador", 1834670, 6338193, 28.9],
+          [20, "Cabo Verde", 146396, 524877, 27.9],
+          [21, "Aruba", 29305, 107995, 27.1],
+          [22, "South Sudan", 3168836, 11943408, 26.5],
+          [23, "Ukraine", 9769216, 37860221, 25.8],
+          [24, "Eritrea", 912792, 3535603, 25.8],
+          [25, "Romania", 4583819, 19051804, 24.1]
+        ]
+      },
+      "based_on": ["det_07", "det_11"]
+    },
+    "ana_06": {
+      "label": "Remittances: 28.2% of GDP in 1980, 12.3% in 2024",
+      "content": "The World Bank series opens in 1980 with remittances worth 28.2% of Cabo Verde's GDP -- the series' all-time peak -- and closes 2024 at 12.3%. The arc is not a straight decline: an 18-19% plateau through the 1980s-90s (1990s mean 18.2%), a slide to the 7.2% low of 2010 as tourism-led GDP growth outpaced inflows, then a pandemic-era resurgence to 15.3% in 2021 (the diaspora sent MORE when tourism collapsed) before easing back. Dependence receded because the denominator grew (det_13), not because the diaspora stopped sending.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/remittances_analysis.py",
+        "lines": [29, 44],
+        "output": "first: 1980 = 28.2% of GDP\npeak : 1980 = 28.2%\nlow  : 2010 = 7.2%\nlast : 2024 = 12.3%\ndecade means (% of GDP):\n1980    17.9\n1990    18.2\n2000    12.0\n2010     9.7\n2020    13.4\nfull series (year, pct): 1980:28.2, 1981:22.7, ... 2024:12.3"
+      },
+      "data_table": {
+        "description": "Cabo Verde personal remittances received, % of GDP, 1980-2024 (WB BX.TRF.PWKR.DT.GD.ZS, 1 dp)",
+        "columns": ["year", "pct_gdp"],
+        "rows": [
+          [1980, 28.2], [1981, 22.7], [1982, 18.4], [1983, 14.8], [1984, 15.6],
+          [1985, 15.1], [1986, 14.5], [1987, 15.5], [1988, 16.2], [1989, 17.8],
+          [1990, 19.3], [1991, 19.5], [1992, 21.3], [1993, 15.6], [1994, 21.0],
+          [1995, 21.7], [1996, 20.0], [1997, 15.6], [1998, 14.1], [1999, 13.5],
+          [2000, 16.6], [2001, 14.4], [2002, 13.7], [2003, 13.3], [2004, 12.3],
+          [2005, 14.1], [2006, 12.3], [2007, 8.4], [2008, 7.9], [2009, 7.3],
+          [2010, 7.2], [2011, 8.6], [2012, 9.3], [2013, 8.7], [2014, 9.6],
+          [2015, 11.5], [2016, 11.4], [2017, 10.8], [2018, 10.6], [2019, 9.5],
+          [2020, 12.9], [2021, 15.3], [2022, 14.0], [2023, 12.6], [2024, 12.3]
+        ]
+      },
+      "based_on": ["det_13"]
+    },
+    "ana_07": {
+      "label": "2024: still #18 of 160 countries on remittance dependence",
+      "content": "Among the 160 true countries reporting in 2024 (WB aggregates excluded via the metadata Region field), Cabo Verde's 12.3% of GDP ranks #18 -- the top 11% worldwide, in a bracket with Uzbekistan (13.7%), Jamaica (16.2%) and Haiti (16.9%), and #4 in Sub-Saharan Africa behind The Gambia (22.0%), Liberia (21.3%) and Lesotho (19.9%). The global leaders are Tajikistan (47.2%) and Tonga (39.2%). Half a century after independence, the diaspora is still one of the economy's main engines.",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/remittances_analysis.py",
+        "lines": [45, 62],
+        "output": "countries reporting in 2024: 160\nCabo Verde 2024: 12.3% of GDP -> rank #18 of 160 (top 11%)\n[top-20 table]\nSub-Saharan Africa top 8, 2024: Gambia 22.0, Liberia 21.3, Lesotho 19.9, Cabo Verde 12.3, Guinea-Bissau 9.9, Sao Tome and Principe 9.7, Nigeria 8.8, Zimbabwe 8.5"
+      },
+      "data_table": {
+        "description": "Top 20 countries by personal remittances received as % of GDP, 2024 (aggregates excluded)",
+        "columns": ["rank", "country", "pct_gdp"],
+        "rows": [
+          [1, "Tajikistan", 47.2], [2, "Tonga", 39.2], [3, "Nicaragua", 26.6],
+          [4, "Nepal", 26.0], [5, "Honduras", 25.7], [6, "El Salvador", 24.3],
+          [7, "Samoa", 24.0], [8, "Marshall Islands", 23.5], [9, "Gambia, The", 22.0],
+          [10, "Liberia", 21.3], [11, "Lesotho", 19.9], [12, "Guatemala", 19.1],
+          [13, "Kyrgyz Republic", 17.6], [14, "Kosovo", 17.3], [15, "Haiti", 16.9],
+          [16, "Jamaica", 16.2], [17, "Uzbekistan", 13.7], [18, "Cabo Verde", 12.3],
+          [19, "Georgia", 11.9], [20, "Timor-Leste", 11.8]
+        ]
+      },
+      "based_on": ["det_13"]
+    },
+    "ana_08": {
+      "label": "Once #2 in the world: 21 straight years in the global top 10",
+      "content": "Ranking every reporting country in every year shows how extreme Cabo Verde's remittance dependence used to be: #2 in the world in its first recorded year (1980, 28.2% of GDP, behind only one country of 90) and again in 1994 and 1995, and inside the global top 10 for 21 consecutive years, 1980 through 2000. The rank then slid to #40 by 2010 as GDP grew, and has since stabilised in the high teens-to-twenties (#18 in 2024). The country's economic history 1980-2024 can be read off a single rank series.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/remittances_analysis.py",
+        "lines": [63, 81],
+        "output": "[45-row rank table]\nbest-ever rank: #2 of 90 in 1980 (28.2% of GDP)\nyears ranked in the global top 10: 21 (1980, 1981, ..., 2000)"
+      },
+      "data_table": {
+        "description": "Cabo Verde's global rank on remittances %GDP among all reporting countries, per year (lower = more dependent)",
+        "columns": ["year", "cpv_rank", "n_countries", "cpv_pct"],
+        "rows": [
+          [1980, 2, 90, 28.2], [1981, 3, 90, 22.7], [1982, 3, 93, 18.4],
+          [1983, 5, 97, 14.8], [1984, 5, 97, 15.6], [1985, 6, 97, 15.1],
+          [1986, 6, 102, 14.5], [1987, 5, 105, 15.5], [1988, 3, 106, 16.2],
+          [1989, 3, 107, 17.8], [1990, 4, 109, 19.3], [1991, 3, 112, 19.5],
+          [1992, 4, 120, 21.3], [1993, 5, 126, 15.6], [1994, 2, 130, 21.0],
+          [1995, 2, 137, 21.7], [1996, 3, 142, 20.0], [1997, 6, 141, 15.6],
+          [1998, 8, 147, 14.1], [1999, 7, 148, 13.5], [2000, 7, 151, 16.6],
+          [2001, 11, 153, 14.4], [2002, 11, 158, 13.7], [2003, 14, 161, 13.3],
+          [2004, 15, 163, 12.3], [2005, 18, 165, 14.1], [2006, 21, 168, 12.3],
+          [2007, 31, 170, 8.4], [2008, 34, 174, 7.9], [2009, 37, 177, 7.3],
+          [2010, 40, 179, 7.2], [2011, 37, 181, 8.6], [2012, 35, 179, 9.3],
+          [2013, 35, 178, 8.7], [2014, 31, 181, 9.6], [2015, 23, 180, 11.5],
+          [2016, 22, 179, 11.4], [2017, 24, 177, 10.8], [2018, 29, 176, 10.6],
+          [2019, 30, 177, 9.5], [2020, 23, 177, 12.9], [2021, 21, 175, 15.3],
+          [2022, 25, 174, 14.0], [2023, 24, 172, 12.6], [2024, 18, 160, 12.3]
+        ]
+      },
+      "based_on": ["det_13"]
+    },
+    "ana_09": {
+      "label": "The squad is the diaspora: 15 of 26 born abroad",
+      "content": "15 of Cape Verde's 26 World Cup players (57.7%) were born outside Cape Verde: 6 in the Netherlands, 4 in Portugal, 3 in France, 1 in Ireland, 1 in the United States -- a near-perfect map of the emigration destinations, with the ironic twist that the top birth country (Netherlands) does not even appear in the UN's emigrant matrix (ana_01). The imported share is highest in midfield (8 of 12) and defence (5 of 8). The generational sweep runs from island-born captain Vozinha, who turned 40 during the group stage (b. 1986-06-03 -- match reports calling him 39 are wrong by a month), to Portugal-born Wagner Pina (23.7).",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/squad_analysis.py",
+        "lines": [21, 38],
+        "output": "born abroad: 15/26 = 57.7%\n  Cape Verde: 11\n  Netherlands: 6\n  Portugal: 4\n  France: 3\n  Ireland: 1\n  United States: 1\nby position (born_abroad / total):\n  DF: 5/8\n  FW: 1/3\n  GK: 1/3\n  MF: 8/12\noldest : Vozinha 40.1y (b. 1986-06-03, Cape Verde)\nyoungest: Wagner Pina 23.7y (b. 2002-11-03, Portugal)"
+      },
+      "data_table": {
+        "description": "2026 World Cup squad by birth country (26 players)",
+        "columns": ["birth_country", "players", "born_abroad"],
+        "rows": [
+          ["Cape Verde", 11, false],
+          ["Netherlands", 6, true],
+          ["Portugal", 4, true],
+          ["France", 3, true],
+          ["Ireland", 1, true],
+          ["United States", 1, true]
+        ]
+      },
+      "based_on": ["det_16"],
+      "client_model": {
+        "id": "cm_02",
+        "file": "code/client_model.js",
+        "function": "squadTally(countries?)",
+        "reproduces": ["ana_09", "ana_10"],
+        "inputs": {
+          "countries": "optional array of birth countries to tally (default: the five born-abroad countries)"
+        },
+        "formula": "sum players/caps/goals over SQUAD_BIRTH[country]; percentages = share of SQUAD_TOTALS {players:26, caps:823, goals:75}, rounded to 1 dp.",
+        "data_table_ref": "SQUAD_BIRTH (6 birth countries x {players, caps, goals, abroad}) inlined in code/client_model.js; identical to ana_09/ana_10 data_tables.",
+        "rounding": "counts exact; percentages 1 dp. Baseline squadTally() -> {players:15, caps:414, goals:33, playersPct:57.7, capsPct:50.3, goalsPct:44.0}"
+      }
+    },
+    "ana_10": {
+      "label": "Half the caps, 3 of 4 World Cup goals came from abroad-born players",
+      "content": "The 15 abroad-born players carry 414 of the squad's 823 career caps (50.3%) and 33 of its 75 pre-tournament goals (44.0%) -- so the diaspora contingent is not padding, it is half the team's entire international experience. At the World Cup itself the tilt was stronger: of Cape Verde's four tournament goals, three were scored by players born abroad -- Helio Varela (b. Portugal) vs Uruguay, and both goals against Argentina by Rotterdam-born Deroy Duarte and Sidny Lopes Cabral (det_04); only Kevin Pina's vs Uruguay came from an island-born player. The data also confirms det_04's detail: Duarte entered the tournament with 0 international goals in 33 caps -- his 59th-minute equaliser against the world champions was his first. Counterweight: the record-holder is island-born Ryan Mendes (96 caps, 22 goals).",
+      "type": "group-diff",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/squad_analysis.py",
+        "lines": [39, 67],
+        "output": "total caps: 823, from born-abroad players: 414 (50.3%)\ntotal pre-tournament goals: 75, from born-abroad players: 33 (44.0%)\ntop pre-tournament scorer: Ryan Mendes (22 goals, 96 caps, born Cape Verde)\n[per-birth-country caps/goals table]\nWC2026 goalscorers traced to birth country (det_01/det_02 + squad csv):\n  Kevin Pina: born Cape Verde | Helio Varela: born Portugal | Deroy Duarte: born Netherlands | Sidny Lopes Cabral: born Netherlands\nWC2026 goals by born-abroad players: 3/4; both Argentina-match scorers born in the Netherlands (Rotterdam, det_04)\ncross-check det_04: Deroy Duarte pre-tournament goals = 0"
+      },
+      "data_table": {
+        "description": "Career caps and goals (at squad announcement) by players' birth country; squad totals 823 caps, 75 goals",
+        "columns": ["birth_country", "players", "caps", "goals"],
+        "rows": [
+          ["Cape Verde", 11, 409, 42],
+          ["Netherlands", 6, 202, 26],
+          ["Portugal", 4, 80, 4],
+          ["France", 3, 86, 3],
+          ["Ireland", 1, 45, 0],
+          ["United States", 1, 1, 0]
+        ]
+      },
+      "based_on": ["det_16", "det_04", "det_01", "det_02"],
+      "notable_instance": {
+        "name": "Ryan Mendes",
+        "value": "96 caps, 22 goals -- both squad records, island-born",
+        "why": "The one-man rebuttal to any 'imported XI' framing: the team's all-time top scorer and cap leader was born on the islands, making the squad a genuine fusion."
+      }
+    },
+    "ana_11": {
+      "label": "Not one of the 26 plays club football in Cape Verde",
+      "content": "The squad's club map is as diasporic as its birth map: the 26 players are employed in 14 different countries, and exactly zero play in Cape Verde's domestic league. Portugal hosts the most (7), then Turkey (3), with Bulgaria, the US, Cyprus and Russia at 2 each, and single players in Romania, Spain, Ireland, the UAE, Hungary, the Netherlands, Finland and Israel. Cape Verde's entire World Cup team is an export product -- even its island-born players professionalised abroad.",
+      "type": "distribution",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/squad_analysis.py",
+        "lines": [68, 74],
+        "output": "club countries: 14; players at clubs in Cape Verde: 0\n  POR: 7\n  TUR: 3\n  BUL: 2\n  USA: 2\n  CYP: 2\n  RUS: 2\n  ROU: 1\n  ESP: 1\n  IRL: 1\n  UAE: 1\n  HUN: 1\n  NED: 1\n  FIN: 1\n  ISR: 1"
+      },
+      "data_table": {
+        "description": "2026 squad by club country (FIFA trigrams)",
+        "columns": ["club_country", "players"],
+        "rows": [
+          ["POR", 7], ["TUR", 3], ["BUL", 2], ["USA", 2], ["CYP", 2], ["RUS", 2],
+          ["ROU", 1], ["ESP", 1], ["IRL", 1], ["UAE", 1], ["HUN", 1], ["NED", 1],
+          ["FIN", 1], ["ISR", 1]
+        ]
+      },
+      "based_on": ["det_16", "det_06"]
+    },
+    "ana_12": {
+      "label": "The Elo climb: world #138 in 1998 to #64 -- and an all-time peak mid-World Cup",
+      "content": "Running a standard Elo (K 60/50/40/30/20 by tournament, goal-difference multiplier, +100 home advantage, everyone starts at 1500 -- constants documented in code) over all 49,493 played internationals since 1872: Cape Verde's first recorded match is a 3-2 loss in Gambia in 1959 (one colonial-era friendly), the continuous record starts at the 1979 Amilcar Cabral Cup. The trajectory bottoms at 1383 (world #115) in 1988 and again 1384 (#138 of 198 FIFA-family teams) in 1998, then climbs almost monotonically for 25 years: #108 in 2010, #86 in 2014, #64 by July 2026. The all-time peak rating, 1702, was set DURING the World Cup on 2026-06-26 (after the 0-0 with Saudi Arabia); even after the Argentina defeat the rating (1699) sits within 3 points of the peak. This is the quantitative arc of det_02's 'small nation rising'.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/elo_ratings.py",
+        "lines": [112, 156],
+        "output": "first recorded match: 1959-12-20 Gambia 3-2 Cape Verde (Friendly)\nmatches: 239 total (238 from the 1979 debut on; 1 colonial-era friendly in 1959)\nPEAK rating: 1702 on 2026-06-26 (after Cape Verde 0-0 Saudi Arabia, FIFA World Cup)\nrating after final data match (2026-07-03): 1699\n[year-end rating + rank table, 41 rows]"
+      },
+      "data_table": {
+        "description": "Cape Verde year-end Elo rating and world rank among established, active FIFA-family teams (>=10 career matches, active within 4 years); 2026 row = as of Jul 3",
+        "columns": ["year", "rating", "world_rank", "pool_size"],
+        "rows": [
+          [1979, 1462, 92, 144], [1981, 1454, 89, 150], [1982, 1433, 96, 151],
+          [1983, 1432, 97, 148], [1984, 1397, 114, 156], [1985, 1426, 100, 157],
+          [1987, 1400, 111, 156], [1988, 1383, 115, 156], [1989, 1415, 110, 158],
+          [1991, 1443, 108, 164], [1992, 1424, 112, 170], [1995, 1442, 120, 193],
+          [1997, 1398, 132, 192], [1998, 1384, 138, 198], [2000, 1449, 118, 204],
+          [2001, 1454, 118, 205], [2002, 1448, 126, 204], [2003, 1461, 118, 206],
+          [2004, 1469, 112, 206], [2005, 1420, 131, 206], [2006, 1429, 124, 207],
+          [2007, 1407, 132, 206], [2008, 1430, 130, 207], [2009, 1469, 117, 207],
+          [2010, 1508, 108, 208], [2011, 1505, 108, 209], [2012, 1536, 98, 209],
+          [2013, 1587, 90, 209], [2014, 1599, 86, 210], [2015, 1655, 65, 210],
+          [2016, 1540, 99, 211], [2017, 1544, 98, 211], [2018, 1519, 105, 211],
+          [2019, 1520, 103, 210], [2020, 1504, 109, 210], [2021, 1582, 85, 210],
+          [2022, 1598, 79, 211], [2023, 1591, 82, 210], [2024, 1585, 84, 210],
+          [2025, 1676, 71, 210], [2026, 1699, 64, 210]
+        ]
+      },
+      "based_on": ["det_02", "det_17"],
+      "notable_instance": {
+        "name": "Peak Elo 1702, 2026-06-26",
+        "value": "all-time high, set during the World Cup group stage",
+        "why": "The team peaked exactly when the world was watching -- the rating's 47-year maximum lands on the eve of the Argentina match."
+      }
+    },
+    "ana_13": {
+      "label": "Win rate by decade: 28% in the 1980s, 43% in the 2020s",
+      "content": "Cape Verde's match record improves decade over decade almost without interruption: 28.1% wins in the 1980s (32 matches), a 23.5% dip in the sparse 1990s (17 matches -- the federation could not afford regular fixtures), then 35.8% in the 2000s, 42.4% in the 2010s and 42.6% in the 2020s. The unbeaten rate tells the cleaner story: 43.8% -> 52.9% -> 62.3% -> 65.2% -> 72.1%. The 2020s cohort (68 matches) is the diaspora-recruitment generation of det_06.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/elo_ratings.py",
+        "lines": [157, 168],
+        "output": "res      P   W   D   L  win_pct  unbeaten_pct\n1950     1   0   0   1      0.0           0.0\n1970     2   0   0   2      0.0           0.0\n1980    32   9   5  18     28.1          43.8\n1990    17   4   5   8     23.5          52.9\n2000    53  19  14  20     35.8          62.3\n2010    66  28  15  23     42.4          65.2\n2020    68  29  20  19     42.6          72.1"
+      },
+      "data_table": {
+        "description": "Cape Verde played-match record by decade (1950s = the single 1959 colonial-era friendly)",
+        "columns": ["decade", "played", "wins", "draws", "losses", "win_pct", "unbeaten_pct"],
+        "rows": [
+          [1950, 1, 0, 0, 1, 0.0, 0.0],
+          [1970, 2, 0, 0, 2, 0.0, 0.0],
+          [1980, 32, 9, 5, 18, 28.1, 43.8],
+          [1990, 17, 4, 5, 8, 23.5, 52.9],
+          [2000, 53, 19, 14, 20, 35.8, 62.3],
+          [2010, 66, 28, 15, 23, 42.4, 65.2],
+          [2020, 68, 29, 20, 19, 42.6, 72.1]
+        ]
+      },
+      "based_on": []
+    },
+    "ana_14": {
+      "label": "The World Cup arc: four matches, never beaten in 90 minutes",
+      "content": "Match by match against the Elo expectations: Cape Verde entered the tournament at 1654 and was given a 3.7% win expectancy against Spain (2219) -- and drew 0-0 (+28 points). Against Uruguay (17.1% expectancy) they came from behind twice to draw 2-2 (+20). The 0-0 with Saudi Arabia was the one dead-even fixture (49.2%). In the Round of 32, Argentina (2225) towered 523 points above them (4.7% expectancy); the 2-3 extra-time defeat cost only 3 rating points. Net: 0 wins, 3 draws, 1 ET loss, group goals 2-2, and +45 Elo across the tournament -- the 'never lost in 90 minutes' record of det_02, quantified.",
+      "type": "trend",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/elo_ratings.py",
+        "lines": [169, 184],
+        "output": "2026-06-15 vs Spain: 0-0 D | CV pre-Elo 1654 vs 2219 | Elo expectancy 3.7% | post 1681 (+28)\n2026-06-21 vs Uruguay: 2-2 D | CV pre-Elo 1681 vs 1955 | Elo expectancy 17.1% | post 1701 (+20)\n2026-06-26 vs Saudi Arabia: 0-0 D | CV pre-Elo 1701 vs 1706 | Elo expectancy 49.2% | post 1702 (+0)\n2026-07-03 vs Argentina: 2-3 L | CV pre-Elo 1702 vs 2225 | Elo expectancy 4.7% | post 1699 (-3)\ngroup stage: 0W-3D-0L, goals 2-2\nElo change across the tournament: 1654 -> 1699 (+45)"
+      },
+      "data_table": {
+        "description": "Cape Verde's four WC2026 matches: result, pre-match Elo both sides, Elo win expectancy (neutral venues), post-match rating",
+        "columns": ["date", "opponent", "score_cv_opp", "result", "cv_pre_elo", "opp_pre_elo", "cv_win_expectancy_pct", "cv_post_elo", "elo_change"],
+        "rows": [
+          ["2026-06-15", "Spain", "0-0", "D", 1654, 2219, 3.7, 1681, 28],
+          ["2026-06-21", "Uruguay", "2-2", "D", 1681, 1955, 17.1, 1701, 20],
+          ["2026-06-26", "Saudi Arabia", "0-0", "D", 1701, 1706, 49.2, 1702, 0],
+          ["2026-07-03", "Argentina", "2-3", "L (AET)", 1702, 2225, 4.7, 1699, -3]
+        ]
+      },
+      "based_on": ["det_01", "det_02"]
+    },
+    "ana_15": {
+      "label": "Beating Argentina would have been a ~top-25 upset of all time",
+      "content": "Across 33,081 decided matches between established teams (both >=30 prior matches), the largest Elo upsets ever are Luxembourg over Switzerland in 2008 WC qualifying (878-point adjusted gap) and Luxembourg over South Korea in 1980 (767). Cape Verde owns one genuinely historic entry: the 2-0 friendly win IN Portugal in 2015, a 440-point gap that ranks #73 of all 33,081 decided matches -- against the very country that hosts 52% of its counted diaspora. Had they beaten Argentina on 2026-07-03 (523-point gap), it would have ranked ~#25 all-time and #2 among World Cup FINALS upsets ever, behind only Cameroon-Brazil 2022 (gap 534) and ahead of Saudi Arabia-Argentina 2022 (446) and USA-England 1950 (429). They came within nine minutes of it.",
+      "type": "anomaly",
+      "strength": "moderate",
+      "calculation": {
+        "file": "code/elo_ratings.py",
+        "lines": [185, 227],
+        "output": "top 12 upsets all-time (adjusted Elo gap = loser(+home adv) - winner):\n  2008-09-10 Luxembourg beat Switzerland 2-1 (FIFA World Cup qualification) gap 878 [1038 vs 1816]\n  1980-05-09 Luxembourg beat South Korea 3-2 (Friendly) gap 767 [1146 vs 1913]\n  2014-11-14 Faroe Islands beat Greece 1-0 (UEFA Euro qualification) gap 646 [1224 vs 1770]\n  ...\nCape Verde's biggest Elo upsets:\n  2015-03-31 beat Portugal 2-0 (Friendly) gap 440\n  1989-05-30 beat Senegal 2-1 (Amilcar Cabral Cup) gap 264\n  2018-06-01 beat Algeria 3-2 (Friendly) gap 217\n  2017-09-05 beat South Africa 2-1 (FIFA World Cup qualification) gap 214\n  2006-10-07 beat Guinea 1-0 (African Cup of Nations qualification) gap 209\nrank of the 2015 Portugal win (gap 440) among all 33,081 decided matches: #73\nbiggest FIFA World Cup FINALS upsets by Elo gap:\n  2022-12-02 Cameroon beat Brazil 1-0 gap 534\n  2022-11-22 Saudi Arabia beat Argentina 2-1 gap 446\n  1950-06-29 United States beat England 1-0 gap 429\n  2010-06-16 Switzerland beat Spain 1-0 gap 357\n  2018-06-27 South Korea beat Germany 2-0 gap 346\nhypothetical: beating Argentina (pre-match gap 523) would have ranked ~#25 among 33,081 decided matches between established teams, and #2 among World Cup FINALS upsets"
+      },
+      "data_table": {
+        "description": "Biggest upsets in international football by adjusted Elo gap (loser incl. +100 home adv minus winner), both teams >=30 prior matches; winner's score first",
+        "columns": ["date", "winner", "loser", "score", "tournament", "elo_gap", "winner_pre", "loser_pre"],
+        "rows": [
+          ["2008-09-10", "Luxembourg", "Switzerland", "2-1", "FIFA World Cup qualification", 878, 1038, 1816],
+          ["1980-05-09", "Luxembourg", "South Korea", "3-2", "Friendly", 767, 1146, 1913],
+          ["2014-11-14", "Faroe Islands", "Greece", "1-0", "UEFA Euro qualification", 646, 1224, 1770],
+          ["2007-10-13", "Luxembourg", "Belarus", "1-0", "UEFA Euro qualification", 641, 999, 1540],
+          ["2025-11-17", "Somalia", "Bahrain", "2-1", "Friendly", 637, 1022, 1559],
+          ["2016-06-07", "Georgia", "Spain", "1-0", "Friendly", 622, 1535, 2056],
+          ["1903-03-21", "Northern Ireland", "Scotland", "2-0", "British Home Championship", 597, 1238, 1735],
+          ["1998-09-06", "Latvia", "Norway", "3-1", "UEFA Euro qualification", 594, 1399, 1893],
+          ["2012-06-15", "Central African Republic", "Egypt", "3-2", "African Cup of Nations qualification", 590, 1371, 1861],
+          ["2017-06-09", "Andorra", "Hungary", "1-0", "FIFA World Cup qualification", 578, 1029, 1707],
+          ["2024-03-26", "Brunei", "Vanuatu", "3-2", "FIFA Series", 574, 847, 1420],
+          ["2012-05-26", "Bulgaria", "Netherlands", "2-1", "Friendly", 571, 1633, 2104]
+        ]
+      },
+      "based_on": ["det_01"],
+      "notable_instance": {
+        "name": "Cape Verde 2-0 Portugal, 2015-03-31",
+        "value": "440-point Elo gap, away, against the colonial motherland",
+        "why": "Cape Verde's biggest win ever is against the very country that holds 52% of its counted diaspora -- the upset and the migration story are the same two countries."
+      }
+    },
+    "ana_16": {
+      "label": "The least-populous team in the world's Elo top 64",
+      "content": "As of the data's end (2026-07-03), Cape Verde's 1699 rating ranks #64 of 210 active FIFA-family teams -- the top 30% of world football from a country in the bottom 21% of country populations (#46 smallest of 217 WB countries). Joining the board to 2025 populations: every team ranked above Cape Verde comes from a country of at least 1.58 million (the smallest is Kosovo at #45); Cape Verde's 527,326 makes it the least-populous team in the entire top 64, and the next smaller country on the board appears only at #79 (Iceland, 1629). No other national team currently converts so few people into so much rating.",
+      "type": "anomaly",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/elo_ratings.py",
+        "lines": [228, 279],
+        "output": "current Elo (post 2026-07-03 data, FIFA-family teams): Cape Verde 1699 = rank #64 of 210 active teams (top 30%)\n[top-64 board with 2025 populations]\nsmallest-population team ranked ABOVE Cape Verde: Kosovo (#45, pop 1,576,876) -> Cape Verde is the least-populous team in the world's Elo top 64\nfirst team with a SMALLER population on the board: Iceland at rank #79 (Elo 1629)\npopulation rank: Cabo Verde #46 smallest of 217 WB countries (bottom 21%)"
+      },
+      "data_table": {
+        "description": "Current Elo top 64 (active FIFA-family teams, post 2026-07-03) with 2025 population (null = no WB row: UK home nations)",
+        "columns": ["rank", "team", "elo", "population_2025"],
+        "rows": [
+          [1, "Argentina", 2228, 45851378], [2, "Spain", 2224, 49355143],
+          [3, "France", 2197, 68720337], [4, "England", 2118, null],
+          [5, "Brazil", 2117, 212812405], [6, "Colombia", 2093, 53425635],
+          [7, "Portugal", 2078, 10804871], [8, "Mexico", 2046, 131946900],
+          [9, "Netherlands", 2045, 18087633], [10, "Morocco", 2025, 38430770],
+          [11, "Switzerland", 2018, 9092436], [12, "Norway", 2002, 5610870],
+          [13, "Germany", 1989, 83491249], [14, "Belgium", 1988, 11941781],
+          [15, "Japan", 1973, 123366734], [16, "Ecuador", 1964, 18289896],
+          [17, "Croatia", 1947, 3876200], [18, "Italy", 1929, 58915656],
+          [19, "Denmark", 1929, 6009169], [20, "Uruguay", 1925, 3384688],
+          [21, "Turkey", 1923, 85878556], [22, "Paraguay", 1911, 7013078],
+          [23, "Australia", 1908, 27614411], [24, "United States", 1893, 341784857],
+          [25, "Austria", 1889, 9208163], [26, "Iran", 1886, 92417681],
+          [27, "Nigeria", 1882, 237527782], [28, "Senegal", 1880, 18931966],
+          [29, "Canada", 1874, 41651653], [30, "Egypt", 1865, 118365995],
+          [31, "Algeria", 1857, 47435312], [32, "Ivory Coast", 1843, 32711547],
+          [33, "South Korea", 1842, 51684564], [34, "Ukraine", 1842, 38980376],
+          [35, "Russia", 1841, 143513328], [36, "Venezuela", 1824, 28516896],
+          [37, "Scotland", 1822, null], [38, "DR Congo", 1810, 112832473],
+          [39, "Chile", 1804, 19859921], [40, "Greece", 1803, 10413962],
+          [41, "Serbia", 1802, 6549143], [42, "Sweden", 1799, 10596620],
+          [43, "Panama", 1775, 4571189], [44, "Peru", 1772, 34576665],
+          [45, "Kosovo", 1772, 1576876], [46, "Poland", 1771, 36435861],
+          [47, "Hungary", 1768, 9514251], [48, "Republic of Ireland", 1761, 5484367],
+          [49, "Czech Republic", 1755, 10886878], [50, "Costa Rica", 1745, 5152950],
+          [51, "Wales", 1743, null], [52, "Slovenia", 1738, 2130986],
+          [53, "Uzbekistan", 1731, 37053428], [54, "Slovakia", 1725, 5413813],
+          [55, "Cameroon", 1724, 29879337], [56, "Jordan", 1720, 11520684],
+          [57, "Bolivia", 1717, 12581843], [58, "Honduras", 1711, 11005850],
+          [59, "Georgia", 1711, 3935766], [60, "Mali", 1708, 25198821],
+          [61, "Saudi Arabia", 1706, 36973555], [62, "Israel", 1701, 10122800],
+          [63, "Romania", 1701, 19020271], [64, "Cape Verde", 1699, 527326]
+        ]
+      },
+      "based_on": ["det_03"]
+    },
+    "ana_17": {
+      "label": "Third-least-populous World Cup nation ever -- verified",
+      "content": "Joining every World Cup participant since 1962 to its edition-year population (415 participant-editions; 2026 uses 2025 populations, the latest): only two teams ever came from smaller countries than Cape Verde's 527,326 -- Curacao 2026 (156,263) and Iceland 2018 (352,721). The story brief's 'second-smallest after Iceland' framing is stale: Curacao's qualification a month after Cape Verde's pushed them to third, exactly as det_03 flagged. Only three sub-1M nations have EVER played a World Cup, all since 2018, two of them in 2026 -- the tournament's 48-team expansion opened a door small nations are walking through. Next on the all-time list: Trinidad and Tobago 2006 (1.30M), Kuwait 1982 (1.66M).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/wc_smallest_nations.py",
+        "lines": [78, 94],
+        "output": "participant-edition rows: 415; excluded (no WB row): [UK home nations, Czechoslovakia, Yugoslavia, German DR editions]\n15 least-populous participant-editions (1962-2026):\n1 2026 Curacao 156263 | 2 2018 Iceland 352721 | 3 2026 Cape Verde 527326 | 4 2006 Trinidad and Tobago 1297944 | 5 1982 Kuwait 1662480 | ...\nparticipants under 1,000,000 population -- the complete all-time list:\n2018 Iceland 352721 | 2026 Curacao 156263 | 2026 Cape Verde 527326\nCape Verde 2026: pop 527,326 -> 2 smaller participant-editions ever: [('Iceland', 2018), ('Curacao', 2026)]\n=> Cape Verde is the 3rd-least-populous nation ever to play a World Cup"
+      },
+      "data_table": {
+        "description": "15 least-populous World Cup participant-editions, 1962-2026 (population at edition year; 2026 uses 2025)",
+        "columns": ["rank", "edition", "team", "population", "matches_played", "advanced_past_first_round"],
+        "rows": [
+          [1, 2026, "Curaçao", 156263, 3, false],
+          [2, 2018, "Iceland", 352721, 3, false],
+          [3, 2026, "Cape Verde", 527326, 4, true],
+          [4, 2006, "Trinidad and Tobago", 1297944, 3, false],
+          [5, 1982, "Kuwait", 1662480, 3, false],
+          [6, 1990, "United Arab Emirates", 1898220, 3, false],
+          [7, 2002, "Slovenia", 1994530, 3, false],
+          [8, 2010, "Slovenia", 2048583, 3, false],
+          [9, 1998, "Jamaica", 2569736, 3, false],
+          [10, 1962, "Uruguay", 2593298, 3, false],
+          [11, 2022, "Qatar", 2657333, 3, false],
+          [12, 1966, "Uruguay", 2707646, 4, true],
+          [13, 1970, "Uruguay", 2790807, 6, true],
+          [14, 1974, "Uruguay", 2853944, 3, false],
+          [15, 2026, "Qatar", 2972215, 3, false]
+        ]
+      },
+      "based_on": ["det_03"],
+      "notable_instance": {
+        "name": "Curaçao 2026",
+        "value": "156,263 people -- the smallest World Cup nation ever, in the same edition",
+        "why": "Cape Verde's own record ('smallest ever') lasted one month before Curacao qualified; precision here is what separates this story from the stale 'second-smallest' line."
+      }
+    },
+    "ana_18": {
+      "label": "Smallest nation ever in the knockouts -- by a factor of five",
+      "content": "Using the exact post-1962 rule that a team advanced past the first round iff it played a 4th match in the edition: Cape Verde (527,326) is the least-populous nation ever to do it, and it is not close -- the next-smallest advancer in World Cup history is Uruguay 1966 at 2,707,646, i.e. 5.1x larger. The two smaller participants never advanced (Curacao and Iceland both exited after 3 group games). Scale of the achievement in one line: the average WC2026 participant country has 47.2 million people (median 30.2M) -- 89 times Cape Verde -- and the biggest, the US, is 648 times larger. The det_02/det_03 claim 'smallest nation ever to reach the knockout stage' is computationally verified (with the NI-1982 caveat recorded in ana_caveat_06).",
+      "type": "ranking",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/wc_smallest_nations.py",
+        "lines": [95, 119],
+        "output": "12 least-populous teams ever to ADVANCE past the first round (1962-2026):\n1 2026 Cape Verde 527326 | 2 1966 Uruguay 2707646 | 3 1970 Uruguay 2790807 | ...\nCape Verde (527,326) is the SMALLEST ever to advance; next: Uruguay 1966 (2,707,646) = 5.1x larger\nthe two smaller participants never advanced: Curacao 2026 played 3 matches (group exit), Iceland 2018 played 3 (group exit)\nWC2026 participants covered: 46/48 (England, Scotland lack WB rows)\nWC2026 population mean 47,191,938, median 30,162,979\nCape Verde vs mean participant: 1 : 89; vs median: 1 : 57\nlargest 2026 participant: United States (341,784,857) = 648x Cape Verde"
+      },
+      "data_table": {
+        "description": "12 least-populous teams ever to advance past the World Cup first round, 1962-2026",
+        "columns": ["rank", "edition", "team", "population", "matches_played"],
+        "rows": [
+          [1, 2026, "Cape Verde", 527326, 4],
+          [2, 1966, "Uruguay", 2707646, 4],
+          [3, 1970, "Uruguay", 2790807, 6],
+          [4, 1986, "Uruguay", 3032845, 4],
+          [5, 1990, "Uruguay", 3104403, 4],
+          [6, 1990, "Costa Rica", 3121706, 4],
+          [7, 2026, "Bosnia and Herzegovina", 3140095, 4],
+          [8, 2010, "Uruguay", 3318580, 7],
+          [9, 2014, "Uruguay", 3356334, 4],
+          [10, 2018, "Uruguay", 3394534, 5],
+          [11, 1990, "Republic of Ireland", 3513974, 5],
+          [12, 1994, "Republic of Ireland", 3590386, 4]
+        ]
+      },
+      "based_on": ["det_02", "det_03"]
+    },
+    "ana_19": {
+      "label": "Cape Verde's chances against Argentina: 3.4% to win, 8.3% to force extra time",
+      "content": "A symmetric ordered-logit model on Elo difference -- fitted to 30,195 internationals 1990-2026, out-of-sample-validated in ana_20, with symmetric thresholds so a neutral-venue prediction cannot depend on which team is listed first -- turns the 523.4-point pre-match gap (Argentina 2225.0 vs Cape Verde 1701.6, neutral Miami venue) into: 3.4% Cape Verde win in 90 minutes, 8.3% level after 90 (i.e. reach extra time), 88.3% Argentina win in 90. Counting a level match as a coin flip, Cape Verde had a 7.6% chance of advancing -- and they landed inside the 8.3% branch, taking the champions to the 111th minute. The model retrospectively rates the group stage as improbable too: 2.8% to beat Spain (drew), 11.3% to beat Uruguay (drew), 33.4% vs Saudi Arabia (drew). Every constant is published and the identical computation ships as pure JS (client_model.js), so a reader can re-run the odds live -- including against any of the 32 knockout teams.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/fit_outcome_model.py",
+        "lines": [84, 118],
+        "output": "fitted params (full sample): C=0.6614 B=2.0468 H=0.2965 (home shift = 119 Elo points; mean NLL 0.8957)\nPUBLISHED (rounded, inlined in client_model.js): C=0.6614 B=2.0468 H=0.2965, SCALE=400\npre-match ratings 2026-07-03 (neutral venue): Argentina 2225.0, Cape Verde 1701.6 (gap 523.4)\nmodel, from Cape Verde's side: win in 90' 3.4%, level after 90' (reach extra time) 8.3%, lose in 90' 88.3%\nP(advance) if a level match is a coin flip (assumption): 7.6%\nside-swap symmetry check: PASS (neutral venue, listed side irrelevant)\n  2026-06-15 vs Spain (0-0): P(CV win)=2.8% P(draw)=6.9% P(CV loss)=90.3%\n  2026-06-21 vs Uruguay (2-2): P(CV win)=11.3% P(draw)=21.0% P(CV loss)=67.7%\n  2026-06-26 vs Saudi Arabia (0-0): P(CV win)=33.4% P(draw)=31.9% P(CV loss)=34.7%\n  2026-07-03 vs Argentina (3-2): P(CV win)=3.4% P(draw)=8.3% P(CV loss)=88.3%"
+      },
+      "data_table": {
+        "description": "Model probabilities for Cape Verde's four WC2026 matches (percent; draw = level after 90 minutes)",
+        "columns": ["date", "opponent", "score", "p_cv_win_pct", "p_draw_pct", "p_cv_loss_pct"],
+        "rows": [
+          ["2026-06-15", "Spain", "0-0", 2.8, 6.9, 90.3],
+          ["2026-06-21", "Uruguay", "2-2", 11.3, 21.0, 67.7],
+          ["2026-06-26", "Saudi Arabia", "0-0", 33.4, 31.9, 34.7],
+          ["2026-07-03", "Argentina", "2-3 (AET)", 3.4, 8.3, 88.3]
+        ]
+      },
+      "based_on": ["det_01"],
+      "notable_instance": {
+        "name": "Argentina 3-2 Cape Verde (AET)",
+        "value": "8.3% chance of reaching extra time -- which is exactly what happened",
+        "instance_ref": "inst_02",
+        "why": "The improbable branch the night actually took: the model quantifies how unlikely 'nine minutes from the biggest upset in World Cup history' was."
+      },
+      "client_model": {
+        "id": "cm_01",
+        "file": "code/client_model.js",
+        "function": "matchOdds(rA, rB, homesign) / capeVerdeVsArgentina()",
+        "reproduces": ["ana_19"],
+        "inputs": {
+          "rA": "Elo rating of team A (use RATINGS_PRE_R32 for any of the 32 knockout teams, or a slider)",
+          "rB": "Elo rating of team B",
+          "homesign": "+1 A at home, -1 B at home, 0 neutral (WC2026 venues are neutral)"
+        },
+        "formula": "u = B*((rA-rB)/400 + H*homesign); P(A wins)=1-sigmoid(C-u); P(A loses)=sigmoid(-C-u); P(draw)=rest; advance = win + 0.5*draw. Constants C=0.6614, B=2.0468, H=0.2965.",
+        "data_table_ref": "RATINGS_PRE_R32 (32 knockout teams' Elo after the 2026 group stage) inlined in code/client_model.js.",
+        "rounding": "probabilities to 1 dp. Baseline capeVerdeVsArgentina() -> {win:3.4, draw:8.3, loss:88.3, advance:7.6} -- node-verified identical to the Python output."
+      }
+    },
+    "ana_20": {
+      "label": "Validation: the odds model beats naive baselines by 19% out-of-sample",
+      "content": "Trained only on 1990-2014 (19,514 matches) and tested on 10,681 fully out-of-sample matches from 2015-2026, the model's 3-class Brier score is 0.5151 vs 0.6346 for a base-rate baseline (18.8% better); log-loss 0.8753 vs 1.0524 (16.8% better). Calibration is tight across all deciles: teams given e.g. a 15.1% win chance won 13.7% of the time, and the maximum predicted-vs-observed gap in any decile is 2.5 points. The underlying Elo expectancy alone scores Brier 0.1284 vs 0.1918 for a coin-flip baseline. LEVEL STATEMENT: this validates PER-MATCH outcome probabilities -- the same level as the ana_19 headline (one match, Cape Verde vs Argentina), so headline and validation match; no tournament-level aggregate is claimed anywhere. What would falsify ana_19: a calibration table where low-probability deciles won far more often than predicted, or a Brier no better than base rates -- neither occurs.",
+      "type": "correlation",
+      "strength": "strong",
+      "calculation": {
+        "file": "code/fit_outcome_model.py",
+        "lines": [119, 156],
+        "output": "train: 19,514 matches (1990-2014), params C=0.6620 B=2.0394 H=0.3187\ntest : 10,681 matches (2015-2026), fully out-of-sample\n3-class Brier: model 0.5151 vs base-rate baseline 0.6346 (18.8% better)\nlog-loss    : model 0.8753 vs baseline 1.0524 (16.8% better)\nElo expectancy Brier (W vs We): 0.1284 vs constant-0.5 baseline 0.1918\n[calibration decile table]\nmax |predicted - observed| across bins: 0.025\nLEVEL VALIDATED: per-match outcome probabilities, out-of-sample 2015-2026."
+      },
+      "data_table": {
+        "description": "Out-of-sample calibration (2015-2026 test set): predicted home-win probability decile vs observed home-win rate",
+        "columns": ["decile_bin", "n_matches", "mean_predicted", "observed_win_rate"],
+        "rows": [
+          [0, 650, 0.058, 0.049], [1, 1074, 0.151, 0.137], [2, 1188, 0.252, 0.259],
+          [3, 1309, 0.350, 0.357], [4, 1353, 0.451, 0.426], [5, 1247, 0.549, 0.538],
+          [6, 1222, 0.649, 0.637], [7, 1168, 0.749, 0.724], [8, 942, 0.848, 0.826],
+          [9, 528, 0.939, 0.926]
+        ]
+      },
+      "based_on": []
+    }
+  },
+  "caveats": [
+    {
+      "id": "ana_caveat_01",
+      "content": "LAYER RULE (binding for every downstream role): all diaspora numbers in ana_01..ana_05 are the UN 'born in Cabo Verde, living abroad' migrant-stock layer -- a FLOOR. The Netherlands, United States, Spain and Senegal are structurally absent from the 2024 bilateral matrix, and the 146,396 world total is literally the sum of the 24 named destinations (no 'other' residual). Never mix these values with citizens-abroad or heritage/ancestry estimates (det_07/det_08/det_10 carry those, with sources); label every chart with its layer."
+    },
+    {
+      "id": "ana_caveat_02",
+      "content": "ana_05's global ratio ranking covers the 212 origins with a WB population row in the shipped file; 21 origins are excluded, largest Puerto Rico (1,948,223 counted emigrants) and Somalia (1,935,594) -- with UN WPP populations Puerto Rico (a US territory, pop ~3.2M) would rank above Cabo Verde and Somalia (pop ~18M) below it. Treat the #20 rank as 'among WB-covered origins'. Emigrant floors are computed on the same UN methodology for all origins, so the comparison is internally consistent."
+    },
+    {
+      "id": "ana_caveat_03",
+      "content": "Football scores are full-time INCLUDING extra time; penalty shootouts are recorded as draws (the 2026-07-03 match appears as 3-2, the three shootout-decided R32 ties as draws). The 8 scheduled-but-unplayed R16 fixtures (2026-07-04..06, NaN scores) are dropped from every computation; all ratings/ranks/probabilities are 'as of 2026-07-03'. The 1959 Gambia-Cape Verde friendly predates independence (1975); the continuous record starts 1979."
+    },
+    {
+      "id": "ana_caveat_04",
+      "content": "The Elo ratings are OUR implementation (constants documented in code/elo_ratings.py headers), initialised at 1500 in 1872 -- levels are not comparable to eloratings.net's published board. Quote trajectories, ranks and gaps computed HERE, never mix with external Elo numbers. Rank pools are restricted to FIFA-family teams (ever played WC or WC qualification) to exclude hobby teams (Jersey, Basque Country) from rankings."
+    },
+    {
+      "id": "ana_caveat_05",
+      "content": "Smallest-nation tables (ana_17/ana_18) cover editions 1962+ because WB population starts in 1960. Historical estimates put every 1930-1958 participant above 1.3M (smallest: Northern Ireland 1958 ~1.4M; Uruguay 1930 ~1.7M), so pre-1962 exclusion cannot affect any sub-600k conclusion. 'Advanced past the first round' = played a 4th match, which is exact for every 1962+ format; note 1974-1982's second stage was a group, not a knockout bracket."
+    },
+    {
+      "id": "ana_caveat_06",
+      "content": "Teams with no WB population row are excluded from ana_16/ana_17/ana_18 tables and printed by the scripts: UK home nations (England, Scotland, Wales, Northern Ireland) and defunct federations (Czechoslovakia, Yugoslavia, German DR). Material case: Northern Ireland advanced in 1982 (and reached the 1958 QF) with ~1.5M people (NISRA estimates, approximate) -- it would rank #2 among small advancers, still ~3x Cape Verde's population, so ana_18's headline stands."
+    },
+    {
+      "id": "ana_caveat_07",
+      "content": "Squad caps/goals are career totals at squad announcement (pre-tournament). WC2026 goalscorer attributions in ana_10 come from detective-sourced facts (det_01/det_02) because international_results.csv has no scorer column; birth countries are country-level only (Rotterdam as both Argentina-match scorers' birth CITY is det_04's sourced detail, not in the CSV)."
+    },
+    {
+      "id": "ana_caveat_08",
+      "content": "Age discrepancy vs press reports: the dataset's DOB (1986-06-03) makes captain Vozinha 40 years old at the Argentina match (he turned 40 during the group stage); det_01's Sky Sports source calls him 39. Use 40 -- the data wins."
+    },
+    {
+      "id": "ana_caveat_09",
+      "content": "ana_19's 'reach extra time' reading of P(draw) is approximate: historical knockout matches enter the fit with ET-inclusive scores (shootouts as draws), a small minority of the 30,195-match sample. The 7.6% advance probability additionally assumes a level-after-90 match is a coin flip. The 3.4%/8.3%/88.3% split itself is the validated per-match quantity."
+    },
+    {
+      "id": "ana_caveat_10",
+      "content": "det_03 cites Iceland 2018 at ~337k (a 2017 estimate); the WB 2018 value used here is 352,721. Ordering (Curacao < Iceland < Cape Verde) is unaffected, but quote the WB numbers for consistency with the computed tables."
+    }
+  ]
+}

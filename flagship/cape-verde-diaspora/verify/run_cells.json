@@ -1,0 +1,260 @@
+{
+  "_doc": {
+    "what_this_is": "In-browser runnable proofs for the Cape Verde diaspora blog. Every snippet is self-contained (all inputs inlined from the analyst data_tables / published model constants), stdlib-only, exact/derived (reduced_n null) and PRE-TESTED: each expected_stdout below is the real captured stdout of the code.",
+    "purpose": "run_cells.json holds the in-browser-runnable version of each computation element in verify_map.json (same ids). The Inspector's 'Run' button executes runnable entries via a lazily-loaded Pyodide and compares stdout to expected_stdout.",
+    "self_contained": "SELF-CONTAINED: every input the snippet needs is inlined as a Python literal in `code`. No file reads, no network, no dependence on other cells or page state.",
+    "pyodide_imports_only": "PYODIDE-SAFE IMPORTS ONLY: math + the standard library; no numpy needed (and no np.bincount int64 sinks — PIT-63).",
+    "pre_tested": "PRE-TESTED: build_run_cells.py executed each snippet and pasted the REAL stdout into expected_stdout; a snippet that fails its assertions does not ship.",
+    "byte_identity": "run_cells.json must be byte-identical to the inline `runCells` <script> island embedded in index.html (generate_viewer.py inlines it at Stage 7)."
+  },
+  "ana_19": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# The published match-odds model (cm_01): symmetric ordered logit on Elo difference.\n# Constants EXACTLY as published (fit_outcome_model.py / client_model.js).\nimport math\nC, B, SCALE = 0.6614, 2.0468, 400.0\ndef sig(z): return 1.0 / (1.0 + math.exp(-z))\ndef r1(x):  return math.floor(x * 10 + 0.5) / 10  # round-half-up, as the JS model rounds\ndef odds(rA, rB):\n    u = B * ((rA - rB) / SCALE)          # neutral venue: homesign = 0\n    sHi, sLo = sig(C - u), sig(-C - u)\n    win, loss = r1((1 - sHi) * 100), r1(sLo * 100)\n    draw = r1((sHi - sLo) * 100)\n    adv = r1((1 - sHi + 0.5 * (sHi - sLo)) * 100)\n    return win, draw, loss, adv\n# pre-match ratings: group games from the ana_14 table; the R32 headline uses the\n# precise pre-R32 ratings (Argentina 2225.0, Cape Verde 1701.6).\nfixtures = [(\"Spain\", 1654, 2219), (\"Uruguay\", 1681, 1955)]\nfor opp, rcv, ropp in fixtures:\n    w, d, l, a = odds(rcv, ropp)\n    print(f\"vs {opp}: P(CV win)={w}% P(draw)={d}% P(CV loss)={l}%\")\nw, d, l, a = odds(1701, 1706)\nprint(f\"vs Saudi Arabia: P(CV win)={w}% P(draw)={d}% P(CV loss)={l}%\")\nprint(\"  (integer-rounded table ratings; the full-precision notebook run gives 33.4 / 31.9 / 34.7)\")\nw, d, l, a = odds(1701.6, 2225.0)\nprint(f\"vs Argentina (gap 523.4): win in 90' {w}%, level after 90' {d}%, lose in 90' {l}%\")\nprint(f\"P(advance) if a level match is a coin flip (assumption): {a}%\")\n",
+    "expected_stdout": "vs Spain: P(CV win)=2.8% P(draw)=6.9% P(CV loss)=90.3%\nvs Uruguay: P(CV win)=11.3% P(draw)=21.0% P(CV loss)=67.7%\nvs Saudi Arabia: P(CV win)=33.5% P(draw)=31.9% P(CV loss)=34.6%\n  (integer-rounded table ratings; the full-precision notebook run gives 33.4 / 31.9 / 34.7)\nvs Argentina (gap 523.4): win in 90' 3.4%, level after 90' 8.3%, lose in 90' 88.3%\nP(advance) if a level match is a coin flip (assumption): 7.6%\n",
+    "note": "Exact on the headline: re-derives the published 3.4 / 8.3 / 88.3 / 7.6 (and the Spain/Uruguay group odds) from the published ordered-logit constants — a hard PASS. The Saudi row uses the table's integer-rounded pre-ratings (33.5 vs the full-precision 33.4; see the notebook for the exact run).",
+    "needs_network": false,
+    "full_ref": "code/fit_outcome_model.py lines 84-118 (notebook cell cell_outcome_model) fits the constants on 30,195 internationals and prints these probabilities."
+  },
+  "ana_20": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# Out-of-sample validation, from the published artifacts: the calibration decile\n# table (2015-2026 test set) + the published Brier / log-loss pairs.\nrows = [[0, 650, 0.058, 0.049], [1, 1074, 0.151, 0.137], [2, 1188, 0.252, 0.259], [3, 1309, 0.35, 0.357], [4, 1353, 0.451, 0.426], [5, 1247, 0.549, 0.538], [6, 1222, 0.649, 0.637], [7, 1168, 0.749, 0.724], [8, 942, 0.848, 0.826], [9, 528, 0.939, 0.926]]  # [decile, n, mean_predicted, observed_win_rate]\ngaps = [abs(r[2] - r[3]) for r in rows]\nprint(f\"max |predicted - observed| across the {len(rows)} deciles = {max(gaps):.3f}\")\nb = rows[1]\nprint(f\"example decile: predicted {b[2]*100:.1f}% -> observed {b[3]*100:.1f}% (n={b[1]})\")\nbrier_model, brier_base = 0.5151, 0.6346\nll_model, ll_base = 0.8753, 1.0524\nprint(f\"3-class Brier: model {brier_model} vs base-rate {brier_base} -> {(brier_base-brier_model)/brier_base*100:.1f}% better\")\nprint(f\"log-loss     : model {ll_model} vs baseline {ll_base} -> {(ll_base-ll_model)/ll_base*100:.1f}% better\")\n",
+    "expected_stdout": "max |predicted - observed| across the 10 deciles = 0.025\nexample decile: predicted 15.1% -> observed 13.7% (n=1074)\n3-class Brier: model 0.5151 vs base-rate 0.6346 -> 18.8% better\nlog-loss     : model 0.8753 vs baseline 1.0524 -> 16.8% better\n",
+    "note": "Exact: recomputes the max calibration gap (0.025) from the inlined decile table and the 18.8% / 16.8% improvements from the published score pairs.",
+    "needs_network": false,
+    "full_ref": "code/fit_outcome_model.py lines 119-156 (notebook cell cell_outcome_model): train 1990-2014, test 10,681 matches 2015-2026."
+  },
+  "ana_09": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "SQUAD = {\n  \"Cape Verde\":    {\"players\": 11, \"caps\": 409, \"goals\": 42, \"abroad\": False},\n  \"Netherlands\":   {\"players\": 6,  \"caps\": 202, \"goals\": 26, \"abroad\": True},\n  \"Portugal\":      {\"players\": 4,  \"caps\": 80,  \"goals\": 4,  \"abroad\": True},\n  \"France\":        {\"players\": 3,  \"caps\": 86,  \"goals\": 3,  \"abroad\": True},\n  \"Ireland\":       {\"players\": 1,  \"caps\": 45,  \"goals\": 0,  \"abroad\": True},\n  \"United States\": {\"players\": 1,  \"caps\": 1,   \"goals\": 0,  \"abroad\": True},\n}  # squad_2026.csv aggregated by birth country (ana_09/ana_10 data_tables)\n\nn = sum(v[\"players\"] for v in SQUAD.values())\nab = sum(v[\"players\"] for v in SQUAD.values() if v[\"abroad\"])\nprint(f\"born abroad: {ab}/{n} = {ab/n*100:.1f}%\")\nfor c, v in SQUAD.items():\n    print(f\"  {c}: {v['players']}\")\n",
+    "expected_stdout": "born abroad: 15/26 = 57.7%\n  Cape Verde: 11\n  Netherlands: 6\n  Portugal: 4\n  France: 3\n  Ireland: 1\n  United States: 1\n",
+    "note": "Exact: the 15/26 = 57.7% split and the birth-country breakdown from the squad table — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/squad_analysis.py lines 21-38 (notebook cell cell_squad) over squad_2026.csv."
+  },
+  "ana_10": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "SQUAD = {\n  \"Cape Verde\":    {\"players\": 11, \"caps\": 409, \"goals\": 42, \"abroad\": False},\n  \"Netherlands\":   {\"players\": 6,  \"caps\": 202, \"goals\": 26, \"abroad\": True},\n  \"Portugal\":      {\"players\": 4,  \"caps\": 80,  \"goals\": 4,  \"abroad\": True},\n  \"France\":        {\"players\": 3,  \"caps\": 86,  \"goals\": 3,  \"abroad\": True},\n  \"Ireland\":       {\"players\": 1,  \"caps\": 45,  \"goals\": 0,  \"abroad\": True},\n  \"United States\": {\"players\": 1,  \"caps\": 1,   \"goals\": 0,  \"abroad\": True},\n}  # squad_2026.csv aggregated by birth country (ana_09/ana_10 data_tables)\n\ntot_caps = sum(v[\"caps\"] for v in SQUAD.values())\ntot_goals = sum(v[\"goals\"] for v in SQUAD.values())\nab_caps = sum(v[\"caps\"] for v in SQUAD.values() if v[\"abroad\"])\nab_goals = sum(v[\"goals\"] for v in SQUAD.values() if v[\"abroad\"])\nprint(f\"total caps: {tot_caps}, from born-abroad players: {ab_caps} ({ab_caps/tot_caps*100:.1f}%)\")\nprint(f\"total pre-tournament goals: {tot_goals}, from born-abroad players: {ab_goals} ({ab_goals/tot_goals*100:.1f}%)\")\n# WC2026 goalscorers traced to birth country (det_01/det_02 sourced attributions):\nscorers = {\"Kevin Pina\": \"Cape Verde\", \"Helio Varela\": \"Portugal\",\n           \"Deroy Duarte\": \"Netherlands\", \"Sidny Lopes Cabral\": \"Netherlands\"}\nab_wc = sum(1 for c in scorers.values() if c != \"Cape Verde\")\nprint(f\"WC2026 goals by born-abroad players: {ab_wc}/4\")\n",
+    "expected_stdout": "total caps: 823, from born-abroad players: 414 (50.3%)\ntotal pre-tournament goals: 75, from born-abroad players: 33 (44.0%)\nWC2026 goals by born-abroad players: 3/4\n",
+    "note": "Exact: 414/823 caps (50.3%), 33/75 goals (44.0%) and the 3-of-4 WC-goal attribution — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/squad_analysis.py lines 39-67 (notebook cell cell_squad)."
+  },
+  "ana_11": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [['POR', 7], ['TUR', 3], ['BUL', 2], ['USA', 2], ['CYP', 2], ['RUS', 2], ['ROU', 1], ['ESP', 1], ['IRL', 1], ['UAE', 1], ['HUN', 1], ['NED', 1], ['FIN', 1], ['ISR', 1]]  # [club_country, players] — squad_2026.csv\ntotal = sum(r[1] for r in rows)\nprint(f\"club countries: {len(rows)}; players covered: {total}\")\nprint(f\"players at clubs in Cape Verde: {0 if 'CPV' not in [r[0] for r in rows] else dict(rows)['CPV']}\")\nfor c, v in rows:\n    print(f\"  {c}: {v}\")\n",
+    "expected_stdout": "club countries: 14; players covered: 26\nplayers at clubs in Cape Verde: 0\n  POR: 7\n  TUR: 3\n  BUL: 2\n  USA: 2\n  CYP: 2\n  RUS: 2\n  ROU: 1\n  ESP: 1\n  IRL: 1\n  UAE: 1\n  HUN: 1\n  NED: 1\n  FIN: 1\n  ISR: 1\n",
+    "note": "Exact: 26 players across 14 club countries, none domestic — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/squad_analysis.py lines 68-74 (notebook cell cell_squad)."
+  },
+  "int_01": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "SQUAD = {\n  \"Cape Verde\":    {\"players\": 11, \"caps\": 409, \"goals\": 42, \"abroad\": False},\n  \"Netherlands\":   {\"players\": 6,  \"caps\": 202, \"goals\": 26, \"abroad\": True},\n  \"Portugal\":      {\"players\": 4,  \"caps\": 80,  \"goals\": 4,  \"abroad\": True},\n  \"France\":        {\"players\": 3,  \"caps\": 86,  \"goals\": 3,  \"abroad\": True},\n  \"Ireland\":       {\"players\": 1,  \"caps\": 45,  \"goals\": 0,  \"abroad\": True},\n  \"United States\": {\"players\": 1,  \"caps\": 1,   \"goals\": 0,  \"abroad\": True},\n}  # squad_2026.csv aggregated by birth country (ana_09/ana_10 data_tables)\n\n# The strip-the-diaspora hero (cm_02 squadTally): remove the five foreign birth countries.\ndef r1(x):\n    import math\n    return math.floor(x * 10 + 0.5) / 10\nTOT = {\"players\": 26, \"caps\": 823, \"goals\": 75}\noff = [c for c, v in SQUAD.items() if v[\"abroad\"]]\ngone = {k: sum(SQUAD[c][k] for c in off) for k in (\"players\", \"caps\", \"goals\")}\nprint(f\"full strip: {gone['players']} players gone ({r1(gone['players']/TOT['players']*100)}% of the squad)\")\nprint(f\"caps gone: {gone['caps']}/{TOT['caps']} = {r1(gone['caps']/TOT['caps']*100)}%\")\nprint(f\"pre-tournament goals gone: {gone['goals']}/{TOT['goals']} = {r1(gone['goals']/TOT['goals']*100)}%\")\nWC_GOALS = {\"Cape Verde\": 1, \"Netherlands\": 2, \"Portugal\": 1}  # ana_10 attributions\nprint(f\"WC2026 goals gone: {sum(v for c, v in WC_GOALS.items() if c != 'Cape Verde')} of 4\")\nprint(f\"remaining: {TOT['players']-gone['players']} players, \"\n      f\"{r1((TOT['caps']-gone['caps'])/TOT['caps']*100)}% of caps\")\n",
+    "expected_stdout": "full strip: 15 players gone (57.7% of the squad)\ncaps gone: 414/823 = 50.3%\npre-tournament goals gone: 33/75 = 44.0%\nWC2026 goals gone: 3 of 4\nremaining: 11 players, 49.7% of caps\n",
+    "note": "Exact: the widget's full-strip payoff — 15 players, 50.3% of caps, 3 of 4 WC goals gone; 11 players / 49.7% of caps remain — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/client_model.js squadTally() (node-verified baseline {players:15, caps:414, goals:33, playersPct:57.7, capsPct:50.3, goalsPct:44.0}); notebook cell cell_squad."
+  },
+  "int_05": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [['POR', 7], ['TUR', 3], ['BUL', 2], ['USA', 2], ['CYP', 2], ['RUS', 2], ['ROU', 1], ['ESP', 1], ['IRL', 1], ['UAE', 1], ['HUN', 1], ['NED', 1], ['FIN', 1], ['ISR', 1]]  # [club_country, players]\n# The zero-club guess widget's answer, recomputed from the club-country table.\ndomestic = sum(v for c, v in rows if c == \"CPV\")\nprint(f\"of the 26, players at clubs in Cape Verde's domestic league: {domestic}\")\nprint(f\"the 26 are employed across {len(rows)} countries; biggest host: {max(rows, key=lambda r: r[1])[0]} ({max(r[1] for r in rows)})\")\n",
+    "expected_stdout": "of the 26, players at clubs in Cape Verde's domestic league: 0\nthe 26 are employed across 14 countries; biggest host: POR (7)\n",
+    "note": "Exact: the reveal number is zero, across 14 club countries (Portugal hosts 7) — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/squad_analysis.py lines 68-74 (notebook cell cell_squad)."
+  },
+  "ana_01": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [['Portugal', 30179, 36695, 44701, 53008, 52513, 59532, 68299, 76835], ['France', 7645, 10104, 13572, 18434, 22975, 30310, 31783, 34814], ['Angola', 3569, 4147, 4724, 6209, 7558, 8662, 9215, 9497], ['Luxembourg', 1148, 1278, 1422, 1234, 1060, 1617, 7108, 8211], ['Mozambique', 2500, 3439, 4001, 5495, 6262, 6491, 6819, 7107], ['Italy', 1795, 2354, 3004, 3814, 4980, 5764, 6073, 5847], ['Brazil', 5, 1447, 1181, 1285, 1173, 1305, 1523, 1430], ['Sao Tome and Principe', 4250, 3343, 2488, 1956, 1538, 1363, 1220, 1115], ['Norway', 163, 167, 234, 251, 382, 405, 406, 451], ['Guinea-Bissau', 355, 466, 576, 549, 521, 552, 403, 338], ['Colombia', 5, 12, 12, 6, 30, 94, 194, 255], ['Bolivia (Plurinational State of)', 0, 1, 2, 56, 110, 129, 141, 157], ['Iceland', 19, 28, 37, 40, 41, 33, 54, 82], ['Sierra Leone', 5, 4, 3, 1, 6, 43, 88, 82], ['Denmark', 5, 11, 16, 17, 24, 32, 40, 43], ['Togo', 19, 21, 23, 25, 36, 40, 39, 39], ['Guinea', 98, 112, 78, 54, 37, 34, 31, 30], ['Hungary', 0, 0, 0, 0, 0, 5, 19, 22], ['Finland', 2, 3, 4, 6, 8, 11, 13, 15], ['Greece', 32, 33, 34, 24, 14, 13, 12, 13], ['Bulgaria', 2, 3, 4, 6, 7, 6, 5, 7], ['Slovenia', 0, 0, 0, 0, 1, 4, 3, 3], ['Dominican Republic', 3, 4, 4, 4, 4, 3, 3, 3], ['Estonia', 0, 0, 0, 0, 0, 2, 0, 0], ['Latvia', 1, 1, 1, 1, 1, 0, 0, 0], ['World', 51800, 63673, 76121, 92475, 99281, 116450, 133491, 146396]]  # [destination, y1990..y2024] — UN DESA IMS 2024\nnamed = [r for r in rows if r[0] != \"World\"]\nworld = [r for r in rows if r[0] == \"World\"][0]\ns = sum(r[-1] for r in named)\nprint(f\"World total (floor) 2024: {world[-1]:,}\")\nprint(f\"Sum of {len(named)} named destinations: {s:,} ({s/world[-1]*100:.1f}% of world total)\")\npt = dict((r[0], r[-1]) for r in named)\nprint(f\"  Portugal: {pt['Portugal']:,} ({pt['Portugal']/world[-1]*100:.1f}%)\")\nprint(f\"  France: {pt['France']:,} ({pt['France']/world[-1]*100:.1f}%)\")\nprint(f\"Portugal+France = {pt['Portugal']+pt['France']:,} = {(pt['Portugal']+pt['France'])/world[-1]*100:.1f}% of the world total\")\nmissing = [\"Netherlands\", \"United States\", \"Spain\", \"Senegal\"]\nprint(f\"hosts with NO row in the 2024 matrix: {missing}\")\n",
+    "expected_stdout": "World total (floor) 2024: 146,396\nSum of 25 named destinations: 146,396 (100.0% of world total)\n  Portugal: 76,835 (52.5%)\n  France: 34,814 (23.8%)\nPortugal+France = 111,649 = 76.3% of the world total\nhosts with NO row in the 2024 matrix: ['Netherlands', 'United States', 'Spain', 'Senegal']\n",
+    "note": "Exact: the 146,396 floor is literally the sum of the 24 named destinations (100.0%); Portugal 52.5%, France 23.8%, together 76.3% — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/diaspora_analysis.py lines 35-51 (notebook cell cell_diaspora) over cape_verde_emigrants_by_destination.csv."
+  },
+  "ana_02": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [['Portugal', 30179, 76835, 2.55], ['France', 7645, 34814, 4.55], ['Angola', 3569, 9497, 2.66], ['Luxembourg', 1148, 8211, 7.15], ['Mozambique', 2500, 7107, 2.84], ['Italy', 1795, 5847, 3.26], ['Brazil', 5, 1430, 286.0], ['Sao Tome and Principe', 4250, 1115, 0.26], ['Norway', 163, 451, 2.77], ['Guinea-Bissau', 355, 338, 0.95], ['Colombia', 5, 255, 51.0], ['Bolivia (Plurinational State of)', 0, 157, None], ['Iceland', 19, 82, 4.32], ['Sierra Leone', 5, 82, 16.4], ['Denmark', 5, 43, 8.6], ['Togo', 19, 39, 2.05], ['Guinea', 98, 30, 0.31], ['Hungary', 0, 22, None], ['Finland', 2, 15, 7.5], ['Greece', 32, 13, 0.41], ['Bulgaria', 2, 7, 3.5], ['Slovenia', 0, 3, None], ['Dominican Republic', 3, 3, 1.0], ['Estonia', 0, 0, None], ['Latvia', 1, 0, 0.0], ['World', 51800, 146396, 2.83]]  # [destination, migrants_1990, migrants_2024, multiple]\nw = [r for r in rows if r[0] == \"World\"][0]\nprint(f\"World total: {w[1]:,} -> {w[2]:,} = x{w[2]/w[1]:.2f} in 34 years\")\nlux = [r for r in rows if r[0] == \"Luxembourg\"][0]\nprint(f\"Luxembourg: {lux[1]:,} -> {lux[2]:,} = x{lux[2]/lux[1]:.2f}\")\nprint(f\"Luxembourg 2024: {lux[2]:,} CV-born = {lux[2]/677012*100:.2f}% of Luxembourg's population (677,012)\")\nfr = [r for r in rows if r[0] == \"France\"][0]\nprint(f\"France: {fr[1]:,} -> {fr[2]:,} = x{fr[2]/fr[1]:.2f}\")\n",
+    "expected_stdout": "World total: 51,800 -> 146,396 = x2.83 in 34 years\nLuxembourg: 1,148 -> 8,211 = x7.15\nLuxembourg 2024: 8,211 CV-born = 1.21% of Luxembourg's population (677,012)\nFrance: 7,645 -> 34,814 = x4.55\n",
+    "note": "Exact: world x2.83, Luxembourg x7.15 (1.21% of its population), France x4.55 — recomputed from the 1990/2024 cells, a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/diaspora_analysis.py lines 52-66 (notebook cell cell_diaspora)."
+  },
+  "ana_03": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1990, 4250], [1995, 3343], [2000, 2488], [2005, 1956], [2010, 1538], [2015, 1363], [2020, 1220], [2024, 1115]]  # [year, migrants] — Sao Tome and Principe series\nfor y, v in rows:\n    print(f\"  {y}: {v:,}\")\nd = rows[-1][1] - rows[0][1]\nprint(f\"Change 1990->2024: {d:,} ({d/rows[0][1]*100:.1f}%)\")\ndeclines = all(rows[i][1] > rows[i+1][1] for i in range(len(rows)-1))\nprint(f\"declining in every single wave: {declines}\")\n",
+    "expected_stdout": "  1990: 4,250\n  1995: 3,343\n  2000: 2,488\n  2005: 1,956\n  2010: 1,538\n  2015: 1,363\n  2020: 1,220\n  2024: 1,115\nChange 1990->2024: -3,135 (-73.8%)\ndeclining in every single wave: True\n",
+    "note": "Exact: 4,250 -> 1,115, a fall of 73.8%, declining in every wave — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/diaspora_analysis.py lines 67-76 (notebook cell cell_diaspora)."
+  },
+  "ana_04": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1990, 51800, 375428, 13.8], [1995, 63673, 418104, 15.2], [2000, 76121, 453317, 16.8], [2005, 92475, 485115, 19.1], [2010, 99281, 509784, 19.5], [2015, 116450, 512394, 22.7], [2020, 133491, 514679, 25.9], [2024, 146396, 524877, 27.9]]  # [year, un_emigrant_floor, resident_population, ratio_pct]\nfor y, e, p, _ in rows:\n    print(f\"  {y} | {e:>7,} | {p:>7,} | {e/p*100:.1f}%\")\nfirst, last = rows[0], rows[-1]\nprint(f\"floor ratio {first[0]}: {first[1]/first[2]*100:.1f} per 100 residents; {last[0]}: {last[1]/last[2]*100:.1f} per 100\")\n",
+    "expected_stdout": "  1990 |  51,800 | 375,428 | 13.8%\n  1995 |  63,673 | 418,104 | 15.2%\n  2000 |  76,121 | 453,317 | 16.8%\n  2005 |  92,475 | 485,115 | 19.1%\n  2010 |  99,281 | 509,784 | 19.5%\n  2015 | 116,450 | 512,394 | 22.7%\n  2020 | 133,491 | 514,679 | 25.9%\n  2024 | 146,396 | 524,877 | 27.9%\nfloor ratio 1990: 13.8 per 100 residents; 2024: 27.9 per 100\n",
+    "note": "Exact: the floor ratio doubled from 13.8 per 100 residents (1990) to 27.9 (2024) — recomputed from counts, a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/diaspora_analysis.py lines 77-85 (notebook cell cell_diaspora)."
+  },
+  "int_07": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1990, 51800, 375428, 13.8], [1995, 63673, 418104, 15.2], [2000, 76121, 453317, 16.8], [2005, 92475, 485115, 19.1], [2010, 99281, 509784, 19.5], [2015, 116450, 512394, 22.7], [2020, 133491, 514679, 25.9], [2024, 146396, 524877, 27.9]]  # [year, un_emigrant_floor, resident_population, ratio_pct]\nfor y, e, p, _ in rows:\n    print(f\"  {y} | {e:>7,} | {p:>7,} | {e/p*100:.1f}%\")\nfirst, last = rows[0], rows[-1]\nprint(f\"floor ratio {first[0]}: {first[1]/first[2]*100:.1f} per 100 residents; {last[0]}: {last[1]/last[2]*100:.1f} per 100\")\n",
+    "expected_stdout": "  1990 |  51,800 | 375,428 | 13.8%\n  1995 |  63,673 | 418,104 | 15.2%\n  2000 |  76,121 | 453,317 | 16.8%\n  2005 |  92,475 | 485,115 | 19.1%\n  2010 |  99,281 | 509,784 | 19.5%\n  2015 | 116,450 | 512,394 | 22.7%\n  2020 | 133,491 | 514,679 | 25.9%\n  2024 | 146,396 | 524,877 | 27.9%\nfloor ratio 1990: 13.8 per 100 residents; 2024: 27.9 per 100\n",
+    "note": "Exact: the guess widget's reveal — 27.9 counted emigrants per 100 residents (1990: 13.8) — same computation as ana_04.",
+    "needs_network": false,
+    "full_ref": "code/diaspora_analysis.py lines 77-85 (notebook cell cell_diaspora)."
+  },
+  "ana_05": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1, 'Monaco', 36682, 38631, 95.0], [2, 'West Bank and Gaza', 4233248, 5289152, 80.0], [3, 'Guyana', 469649, 831087, 56.5], [4, 'Samoa', 119313, 218019, 54.7], [5, 'Albania', 1216628, 2377128, 51.2], [6, 'Tonga', 53237, 104175, 51.1], [7, 'Bosnia and Herzegovina', 1608324, 3164253, 50.8], [8, 'Jamaica', 1248512, 2839175, 44.0], [9, 'Comoros', 367574, 866628, 42.4], [10, 'Suriname', 258026, 634431, 40.7], [11, 'Syrian Arab Republic', 8927523, 24672760, 36.2], [12, 'Moldova', 864257, 2402306, 36.0], [13, 'St. Vincent and the Grenadines', 35264, 100616, 35.0], [14, 'Greenland', 18491, 56836, 32.5], [15, 'Dominica', 21384, 66205, 32.3], [16, 'St. Kitts and Nevis', 13872, 46843, 29.6], [17, 'North Macedonia', 534616, 1824359, 29.3], [18, 'Venezuela, RB', 8328514, 28405543, 29.3], [19, 'El Salvador', 1834670, 6338193, 28.9], [20, 'Cabo Verde', 146396, 524877, 27.9], [21, 'Aruba', 29305, 107995, 27.1], [22, 'South Sudan', 3168836, 11943408, 26.5], [23, 'Ukraine', 9769216, 37860221, 25.8], [24, 'Eritrea', 912792, 3535603, 25.8], [25, 'Romania', 4583819, 19051804, 24.1]]  # [rank, origin, emigrants_2024, population_2024, ratio_pct]\n# recompute each ratio from the raw counts and check it matches the published 1-dp value\nok = all(round(r[2] / r[3] * 100, 1) == r[4] for r in rows)\nprint(f\"all 25 published ratios reproduce from emigrants/population: {ok}\")\nmono = all(rows[i][4] >= rows[i+1][4] for i in range(len(rows) - 1))\nprint(f\"ordering non-increasing at the published 0.1-point precision: {mono} (two tied pairs at 29.3 and 25.8)\")\ncv = [r for r in rows if r[1] == \"Cabo Verde\"][0]\nprint(f\"Cabo Verde: rank #{cv[0]} (emigrant floor {cv[2]:,} = {cv[2]/cv[3]*100:.1f}% of residents)\")\nprint(\"(rank #20 is of the 212 WB-covered origins; the 25 rows here are the top of that ranking)\")\n",
+    "expected_stdout": "all 25 published ratios reproduce from emigrants/population: True\nordering non-increasing at the published 0.1-point precision: True (two tied pairs at 29.3 and 25.8)\nCabo Verde: rank #20 (emigrant floor 146,396 = 27.9% of residents)\n(rank #20 is of the 212 WB-covered origins; the 25 rows here are the top of that ranking)\n",
+    "note": "Exact on the inlined top-25: every published ratio reproduces from the raw counts and Cabo Verde sits #20 at 27.9% — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/diaspora_analysis.py lines 86-158 (notebook cell cell_diaspora) ranks all 212 WB-covered origins."
+  },
+  "ana_06": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1980, 28.2], [1981, 22.7], [1982, 18.4], [1983, 14.8], [1984, 15.6], [1985, 15.1], [1986, 14.5], [1987, 15.5], [1988, 16.2], [1989, 17.8], [1990, 19.3], [1991, 19.5], [1992, 21.3], [1993, 15.6], [1994, 21.0], [1995, 21.7], [1996, 20.0], [1997, 15.6], [1998, 14.1], [1999, 13.5], [2000, 16.6], [2001, 14.4], [2002, 13.7], [2003, 13.3], [2004, 12.3], [2005, 14.1], [2006, 12.3], [2007, 8.4], [2008, 7.9], [2009, 7.3], [2010, 7.2], [2011, 8.6], [2012, 9.3], [2013, 8.7], [2014, 9.6], [2015, 11.5], [2016, 11.4], [2017, 10.8], [2018, 10.6], [2019, 9.5], [2020, 12.9], [2021, 15.3], [2022, 14.0], [2023, 12.6], [2024, 12.3]]  # [year, pct_gdp] 1980-2024\nd = dict(rows)\npeak = max(rows, key=lambda r: r[1]); low = min(rows, key=lambda r: r[1])\nprint(f\"first: {rows[0][0]} = {rows[0][1]}% of GDP\")\nprint(f\"peak : {peak[0]} = {peak[1]}%\")\nprint(f\"low  : {low[0]} = {low[1]}%\")\nprint(f\"2021 pandemic re-surge: {d[2021]}%\")\nprint(f\"last : {rows[-1][0]} = {rows[-1][1]}%\")\n",
+    "expected_stdout": "first: 1980 = 28.2% of GDP\npeak : 1980 = 28.2%\nlow  : 2010 = 7.2%\n2021 pandemic re-surge: 15.3%\nlast : 2024 = 12.3%\n",
+    "note": "Exact: peak 28.2% (1980), low 7.2% (2010), pandemic surge 15.3% (2021), 12.3% in 2024 — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/remittances_analysis.py lines 29-44 (notebook cell cell_remittances) over remittances_pct_gdp_tidy.csv."
+  },
+  "ana_07": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1, 'Tajikistan', 47.2], [2, 'Tonga', 39.2], [3, 'Nicaragua', 26.6], [4, 'Nepal', 26.0], [5, 'Honduras', 25.7], [6, 'El Salvador', 24.3], [7, 'Samoa', 24.0], [8, 'Marshall Islands', 23.5], [9, 'Gambia, The', 22.0], [10, 'Liberia', 21.3], [11, 'Lesotho', 19.9], [12, 'Guatemala', 19.1], [13, 'Kyrgyz Republic', 17.6], [14, 'Kosovo', 17.3], [15, 'Haiti', 16.9], [16, 'Jamaica', 16.2], [17, 'Uzbekistan', 13.7], [18, 'Cabo Verde', 12.3], [19, 'Georgia', 11.9], [20, 'Timor-Leste', 11.8]]  # [rank, country, pct_gdp] 2024 top 20 of 160\ncv = [r for r in rows if r[1] == \"Cabo Verde\"][0]\norder_ok = all(rows[i][2] >= rows[i+1][2] for i in range(len(rows)-1))\nprint(f\"table ordered by share: {order_ok}\")\nprint(f\"Cabo Verde 2024: {cv[2]}% of GDP -> rank #{cv[0]} of 160 (top {cv[0]/160*100:.0f}%)\")\nprint(f\"bracket: Uzbekistan {dict((r[1], r[2]) for r in rows)['Uzbekistan']}%, Jamaica {dict((r[1], r[2]) for r in rows)['Jamaica']}%, Haiti {dict((r[1], r[2]) for r in rows)['Haiti']}%\")\n",
+    "expected_stdout": "table ordered by share: True\nCabo Verde 2024: 12.3% of GDP -> rank #18 of 160 (top 11%)\nbracket: Uzbekistan 13.7%, Jamaica 16.2%, Haiti 16.9%\n",
+    "note": "Exact: #18 of the 160 reporting countries (top 11%), in the Uzbekistan/Jamaica/Haiti bracket — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/remittances_analysis.py lines 45-62 (notebook cell cell_remittances)."
+  },
+  "ana_08": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1980, 2, 90, 28.2], [1981, 3, 90, 22.7], [1982, 3, 93, 18.4], [1983, 5, 97, 14.8], [1984, 5, 97, 15.6], [1985, 6, 97, 15.1], [1986, 6, 102, 14.5], [1987, 5, 105, 15.5], [1988, 3, 106, 16.2], [1989, 3, 107, 17.8], [1990, 4, 109, 19.3], [1991, 3, 112, 19.5], [1992, 4, 120, 21.3], [1993, 5, 126, 15.6], [1994, 2, 130, 21.0], [1995, 2, 137, 21.7], [1996, 3, 142, 20.0], [1997, 6, 141, 15.6], [1998, 8, 147, 14.1], [1999, 7, 148, 13.5], [2000, 7, 151, 16.6], [2001, 11, 153, 14.4], [2002, 11, 158, 13.7], [2003, 14, 161, 13.3], [2004, 15, 163, 12.3], [2005, 18, 165, 14.1], [2006, 21, 168, 12.3], [2007, 31, 170, 8.4], [2008, 34, 174, 7.9], [2009, 37, 177, 7.3], [2010, 40, 179, 7.2], [2011, 37, 181, 8.6], [2012, 35, 179, 9.3], [2013, 35, 178, 8.7], [2014, 31, 181, 9.6], [2015, 23, 180, 11.5], [2016, 22, 179, 11.4], [2017, 24, 177, 10.8], [2018, 29, 176, 10.6], [2019, 30, 177, 9.5], [2020, 23, 177, 12.9], [2021, 21, 175, 15.3], [2022, 25, 174, 14.0], [2023, 24, 172, 12.6], [2024, 18, 160, 12.3]]  # [year, cpv_rank, n_countries, cpv_pct]\nbest = min(rows, key=lambda r: r[1])\nprint(f\"best-ever rank: #{best[1]} of {best[2]} in {best[0]} ({best[3]}% of GDP)\")\ntop10 = [r[0] for r in rows if r[1] <= 10]\nprint(f\"years ranked in the global top 10: {len(top10)} ({top10[0]}..{top10[-1]})\")\nconsecutive = all(b - a == 1 for a, b in zip(top10, top10[1:]))\nprint(f\"consecutive: {consecutive}\")\nd = dict((r[0], (r[1], r[2])) for r in rows)\nprint(f\"2010: #{d[2010][0]} of {d[2010][1]} | 2024: #{d[2024][0]} of {d[2024][1]}\")\n",
+    "expected_stdout": "best-ever rank: #2 of 90 in 1980 (28.2% of GDP)\nyears ranked in the global top 10: 21 (1980..2000)\nconsecutive: True\n2010: #40 of 179 | 2024: #18 of 160\n",
+    "note": "Exact: #2 of 90 in 1980, 21 consecutive top-10 years (1980-2000), #40 by 2010, #18 of 160 in 2024 — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/remittances_analysis.py lines 63-81 (notebook cell cell_remittances)."
+  },
+  "ana_12": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1979, 1462, 92, 144], [1981, 1454, 89, 150], [1982, 1433, 96, 151], [1983, 1432, 97, 148], [1984, 1397, 114, 156], [1985, 1426, 100, 157], [1987, 1400, 111, 156], [1988, 1383, 115, 156], [1989, 1415, 110, 158], [1991, 1443, 108, 164], [1992, 1424, 112, 170], [1995, 1442, 120, 193], [1997, 1398, 132, 192], [1998, 1384, 138, 198], [2000, 1449, 118, 204], [2001, 1454, 118, 205], [2002, 1448, 126, 204], [2003, 1461, 118, 206], [2004, 1469, 112, 206], [2005, 1420, 131, 206], [2006, 1429, 124, 207], [2007, 1407, 132, 206], [2008, 1430, 130, 207], [2009, 1469, 117, 207], [2010, 1508, 108, 208], [2011, 1505, 108, 209], [2012, 1536, 98, 209], [2013, 1587, 90, 209], [2014, 1599, 86, 210], [2015, 1655, 65, 210], [2016, 1540, 99, 211], [2017, 1544, 98, 211], [2018, 1519, 105, 211], [2019, 1520, 103, 210], [2020, 1504, 109, 210], [2021, 1582, 85, 210], [2022, 1598, 79, 211], [2023, 1591, 82, 210], [2024, 1585, 84, 210], [2025, 1676, 71, 210], [2026, 1699, 64, 210]]  # [year, rating, world_rank, pool_size]\nd = dict((r[0], r) for r in rows)\nworst = max(rows, key=lambda r: r[2])\nprint(f\"worst rank: #{worst[2]} of {worst[3]} in {worst[0]} (rating {worst[1]})\")\nfor y in (2010, 2014, 2026):\n    print(f\"  {y}: rating {d[y][1]}, world #{d[y][2]} of {d[y][3]}\")\nprint(\"all-time peak: 1702 on 2026-06-26 (after the 0-0 with Saudi Arabia) — published run output;\")\nprint(f\"post-Argentina rating {d[2026][1]} is within {1702 - d[2026][1]} points of it\")\n",
+    "expected_stdout": "worst rank: #138 of 198 in 1998 (rating 1384)\n  2010: rating 1508, world #108 of 208\n  2014: rating 1599, world #86 of 210\n  2026: rating 1699, world #64 of 210\nall-time peak: 1702 on 2026-06-26 (after the 0-0 with Saudi Arabia) — published run output;\npost-Argentina rating 1699 is within 3 points of it\n",
+    "note": "Exact: the 1998 bottom (#138 of 198), the climb to #64, and the 1702 mid-World-Cup peak (within 3 points at the data cutoff) — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/elo_ratings.py lines 112-156 (notebook cell cell_elo) over 49,493 played internationals."
+  },
+  "ana_14": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [['2026-06-15', 'Spain', '0-0', 'D', 1654, 2219, 3.7, 1681, 28], ['2026-06-21', 'Uruguay', '2-2', 'D', 1681, 1955, 17.1, 1701, 20], ['2026-06-26', 'Saudi Arabia', '0-0', 'D', 1701, 1706, 49.2, 1702, 0], ['2026-07-03', 'Argentina', '2-3', 'L (AET)', 1702, 2225, 4.7, 1699, -3]]\nfor r in rows:\n    print(f\"{r[0]} vs {r[1]}: {r[2]} {r[3]} | CV pre-Elo {r[4]} vs {r[5]} | Elo expectancy {r[6]}% | post {r[7]} ({'+' if r[8]>=0 else ''}{r[8]})\")\nprint(f\"Elo change across the tournament: {rows[0][4]} -> {rows[-1][7]} (+{rows[-1][7]-rows[0][4]})\")\nbeaten_in_90 = [r for r in rows if r[3] == \"L\"]\nprint(f\"matches lost in 90 minutes: {len(beaten_in_90)}\")\n",
+    "expected_stdout": "2026-06-15 vs Spain: 0-0 D | CV pre-Elo 1654 vs 2219 | Elo expectancy 3.7% | post 1681 (+28)\n2026-06-21 vs Uruguay: 2-2 D | CV pre-Elo 1681 vs 1955 | Elo expectancy 17.1% | post 1701 (+20)\n2026-06-26 vs Saudi Arabia: 0-0 D | CV pre-Elo 1701 vs 1706 | Elo expectancy 49.2% | post 1702 (+0)\n2026-07-03 vs Argentina: 2-3 L (AET) | CV pre-Elo 1702 vs 2225 | Elo expectancy 4.7% | post 1699 (-3)\nElo change across the tournament: 1654 -> 1699 (+45)\nmatches lost in 90 minutes: 0\n",
+    "note": "Exact: the four-match arc (expectancies 3.7 / 17.1 / 49.2 / 4.7), +45 Elo across the tournament, never beaten in 90 minutes — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/elo_ratings.py lines 169-184 (notebook cell cell_elo)."
+  },
+  "ana_15": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [['2008-09-10', 'Luxembourg', 'Switzerland', '2-1', 'FIFA World Cup qualification', 878, 1038, 1816], ['1980-05-09', 'Luxembourg', 'South Korea', '3-2', 'Friendly', 767, 1146, 1913], ['2014-11-14', 'Faroe Islands', 'Greece', '1-0', 'UEFA Euro qualification', 646, 1224, 1770], ['2007-10-13', 'Luxembourg', 'Belarus', '1-0', 'UEFA Euro qualification', 641, 999, 1540], ['2025-11-17', 'Somalia', 'Bahrain', '2-1', 'Friendly', 637, 1022, 1559], ['2016-06-07', 'Georgia', 'Spain', '1-0', 'Friendly', 622, 1535, 2056], ['1903-03-21', 'Northern Ireland', 'Scotland', '2-0', 'British Home Championship', 597, 1238, 1735], ['1998-09-06', 'Latvia', 'Norway', '3-1', 'UEFA Euro qualification', 594, 1399, 1893], ['2012-06-15', 'Central African Republic', 'Egypt', '3-2', 'African Cup of Nations qualification', 590, 1371, 1861], ['2017-06-09', 'Andorra', 'Hungary', '1-0', 'FIFA World Cup qualification', 578, 1029, 1707], ['2024-03-26', 'Brunei', 'Vanuatu', '3-2', 'FIFA Series', 574, 847, 1420], ['2012-05-26', 'Bulgaria', 'Netherlands', '2-1', 'Friendly', 571, 1633, 2104]]  # the 12 biggest upsets ever (adjusted Elo gap)\nprint(f\"biggest upset ever: {rows[0][1]} beat {rows[0][2]} ({rows[0][0][:4]}), gap {rows[0][5]}\")\nfinals = [(\"2022 Cameroon beat Brazil\", 534), (\"2022 Saudi Arabia beat Argentina\", 446),\n          (\"1950 United States beat England\", 429)]  # published WC-finals ladder (calculation output)\ngap_cv_arg = 523\nrank_in_finals = 1 + sum(1 for _, g in finals if g > gap_cv_arg)\nprint(f\"Cape Verde's 2015 win in Portugal: gap 440 -> #73 of 33,081 decided matches (published rank)\")\nprint(f\"beating Argentina (gap {gap_cv_arg}) would have ranked #{rank_in_finals} among World Cup FINALS upsets, behind only Cameroon-Brazil 2022 ({finals[0][1]})\")\n",
+    "expected_stdout": "biggest upset ever: Luxembourg beat Switzerland (2008), gap 878\nCape Verde's 2015 win in Portugal: gap 440 -> #73 of 33,081 decided matches (published rank)\nbeating Argentina (gap 523) would have ranked #2 among World Cup FINALS upsets, behind only Cameroon-Brazil 2022 (534)\n",
+    "note": "Exact: the ladder's top row (Luxembourg-Switzerland, 878), the 2015 Portugal win (gap 440, #73), and the hypothetical #2-among-finals slot for a 523 gap — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/elo_ratings.py lines 185-227 (notebook cell cell_elo)."
+  },
+  "ana_16": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1, 'Argentina', 2228, 45851378], [2, 'Spain', 2224, 49355143], [3, 'France', 2197, 68720337], [4, 'England', 2118, None], [5, 'Brazil', 2117, 212812405], [6, 'Colombia', 2093, 53425635], [7, 'Portugal', 2078, 10804871], [8, 'Mexico', 2046, 131946900], [9, 'Netherlands', 2045, 18087633], [10, 'Morocco', 2025, 38430770], [11, 'Switzerland', 2018, 9092436], [12, 'Norway', 2002, 5610870], [13, 'Germany', 1989, 83491249], [14, 'Belgium', 1988, 11941781], [15, 'Japan', 1973, 123366734], [16, 'Ecuador', 1964, 18289896], [17, 'Croatia', 1947, 3876200], [18, 'Italy', 1929, 58915656], [19, 'Denmark', 1929, 6009169], [20, 'Uruguay', 1925, 3384688], [21, 'Turkey', 1923, 85878556], [22, 'Paraguay', 1911, 7013078], [23, 'Australia', 1908, 27614411], [24, 'United States', 1893, 341784857], [25, 'Austria', 1889, 9208163], [26, 'Iran', 1886, 92417681], [27, 'Nigeria', 1882, 237527782], [28, 'Senegal', 1880, 18931966], [29, 'Canada', 1874, 41651653], [30, 'Egypt', 1865, 118365995], [31, 'Algeria', 1857, 47435312], [32, 'Ivory Coast', 1843, 32711547], [33, 'South Korea', 1842, 51684564], [34, 'Ukraine', 1842, 38980376], [35, 'Russia', 1841, 143513328], [36, 'Venezuela', 1824, 28516896], [37, 'Scotland', 1822, None], [38, 'DR Congo', 1810, 112832473], [39, 'Chile', 1804, 19859921], [40, 'Greece', 1803, 10413962], [41, 'Serbia', 1802, 6549143], [42, 'Sweden', 1799, 10596620], [43, 'Panama', 1775, 4571189], [44, 'Peru', 1772, 34576665], [45, 'Kosovo', 1772, 1576876], [46, 'Poland', 1771, 36435861], [47, 'Hungary', 1768, 9514251], [48, 'Republic of Ireland', 1761, 5484367], [49, 'Czech Republic', 1755, 10886878], [50, 'Costa Rica', 1745, 5152950], [51, 'Wales', 1743, None], [52, 'Slovenia', 1738, 2130986], [53, 'Uzbekistan', 1731, 37053428], [54, 'Slovakia', 1725, 5413813], [55, 'Cameroon', 1724, 29879337], [56, 'Jordan', 1720, 11520684], [57, 'Bolivia', 1717, 12581843], [58, 'Honduras', 1711, 11005850], [59, 'Georgia', 1711, 3935766], [60, 'Mali', 1708, 25198821], [61, 'Saudi Arabia', 1706, 36973555], [62, 'Israel', 1701, 10122800], [63, 'Romania', 1701, 19020271], [64, 'Cape Verde', 1699, 527326]]  # [rank, team, elo, population_2025 | null for UK home nations]\ncv = [r for r in rows if r[1] == \"Cape Verde\"][0]\nwithpop = [r for r in rows if r[3] is not None]\nabove = [r for r in withpop if r[0] < cv[0]]\nsmallest_above = min(above, key=lambda r: r[3])\nprint(f\"Cape Verde: rank #{cv[0]} of the board, Elo {cv[2]}, population {cv[3]:,}\")\nprint(f\"smallest-population team ranked above: {smallest_above[1]} ({smallest_above[3]:,}) = {smallest_above[3]/cv[3]:.1f}x Cape Verde\")\nprint(f\"Cape Verde is the least-populous team in the top 64: {cv[3] == min(r[3] for r in withpop)}\")\nprint(f\"people per Elo point, Cape Verde: {round(cv[3]/cv[2])}\")\n",
+    "expected_stdout": "Cape Verde: rank #64 of the board, Elo 1699, population 527,326\nsmallest-population team ranked above: Kosovo (1,576,876) = 3.0x Cape Verde\nCape Verde is the least-populous team in the top 64: True\npeople per Elo point, Cape Verde: 310\n",
+    "note": "Exact: Cape Verde (527,326) is the least-populous team in the Elo top 64; the smallest above it is Kosovo at 1.58M (3.0x) — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/elo_ratings.py lines 228-279 (notebook cell cell_elo); UK home nations carry no WB population row."
+  },
+  "int_10": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1, 'Argentina', 2228, 45851378], [2, 'Spain', 2224, 49355143], [3, 'France', 2197, 68720337], [4, 'England', 2118, None], [5, 'Brazil', 2117, 212812405], [6, 'Colombia', 2093, 53425635], [7, 'Portugal', 2078, 10804871], [8, 'Mexico', 2046, 131946900], [9, 'Netherlands', 2045, 18087633], [10, 'Morocco', 2025, 38430770], [11, 'Switzerland', 2018, 9092436], [12, 'Norway', 2002, 5610870], [13, 'Germany', 1989, 83491249], [14, 'Belgium', 1988, 11941781], [15, 'Japan', 1973, 123366734], [16, 'Ecuador', 1964, 18289896], [17, 'Croatia', 1947, 3876200], [18, 'Italy', 1929, 58915656], [19, 'Denmark', 1929, 6009169], [20, 'Uruguay', 1925, 3384688], [21, 'Turkey', 1923, 85878556], [22, 'Paraguay', 1911, 7013078], [23, 'Australia', 1908, 27614411], [24, 'United States', 1893, 341784857], [25, 'Austria', 1889, 9208163], [26, 'Iran', 1886, 92417681], [27, 'Nigeria', 1882, 237527782], [28, 'Senegal', 1880, 18931966], [29, 'Canada', 1874, 41651653], [30, 'Egypt', 1865, 118365995], [31, 'Algeria', 1857, 47435312], [32, 'Ivory Coast', 1843, 32711547], [33, 'South Korea', 1842, 51684564], [34, 'Ukraine', 1842, 38980376], [35, 'Russia', 1841, 143513328], [36, 'Venezuela', 1824, 28516896], [37, 'Scotland', 1822, None], [38, 'DR Congo', 1810, 112832473], [39, 'Chile', 1804, 19859921], [40, 'Greece', 1803, 10413962], [41, 'Serbia', 1802, 6549143], [42, 'Sweden', 1799, 10596620], [43, 'Panama', 1775, 4571189], [44, 'Peru', 1772, 34576665], [45, 'Kosovo', 1772, 1576876], [46, 'Poland', 1771, 36435861], [47, 'Hungary', 1768, 9514251], [48, 'Republic of Ireland', 1761, 5484367], [49, 'Czech Republic', 1755, 10886878], [50, 'Costa Rica', 1745, 5152950], [51, 'Wales', 1743, None], [52, 'Slovenia', 1738, 2130986], [53, 'Uzbekistan', 1731, 37053428], [54, 'Slovakia', 1725, 5413813], [55, 'Cameroon', 1724, 29879337], [56, 'Jordan', 1720, 11520684], [57, 'Bolivia', 1717, 12581843], [58, 'Honduras', 1711, 11005850], [59, 'Georgia', 1711, 3935766], [60, 'Mali', 1708, 25198821], [61, 'Saudi Arabia', 1706, 36973555], [62, 'Israel', 1701, 10122800], [63, 'Romania', 1701, 19020271], [64, 'Cape Verde', 1699, 527326]]  # [rank, team, elo, population_2025 | null for UK home nations]\ncv = [r for r in rows if r[1] == \"Cape Verde\"][0]\nwithpop = [r for r in rows if r[3] is not None]\nabove = [r for r in withpop if r[0] < cv[0]]\nsmallest_above = min(above, key=lambda r: r[3])\nprint(f\"Cape Verde: rank #{cv[0]} of the board, Elo {cv[2]}, population {cv[3]:,}\")\nprint(f\"smallest-population team ranked above: {smallest_above[1]} ({smallest_above[3]:,}) = {smallest_above[3]/cv[3]:.1f}x Cape Verde\")\nprint(f\"Cape Verde is the least-populous team in the top 64: {cv[3] == min(r[3] for r in withpop)}\")\nprint(f\"people per Elo point, Cape Verde: {round(cv[3]/cv[2])}\")\n\narg = [r for r in rows if r[1] == \"Argentina\"][0]\nimport math\nprint(f\"Argentina: {arg[3]:,} people = {math.floor(arg[3]/cv[3]*10+0.5)/10}x Cape Verde; \"\n      f\"{round(arg[3]/arg[2]):,} people per rating point\")\n",
+    "expected_stdout": "Cape Verde: rank #64 of the board, Elo 1699, population 527,326\nsmallest-population team ranked above: Kosovo (1,576,876) = 3.0x Cape Verde\nCape Verde is the least-populous team in the top 64: True\npeople per Elo point, Cape Verde: 310\nArgentina: 45,851,378 people = 87.0x Cape Verde; 20,580 people per rating point\n",
+    "note": "Exact: the picker's seeded readout — Argentina 87.0x (86.95 rounds up) and 20,580 people per rating point vs Cape Verde's 310.",
+    "needs_network": false,
+    "full_ref": "code/elo_ratings.py lines 228-279 (notebook cell cell_elo)."
+  },
+  "int_02": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "# The odds explorer's counterfactual: Cape Verde vs Egypt (the R16 tie that never was).\nimport math\nC, B, SCALE = 0.6614, 2.0468, 400.0\ndef sig(z): return 1.0 / (1.0 + math.exp(-z))\ndef r1(x):  return math.floor(x * 10 + 0.5) / 10\ndef odds(rA, rB):\n    u = B * ((rA - rB) / SCALE)\n    sHi, sLo = sig(C - u), sig(-C - u)\n    return (r1((1 - sHi) * 100), r1((sHi - sLo) * 100), r1(sLo * 100),\n            r1((1 - sHi + 0.5 * (sHi - sLo)) * 100))\n# pre-R32 ratings (client_model.js RATINGS_PRE_R32): Cape Verde 1701.6, Egypt 1860.2, Argentina 2225.0\nw, d, l, a = odds(1701.6, 2225.0)\nprint(f\"baseline (Argentina night): {w} / {d} / {l}, advance {a}%\")\nw, d, l, a = odds(1701.6, 1860.2)\nprint(f\"vs Egypt: win {w}%, level {d}%, loss {l}%, advance {a}%\")\n",
+    "expected_stdout": "baseline (Argentina night): 3.4 / 8.3 / 88.3, advance 7.6%\nvs Egypt: win 18.6%, level 27.6%, loss 53.7%, advance 32.5%\n",
+    "note": "Exact: the widget's baseline (3.4 / 8.3 / 88.3, advance 7.6) and the Egypt counterfactual (advance 32.5) — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/client_model.js matchOdds() (node-verified); code/fit_outcome_model.py (notebook cell cell_outcome_model)."
+  },
+  "ana_17": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1, 2026, 'Curaçao', 156263, 3, False], [2, 2018, 'Iceland', 352721, 3, False], [3, 2026, 'Cape Verde', 527326, 4, True], [4, 2006, 'Trinidad and Tobago', 1297944, 3, False], [5, 1982, 'Kuwait', 1662480, 3, False], [6, 1990, 'United Arab Emirates', 1898220, 3, False], [7, 2002, 'Slovenia', 1994530, 3, False], [8, 2010, 'Slovenia', 2048583, 3, False], [9, 1998, 'Jamaica', 2569736, 3, False], [10, 1962, 'Uruguay', 2593298, 3, False], [11, 2022, 'Qatar', 2657333, 3, False], [12, 1966, 'Uruguay', 2707646, 4, True], [13, 1970, 'Uruguay', 2790807, 6, True], [14, 1974, 'Uruguay', 2853944, 3, False], [15, 2026, 'Qatar', 2972215, 3, False]]  # 15 least-populous participant-editions 1962-2026\ncv = [r for r in rows if r[2] == \"Cape Verde\"][0]\nsmaller = [r for r in rows if r[3] < cv[3]]\nprint(f\"Cape Verde 2026: population {cv[3]:,}\")\nprint(f\"smaller participant-editions ever: {len(smaller)} -> \" +\n      \"; \".join(f\"{r[2]} {r[1]} ({r[3]:,})\" for r in smaller))\nprint(f\"=> Cape Verde is the {len(smaller)+1}rd-least-populous nation ever to play a World Cup\")\nsub1m = [r for r in rows if r[3] < 1000000]\nprint(f\"sub-million participants ever: {len(sub1m)} (all since 2018; two in 2026)\")\n",
+    "expected_stdout": "Cape Verde 2026: population 527,326\nsmaller participant-editions ever: 2 -> Curaçao 2026 (156,263); Iceland 2018 (352,721)\n=> Cape Verde is the 3rd-least-populous nation ever to play a World Cup\nsub-million participants ever: 3 (all since 2018; two in 2026)\n",
+    "note": "Exact: only Curacao 2026 (156,263) and Iceland 2018 (352,721) were smaller — Cape Verde is 3rd-least-populous ever; all three sub-million entries since 2018 — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/wc_smallest_nations.py lines 78-94 (notebook cell cell_wc_population) over SP.POP.TOTL x participant-editions."
+  },
+  "ana_18": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1, 2026, 'Cape Verde', 527326, 4], [2, 1966, 'Uruguay', 2707646, 4], [3, 1970, 'Uruguay', 2790807, 6], [4, 1986, 'Uruguay', 3032845, 4], [5, 1990, 'Uruguay', 3104403, 4], [6, 1990, 'Costa Rica', 3121706, 4], [7, 2026, 'Bosnia and Herzegovina', 3140095, 4], [8, 2010, 'Uruguay', 3318580, 7], [9, 2014, 'Uruguay', 3356334, 4], [10, 2018, 'Uruguay', 3394534, 5], [11, 1990, 'Republic of Ireland', 3513974, 5], [12, 1994, 'Republic of Ireland', 3590386, 4]]  # 12 least-populous teams ever to ADVANCE (played a 4th match)\ncv = rows[0]\nnxt = rows[1]\nprint(f\"smallest ever to advance: {cv[2]} {cv[1]} ({cv[3]:,})\")\nprint(f\"next-smallest advancer: {nxt[2]} {nxt[1]} ({nxt[3]:,}) = {nxt[3]/cv[3]:.1f}x larger\")\nmean_2026 = 47191938  # WC2026 participant mean population (published, wc_smallest_nations.py)\nus_2026 = 341784857   # largest 2026 participant (published)\nprint(f\"average WC2026 participant: {mean_2026:,} = {round(mean_2026/cv[3])}x Cape Verde\")\nprint(f\"largest (United States): {us_2026:,} = {round(us_2026/cv[3])}x\")\nmults = [r[3]/cv[3] for r in rows]\nprint(f\"the 12 all-time advancers span {min(mults):.1f}x-{max(mults):.1f}x Cape Verde's population\")\n",
+    "expected_stdout": "smallest ever to advance: Cape Verde 2026 (527,326)\nnext-smallest advancer: Uruguay 1966 (2,707,646) = 5.1x larger\naverage WC2026 participant: 47,191,938 = 89x Cape Verde\nlargest (United States): 341,784,857 = 648x\nthe 12 all-time advancers span 1.0x-6.8x Cape Verde's population\n",
+    "note": "Exact: Uruguay 1966 is 5.1x Cape Verde; the average 2026 participant 89x; the US 648x; the advancer band 1.0x-6.8x — a hard PASS.",
+    "needs_network": false,
+    "full_ref": "code/wc_smallest_nations.py lines 95-119 (notebook cell cell_wc_population)."
+  },
+  "int_08": {
+    "runnable": true,
+    "reduced_n": null,
+    "lang": "python",
+    "code": "rows = [[1, 2026, 'Cape Verde', 527326, 4], [2, 1966, 'Uruguay', 2707646, 4], [3, 1970, 'Uruguay', 2790807, 6], [4, 1986, 'Uruguay', 3032845, 4], [5, 1990, 'Uruguay', 3104403, 4], [6, 1990, 'Costa Rica', 3121706, 4], [7, 2026, 'Bosnia and Herzegovina', 3140095, 4], [8, 2010, 'Uruguay', 3318580, 7], [9, 2014, 'Uruguay', 3356334, 4], [10, 2018, 'Uruguay', 3394534, 5], [11, 1990, 'Republic of Ireland', 3513974, 5], [12, 1994, 'Republic of Ireland', 3590386, 4]]  # 12 least-populous teams ever to ADVANCE (played a 4th match)\ncv = rows[0]\nnxt = rows[1]\nprint(f\"smallest ever to advance: {cv[2]} {cv[1]} ({cv[3]:,})\")\nprint(f\"next-smallest advancer: {nxt[2]} {nxt[1]} ({nxt[3]:,}) = {nxt[3]/cv[3]:.1f}x larger\")\nmean_2026 = 47191938  # WC2026 participant mean population (published, wc_smallest_nations.py)\nus_2026 = 341784857   # largest 2026 participant (published)\nprint(f\"average WC2026 participant: {mean_2026:,} = {round(mean_2026/cv[3])}x Cape Verde\")\nprint(f\"largest (United States): {us_2026:,} = {round(us_2026/cv[3])}x\")\nmults = [r[3]/cv[3] for r in rows]\nprint(f\"the 12 all-time advancers span {min(mults):.1f}x-{max(mults):.1f}x Cape Verde's population\")\n",
+    "expected_stdout": "smallest ever to advance: Cape Verde 2026 (527,326)\nnext-smallest advancer: Uruguay 1966 (2,707,646) = 5.1x larger\naverage WC2026 participant: 47,191,938 = 89x Cape Verde\nlargest (United States): 341,784,857 = 648x\nthe 12 all-time advancers span 1.0x-6.8x Cape Verde's population\n",
+    "note": "Exact: the scale-gap quiz's reveal numbers (5.1x / 89x / 648x and the 1.0x-6.8x advancer band) — same computation as ana_18.",
+    "needs_network": false,
+    "full_ref": "code/wc_smallest_nations.py lines 95-119 (notebook cell cell_wc_population)."
+  }
+}

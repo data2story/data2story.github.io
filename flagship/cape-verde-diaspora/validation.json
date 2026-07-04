@@ -1,0 +1,63 @@
+{
+  "project": "phase2/project/cape-verde-diaspora/blog_fable5_0704_1601",
+  "counts": {
+    "errors": 0,
+    "warnings": 9
+  },
+  "issues": [
+    {
+      "severity": "warn",
+      "kind": "media_manifest_unresolved",
+      "where": "des_03",
+      "detail": "displayed des_ image carries neither a media_ref into a checked sct_ item nor an inline {spdx,permits_republication,...} block — provenance not verifiable from the role JSONs"
+    },
+    {
+      "severity": "warn",
+      "kind": "media_manifest_unresolved",
+      "where": "des_07",
+      "detail": "displayed des_ image carries neither a media_ref into a checked sct_ item nor an inline {spdx,permits_republication,...} block — provenance not verifiable from the role JSONs"
+    },
+    {
+      "severity": "warn",
+      "kind": "media_manifest_unresolved",
+      "where": "des_10",
+      "detail": "displayed des_ image carries neither a media_ref into a checked sct_ item nor an inline {spdx,permits_republication,...} block — provenance not verifiable from the role JSONs"
+    },
+    {
+      "severity": "warn",
+      "kind": "media_manifest_unresolved",
+      "where": "des_12",
+      "detail": "displayed des_ image carries neither a media_ref into a checked sct_ item nor an inline {spdx,permits_republication,...} block — provenance not verifiable from the role JSONs"
+    },
+    {
+      "severity": "warn",
+      "kind": "media_manifest_unresolved",
+      "where": "des_16",
+      "detail": "displayed des_ image carries neither a media_ref into a checked sct_ item nor an inline {spdx,permits_republication,...} block — provenance not verifiable from the role JSONs"
+    },
+    {
+      "severity": "warn",
+      "kind": "media_manifest_unresolved",
+      "where": "des_21",
+      "detail": "displayed des_ image carries neither a media_ref into a checked sct_ item nor an inline {spdx,permits_republication,...} block — provenance not verifiable from the role JSONs"
+    },
+    {
+      "severity": "warn",
+      "kind": "media_manifest_unresolved",
+      "where": "des_23",
+      "detail": "displayed des_ image carries neither a media_ref into a checked sct_ item nor an inline {spdx,permits_republication,...} block — provenance not verifiable from the role JSONs"
+    },
+    {
+      "severity": "warn",
+      "kind": "media_low_resolution",
+      "where": "sct_08",
+      "detail": "image records native_width=508px (< 640px display floor) — a low-res asset shown upscaled looks soft/blurry. Source a higher-res asset or do not display it full-bleed/upscaled. (WARN; fires only when native_width is recorded-and-low — an absent dimension is grandfathered/skipped.)"
+    },
+    {
+      "severity": "warn",
+      "kind": "media_low_resolution",
+      "where": "sct_09",
+      "detail": "image records native_width=581px (< 640px display floor) — a low-res asset shown upscaled looks soft/blurry. Source a higher-res asset or do not display it full-bleed/upscaled. (WARN; fires only when native_width is recorded-and-low — an absent dimension is grandfathered/skipped.)"
+    }
+  ]
+}

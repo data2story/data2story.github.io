@@ -1,0 +1,310 @@
+{
+  "meta": {
+    "role": "scout",
+    "version": "1.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04T15:34:37Z",
+    "topic_profile_note": "detective.json carries a resolved topic_profile (is_visual=true, is_computational=true, privacy_sensitive=false) — no Scout echo needed.",
+    "bgm_decision": "No license-clean REAL morna recording exists on any documented rung: Wikimedia Commons audio ('morna'/'Cape Verde'/'saudade'/'coladeira'/'cavaquinho' — only 1-second pronunciation clips), Openverse audio (Jamendo/Freesound/wikimedia aggregate — no allowlisted morna; the only 'Saudade'-titled Commons track is a future-garage electronic piece, wrong genre), Free Music Archive (zero results for 'morna'), and Internet Archive (the only Cape Verdean-music items are unauthorized rips of copyrighted Cesária Évora albums — NOT laundered — plus a BY-NC-ND radio show, and 1930s Cape Verdean-American 78s are not yet public domain under the US Music Modernization Act). All Cesária Évora studio recordings are © Lusafrica/Sony. The rung-2 copyrighted demo self-host was deliberately NOT used (this premium run targets publication; a publish-blocked BGM would gate it). Chosen: rung-C license-clean floor with maximum mood/instrument fit — 'Romance Anónimo' (Spanish Romance), a CC0 Musopen RECORDING (recording license verified, not just the PD-ish composition) of the most famous melancholic solo-GUITAR piece in the repertoire: guitar is morna's core instrument and the piece's quiet longing matches 'sodade'. The REAL morna is still on the page: the Detective's oEmbed-verified official YouTube embeds inst_01 ('Sodade') and inst_03 ('Petit pays') give readers Cesária Évora herself in context.",
+    "gaps_for_editor": [
+      "Sidny Lopes Cabral (103' scorer): NO license-clean, identity-verifiable photo exists — Wikidata Q124382289 has no P18, Wikimedia Commons search is empty, Openverse search is empty. Per detective.json meta.scout_brief escalation: do NOT use an unlicensed press photo; lean on the verified Deroy Duarte photo (sct_09) + the FOX highlights embed (inst_02) for the goal-scorer visuals. Recorded honestly as a gap.",
+      "Cape Verde fan-CELEBRATION crowds (Brockton watch parties / Praia street scenes, WC2026): no license-clean photos on Commons/Openverse as of 2026-07-04 (only Uganda fans from a 2016 qualifier). Best available substitute is sct_03 — Rotterdam's Nieuwe Binnenweg dressed in Cape Verdean flags for the World Cup (2026-06-23), which lands the diaspora-street-pride beat and directly matches the Rotterdam spine (det_05/det_10).",
+      "Match-night action photos from Miami Stadium 2026-07-03: none license-clean; the venue is covered by the verified aerial (sct_04) and the match by the FOX embed (inst_02)."
+    ],
+    "video_leads_not_registered": "Wikimedia Commons hosts several teleSUR .webm news clips on Cape Verde at WC2026 (e.g. 'LA PELOTA NO SE MANCHA - Mundo en el Mundial - Cabo Verde- Cultura, sodade y fútbol 15-06-2026.webm', a Vozinha interview, Spain 0-0 report). Not registered: each would need frame_verify + weight budget; the story already has three oEmbed-verified YouTube embeds. Designer may request one if a video beat is missing."
+  },
+  "items": {
+    "sct_01": {
+      "kind": "audio",
+      "label": "BGM: 'Romance Anónimo' (Spanish Romance) — license-clean solo-guitar recording",
+      "filename": "scout_bgm_web.mp3",
+      "caption": "Romance Anónimo (Spanish Romance), performed by Jim Greeninger — a public-domain-dedicated recording via Musopen. Solo guitar, quiet longing: the license-clean sibling of morna's sodade.",
+      "caption_claims": [
+        "this is a real, human-performed recording of the anonymous Spanish Romance for classical guitar",
+        "the recording itself (not just the composition) is license-clean (CC0 via Musopen)"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Romance_An%C3%B3nimo_(Jeux_interdits).ogg",
+      "retrieved_at": "2026-07-04T15:30:35Z",
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Music: 'Romance Anónimo' (Spanish Romance), performed by Jim Greeninger — Musopen / Wikimedia Commons (CC0 public-domain dedication)"
+      },
+      "identity": {
+        "method": "trusted_source",
+        "verified": true,
+        "verified_title": "Commons file page 'Romance Anónimo (Jeux interdits).ogg': 'composer unknown; performed by Jim Greeninger', credited to Musopen (https://musopen.org/music/570/francisco-tarrega/romance-de-juegos-prohibidos/), license CC0",
+        "subject": "Romance Anónimo (Spanish Romance) for solo classical guitar, performed by Jim Greeninger"
+      },
+      "cover_path": "scout_bgm_cover.jpg",
+      "duration_s": 167.2,
+      "note": "Shipped as a 128 kbps mp3 transcode (2.68 MB, under the 3 MB audio budget) of the Commons master ogg (3.9 MB, master URL: https://upload.wikimedia.org/wikipedia/commons/3/33/Romance_An%C3%B3nimo_%28Jeux_interdits%29.ogg — not shipped, provenance only). Mood word: longing/pensive, NOT celebratory — the story's spine is sodade (departure, separation), so a quiet guitar bed is the right BGM even on a football hook. See meta.bgm_decision for the full morna-search record. Cover art registered separately as sct_02.",
+      "relates_to": [
+        "det_15"
+      ],
+      "purpose": "IMMERSE"
+    },
+    "sct_02": {
+      "kind": "image",
+      "label": "BGM cover art: baroque guitar (Met Museum, CC0)",
+      "filename": "scout_bgm_cover_web.webp",
+      "caption": "Guitar by Joachim Tielke (Hamburg, ca. 1675–85), The Metropolitan Museum of Art — cover art for the now-playing card.",
+      "caption_claims": [
+        "this is a historical guitar from the Met's open-access collection"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Guitar_MET_DP163292.jpg",
+      "retrieved_at": "2026-07-04T15:33:00Z",
+      "native_width": 960,
+      "native_height": 1280,
+      "license": {
+        "spdx": "CC0-1.0",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Cover art: Guitar, Joachim Tielke — The Metropolitan Museum of Art / Wikimedia Commons (CC0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "an ornate baroque guitar (ebony/ivory striped back, inlaid floral neck) photographed against a museum-grey backdrop — a real museum photograph, not an AI render",
+        "subject": "baroque guitar by Joachim Tielke, Metropolitan Museum of Art (cover-art use for the sct_01 track; Designer center-crops to the square disc)"
+      },
+      "relates_to": [
+        "det_15"
+      ],
+      "purpose": "IMMERSE"
+    },
+    "sct_03": {
+      "kind": "image",
+      "label": "Rotterdam street strung with Cape Verdean flags for the World Cup",
+      "filename": "scout_rotterdam_wc_flags_web.webp",
+      "caption": "Cape Verdean flags strung across the Nieuwe Binnenweg in Rotterdam-West for the 2026 World Cup (23 June 2026) — the diaspora's biggest European street, dressed for its islands' first tournament.",
+      "caption_claims": [
+        "these are Cape Verdean flags (blue with the circle of ten yellow stars)",
+        "this is a Rotterdam street (Nieuwe Binnenweg) during the 2026 World Cup, photographed 23 June 2026"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kaapverdische_voetbalversiering_in_Rotterdam_(2026-06-23)-1.jpg",
+      "retrieved_at": "2026-07-04T15:30:00Z",
+      "native_width": 1280,
+      "native_height": 839,
+      "license": {
+        "spdx": "CC-BY-SA-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Sneeuwvlakte / Wikimedia Commons (CC BY-SA 4.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "a Dutch shopping street with two strings of small Cape Verde flags (blue field, white-red-white stripes, circle of yellow stars) over the sidewalk, bikes and gabled buildings behind — matches the Commons description (Nieuwe Binnenweg, WK voetbal, 2026-06-23)",
+        "subject": "Cape Verdean World Cup flag bunting on the Nieuwe Binnenweg, Rotterdam-West, 23 June 2026"
+      },
+      "relates_to": [
+        "det_05",
+        "det_10"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_04": {
+      "kind": "image",
+      "label": "Hard Rock Stadium, Miami Gardens (aerial)",
+      "filename": "scout_hard_rock_stadium_web.webp",
+      "caption": "Hard Rock Stadium, Miami Gardens — played as 'Miami Stadium' under FIFA clean naming, the ground where Cape Verde took Argentina to the 111th minute. Aerial from its 2016 re-opening.",
+      "caption_claims": [
+        "this is Hard Rock Stadium in Miami Gardens, the venue of Argentina 3-2 Cape Verde (2026-07-03)",
+        "the photo is an aerial view from 2016, not from match night"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hard_Rock_Stadium_Prior_to_first_NFL_game.jpg",
+      "retrieved_at": "2026-07-04T15:30:00Z",
+      "native_width": 1280,
+      "native_height": 960,
+      "license": {
+        "spdx": "CC-BY-SA-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Eisenthesky Productions / Wikimedia Commons (CC BY-SA 4.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "aerial of a square white-canopied stadium with 'Hard Rock Stadium' logo painted on the roof and 'MIAMI' in both end zones — unambiguously Hard Rock Stadium after the 2016 renovation",
+        "subject": "Hard Rock Stadium, Miami Gardens, Florida (WC2026 'Miami Stadium')"
+      },
+      "relates_to": [
+        "det_01"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_05": {
+      "kind": "image",
+      "label": "Historic Delfshaven, Rotterdam",
+      "filename": "scout_delfshaven_rotterdam_web.webp",
+      "caption": "Historic Delfshaven, Rotterdam — the borough where the Cape Verdean community that arrived with the 1960s–70s sailors is most concentrated (~8.8% of residents).",
+      "caption_claims": [
+        "this is the Aelbrechtskolk harbour in Delfshaven, Rotterdam"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rotterdam-Delfshaven,_de_Aelbrechtskolk_vanaf_de_Piet_Heynbrug_IMG_0270_2021-10-24_12.53.jpg",
+      "retrieved_at": "2026-07-04T15:30:00Z",
+      "native_width": 1280,
+      "native_height": 825,
+      "license": {
+        "spdx": "CC-BY-SA-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Michielverbeek / Wikimedia Commons (CC BY-SA 4.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "a historic Dutch inner harbour with moored barges, stepped-gable brick houses and the Piet Heyn-era quay — matches the Commons description of the Aelbrechtskolk, Delfshaven, by Michielverbeek",
+        "subject": "Aelbrechtskolk harbour, Delfshaven, Rotterdam"
+      },
+      "relates_to": [
+        "det_10",
+        "det_04"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_06": {
+      "kind": "image",
+      "label": "Schooner Ernestina under sail, New Bedford Harbor (upgrade of det_media_06)",
+      "filename": "scout_ernestina_new_bedford_web.webp",
+      "caption": "The schooner Ernestina (ex-Effie M. Morrissey) under sail in New Bedford Harbor — the actual Cape Verde packet ship that carried immigrants between the islands and New England until 1965; Cape Verde gifted her back to the United States in 1982.",
+      "caption_claims": [
+        "this is the National Historic Landmark schooner Ernestina",
+        "she is sailing in New Bedford Harbor, Massachusetts"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Ernestina_at_sail_in_the_New_Bedford_Harbor_(1b653be7-155d-451f-67f2-2c246a7bc791).jpg",
+      "retrieved_at": "2026-07-04T15:30:00Z",
+      "native_width": 1280,
+      "native_height": 853,
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Photo: National Park Service (public domain), via Wikimedia Commons"
+      },
+      "identity": {
+        "method": "trusted_source",
+        "verified": true,
+        "verified_title": "NPS-authored Commons file captioned 'Ernestina at sail in the New Bedford Harbor'; vlm_view consistent: a black-hulled two-masted schooner under sail with a US flag, working-harbor waterfront behind — matches Ernestina's documented appearance",
+        "subject": "Schooner Ernestina (ex-Effie M. Morrissey), New Bedford Harbor, Massachusetts"
+      },
+      "note": "Direct upgrade of the Detective's weak det_media_06 (a museum model in a display case): this is the real ship, public domain, landscape, cover-able. Ernestina is stronger than a generic whaler — she is the packet-trade vessel itself (det_12's escape route west made visible).",
+      "relates_to": [
+        "det_08",
+        "det_12"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_07": {
+      "kind": "image",
+      "label": "Street scene on the Plateau, Praia, Santiago",
+      "filename": "scout_praia_santiago_web.webp",
+      "caption": "Praia, Santiago — the capital where Cape Verde clinched its first-ever World Cup qualification on 13 October 2025.",
+      "caption_claims": [
+        "this is a street scene in Praia, Santiago Island, Cape Verde"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Santiago,_Praia_City_-_panoramio.jpg",
+      "retrieved_at": "2026-07-04T15:30:00Z",
+      "native_width": 1280,
+      "native_height": 960,
+      "license": {
+        "spdx": "CC-BY-SA-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Garbsen / Wikimedia Commons (CC BY-SA 3.0)"
+      },
+      "identity": {
+        "method": "trusted_source",
+        "verified": true,
+        "verified_title": "Commons/Panoramio geotagged file titled 'Santiago, Praia City'; vlm_view consistent: cobbled square, colonial-era pink building with terracotta roof, acacia shade tree and street life — characteristic of Praia's Plateau district",
+        "subject": "street scene in Praia, Santiago, Cape Verde"
+      },
+      "relates_to": [
+        "det_02",
+        "det_14"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_08": {
+      "kind": "image",
+      "label": "Bubista (Pedro Leitão Brito), Cape Verde head coach, at the 2026 World Cup",
+      "filename": "scout_bubista_web.webp",
+      "caption": "Bubista — Pedro Leitão Brito, the Boa Vista-born coach who fused island-born and diaspora-born players into one team — at the 2026 World Cup.",
+      "caption_claims": [
+        "this is Bubista (Pedro Leitão Brito), Cape Verde's head coach, photographed at the 2026 World Cup"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Bubista_2026.jpg",
+      "retrieved_at": "2026-07-04T15:30:00Z",
+      "native_width": 508,
+      "native_height": 677,
+      "license": {
+        "spdx": "CC-BY-SA-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Polites News (polites.news, site content licensed CC BY-SA 4.0) via Wikimedia Commons (CC BY-SA 4.0)"
+      },
+      "identity": {
+        "method": "trusted_source",
+        "verified": true,
+        "verified_title": "Commons file 'Bubista 2026.jpg' sourced to https://polites.news/3946.html — I fetched the source page and verified its notice: 'Материалы Polites News распространяются по лицензии Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0)'; the article is about Cape Verde's WC2026 knockout run. vlm_view consistent: smiling Cape Verdean man in his 50s in a navy/red national-team zip top wearing a FIFA World Cup lanyard, in-stadium background",
+        "subject": "Bubista (Pedro Leitão Brito), Cape Verde national team head coach"
+      },
+      "note": "Native size is only 508x677 — inline portrait use ONLY, never full-bleed/hero (validate.py media_low_resolution floor). License verified at the SOURCE site level (Polites News publishes all materials under CC BY-SA 4.0), not just taken from the Commons tag.",
+      "relates_to": [
+        "det_06"
+      ],
+      "purpose": "INFORM"
+    },
+    "sct_09": {
+      "kind": "image",
+      "label": "Deroy Duarte — identity gate PASSED on the Detective's ref photo",
+      "filename": "ref_deroy_duarte_web.webp",
+      "caption": "Deroy Duarte — born in Rotterdam, raised in Sparta's academy, scorer of Cape Verde's first goal against Argentina — here in Fortuna Sittard colours (2021–24).",
+      "caption_claims": [
+        "this is Deroy Duarte, the Rotterdam-born Cape Verde international",
+        "he is playing for Fortuna Sittard (his 2021-24 club), consistent with the photo's Eredivisie setting"
+      ],
+      "source_url": "https://commons.wikimedia.org/wiki/File:Deroy_Duarte.jpg",
+      "retrieved_at": "2026-07-04T15:34:37Z",
+      "native_width": 581,
+      "native_height": 1024,
+      "license": {
+        "spdx": "CC-BY-2.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Carlo Bruil Fotografie / Wikimedia Commons (CC BY 2.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "verified_title": "in-action shot of a player in Fortuna Sittard's green-black away kit (BetCity sponsor, 'FORTUNA' on the shorts, Eredivisie sleeve badge) vs Go Ahead Eagles' red-yellow — kit, competition, club era and appearance all consistent with Deroy Duarte; Commons file by Dutch football photographer Carlo Bruil names him",
+        "subject": "Deroy Duarte, Cape Verde international midfielder (Rotterdam-born)"
+      },
+      "note": "This is the SAME file the Detective fetched (ref_deroy_duarte.jpg) — not re-downloaded. Registered here because detective.json's scout_brief asked the Scout to run the identity gate before page use; the gate PASSED. Native 581x1024 (portrait) — inline use, not full-bleed. Designer may cite scout.sct_09.",
+      "relates_to": [
+        "det_01",
+        "det_04"
+      ],
+      "purpose": "INFORM"
+    }
+  },
+  "live_status": [
+    {
+      "subject": "2026 World Cup status for the story's protagonists (Cape Verde eliminated; Argentina's next fixture)",
+      "as_of": "2026-07-04",
+      "status": "As of 4 July 2026: Cape Verde's tournament is over — eliminated in the Round of 32 by Argentina, 3-2 after extra time, at Miami Stadium on 3 July (the winner an own-goal deflection in the 111th minute). Argentina advance to a Round-of-16 tie against Egypt (who beat Australia 4-2 on penalties, their first-ever knockout win) on 7 July 2026 at Atlanta Stadium, 16:00 GMT. Cape Verde exit as the smallest nation ever to reach a World Cup knockout round, unbeaten in 90 minutes across all four matches.",
+      "source": {
+        "url": "https://www.aljazeera.com/sports/2026/7/4/fifa-world-cup-round-of-16-match-schedule-which-teams-qualified",
+        "title": "FIFA World Cup: Round of 16 match schedule and which teams qualified — Al Jazeera (published 4 July 2026)",
+        "fetched_at": "2026-07-04T15:33:26Z"
+      },
+      "data_file": "code/live_status_wc2026_r16_argentina_egypt.html",
+      "relates_to": [
+        "det_01",
+        "det_02"
+      ]
+    }
+  ]
+}

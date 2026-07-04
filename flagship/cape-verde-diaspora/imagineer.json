@@ -1,0 +1,222 @@
+{
+  "meta": {
+    "role": "imagineer",
+    "version": "1.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "is_computational": true,
+    "is_visual": true,
+    "note": "Full fan-out (both topic_profile booleans true, per detective.json). Both client models node-verified this session: cm_01 matchOdds(rA,rB,homesign) reproduces the ana_19 baseline exactly ({win:3.4, draw:8.3, loss:88.3, advance:7.6}) and RATINGS_PRE_R32 carries all 32 knockout teams incl. Cape Verde 1701.6; cm_02 squadTally(countries?) reproduces ana_09/ana_10 ({players:15, caps:414, goals:33, playersPct:57.7, capsPct:50.3, goalsPct:44.0}) and accepts arbitrary country subsets. Diaspora concepts (img_07, img_08, img_10, img_15) MUST honor ana_caveat_01: every UN bilateral number is the born-in-CV FLOOR layer (146,396 = sum of 24 named destinations; Netherlands/US/Spain/Senegal structurally absent) — label the layer, ghost the missing hosts, never blend with heritage estimates."
+  },
+  "items": {
+    "img_01": {
+      "label": "What were the odds of that night? — re-run the match model",
+      "finding": "ana_19",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "picks any two of the 32 knockout teams (seeded Argentina vs Cape Verde) and derives the 3.4% / 8.3% / 88.3% split themselves — then re-matches Cape Verde against Egypt, the R16 opponent they never reached (32.5% to advance), on the same audited model",
+      "needs": { "client_model": "code/client_model.js:matchOdds", "data_table": "ana_19" },
+      "feasibility": "high",
+      "sketch": "dropdown(team A)+dropdown(team B, both from inlined RATINGS_PRE_R32, seeded ARG vs CV)+neutral-venue note -> matchOdds() -> three animated probability bars + bare advance-% readout; baseline chip pins the published 3.4/8.3/88.3",
+      "hero_candidate": true
+    },
+    "img_02": {
+      "label": "How good would Cape Verde have to be? — tune the Elo gap",
+      "finding": "ana_19",
+      "archetype": "tune_the_assumption",
+      "purpose": "INFORM",
+      "reader_produces": "drags Cape Verde's 1701.6 rating upward and watches the advance probability re-derive against the cached 7.6% baseline — discovering they'd need to be Argentina's equal (Elo ~2225) before the odds reach a coin flip",
+      "needs": { "client_model": "code/client_model.js:matchOdds", "data_table": "ana_19" },
+      "feasibility": "high",
+      "sketch": "slider(CV Elo, 1700-2300, seeded 1701.6)+reset-to-baseline -> matchOdds(slider, 2225, 0) -> delta bar vs ghost 7.6% baseline + bare advance-% readout (node-checked: advance crosses 50% only at 2225)",
+      "hero_candidate": true
+    },
+    "img_03": {
+      "label": "Strip the diaspora out of the squad",
+      "finding": "ana_09",
+      "archetype": "explorable_recompute",
+      "purpose": "INFORM",
+      "reader_produces": "toggles birth countries off the 26-man squad and derives what remains — remove all five foreign birth countries and 15 players, half the caps (50.3%) and 3 of 4 World Cup goals vanish; the team that qualified stops existing",
+      "needs": { "client_model": "code/client_model.js:squadTally", "data_table": "ana_09" },
+      "feasibility": "high",
+      "sketch": "flag-chip toggles (NED/POR/FRA/IRL/USA, all on at baseline) -> squadTally(deselected) -> 26 player dots grey out + bare players/caps/goals-% readouts re-derive (node-checked: full-abroad tally = 15/414/33 exactly)",
+      "hero_candidate": true
+    },
+    "img_04": {
+      "label": "Guess the squad's foreign-born share",
+      "finding": "ana_09",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "commits a guess for how many of the 26 were born abroad, then feels the correction when the real 15 (57.7%) lands drawn from the data — pool alternative to img_03 on the same finding, for the Editor to pick ONE",
+      "needs": { "client_model": null, "data_table": "ana_09" },
+      "feasibility": "high",
+      "sketch": "slider(0-26, your guess) -> reveal: guess bar vs data-bound 15/26 bar + per-country breakdown animates in; bare 15 readout",
+      "hero_candidate": false
+    },
+    "img_05": {
+      "label": "Replay the Argentina night until Cape Verde goes through",
+      "finding": "ana_19",
+      "archetype": "playable_game",
+      "purpose": "IMMERSE",
+      "reader_produces": "replays the R32 tie under the model's real odds, one click per universe, counting how many nights it takes before Cape Verde advances — the running advance-rate visibly converges to the published 7.6%",
+      "needs": { "client_model": "code/client_model.js:capeVerdeVsArgentina", "data_table": "ana_19" },
+      "feasibility": "high",
+      "sketch": "button(replay the night)+auto-run x100 -> sample outcome from {3.4, 8.3 (coin-flip ET), 88.3} -> tally strip of green/grey nights + bare running advance-% readout converging on 7.6",
+      "hero_candidate": false
+    },
+    "img_06": {
+      "label": "Four matches, four improbabilities — the tournament as the model saw it",
+      "finding": "ana_14",
+      "archetype": "scrollytelling",
+      "purpose": "IMMERSE",
+      "reader_produces": "steps through Spain (3.7% win expectancy) -> Uruguay (17.1%) -> Saudi Arabia (49.2%) -> Argentina (4.7%), watching the pre-match expectancy bar and the actual result land beat by beat, ending on +45 Elo and 'never beaten in 90 minutes'",
+      "needs": { "client_model": null, "data_table": "ana_14" },
+      "feasibility": "high",
+      "sketch": "sticky expectancy-vs-result graphic + four step beats (one per match row); each step draws the Elo expectancy bar, then stamps the real score from the data_table",
+      "hero_candidate": false
+    },
+    "img_07": {
+      "label": "The counted diaspora map — with the holes made visible",
+      "finding": "ana_01",
+      "archetype": "scrollytelling",
+      "purpose": "INFORM",
+      "reader_produces": "walks the 24-destination UN map (Portugal 52.5%, France 23.8%) and then the twist beat: the Netherlands, US, Spain and Senegal — including the birth countries of 7 squad players — render as ghosted 'not counted' markers, so the reader produces the insight that 146,396 is a floor, not the diaspora",
+      "needs": { "client_model": null, "data_table": "ana_01" },
+      "feasibility": "high",
+      "sketch": "sticky flow-map/proportional-circle graphic over ana_01 rows; steps: PT+FR dominance -> long tail -> ghost markers for the four structurally-missing hosts (ana_caveat_01 layer label pinned throughout)",
+      "hero_candidate": false
+    },
+    "img_08": {
+      "label": "Which country hosts the most squad birthplaces? (It's not on the UN map)",
+      "finding": "ana_01",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "picks which country they think hosts the largest counted Cape Verdean community, then feels the double reveal: Portugal holds 52.5% — and the squad's top birth country (Netherlands, 6 players) has no row in the UN matrix at all",
+      "needs": { "client_model": null, "data_table": "ana_01" },
+      "feasibility": "high",
+      "sketch": "choice buttons (Portugal/France/Netherlands/USA) -> reveal data-bound destination bars from ana_01 + 'Netherlands: not broken out' ghost row; verdict line scores the guess",
+      "hero_candidate": false
+    },
+    "img_09": {
+      "label": "Guess 1980's remittance dependence",
+      "finding": "ana_06",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "commits a guess for what share of GDP remittances were in 1980, then watches the real 28.2% land against today's 12.3% — and where their guess sits in the 45-year series' own spread",
+      "needs": { "client_model": null, "data_table": "ana_06" },
+      "feasibility": "high",
+      "sketch": "slider(0-50% of GDP, your guess) -> reveal guess marker on the full 1980-2024 area chart drawn from ana_06 rows; bare 28.2 readout + band from the series' own min/max",
+      "hero_candidate": false
+    },
+    "img_10": {
+      "label": "The rank race: 21 straight years in the world's remittance top 10",
+      "finding": "ana_08",
+      "archetype": "scrollytelling",
+      "purpose": "INFORM",
+      "reader_produces": "scrubs a rank line (#2 of 90 in 1980 -> #40 in 2010 -> #18 of 160 in 2024) and produces the economic-history reading themselves: dependence receded because GDP grew, not because the diaspora stopped sending",
+      "needs": { "client_model": null, "data_table": "ana_08" },
+      "feasibility": "high",
+      "sketch": "sticky inverted rank line (lower = more dependent) self-drawing per step; beats at 1980 #2, the 1994-95 return to #2, the 2010 #40 trough, the 2021 pandemic re-rise, 2024 #18",
+      "hero_candidate": false
+    },
+    "img_11": {
+      "label": "The 25-year Elo climb, ending at a mid-World-Cup peak",
+      "finding": "ana_12",
+      "archetype": "scrollytelling",
+      "purpose": "IMMERSE",
+      "reader_produces": "rides the rating line from #138 of 198 (1998) through the near-monotonic climb to #64 — and feels the kicker that the all-time peak (1702) was set DURING the World Cup, on 2026-06-26, two matches before the Argentina night",
+      "needs": { "client_model": null, "data_table": "ana_12" },
+      "feasibility": "high",
+      "sketch": "self-drawing line over 41 year-end rows; steps: 1988/1998 bottoms -> 2010s acceleration -> 2015 blip -> zoom to the four 2026 WC matches with the 1702 peak flag",
+      "hero_candidate": false
+    },
+    "img_12": {
+      "label": "Find your country on the top-64 board Cape Verde crashed",
+      "finding": "ana_16",
+      "archetype": "personal_input",
+      "purpose": "INFORM",
+      "reader_produces": "selects their own country on the current Elo top-64 board and produces the comparison themselves: every team above Cape Verde comes from a country at least 3x more populous (min Kosovo, 1.58M) — 'your country has N people per Elo point; Cape Verde has 310'",
+      "needs": { "client_model": null, "data_table": "ana_16" },
+      "feasibility": "high",
+      "sketch": "select/datalist(64 teams from ana_16 rows, seeded Argentina) -> highlight reader's row + Cape Verde's row on a population-vs-Elo strip; bare population-ratio readout",
+      "hero_candidate": false
+    },
+    "img_13": {
+      "label": "How big an upset did the world nearly see?",
+      "finding": "ana_15",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "guesses where a Cape Verde win over Argentina would have ranked among 33,081 matches, then sees the reveal: ~#25 all-time and #2 among World Cup finals upsets ever — and that Cape Verde already owns #73 (2-0 in Portugal, 2015, against the country holding 52% of its counted diaspora)",
+      "needs": { "client_model": null, "data_table": "ana_15" },
+      "feasibility": "high",
+      "sketch": "slider(top-10 / top-100 / top-1000 rank guess) -> reveal the all-time upset ladder from ana_15 rows with the hypothetical ARG slot + the real 2015 Portugal row highlighted; bare rank readout",
+      "hero_candidate": false
+    },
+    "img_14": {
+      "label": "Guess the scale gap: Cape Verde vs everyone who ever advanced",
+      "finding": "ana_18",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "commits a guess for how many times more populous the next-smallest knockout nation in history is, then feels 5.1x (Uruguay 1966) land — followed by the 89x average-2026-participant beat, dots drawn to population scale",
+      "needs": { "client_model": null, "data_table": "ana_18" },
+      "feasibility": "high",
+      "sketch": "slider(1x-100x, your guess) -> reveal population-scaled dot per advancer from ana_18 rows, Cape Verde's 527,326 dot vs Uruguay-1966's 2.7M; bare 5.1 readout + verdict",
+      "hero_candidate": false
+    },
+    "img_15": {
+      "label": "Sodade: the community the song mourns is vanishing from the table",
+      "finding": "ana_03",
+      "archetype": "scrollytelling",
+      "purpose": "IMMERSE",
+      "reader_produces": "a feeling: while the verified Cesaria Evora 'Sodade' embed plays (inst_01 — the lament for emigrants shipped to Sao Tome's plantations), the reader scrolls the one shrinking series in the data, 4,250 -> 1,115, wave by wave — hearing the loss the numbers record",
+      "needs": { "client_model": null, "data_table": "ana_03" },
+      "feasibility": "high",
+      "sketch": "quiet full-bleed beat: inst_01 YouTube embed + Mindelo harbor imagery; eight bars (one per UN wave) fade DOWN in sequence as the reader scrolls; one caption per beat, layer label per ana_caveat_01; no controls beyond scroll",
+      "hero_candidate": false
+    },
+    "img_16": {
+      "label": "How many of the 26 play club football in Cape Verde?",
+      "finding": "ana_11",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "commits a guess and gets the flattest possible answer — zero, across 14 club countries — the whole national team is an export product",
+      "needs": { "client_model": null, "data_table": "ana_11" },
+      "feasibility": "high",
+      "sketch": "stepper/slider(0-26 guess) -> reveal 14-country club map from ana_11 rows with an empty Cape Verde slot; bare 0 readout",
+      "hero_candidate": false
+    },
+    "img_17": {
+      "label": "Which country's Cape Verdean community grew 7x in one generation?",
+      "finding": "ana_02",
+      "archetype": "scored_quiz",
+      "purpose": "IMMERSE",
+      "reader_produces": "picks the fastest-growing destination and is corrected toward Luxembourg (x7.15, almost all in a single 2015-2020 wave; now 1.21% of Luxembourg's population) — a brand-new branch of a 500-year-old migration",
+      "needs": { "client_model": null, "data_table": "ana_02" },
+      "feasibility": "high",
+      "sketch": "choice buttons (France/Luxembourg/Italy/Brazil) -> reveal growth-multiple bars from ana_02 rows with Luxembourg's wave series inset (Brazil's x286 footnoted as a small-base artifact); verdict line",
+      "hero_candidate": false
+    },
+    "img_18": {
+      "label": "Where does your country sit on the emigration ladder?",
+      "finding": "ana_05",
+      "archetype": "personal_input",
+      "purpose": "INFORM",
+      "reader_produces": "looks up their own country's emigrants-per-resident ratio and lands it next to Cape Verde's 27.9% (#20 of 212) — producing the realization that nearly everything above Cape Verde is a war economy, a Balkan/Caribbean emigration state, or a microstate",
+      "needs": { "client_model": null, "data_table": "ana_05" },
+      "feasibility": "medium",
+      "sketch": "datalist(country) -> highlight on the ratio ladder; ana_05's data_table ships only the top 25 rows — the Analyst would need to emit the full 212-origin table (already computed in code/diaspora_analysis.py) for arbitrary lookup; falls back to high if scoped to the top-25 + Cabo Verde",
+      "hero_candidate": false
+    },
+    "img_19": {
+      "label": "The floor is already 28 in every 100 — guess it first",
+      "finding": "ana_04",
+      "archetype": "guess_then_reveal",
+      "purpose": "IMMERSE",
+      "reader_produces": "guesses how many counted emigrants exist per 100 residents and watches 27.9 land — then the honest layer beat: this is the strictest of three layers, and the heritage diaspora runs to ~120% of the resident population",
+      "needs": { "client_model": null, "data_table": "ana_04" },
+      "feasibility": "high",
+      "sketch": "slider(0-100 per-100-residents guess) -> reveal an isotype grid (100 person-marks, 28 tinted) data-bound to ana_04's 2024 row + the 1990->2024 doubling strip; bare 27.9 readout; layer label mandatory (ana_caveat_01)",
+      "hero_candidate": false
+    }
+  }
+}

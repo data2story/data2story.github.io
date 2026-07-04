@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "role": "cinematographer",
+    "version": "1.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "run_profile": "premium",
+    "mode": "photographic",
+    "mode_reason": "Rich verified real imagery -> photographic (the primary mode). The Designer's cinematic_background_pool registers 6 license-clean, >=1280px landscape cover-ables (des_01 Mindelo harbour, sct_04 Hard Rock aerial, sct_05 Delfshaven, sct_06 Ernestina under sail, sct_07 Praia, sct_03 Rotterdam WC flags) — at the 5-floor with one to spare, for a place/people/sport story whose geography (Miami / Rotterdam / the islands / the sea) IS the argument. No generative or data_driven fallback is needed or allowed to displace real photos.",
+    "gradient_scene_decision": "ZERO kind:color|gradient scenes, deliberately. The dense-interactive sections (edt_02 odds explorer, edt_05 scrolly map, edt_09 double scrolly) do NOT get gradient interludes — validate.py Section 6c hard-errors ANY gradient/color scene in photographic mode (cin_photographic_gradient_rest, the PIT-54 black-scroll-gap bug). Instead those beats HOLD the adjacent real photo rendered framed (blurred-darkened cover fill) under a near-opaque scrim, so the photographic surface quiets to near-silence without ever going black or fighting the charts.",
+    "registration_audit": {
+      "registered_backgrounds_referenced": ["des_01", "sct_04", "sct_05", "sct_06", "sct_07", "sct_03"],
+      "cin_00_media_ref_note": "cin_00's media_ref is des_01 (the Designer-REGISTERED hero still; hero.json still_ref='des_01') — NOT the hero.json id 'des_hero_video', which is not an item in designer.json and would trip validate.py Section 6 cin_media_ref_dangling (it is structural-exempt only for HTML data-des tokens). The layer the Programmer builds PAINTS the hero loop assets from hero.json (assets/teaser.webm, mp4 fallback assets/teaser_web.mp4, poster assets/teaser.jpg — an 8s ffmpeg Ken-Burns boomerang that is a pure camera move on des_01; every pixel is the verified photo). Tag the layer data-cin='cin_00' data-des='des_01'; the hero's Verify hit stays on the .teaser overlay keyed data-des='des_hero_video' per hero.json.",
+      "not_used_portrait_or_small": ["sct_08 Bubista 508x677 (inline only)", "sct_09 Duarte 581x1024 (inline only)", "des_08 Vozinha 819x720 (inline only)", "des_14 Evora 1280x1912 portrait (inline only, ai_face_policy reverence)", "des_17 Fogo 750x478 (sub-1280, in-column only)", "sct_02 BGM cover (disc art only)"],
+      "reserve_honored": "sct_03 (Rotterdam Nieuwe Binnenweg dressed in Cape Verdean flags) appears in ONE scene only — cin_10 / edt_10, the Editor's reserved full-circle close. It is referenced nowhere earlier."
+    },
+    "rhythm_map": "F=fresh photo debut, H=held/dimmed re-use (rest), R=deliberate motif return. cin_00 F(des_01 video) -> cin_01 F(sct_04) -> cin_02 H(sct_04) -> cin_03 F(sct_05) -> cin_04 H(sct_05) -> cin_05 F(sct_06) -> cin_06 H(sct_06) -> cin_07 R(des_01, the darkest scene — an ACTIVE treatment event, not a dead hold: new photo relative to both neighbours, hard grade change) -> cin_08 F(sct_07) -> cin_09 H(sct_07) -> cin_10 F(sct_03). No two consecutive rests; a real photo is on screen in every scene; no gradient anywhere.",
+    "interactive_scene_map": {
+      "cin_02": "edt_02 hosts int_02 (odds explorer) + des_06 chart — background is a framed HOLD under the heaviest evidence-tier scrim; the model, not the photo, is the subject.",
+      "cin_03": "edt_03 hosts the CENTERPIECE int_01 (strip-the-diaspora hero widget) + des_07/des_08 diptych + des_09 payoff chart — fresh Delfshaven photo, heavily scrimmed so the widget owns the light.",
+      "cin_04": "edt_04 hosts int_05 (zero-club guess) — held Delfshaven, quieter still; the guess widget must meet no visual competition.",
+      "cin_05": "edt_05 hosts int_03 (floor-map scrollytelling, its own sticky+IO steps) — ONE scene spans the whole section; the background NEVER changes mid-scrolly.",
+      "cin_06": "edt_06 hosts int_07 (27.9 guess) + des_13 ranking chart — held Ernestina, framed and dim behind the widget and 25 bars.",
+      "cin_07": "edt_07 hosts int_04 (Sodade scrollytelling with the inst_01 embed and its OWN imagery run des_14/des_16/des_17 inside the sticky panel) — the background is the darkest, most static scene on the page and must not compete with the scrolly's interior imagery.",
+      "cin_08": "edt_08 hosts int_06 (rank-race scrollytelling) + des_18 line chart — fresh Praia daylight; one scene for the whole section.",
+      "cin_09": "edt_09 hosts int_09 (Elo-climb scrollytelling) AND int_10 (find-your-country) + des_20 chart — the densest section gets a held, framed Praia so both playgrounds sit on the quietest possible stage.",
+      "cin_10": "edt_10 hosts int_08 (scale-gap quiz) + des_22 chart + des_23 full-bleed close + des_24 embed — the reserved flags photo backs the whole close."
+    },
+    "edt_07_restraint_doctrine": "The famine/sodade scene (cin_07) is REVERENT by construction: the Mindelo harbour photo returns desaturated, framed over a blurred near-black fill, under the page's heaviest scrim, with ALL motion removed (no ken-burns, no parallax even for motion-tolerant readers). No tourist-pretty island shot: sct_07 Praia street life and the bright Ernestina-at-sail cover treatment are kept away from this beat; the Sao Tome fading bars (int_04) and the imagery run INSIDE the scrolly carry the weight. The background is a room gone quiet, not a postcard."
+  },
+  "scenes": {
+    "cin_00": {
+      "backs": "teaser",
+      "order": 0,
+      "background": {
+        "kind": "video",
+        "fit": "cover",
+        "media_ref": "des_01",
+        "filename": "teaser.webm",
+        "treatment": "Full-bleed cover. The hero loop from hero.json (assets/teaser.webm, mp4 fallback assets/teaser_web.mp4, poster assets/teaser.jpg): an 8s smoothstep Ken-Burns boomerang (1.00->1.09 push-in toward the moored boats, zero-velocity loop join) on the verified Mindelo harbour still des_01 — a pure camera move, nothing fabricated. Lifted ABOVE the stage's global darkening (higher z-index) so the hero keeps its own brightness; .active by default from the very top, before any scroll."
+      },
+      "transition_in": "Active on load (no scroll needed). Reuses the shared crossfade engine: when edt_01's beat crosses the viewport middle, the IntersectionObserver toggles .active off cin_00 and onto cin_01 — the harbour dissolves into the Miami stadium as one continuous move, no 'cover ends, content begins' seam (hero_as_cin_00_continuous_backdrop).",
+      "scrim": "Bottom-anchored masthead scrim only (the image stays bright above): linear-gradient(180deg, rgba(10,20,32,0) 0%, rgba(10,20,32,.25) 55%, rgba(10,20,32,.88) 100%)",
+      "motion": "None added — the loop itself is the motion (no extra ken-burns on a video). The transparent .teaser FURNITURE overlay (kicker, headline 'Cape Verde Is Bigger Than Cape Verde', standfirst, gold kicker rule, scrim) OPACITY-DISSOLVES (opacity 1->0, OPACITY ONLY — never scale a transparent overlay) via a rAF scroll handler as it scrolls past. Under prefers-reduced-motion: poster assets/teaser.jpg, overlay static and fully opaque.",
+      "scroll_span": "~1.0 viewport height (the teaser)",
+      "purpose": "IMMERSE",
+      "credit": "Rendered on the .teaser overlay per hero.json, not on this layer: 'Photo: Manuel de Sousa / Wikimedia Commons (CC BY-SA 3.0) — identity verified; motion is a camera move on the still'",
+      "notes": "HERO-HANDOFF LAYER. media_ref=des_01 (the registered still; hero.json still_ref) — see meta.registration_audit.cin_00_media_ref_note. The hero's Verify hit stays on the .teaser overlay (data-des='des_hero_video', class_marker 'teaser'); this layer tags data-cin='cin_00' data-des='des_01'. The overlay also paints the poster as its own static backdrop so the hero survives JS-off/no-video."
+    },
+    "cin_01": {
+      "backs": "edt_01",
+      "order": 1,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_04",
+        "filename": "scout_hard_rock_stadium_web.webp",
+        "treatment": "Full-bleed cover, graded toward the page's deep-Atlantic navy (a static CSS filter on the layer: slight desaturation + cool shift) so the 2016 daytime aerial reads as document of a place, not a sunny postcard — the night of 3 July happened HERE."
+      },
+      "transition_in": "Crossfade from cin_00 as edt_01 centres (CSS transition:opacity ~1.15s ease on .active; no forced reflow; img pre-decoded)",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.55) 0%, rgba(10,20,32,.88) 100%)",
+      "motion": "Gentle ken-burns scale 1.0->1.04 over the scene (CSS transition toggled with .active); parallax translateY at 0.55x scroll, capped +-6vh; transform/opacity only",
+      "scroll_span": "full edt_01 section, ~2.5 viewport heights (timeline prose + des_03 + inst_02 embed + 8.3% callout)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Eisenthesky Productions / Wikimedia Commons (CC BY-SA 4.0)",
+      "notes": "Match-night hook: the stadium where Cape Verde held the champions to the 111th minute. The FOX highlights embed (des_04) and stadium in-column photo (des_03) live in the prose column over this backdrop; the honest 2016-aerial dating stays on des_03's caption."
+    },
+    "cin_02": {
+      "backs": "edt_02",
+      "order": 2,
+      "background": {
+        "kind": "image",
+        "fit": "framed",
+        "media_ref": "sct_04",
+        "filename": "scout_hard_rock_stadium_web.webp",
+        "treatment": "REST — the same stadium HELD as a quieter beat: blurred-darkened cover fill (object-fit:cover; filter:blur(~32px) brightness(~.4); transform:scale(1.2)) with no contained foreground copy — the frame quiets to an abstract navy field that is still, verifiably, the photograph. The odds explorer and the lollipop chart own the section's light."
+      },
+      "transition_in": "Crossfade from cin_01 (the sharp stadium softens into its own blur — reads as the camera pulling focus from the place to the numbers)",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.72) 0%, rgba(10,20,32,.94) 100%) — evidence-tier, near-opaque behind the interactive and chart",
+      "motion": "None (static hold; the blur layer never animates) — motion here would fight int_02's controls",
+      "scroll_span": "full edt_02 section, ~3 viewport heights (explorer + trust paragraph + two honesty sentences + des_06)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Eisenthesky Productions / Wikimedia Commons (CC BY-SA 4.0)",
+      "notes": "Forensic mood: the reader re-runs the 3.4/8.3/88.3 night on cm_01. A real photo stays on screen (PIT-54) but at whisper volume. Rest #1 — preceded and followed by fresh scenes."
+    },
+    "cin_03": {
+      "backs": "edt_03",
+      "order": 3,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_05",
+        "filename": "scout_delfshaven_rotterdam_web.webp",
+        "treatment": "Full-bleed cover, cool Dutch light kept natural (the visual contrast with the volcanic-island imagery IS the diaspora story) — the harbour borough that produced both Miami goalscorers appears exactly when the story asks whose team this is."
+      },
+      "transition_in": "Crossfade from cin_02's abstract navy blur into sharp Delfshaven — the geographic cut from Miami to Rotterdam lands the section turn",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.6) 0%, rgba(10,20,32,.9) 100%) — heavy enough that the hero widget, diptych and payoff chart read cleanly",
+      "motion": "Gentle ken-burns 1.0->1.04; parallax translateY at 0.5x scroll; freezes (no class toggling) while int_01's recompute animation runs is NOT needed — the widget is in-column and the background animates opacity/transform only",
+      "scroll_span": "full edt_03 section, ~4 viewport heights (texture -> priming -> HERO widget -> payoff paragraphs -> des_09)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Michielverbeek / Wikimedia Commons (CC BY-SA 4.0)",
+      "notes": "CENTERPIECE SCENE (global.centerpiece_scene). The reveal-protection order inside the column is the Editor's; the background carries no number and cannot spoil. Rotterdam enters the visual story here and pays off at cin_10."
+    },
+    "cin_04": {
+      "backs": "edt_04",
+      "order": 4,
+      "background": {
+        "kind": "image",
+        "fit": "framed",
+        "media_ref": "sct_05",
+        "filename": "scout_delfshaven_rotterdam_web.webp",
+        "treatment": "REST — Delfshaven HELD: blurred-darkened cover fill (blur ~28px, brightness ~.42, scale 1.2). The same streets, now as the federation's scouting ground: the machine trawls the neighbourhoods the previous scene showed sharp."
+      },
+      "transition_in": "Crossfade from cin_03 (sharp -> its own blur; a focus pull, not a location change)",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.7) 0%, rgba(10,20,32,.93) 100%)",
+      "motion": "None (static hold) — the zero-club guess widget (int_05) precedes its answer paragraph and must meet no competition",
+      "scroll_span": "full edt_04 section, ~2 viewport heights (LinkedIn anecdote + Bubista portrait + guess widget + answer)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Michielverbeek / Wikimedia Commons (CC BY-SA 4.0)",
+      "notes": "Rest #2 — non-consecutive with cin_02 (cin_03 is fresh between them). Bubista's portrait (des_10, 508x677) stays inline-only per the low-resolution floor; it is never a background."
+    },
+    "cin_05": {
+      "backs": "edt_05",
+      "order": 5,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_06",
+        "filename": "scout_ernestina_new_bedford_web.webp",
+        "treatment": "Full-bleed cover, graded dark-maritime (deepened shadows, cool navy cast): the packet schooner that physically carried the counted emigrants — the UN table's rows made of wood and sail. Public domain, cover-able."
+      },
+      "transition_in": "Crossfade from cin_04's Delfshaven blur to the ship — the section turns from who plays to who LEFT, and the vessel is the bridge",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.68) 0%, rgba(10,20,32,.93) 100%) — heavy: the floor-map scrolly (int_03) owns this section and its sticky map must dominate",
+      "motion": "Very slow ken-burns 1.0->1.03 ONLY while the section's opening prose is in view; the layer holds still once int_03's sticky graphic pins (single scene for the whole section — the background NEVER changes mid-scrolly, the scrolly's own IO steps do the storytelling)",
+      "scroll_span": "full edt_05 section, ~5 viewport heights (the int_03 scrolly steps s1-s4 + des_11 chart)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: National Park Service (public domain), via Wikimedia Commons",
+      "notes": "The 'count with holes' mood: an emigrant ship on a dark sea behind a map that admits it cannot see everyone. int_03's ghosted not-counted markers do the arguing; the background just says 'by sea'."
+    },
+    "cin_06": {
+      "backs": "edt_06",
+      "order": 6,
+      "background": {
+        "kind": "image",
+        "fit": "framed",
+        "media_ref": "sct_06",
+        "filename": "scout_ernestina_new_bedford_web.webp",
+        "treatment": "REST — the Ernestina HELD: blurred-darkened cover fill (blur ~30px, brightness ~.4, scale 1.2). The ship dissolves into open water while the prose stacks the three layers of the real nation."
+      },
+      "transition_in": "Crossfade from cin_05 (sharp ship -> its own blur; the same maritime surface, quieter)",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.72) 0%, rgba(10,20,32,.94) 100%) — the 27.9 guess widget (int_07) and the 25-bar ranking (des_13) need a silent field",
+      "motion": "None (static hold)",
+      "scroll_span": "full edt_06 section, ~3 viewport heights (guess widget -> three-layer paragraphs -> Brockton beat -> des_13 at section end)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: National Park Service (public domain), via Wikimedia Commons",
+      "notes": "Rest #3 — non-consecutive (cin_05 fresh before, cin_07 is an active motif return after). The section's own in-column image is Delfshaven (des_12); the background deliberately stays on the sea so the Dutch harbour photo reads fresh in-column. Brockton's curfew beat passes over this quiet field — no imagery leans on it."
+    },
+    "cin_07": {
+      "backs": "edt_07",
+      "order": 7,
+      "background": {
+        "kind": "image",
+        "fit": "framed",
+        "media_ref": "des_01",
+        "filename": "teaser_web.webp",
+        "treatment": "THE DARKEST SCENE — a deliberate motif RETURN, not a rest: the hero's Mindelo harbour comes back desaturated (filter:grayscale(~.85) brightness(~.35) + blur(~24px) on the cover fill; the contained copy at brightness ~.55, desaturated), the port the famine ships and the Sao Tome contract-labour route left from, drained of its opening warmth. The Editor's edt_07 imagery run names Mindelo (det_media_02 — the same verified photograph) for exactly this beat."
+      },
+      "transition_in": "Slow crossfade from cin_06's sea-blur into the grey harbour — the page's home image returning in mourning registers the turn without a single new pixel of spectacle",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.82) 0%, rgba(10,20,32,.96) 100%) — the heaviest scrim on the page; the Sao Tome fading bars and the 'Sodade' embed inside int_04 carry ALL the weight",
+      "motion": "NONE — no ken-burns, no parallax, for any reader (not just reduced-motion). A still, silent room. The only motion in this section belongs to int_04's scrolly (bars fading wave by wave) and the click-to-play embed.",
+      "scroll_span": "full edt_07 section, ~5 viewport heights (the int_04 Sodade scrolly with its interior imagery run des_14/des_16/des_17, then the famine prose: 45,000 dead 1941-48; Sao Nicolau 28%, Fogo 31%; 80,000 to Sao Tome)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Manuel de Sousa / Wikimedia Commons (CC BY-SA 3.0)",
+      "notes": "RESTRAINT DOCTRINE (meta.edt_07_restraint_doctrine): no tourist-pretty island shot, no fresh spectacle, nothing competing with the scrolly's interior Evora/Ernestina/Fogo run. Cesaria Evora's portrait (des_14) is NEVER a background (portrait orientation + ai_face_policy reverence — she died in 2011). Tag data-cin='cin_07' data-des='des_01'."
+    },
+    "cin_08": {
+      "backs": "edt_08",
+      "order": 8,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_07",
+        "filename": "scout_praia_santiago_web.webp",
+        "treatment": "Full-bleed cover at natural daylight grade (only a slight navy cool in the shadows): after the darkest scene, the capital's street life arrives as the recovery — the country the remittances built, in ordinary sunlight. The tonal lift IS the section's argument (det_13: the falling share is a growing denominator)."
+      },
+      "transition_in": "Crossfade from cin_07's grey harbour into Praia daylight — the page's one deliberate brightness step-up, timed to the money-that-built-the-country turn",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.6) 0%, rgba(10,20,32,.9) 100%)",
+      "motion": "Gentle ken-burns 1.0->1.04; parallax translateY at 0.5x, capped +-6vh; holds still once int_06's sticky rank-race pins",
+      "scroll_span": "full edt_08 section, ~4 viewport heights (2021 proof paragraph -> int_06 rank-race scrolly -> #18-of-160 callout -> des_18 -> LDC graduation close)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Garbsen / Wikimedia Commons (CC BY-SA 3.0)",
+      "notes": "Fresh debut of sct_07 HERE (not edt_09) so the brightness recovery lands on the remittance beat; edt_09 then holds it. One scene for the whole section — int_06's own IO steps run inside it."
+    },
+    "cin_09": {
+      "backs": "edt_09",
+      "order": 9,
+      "background": {
+        "kind": "image",
+        "fit": "framed",
+        "media_ref": "sct_07",
+        "filename": "scout_praia_santiago_web.webp",
+        "treatment": "REST — Praia HELD: blurred-darkened cover fill (blur ~30px, brightness ~.45, scale 1.2). The capital stays under the section where its team's 25-year climb is measured, but at whisper volume: this is the page's densest section (two playgrounds + a chart)."
+      },
+      "transition_in": "Crossfade from cin_08 (sharp street -> its own blur; same place, the eye released to the data)",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.72) 0%, rgba(10,20,32,.94) 100%)",
+      "motion": "None (static hold) — int_09's Elo-climb scrub and int_10's find-your-country picker own all motion here",
+      "scroll_span": "full edt_09 section, ~5 viewport heights (ana_12 paragraph -> int_09 scrolly -> int_10 picker -> des_20 upset ladder -> qualification beat with des_21 in-column)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Garbsen / Wikimedia Commons (CC BY-SA 3.0)",
+      "notes": "Rest #4 — non-consecutive (cin_08 fresh before, cin_10 fresh after). des_21 (the sharp Praia photo) sits in-column at the qualification beat, reading crisp against its own blurred echo behind — the held background quietly reinforces rather than repeats."
+    },
+    "cin_10": {
+      "backs": "edt_10",
+      "order": 10,
+      "background": {
+        "kind": "image",
+        "fit": "cover",
+        "media_ref": "sct_03",
+        "filename": "scout_rotterdam_wc_flags_web.webp",
+        "treatment": "Full-bleed cover, natural grade with the flags' star-gold and Atlantic blue left saturated — the page's accent palette appears IN the photograph for the first time: the Nieuwe Binnenweg dressed in Cape Verdean flags, the eleventh island itself. RESERVED image, first and only appearance."
+      },
+      "transition_in": "Crossfade from cin_09's Praia blur into the sharp Rotterdam street — islands to diaspora in one dissolve; the full circle (both Miami scorers grew up streets away) closes where the goals began",
+      "scrim": "linear-gradient(180deg, rgba(10,20,32,.55) 0%, rgba(10,20,32,.9) 100%) — lighter at the top so the bunting reads, dense at the base under the quiz, chart, live badge and closing embed",
+      "motion": "Gentle ken-burns 1.0->1.03 (slightly restrained: bunting + fine flag detail; a stronger zoom would shimmer); parallax at 0.5x; settles still at the 'Petit pays' embed",
+      "scroll_span": "full edt_10 section to page end, ~4 viewport heights (des_22 -> scale-gap quiz -> ana_18 payoff -> live-status badge -> des_23 full-bleed -> closing paragraph -> des_24 embed)",
+      "purpose": "IMMERSE",
+      "credit": "Photo: Sneeuwvlakte / Wikimedia Commons (CC BY-SA 4.0)",
+      "notes": "The Editor's reserve honored: sct_03 renders nowhere before this scene (des_23, the in-column full-bleed of the same photo, also lives here). Background and des_23 are the same verified asset used as backdrop + document respectively; the page ends on the open question over this street. Tag data-cin='cin_10' data-sct='sct_03'."
+    }
+  },
+  "global": {
+    "engine": "One pinned full-bleed .cin-stage (position:fixed, inset:0, z-index behind <main>) holding one .cin-bg layer per scene, stacked. The ACTIVE layer has opacity 1, all others 0; scene switching is an IntersectionObserver on the section beats (data-backs=teaser|edt_xx; rootMargin '-45% 0px -45% 0px', threshold 0 — the beat whose middle crosses the viewport middle activates its layer) toggling an .active class; the crossfade is a CSS transition:opacity 1.15s ease (NEVER a JS tween, NEVER a forced-reflow restart like void el.offsetWidth). Text scrolls over the stage in <main> with per-scene scrims painted inside each .cin-bg plus the body backplate below. Copy the working reference build (cinematographer/references/example_cinematic_scroll.html) for the exact CSS/JS, restyled to THIS page's tokens (bg #0A1420, ink #EAE6DC, accent #F2B544) — not the example's mint.",
+    "scene_count": 11,
+    "reduced_motion": "@media (prefers-reduced-motion: reduce): no crossfade, no ken-burns, no parallax, no hero video (cin_00 -> poster assets/teaser.jpg; the .teaser overlay stays static and fully opaque). Each section paints its scene's image as a STATIC scrimmed per-section background (the framed holds keep their blur+dim grade as static CSS). The page reads fully with motion off; JS-off degrades the same way (per-section static backgrounds; never a bare or white column).",
+    "performance": "Lazy-decode: every .cin-bg <img> gets decoding='async' + img.decode() on preload; only the current and next scene's images are decoded/upgraded (IO with a generous rootMargin marks 'near' scenes); crossfade current+next pair only, will-change:opacity ONLY on that pair (remove after transition). All grade filters (blur/brightness/grayscale) are STATIC per layer — never animated at scroll-time. Parallax + the hero overlay dissolve run in one rAF-throttled scroll handler, transform/opacity only, parallax capped +-6vh. The framed holds re-use the SAME image file as their sharp sibling (browser cache — zero extra bytes: 6 photos + 1 video cover 11 scenes). Total background weight ~1.5 MB images + the 8s teaser loop. Mobile <=700px: parallax OFF, ken-burns OFF, crossfade kept; the sticky stage uses 100svh; hero prefers the mp4 (small loop) with poster-first paint, poster-only under Save-Data.",
+    "centerpiece_scene": "cin_03",
+    "interaction_coexistence": "The cinematic IO watches ONLY section-level beats (the teaser + the ten data-edt sections) — never the .step divs inside int_03/int_04/int_06/int_09, which run their OWN sticky+IO engines (rootMargin '-40% 0 -40% 0') for step logic. One scene per section means the background NEVER changes mid-scrolly; it holds while a scrolly's interior steps fire. Stacking: .cin-stage lowest; scrolly sticky panels, widgets, charts and the frosted plates live in <main>'s stacking context above it. The scrollies' sticky graphics carry their own opaque panel surfaces (--surface #101D2B family) so their SVGs never depend on the background for contrast.",
+    "readability": "Two-tier legibility, per cinematic_recipes.readability_scrims: (1) per-scene scrims as specced on each cin_xx (bottom-anchored, tuned darker for evidence/interactive-heavy beats); (2) a frosted dark BACKPLATE on the prose sections — main>section:not(.teaser):not(.refs){ background:rgba(10,20,32,.6); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px) } — at the PROSE width: wide charts/maps/card-decks break out as their own frosted figures, but data-grid tables stay WITHIN the backplate measure (tables-vs-charts split, PIT-67). Text-shadow alone is never relied on. All chart guide text stays in --ink/--muted light values (dark-mode-safe gate).",
+    "continuity": "Connective thread = the star-gold accent (#F2B544): the 1px scroll-progress hairline on the stage, scene credits and the kicker rules all use it, and every background is graded toward the deep-Atlantic navy (#0A1420 family) so no scene jumps palette — the one deliberate tonal event is the cin_07 (grey, darkest) -> cin_08 (daylight) recovery, which is the story's own emotional turn. Geography arcs Mindelo -> Miami -> Rotterdam -> the sea -> Mindelo (dark) -> Praia -> Rotterdam (flags): the page opens on the islands and closes on the diaspora, which is the thesis.",
+    "credits": "Each scene's credit renders small (bottom-right of the stage, --muted, 11-12px) from the media_ref's verified attribution_text, switching with the active scene; cin_00's credit lives on the .teaser overlay per hero.json. CC BY-SA / CC BY attributions verbatim as specced per scene; the NPS public-domain line kept for sct_06.",
+    "tagging": "The Programmer tags every layer data-cin='cin_xx' + data-des/data-sct from its media_ref (cin_00 -> data-des='des_01'; the .teaser overlay separately carries data-des='des_hero_video' as the hero's Verify hit). All ids resolve against scout.json/designer.json registries (validate.py Section 6)."
+  }
+}

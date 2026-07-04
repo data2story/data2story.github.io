@@ -1,0 +1,279 @@
+{
+  "meta": {
+    "role": "editor",
+    "version": "2.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "run_profile": "premium",
+    "working_masthead": {
+      "title": "The Eleventh Island",
+      "subtitle": "Cape Verde, the World Cup nation whose people mostly live elsewhere",
+      "note": "Working strings only — the Copywriter owns the final masthead, section titles and captions. Standfirst must prime, never spoil: no 15/26, no 27.9, no zero-home-based, no 5.1x in the dek."
+    },
+    "bgm": {
+      "asset": "sct_01",
+      "cover": "sct_02",
+      "intent": "site-wide now-playing card; longing/pensive solo guitar (sodade register), never celebratory; real morna lives as inst_01/inst_03 embeds"
+    }
+  },
+  "core_claim": "Cape Verde took the reigning world champions to the 111th minute because 'Cape Verde' is much bigger than Cape Verde — the team, the money and the nation itself are the diaspora made visible, and even the UN's strictest count cannot fully see it.",
+  "items": {
+    "edt_01": {
+      "label": "Hook — the night in Miami, and both goals from Rotterdam",
+      "purpose": "hook",
+      "title": "Nine Minutes from History",
+      "findings": ["ana_19", "ana_14"],
+      "context": ["det_01", "det_04", "det_02", "sct_04"],
+      "triage": {
+        "ana_19": "supporting",
+        "ana_14": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "video",
+      "editorial_notes": "Match timeline verbatim from det_01 (winner = Diney own goal, 111'). Vozinha is 40 (ana_caveat_08). inst_02 (FOX highlights) is the section's video AND the agreed stand-in for the missing Lopes Cabral photo — no unlicensed portrait, no AI likeness. Do not state 15/26 or any hero-payoff number here. Hard Rock aerial sct_04 available as scene-setter."
+    },
+    "edt_02": {
+      "label": "The odds, reader-runnable — and why to believe them",
+      "purpose": "evidence",
+      "title": "What Were the Odds?",
+      "findings": ["ana_19", "ana_20", "ana_14"],
+      "context": ["det_01", "det_02"],
+      "triage": {
+        "ana_19": "supporting",
+        "ana_20": "supporting",
+        "ana_14": "supporting"
+      },
+      "chart_placeholder": "ana_14",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Odds explorer (interactives.supporting rank 1, cm_01 matchOdds) lives here, seeded Argentina vs Cape Verde. ana_20 gets its own trust paragraph. Two honesty sentences are binding page copy: ET-as-coin-flip assumption -> 7.6% (ana_caveat_09) and our-own-Elo-not-comparable (ana_caveat_04). Chart ana_14 labels its column 'Elo win expectancy' to keep it distinct from the model probabilities in prose."
+    },
+    "edt_03": {
+      "label": "The lead: the squad IS the diaspora (hero playground)",
+      "purpose": "turn",
+      "title": "Whose Team Is This?",
+      "findings": ["ana_09", "ana_10"],
+      "context": ["det_16", "det_04", "det_05", "sct_09", "sct_05"],
+      "triage": {
+        "ana_09": "lead",
+        "ana_10": "supporting"
+      },
+      "chart_placeholder": "ana_10",
+      "media_placeholder": "interactive",
+      "editorial_notes": "HERO section. Order is binding: Duarte-family texture -> priming paragraph -> hero widget (strip-the-diaspora, cm_02 squadTally) -> only then the 15/26, 50.3%-of-caps and 3-of-4-goals paragraphs. Ryan Mendes / island-born counterweight must survive (fusion, not imported XI). sct_09 Duarte portrait inline only (581x1024). Flags PNG set (det_media_07) available for country chips."
+    },
+    "edt_04": {
+      "label": "The federation's diaspora-recruitment machine",
+      "purpose": "evidence",
+      "title": "The Machine",
+      "findings": ["ana_11"],
+      "context": ["det_06", "sct_08"],
+      "triage": {
+        "ana_11": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "image",
+      "editorial_notes": "LinkedIn/Roberto Lopes anecdote + Bubista profile (sct_08 portrait, inline only, 508x677). The ana_11 guess widget (zero home-based players) precedes the answer paragraph — no static ana_11 chart above it, chart_placeholder deliberately null to avoid spoiling the reveal."
+    },
+    "edt_05": {
+      "label": "The UN count and its structural holes",
+      "purpose": "evidence",
+      "title": "The Count with Holes in It",
+      "findings": ["ana_01", "ana_02"],
+      "context": ["det_07"],
+      "triage": {
+        "ana_01": "supporting",
+        "ana_02": "color"
+      },
+      "chart_placeholder": "ana_02",
+      "media_placeholder": "map",
+      "editorial_notes": "LAYER RULE front and center (ana_caveat_01): 146,396 = floor, sum of 24 destinations, no residual; NL/US/Spain/Senegal rendered as ghosted 'not counted' markers — the scrolly map (interactives rank 2) owns ana_01, so the static chart slot takes ana_02 (growth multiples; footnote Brazil x286 as small-base artifact). Luxembourg x7.15 / 1.21% is the color beat. Strip the UN '*' from destination names (det_17)."
+    },
+    "edt_06": {
+      "label": "Three layers deep: how big the real nation is",
+      "purpose": "evidence",
+      "title": "The Nation of 120 Percent",
+      "findings": ["ana_04", "ana_05"],
+      "context": ["det_08", "det_09", "det_10", "det_11", "sct_05"],
+      "triage": {
+        "ana_04": "supporting",
+        "ana_05": "supporting"
+      },
+      "chart_placeholder": "ana_05",
+      "media_placeholder": "image",
+      "editorial_notes": "Guess widget (27.9 per 100, interactives rank 6) sits BEFORE the ana_04 answer paragraph. ana_05 framed as '#20 of 212 WB-covered origins' (ana_caveat_02). Three layers must stay visibly separated: UN floor / CBS 23,150 / ACS 106,084-142,570 vs State Dept ~500k / EUDiF ~120% — attributed, never blended into one chart. Brockton (det_09): curfew + nine injured reported factually and briefly; tone stays on diaspora identity. Delfshaven photo sct_05 is this section's image."
+    },
+    "edt_07": {
+      "label": "Famine, ships, Sao Tome — and the music it composed",
+      "purpose": "turn",
+      "title": "Sodade — Why They Left",
+      "findings": ["ana_03"],
+      "context": ["det_12", "det_15", "sct_06"],
+      "triage": {
+        "ana_03": "supporting"
+      },
+      "chart_placeholder": null,
+      "media_placeholder": "audio",
+      "editorial_notes": "Emotional heart. The Sodade scrolly (interactives rank 3) owns ana_03's fading bars — no separate static chart. inst_01 (Cesaria Evora 'Sodade', verified embed) plays inside it; imagery run: Ernestina (sct_06), Mindelo (det_media_02), Pico do Fogo (det_media_03), Cesaria Evora (det_media_01 — if animated, minimal and reverential per ai_face_policy). Famine numbers exact: 45,000 dead 1941-48; Sao Nicolau 28%, Fogo 31%; 80,000 to Sao Tome 1900-1970. Layer label still applies to the ana_03 series."
+    },
+    "edt_08": {
+      "label": "Remittances: the economy the diaspora carried",
+      "purpose": "evidence",
+      "title": "The Money That Built the Country",
+      "findings": ["ana_06", "ana_08", "ana_07"],
+      "context": ["det_13", "det_14"],
+      "triage": {
+        "ana_06": "supporting",
+        "ana_08": "supporting",
+        "ana_07": "supporting"
+      },
+      "chart_placeholder": "ana_06",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Direction-of-reading is binding (det_13): the falling share = growing denominator, NOT a fading diaspora; the 2021 pandemic surge to 15.3% is the proof beat. Rank-race scrolly (interactives rank 5) owns ana_08; ana_06 takes the static 45-year chart; ana_07 is an inline callout (#18 of 160, top 11%, SSA #4). LDC graduation (det_14, second ever, Dec 2007) closes the section as the payoff of the money."
+    },
+    "edt_09": {
+      "label": "The rise, quantified: Elo climb + smallest team in the top 64",
+      "purpose": "evidence",
+      "title": "The Rise, Measured",
+      "findings": ["ana_12", "ana_16", "ana_15"],
+      "context": ["det_02", "det_06", "sct_07"],
+      "triage": {
+        "ana_12": "supporting",
+        "ana_16": "supporting",
+        "ana_15": "color"
+      },
+      "chart_placeholder": "ana_15",
+      "media_placeholder": "interactive",
+      "editorial_notes": "Two playgrounds live here: the Elo-climb scrolly (rank 8, ana_12, peak-1702-mid-WC kicker) and find-your-country on the top-64 board (rank 9, ana_16, personal_input). ana_15 is the color chart (upset ladder; the 2015 Portugal win vs the country holding 52% of the counted diaspora is the thesis tie — keep that sentence). Elo numbers are our implementation (ana_caveat_04, already stated in edt_02). Praia photo sct_07 accompanies the qualification beat."
+    },
+    "edt_10": {
+      "label": "Close: smallest ever past the first round; the full-circle street",
+      "purpose": "close",
+      "title": "The Eleventh Island",
+      "findings": ["ana_18", "ana_17"],
+      "context": ["det_03", "det_14", "det_10", "sct_03"],
+      "triage": {
+        "ana_18": "supporting",
+        "ana_17": "supporting"
+      },
+      "chart_placeholder": "ana_17",
+      "media_placeholder": "image",
+      "editorial_notes": "Precision beat first (ana_17: 3rd-least-populous participant ever; Curacao 156,263 / Iceland 352,721, WB numbers per ana_caveat_10 — never repeat the stale 'second-smallest' line). Scale-gap quiz (rank 7) sits BEFORE the ana_18 answer paragraph (5.1x, 89x, 648x; NI-1982 exclusion woven per ana_caveat_06). Live status = one compact dated display-only sentence (as of 2026-07-04: eliminated; Argentina vs Egypt Jul 7). sct_03 Rotterdam-flags is the reserved full-circle image; inst_03 'Petit pays' is the closing embed. End on the open question, not a summary."
+    }
+  },
+  "full_triage": {
+    "ana_01": "supporting",
+    "ana_02": "color",
+    "ana_03": "supporting",
+    "ana_04": "supporting",
+    "ana_05": "supporting",
+    "ana_06": "supporting",
+    "ana_07": "supporting",
+    "ana_08": "supporting",
+    "ana_09": "lead",
+    "ana_10": "supporting",
+    "ana_11": "supporting",
+    "ana_12": "supporting",
+    "ana_13": "cut",
+    "ana_14": "supporting",
+    "ana_15": "color",
+    "ana_16": "supporting",
+    "ana_17": "supporting",
+    "ana_18": "supporting",
+    "ana_19": "supporting",
+    "ana_20": "supporting"
+  },
+  "interactives": {
+    "hero": {
+      "concept_ref": "img_03",
+      "finding": "ana_09",
+      "purpose": "INFORM",
+      "section": "edt_03",
+      "archetype": "explorable_recompute",
+      "why_hero": "The core claim made contestable: toggle the five foreign birth countries off the 26-man squad and the reader produces the collapse — 15 players, half the caps (50.3%) and 3 of 4 World Cup goals vanish; the team that qualified stops existing. Runs on the shipped client model cm_02 (squadTally, node-verified 15/414/33 = 57.7/50.3/44.0)."
+    },
+    "supporting": [
+      {
+        "concept_ref": "img_01",
+        "finding": "ana_19",
+        "purpose": "INFORM",
+        "section": "edt_02",
+        "archetype": "explorable_recompute",
+        "rank": 1,
+        "earns_place": "The hook's improbability, reader-derived: re-run the 3.4/8.3/88.3 night on the published model (cm_01) and re-match Cape Verde against any of the 32 knockout teams incl. never-reached Egypt — a match-odds payoff the squad-stripping hero cannot produce. Chosen over img_02/img_05 (same finding: one ana_19 playground only)."
+      },
+      {
+        "concept_ref": "img_07",
+        "finding": "ana_01",
+        "purpose": "INFORM",
+        "section": "edt_05",
+        "archetype": "scrollytelling",
+        "rank": 2,
+        "earns_place": "The layer-honesty thesis made visible: walk the 24-destination floor map (Portugal 52.5%, France 23.8%) into the ghosted not-counted markers for NL/US/Spain/Senegal — the reader produces 'the UN total is a floor with holes' themselves. Distinct from ana_04's ratio widget (where vs how big). Chosen over img_08 (same finding)."
+      },
+      {
+        "concept_ref": "img_15",
+        "finding": "ana_03",
+        "purpose": "IMMERSE",
+        "section": "edt_07",
+        "archetype": "scrollytelling",
+        "rank": 3,
+        "earns_place": "The one shrinking series (Sao Tome 4,250 -> 1,115, -73.8%) scrolled wave by wave while the verified 'Sodade' embed plays — the reader produces the feeling the numbers record: the community the song mourns is disappearing from the table. No other element touches ana_03."
+      },
+      {
+        "concept_ref": "img_16",
+        "finding": "ana_11",
+        "purpose": "IMMERSE",
+        "section": "edt_04",
+        "archetype": "guess_then_reveal",
+        "rank": 4,
+        "earns_place": "The flattest number in the dataset lands as a correction: guess how many of the 26 play club football in Cape Verde — zero, across 14 club countries. Distinct from the hero (birthplaces vs employment): even the island-born XI professionalised abroad."
+      },
+      {
+        "concept_ref": "img_10",
+        "finding": "ana_08",
+        "purpose": "INFORM",
+        "section": "edt_08",
+        "archetype": "scrollytelling",
+        "rank": 5,
+        "earns_place": "The country's whole economic history read off one rank line (#2 of 90 in 1980 -> #40 in 2010 -> #18 of 160 in 2024): the reader produces the 'dependence receded because GDP grew' insight themselves. Distinct from ana_06 (share series, static chart) — rank race vs level; img_09 cut as the duplicate remittance teach."
+      },
+      {
+        "concept_ref": "img_19",
+        "finding": "ana_04",
+        "purpose": "IMMERSE",
+        "section": "edt_06",
+        "archetype": "guess_then_reveal",
+        "rank": 6,
+        "earns_place": "Guess the floor: 27.9 counted emigrants per 100 residents lands on an isotype grid, then the honest three-layer beat (floor < censuses < ~120% heritage). Distinct from img_07 (how big relative to home vs where + holes); layer label mandatory (ana_caveat_01)."
+      },
+      {
+        "concept_ref": "img_14",
+        "finding": "ana_18",
+        "purpose": "IMMERSE",
+        "section": "edt_10",
+        "archetype": "scored_quiz",
+        "rank": 7,
+        "earns_place": "The closing record made felt: guess the population gap to the next-smallest knockout nation ever, then 5.1x (Uruguay 1966) and 89x (average 2026 participant) land at dot scale. Distinct from ana_17's participant precision beat (advancers vs participants)."
+      },
+      {
+        "concept_ref": "img_11",
+        "finding": "ana_12",
+        "purpose": "IMMERSE",
+        "section": "edt_09",
+        "archetype": "scrollytelling",
+        "rank": 8,
+        "earns_place": "The 25-year climb ridden, not read: #138 of 198 (1998) to #64, with the kicker that the all-time peak (1702) was set DURING the World Cup on 2026-06-26. Distinct from ana_14 (career arc vs four-match tournament) and from the odds explorer (trajectory vs probability)."
+      },
+      {
+        "concept_ref": "img_12",
+        "finding": "ana_16",
+        "purpose": "INFORM",
+        "section": "edt_09",
+        "archetype": "personal_input",
+        "rank": 9,
+        "earns_place": "Where-you-land lever: pick your own country on the current top-64 board and produce the comparison — every team above Cape Verde has at least 3x its population (min Kosovo 1.58M). Distinct from ana_18 (current rating board vs all-time WC history); the only personal_input kept (img_18 cut: overlapping move, medium feasibility)."
+      }
+    ]
+  },
+  "cut_concepts_note": "img_02, img_04, img_05, img_08 cut as duplicate-finding variants of kept playgrounds (ana_19/ana_09/ana_01 already delivered); img_06 cut — ana_14's four-match improbability is delivered by the odds explorer + the edt_02 chart; img_09 cut — remittance teach duplicated by the rank race, ana_06 keeps the static chart; img_13 cut — the near-upset's magnitude is prose color (ana_15) once the odds explorer exists; img_17 cut — Luxembourg is a prose color beat (ana_02 chart carries it); img_18 cut — second find-your-country move + needs a 212-row table the data_table doesn't ship."
+}

@@ -1,0 +1,82 @@
+{
+  "meta": {
+    "role": "copywriter",
+    "version": "1.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "run_profile": "premium",
+    "is_computational": true,
+    "is_visual": true,
+    "note": "designer.json did not exist at Copywriter time (Stage 3.5 runs before the Designer), so no des_xx ids exist and the schema forbids minting new ids: this file names the masthead + all ten edt_xx section titles. Caption standard binding on the Designer/Programmer (copywriter SKILL Step 3): chart caption = conclusion title-line (<=10 words, active, with the number) + descriptive subtitle (metric/unit/window) + source below, outlier annotated ON the chart; photo caption = present-tense who/what/where with an ABSOLUTE date, then a past-tense why-it-matters (Scout captions in scout.json already carry the verified facts to use); table caption sits above with a 'what to look for' line. Forbidden openers: 'This chart shows', 'the x-axis shows', 'is pictured', 'Figure N:' (PIT-58). Reveal protection carried through from the Editor: no rendered string may state 15/26, 57.7%, zero home-based players, 27.9 per 100, or 5.1x ahead of its widget (PIT-57)."
+  },
+  "masthead": {
+    "headline": "Cape Verde Is Bigger Than Cape Verde",
+    "standfirst": "On 3 July, the reigning world champions needed 111 minutes and an own goal to get past a nation of 527,326 people. The country that nearly beat them is far bigger than the one on the map — too big for any count, even the UN's. Take the squad apart and find out where Cape Verde really lives.",
+    "kicker": "World Cup 2026 · The diaspora",
+    "headline_device": "D1",
+    "headline_backs": "ana_04",
+    "rationale": "D1 flat verdict stating the Editor's core claim as ONE spine — kills the AT1 two-beat default ('Cape Verde has half a million people. Its team was born somewhere else.'). Honest even on the strictest layer: ana_04's floor alone adds 27.9 counted emigrants per 100 residents, so the nation exceeds the map's country before any heritage estimate; the ~120% figure stays attributed in body prose (det_11). Standfirst primes and never spoils (PIT-57): it states only sanctioned numbers (527,326 = ana_16/ana_17; 111th-minute own goal = det_01/ana_19) and invites the hero interaction ('take the squad apart') without 15/26, 57.7, zero, 27.9 or 5.1x. Kicker is a plain container label, not a sentence."
+  },
+  "items": {
+    "edt_01": {
+      "title": "Nine Minutes from History",
+      "device": "D9",
+      "backs": "ana_19",
+      "rationale": "D9 N-units-later on the real margin — the winner fell in the 111th of 120 minutes (det_01: 'within nine minutes of the biggest upset'), the night that landed in ana_19's 8.3% branch; states the hook's stakes with a concrete unit and leaks no protected payoff number."
+    },
+    "edt_02": {
+      "title": "Run the Night Again",
+      "device": "D6",
+      "backs": "ana_19",
+      "rationale": "D6 second-person imperative — the section IS the odds explorer (cm_01) that lets the reader re-derive the 3.4/8.3/88.3 split; replaces the question default 'What Were the Odds?' (already answered in edt_01's prose) and avoids AT6; the ana_20 trust beat stays in body copy."
+    },
+    "edt_03": {
+      "title": "Whose Team Is This?",
+      "device": "D7",
+      "backs": "ana_09",
+      "rationale": "D7 self-challenge — the deck's one genuine question, and the reader answers it by doing the hero (strip birth countries, cm_02 squadTally); not a Betteridge yes/no, and it withholds 15/26 and 57.7% so the hero's reveal survives (PIT-57)."
+    },
+    "edt_04": {
+      "title": "Scouted on LinkedIn",
+      "device": "D13",
+      "backs": "edt_04",
+      "rationale": "D13 concrete-detail proof — det_06's sourced fact (Shamrock Rovers' Roberto Lopes recruited by Cape Verde's coach via LinkedIn, 2019) carries the whole recruitment-machine thesis in three words; a category label with no number, so ana_11's zero-club guess reveal stays unspoiled."
+    },
+    "edt_05": {
+      "title": "The Count with Holes in It",
+      "device": "D1",
+      "backs": "ana_01",
+      "rationale": "D1 flat verdict on ana_01's finding — 146,396 is literally the sum of just 24 named destinations, with the Netherlands, US, Spain and Senegal missing by construction; concrete nouns, no AT4 abstraction; kept from the Editor's working title because it already states the takeaway."
+    },
+    "edt_06": {
+      "title": "Three Ways to Count a Nation",
+      "device": "D14",
+      "backs": "edt_06",
+      "rationale": "D14 genuine triple — the UN floor, national censuses and heritage estimates really are three distinct counts, so the triple is earned, not reflexive (AT2); replaces the working '120 Percent' title so no number outside analyst.json sits in a head and the 27.9-per-100 guess widget keeps its reveal (PIT-57)."
+    },
+    "edt_07": {
+      "title": "Why They Left",
+      "device": "D16",
+      "backs": "edt_07",
+      "rationale": "D16 plain literal — a famine section (45,000 dead, det_12) forbids puns, superlatives and flourish; a bare sober clause instead of the AT6 gerund default ('Exploring Cape Verde's Emigration History'); ana_03's Sao Tome decline is the section's data beat, delivered by the Sodade scrolly and body prose."
+    },
+    "edt_08": {
+      "title": "The Money That Built the Country",
+      "device": "D8",
+      "backs": "ana_06",
+      "rationale": "D8 causal spine stating the section's conclusion — remittances (28.2% of GDP in 1980, top-10 in the world for 21 straight years per ana_08) financed the development climb det_14 closes on; one spine, not the AT1 two-beat ('Remittances fell. The diaspora didn't.')."
+    },
+    "edt_09": {
+      "title": "From 138th in the World to 64th",
+      "device": "D3",
+      "backs": "ana_12",
+      "rationale": "D3 surprising numbers, both verbatim from ana_12's rank table (#138 of 198 in 1998 to #64 in 2026, our documented Elo implementation per ana_caveat_04); replaces the flatter D4 'The Rise, Measured'; the peak-1702-set-mid-World-Cup kicker is left for the scrolly to deliver."
+    },
+    "edt_10": {
+      "title": "The Eleventh Island",
+      "device": "D10",
+      "backs": "edt_10",
+      "rationale": "D10 named phenomenon — the diaspora's own name for itself (det_09: Brockton locals; det_06: The Conversation), landed as the close's title-drop over the reserved Rotterdam full-circle image (sct_03); withholds ana_18's 5.1x for the scale quiz (PIT-57) and gives the masthead verdict its final image."
+    }
+  }
+}

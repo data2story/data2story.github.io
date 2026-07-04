@@ -1,0 +1,124 @@
+{
+  "meta": {
+    "role": "auditor",
+    "version": "1.0",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "run_profile": "premium",
+    "browser": "C:/Program Files/Google/Chrome/Application/chrome.exe (headless, puppeteer-core)",
+    "rounds": "capture -> fix (9 edits) -> recapture -> fix (int_10 label clamp, round 2) -> recapture; bounded loop closed at 2"
+  },
+  "render_audit": {
+    "ran": true,
+    "status": "verified",
+    "verdict": "clean-after-fixes",
+    "zeroWidthCharts": [],
+    "chartsWithNoRender": [],
+    "hiddenCharts": [],
+    "brokenImages": 0,
+    "visibleCssLeak": [],
+    "consoleErrors": 0,
+    "horizontalOverflow": false,
+    "mobileHorizontalOverflow": false,
+    "mobileLayoutViewport": "FIXED: fresh 390x844 load now reports innerWidth=390/scrollWidth=390 (pre-fix the hidden .vh a11y tables' ~690px min-content boxes expanded the mobile layout viewport to 694 — page rendered zoomed-out on phones despite the harness overflow flag reading false, because it compares scrollWidth to the already-expanded innerWidth)",
+    "totalPayloadMb": 6.99,
+    "totalPayloadOverBudget": false,
+    "oversizedAssets": [],
+    "chartCount": 7,
+    "probe_note": "render_capture --probe 'changed:false' is a probe artifact, not a defect: the probe's generic gesture set moves sliders (which only arm a reveal) and clicks the FIRST button in int_02 — 'The Argentina night', the reset-to-baseline chip — at baseline, a correct visual no-op. Fresh state-changing evidence captured: audit/shots/_probe_before.png (7.6 baseline) vs _probe_after.png (Egypt chip -> 32.5), plus final_verify readouts 7.6 -> 32.5.",
+    "agents": 3,
+    "confirmed_by_vision": [
+      "des_11 Luxembourg annotation strikethrough (charts lens MEDIUM + layout lens LOW + auditor eyeball) -> fixed",
+      "hero masthead deck/byline/credit low contrast at 390px (layout lens MEDIUM + auditor eyeball of _mobile.png) -> fixed",
+      "des_13 gold note overlong/borderline at mobile (charts lens LOW + layout lens note) -> fixed (two-line wrap)",
+      "int_10 'Elo rating' axis title colliding with the 2200 tick (layout lens LOW + auditor eyeball of _full_29.png) -> fixed"
+    ],
+    "vision_rubric_summary": {
+      "charts_lens": "CHT1/2/4/5 + COL1-5 PASS; CHT3 FAIL (tick spam, advisory note below); all 7 charts' numbers verified against analyst.json",
+      "layout_lens": "TYP1-5, LAY1-7, ANT1-5 all PASS; 1 medium + 5 low findings (see fixes/notes)",
+      "media_lens": "MOT1-6 + A11Y1-5 all PASS; 17/17 image identity checks CONFIRMED except scout_bubista_web.webp UNSURE-by-face (context-consistent, trusted-source chain upstream); all flags correct incl. Ireland vs Ivory Coast"
+    },
+    "cinematic_scene_switching": "verified live: .cin-bg.active tracks the section beats — teaser->cin_00, edt_01->cin_01, edt_02->cin_02, edt_05->cin_05, edt_07->cin_07, edt_10->cin_10; hero Ken-Burns video plays under prefers-reduced-motion:no-preference (readyState 4, currentTime advancing) and correctly falls back to the poster still under reduce (the initial headless capture's display:none video was headless Chrome's default reduced-motion, not a page bug)",
+    "hero_video": "assets/teaser.webm 0.93MB + teaser_web.mp4 1.1MB referenced (both <= 3MB); poster + .video-failed stall fallback + reduce fallback all wired"
+  },
+  "playtest": {
+    "ran": true,
+    "report": "audit/playtest_report.json",
+    "post_fix_summary": { "playgrounds": 10, "driver_passed": 4, "driver_hard_fails": 2, "recompute_disagreements": 0 },
+    "per_id": {
+      "int_01": "PASS by manual oracle (driver fires-FAIL is a double-click artifact — see send_backs): at rest 26; single US-chip click -> 25 -> 26; Strip-all -> 11 remaining, vanished line '15 players · 50.3% of all caps · 3 of 4 World Cup goals', caps-remaining 49.7, goals 1; Reset -> 26; verify-on chip click mutates nothing; keyboard_readout PASS; degradation PASS",
+      "int_02": "PASS by manual oracle (driver fires-FAIL is a reset-chip artifact — see send_backs): at rest 7.6 with bars 3.4/8.3/88.3; Egypt chip -> 32.5; Argentina-night chip -> 7.6; Team-B select -> Egypt -> 32.5; verify-on inert; degradation PASS (static published bars)",
+      "int_03": "PASS (scroll oracle, manual): floorMap steps s0->s3; ghost NL/US/ES/SN markers hidden until s3 (opacity 0 -> 1); counter 111,649 -> 146,396; layer label pinned throughout; no console errors",
+      "int_04": "PASS (scroll oracle, manual): 4,250 -> 1,956 -> 1,220 -> 1,115 with bars ghosting 0/1/4/7; '-73.8%' lands at s4; Sodade embed is a click-to-play facade (no iframe until user click, autoplay impossible)",
+      "int_05": "PASS: readout EMPTY at rest; lock -> 0; bars Cape Verde 0 / POR 7 / TUR 3 data-bound; keyboard_readout now PASS (Enter/Space on slider reveals); degradation PASS",
+      "int_06": "PASS (scroll oracle, manual): rank line self-draws through 4 beats, steps toggle .on in order, '#18 of 160' present in the sticky annotations",
+      "int_07": "PASS: readout EMPTY at rest; lock -> 27.9; 28 pips tint; 13.8 strip present; keyboard Enter on slider -> 27.9 (trusted key event verified); degradation PASS",
+      "int_08": "PASS: readout EMPTY at rest; lock -> 5.1; 89x and 648x beats present; keyboard_readout now PASS; degradation PASS",
+      "int_09": "PASS (scroll oracle, manual): line draws, #eloLine gains .zoomed at the final step, 1702 peak flag present",
+      "int_10": "PASS: at rest 87.0 (never 86.9) with people-per-point 20,580 vs 310; Kosovo -> 3.0; ring label relocates and stays in-frame after the clamp fix; verify-on inert"
+    },
+    "needs_human_eyeball": [
+      "animation feel / payoff legibility / delight are not machine-judged — eyeball every playground before shipping (playtest_report blanket flag)",
+      "int_01 payoff banner spring entrance and count-up feel",
+      "Sodade scrolly emotional pacing with the embed playing"
+    ]
+  },
+  "fixes": [
+    { "type": "mobile_layout_viewport_expansion", "count": 1, "lines": [411], "detail": "table.vh{table-layout:fixed} + table.vh caption{white-space:normal} — the five visually-hidden a11y data tables (int_03/04/06/09/10) ignored the .vh width:1px under auto table layout (min-content ~690px, caption nowrap kept the width even under fixed layout) and expanded the mobile layout viewport to 694px; fresh 390px load now measures innerWidth 390. Verified by re-render (mobile.pageW=390) + standalone fresh-load probe." },
+    { "type": "interaction_keyboard_no_readout", "count": 3, "lines": [2030, 2091, 2152], "detail": "int_05/int_07/int_08: Enter/Space keydown on the focused guess slider now triggers the same lock/reveal path as the mouse click (vOn-guarded, preventDefault only after the guard so Verify-mode bubbles stay untouched). Playtest re-run: keyboard_readout FAIL -> PASS on all three; trusted-key manual proof int_07 ArrowRight+Enter -> 27.9." },
+    { "type": "chart_annotation_collision", "count": 1, "lines": [2465], "detail": "des_11 Luxembourg annotation dy 1 -> -11: the gold note no longer strikes through the gold lollipop stem (charts+layout lenses agreed). Post-fix screenshot chart_2_des_11.png confirms clear separation." },
+    { "type": "chart_annotation_overflow_mobile", "count": 1, "lines": [2513], "detail": "des_13 Cabo Verde note split into a two-line text array ('#20 of 212 — true position higher:' / 'its four biggest host countries are missing from the count') so it no longer escapes the plot into the card gutter at 390px. Post-fix screenshot chart_3_des_13.png." },
+    { "type": "svg_axis_label_collision", "count": 2, "lines": [1179, 2288], "detail": "int_10 popStrip: axis title 'Elo rating →' moved from y=168 (colliding with the 2200 tick, rendering '220Blo rating') to its own row y=185; ring label 'you are here — TEAM' x clamped to [95,865] in render() (+ static markup x=865) so it never clips the 960 viewBox for right/left-edge teams. Verified: at-rest x=865, Kosovo x=177.9, oracle 87.0/3.0 intact." },
+    { "type": "hero_mobile_scrim_contrast", "count": 1, "lines": [99], "detail": "At <=700px the hero .cin-scrim gradient is deepened (.22/.48@18%/.66@52%/.95) so the masthead deck, byline and photo-credit stay legible over the pale harbour buildings (layout lens MEDIUM + auditor corroboration on _mobile.png). Desktop scrim untouched. Refreshed _mobile.png captured post-fix." },
+    { "type": "console_404_favicon", "count": 1, "lines": [7], "detail": "<link rel=\"icon\" href=\"data:,\"> added — suppresses the guaranteed favicon.ico 404 on file:// and any static host. Console now 0 errors including network." }
+  ],
+  "send_backs": [
+    {
+      "type": "interaction_dead_control",
+      "element": "int_01",
+      "severity": "hard",
+      "send_back_to": "programmer",
+      "resolution": "blocker_recorded",
+      "blocker_reason": "FALSE POSITIVE of the generic driver, not a page defect: playtest_drive.js fires BOTH dispatchEvent(new MouseEvent('click')) AND el.click() on the chosen group chip — two clicks on a TOGGLE chip return it to baseline, so the readout legitimately reads 26 before and after. Manual single-click oracle passes in full (26->25->26; strip-all -> 11 + '15 players · 50.3% · 3 of 4'; reset -> 26; verify-on inert). Widget behavior is correct toggle semantics; changing it to satisfy the driver would harm real readers.",
+      "detail": "playtest_report.json int_01 fires=FAIL evidence readout before=26 after=26",
+      "evidence": "manual_playtest (scratchpad) + final_verify: int01_strip=11, int01_gone='Gone: 15 players · 50.3% of all caps · 3 of 4 World Cup goals.'"
+    },
+    {
+      "type": "interaction_dead_control",
+      "element": "int_02",
+      "severity": "hard",
+      "send_back_to": "programmer",
+      "resolution": "blocker_recorded",
+      "blocker_reason": "FALSE POSITIVE of the generic driver: after driving both selects it falls back to clicking the first <button> as a 'run button' — which is 'The Argentina night', the documented reset-to-baseline chip — so the end state equals the start state (7.6). The same artifact explains render_capture's probe.changed=false and the media vision lens's identical probe pair. Manual oracle passes in full and fresh state-changing evidence is captured: _probe_before.png (7.6) vs _probe_after.png (Egypt -> 32.5).",
+      "detail": "playtest_report.json int_02 fires=FAIL evidence readout before=7.6 after=7.6; media lens HIGH finding 'probe pair identical'",
+      "evidence": "final_verify: int02_before=7.6, int02_after=32.5 (Egypt chip), Argentina-night restores 7.6; select-drive -> 32.5; refreshed probe screenshot pair in audit/shots/"
+    },
+    {
+      "type": "media_low_resolution",
+      "element": "des_10 (assets/scout_bubista_web.webp)",
+      "severity": "medium",
+      "send_back_to": "scout",
+      "resolution": "blocker_recorded",
+      "blocker_reason": "The only license-clean Bubista photo available (scout.json records the gap); the page already applies the recorded mitigation — inline-only at 440x586 display, below its 508x677 native size, never full-bleed — so the upscale artifacts stay below notice at rendered size, and identity rests on the trusted-source chain (Commons filename + source article) that passed upstream. Re-fetching a cleaner original from the polites.news source is the improvement path if the Scout re-runs.",
+      "detail": "Media vision lens: upscale/denoise artifacts at the temple/hairline; face too degraded for confident vision-only identification (identity UNSURE by face, context CONFIRMED: FCF colours, FIFA WORLD CUP lanyard, in-stadium bokeh)",
+      "evidence": "media lens identity_checks + designer.json des_10 display_note (inline portrait ONLY, low-resolution floor)"
+    }
+  ],
+  "notes": {
+    "advisory_unactioned": [
+      "des_22: star legend/footnote drawn inside the plot over the bottom Qatar bar (charts lens LOW, single-agent) — cosmetic; moving it out needs a height/padding re-spec; left for a Designer polish round",
+      "CHT3 tick density: des_22 (31 x labels), des_20 (26), des_09/des_13 (every 5%) exceed the de-clutter ideal (~5-8 ticks); des_06 is the clean model (charts lens LOW, single-agent)",
+      "des_09: the 57.7/50.3/44.0 values are present and correct as row-label suffixes but the designed on-plot bracket over the abroad-born segments is not drawn (charts lens LOW, single-agent)",
+      "des_07+des_08 diptych bottoms are ragged (portrait vs landscape heights differ ~300px; layout lens LOW, single-agent, Designer aesthetic call)",
+      "Sodade facade play-label overlaps the thumbnail's baked-in VEVO watermark (layout lens LOW, single-agent)",
+      "Verify pill transiently covers content scrolled beneath it at 390px (fixed-position UI behaves like any sticky header; no persistent occlusion — noted, not churned)",
+      "int_08 range thumb ~20px visual diameter at mobile (media lens LOW; the input's full-height strip is the actual >=44px touch target and the playtest a11y hit-area check passes)",
+      "des_08 Vozinha has a pale blurred watermark blotch top-right inherited from the source video still (media lens LOW; Designer could zoom-crop the diptych frame)",
+      "flagship_contract soft entries: ratings_cards not shipped as cards (entity set covered by the int_01 dot grid + des_09 composition); model_vs_market has no public benchmark line in analyst.json (the ana_20 out-of-sample calibration scorecard ships instead, rendered in edt_02)"
+    ],
+    "asset_budget": "SHIPPED payload 6.99MB < 8MB budget; no referenced asset over per-type budget (BGM mp3 2.68MB <= 3MB audio; hero teaser.webm 0.93MB + teaser_web.mp4 1.1MB <= 3MB video; largest referenced image ref_cesaria_evora_web.webp 536KB <= 600KB). render_report.performance.unreferencedAssets lists 31 files (~5.9MB: 17 heavy originals/masters incl. teaser.mp4 3.3MB, spare flag PNGs and unused _web twins) — verified NOT referenced by index.html; NOT compressed here per SKILL (Inspector's relocate_unreferenced.py moves them to provenance/ at Stage 7; validate.py Section 16 then asserts the ship set).",
+    "static_checks": "checks.json walk clean: verifyMap/runCells inline islands EMPTY by design at this stage (panel shell + #verifyToggle present and functional — drawer opens, chips inert under verify-on); anaTables island inlined; gallery renderer maps whole asset arrays (firstUrl only used for an item's own mirror-list, PIT-21 compliant); run_cells.json 25 runnable cells import only math, needs_network false everywhere, no np.bincount int64 trap; notebook uses the DATA_DIR resolver ladder (env -> repo-relative -> absolute-as-last-rung, per check_8 design); global img{max-width:100%} + 12 orientation-class hits; no decorative element carries provenance data-*; cinematographer mode=photographic with zero gradient/color rests; 38 fault-isolated IIFEs, embedChart guards typeof vegaEmbed with static-table fallback; no marketing words in h1/h2/figcaption; no forbidden caption openers; headline is not an AT1 two-beat and the standfirst pre-spoils no protected number (527,326 and 111 minutes are published hook numbers; 15/26, 57.7, 50.3, zero-club, 27.9, 5.1 all absent from the dek).",
+    "flagship_contract": "hard entries all satisfied: runnable_verify_for_computed_headline (lead edt_03/ana_09 covered in verify/verify_map.json [92 entries] + verify/run_cells.json cells ana_09/ana_10/int_01); interactive_centerpiece (int_01 wired + oracle-passing); interactive_supporting_set (int_02..int_10 all wired; driver artifacts on 01/02 documented above, manual oracles pass); responsive_charts (7/7 render desktop + 390px, no zero-width); multi_asset_gallery (drawer gallery code maps arrays); cinematic_background (11 scenes, switching verified live); bgm_music (CC0 Romance Anonimo vinyl card, 2.68MB); interactive_hero_verify_coexistence (verify-on inert + drawer opens); honest_model_scorecard (ana_20 rendered in edt_02); hero_video_continuous_backdrop (cin_00 hands to cin_01+ with crossfade, no black gap); cinematic_supply_floor (6 cover-ables >= 5).",
+    "image_identity": "All 17 assets viewed by the media lens: 16 CONFIRMED real photographs matching their scout.json/designer.json identity claims (incl. Ireland flag green-at-hoist, NOT Ivory Coast; Duarte in Fortuna Sittard kit; Evora recognizable; Ernestina under sail; Hard Rock Stadium roof logo legible); scout_bubista UNSURE-by-face -> send_back above. No AI-generated image poses as a real subject; the hero motion is a disclosed Ken-Burns camera move on the verified still (hero.json disclosure intact)."
+  }
+}

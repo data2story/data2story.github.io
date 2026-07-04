@@ -1,0 +1,699 @@
+{
+  "meta": {
+    "role": "designer",
+    "version": "2.1",
+    "dataset": "cape-verde-diaspora",
+    "created_at": "2026-07-04",
+    "run_profile": "premium",
+    "media_strategy": {
+      "selection_principle": "All five channels are used and every asset is REAL media: 13 verified license-clean photos (Scout + Detective), 3 oEmbed-verified official YouTube embeds, 1 CC0 recording. Zero generative calls were made — every concrete subject in this story (players, coach, stadium, islands, streets, the singer, the ship) has a verified real photo, so AI atmosphere would only dilute the reported texture (real-media policy: prefer fetched reals; never generate a real subject).",
+      "visual_diversity_goal": true,
+      "avoid_reused_blog_patterns": true,
+      "layer_rule": "BINDING (ana_caveat_01): every diaspora chart/metric carries its layer label. All ana_01..ana_05 visuals are labelled 'UN born-in-Cabo-Verde floor'; census (CBS 23,150) and heritage (~500k / ~120%) numbers live only in attributed prose, never in the same chart.",
+      "reveal_protection": "BINDING (PIT-57): no rendered des_ string states 15/26, 57.7%, zero home-based, 27.9-per-100 or 5.1x ahead of its widget. des_09 (57.7/50.3 chart) is pinned BELOW the edt_03 hero widget and its payoff paragraphs; des_13 (27.9 in the ana_05 ranking) is pinned to the END of edt_06 after the guess widget; des_22 avoids any 5.1x annotation."
+    },
+    "media_decisions": {
+      "chart": {
+        "used": true,
+        "reason": "Seven chart-shaped findings with shipped data_tables: per-match win expectancy (ana_14), squad caps/goals composition (ana_10), destination growth multiples (ana_02), the emigrants-per-resident world ranking (ana_05), the 45-year remittance share series (ana_06), the all-time upset ladder (ana_15) and the least-populous-participants board (ana_17). One chart per section max — the Interaction Engineer's scrollies own ana_01, ana_03, ana_08 and ana_12, so no chart duplicates them."
+      },
+      "image": {
+        "used": true,
+        "reason": "A sport/place/people story with 11 verified real photos registered (7 Scout sct_, 4 Detective ref_ re-registered as des_ with complete license+identity blocks). Six are >=1280px landscape and back the mandatory cinematic scroll; portraits (Duarte, Vozinha, Bubista, Evora) are inline-only per their native sizes. No AI images: every needed subject has a verified real photo."
+      },
+      "video": {
+        "used": true,
+        "reason": "Real footage exists for the story's one filmable event: the oEmbed-verified FOX Sports highlights embed (inst_02) carries the actual goals — it is also the Editor's binding stand-in for the missing Sidny Lopes Cabral photo. The animated cover is the Hero role's job (Stage 4.6): hero_strategy = real_still + image2video cinemagraph on the Mindelo harbour teaser (no faces in frame, Veo-safe; ffmpeg Ken-Burns fallback). No text2video: AI-generating match action or real places is banned by the real-subject rule and inferior to the broadcast footage we already embed."
+      },
+      "audio": {
+        "used": true,
+        "reason": "BGM mandatory and shipped: the Scout's rung-C license-clean floor 'Romance Anonimo' (CC0 Musopen recording, 2.68 MB mp3, sct_01) in the canonical top-of-article spinning-vinyl card — solo guitar is morna's core instrument and the piece's quiet longing matches the story's sodade spine (no license-clean real morna exists; full search record in scout.json meta.bgm_decision). The REAL morna still plays on the page via the official embeds: 'Sodade' (inst_01) inside the edt_07 scrolly and 'Petit pays' (inst_03) at the close. No sonification (nothing here is decodable by ear that the scrollies don't already show); no text2music SFX (no un-findable sound is needed)."
+      },
+      "interactive_or_map": {
+        "used": true,
+        "reason": "Ten Editor-curated playgrounds are built by the Interaction Engineer (Stage 4.5) on the shipped client models: the strip-the-diaspora hero (cm_02, edt_03), the odds explorer (cm_01, edt_02), the floor-map scrolly with ghosted not-counted markers (ana_01, edt_05 — the map channel), the Sodade scrolly (ana_03), the zero-club guess (ana_11), the rank-race scrolly (ana_08), the 27.9-per-100 guess (ana_04), the scale-gap quiz (ana_18), the Elo-climb scrolly (ana_12) and find-your-country (ana_16). This file designs the visual system they live in; no des_ item duplicates them."
+      }
+    },
+    "media_blockers": [
+      {
+        "category": "image",
+        "reason": "No license-clean, identity-verifiable photo of Sidny Lopes Cabral (103' scorer) exists: Wikidata Q124382289 has no P18, Commons and Openverse searches empty (scout.json gaps_for_editor). Editor's binding decision: no unlicensed press photo, no lookalike, no AI likeness or illustration (ai_face_policy) — his beat is carried by the FOX highlights embed and the Duarte portrait.",
+        "fallback_des": "des_04"
+      },
+      {
+        "category": "image",
+        "reason": "No license-clean Cape Verde fan-celebration crowd photos (Brockton watch parties / Praia street scenes, WC2026) exist on Commons/Openverse as of 2026-07-04. Scout's recorded substitute: sct_03, the Rotterdam street dressed in Cape Verdean flags (2026-06-23), which lands the diaspora-street-pride beat and is reserved for the edt_10 close.",
+        "fallback_des": "des_23"
+      }
+    ],
+    "designer_team_brief": {
+      "centerpiece_candidate": "edt_03 / ana_09 — the strip-the-diaspora hero playground (Editor-designated, concept img_03, explorable_recompute on cm_02 squadTally; baseline 15/414/33 = 57.7/50.3/44.0). The reader must PRODUCE the collapse before any prose states 15/26. Flag PNG set for the widget's country chips is COMPLETE: the Detective's set (det_media_07, public domain, assets/flags_manifest.json — Cape Verde, Netherlands, Portugal, France, US, Luxembourg, Angola, Senegal, Argentina) plus the Designer-fetched Ireland flag (des_26, assets/flag_ireland.png, public domain) covering the fifth birth country.",
+      "cinematic_background_pool": "Registered, license-clean, >=1280px landscape cover-ables for the Cinematographer (S4: pick ONLY from these registered ids): des_01 teaser_web.webp / Mindelo harbour (cin_00 hero; 1280x720 crop, full-res teaser.jpg + ref_mindelo_harbor.jpg also in assets/), sct_04 Hard Rock Stadium aerial, sct_05 Delfshaven Rotterdam, sct_06 Ernestina under sail, sct_07 Praia street, sct_03 Rotterdam WC flags (reserved as the LAST scene — full-circle, edt_10). Count = 6 >= the 5-floor. Portraits (sct_08 508x677, sct_09 581x1024, des_08 Vozinha 819x720, des_14 Evora 1280x1912 portrait, des_17 Fogo 750x478 sub-1280) are inline-only — NOT cover-able backgrounds.",
+      "interactive_sections_map": "edt_02 odds explorer; edt_03 HERO widget (order binding: Duarte-family texture -> priming paragraph -> widget -> payoff paragraphs -> des_09 chart); edt_04 zero-club guess BEFORE the answer paragraph; edt_05 floor-map scrolly (owns ana_01; ghosted NL/US/Spain/Senegal markers; ocean-blue sequential ramp from page tokens; flag chips available); edt_06 27.9 guess BEFORE the ana_04 answer; edt_07 Sodade scrolly (stages des_15 embed inside it; imagery run des_14 Evora, des_16 Ernestina, des_17 Fogo); edt_08 rank-race scrolly; edt_09 Elo-climb scrolly + find-your-country; edt_10 scale-gap quiz BEFORE the ana_18 answer paragraph.",
+      "hero_brief": "Hero role (Stage 4.6): animate des_01 (assets/teaser.jpg — full-quality source for animation; des_01's filename points at the web-weight teaser_web.webp for page use; Mindelo harbour, NO faces in frame — Veo/Wan-safe) as a subtle cinemagraph: water shimmer in the bay, slow cloud drift over the peaks, gentle boat bob; 6s seamless loop; keep the still as poster. Fallback ladder: Kling -> ffmpeg Ken-Burns on the same still. Do NOT use sct_03 (reserved for edt_10). The masthead (headline 'Cape Verde Is Bigger Than Cape Verde' + standfirst) butts directly against the hero so the hook lands in the first beat.",
+      "live_status_presentation": "des_25 renders scout.live_status as ONE compact dated badge next to the edt_10 dated-note paragraph — display-only, never a list, never fed to any model."
+    }
+  },
+  "items": {
+    "des_01": {
+      "label": "Hero cover still — Mindelo harbour (the Atlantic establishing shot)",
+      "type": "asset",
+      "purpose": "IMMERSE",
+      "section": "teaser",
+      "content": {
+        "asset_type": "image",
+        "filename": "teaser_web.webp",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Mindelo_(S_Vicente,_Cabo_Verde).JPG",
+        "derivative_note": "16:9 centre-crop (1280x720, 224 KB) of the Detective's ref_mindelo_harbor.jpg (det_media_02); original kept in assets/ untouched.",
+        "hero_strategy": "real_still +image2video (Hero role renders the cinemagraph; still stays as poster)",
+        "why": "Rung 1 (interactive) not taken: the centerpiece (ana_09 squad-strip) is reveal-protected and lands mid-page at edt_03 by binding Editor order — front-loading it would spoil the 15/26 payoff the whole page is built around. Rung 2 taken: a specific real subject IS the natural face of this story — the archipelago itself, and a verified license-clean establishing shot exists: Mindelo's harbour, the port the emigration physically left from (whalers from the 1800s, Rotterdam sailors in the 1960s, Cesaria Evora's hometown). No licensed match/celebration frame exists (see media_blockers), and the Rotterdam-flags street (sct_03) is reserved for edt_10's full-circle close.",
+        "hook_landing": "The hero signals the subject (an Atlantic island port); the surprise lands immediately after: the headline 'Cape Verde Is Bigger Than Cape Verde' and the standfirst's 111-minutes/527,326 numbers sit directly on/under the image (dark scrim at the lower third for the masthead), with the BGM vinyl card directly below."
+      },
+      "license": {
+        "spdx": "CC-BY-SA-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Manuel de Sousa / Wikimedia Commons (CC BY-SA 3.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "Mindelo harbour bay, Sao Vicente, Cabo Verde (Detective vision-confirmed harbour cityscape)"
+      },
+      "caption": "Mindelo's harbour on Sao Vicente faces the Atlantic that scattered its nation. From this port the emigration left — whaling crews from the 1800s, sailors bound for Rotterdam in the 1960s.",
+      "brief": "Full-bleed cover. The bay curves from lower-left, town at the waterline, volcanic peaks behind; motion (Hero role) is water shimmer + slow cloud drift only. Lower-third scrim carries kicker, headline and standfirst; no text baked into the image.",
+      "rationale": "The story's first beat must say 'islands, Atlantic, departure' before it says 'football' — the match footage and stadium arrive in edt_01 seconds later. A real fetched photo, per the real-subject rule.",
+      "based_on": []
+    },
+    "des_02": {
+      "label": "BGM now-playing card — Romance Anonimo (CC0 solo guitar)",
+      "type": "audio",
+      "purpose": "IMMERSE",
+      "section": "edt_01",
+      "media_ref": "sct_01",
+      "content": {
+        "audio_type": "sourced_bgm",
+        "filename": "scout_bgm_web.mp3",
+        "cover_filename": "scout_bgm_cover.jpg",
+        "cover_media_ref": "sct_02",
+        "ui_form": "top-of-article spinning-vinyl card, directly below the masthead and above edt_01 prose, centred in the column: circular cover disc (centre-crop of the Met's Tielke baroque guitar, sct_02) that rotates only while playing; eyebrow + title + artist + one play/pause button",
+        "eyebrow": "The soundtrack — sodade in a minor key",
+        "display_title": "Romance Anonimo (Spanish Romance)",
+        "display_artist": "Jim Greeninger — Musopen recording, CC0",
+        "trigger": "Starts on the reader's first click/tap/scroll gesture anywhere on the page (single first-gesture unlock); never autoplays; loops; pausable at the card; page fully works muted; @media (prefers-reduced-motion) stops the disc spin.",
+        "why_audio": "The story's spine is sodade — departure and longing — and morna is literally its soundtrack (det_15, UNESCO-listed). No license-clean real morna recording exists on any documented rung (scout.json meta.bgm_decision records the full Commons/Openverse/FMA/Internet-Archive search), and this premium run targets publication, so the rung-2 copyrighted demo self-host was deliberately not used. The rung-C floor with maximum fit: a CC0 recording of the most famous melancholic solo-GUITAR piece in the repertoire — guitar is morna's core instrument. Longing/pensive, never celebratory.",
+        "fallback": "Page reads fully with audio off; the real morna is still hearable via the official 'Sodade' (des_15) and 'Petit pays' (des_24) embeds.",
+        "novelty_note": "Track character differs from recent blogs (quiet classical guitar, not orchestral or anthem); the player form is the fixed canonical spinning-vinyl card."
+      },
+      "brief": "The one canonical BGM card: vinyl disc + eyebrow 'The soundtrack — sodade in a minor key' + track title/artist + play/pause + the one-line CC0 credit. Attribution strings verbatim from sct_01/sct_02.",
+      "rationale": "BGM is mandatory; fit-first landed on the license-clean sibling of morna rather than a generic loop, and the real morna plays in context downpage.",
+      "based_on": []
+    },
+    "des_03": {
+      "label": "Hard Rock Stadium aerial — the scene of the night",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_01",
+      "media_ref": "sct_04",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_hard_rock_stadium_web.webp",
+        "tool": "scout_fetch"
+      },
+      "caption": "Hard Rock Stadium in Miami Gardens — 'Miami Stadium' under FIFA clean naming — seen from the air at its 2016 re-opening. Here, on 3 July 2026, Cape Verde held the world champions until the 111th minute.",
+      "brief": "In-column landscape (1280x960) as edt_01's scene-setter, placed at the match-timeline paragraphs, before the highlights embed. Duotone-grade toward the page's Atlantic navy so the daytime aerial reads as document, not postcard.",
+      "rationale": "Grounds the hook in a real, verifiable place; the honest caption dates the aerial to 2016 so it never masquerades as match-night imagery.",
+      "based_on": []
+    },
+    "des_04": {
+      "label": "FOX Sports highlights embed — the actual goals",
+      "type": "instance",
+      "purpose": "INFORM",
+      "section": "edt_01",
+      "content": {
+        "instance_ref": "inst_02",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/EC2jOKluGRI",
+        "caption": "Argentina 3-2 Cape Verde, 3 July 2026 — the official FOX Sports highlights. Both Cape Verdean goals, by Rotterdam-born Deroy Duarte and Sidny Lopes Cabral, are here in moving pictures."
+      },
+      "brief": "Framed 16:9 embed at the end of edt_01, after the Rotterdam-scorers paragraph. Click-to-play (no autoplay). This is the section's [MEDIA: video] AND the Editor's binding stand-in for the missing Lopes Cabral portrait — moving pictures of the actual goal beat any headshot.",
+      "rationale": "Real broadcast footage of the hook event; the reader can verify the match narrative with their own eyes. ID copied verbatim from detective inst_02 (verified).",
+      "based_on": []
+    },
+    "des_05": {
+      "label": "Stat callout — the 8.3% branch",
+      "type": "stat_callout",
+      "purpose": "INFORM",
+      "section": "edt_01",
+      "content": {
+        "value": "8.3%",
+        "label": "the pre-match chance Cape Verde would still be level after 90 minutes — the branch the night actually took",
+        "data_source": "ana_19"
+      },
+      "brief": "Oversized display-type number (weight-extreme contrast, accent gold) beside the ana_19 paragraph; count-up on first view (motion.json count_up), static under reduced-motion.",
+      "rationale": "The hook's improbability in one number, sanctioned for edt_01 by the Editor (it primes the edt_02 explorer without leaking any protected payoff).",
+      "based_on": [
+        "ana_19"
+      ]
+    },
+    "des_06": {
+      "label": "Chart — four matches, four win expectancies",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_02",
+      "content": {
+        "chart_type": "lollipop",
+        "data_source": "ana_14",
+        "y": "opponent",
+        "x": "cv_win_expectancy_pct",
+        "sort": "chronological by date (Spain, Uruguay, Saudi Arabia, Argentina)",
+        "axis_label_x": "Elo win expectancy (%)",
+        "annotations": [
+          "each lollipop dot labelled with score_cv_opp and result (0-0 D, 2-2 D, 0-0 D, 2-3 L AET)",
+          "right-margin per-row tag: elo_change with sign (+28, +20, +0, -3)",
+          "dashed reference rule at 50% labelled 'even match'",
+          "Argentina row (4.7%) highlighted in accent gold; note '523-point rating gap'"
+        ],
+        "interaction": "hover tooltip: date, opponent, both pre-match Elos, expectancy, post-match rating",
+        "style": {
+          "palette": "muted slate-blue stems/dots, accent #F2B544 for the Argentina row",
+          "x_domain": [
+            0,
+            100
+          ],
+          "dark_mode_guide_text": "axis/labels in --ink/--muted light values on the dark bg (never near-black)",
+          "no_gridlines": "hairline --line only at 0/25/50/75/100"
+        }
+      },
+      "caption": "Four matches, never favoured above 49%, never beaten in 90 minutes",
+      "caption_subtitle": "Elo win expectancy per WC2026 match (our own implementation, neutral venue) with result and rating change. Source: elo_ratings.py over 49,493 internationals, 1872-2026.",
+      "brief": "Four horizontal lollipops on a 0-100% scale — the whole tournament's improbability at a glance, chronological so the Argentina row lands last and lowest-but-one. The 'Elo win expectancy' axis wording is binding (Editor: keeps it distinct from the model probabilities in prose).",
+      "rationale": "Magnitude intent, tiny n: position on a common scale beats any fancier form. The odds explorer (Interaction) sits above; this static chart is the take-home record of what the model said, placed at the end of edt_02 per editor.md.",
+      "based_on": [
+        "ana_14"
+      ]
+    },
+    "des_07": {
+      "label": "Deroy Duarte portrait — the Rotterdam scorer",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_03",
+      "media_ref": "sct_09",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_deroy_duarte_web.webp",
+        "tool": "scout_fetch",
+        "display_note": "inline portrait only (581x1024) — never full-bleed; pair side-by-side with des_08 (Vozinha) as a two-up 'fusion' diptych"
+      },
+      "caption": "Deroy Duarte plays for Fortuna Sittard in the Eredivisie, his club from 2021 to 2024. On 3 July 2026 the Rotterdam-born midfielder's 59th-minute equaliser against Argentina became his first international goal.",
+      "brief": "Left half of a two-up diptych at the Duarte-family opening of edt_03 (Rotterdam-born scorer | island-born captain), before the priming paragraph and hero widget. Identity gate PASSED by the Scout (sct_09).",
+      "rationale": "The section's question is 'whose team is this?' — two verified faces, one born in Rotterdam and one on the islands, pose it visually without leaking any number.",
+      "based_on": []
+    },
+    "des_08": {
+      "label": "Vozinha portrait — the island-born captain",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_vozinha_web.webp",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Vozinha_Cape_Verde_Goalkeeper.jpg",
+        "display_note": "inline only (819x720); right half of the diptych with des_07"
+      },
+      "license": {
+        "spdx": "CC-BY-4.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Nha Terra Nha Cretcheu / Wikimedia Commons (CC BY 4.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "Vozinha, Cape Verde national-team captain and goalkeeper, in FCF training top (crest visible; Detective vision-confirmed)"
+      },
+      "caption": "Vozinha, Cape Verde's island-born captain and goalkeeper, gives an interview in Federation training kit. He turned 40 during the 2026 group stage and made eight saves against Argentina on 3 July.",
+      "brief": "Right half of the edt_03 diptych. Caption must say 40, not 39 (ana_caveat_08 — the dataset DOB wins over Sky's report).",
+      "rationale": "The island-born counterweight the Editor requires to survive: fusion, not an imported XI.",
+      "based_on": []
+    },
+    "des_09": {
+      "label": "Chart — who carries the caps and goals",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_03",
+      "content": {
+        "chart_type": "proportional_stacked_bar",
+        "data_source": "ana_10",
+        "y": "measure (three normalized 100% rows: Players n=26, Career caps n=823, Career goals n=75)",
+        "x": "share of row total",
+        "color": "birth_country",
+        "segment_order": [
+          "Cape Verde",
+          "Netherlands",
+          "Portugal",
+          "France",
+          "Ireland",
+          "United States"
+        ],
+        "annotations": [
+          "bracket over the abroad-born segments of each row with the combined share: 57.7% of players, 50.3% of caps, 44.0% of goals",
+          "direct segment labels (country + value) on segments wide enough; tooltip for the rest"
+        ],
+        "interaction": "hover tooltip: birth_country, players/caps/goals count, share of row",
+        "style": {
+          "palette": "Cape Verde segment = deep Atlantic blue (#4E8FD9 family); the five abroad countries = an ordered warm ramp around accent gold #F2B544, consistent left-to-right order across all three rows",
+          "dark_mode_guide_text": "light ink labels on dark bg",
+          "placement_binding": "MUST render BELOW the edt_03 hero widget and the 15/26 + 50.3% payoff paragraphs (PIT-57) — end of section per editor.md [CHART: ana_10]"
+        }
+      },
+      "caption": "Abroad-born players carry 50.3% of the squad's caps",
+      "caption_subtitle": "Share of the 26 players, their 823 career caps and 75 career goals by birth country, at squad announcement. Squad file: squad_2026.csv.",
+      "brief": "Three 100%-stacked horizontal bars with a fixed segment order so the eye reads the Cape Verde share shrinking from players (11/26) to experience (caps) — the 'not padding, half the team's experience' point in one composition.",
+      "rationale": "Part-to-whole intent across three totals; a normalized stacked bar is the honest form. It restates the hero widget's payoff as a keepable record after the reveal.",
+      "based_on": [
+        "ana_10"
+      ]
+    },
+    "des_10": {
+      "label": "Bubista portrait — the machine's home-grown operator",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_04",
+      "media_ref": "sct_08",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_bubista_web.webp",
+        "tool": "scout_fetch",
+        "display_note": "inline portrait ONLY (508x677, validate.py low-resolution floor) — never full-bleed or hero"
+      },
+      "caption": "Bubista — Pedro Leitao Brito, born on Boa Vista — at the 2026 World Cup. Appointed in January 2020, he fused island-born and diaspora-born players into the team that reached the knockouts, and was named CAF Coach of the Year 2025.",
+      "brief": "Inline portrait beside the det_06 recruitment-machine paragraphs, ABOVE the zero-club guess widget (the photo carries no number, so it cannot spoil the ana_11 reveal).",
+      "rationale": "The section's [MEDIA: image] hint: the machine has a verified human face, and the story's AI-face policy makes this fetched, license-verified photo the only correct way to show it.",
+      "based_on": []
+    },
+    "des_11": {
+      "label": "Chart — the floor's growth multiples, 1990 to 2024",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_05",
+      "content": {
+        "chart_type": "lollipop",
+        "data_source": "ana_02",
+        "y": "destination (filtered: migrants_1990 >= 1,000 - Portugal, France, Angola, Luxembourg, Mozambique, Italy, Sao Tome and Principe)",
+        "x": "multiple",
+        "sort": "-x (descending by multiple)",
+        "annotations": [
+          "dashed reference rule at x=1.0 labelled 'no growth'",
+          "dashed reference rule at x=2.83 labelled 'World total x2.83'",
+          "Luxembourg (7.15) in accent gold with note: '1,148 to 8,211 — almost all in one 2015-2020 wave; now 1.21% of Luxembourg's population'",
+          "Sao Tome and Principe (0.26) in cool blue below the 1.0 line with note 'the one big community shrinking - see the next chapter'",
+          "footnote annotation: 'Brazil (x286) excluded - a small-base artifact: 5 people counted in 1990'"
+        ],
+        "interaction": "hover tooltip: destination, migrants_1990, migrants_2024, multiple",
+        "layer_label": "UN born-in-Cabo-Verde floor (24 named destinations; NL/US/Spain/Senegal structurally absent)",
+        "style": {
+          "palette": "muted slate-blue; Luxembourg accent #F2B544; Sao Tome #4E8FD9",
+          "x_scale": "linear, domain 0-8",
+          "dark_mode_guide_text": "light ink on dark bg",
+          "placement": "end of edt_05 per editor.md [CHART: ana_02] — the scrolly floor-map (Interaction, ana_01) owns the section's opening"
+        }
+      },
+      "caption": "The counted floor nearly tripled; Luxembourg grew 7.15x",
+      "caption_subtitle": "Growth multiple of the UN born-in-Cabo-Verde stock by destination, 1990-2024, destinations with at least 1,000 counted in 1990. Layer: UN floor. Source: UN DESA International Migrant Stock 2024.",
+      "brief": "Seven lollipops against reference rules at 1.0 and the world's 2.83 — Luxembourg's outlier branch and Sao Tome's decay read instantly, and the Sao Tome cue foreshadows edt_07.",
+      "rationale": "Deviation-from-reference intent; the small-base filter keeps the chart honest (Brazil's x286 is a footnote, not a bar). Layer label is binding.",
+      "based_on": [
+        "ana_02"
+      ]
+    },
+    "des_12": {
+      "label": "Delfshaven photo — the second layer's home borough",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_06",
+      "media_ref": "sct_05",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_delfshaven_rotterdam_web.webp",
+        "tool": "scout_fetch"
+      },
+      "caption": "Historic Delfshaven, Rotterdam, photographed on 24 October 2021. The borough where Cape Verdean sailors settled in the 1960s-70s is now about one resident in eleven Cape Verdean — the community that produced both Miami goalscorers.",
+      "brief": "In-column landscape (1280x825) at the det_10 'second layer' paragraph. Cool Dutch light kept natural — the visual contrast with the volcanic-island imagery IS the diaspora story.",
+      "rationale": "The census-layer beat has a real, verified place; showing the harbour the sailors settled beside makes 'statistically invisible in the UN table, real on this street' concrete.",
+      "based_on": []
+    },
+    "des_13": {
+      "label": "Chart — where Cabo Verde ranks among the world's origins",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_06",
+      "content": {
+        "chart_type": "ordered_bar",
+        "data_source": "ana_05",
+        "y": "origin (top 25 by ratio_pct, rank order preserved)",
+        "x": "ratio_pct",
+        "sort": "by rank ascending (Monaco 95.0 at top)",
+        "annotations": [
+          "Cabo Verde bar (#20, 27.9%) in accent gold, all others muted",
+          "three side tags grouping the company: 'war economies' (West Bank and Gaza, Syria, Venezuela, South Sudan, Ukraine), 'emigration states' (Guyana, Albania, Bosnia, Jamaica, Moldova), 'microstates' (Monaco, Samoa, Tonga, Dominica)",
+          "note under the Cabo Verde bar: 'true position higher - its four biggest host countries are missing from the count'"
+        ],
+        "interaction": "hover tooltip: rank, origin, emigrants_2024, population_2024, ratio_pct",
+        "layer_label": "UN counted-emigrant floor as % of 2024 residents - #20 of the 212 WB-covered origins (ana_caveat_02 framing, binding)",
+        "style": {
+          "palette": "muted slate-blue bars, Cabo Verde accent #F2B544",
+          "bars_start_at_zero": true,
+          "dark_mode_guide_text": "light ink on dark bg",
+          "placement_binding": "END of edt_06, after the guess widget and all three layer paragraphs (the 27.9 value renders only post-reveal, PIT-57)"
+        }
+      },
+      "caption": "Only war zones, microstates and emigration states sit higher",
+      "caption_subtitle": "UN-counted emigrants as a share of 2024 residents — the born-in-Cabo-Verde floor — top 25 of the 212 World Bank-covered origins; Cabo Verde ranks #20 at 27.9%. Source: UN DESA 2024 x World Bank population.",
+      "brief": "A 25-bar ordered ranking whose message is the COMPANY Cabo Verde keeps: everything above it emigrates because of war, size or crisis; Cabo Verde is there by structure. Placed at section end, after the reveal.",
+      "rationale": "Ranking intent -> ordered bars, highlight-one-mute-rest; the grouped side tags carry the analyst's 'company is telling' reading without a second chart.",
+      "based_on": [
+        "ana_05"
+      ]
+    },
+    "des_14": {
+      "label": "Cesaria Evora photo — the voice of sodade",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_cesaria_evora_web.webp",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Ces%C3%A1ria_%C3%89vora_(2457851527).jpg",
+        "display_note": "portrait 1280x1912 — inline/tall-column use inside the Sodade scrolly imagery run; if the Cinematographer or Hero animates her, motion must be minimal and reverential (ai_face_policy sensitivity_advisory: she died in 2011)"
+      },
+      "license": {
+        "spdx": "CC-BY-SA-2.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: 'As fotos da Virada!' / Wikimedia Commons (CC BY-SA 2.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "Cesaria Evora, the 'Barefoot Diva' of Mindelo, singing at a microphone in her characteristic black dress (Detective vision-confirmed)"
+      },
+      "caption": "Cesaria Evora, the 'Barefoot Diva' of Mindelo, sings at the microphone in her signature black dress. Until her death in 2011 she carried morna — and the emigrant's sodade — to audiences worldwide.",
+      "brief": "The human face of edt_07's turn, staged in the Sodade scrolly's imagery run (with des_16 Ernestina and des_17 Fogo) as the 'Sodade' embed plays. Reference the optimized _web copy (original is 677 KB, over the 600 KB image budget).",
+      "rationale": "The section is about the music this history composed; its verified, license-clean photo of the genre's global face is load-bearing, not decorative (det_15).",
+      "based_on": []
+    },
+    "des_15": {
+      "label": "'Sodade' official embed — hear the lament itself",
+      "type": "instance",
+      "purpose": "IMMERSE",
+      "section": "edt_07",
+      "content": {
+        "instance_ref": "inst_01",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/ku_WZoTtT8Q",
+        "caption": "'Sodade', sung by Cesaria Evora — a lament addressed to an emigrant bound for Sao Tome, the contract-labour route in the data. The community the song mourns is the one shrinking in the table: 4,250 counted in 1990, 1,115 by 2024."
+      },
+      "brief": "Staged INSIDE the Interaction Engineer's Sodade scrolly (editor binding: inst_01 plays within it, click-to-play — never autoplay) so the reader hears the song while the Sao Tome bars fade wave by wave.",
+      "rationale": "The one place on the page where the data (ana_03), the history (det_12) and the art (det_15) are the same object; the official VEVO embed carries the rights. ID verbatim from detective inst_01 (verified).",
+      "based_on": []
+    },
+    "des_16": {
+      "label": "Schooner Ernestina — the escape route west, afloat",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_07",
+      "media_ref": "sct_06",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_ernestina_new_bedford_web.webp",
+        "tool": "scout_fetch"
+      },
+      "caption": "The schooner Ernestina — ex-Effie M. Morrissey — sails New Bedford Harbor, Massachusetts. Until 1965 she carried Cape Verdean immigrants between the islands and New England; Cape Verde gifted her back to the United States in 1982.",
+      "brief": "Landscape (1280x853, public domain) in edt_07's history run at the whaling/New Bedford paragraph. This is the actual packet vessel, not a museum model — the Scout's deliberate upgrade of the Detective's weak det_media_06.",
+      "rationale": "det_12's escape route west made visible by the real ship that sailed it; PD license makes it cover-able for the cinematic too.",
+      "based_on": []
+    },
+    "des_17": {
+      "label": "Pico do Fogo — the geography that forced departure",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "ref_pico_do_fogo_web.webp",
+        "tool": "wikimedia_download",
+        "source_url": "https://commons.wikimedia.org/wiki/File:Pico-94-117-13.jpg",
+        "display_note": "750x478 — in-column only (below full-bleed resolution); NOT in the cinematic cover-able pool"
+      },
+      "license": {
+        "spdx": "CC-BY-SA-3.0",
+        "permits_republication": true,
+        "requires_attribution": true,
+        "attribution_text": "Photo: Holger Reineccius / Wikimedia Commons (CC BY-SA 3.0)"
+      },
+      "identity": {
+        "method": "vlm_view",
+        "verified": true,
+        "subject": "Pico do Fogo volcano rising over lava fields, Fogo island, Cabo Verde (Detective vision-confirmed)"
+      },
+      "caption": "Pico do Fogo rises over its lava fields on Fogo island. In the famines of the 1940s Fogo lost 31% of its people — the volcanic, drought-prone geography that made emigration survival rather than choice.",
+      "brief": "In-column image at the famine paragraph of edt_07, before the Ernestina/whaling beat. Keep the frame stark; no warm grade.",
+      "rationale": "The famine numbers (45,000 dead; 28%/31% island losses) need the landscape that produced them; a real photo of the actual island, per the real-subject rule.",
+      "based_on": []
+    },
+    "des_18": {
+      "label": "Chart — 45 years of remittances as a share of GDP",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_08",
+      "content": {
+        "chart_type": "line",
+        "data_source": "ana_06",
+        "x": "year",
+        "y": "pct_gdp",
+        "annotations": [
+          "point + label at 1980: '28.2% — all-time peak, #2 in the world'",
+          "point + label at 2010: '7.2% — the low: tourism-led GDP growth outgrew the inflows'",
+          "point + label in accent at 2021: '15.3% — tourism collapsed; the diaspora sent MORE'",
+          "end-of-line label at 2024: '12.3%'",
+          "direction-of-reading note (binding, det_13): 'the falling share is a growing denominator, not a fading diaspora'"
+        ],
+        "interaction": "hover tooltip: year, pct_gdp",
+        "style": {
+          "palette": "line in --ink with subtle area fill toward --accent-2 (Atlantic blue); the 2021 annotation dot in accent gold #F2B544",
+          "y_scale": "zero-based, domain 0-30",
+          "dark_mode_guide_text": "light ink on dark bg",
+          "placement": "end of edt_08 per editor.md [CHART: ana_06]; the rank-race scrolly (Interaction, ana_08) sits mid-section"
+        }
+      },
+      "caption": "Remittances fell from 28.2% of GDP only because GDP grew",
+      "caption_subtitle": "Personal remittances received, % of Cabo Verde GDP, 1980-2024 (World Bank BX.TRF.PWKR.DT.GD.ZS); the pandemic surge to 15.3% in 2021 is the proof beat.",
+      "brief": "One clean 45-year line with exactly four annotated turning points; the 2021 spike carries the section's argument, so it alone gets the accent color.",
+      "rationale": "Change-over-time intent -> line; the Editor's binding direction-of-reading lives ON the chart as an annotation so layout cannot strip it.",
+      "based_on": [
+        "ana_06"
+      ]
+    },
+    "des_19": {
+      "label": "Stat callout — still #18 of 160",
+      "type": "stat_callout",
+      "purpose": "INFORM",
+      "section": "edt_08",
+      "content": {
+        "value": "#18 of 160",
+        "label": "countries by remittance dependence in 2024 — the top 11% of the world, and #4 in Sub-Saharan Africa, half a century after independence",
+        "data_source": "ana_07"
+      },
+      "brief": "Inline callout (the Editor assigns ana_07 exactly this treatment) between the rank-race scrolly and the LDC-graduation close of edt_08; display-type number, count-up on view.",
+      "rationale": "One rank tells the 'still one of the economy's main engines' present tense; a third chart here would start a chart streak.",
+      "based_on": [
+        "ana_07"
+      ]
+    },
+    "des_20": {
+      "label": "Chart — the upset that almost was, on the all-time ladder",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_09",
+      "content": {
+        "chart_type": "dot_strip_plot",
+        "data_source": "ana_15",
+        "y": "row label: winner + 'beat' + loser + (year)",
+        "x": "elo_gap",
+        "sort": "-x (Luxembourg-Switzerland 878 at top)",
+        "annotations": [
+          "the 12 data_table upsets as muted dots (adjusted Elo gap, from 878 down to 571)",
+          "accent-gold dot from ana_15 content: 'Cape Verde 2-0 Portugal, 2015 — gap 440, #73 all-time; against the country holding 52% of its counted diaspora'",
+          "dashed hollow marker from ana_15 content: 'Cape Verde beats Argentina, 3 July 2026 — the upset that did not happen: gap 523, would rank ~#25 all-time and #2 among World Cup finals upsets'",
+          "x-axis label: 'adjusted Elo gap (loser incl. +100 home advantage, minus winner)'"
+        ],
+        "interaction": "hover tooltip: date, winner, loser, score, tournament, elo_gap, both pre-match ratings",
+        "style": {
+          "palette": "muted slate-blue dots; Cape Verde 2015 accent #F2B544; the hypothetical as a dashed hollow gold outline (unmistakably not-a-result)",
+          "x_scale": "linear, domain 400-900",
+          "dark_mode_guide_text": "light ink on dark bg",
+          "placement": "end of edt_09 per editor.md [CHART: ana_15]"
+        }
+      },
+      "caption": "Beating Argentina would have ranked about #25 of 33,081 matches",
+      "caption_subtitle": "Biggest international upsets by adjusted Elo gap (both teams with 30+ prior matches, 1872-2026, our implementation); Cape Verde's 2015 win in Portugal (gap 440, #73) highlighted; the dashed marker is hypothetical.",
+      "brief": "A ranked dot ladder of the greatest upsets ever, with Cape Verde's real 2015 entry in accent and the never-happened Argentina win as an honest dashed ghost — 'nine minutes from this dot'.",
+      "rationale": "The color finding (ana_15) is a ranking-with-a-ghost; a dot strip keeps 14 rows light. The Portugal-2015 note ties the upset to the diaspora thesis (the Editor's must-keep sentence).",
+      "based_on": [
+        "ana_15"
+      ]
+    },
+    "des_21": {
+      "label": "Praia photo — where qualification was clinched",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_09",
+      "media_ref": "sct_07",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_praia_santiago_web.webp",
+        "tool": "scout_fetch"
+      },
+      "caption": "The Plateau district of Praia, Santiago, in a street scene from the Panoramio archive. Here on 13 October 2025 Cape Verde beat Eswatini 3-0 to reach a World Cup for the first time in its history.",
+      "brief": "In-column landscape (1280x960) at the qualification beat closing edt_09 (editor binding: sct_07 accompanies it).",
+      "rationale": "The rise-measured section ends on the day the curve paid off; the capital's street is its verified, license-clean face.",
+      "based_on": []
+    },
+    "des_22": {
+      "label": "Chart — the smallest nations ever to play a World Cup",
+      "type": "chart",
+      "purpose": "INFORM",
+      "section": "edt_10",
+      "content": {
+        "chart_type": "ordered_bar",
+        "data_source": "ana_17",
+        "y": "team + edition (rank order, Curacao 2026 at top)",
+        "x": "population",
+        "sort": "by rank ascending (least populous first)",
+        "annotations": [
+          "Cape Verde 2026 bar in accent gold",
+          "advanced_past_first_round=true rows (Cape Verde 2026, Uruguay 1966, Uruguay 1970) marked with a small star + legend 'advanced past the first round'",
+          "value labels in compact form (156,263 / 352,721 / 527,326 / 1.30M / ...)",
+          "note: 'all three sub-million participants ever played since 2018; two of them in 2026'"
+        ],
+        "interaction": "hover tooltip: rank, edition, team, population, matches_played, advanced_past_first_round",
+        "reveal_protection": "NO gap-multiple annotation (5.1x belongs to the scale-gap quiz that precedes the ana_18 paragraph); the chart states populations only",
+        "style": {
+          "palette": "muted slate-blue bars, Cape Verde accent #F2B544",
+          "bars_start_at_zero": true,
+          "x_scale": "linear",
+          "dark_mode_guide_text": "light ink on dark bg",
+          "placement": "at the ana_17 precision paragraph, BEFORE the scale-gap quiz (its content is ana_17's — populations and the advanced flag — and leaks nothing of ana_18's multiples)"
+        }
+      },
+      "caption": "Only two World Cup nations were ever smaller than Cape Verde",
+      "caption_subtitle": "The 15 least-populous participant-editions, 1962-2026, World Bank population at edition year (2026 uses 2025); advancers past the first round starred. Curacao 156,263; Iceland 352,721; Cape Verde 527,326.",
+      "brief": "Fifteen ordered bars anchoring the close's precision beat (third-least-populous ever — never 'second-smallest'); the stars quietly set up the quiz without stating any multiple.",
+      "rationale": "Ranking intent with absolute magnitude -> zero-based ordered bars; WB numbers per ana_caveat_10.",
+      "based_on": [
+        "ana_17"
+      ]
+    },
+    "des_23": {
+      "label": "Rotterdam flags street — the full-circle closing image",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_10",
+      "media_ref": "sct_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "scout_rotterdam_wc_flags_web.webp",
+        "tool": "scout_fetch",
+        "display_note": "RESERVED by the Editor for this close (do not render earlier); full-bleed permitted (1280x839); also the LAST cinematic scene"
+      },
+      "caption": "Cape Verdean flags hang across the Nieuwe Binnenweg in Rotterdam-West on 23 June 2026. The diaspora's biggest European street — the neighbourhood that produced both Miami goalscorers — dressed itself for the first World Cup its islands ever reached.",
+      "brief": "Full-bleed closing image after the ana_18 payoff and the dated live-status note, immediately before the closing morna paragraph and the 'Petit pays' embed. This is the page's last photograph.",
+      "rationale": "The Editor's reserved full-circle image: not Miami, not Praia — the eleventh island itself, dressed for the tournament. Ends the page where the goals began.",
+      "based_on": []
+    },
+    "des_24": {
+      "label": "'Petit pays' official embed — the closing note",
+      "type": "instance",
+      "purpose": "IMMERSE",
+      "section": "edt_10",
+      "content": {
+        "instance_ref": "inst_03",
+        "embed_type": "youtube",
+        "embed_url": "https://www.youtube.com/embed/DeLUGn7qYP8",
+        "caption": "'Petit pays' — Cesaria Evora's tender ode to a 4,033-square-kilometre homeland. The little country, the song already knew, is bigger than its map."
+      },
+      "brief": "Framed embed as the page's final element, after des_23 and the closing paragraph. Click-to-play; the official VEVO channel carries the rights.",
+      "rationale": "The Editor's chosen closing embed: Sodade opened the emotional arc (departure), Petit pays closes it (the homeland, loved from afar). ID verbatim from detective inst_03 (verified).",
+      "based_on": []
+    },
+    "des_26": {
+      "label": "Ireland flag chip — completes the hero widget's birth-country set",
+      "type": "asset",
+      "purpose": "INFORM",
+      "section": "edt_03",
+      "content": {
+        "asset_type": "image",
+        "filename": "flag_ireland_web.webp",
+        "tool": "wikimedia_download",
+        "source_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/Flag_of_Ireland.svg/960px-Flag_of_Ireland.svg.png",
+        "display_note": "UI chip only (960x480 PNG, 747 bytes) — used inside the strip-the-diaspora hero widget and anywhere the five birth countries are chipped; never a standalone figure"
+      },
+      "license": {
+        "spdx": "Public Domain",
+        "permits_republication": true,
+        "requires_attribution": false,
+        "attribution_text": "Flag of Ireland: public domain, via Wikimedia Commons"
+      },
+      "identity": {
+        "method": "trusted_source",
+        "verified": true,
+        "subject": "Flag of Ireland (Commons File:Flag_of_Ireland.svg, official tricolour)"
+      },
+      "caption": "Flag chip: Ireland — birth country of Roberto 'Pico' Lopes, the LinkedIn call-up.",
+      "brief": "Completes the Detective's public-domain flag set (which lacked Ireland) so the hero widget can chip all five foreign birth countries: Netherlands, Portugal, France, Ireland, United States.",
+      "rationale": "The hero widget's country toggles need a chip per birth country; a text-only Ireland chip among eight flag chips would read as an error.",
+      "based_on": []
+    },
+    "des_25": {
+      "label": "Live-status badge — as of 4 July 2026",
+      "type": "stat_callout",
+      "purpose": "INFORM",
+      "section": "edt_10",
+      "content": {
+        "value": "as of 4 Jul 2026",
+        "label": "Cape Verde's tournament is over — eliminated by Argentina 3-2 AET in the Round of 32; Argentina face Egypt on 7 July",
+        "data_source": "scout.live_status"
+      },
+      "brief": "One compact dated badge (small border, muted, calendar glyph) rendered beside the Editor's display-only dated-note paragraph in edt_10. Never a list, never more than the single latest result; display-only — feeds no model, and all computed numbers on the page remain 'as of 2026-07-03'.",
+      "rationale": "The SKILL's live-status rule: compact, dated, display-only, next to the data it relates to.",
+      "based_on": []
+    }
+  },
+  "page_rhythm": {
+    "tone": "dark cinematic editorial — deep-Atlantic navy field, warm sand-white ink, star-gold accent; sober longing (sodade) under a sports epic, never neon-sport",
+    "theme": {
+      "derived_from": "editorial_dark (themes.json), tuned to this story's Atlantic/deep-blue + island-warm system",
+      "tokens": {
+        "--bg": "#0A1420",
+        "--surface": "#101D2B",
+        "--ink": "#EAE6DC",
+        "--muted": "#90A2B4",
+        "--line": "#223447",
+        "--accent": "#F2B544",
+        "--accent-2": "#4E8FD9"
+      },
+      "accent_rationale": "--accent #F2B544 is the star-gold of the ten stars on Cape Verde's flag, warmed for a dark field: it marks the Cape Verde / diaspora datum in EVERY chart (consistency rule — one value, one color). --accent-2 #4E8FD9 is the Atlantic blue of the flag's field, used for comparisons, the island-born squad segment and the map's sequential ocean ramp. Gold-vs-blue is a CVD-safe orange/blue pair; meaning is never carried by color alone (direct labels + markers everywhere)."
+    },
+    "type_pairing": "didone_fashion (typography.json tier-1): display Didot / 'Bodoni MT' / 'Noto Serif Display' serif at h1-h2 only; body Georgia / 'Times New Roman' serif; UI system-ui. Weight/size extremes: hairline didone masthead over heavy Georgia stat numbers, h1 at 3x+ body scale.",
+    "data_color_notes": "Charts on dark surfaces: guide text/axis labels in --ink/--muted LIGHT values (never near-black — dark-mode-safe guide text is a hard gate); hairline gridlines in --line; sequential map ramp = deep navy -> #4E8FD9 -> pale sand, shared between the edt_05 scrolly map and any density encodings; the amber accent is reserved for Cape Verde/focal datums only.",
+    "text_visual_pattern": "hero -> masthead + vinyl BGM card -> reported hook (photo + embed + one big stat) -> alternating [prose -> playground -> payoff prose -> chart] per section; photos punctuate the turns (edt_03 diptych, edt_07 history run, edt_10 full-circle). Charts never streak: every chart is separated by prose, a photo or a playground.",
+    "centrepiece": "the edt_03 strip-the-diaspora hero playground (Interaction Engineer, cm_02) — this file's visual system stages it: flag chips from the PD flag set, gold=diaspora/blue=island-born encoding matching des_09, and the des_07/des_08 diptych priming it",
+    "anti_sameness_notes": "Not the WC-blog keynote look and not a generic dark dashboard: didone masthead (not grotesk), a two-hue flag-derived data system (not a rainbow), an emotional midpoint where the audio embed IS the argument (the Sodade scrolly), and a photo-led close (the reserved Rotterdam street) instead of a summary chart. The one deliberate echo of previous blogs is the canonical vinyl BGM card, which is fixed by doctrine.",
+    "typography_notes": "Drop cap on the article's first paragraph only (accent gold). Kicker eyebrows (uppercase, letter-spaced, accent) above section titles — the Copywriter's kicker 'World Cup 2026 · The diaspora' sits above the masthead. ONE divider style: the asterism (finish.json divider-ast) between sections. Dateline byline under the standfirst. One pull-quote treatment (oversized_serif, gold left rule) reserved for Maria da Cruz's 'chasing every ball' quote in edt_03. Stat callouts in display serif at 64-72px with count-up (static under prefers-reduced-motion). No paper grain (dark cinematic field stays clean).",
+    "motion_notes": "Content visible by default (reveal-visible-by-default); scroll-driven scrollies are linear with the scrub (no easing fights); count-up on the two stat callouts and the live badge; vinyl disc spins only while audio plays; hero cinemagraph loops seamlessly with poster fallback; cinematic scroll backgrounds cross-fade at section boundaries (Cinematographer); no hover-scale spam, no blur entrances; all motion gated by prefers-reduced-motion."
+  }
+}

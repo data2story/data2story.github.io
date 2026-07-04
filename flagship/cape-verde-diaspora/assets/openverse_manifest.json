@@ -1,0 +1,24 @@
+[
+  {
+    "id": "a953777d-fdbb-429b-b0cc-51b255d9893c",
+    "title": "Whaling Bark Wanderer",
+    "source": "flickr",
+    "provider": "flickr",
+    "creator": "safr_social_media",
+    "license": "by",
+    "license_version": "2.0",
+    "spdx": "CC-BY-2.0",
+    "permits_republication": true,
+    "requires_attribution": true,
+    "attribution_text": "\"Whaling Bark Wanderer\" by safr_social_media is licensed under CC BY 2.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/2.0/.",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "foreign_landing_url": "https://www.flickr.com/photos/124440767@N07/14888059100",
+    "source_url": "https://live.staticflickr.com/3909/14888059100_ced2dc1f89_b.jpg",
+    "mime": null,
+    "width": 1024,
+    "height": 755,
+    "local_path": "ref_whaling_bark_wanderer__openverse.jpg",
+    "retrieved_at": "2026-07-04T15:15:00Z",
+    "status": "ok"
+  }
+]
